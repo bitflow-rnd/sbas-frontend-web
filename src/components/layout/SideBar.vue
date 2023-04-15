@@ -17,7 +17,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link active" href="../../demo44/dist/index.html">
+          <a class="menu-link active" href="/index.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -29,7 +29,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/ecommerce.html">
+          <a class="menu-link" href="/dashboards/ecommerce.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -41,7 +41,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/projects.html">
+          <a class="menu-link" href="/dashboards/projects.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -53,7 +53,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/online-courses.html">
+          <a class="menu-link" href="/dashboards/online-courses.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -65,7 +65,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/marketing.html">
+          <a class="menu-link" href="/dashboards/marketing.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -77,7 +77,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/bidding.html">
+          <a class="menu-link" href="/dashboards/bidding.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -89,7 +89,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/pos.html">
+          <a class="menu-link" href="/dashboards/pos.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -101,7 +101,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/call-center.html">
+          <a class="menu-link" href="/dashboards/call-center.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -113,7 +113,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/logistics.html">
+          <a class="menu-link" href="/dashboards/logistics.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -125,7 +125,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/website-analytics.html">
+          <a class="menu-link" href="/dashboards/website-analytics.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -137,7 +137,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/finance-performance.html">
+          <a class="menu-link" href="/dashboards/finance-performance.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -149,7 +149,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/store-analytics.html">
+          <a class="menu-link" href="/dashboards/store-analytics.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -161,7 +161,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/social.html">
+          <a class="menu-link" href="/dashboards/social.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -173,7 +173,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/delivery.html">
+          <a class="menu-link" href="/dashboards/delivery.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -185,7 +185,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/crypto.html">
+          <a class="menu-link" href="/dashboards/crypto.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -197,7 +197,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/school.html">
+          <a class="menu-link" href="/dashboards/school.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -209,7 +209,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/dashboards/podcast.html">
+          <a class="menu-link" href="/dashboards/podcast.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>
@@ -221,7 +221,7 @@
         <!--begin:Menu item-->
         <div class="menu-item">
           <!--begin:Menu link-->
-          <a class="menu-link" href="../../demo44/dist/landing.html">
+          <a class="menu-link" href="/landing.html">
 									<span class="menu-bullet">
 										<span class="bullet bullet-dot"></span>
 									</span>

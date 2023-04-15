@@ -1,8 +1,15 @@
 import { createWebHashHistory, createRouter } from "vue-router";
 
-// home
-import LayoutMain from "../components/layout/LayoutMain.vue";
+import UserLayout from "../components/layout/LayoutUser.vue";
 import Index from "../components/Index.vue";
+import MobileMain from "../components/MobileMain.vue";
+import LoginView from "../components/common/LoginView.vue";
+import IdfySms from "../components/common/IdfySms.vue";
+import InitPw from "../components/common/InitPw.vue";
+import ReqUserReg from "../components/common/ReqUserReg.vue";
+import RegMyOrgan from "../components/common/RegMyOrgan.vue";
+import FindId from "../components/common/FindId.vue";
+import Dashbd from "../components/common/Dashbd.vue";
 
 // 네비게이션 가드
 /*
@@ -13,25 +20,65 @@ import {
 
 const routes = [
     {
-        path: "",
-        name: "main",
-        component: LayoutMain,
+        path: "/login",
+        name: "login",
+        component: LoginView,
+    },
+    {
+        path: "/idfysms",
+        name: "idfysms",
+        component: IdfySms,
+    },
+    {
+        path: "/initpw",
+        name: "initpw",
+        component: InitPw,
+    },
+    {
+        path: "/requserreg",
+        name: "requserreg",
+        component: ReqUserReg,
+    },
+    {
+        path: "/regmyorgan",
+        name: "regmyorgan",
+        component: RegMyOrgan,
+    },
+    {
+        path: "/findid",
+        name: "findid",
+        component: FindId,
+    },
+    {
+        path: "/dashbd",
+        name: "dashbd",
+        component: Dashbd,
+    },
+    {
+        path: "/user",
+        name: "user",
+        component: UserLayout,
         children: [
             {
-                path: "main",
-                name: "main",
+                path: "/pcmain",
+                name: "pcmain",
                 component: Index,
             },
             {
-                path: "",
+                path: "/momain",
+                name: "momain",
+                component: MobileMain,
+            },
+           {
+                path: "/",
                 component: Index,
             },
         ],
     },
     {
-        path: "",
-        name: "index",
-        component: Index,
+        path: "/login",
+        name: "login",
+        component: LoginView,
     }
 ];
 

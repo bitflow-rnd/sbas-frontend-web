@@ -18,7 +18,7 @@
         </div>
         <!--end::Mobile toggle-->
         <!--begin::Logo image-->
-        <a href="../../demo44/dist/index.html">
+        <a href="/index.html">
           <img alt="Logo" src="/img/logos/title-bar.webp" class="theme-light-show" />
           <img alt="Logo" src="/media/logos/demo44-dark.svg" class="h-25px theme-dark-show" />
         </a>
@@ -79,9 +79,9 @@
             <!--begin:Menu item-->
             <div class="menu-item menu-lg-down-accordion me-0 me-lg-1">
               <!--begin:Menu link-->
-              <span class="menu-link">
+              <router-link to="/admin" :class="{active: tabidx === 2}" class="menu-link" @click="setActive(2)">
 									<span class="menu-title">시스템관리</span>
-								</span>
+              </router-link>
               <!--end:Menu link-->
             </div>
             <!--end:Menu item-->
@@ -129,12 +129,12 @@
               <!--end::Menu separator-->
               <!--begin::Menu item-->
               <div class="menu-item px-5">
-                <a href="../../demo44/dist/account/overview.html" class="menu-link px-5">내 정보</a>
+                <a href="/account/overview.html" class="menu-link px-5">내 정보</a>
               </div>
               <!--end::Menu item-->
               <!--begin::Menu item-->
               <div class="menu-item px-5">
-                <a href="../../demo44/dist/authentication/layouts/corporate/sign-in.html" class="menu-link px-5">로그아웃</a>
+                <a href="/authentication/layouts/corporate/sign-in.html" class="menu-link px-5">로그아웃</a>
               </div>
               <!--end::Menu item-->
             </div>
@@ -414,7 +414,7 @@
                   <!--end::Items-->
                   <!--begin::View more-->
                   <div class="py-3 text-center border-top">
-                    <a href="../../demo44/dist/pages/user-profile/activity.html" class="btn btn-color-gray-600 btn-active-color-primary">View All
+                    <a href="/pages/user-profile/activity.html" class="btn btn-color-gray-600 btn-active-color-primary">View All
                       <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
                       <span class="svg-icon svg-icon-5">
 												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -667,7 +667,7 @@
                   <!--end::Items-->
                   <!--begin::View more-->
                   <div class="py-3 text-center border-top">
-                    <a href="../../demo44/dist/pages/user-profile/activity.html" class="btn btn-color-gray-600 btn-active-color-primary">View All
+                    <a href="/pages/user-profile/activity.html" class="btn btn-color-gray-600 btn-active-color-primary">View All
                       <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
                       <span class="svg-icon svg-icon-5">
 												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
