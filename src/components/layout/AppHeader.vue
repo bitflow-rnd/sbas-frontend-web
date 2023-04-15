@@ -18,10 +18,10 @@
         </div>
         <!--end::Mobile toggle-->
         <!--begin::Logo image-->
-        <a href="/index.html">
+        <router-link to="/user">
           <img alt="Logo" src="/img/logos/title-bar.webp" class="theme-light-show" />
           <img alt="Logo" src="/media/logos/demo44-dark.svg" class="h-25px theme-dark-show" />
-        </a>
+        </router-link>
         <!--end::Logo image-->
       </div>
       <!--end::Header logo-->
