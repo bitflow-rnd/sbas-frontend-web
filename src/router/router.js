@@ -1,7 +1,6 @@
 import { createWebHashHistory, createRouter } from "vue-router";
 
 import LayoutUser from "../components/layout/LayoutUser.vue";
-import LayoutAdmin from "@/components/layout/LayoutAdmin";
 import Index from "../components/Index.vue";
 import MobileMain from "../components/MobileMain.vue";
 import LoginView from "../components/common/LoginView.vue";
@@ -80,7 +79,7 @@ const routes = [
     {
         path: "/admin",
         name: "admin",
-        component: LayoutAdmin,
+        component: LayoutUser,
         children: [
             {
                 path: "/",
