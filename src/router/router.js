@@ -11,6 +11,11 @@ import RegMyOrgan from "../components/common/RegMyOrgan.vue";
 import FindId from "../components/common/FindId.vue";
 import Dashbd from "../components/common/Dashbd.vue";
 import DashbdAdmin from "../components/admin/dashbd/Index.vue";
+import ListPatnt from "../components/user/patnt/ListPatnt.vue";
+import ListAncmt from "../components/admin/comm/ListAncmt.vue";
+import ListUsgTerm from "@/components/admin/comm/ListUsgTerm.vue";
+
+
 
 // 네비게이션 가드
 /*
@@ -18,6 +23,7 @@ import {
   onlyAuthAndPtNoAndGoCharm
 } from "./navigationGuard"
 */
+
 
 const routes = [
     {
@@ -63,7 +69,7 @@ const routes = [
             {
                 path: "/pcmain",
                 name: "pcmain",
-                component: Index,
+                component: FindId,
             },
             {
                 path: "/momain",
@@ -73,6 +79,11 @@ const routes = [
            {
                 path: "",
                 component: Index,
+            },
+            {
+                path: "/patnt/list",
+                name: "listpatnt",
+                component: ListPatnt,
             },
         ],
     },
@@ -90,7 +101,18 @@ const routes = [
                 path: "",
                 name: "dashbd",
                 component: DashbdAdmin,
-            }
+            },
+            {
+                path: "/comm/ancmt/list",
+                name: "ListAncmt",
+                component: ListAncmt,
+            },
+            {
+                path: "/comm/usgterm/list",
+                name: "ListUsgTerm",
+                component: ListUsgTerm,
+            },
+
         ]
     },
     {
