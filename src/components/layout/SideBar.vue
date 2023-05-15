@@ -4,8 +4,8 @@
     <div class="lnb-wrap">
       <div class="depth-group">
         <div class="depth-head-box">
-          <img src="/img/common/ic_lnb_organ.svg" alt="이미지">
-          <div class="head-txt-box">사용자 관리 </div>
+          <i class="fa-solid fa-users"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="head-txt-box">사용자 관리</div>
         </div>
         <div class="depth-body-box">
           <ul class="depth1">
@@ -13,7 +13,7 @@
           </ul>
         </div>
         <div class="depth-head-box">
-          <img src="/img/common/ic_lnb_organ.svg" alt="이미지">
+          <i class="fa-solid fa-computer"></i>&nbsp;&nbsp;&nbsp;&nbsp;
           <div class="head-txt-box">시스템 관리</div>
         </div>
         <div class="depth-body-box">
@@ -25,8 +25,8 @@
           </ul>
         </div>
         <div class="depth-head-box">
-          <img src="/img/common/ic_lnb_organ.svg" alt="이미지">
-          <div class="head-txt-box">기관정보 관리 </div>
+          <i class="fa-solid fa-sitemap"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="head-txt-box">기관정보 관리</div>
         </div>
         <div class="depth-body-box">
           <ul class="depth1">
@@ -60,4 +60,8 @@ export default {
 </script>
 
 <style scoped>
+.head-txt-box { font-size: 14px; }
+.depth-head-box > i {
+  color: #3F90E2;
+}
 </style>
