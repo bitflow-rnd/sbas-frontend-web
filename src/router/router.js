@@ -1,7 +1,6 @@
 import { createWebHashHistory, createRouter } from "vue-router";
 
 import LayoutUser from "../components/layout/LayoutUser.vue";
-import Index from "../components/Index.vue";
 import MobileMain from "../components/MobileMain.vue";
 import LoginView from "../components/common/LoginView.vue";
 import IdfySms from "../components/common/IdfySms.vue";
@@ -10,12 +9,11 @@ import ReqUserReg from "../components/common/ReqUserReg.vue";
 import RegMyOrgan from "../components/common/RegMyOrgan.vue";
 import FindId from "../components/common/FindId.vue";
 import Dashbd from "../components/common/Dashbd.vue";
-import DashbdAdmin from "../components/admin/dashbd/Index.vue";
 import ListPatnt from "../components/user/patnt/ListPatnt.vue";
 import ListAncmt from "../components/admin/comm/ListAncmt.vue";
-import ListUsgTerm from "@/components/admin/comm/ListUsgTerm.vue";
-
-
+import ListUsgTerm from "../components/admin/comm/ListUsgTerm.vue";
+// import Index from "../components/Index.vue";
+// import DashbdAdmin from "../components/admin/dashbd/Index.vue";
 
 // 네비게이션 가드
 /*
@@ -67,22 +65,22 @@ const routes = [
         component: LayoutUser,
         children: [
             {
-                path: "/pcmain",
+                path: "pcmain",
                 name: "pcmain",
                 component: FindId,
             },
             {
-                path: "/momain",
+                path: "momain",
                 name: "momain",
                 component: MobileMain,
             },
-           {
-                path: "",
-                component: Index,
+            {
+                path: "patnt/list",
+                name: "listpatnt",
+                component: ListPatnt,
             },
             {
-                path: "/patnt/list",
-                name: "listpatnt",
+                path: "",
                 component: ListPatnt,
             },
         ],
@@ -93,24 +91,19 @@ const routes = [
         component: LayoutUser,
         children: [
             {
-                path: "/",
-                name: "dashbd",
-                component: DashbdAdmin,
-            },
-            {
-                path: "",
-                name: "dashbd",
-                component: DashbdAdmin,
-            },
-            {
-                path: "/comm/ancmt/list",
+                path: "comm/ancmt/list",
                 name: "ListAncmt",
                 component: ListAncmt,
             },
             {
-                path: "/comm/usgterm/list",
+                path: "comm/usgterm/list",
                 name: "ListUsgTerm",
                 component: ListUsgTerm,
+            },
+            {
+                path: "",
+                name: "ListAncmt",
+                component: ListAncmt,
             },
 
         ]
