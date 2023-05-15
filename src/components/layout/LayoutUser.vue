@@ -6,16 +6,15 @@
     <!--end::Header-->
     <!--begin::Wrapper-->
     <div class="app-wrapper d-flex" id="kt_app_wrapper">
+      <!-- sidebar start -->
+      <SideBar v-if="isadminpage"></SideBar>
+      <!-- sidebar end -->
       <!--begin::Wrapper container-->
       <div class="app-container container-fluid d-flex">
-        <!-- sidebar start -->
-        <SideBar v-if="isadminpage"></SideBar>
-        <!-- sidebar end -->
         <!-- tab contents start -->
         <router-view></router-view>
         <!-- tab contents end -->
       </div>
-      <!--end::Wrapper container-->
     </div>
     <!--end::Wrapper-->
   </div>

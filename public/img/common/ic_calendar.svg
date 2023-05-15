@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="그룹_14352" data-name="그룹 14352" transform="translate(-1231.816 -731.797)">
+    <rect id="사각형_6972" data-name="사각형 6972" width="24" height="24" transform="translate(1231.816 731.797)" fill="none"/>
+    <rect id="사각형_6973" data-name="사각형 6973" width="16.518" height="14.853" rx="2.167" transform="translate(1235.557 736.121)" fill="none" stroke="#b6b6b6" stroke-miterlimit="10" stroke-width="1.3"/>
+    <line id="선_3668" data-name="선 3668" x2="16.518" transform="translate(1235.557 740.104)" fill="none" stroke="#b6b6b6" stroke-miterlimit="10" stroke-width="1.3"/>
+    <g id="그룹_14350" data-name="그룹 14350">
+      <line id="선_3669" data-name="선 3669" y2="2.144" transform="translate(1239.419 734.955)" fill="none" stroke="#b6b6b6" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.6"/>
+      <line id="선_3670" data-name="선 3670" y2="2.144" transform="translate(1248.214 734.955)" fill="none" stroke="#b6b6b6" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.6"/>
+    </g>
+    <g id="그룹_14351" data-name="그룹 14351">
+      <rect id="사각형_6974" data-name="사각형 6974" width="3.174" height="2.348" rx="0.185" transform="translate(1237.743 742.187)" fill="#b6b6b6"/>
+      <rect id="사각형_6975" data-name="사각형 6975" width="3.174" height="2.348" rx="0.185" transform="translate(1237.743 745.725)" fill="#b6b6b6"/>
+      <rect id="사각형_6976" data-name="사각형 6976" width="3.174" height="2.348" rx="0.185" transform="translate(1242.205 745.725)" fill="#b6b6b6"/>
+      <rect id="사각형_6977" data-name="사각형 6977" width="3.174" height="2.348" rx="0.185" transform="translate(1242.205 742.187)" fill="#b6b6b6"/>
+      <rect id="사각형_6978" data-name="사각형 6978" width="3.174" height="2.348" rx="0.185" transform="translate(1246.716 742.187)" fill="#b6b6b6"/>
+    </g>
+  </g>
+</svg>

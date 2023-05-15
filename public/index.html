@@ -16,113 +16,110 @@
 <!--end::Vendor Stylesheets-->
 <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
 <link href="/css/plugins.css" rel="stylesheet" type="text/css" />
-<link href="/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/css/style.bundle.css" rel="stylesheet" type="text/css" />
+<link href="/css/custom-ui.css" rel="stylesheet" type="text/css" />
+<link href="/css/custom-style.css" rel="stylesheet" type="text/css" />
 <!--end::Global Stylesheets Bundle-->
 <style>
-body { max-width: 100%; overflow-x: hidden; }
-#app {
-font-family: SpoqaHanSansNeo, Helvetica, Arial, sans-serif;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-height: 100%;
-}
-.app-root { background-color: #f3f3f5; }
-.app-wrapper { height: calc(100% - 70px); }
-.app-header .btn-custom i { font-size: 2.23rem; }
-.app-header-logo > a > img { height: 5.39rem; }
-.app-toolbar { padding: 0 !important; }
-.app-toolbar-wrapper { padding: 1.54rem 0 1rem 0.7rem !important; }
-.app-navbar-item > div > p { margin-bottom: 0.31rem; }
-.app-navbar-item > div > p:first-child { line-height: 1.27; font-size: 1.15rem; font-weight: bold; }
-.app-navbar-item > div > p:nth-child(2) { line-height: 1.3;  }
-.app-content { padding-top: 0; padding-bottom: 30px; }
-.app-content > .row { height: 100%; }
-.separator { border-bottom: 1px solid #ddd; }
-.card-header.p-8, .card-body.p-8 { padding: 22px 24px !important; }
-.card-header.p-8 { padding-bottom: 0 !important; }
-.card-body > h5 { margin-bottom: 1.5rem; position: relative; }
-.card-body > h5 > span { left: 84px !important; top: 0.63rem !important; height: 21px; padding: 0 8px; font-size: 1.15rem; color: white; font-weight: 500; padding-top: 1px; }
-.fa-bell + span { margin-left: -0.54rem; }
-.menu-link { text-align: center; }
-.card-header .table .form-check.form-check-solid .form-check-input:not(:checked) {
-  margin-right: 8px;
-}
-.card-header .table thead > tr:last-child {
-  border-bottom: 1px solid #86898d;
-}
-td .symbol .symbol-label, td .symbol img {
-  width: 38px;
-  height: 38px;
-}
-td .symbol img{
-  border-radius: 0.65rem !important;
-}
-#kt_app_header_middle_wrapper > .btn-danger {
-  animation: blinker 1s step-start infinite;
-}
-.blink {
-  animation: blinker 1s step-start infinite;
-}
+    body { max-width: 100%; overflow-x: hidden; }
+    .app-root { background-color: #f3f3f5; }
+    .app-wrapper { height: calc(100% - 70px); }
+    .app-header .btn-custom i { font-size: 2.23rem; }
+    .app-header-logo > a > img { height: 5.39rem; }
+    .app-sidebar { display: none; }
+    .app-toolbar { padding: 0 !important; }
+    .app-toolbar-wrapper { padding: 1.54rem 0 1rem 0.7rem !important; }
+    .app-navbar-item > div > p { margin-bottom: 0.31rem; }
+    .app-navbar-item > div > p:first-child { line-height: 1.27; font-size: 1.15rem; font-weight: bold; }
+    .app-navbar-item > div > p:nth-child(2) { line-height: 1.3;  }
+    .app-content { padding-top: 0; padding-bottom: 30px; }
+    .app-content > .row { height: 100%; }
+    .separator { border-bottom: 1px solid #ddd; }
+    .card-header.p-8, .card-body.p-8 { padding: 22px 24px !important; }
+    .card-header.p-8 { padding-bottom: 0 !important; }
+    .card-body > h5 { margin-bottom: 1.5rem; position: relative; }
+    .card-body > h5 > span { left: 84px !important; top: 0.63rem !important; height: 21px; padding: 0 8px; font-size: 1.15rem; color: white; font-weight: 500; padding-top: 1px; }
+    .fa-bell + span { margin-left: -0.54rem; }
+    .menu-link { text-align: center; }
+    .card-header .table .form-check.form-check-solid .form-check-input:not(:checked) {
+        margin-right: 8px;
+    }
+    .card-header .table thead > tr:last-child {
+        border-bottom: 1px solid #86898d;
+    }
+    td .symbol .symbol-label, td .symbol img {
+        width: 38px;
+        height: 38px;
+    }
+    td .symbol img{
+        border-radius: 0.65rem !important;
+    }
+    #kt_app_header_middle_wrapper > .btn-danger {
+        animation: blinker 1s step-start infinite;
+    }
+    .blink {
+        animation: blinker 1s step-start infinite;
+    }
 
-@keyframes blinker {
-  50% {
-      opacity: 0;
-  }
-}
-#kt_app_root { height: 100%; }
-#kt_app_header_middle_wrapper { padding-right: 9px; }
+    @keyframes blinker {
+        50% {
+            opacity: 0;
+        }
+    }
+    #kt_app_root { height: 100%; }
+    #kt_app_header_middle_wrapper { padding-right: 9px; }
 
-@media (max-width: 991px) {
-  #kt_app_header_menu_wrapper {
-      display: none !important;
-  }
-}
-@media (max-width: 1119px) {
-  .app-navbar-item > div > p:nth-child(2) {
-      width: 70px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-  }
-}
-@media (min-width: 992px) {
+    @media (max-width: 991px) {
+        #kt_app_header_menu_wrapper {
+            display: none !important;
+        }
+    }
+    @media (max-width: 1119px) {
+        .app-navbar-item > div > p:nth-child(2) {
+            width: 70px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+    @media (min-width: 992px) {
 
-  /* .app-navbar-item > div > p { max-width: 75px; } */
+        /* .app-navbar-item > div > p { max-width: 75px; } */
 
-  .app-header .menu-top-rounded > .menu-item {
-      width: calc(100% / 6 - 1.25rem);
-  }
-  .app-header .menu-top-rounded > .menu-item > .menu-link {
-      overflow-x: hidden;
-  }
-  .app-header .menu-top-rounded > .menu-item > .menu-link .menu-title {
-      min-width: 70px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-  }
-}
-@media (min-width: 1200px) {
-  .app-header .menu-top-rounded > .menu-item {
-      width: 125px;
-      margin-right: 0.65rem !important;
-  }
-  .app-header .menu-top-rounded > .menu-item > .menu-link {
-      flex: 0 0 100%;
-  }
-}
-@media (min-width: 1460px) {
-  .app-header .menu-top-rounded > .menu-item {
-      width: 145px;
-  }
-}
+        .app-header .menu-top-rounded > .menu-item {
+            width: calc(100% / 6 - 1.25rem);
+        }
+        .app-header .menu-top-rounded > .menu-item > .menu-link {
+            overflow-x: hidden;
+        }
+        .app-header .menu-top-rounded > .menu-item > .menu-link .menu-title {
+            min-width: 70px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+    @media (min-width: 1200px) {
+        .app-header .menu-top-rounded > .menu-item {
+            width: 125px;
+            margin-right: 0.65rem !important;
+        }
+        .app-header .menu-top-rounded > .menu-item > .menu-link {
+            flex: 0 0 100%;
+        }
+    }
+    @media (min-width: 1460px) {
+        .app-header .menu-top-rounded > .menu-item {
+            width: 145px;
+        }
+    }
 </style>
 </head>
 <body>
 <noscript>
   <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
 </noscript>
-<div id="app"></div>
+<div id="kt_app_root" class="d-flex flex-column app-root"></div>
 <!-- built files will be auto injected -->
 
 

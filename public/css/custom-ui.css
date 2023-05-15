@@ -1,0 +1,310 @@
+.py-40 {
+  padding-top: 10rem !important;
+  padding-bottom: 10rem !important;
+}
+
+.fs-12px {
+  font-size: 12px;
+}
+
+.fs-16px {
+  font-size: 16px;
+}
+
+.datepickers-container {
+  z-index: 6000;
+}
+
+.sbox select {
+  border-radius: 2px;
+  width: 100%;
+  height: 30px;
+  padding: 0 30px 0 16px;
+  font-size: 13px;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  border: 1px solid #DADBDC;
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") no-repeat center right 12px/16px 12px;
+}
+.sbox select:disabled {
+  background-color: #eff0f2;
+}
+
+.tbox.full {
+  width: 100% !important;
+}
+.tbox.normal {
+  width: 212px;
+}
+.tbox.normal2 {
+  width: 250px;
+}
+.tbox.normal3 {
+  width: 190px;
+}
+.tbox.shorter {
+  width: 112px;
+}
+.tbox.shorter input {
+  padding: 0 14px;
+}
+.tbox.short {
+  width: 123px;
+}
+.tbox.short2 {
+  width: 160px;
+}
+.tbox.short3 {
+  width: 200px;
+}
+.tbox.long {
+  width: 371px;
+}
+.tbox.longer {
+  width: 420px;
+}
+.tbox.longer2 {
+  width: 460px;
+}
+.tbox.medium {
+  width: 308px;
+}
+.tbox.small input {
+  padding: 0 14px;
+  border: 1px solid #D7D7D7;
+  height: 40px;
+}
+.tbox.smaller input {
+  padding: 0 10px;
+  height: 36px;
+  font-size: 12px;
+}
+.tbox.with-btn {
+  position: relative;
+}
+.tbox.with-btn .input-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+}
+.tbox.with-btn .input-btn i {
+  font-size: 15px;
+  color: #707070;
+}
+.tbox.with-btn input {
+  padding-right: 40px;
+}
+.tbox.with-calendar {
+  position: relative;
+}
+.tbox.with-calendar:after {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  content: "\f073";
+  font-family: "Font Awesome 6 Free";
+  color: #b6b6b6;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.tbox.with-calendar input {
+  padding-right: 40px;
+  border: 1px solid #DADBDC !important;
+}
+.tbox input {
+  outline: none;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid #DADBDC;
+  border-radius: 2px;
+  outline: none;
+  padding: 0 16px;
+  height: 30px;
+  font-size: 13px;
+  color: #000;
+}
+.tbox input::placeholder {
+  color: rgba(17, 17, 17, 0.5);
+  letter-spacing: -0.05em;
+}
+.tbox input:read-only {
+  border: 1px solid transparent;
+  background-color: #ECEDEF;
+}
+.tbox.center input {
+  text-align: center;
+}
+.tbox::placeholder {
+  color: rgba(57, 57, 57, 0.4);
+  letter-spacing: -0.3px;
+}
+.tbox.placeholder-col input::placeholder {
+  color: #212121;
+}
+
+.textbox {
+  border: 1px solid #DADBDC;
+  display: flex;
+  flex-direction: column;
+}
+.textbox.full {
+  width: 100%;
+}
+.textbox textarea {
+  outline: none;
+  width: 100%;
+  padding: 16px;
+  font-size: 13px;
+  letter-spacing: -0.05em;
+  line-height: 26px;
+  height: 200px;
+  border: 0;
+  resize: none;
+}
+.textbox .option-box {
+  padding: 0 16px 16px;
+  color: #838693;
+  letter-spacing: -0.05em;
+}
+.textbox .limit-box {
+  padding: 16px;
+  text-align: right;
+  letter-spacing: -0.05em;
+  color: #838693;
+}
+
+.rbox {
+  display: inline-flex;
+  align-items: center;
+}
+.rbox label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  position: relative;
+}
+.rbox label input[type=radio] {
+  position: absolute;
+  left: -9999px;
+  transform: scale(0);
+}
+.rbox label input[type=radio]:checked ~ i:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: #74afeb;
+  border-radius: 50%;
+}
+.rbox label i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(134, 137, 141, 0.4);
+}
+.rbox label .txt {
+  padding-left: 28px;
+  color: #696971;
+  font-size: 13px;
+  letter-spacing: -0.05em;
+  line-height: 19px;
+}
+
+.cbox {
+  display: inline-flex;
+  align-items: center;
+}
+.cbox label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  min-width: 20px;
+  position: relative;
+}
+.cbox label input[type=checkbox] {
+  position: absolute;
+  left: -9999px;
+  transform: scale(0);
+}
+.cbox label input[type=checkbox]:checked ~ i:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: #74afeb url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 11' width='13' height='11' fill='none'%3e%3cpath d='M11.0426 1.02893C11.3258 0.695792 11.8254 0.655283 12.1585 0.938451C12.4917 1.22162 12.5322 1.72124 12.249 2.05437L5.51985 9.97104C5.23224 10.3094 4.72261 10.3451 4.3907 10.05L0.828197 6.88335C0.50141 6.59288 0.471975 6.09249 0.762452 5.7657C1.05293 5.43891 1.55332 5.40948 1.88011 5.69995L4.83765 8.32889L11.0426 1.02893Z' fill='%23ffffff'/%3e%3c/svg%3e") no-repeat center;
+}
+.cbox label i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid rgba(134, 137, 141, 0.4);
+}
+.cbox label .txt {
+  padding-left: 28px;
+  color: #696971;
+  font-size: 13px;
+  letter-spacing: -0.05em;
+  line-height: 19px;
+}
+.cbox label .cnt {
+  padding: 0 8px;
+  height: 17px;
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  color: #fff;
+  background-color: #74AFEB;
+  border-radius: 40px;
+}
+
+article.btn-layout .btn {
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+}
+article.btn-layout .btn.small {
+  font-size: 13px;
+  height: 30px;
+  padding: 0 !important;
+  letter-spacing: -0.05em;
+}
+article.btn-layout .btn.type-1 {
+  border-radius: 2px;
+  border: 1px solid rgba(116, 175, 235, 0.8) !important;
+  color: #74AFEB;
+}
+article.btn-layout .btn.type-1:hover, article.btn-layout .btn.type-1:active {
+  border-color: #026AD3 !important;
+  color: #026AD3;
+}
+
+/*# sourceMappingURL=custom-ui.css.map */
