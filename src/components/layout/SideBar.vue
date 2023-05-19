@@ -9,7 +9,7 @@
         </div>
         <div class="depth-body-box">
           <ul class="depth1">
-            <li class="depth1-box"><a href="#none" class="depth1-btn">사용자 관리</a></li>
+            <li class="depth1-box"><router-link to="/admin/user/list" @click="setActive(0)" :class="{'': tabidx === 0}" class="depth1-btn">사용자 관리</router-link></li>
           </ul>
         </div>
         <div class="depth-head-box">
@@ -18,10 +18,10 @@
         </div>
         <div class="depth-body-box">
           <ul class="depth1">
-            <li class="depth1-box"><a href="#none" class="depth1-btn">공통코드 관리</a></li>
-            <li class="depth1-box"><a href="#none" class="depth1-btn">공지사항 관리</a></li>
-            <li class="depth1-box"><a href="#none" class="depth1-btn">약관/방침 관리</a></li>
-            <li class="depth1-box"><a href="#none" class="depth1-btn">App 버전 관리</a></li>
+            <li class="depth1-box"><router-link to="#none" @click="setActive(1)" :class="{'': tabidx === 1}" class="depth1-btn">공통코드 관리</router-link></li>
+            <li class="depth1-box"><router-link to="/admin/comm/ancmt/list" @click="setActive(2)" :class="{'': tabidx === 2}" class="depth1-btn">공지사항 관리</router-link></li>
+            <li class="depth1-box"><router-link to="/admin/comm/usgterm/list" @click="setActive(3)" :class="{'': tabidx === 3}" class="depth1-btn">약관/방침 관리</router-link></li>
+            <li class="depth1-box"><router-link to="#none" @click="setActive(4)" :class="{'': tabidx === 4}" class="depth1-btn">App 버전 관리</router-link></li>
           </ul>
         </div>
         <div class="depth-head-box">
@@ -30,11 +30,11 @@
         </div>
         <div class="depth-body-box">
           <ul class="depth1">
-            <li class="depth1-box"><a href="#none" class="depth1-btn">병상배정반 관리</a></li>
-            <li class="depth1-box"><a href="#none" class="depth1-btn">보건소 관리</a></li>
-            <li class="depth1-box"><a href="#none" class="depth1-btn active">의료기관 관리</a></li>
-            <li class="depth1-box"><a href="#none" class="depth1-btn">구급대 관리</a></li>
-            <li class="depth1-box"><a href="#none" class="depth1-btn">전산담당 관리</a></li>
+            <li class="depth1-box"><router-link to="#none" @click="setActive(5)" :class="{'': tabidx === 5}" class="depth1-btn">병상배정반 관리</router-link></li>
+            <li class="depth1-box"><router-link to="#none" @click="setActive(6)" :class="{'': tabidx === 6}" class="depth1-btn">보건소 관리</router-link></li>
+            <li class="depth1-box"><router-link to="#none" @click="setActive(7)" :class="{'': tabidx === 7}" class="depth1-btn active">의료기관 관리</router-link></li>
+            <li class="depth1-box"><router-link to="/admin/organ/firestatn/list" @click="setActive(8)" :class="{'': tabidx === 8}" class="depth1-btn">구급대 관리</router-link></li>
+            <li class="depth1-box"><router-link to="#none" @click="setActive(9)" :class="{'': tabidx === 9}" class="depth1-btn">전산담당 관리</router-link></li>
           </ul>
         </div>
       </div>
