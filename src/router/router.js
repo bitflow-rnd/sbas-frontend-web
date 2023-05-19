@@ -8,10 +8,20 @@ import InitPw from "../components/common/InitPw.vue";
 import ReqUserReg from "../components/common/ReqUserReg.vue";
 import RegMyOrgan from "../components/common/RegMyOrgan.vue";
 import FindId from "../components/common/FindId.vue";
-import Dashbd from "../components/common/Dashbd.vue";
+//import Dashbd from "../components/common/Dashbd.vue";
 import ListPatnt from "../components/user/patnt/ListPatnt.vue";
 import ListAncmt from "../components/admin/comm/ListAncmt.vue";
 import ListUsgTerm from "../components/admin/comm/ListUsgTerm.vue";
+import ListBed from "../components/user/bedasgn/ListBed.vue";
+import ListBedNoData from "../components/user/bedasgn/ListBedNoData.vue";
+import ListCntc from "../components/user/cntc/ListCntc.vue";
+import DetlCntc1 from "../components/user/cntc/DetlCntc1.vue";
+import ListFirestatn from "../components/admin/organ/ListFirestatn.vue";
+import ListFirestatnNoData from "../components/admin/organ/ListFirestatnNoData.vue";
+import ListUser from "../components/admin/user/ListUser.vue";
+import ListChnl from "../components/user/chnl/ListChnl.vue";
+import ListChnlBak from "../components/user/chnl/ListChnlBak.vue";
+import DashbdView from "../components/common/DashbdView.vue";
 // import Index from "../components/Index.vue";
 // import DashbdAdmin from "../components/admin/dashbd/Index.vue";
 
@@ -57,13 +67,18 @@ const routes = [
     {
         path: "/dashbd",
         name: "dashbd",
-        component: Dashbd,
+        component: DashbdView,
     },
     {
         path: "/user",
         name: "user",
         component: LayoutUser,
         children: [
+            {
+                path: "/dashbd",
+                name: "dashbd",
+                component: DashbdView,
+            },
             {
                 path: "pcmain",
                 name: "pcmain",
@@ -80,8 +95,36 @@ const routes = [
                 component: ListPatnt,
             },
             {
-                path: "",
-                component: ListPatnt,
+                path: "bedasgn/list",
+                name: "listbed",
+                component: ListBed,
+            },
+            {
+                path: "bedasgn/list/nodata",
+                name: "listbednodata",
+                component: ListBedNoData,
+            },
+
+            /*연락처*/
+            {
+                path: "cntc/list",
+                name: "ListCntc",
+                component: ListCntc,
+            },
+            {
+                path: "cntc/detl1",
+                name: "DetlCntc",
+                component: DetlCntc1,
+            },
+            {
+                path: "chnl/list",
+                name: "listchnl",
+                component: ListChnl,
+            },
+            {
+                path: "chnl/listbak",
+                name: "listchnlbak",
+                component: ListChnlBak,
             },
         ],
     },
@@ -101,9 +144,19 @@ const routes = [
                 component: ListUsgTerm,
             },
             {
-                path: "",
-                name: "ListAncmt",
-                component: ListAncmt,
+                path: "organ/firestatn/list",
+                name: "ListFirestatn",
+                component: ListFirestatn,
+            },
+            {
+                path: "organ/firestatn/list/nodata",
+                name: "ListFirestatnNoData",
+                component: ListFirestatnNoData,
+            },
+            {
+                path: "user/list",
+                name: "ListUser",
+                component: ListUser,
             },
 
         ]

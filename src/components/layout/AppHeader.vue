@@ -32,7 +32,7 @@
           <!--begin::Menu-->
           <div class="menu menu-top-rounded menu-column menu-lg-row menu-active-bg menu-title-gray-600 menu-state-dark menu-arrow-gray-400 fw-semibold fw-semibold fs-6 align-items-stretch my-5 my-lg-0 px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
             <!--begin:Menu item-->
-            <router-link to="/user" @click="setActive(0)" :class="{'here': tabidx === 0}" class="menu-item me-0 me-lg-1">
+            <router-link to="/dashbd" @click="setActive(0)" :class="{'here': tabidx === 0}" class="menu-item me-0 me-lg-1">
               <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">상황판</span>
@@ -41,7 +41,7 @@
             </router-link>
             <!--end:Menu item-->
             <!--begin:Menu item-->
-            <router-link to="/user/bedasgn" @click="setActive(1)" :class="{'here': tabidx === 1}" class="menu-item me-0 me-lg-1">
+            <router-link to="/user/bedasgn/list" @click="setActive(1)" :class="{'here': tabidx === 1}" class="menu-item me-0 me-lg-1">
               <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">병상배정</span>
@@ -59,7 +59,7 @@
             </router-link>
             <!--end:Menu item-->
             <!--begin:Menu item-->
-            <router-link to="/user/contact" @click="setActive(3)" :class="{'here': tabidx === 3}" class="menu-item me-0 me-lg-1">
+            <router-link to="/user/cntc/list" @click="setActive(3)" :class="{'here': tabidx === 3}" class="menu-item me-0 me-lg-1">
               <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">연락처/메시지</span>
