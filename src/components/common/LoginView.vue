@@ -1,187 +1,751 @@
 <template>
-  <!--begin::Authentication - Sign-in -->
-  <div class="d-flex flex-column flex-column-fluid flex-lg-row login-wrapper">
-    <!--begin::Aside-->
-    <div class="d-flex flex-center w-lg-50 pt-15 pt-lg-0 px-10">
-    </div>
-    <!--begin::Aside-->
-    <!--begin::Body-->
-    <div class="d-flex flex-center w-lg-50 p-10">
-      <!--begin::Card-->
-      <div class="card rounded-3 w-md-550px">
-        <!--begin::Card body-->
-        <div class="card-body d-flex flex-column p-10 p-lg-20 pb-lg-10">
-          <!--begin::Wrapper-->
-          <div class="d-flex flex-center flex-column-fluid pb-15 pb-lg-20">
-            <!--begin::Form-->
-            <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="/index.html" action="#">
-              <!--begin::Heading-->
-              <div class="text-center mb-11">
-                <!--begin::Title-->
-                <h1 class="text-dark fw-bolder mb-3">Sign In</h1>
-                <!--end::Title-->
-                <!--begin::Subtitle-->
-                <div class="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div>
-                <!--end::Subtitle=-->
-              </div>
-              <!--begin::Heading-->
-              <!--begin::Login options-->
-              <div class="row g-3 mb-9">
-                <!--begin::Col-->
-                <div class="col-md-6">
-                  <!--begin::Google link=-->
-                  <a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                    <img alt="Logo" src="/media/svg/brand-logos/google-icon.svg" class="h-15px me-3" />Sign in with Google</a>
-                  <!--end::Google link=-->
-                </div>
-                <!--end::Col-->
-                <!--begin::Col-->
-                <div class="col-md-6">
-                  <!--begin::Google link=-->
-                  <a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                    <img alt="Logo" src="/media/svg/brand-logos/apple-black.svg" class="theme-light-show h-15px me-3" />
-                    <img alt="Logo" src="/media/svg/brand-logos/apple-black-dark.svg" class="theme-dark-show h-15px me-3" />Sign in with Apple</a>
-                  <!--end::Google link=-->
-                </div>
-                <!--end::Col-->
-              </div>
-              <!--end::Login options-->
-              <!--begin::Separator-->
-              <div class="separator separator-content my-14">
-                <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
-              </div>
-              <!--end::Separator-->
-              <!--begin::Input group=-->
-              <div class="fv-row mb-8">
-                <!--begin::Email-->
-                <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
-                <!--end::Email-->
-              </div>
-              <!--end::Input group=-->
-              <div class="fv-row mb-3">
-                <!--begin::Password-->
-                <input type="password" placeholder="Password" name="password" autocomplete="off" class="form-control bg-transparent" />
-                <!--end::Password-->
-              </div>
-              <!--end::Input group=-->
-              <!--begin::Wrapper-->
-              <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-                <div></div>
-                <!--begin::Link-->
-                <a href="/authentication/layouts/creative/reset-password.html" class="link-primary">Forgot Password ?</a>
-                <!--end::Link-->
-              </div>
-              <!--end::Wrapper-->
-              <!--begin::Submit button-->
-              <div class="d-grid mb-10">
-                <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
-                  <!--begin::Indicator label-->
-                  <span class="indicator-label">Sign In</span>
-                  <!--end::Indicator label-->
-                  <!--begin::Indicator progress-->
-                  <span class="indicator-progress">Please wait...
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                  <!--end::Indicator progress-->
-                </button>
-              </div>
-              <!--end::Submit button-->
-              <!--begin::Sign up-->
-              <div class="text-gray-500 text-center fw-semibold fs-6">Not a Member yet?
-                <a href="/authentication/layouts/creative/sign-up.html" class="link-primary">Sign up</a></div>
-              <!--end::Sign up-->
-            </form>
-            <!--end::Form-->
-          </div>
-          <!--end::Wrapper-->
-          <!--begin::Footer-->
-          <div class="d-flex flex-stack">
-            <!--begin::Languages-->
-            <div class="me-10">
-              <!--begin::Toggle-->
-              <button class="btn btn-flex btn-link btn-color-gray-700 btn-active-color-primary rotate fs-base" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="0px, 0px">
-                <img data-kt-element="current-lang-flag" class="w-20px h-20px rounded me-3" src="/media/flags/united-states.svg" alt="" />
-                <span data-kt-element="current-lang-name" class="me-1">English</span>
-                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                <span class="svg-icon svg-icon-5 svg-icon-muted rotate-180 m-0">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
-                </svg>
-              </span>
-                <!--end::Svg Icon-->
-              </button>
-              <!--end::Toggle-->
-              <!--begin::Menu-->
-              <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-4 fs-7" data-kt-menu="true" id="kt_auth_lang_menu">
-                <!--begin::Menu item-->
-                <div class="menu-item px-3">
-                  <a href="#" class="menu-link d-flex px-5" data-kt-lang="English">
-                  <span class="symbol symbol-20px me-4">
-                    <img data-kt-element="lang-flag" class="rounded-1" src="/media/flags/united-states.svg" alt="" />
-                  </span>
-                    <span data-kt-element="lang-name">English</span>
-                  </a>
-                </div>
-                <!--end::Menu item-->
-                <!--begin::Menu item-->
-                <div class="menu-item px-3">
-                  <a href="#" class="menu-link d-flex px-5" data-kt-lang="Spanish">
-                  <span class="symbol symbol-20px me-4">
-                    <img data-kt-element="lang-flag" class="rounded-1" src="/media/flags/spain.svg" alt="" />
-                  </span>
-                    <span data-kt-element="lang-name">Spanish</span>
-                  </a>
-                </div>
-                <!--end::Menu item-->
-                <!--begin::Menu item-->
-                <div class="menu-item px-3">
-                  <a href="#" class="menu-link d-flex px-5" data-kt-lang="German">
-                  <span class="symbol symbol-20px me-4">
-                    <img data-kt-element="lang-flag" class="rounded-1" src="/media/flags/germany.svg" alt="" />
-                  </span>
-                    <span data-kt-element="lang-name">German</span>
-                  </a>
-                </div>
-                <!--end::Menu item-->
-                <!--begin::Menu item-->
-                <div class="menu-item px-3">
-                  <a href="#" class="menu-link d-flex px-5" data-kt-lang="Japanese">
-                  <span class="symbol symbol-20px me-4">
-                    <img data-kt-element="lang-flag" class="rounded-1" src="/media/flags/japan.svg" alt="" />
-                  </span>
-                    <span data-kt-element="lang-name">Japanese</span>
-                  </a>
-                </div>
-                <!--end::Menu item-->
-                <!--begin::Menu item-->
-                <div class="menu-item px-3">
-                  <a href="#" class="menu-link d-flex px-5" data-kt-lang="French">
-                  <span class="symbol symbol-20px me-4">
-                    <img data-kt-element="lang-flag" class="rounded-1" src="/media/flags/france.svg" alt="" />
-                  </span>
-                    <span data-kt-element="lang-name">French</span>
-                  </a>
-                </div>
-                <!--end::Menu item-->
-              </div>
-              <!--end::Menu-->
-            </div>
-            <!--end::Languages-->
-          </div>
-          <!--end::Footer-->
-        </div>
-        <!--end::Card body-->
-      </div>
-      <!--end::Card-->
-    </div>
-    <!--end::Body-->
-  </div>
-  <!--end::Authentication - Sign-in-->
+    <div class="container" style="padding:0; max-width:100%;">
 
+        <section class="login">
+
+
+            <div class="login-wrap">
+
+                <div class="login-bg">
+                    <img src="/img/common/img_login_bg_item.png" alt="이미지">
+                </div>
+
+                <div class="login-contents">
+
+                    <div class="con-head-box">
+                        <div class="main-box">로그인</div>
+                        <div class="sub-box">감염병 스마트 병상배정 시스템</div>
+                    </div>
+
+                    <div class="con-body-box">
+
+                        <form @submit.prevent="onSubmit" class="input-form-box">
+
+                            <div class="row-list">
+                                <div class="row">
+                                    <div class="input-box">
+                                        <input v-model="id" type="text" placeholder="아이디" >
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-box">
+                                        <input v-model="pw" type="password" placeholder="비밀번호" >
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="login-btn-box">
+                                <button type="submit" class="login-btn">로그인</button>
+                            </div>
+
+                        </form>
+
+                        <div class="login-option-box">
+
+                            <div class="captcha-box">캡차</div>
+
+                            <div class="option-list">
+                            <!--                 모달인지 새 페이지인지 확인 필요               -->
+                                <a @click="openFindId" class="option-btn">아이디찾기</a> / <a @click="openInitPw" class="option-btn">비밀번호 초기화</a>
+                            </div>
+
+                        </div>
+
+                        <div class="login-note-box">
+
+                            <div class="note-wrap">
+                                <div class="row">감염병 스마트 병상배정 시스템입니다.</div>
+                                <div class="row">불법 사용시 법적 제재를 받을 수 있습니다.</div>
+                                <div class="row">접속문의 : master@lemonhealth.com / 1577-1577</div>
+                            </div>
+
+                        </div>
+
+                        <div class="login-request-box">
+
+                            <a @click="toggleUserEditModal" class="request-btn">
+                                <span class="txt">사용자 등록 요청</span>
+                                <i class="ic ic-link"></i>
+                            </a>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+
+            <div class="login-bottom"></div>
+
+        </section>
+
+
+
+    </div>
+
+  <!--begin::Modals-->
+  <!--begin::Modal - 내정보-->
+    <div v-show="userEditModal" class="modal fade " id="kt_modal_edit_user" tabindex="-1" aria-hidden="true" style=";">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog mw-1500px modal-dialog-centered">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header px-10 py-5 d-flex justify-content-between">
+                    <!--begin::Modal title-->
+                    <h2>사용자 정보 등록</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span @click="toggleUserEditModal" class="svg-icon svg-icon-1">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                        fill="currentColor"></rect>
+									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                        fill="currentColor"></rect>
+								</svg>
+							</span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <!--begin::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y py-10 px-10">
+
+                    <article class="table-form-layout1">
+                        <div class="form-head-box">
+
+                            <div class="head-box">
+                                <div class="head-txt-box fs-16px fw-bold pb-5">사용자 기본 정보</div>
+                            </div>
+
+                        </div>
+                        <div class="form-body-box">
+
+                            <div class="table-box">
+                                <table>
+                                    <colgroup>
+                                        <col style="width: 168px;">
+                                        <col style="width: auto;">
+                                        <col style="width: 168px;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr>
+                                        <th>아이디 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="text" value="ladder@battele.net" readonly>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <th>비밀번호 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="password" value="">
+                                                </div>
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 비밀번호 유효성 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>휴대폰번호 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <a href="javascript:popupOpen('certify')" class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"> 본인인증</a>
+                                            </div>
+                                        </td>
+                                        <th>비밀번호 확인 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="password" value="ladder@battele.net">
+                                                </div>
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 비밀번호와 비밀번호 확인 일치 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>이름 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="text" value="010-1234-5678">
+                                                </div>
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 이름 유효성 확인 문구</div>
+                                            </div>
+                                        </td>
+                                        <th>생년월일 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="text" value="1945-07-01">
+                                                </div>
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 생년월일 유효성 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="table-form-layout1 mt-10">
+                        <div class="form-head-box">
+
+                            <div class="head-box">
+                                <div class="head-txt-box fs-16px fw-bold pb-5">업무 역할</div>
+                            </div>
+
+                        </div>
+                        <div class="form-body-box">
+
+                            <div class="table-box">
+                                <table>
+                                    <colgroup>
+                                        <col style="width: 168px;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr>
+                                        <th>소속기관 유형 <span class="text-primary">*</span></th>
+                                        <td>
+                                            <div class="item-cell-box full">
+                                                <div class="rbox">
+                                                    <label>
+                                                        <input type="radio" name="public" checked>
+                                                        <i></i><span class="txt">보건소</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="rbox ms-4">
+                                                    <label>
+                                                        <input type="radio" name="public">
+                                                        <i></i><span class="txt">병상배정반</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="rbox ms-4">
+                                                    <label>
+                                                        <input type="radio" name="public">
+                                                        <i></i><span class="txt">의료진</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="rbox ms-4">
+                                                    <label>
+                                                        <input type="radio" name="public">
+                                                        <i></i><span class="txt">구급대</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="rbox ms-4">
+                                                    <label>
+                                                        <input type="radio" name="public">
+                                                        <i></i><span class="txt">전산담당</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 소속기관 선택여부 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>권한 그룹 선택 <span class="text-primary">*</span></th>
+                                        <td>
+                                            <div class="item-cell-box full">
+
+                                                <article class="permission-selector-layout">
+
+                                                    <label class="selector-box">
+                                                        <input type="radio" name="t1">
+                                                        <div class="selector-wrap">
+                                                            <div class="img-box">
+                                                                <img src="/img/common/img_permission_item1.svg" alt="이미지" class="on">
+                                                                <img src="/img/common/img_permission_item1_off.svg" alt="이미지" class="off">
+                                                            </div>
+                                                            <div class="info-box">
+                                                                <div class="main-box">병상요청그룹</div>
+                                                                <div class="sub-box">보건소, 병상배정반, 의료진</div>
+
+                                                            </div>
+                                                        </div>
+                                                    </label>
+
+                                                    <label class="selector-box">
+                                                        <input type="radio" name="t1">
+                                                        <div class="selector-wrap">
+                                                            <div class="img-box">
+                                                                <img src="/img/common/img_permission_item2.svg" alt="이미지" class="on">
+                                                                <img src="/img/common/img_permission_item2_off.svg" alt="이미지" class="off">
+                                                            </div>
+                                                            <div class="info-box">
+                                                                <div class="main-box">병상승인그룹</div>
+                                                                <div class="sub-box">병상배정반</div>
+
+                                                            </div>
+                                                        </div>
+                                                    </label>
+
+                                                    <label class="selector-box">
+                                                        <input type="radio" name="t1">
+                                                        <div class="selector-wrap">
+                                                            <div class="img-box">
+                                                                <img src="/img/common/img_permission_item3.svg" alt="이미지" class="on">
+                                                                <img src="/img/common/img_permission_item3_off.svg" alt="이미지" class="off">
+                                                            </div>
+                                                            <div class="info-box">
+                                                                <div class="main-box">병상배정그룹</div>
+                                                                <div class="sub-box">의료진</div>
+
+                                                            </div>
+                                                        </div>
+                                                    </label>
+
+                                                    <label class="selector-box">
+                                                        <input type="radio" name="t1">
+                                                        <div class="selector-wrap">
+                                                            <div class="img-box">
+                                                                <img src="/img/common/img_permission_item4.svg" alt="이미지" class="on">
+                                                                <img src="/img/common/img_permission_item4_off.svg" alt="이미지" class="off">
+                                                            </div>
+                                                            <div class="info-box">
+                                                                <div class="main-box">시스템 관리자</div>
+                                                                <div class="sub-box">전산운영</div>
+
+                                                            </div>
+                                                        </div>
+                                                    </label>
+
+
+                                                </article>
+
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 권한그룹 선택여부 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>세부 권한 선택 <span class="text-primary">*</span></th>
+                                        <td>
+                                            <div class="item-cell-box full">
+                                                <div class="rbox">
+                                                    <label>
+                                                        <input type="radio" name="permission" checked>
+                                                        <i></i><span class="txt text-black">일반 <span class="fw-normal text-gray-600 ps-2">일반 업무처리 및 사용자 초대 권한</span></span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="rbox ms-4">
+                                                    <label>
+                                                        <input type="radio" name="permission">
+                                                        <i></i><span class="txt text-black">게스트 <span
+                                                            class="fw-normal text-gray-600 ps-2">업무조회만 가능</span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 세부권한 선택여부 확인 문구</div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="table-form-layout1 mt-10">
+                        <div class="form-head-box">
+
+                            <div class="head-box">
+                                <div class="head-txt-box fs-16px fw-bold pb-5">소속기관</div>
+                            </div>
+
+                        </div>
+                        <div class="form-body-box">
+
+                            <div class="table-box">
+                                <table>
+                                    <colgroup>
+                                        <col style="width: 168px;">
+                                        <col style="width: auto;">
+                                        <col style="width: 168px;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr>
+                                        <th>담당/근무지역 <span class="text-primary">*</span></th>
+                                        <td colspan="3" class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="sbox w-175px">
+                                                    <select>
+                                                        <option>대구광역시</option>
+                                                        <option>서울특별시</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="sbox w-175px ms-2">
+                                                    <select>
+                                                        <option>전체</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 주 담당지역 선택여부 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>소속기관 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="sbox w-175px">
+                                                    <select>
+                                                        <option>소속기관 선택</option>
+                                                        <option>국립암센터</option>
+                                                    </select>
+                                                </div>
+                                                <div class="tbox full ms-2">
+                                                    <input type="text" value="소속기관명 직접 입력" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 비밀번호와 비밀번호 확인 일치 확인 문구</div>
+                                            </div>
+
+                                        </td>
+                                        <th>직급 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="text" value="" placeholder="직급, 직무 또는 직위 입력">
+                                                </div>
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 직급 입력 여부 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>담당환자 유형 <span class="text-primary">*</span></th>
+                                        <td colspan="3">
+                                            <div class="item-cell-box">
+
+                                                <div class="cbox">
+                                                    <label>
+                                                        <input type="checkbox" name="state"><i></i>
+                                                        <span class="txt">해당없음</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="cbox ms-4">
+                                                    <label>
+                                                        <input type="checkbox" name="state"><i></i>
+                                                        <span class="txt">투석</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="cbox ms-4">
+                                                    <label>
+                                                        <input type="checkbox" name="state"><i></i>
+                                                        <span class="txt">임산부</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="cbox ms-4">
+                                                    <label>
+                                                        <input type="checkbox" name="state"><i></i>
+                                                        <span class="txt">신생아</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="cbox ms-4">
+                                                    <label>
+                                                        <input type="checkbox" name="state"><i></i>
+                                                        <span class="txt">소아</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="cbox ms-4">
+                                                    <label>
+                                                        <input type="checkbox" name="state"><i></i>
+                                                        <span class="txt">응급</span>
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>소속 증명 정보</th>
+                                        <td class="vertical-top" colspan="3">
+                                            <div class="item-cell-box full">
+                                                <article class="img-upload-layout">
+
+                                                    <div class="upload-box">
+
+                                                        <label>
+                                                            <input type="file">
+                                                            <span class="upload-btn-box">
+															<img src="/img/common/img_upload_img.svg" alt="이미지">
+															<span class="txt">클릭하여 업로드</span>
+														</span>
+                                                        </label>
+
+                                                    </div>
+
+                                                    <div class="result-list">
+                                                        <div class="result-box">
+                                                            <img src="/img/common/img_profile_dummy.png" alt="이미지">
+
+                                                            <a href="javascript:void(0)" class="remove-btn" onclick="imgRemove(this)"><img
+                                                                    src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
+
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </article>
+
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 빠른 승인처리를 위해 해당 기관 소속임을 증명할 수 있는 명함, 또는 신분증 사진을 업로드 해주세요.
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </article>
+
+
+                    <article class="modal-menu-layout1 pt-10">
+
+                        <div class="modal-menu-list">
+                            <a @click="alertOpen('사용자를 등록하였습니다')" class="modal-menu-btn menu-primary">등록 요청 완료</a>
+                        </div>
+
+
+                    </article>
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+  <!--end::Modal - 내정보-->
+
+    <article class="popup popup-certify" style="">
+        <div class="popup-wrapper">
+            <div class="popup-contents">
+
+                <div class="popup-head-box py-5 px-10">
+
+                    <div class="head-tit-box">환자정보 존재</div>
+
+                    <div class="head-option-box">
+                        <a href="javascript:popupClose('certify')" class="popup-close-btn">
+						<span class="svg-icon svg-icon-1">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                        fill="currentColor"></rect>
+									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                        fill="currentColor"></rect>
+								</svg>
+							</span>
+                        </a>
+                    </div>
+
+                </div>
+
+
+                <div class="popup-body-box py-5 px-10">
+
+                    <article class="modal-head-layout1">
+
+                        <div class="modal-head-box pb-12">
+                            <div class="head-box">휴대폰번호 변경</div>
+                            <div class="sub-box">변경하실 휴대폰번호로 인증을 진행해 주세요.</div>
+
+                        </div>
+
+                    </article>
+
+                    <article class="table-form-layout1">
+
+                        <div class="form-head-box">
+
+                        </div>
+
+
+                        <div class="form-body-box">
+
+                            <div class="table-box">
+                                <table>
+                                    <colgroup>
+                                        <col style="width: 168px;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+
+                                    <tr>
+                                        <th>휴대폰번호  <span class="text-primary">*</span></th>
+                                        <td>
+                                            <div class="item-row-box">
+                                                <div class="item-cell-box">
+                                                    010-****-1234
+                                                    <a href="javascript:phoneCertify();" class="btn btn-sm btn-primary h-30px ms-3 certify-btn" style="min-width: 103px;">인증번호 발송</a>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="certify-row" style="display: none;">
+                                        <th>인증번호  <span class="text-primary">*</span></th>
+                                        <td>
+                                            <div class="item-row-box">
+                                                <div class="item-cell-box">
+                                                    <div class="tbox full">
+                                                        <input type="text" placeholder="인증번호 6자리">
+                                                    </div>
+
+                                                    <div class="timer-box ms-3 text-danger" style="min-width: 103px">유효시간: <span class="timer">03:00</span></div>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody></table>
+                            </div>
+
+                        </div>
+
+
+                    </article>
+
+
+
+                </div>
+
+                <div class="popup-foot-box py-5 px-10">
+                    <article class="modal-menu-layout1">
+
+                        <div class="modal-menu-list">
+                            <a @click="alertOpen('등록되지 않은 PC 입니다.<br/>휴대폰 인증을 진행해주세요.')" class="modal-menu-btn menu-primary">확인</a>
+                        </div>
+
+
+                    </article>
+                </div>
+
+            </div>
+
+        </div>
+    </article>
+
+
+  <!--end::Modals-->
 </template>
 
 <script>
+//import {mapState} from "vuex";
+import * as ui from "@/util/ui"
+
+import {ref} from "vue";
+
 export default {
-  name: "LoginView"
+    name: "LoginView",
+    components:{},
+    props: {},
+    data: function (){
+        return {
+            id:'',
+            pw:''
+        }
+    },
+    setup(){
+      const userEditModal = ref(false);
+
+      const toggleUserEditModal = function(){
+          console.log(userEditModal)
+          userEditModal.value = !userEditModal.value
+          //document.getElementById("kt_modal_edit_user").modal('show');
+      }
+
+      const alertOpen = function (msg){
+          console.log(msg)
+          ui.alertPopupOpen(msg,null)
+        }
+        const alertClose = function (){
+            console.log("실행")
+            ui.alertPopupClose()
+        }
+      return{
+          userEditModal,
+          toggleUserEditModal,
+          alertOpen,
+          alertClose
+      }
+
+    },
+    methods: {
+        onSubmit(values){
+            //let newData ={}
+            console.log('제출')
+            this.$store.dispatch("login",values,values)
+        },
+        openFindId(){
+            console.log('아이디 찾기')
+        },
+        openInitPw(){
+            console.log('비번 찾기')
+        }
+
+    },
+    mounted() {
+        this.emitter.on('toggleUserEditModal',this.toggleUserEditModal)
+    }
 }
 </script>
 
@@ -198,4 +762,10 @@ export default {
   background-image: url('/public/img/bg/bg-login.svg');
 }
  */
+.fade{
+    opacity: 100;
+}
+.modal{
+    display: block;
+}
 </style>
