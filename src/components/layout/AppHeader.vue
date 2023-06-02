@@ -77,7 +77,7 @@
             </router-link>
             <!--end:Menu item-->
             <!--begin:Menu item-->
-            <router-link to="/admin" @click="setActive(5)" :class="{'here': tabidx === 5}" class="menu-item me-0 me-lg-1">
+            <router-link to="/admin/user/list" @click="setActive(5)" :class="{'here': tabidx === 5}" class="menu-item me-0 me-lg-1">
               <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">시스템관리</span>

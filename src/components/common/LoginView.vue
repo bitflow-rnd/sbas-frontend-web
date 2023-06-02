@@ -708,7 +708,7 @@ export default {
       const userEditModal = ref(false);
 
       const toggleUserEditModal = function(){
-          console.log(userEditModal)
+          //console.log(userEditModal)
           userEditModal.value = !userEditModal.value
           //document.getElementById("kt_modal_edit_user").modal('show');
       }
@@ -766,6 +766,7 @@ export default {
     opacity: 100;
 }
 .modal{
-    display: block;
+    display: inline-block;
+    --bs-modal-width: 1000px;
 }
 </style>

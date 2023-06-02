@@ -31,11 +31,12 @@ export default {
                 console.log(response, "로그인 응답값")
 
                 comment.commit('loginSuccess',response.data)
+                localStorage.setItem("userInfo", JSON.stringify(response.data))
 
-                return router.push('/user')
+                return router.push('/admin')
             }).catch(e =>{
                 console.log(e)
-                return router.push('/user')
+                return router.push('/dashbd')
             })
         }
     },
