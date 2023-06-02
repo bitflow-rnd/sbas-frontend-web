@@ -604,6 +604,7 @@
         <!--end::Modal dialog-->
     </div>
 
+<!--  detail  -->
     <div class="modal fade" id="kt_modal_board_view" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-800px modal-dialog-centered">

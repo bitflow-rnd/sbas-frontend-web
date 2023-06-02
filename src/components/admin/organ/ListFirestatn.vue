@@ -69,7 +69,7 @@
                             <div class="d-flex align-items-center gap-2 gap-lg-3 justify-content-end">
                                 <a href="#" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users"><i class="fa-regular fa-trash-can"></i> 삭제</a>
                                 <a href="#" class="btn btn-flex btn-sm btn-secondary fs-7" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users"><i class="fa-solid fa-download"></i> 엑셀다운로드</a>
-                                <a href="javascript:groupEditModal()" class="btn btn-sm btn-flex btn-primary align-self-center px-3">
+                                <a @click="toggleModal(0)" class="btn btn-sm btn-flex btn-primary align-self-center px-3">
                                     <i class="fa-solid fa-plus"></i> 구급대 등록</a>
                             </div>
                         </div>
@@ -196,33 +196,11 @@
                                                 <td>02-445-9993</td>
                                                 <td>13</td>
                                                 <td>
-                                                    <a href="javascript:groupEditModal()" class="btn btn-flex btn-xs btn-outline btn-outline-primary">수정</a>
+                                                    <a @click="toggleModal(0)" class="btn btn-flex btn-xs btn-outline btn-outline-primary">수정</a>
 
-                                                    <a href="javascript:groupViewModal();" class="btn btn-flex btn-xs btn-outline btn-outline-primary ms-2">상세</a>
+                                                    <a @click="toggleModal(1)" class="btn btn-flex btn-xs btn-outline btn-outline-primary ms-2">상세</a>
                                                 </td>
                                             </tr>
-
-                                            <tr>
-                                                <td>7</td>
-                                                <td>
-                                                    <div class="cbox d-flex justify-content-center">
-                                                        <label>
-                                                            <input type="checkbox"><i></i>
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>경상북도</td>
-                                                <td>포항시</td>
-                                                <td>봉천</td>
-                                                <td>02-445-9993</td>
-                                                <td>13</td>
-                                                <td>
-                                                    <a href="javascript:groupEditModal()" class="btn btn-flex btn-xs btn-outline btn-outline-primary">수정</a>
-
-                                                    <a href="javascript:groupViewModal();" class="btn btn-flex btn-xs btn-outline btn-outline-primary ms-2">상세</a>
-                                                </td>
-                                            </tr>
-
                                             </tbody>
 
                                         </table>
@@ -262,7 +240,7 @@
                         <div class="card-option p-8">
                             <div class="d-flex align-items-center gap-2 gap-lg-3 justify-content-end">
                                 <a href="#" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users"><i class="fa-regular fa-trash-can"></i> 삭제</a>
-                                <a href="javascript:memberEditModal();" class="btn btn-sm btn-flex btn-primary align-self-center px-3">
+                                <a @click="toggleModal(2)" class="btn btn-sm btn-flex btn-primary align-self-center px-3">
                                     <i class="fa-solid fa-plus"></i> 대원등록
                                 </a>
                             </div>
@@ -333,11 +311,11 @@
                                                             </label>
                                                         </div>
                                                     </td>
-                                                    <td>한*진</td>
+                                                    <td @click="toggleModal(3)" >한*진</td>
                                                     <td>소방교</td>
                                                     <td>010-***-4567</td>
                                                     <td>
-                                                        <a href="javascript:memberViewModal()" class="btn btn-flex btn-xs btn-outline btn-outline-primary">수정</a>
+                                                        <a @click="toggleModal(2)" class="btn btn-flex btn-xs btn-outline btn-outline-primary">수정</a>
                                                     </td>
                                                 </tr>
 
@@ -393,7 +371,8 @@
   <!--end:::Main-->
 
   <!--begin::Modals-->
-    <div class="modal fade" id="kt_modal_group_edit" tabindex="-1" aria-hidden="true" style="">
+    <!-- 구급대 등록   -->
+    <div v-show="openModal[0]" class="modal fade" id="kt_modal_group_edit" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -406,7 +385,7 @@
                     <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                        <span class="svg-icon svg-icon-1">
+                        <span @click="toggleModal(0)" class="svg-icon svg-icon-1">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
                         fill="currentColor"></rect>
@@ -418,7 +397,6 @@
                     </div>
                     <!--end::Close-->
                 </div>
-
                 <!--begin::Modal header-->
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y py-10 px-10">
@@ -429,8 +407,7 @@
 
                         </div>
 
-
-                        <div class="form-body-box">
+                        <form @submit="onSubmitFirestatn" class="form-body-box">
 
                             <div class="table-box">
                                 <table>
@@ -446,7 +423,7 @@
                                         <td colspan="3">
                                             <div class="item-cell-box">
                                                 <div class="tbox w-450px">
-                                                    <input placeholder="구급대명 직접 입력">
+                                                    <input v-model="crewId" placeholder="구급대명 직접 입력">
                                                 </div>
 
                                             </div>
@@ -472,7 +449,6 @@
                                                 <div class="tbox w-450px ms-3">
                                                     <input placeholder="상세주소 입력 (선택사항)" readonly>
                                                 </div>
-
                                             </div>
                                         </td>
                                     </tr>
@@ -481,7 +457,7 @@
                                         <td>
                                             <div class="item-cell-box full">
                                                 <div class="tbox w-175px full">
-                                                    <input placeholder="담당자 입력 (선택사항)">
+                                                    <input v-model="crewNm" placeholder="담당자 입력 (선택사항)">
                                                 </div>
 
                                             </div>
@@ -490,7 +466,7 @@
                                         <td>
                                             <div class="item-cell-box full">
                                                 <div class="tbox w-175px full">
-                                                    <input placeholder="담당자 연락처 입력 (선택사항)">
+                                                    <input v-model="telno" placeholder="담당자 연락처 입력 (선택사항)">
                                                 </div>
 
                                             </div>
@@ -505,7 +481,7 @@
                                             <div class="item-cell-box full">
 
                                                 <div class="textbox full">
-                                                    <textarea onkeyup="limitTextarea(this,'textarea4',500)" maxlength="500" placeholder="메시지 입력" style="height: 120px;"></textarea>
+                                                    <textarea v-model="rmk" onkeyup="limitTextarea(this,'textarea4',500)" maxlength="500" placeholder="메시지 입력" style="height: 120px;"></textarea>
                                                     <div class="limit-box"><span id="textarea4">0</span>/500자</div>
                                                 </div>
 
@@ -519,7 +495,7 @@
                                 </table>
                             </div>
 
-                        </div>
+                        </form>
 
                     </article>
 
@@ -537,7 +513,8 @@
         <!--end::Modal dialog-->
     </div>
 
-    <div class="modal fade" id="kt_modal_group_view" tabindex="-1" aria-hidden="true" style="">
+    <!-- 구급대 상세   -->
+    <div v-show="openModal[1]" class="modal fade" id="kt_modal_group_view" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -550,7 +527,7 @@
                     <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                        <span class="svg-icon svg-icon-1">
+                        <span @click="toggleModal(1)" class="svg-icon svg-icon-1">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
                         fill="currentColor"></rect>
@@ -637,7 +614,8 @@
         <!--end::Modal dialog-->
     </div>
 
-    <div class="modal fade" id="kt_modal_member_edit" tabindex="-1" aria-hidden="true" style="">
+    <!-- 구급대원 등록   -->
+    <div v-show="openModal[2]" class="modal fade" id="kt_modal_member_edit" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -650,7 +628,7 @@
                     <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                        <span class="svg-icon svg-icon-1">
+                        <span @click="toggleModal(2)" class="svg-icon svg-icon-1">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
                         fill="currentColor"></rect>
@@ -758,8 +736,8 @@
         </div>
         <!--end::Modal dialog-->
     </div>
-
-    <div class="modal fade" id="kt_modal_member_view" tabindex="-1" aria-hidden="true" style="">
+    <!-- 구급대원 상세   -->
+    <div v-show="openModal[3]" class="modal fade" id="kt_modal_member_view" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -767,12 +745,12 @@
                 <!--begin::Modal header-->
                 <div class="modal-header px-10 py-5 d-flex justify-content-between">
                     <!--begin::Modal title-->
-                    <h2>구급대원 등록</h2>
+                    <h2>구급대원 수정</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                        <span class="svg-icon svg-icon-1">
+                        <span @click="toggleModal(3)" class="svg-icon svg-icon-1">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
                         fill="currentColor"></rect>
@@ -853,6 +831,9 @@
 
 <script>
 
+import {reactive} from "vue";
+
+
 export default {
     components: {
 
@@ -867,11 +848,35 @@ export default {
         return {
         }
     },
+    setup(){
+      const openModal = reactive([false,false,false,false]);
+
+      const toggleModal = function(idx) {
+          console.log(openModal[idx]);
+          openModal[idx] = !openModal[idx];
+      }
+
+      return{
+          openModal,
+          toggleModal,
+
+      }
+    },
     methods: {
-    }
+        onSubmitFirestatn(values){
+            console.log(values)
+
+            this.$store.dispatch("regFirestatn",values)
+        }
+    },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+#kt_modal_group_edit, #kt_modal_member_view, #kt_modal_member_edit, #kt_modal_group_view {
+    display: inline-block;
+    opacity: 100;
+    --bs-modal-width: 1200px;
+}
 </style>
