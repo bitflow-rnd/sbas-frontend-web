@@ -1,0 +1,1 @@
+export const API_PROD = "http://sbas-test.bitflow.ai"

@@ -19,17 +19,32 @@
 
                     <div class="con-body-box">
 
-                        <form @submit.prevent="onSubmit" class="input-form-box">
+                        <form
+                            @submit.prevent="onSubmit"
+                             class="input-form-box">
 
                             <div class="row-list">
                                 <div class="row">
                                     <div class="input-box">
-                                        <input v-model="id" type="text" placeholder="아이디" >
+                                        <input
+                                            name="id"
+                                            v-model="id"
+                                            type="text"
+                                            maxlength="20"
+                                            placeholder="아이디"
+                                            @input="validateInput(0)"
+                                        />
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-box">
-                                        <input v-model="pw" type="password" placeholder="비밀번호" >
+                                        <input
+                                            name="pw"
+                                            v-model="pw"
+                                            type="password"
+                                            maxlength="32"
+                                            placeholder="비밀번호"
+                                        />
                                     </div>
                                 </div>
 
@@ -37,14 +52,15 @@
 
 
                             <div class="login-btn-box">
-                                <button type="submit" class="login-btn">로그인</button>
+                                <button
+                                    type="submit" class="login-btn">로그인</button>
                             </div>
 
                         </form>
 
                         <div class="login-option-box">
 
-                            <div class="captcha-box">캡차</div>
+<!--                            <vue-recaptcha ref="recaptcha" @verify="onRecaptchaVerified" sitekey="" class="captcha-box"></vue-recaptcha>-->
 
                             <div class="option-list">
                             <!--                 모달인지 새 페이지인지 확인 필요               -->
@@ -65,10 +81,10 @@
 
                         <div class="login-request-box">
 
-                            <a @click="toggleUserEditModal" class="request-btn">
+                            <router-link to="" @click="toggleUserEditModal" class="request-btn">
                                 <span class="txt">사용자 등록 요청</span>
                                 <i class="ic ic-link"></i>
-                            </a>
+                            </router-link>
 
                         </div>
                     </div>
@@ -118,7 +134,7 @@
 
                 <!--begin::Modal header-->
                 <!--begin::Modal body-->
-                <div class="modal-body scroll-y py-10 px-10">
+                <form @submit.prevent="onEnter" class="modal-body scroll-y py-10 px-10">
 
                     <article class="table-form-layout1">
                         <div class="form-head-box">
@@ -144,7 +160,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" value="ladder@battele.net" readonly>
+                                                    <input type="text" v-model="id" >
                                                 </div>
                                             </div>
                                         </td>
@@ -152,7 +168,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="password" value="">
+                                                    <input type="password" v-model="pw">
                                                 </div>
                                             </div>
                                             <div class="item-cell-box full">
@@ -165,14 +181,14 @@
                                         <th>휴대폰번호 <span class="text-primary">*</span></th>
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
-                                                <a href="javascript:popupOpen('certify')" class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"> 본인인증</a>
+                                                <router-link to="" @click="openCertify" class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"> 본인인증</router-link>
                                             </div>
                                         </td>
                                         <th>비밀번호 확인 <span class="text-primary">*</span></th>
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="password" value="ladder@battele.net">
+                                                    <input type="password" v-model="valPw">
                                                 </div>
                                             </div>
                                             <div class="item-cell-box full">
@@ -186,7 +202,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" value="010-1234-5678">
+                                                    <input type="text" v-model="userNm">
                                                 </div>
                                             </div>
                                             <div class="item-cell-box full">
@@ -197,7 +213,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" value="1945-07-01">
+                                                    <input type="text" v-model="btDt">
                                                 </div>
                                             </div>
                                             <div class="item-cell-box full">
@@ -235,35 +251,35 @@
                                             <div class="item-cell-box full">
                                                 <div class="rbox">
                                                     <label>
-                                                        <input type="radio" name="public" checked>
+                                                        <input type="radio" name="public" value="3" v-model="instTypeCd" checked>
                                                         <i></i><span class="txt">보건소</span>
                                                     </label>
                                                 </div>
 
                                                 <div class="rbox ms-4">
                                                     <label>
-                                                        <input type="radio" name="public">
+                                                        <input type="radio" name="public" value="1" v-model="instTypeCd">
                                                         <i></i><span class="txt">병상배정반</span>
                                                     </label>
                                                 </div>
 
                                                 <div class="rbox ms-4">
                                                     <label>
-                                                        <input type="radio" name="public">
+                                                        <input type="radio" name="public" value="4" v-model="instTypeCd">
                                                         <i></i><span class="txt">의료진</span>
                                                     </label>
                                                 </div>
 
                                                 <div class="rbox ms-4">
                                                     <label>
-                                                        <input type="radio" name="public">
+                                                        <input type="radio" name="public" value="2" v-model="instTypeCd">
                                                         <i></i><span class="txt">구급대</span>
                                                     </label>
                                                 </div>
 
                                                 <div class="rbox ms-4">
                                                     <label>
-                                                        <input type="radio" name="public">
+                                                        <input type="radio" name="public" value="5" v-model="instTypeCd">
                                                         <i></i><span class="txt">전산담당</span>
                                                     </label>
                                                 </div>
@@ -282,7 +298,7 @@
                                                 <article class="permission-selector-layout">
 
                                                     <label class="selector-box">
-                                                        <input type="radio" name="t1">
+                                                        <input type="radio" name="t1" value="1" v-model="authCd">
                                                         <div class="selector-wrap">
                                                             <div class="img-box">
                                                                 <img src="/img/common/img_permission_item1.svg" alt="이미지" class="on">
@@ -297,7 +313,7 @@
                                                     </label>
 
                                                     <label class="selector-box">
-                                                        <input type="radio" name="t1">
+                                                        <input type="radio" name="t1" value="2" v-model="authCd">
                                                         <div class="selector-wrap">
                                                             <div class="img-box">
                                                                 <img src="/img/common/img_permission_item2.svg" alt="이미지" class="on">
@@ -312,7 +328,7 @@
                                                     </label>
 
                                                     <label class="selector-box">
-                                                        <input type="radio" name="t1">
+                                                        <input type="radio" name="t1" value="3" v-model="authCd">
                                                         <div class="selector-wrap">
                                                             <div class="img-box">
                                                                 <img src="/img/common/img_permission_item3.svg" alt="이미지" class="on">
@@ -327,7 +343,7 @@
                                                     </label>
 
                                                     <label class="selector-box">
-                                                        <input type="radio" name="t1">
+                                                        <input type="radio" name="t1" value="4" v-model="authCd">
                                                         <div class="selector-wrap">
                                                             <div class="img-box">
                                                                 <img src="/img/common/img_permission_item4.svg" alt="이미지" class="on">
@@ -517,10 +533,10 @@
                                                     <div class="upload-box">
 
                                                         <label>
-                                                            <input type="file">
+                                                            <input type="file" @change="onFileChange">
                                                             <span class="upload-btn-box">
 															<img src="/img/common/img_upload_img.svg" alt="이미지">
-															<span class="txt">클릭하여 업로드</span>
+															<span @click="uploadImg" class="txt">클릭하여 업로드</span>
 														</span>
                                                         </label>
 
@@ -528,10 +544,10 @@
 
                                                     <div class="result-list">
                                                         <div class="result-box">
-                                                            <img src="/img/common/img_profile_dummy.png" alt="이미지">
+                                                            <img :src="imgUrl" alt="이미지">
 
-                                                            <a href="javascript:void(0)" class="remove-btn" onclick="imgRemove(this)"><img
-                                                                    src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
+                                                            <router-link to="" class="remove-btn" @onclick="imgRemove(this)"><img
+                                                                src="/img/common/ic_profile_remove.svg" alt="이미지"></router-link>
 
                                                         </div>
 
@@ -559,12 +575,12 @@
                     <article class="modal-menu-layout1 pt-10">
 
                         <div class="modal-menu-list">
-                            <a @click="alertOpen('사용자를 등록하였습니다')" class="modal-menu-btn menu-primary">등록 요청 완료</a>
+                            <button to="" type="submit" class="modal-menu-btn menu-primary">등록 요청 완료</button>
                         </div>
 
 
                     </article>
-                </div>
+                </form>
                 <!--end::Modal body-->
             </div>
             <!--end::Modal content-->
@@ -573,7 +589,7 @@
     </div>
   <!--end::Modal - 내정보-->
 
-    <article class="popup popup-certify" style="">
+    <article v-show="showCertify" class="popup popup-certify" style="">
         <div class="popup-wrapper">
             <div class="popup-contents">
 
@@ -582,7 +598,7 @@
                     <div class="head-tit-box">환자정보 존재</div>
 
                     <div class="head-option-box">
-                        <a href="javascript:popupClose('certify')" class="popup-close-btn">
+                        <router-link to="" @click="openCertify" class="popup-close-btn">
 						<span class="svg-icon svg-icon-1">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
@@ -591,7 +607,7 @@
                         fill="currentColor"></rect>
 								</svg>
 							</span>
-                        </a>
+                        </router-link>
                     </div>
 
                 </div>
@@ -632,7 +648,7 @@
                                             <div class="item-row-box">
                                                 <div class="item-cell-box">
                                                     010-****-1234
-                                                    <a href="javascript:phoneCertify();" class="btn btn-sm btn-primary h-30px ms-3 certify-btn" style="min-width: 103px;">인증번호 발송</a>
+                                                    <router-link to="" @click="phoneCertify" class="btn btn-sm btn-primary h-30px ms-3 certify-btn" style="min-width: 103px;">인증번호 발송</router-link>
 
                                                 </div>
                                             </div>
@@ -645,7 +661,7 @@
                                             <div class="item-row-box">
                                                 <div class="item-cell-box">
                                                     <div class="tbox full">
-                                                        <input type="text" placeholder="인증번호 6자리">
+                                                        <input type="text" v-model="crtfNo" placeholder="인증번호 6자리">
                                                     </div>
 
                                                     <div class="timer-box ms-3 text-danger" style="min-width: 103px">유효시간: <span class="timer">03:00</span></div>
@@ -672,15 +688,30 @@
                     <article class="modal-menu-layout1">
 
                         <div class="modal-menu-list">
-                            <a @click="alertOpen('등록되지 않은 PC 입니다.<br/>휴대폰 인증을 진행해주세요.')" class="modal-menu-btn menu-primary">확인</a>
+                            <router-link to="" @click="certifyNo(crtfNo)" class="modal-menu-btn menu-primary">확인</router-link>
                         </div>
-
-
                     </article>
                 </div>
 
             </div>
 
+        </div>
+    </article>
+    <article v-show="isAlert" class="popup popup-alert">
+        <div class="popup-wrapper">
+            <div class="popup-contents py-10 px-10" style="width: 300px;">
+                <article class="modal-alert-layout pb-10">
+                    <div class="alert-view-box pb-6">
+                        <img src="/img/common/ic_alert.svg" alt="이미지">
+                    </div>
+                    <div class="alert-msg-box">{{this.errMsg}}</div>
+                </article>
+                <article class="modal-menu-layout1">
+                    <div class="modal-menu-list">
+                        <router-link to="" @click="alertClose" class="modal-menu-btn menu-primary">확인</router-link>
+                    </div>
+                </article>
+            </div>
         </div>
     </article>
 
@@ -689,62 +720,196 @@
 </template>
 
 <script>
-//import {mapState} from "vuex";
-import * as ui from "@/util/ui"
-
+import {mapState} from "vuex";
+//import {Form} from "vee-validate";
+import * as yup from "yup";
 import {ref} from "vue";
+//import router from "@/router/router";
+
+//import {API_PROD} from "@/util/constantURL";
+//import axios from "axios";
+
 
 export default {
     name: "LoginView",
-    components:{},
+    components:{
+
+    },
+    computed:{
+      ...mapState(['smsCrtfSuccess'])
+    },
     props: {},
-    data: function (){
+    data(){
+        const schema = yup.object({
+            id: yup
+                .string()
+                .required("유효성검사"),
+            pw: yup
+                .string()
+                .required("유효성검사"),
+        })
         return {
+            schema,
             id:'',
-            pw:''
+            pw:'',
+            crtfNo:'',
+            selectedFile:true,
+            imgUrl:null,
         }
     },
     setup(){
+
       const userEditModal = ref(false);
+      const showCertify = ref(false);
+      const isAlert = ref(false);
+      const errMsg = '';
 
       const toggleUserEditModal = function(){
           //console.log(userEditModal)
           userEditModal.value = !userEditModal.value
           //document.getElementById("kt_modal_edit_user").modal('show');
       }
-
+      const openCertify = function (){
+          showCertify.value = !showCertify.value
+      }
       const alertOpen = function (msg){
-          console.log(msg)
-          ui.alertPopupOpen(msg,null)
-        }
-        const alertClose = function (){
+          this.errMsg = msg
+          this.isAlert = true;
+      }
+      const alertClose = function(){
             console.log("실행")
-            ui.alertPopupClose()
+            isAlert.value= !isAlert.value
+      }
+        const timerStart = () => {
+            let time = 179; // 기준시간 작성
+            let min = ''; // 분
+            let sec = ''; // 초
+
+            let timer = setInterval(() => {
+                min = parseInt(time / 60); // 몫을 계산
+                sec = time % 60; // 나머지를 계산
+
+                if (min.toString().length === 1) {
+                    min = '0' + min.toString();
+                }
+
+                if (sec.toString().length === 1) {
+                    sec = '0' + sec.toString();
+                }
+
+                document.querySelector('.timer').textContent = min + ':' + sec;
+
+                time--;
+
+                if (time < 0) {
+                    clearInterval(timer); // setInterval() 실행을 끝냄
+                }
+            }, 1000);
         }
       return{
           userEditModal,
+          showCertify,
+          isAlert,
+          errMsg,
           toggleUserEditModal,
           alertOpen,
-          alertClose
+          alertClose,
+          openCertify,
+          timerStart
       }
 
     },
     methods: {
-        onSubmit(values){
+        validateInput(idx){
+          if(idx===0){
+              this.id = this.id.replace(/[^a-z0-9]/g, '');
+          }
+        },
+        onRecaptchaVerified(response){
+            console.log('reCAPTCHA verified:', response);
+        },
+        onSubmit(){
             //let newData ={}
-            console.log('제출')
-            this.$store.dispatch("login",values,values)
+            //const recaptchaToken = this.$refs.recaptcha.getResponse();
+            const recaptchaToken = true;
+            if(recaptchaToken){
+                if(this.id===''){
+                    this.alertOpen("아이디를 입력해 주세요.")
+                } else if(this.pw===''){
+                    this.alertOpen("비밀번호를 입력해 주세요.")
+                } else{
+                    const values = {
+                        id: this.id,
+                        pw: this.pw
+                    }
+                    console.log('제출' + values)
+                    this.$store.dispatch("login",values)
+                }
+
+            } else{
+                console.log('reCAPTCHA 안함');
+            }
+
+        },
+        onFileChange(event) {
+            console.log('이벤트')
+            this.selectedFile = event.target.files[0];
+
+            console.log(localStorage.getItem('imgData'))
+        },
+        uploadImg(){
+            console.log('이미지')
+          if(this.selectedFile){
+              const reader = new FileReader();
+              const blob = new Blob([this.selectedFile]);
+              reader.onload = (event) => {
+
+                  localStorage.setItem('imgData',event.target.result);
+                  this.imgUrl = event.target.result;
+              }
+              reader.readAsDataURL(blob);
+
+              //console.log(localStorage.getItem('imgData'))
+          }
+        },
+        onEnter(value){
+            console.log('가입')
+            const value2 = value
+            this.$store.dispatch("signup",value2)
         },
         openFindId(){
             console.log('아이디 찾기')
         },
         openInitPw(){
             console.log('비번 찾기')
-        }
+        },
+        phoneCertify(){
+            const certifyRows = document.querySelectorAll('.certify-row');
+            const certifyBtns = document.querySelectorAll('.certify-btn');
 
+            certifyRows.forEach((row) => {
+                row.style.display = 'table-row';
+            });
+
+            certifyBtns.forEach((btn) => {
+                btn.textContent = '재발송';
+            });
+            const num="01082072505"
+            this.$store.dispatch("sendSms",num);
+            this.timerStart();
+        },
+        certifyNo(num){
+            console.log(num)
+            this.$store.dispatch('confirmSms',num);
+        },
     },
     mounted() {
         this.emitter.on('toggleUserEditModal',this.toggleUserEditModal)
+
+        const storedImg = localStorage.getItem('imgData');
+        if(storedImg) {
+            this.imgUrl = storedImg;
+        }
     }
 }
 </script>
@@ -765,8 +930,12 @@ export default {
 .fade{
     opacity: 100;
 }
-.modal{
+.modal, .popup{
     display: inline-block;
     --bs-modal-width: 1000px;
+}
+.modal-dialog{
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 </style>
