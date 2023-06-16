@@ -176,8 +176,8 @@
                         </tr>
 
                         <tr v-for="(value, idx) in codeGroupData" :key="idx" class="cursor"
-                            :class="{'selected': (value['cdGrpId'] === selectedRow)}"
-                            @click="selectRow(value['cdGrpId'])">
+                            :class="{'selected': (value['cdGrpId'] === selectedRow.cdGrpId)}"
+                            @click="selectRow(value)">
                           <!--                                                <tr class="cursor">-->
                           <td>
                             <div class="cbox d-flex justify-content-center">
@@ -244,7 +244,7 @@
                                 <input @change="allCodesChangeState()" type="checkbox"
                                        class="all-chk" v-model="allCodesSelected"
                                        :disabled="codeData.length === 0"><i></i>
-<!--                                :checked="checkedCodes.length == codeData.length && codeData.length != 0"><i></i>-->
+                                <!--                                :checked="checkedCodes.length == codeData.length && codeData.length != 0"><i></i>-->
 
                               </label>
                             </div>
@@ -370,8 +370,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 
 export default {
   components: {},
@@ -381,21 +379,12 @@ export default {
   },
   async created() {
 
-    await axios
-        .get('http://sbas-test.bitflow.ai/api/v1/admin/common/codegrps', {
-          headers: {
-            // 'application/json' is the modern content-type for JSON, but some
-            // older servers may use 'text/json'.
-            // See: http://bit.ly/text-json
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NiYXMtdGVzdC5iaXRmbG93LmFpIiwidXBuIjoiYWRtaW5pc3RyYXRvciIsInN1YiI6Iuq0gOumrOyekCIsInVzZXJObSI6Iuq0gOumrOyekCIsImdyb3VwcyI6WyJVU0VSIl0sImlhdCI6MTY4NjI4NTE5NywiZXhwIjoxNjg4ODc3MTk3LCJqdGkiOiJlZGE3MGZlNy01MjQ2LTQ4MGItOWI5NS01Y2I4MWI5Njg1MzIifQ.bCqHt_PB-dRwrlOqcdtOOJqNrO-sYnPkOfkKiNz_CrPN6VmZTE-1ZbFjleRAhDW8JLh5HIABrdN4BHDLBDNbWmRizH6qGqnUBkCQptXZtwixJzhBTNoOZn8VyDvXpW76mY2gxYjguxAGkJ7UIIROigSsGJnl-Q8ws_iFMCnEtogj8txxZRnDcR0st03QBKx14bNsQfhXZushxOPnXM47ewjasf5hTpidHQgtd_zZ8jYfm2RNnbUsurMXyVHCFsfcVNWIoLSUTGoxUmOAMqX3YwxsfwS1AtQ347zkCLgfWGsgENyB1YKIotSY4fl50GXr0y3QWWUL-PkCfZJTQtwgqQ'
-          }
-        })
-        .then(response => (this.codeGroupData = response?.data['result']))
-    this.selectedRow = this.codeGroupData[0]?.['cdGrpId']
+    await this.$store.dispatch("loadCodeGroupsData").then(result => (this.codeGroupData = result.data['result']))
+    this.selectedRow = this.codeGroupData[0]
   },
   data() {
     return {
-      selectedRow: "",
+      selectedRow: {},
       allCodeGroupsSelected: false,
       allCodesSelected: false,
       codeRegShow: false,
@@ -426,9 +415,7 @@ export default {
       codeData: []
     }
   },
-  computed: {
-
-  },
+  computed: {},
   watch: {
     checkedCodeGroups() {
       this.allCodeGroupsSelected = this.checkedCodeGroups.length === this.codeGroupData.length;
@@ -446,34 +433,50 @@ export default {
       if (!this.selectedRow) {
         this.codeData = []
       }
-      axios
-          .get(`http://sbas-test.bitflow.ai/api/v1/public/common/codes/${this.selectedRow}`)
-          .then(response => (this.codeData = response?.data['result']))
+      this.$store.dispatch("loadCodesData", this.selectedRow.cdGrpId)
+          .then(response => (this.codeData = response.data['result']))
       this.allCodesSelected = false
+      // console.log(this.codeData)
     }
+
   },
   methods: {
-    selectRow(rowId) {
-      this.selectedRow = rowId
+    selectRow(row) {
+      this.selectedRow = row
     },
-    // TODO: implement updating data in db
     codeGroupRemove() {
+      let codeGroupId = ""
       for (let idx in this.checkedCodeGroups.sort((a, b) => (b - a))) {
-        this.codeGroupData.splice(this.checkedCodeGroups[idx], 1)
+        try {
+          codeGroupId = this.codeGroupData[this.checkedCodeGroups[idx]]['cdGrpId']
+          this.$store.dispatch("deleteCodeGroup", codeGroupId)
+          this.codeGroupData.splice(this.checkedCodeGroups[idx], 1)
+        } catch (error) {
+          console.log(error)
+        }
+
       }
       this.checkedCodeGroups = []
       if (this.codeGroupData.length) {
-        this.selectedRow = this.codeGroupData[0]['cdGrpId']
+        this.selectedRow = this.codeGroupData[0]
       } else {
         this.selectedRow = null
       }
     },
     // TODO: implement updating data in db
     codeRemove() {
+      let code
       for (let idx in this.checkedCodes.sort().reverse()) {
-        this.codeData.splice(this.checkedCodes[idx], 1)
+        try {
+          code = this.codeData[this.checkedCodes[idx]]
+          this.$store.dispatch("deleteCode", code)
+          this.codeData.splice(this.checkedCodes[idx], 1)
+        } catch (error) {
+          console.log(error)
+        }
       }
       this.checkedCodes = []
+      console.log(this.selectedRow)
     },
     allCodeGroupsChangeState() {
       if (this.allCodeGroupsSelected) {
@@ -499,13 +502,19 @@ export default {
       this.codeRegShow = !this.codeRegShow
       this.cleanCodeRegForm()
     },
-    // TODO: implement updating data in db
     codeRegFinish() {
       this.codeRegError['codeNoError'] = !this.codeRegData['codeNo']
       this.codeRegError['codeNameError'] = !this.codeRegData['codeName']
       this.codeRegError['codeOrderError'] = !this.codeRegData['codeOrder']
-      console.log(this.codeData)
-      // TODO: add code object to codeData
+      const newCode = {
+        cdGrpId: this.selectedRow.cdGrpId,
+        cdGrpNm: this.selectedRow.cdGrpNm,
+        cdId: this.codeRegData['codeNo'],
+        cdNm: this.codeRegData['codeName'],
+        cdSeq: this.codeRegData['codeOrder']
+      }
+      this.$store.dispatch("addCode", newCode)
+
     },
     codeGroupReg() {
       this.codeGroupRegShow = !this.codeGroupRegShow
@@ -514,8 +523,6 @@ export default {
     codeGroupRegFinish() {
       this.codeGroupRegError['codeGroupNoError'] = !this.codeGroupRegData['codeGroupNo']
       this.codeGroupRegError['codeGroupNameError'] = !this.codeGroupRegData['codeGroupName']
-      console.log(this.codeGroupData)
-      console.log(this.selectedRow)
       // TODO: add codeGroup object to codeGroupData
     },
     cleanCodeRegForm() {
