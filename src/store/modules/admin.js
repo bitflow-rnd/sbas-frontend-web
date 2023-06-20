@@ -84,6 +84,15 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+        // addCodeGroup(_, newCodeGroup) {
+        //     try {
+        //         return axios
+        //             .post(`http://sbas-test.bitflow.ai/api/v1/admin`,{...newCodeGroup})
+        //             .then()
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
     },
 };

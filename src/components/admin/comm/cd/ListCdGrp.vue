@@ -506,6 +506,9 @@ export default {
       this.codeRegError['codeNoError'] = !this.codeRegData['codeNo']
       this.codeRegError['codeNameError'] = !this.codeRegData['codeName']
       this.codeRegError['codeOrderError'] = !this.codeRegData['codeOrder']
+      if (Object.values(this.codeRegError).some(err => err)) {
+        return
+      }
       const newCode = {
         cdGrpId: this.selectedRow.cdGrpId,
         cdGrpNm: this.selectedRow.cdGrpNm,
@@ -514,7 +517,8 @@ export default {
         cdSeq: this.codeRegData['codeOrder']
       }
       this.$store.dispatch("addCode", newCode)
-
+      this.codeData.push(newCode)
+      this.codeReg()
     },
     codeGroupReg() {
       this.codeGroupRegShow = !this.codeGroupRegShow
