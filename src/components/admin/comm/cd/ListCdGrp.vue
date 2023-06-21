@@ -175,7 +175,7 @@
                           </td>
                         </tr>
 
-                        <tr v-for="(value, idx) in codeGroupData" :key="idx" class="cursor"
+                        <tr v-for="(value, idx) in paginatedCodeGroupData" :key="idx" class="cursor"
                             :class="{'selected': (value['cdGrpId'] === selectedRow.cdGrpId)}"
                             @click="selectRow(value)">
                           <!--                                                <tr class="cursor">-->
@@ -333,23 +333,26 @@
               <div class="col-12 d-flex align-items-center justify-content-center">
                 <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
                   <ul class="pagination">
-                    <li class="paginate_button page-item previous disabled" id="kt_table_users_previous"><a
-                        href="#" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link"><i
+                    <li class="paginate_button page-item previous" :class="{disabled: page < 2}"
+                        id="kt_table_users_previous"><a
+                        @click="changePage(page - 1)" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0"
+                        class="page-link"><i
                         class="previous"></i></a></li>
-                    <li class="paginate_button page-item active"><a href="#" aria-controls="kt_table_users"
-                                                                    data-dt-idx="1" tabindex="0"
-                                                                    class="page-link">1</a></li>
-                    <li class="paginate_button page-item "><a href="#" aria-controls="kt_table_users"
-                                                              data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                    </li>
-                    <li class="paginate_button page-item "><a href="#" aria-controls="kt_table_users"
-                                                              data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                    </li>
-                    <li class="paginate_button page-item next" id="kt_table_users_next"><a href="#"
-                                                                                           aria-controls="kt_table_users"
-                                                                                           data-dt-idx="4"
-                                                                                           tabindex="0"
-                                                                                           class="page-link"><i
+
+                    <template v-for="num in [...Array(++totalPageCount).keys()].splice(1)" :key="num">
+                      <li class="paginate_button page-item"><a @click="changePage(num)"
+                                                               aria-controls="kt_table_users"
+                                                               :class="{active: num === page}"
+                                                               :data-dt-idx="num" tabindex="0"
+                                                               class="page-link">{{ num }}</a></li>
+                    </template>
+                    <li class="paginate_button page-item next" :class="{disabled: !hasNextPage}"
+                        id="kt_table_users_next"><a
+                        @click="changePage(page + 1)"
+                        aria-controls="kt_table_users"
+                        data-dt-idx="4"
+                        tabindex="0"
+                        class="page-link"><i
                         class="next"></i></a></li>
                   </ul>
                 </div>
@@ -366,6 +369,7 @@
     </div>
     <!--end::Content wrapper-->
   </div>
+
   <!--end:::Main-->
 </template>
 
@@ -384,6 +388,7 @@ export default {
   },
   data() {
     return {
+      page: 1,
       selectedRow: {},
       allCodeGroupsSelected: false,
       allCodesSelected: false,
@@ -415,7 +420,23 @@ export default {
       codeData: []
     }
   },
-  computed: {},
+  computed: {
+    totalPageCount() {
+      return Math.ceil(this.codeGroupData.length / 10)
+    },
+    startIndex() {
+      return (this.page - 1) * 10;
+    },
+    endIndex() {
+      return this.page * 10;
+    },
+    hasNextPage() {
+      return this.codeGroupData.length > this.endIndex;
+    },
+    paginatedCodeGroupData() {
+      return this.codeGroupData.slice(this.startIndex, this.endIndex)
+    }
+  },
   watch: {
     checkedCodeGroups() {
       this.allCodeGroupsSelected = this.checkedCodeGroups.length === this.codeGroupData.length;
@@ -441,6 +462,10 @@ export default {
 
   },
   methods: {
+    changePage(newPage) {
+      this.page = newPage
+      this.selectedRow = this.codeGroupData[this.startIndex]
+    },
     selectRow(row) {
       this.selectedRow = row
     },
