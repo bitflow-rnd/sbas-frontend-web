@@ -359,7 +359,8 @@
                         class="page-link"><i
                         class="previous"></i></a></li>
 
-                    <template v-for="num in [...Array(totalPageCount + 1).keys()].splice(1)" :key="num">
+                    <template v-for="num in [...Array(this.pageEndIndex + 1).keys()].splice(this.pageStartIndex)"
+                              :key="num">
                       <li class="paginate_button page-item"><a @click="changePage(num)"
                                                                aria-controls="kt_table_users"
                                                                :class="{active: num === page}"
@@ -403,11 +404,15 @@ export default {
   },
   async created() {
 
-    await this.$store.dispatch("loadCodeGroupsData").then(result => (this.codeGroupData = result.data['result']))
+    await this.$store.dispatch("admin/loadCodeGroupsData").then(result => (this.codeGroupData = result.data['result']))
     this.selectedRow = this.codeGroupData[0]
   },
   data() {
     return {
+      displayRowsCount: 10,
+      displayChangePageButtonsCount: 10,
+      previousPageButtonsCount: 4,
+      nextPageButtonsCount: 4,
       codeCellValue: "",
       editable: false,
       page: 1,
@@ -444,13 +449,31 @@ export default {
   },
   computed: {
     totalPageCount() {
-      return Math.ceil(this.codeGroupData.length / 10)
+      return Math.ceil(this.codeGroupData.length / this.displayRowsCount)
     },
     startIndex() {
-      return (this.page - 1) * 10;
+      return (this.page - 1) * this.displayRowsCount;
     },
     endIndex() {
-      return this.page * 10;
+      return this.page * this.displayRowsCount;
+    },
+    pageStartIndex() {
+      if (this.page < (this.previousPageButtonsCount + 1)) {
+        return 1
+      } else {
+        return this.page - this.previousPageButtonsCount
+      }
+    },
+    pageEndIndex() {
+      if (this.totalPageCount <= this.displayChangePageButtonsCount) {
+        return this.totalPageCount
+      } else if ((this.page + this.nextPageButtonsCount) > this.totalPageCount) {
+        return this.totalPageCount
+      } else if ((this.page + this.nextPageButtonsCount) <= this.displayChangePageButtonsCount) {
+        return this.displayChangePageButtonsCount
+      } else {
+        return this.page + this.nextPageButtonsCount
+      }
     },
     hasNextPage() {
       return this.codeGroupData.length > this.endIndex;
@@ -476,7 +499,7 @@ export default {
       if (!this.selectedRow) {
         this.codeData = []
       }
-      this.$store.dispatch("loadCodesData", this.selectedRow.cdGrpId)
+      this.$store.dispatch("admin/loadCodesData", this.selectedRow.cdGrpId)
           .then(response => (this.codeData = response.data['result']))
       this.allCodesSelected = false
       // console.log(this.codeData)
@@ -495,10 +518,10 @@ export default {
         newObject[changedField] = this.codeCellValue
         switch (type) {
           case 'code':
-            this.$store.dispatch("modifyCode", newObject)
+            this.$store.dispatch("admin/modifyCode", newObject)
             break
           case 'codeGroup':
-            this.$store.dispatch("modifyCodeGroup", newObject)
+            this.$store.dispatch("admin/modifyCodeGroup", newObject)
             break
         }
       }
@@ -515,7 +538,7 @@ export default {
       for (let idx in this.checkedCodeGroups.sort((a, b) => (b - a))) {
         try {
           codeGroupId = this.codeGroupData[this.checkedCodeGroups[idx] + (this.page - 1) * 10]['cdGrpId']
-          this.$store.dispatch("deleteCodeGroup", codeGroupId)
+          this.$store.dispatch("admin/deleteCodeGroup", codeGroupId)
           this.codeGroupData.splice(this.checkedCodeGroups[idx] + (this.page - 1) * 10, 1)
         } catch (error) {
           console.log(error)
@@ -534,7 +557,7 @@ export default {
       for (let idx in this.checkedCodes.sort().reverse()) {
         try {
           code = this.codeData[this.checkedCodes[idx]]
-          this.$store.dispatch("deleteCode", code)
+          this.$store.dispatch("admin/deleteCode", code)
           this.codeData.splice(this.checkedCodes[idx], 1)
         } catch (error) {
           console.log(error)
@@ -581,7 +604,7 @@ export default {
         cdNm: this.codeRegData['codeName'],
         cdSeq: this.codeRegData['codeOrder']
       }
-      this.$store.dispatch("addCode", newCode)
+      this.$store.dispatch("admin/addCode", newCode)
       this.codeData.push(newCode)
       this.codeReg()
     },
@@ -600,7 +623,7 @@ export default {
         cdGrpNm: this.codeGroupRegData['codeGroupName'],
         rmk: this.codeGroupRegData['codeGroupDesc']
       }
-      this.$store.dispatch("addCodeGroup", newCodeGroup)
+      this.$store.dispatch("admin/addCodeGroup", newCodeGroup)
       this.codeGroupReg()
     },
     cleanCodeRegForm() {
