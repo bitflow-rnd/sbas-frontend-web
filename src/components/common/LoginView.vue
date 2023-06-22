@@ -163,6 +163,9 @@
                                                     <input type="text" v-model="id" >
                                                 </div>
                                             </div>
+                                            <div v-if="validateInput(3)" class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 아이디 유효성 확인 문구</div>
+                                            </div>
                                         </td>
                                         <th>비밀번호 <span class="text-primary">*</span></th>
                                         <td class="vertical-top">
@@ -171,7 +174,7 @@
                                                     <input type="password" v-model="pw">
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="validateInput(4)" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 비밀번호 유효성 확인 문구</div>
                                             </div>
                                         </td>
@@ -191,7 +194,7 @@
                                                     <input type="password" v-model="valPw">
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="validateInput(5)" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 비밀번호와 비밀번호 확인 일치 확인 문구</div>
                                             </div>
                                         </td>
@@ -205,7 +208,7 @@
                                                     <input type="text" v-model="userNm">
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="validateInput(6)" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 이름 유효성 확인 문구</div>
                                             </div>
                                         </td>
@@ -216,7 +219,7 @@
                                                     <input type="text" v-model="btDt">
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="validateInput(7)" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 생년월일 유효성 확인 문구</div>
                                             </div>
                                         </td>
@@ -284,7 +287,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="validateInput(8)" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 소속기관 선택여부 확인 문구</div>
                                             </div>
                                         </td>
@@ -361,7 +364,7 @@
                                                 </article>
 
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="validateInput(9)" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 권한그룹 선택여부 확인 문구</div>
                                             </div>
                                         </td>
@@ -386,7 +389,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="validateInput(10)" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 세부권한 선택여부 확인 문구</div>
                                             </div>
                                         </td>
@@ -435,7 +438,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="validateInput(11)" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 주 담당지역 선택여부 확인 문구</div>
                                             </div>
                                         </td>
@@ -455,7 +458,7 @@
                                                     <input type="text" value="소속기관명 직접 입력" readonly>
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="validateInput(12)" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 비밀번호와 비밀번호 확인 일치 확인 문구</div>
                                             </div>
 
@@ -467,7 +470,7 @@
                                                     <input type="text" value="" placeholder="직급, 직무 또는 직위 입력">
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="validateInput(13)" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 직급 입력 여부 확인 문구</div>
                                             </div>
                                         </td>
@@ -546,7 +549,7 @@
                                                         <div class="result-box">
                                                             <img :src="imgUrl" alt="이미지">
 
-                                                            <router-link to="" class="remove-btn" @onclick="imgRemove(this)"><img
+                                                            <router-link to="" class="remove-btn" @click="imgRemove"><img
                                                                 src="/img/common/ic_profile_remove.svg" alt="이미지"></router-link>
 
                                                         </div>
@@ -661,7 +664,7 @@
                                             <div class="item-row-box">
                                                 <div class="item-cell-box">
                                                     <div class="tbox full">
-                                                        <input type="text" v-model="crtfNo" placeholder="인증번호 6자리">
+                                                        <input type="text" v-model.trim="crtfNo" placeholder="인증번호 6자리">
                                                     </div>
 
                                                     <div class="timer-box ms-3 text-danger" style="min-width: 103px">유효시간: <span class="timer">03:00</span></div>
@@ -753,6 +756,7 @@ export default {
             id:'',
             pw:'',
             crtfNo:'',
+            /*todo 본인확인코드 선언하고 3step - 기존/발송버튼누른후/Y로 나누기*/
             selectedFile:true,
             imgUrl:null,
         }
@@ -763,7 +767,7 @@ export default {
       const showCertify = ref(false);
       const isAlert = ref(false);
       const errMsg = '';
-
+      let timer = null;
       const toggleUserEditModal = function(){
           //console.log(userEditModal)
           userEditModal.value = !userEditModal.value
@@ -785,7 +789,11 @@ export default {
             let min = ''; // 분
             let sec = ''; // 초
 
-            let timer = setInterval(() => {
+            if(timer){
+                clearInterval(timer);
+            }
+
+             timer = setInterval(() => {
                 min = parseInt(time / 60); // 몫을 계산
                 sec = time % 60; // 나머지를 계산
 
@@ -824,6 +832,7 @@ export default {
           if(idx===0){
               this.id = this.id.replace(/[^a-z0-9]/g, '');
           }
+          return false
         },
         onRecaptchaVerified(response){
             console.log('reCAPTCHA verified:', response);
@@ -849,12 +858,14 @@ export default {
             } else{
                 console.log('reCAPTCHA 안함');
             }
-
         },
         onFileChange(event) {
             console.log('이벤트')
             this.selectedFile = event.target.files[0];
 
+            if(this.selectedFile){
+                this.uploadImg();
+            }
             console.log(localStorage.getItem('imgData'))
         },
         uploadImg(){
@@ -864,13 +875,17 @@ export default {
               const blob = new Blob([this.selectedFile]);
               reader.onload = (event) => {
 
-                  localStorage.setItem('imgData',event.target.result);
+                  this.$store.commit('setAttcId',event.target.result);
                   this.imgUrl = event.target.result;
               }
               reader.readAsDataURL(blob);
 
               //console.log(localStorage.getItem('imgData'))
           }
+        },
+        imgRemove(){
+          this.$store.commit('setAttcId',null);
+          this.imgUrl='';
         },
         onEnter(value){
             console.log('가입')
@@ -899,8 +914,27 @@ export default {
             this.timerStart();
         },
         certifyNo(num){
-            console.log(num)
-            this.$store.dispatch('confirmSms',num);
+            console.log(num);
+            if(num ===''){
+                this.alertOpen('인증번호를 입력해 주세요.')
+            }
+            else if(num.length!==6){
+                this.alertOpen('인증번호를 6자리로\n'+ '입력해 주세요.');
+            }
+            else{
+                this.$store.dispatch('confirmSms',num)
+                    .then((result)=>{
+                        console.log(this.$store.state.smsCrtfSuccess)
+                        if(result) {
+                            this.openCertify();
+                            this.crtfNo='';
+                            /* todo 본인확인Flag Y로저장 */
+                        } else{
+                            this.alertOpen('인증번호가 일치하지 않습니다.\n'+'다시 입력해 주세요.');
+                        }
+                    })
+            }
+
         },
     },
     mounted() {

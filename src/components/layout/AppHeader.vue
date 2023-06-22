@@ -18,7 +18,7 @@
         </div>
         <!--end::Mobile toggle-->
         <!--begin::Logo image-->
-        <router-link to="/user">
+        <router-link to="/dashbd">
           <img alt="Logo" src="/img/logos/title-bar.webp" class="theme-light-show" />
           <img alt="Logo" src="/media/logos/demo44-dark.svg" class="h-25px theme-dark-show" />
         </router-link>
@@ -77,7 +77,7 @@
             </router-link>
             <!--end:Menu item-->
             <!--begin:Menu item-->
-            <router-link to="/admin/user/list" @click="setActive(5)" :class="{'here': tabidx === 5}" class="menu-item me-0 me-lg-1">
+            <router-link to="" @click="handlefunc(getUserList,5)" :class="{'here': tabidx === 5}" class="menu-item me-0 me-lg-1">
               <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">시스템관리</span>
@@ -186,6 +186,13 @@ export default {
   methods: {
     setActive(idx) {
       this.tabidx = idx;
+    },
+    handlefunc(fun,idx){
+        this.setActive(idx);
+        fun();
+    },
+    getUserList() {
+        this.$store.dispatch('admin/getUserList')
     }
   }
 }
