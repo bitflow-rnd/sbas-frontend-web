@@ -186,9 +186,14 @@
                               </label>
                             </div>
                           </td>
-                          <td>{{ value['cdGrpId'] }}</td>
-                          <td>{{ value['cdGrpNm'] }}</td>
-                          <td class="left">-</td>
+                          <td>{{ value['cdGrpId'] }}
+                          </td>
+                          <td @input="updateCellValue($event)" @blur="updateData('codeGroup', value, 'cdGrpNm')"
+                              @focus="updateCellValue($event)" contenteditable>{{ value['cdGrpNm'] }}
+                          </td>
+                          <td @input="updateCellValue($event)" @blur="updateData('codeGroup', value, 'rmk')"
+                              @focus="updateCellValue($event)" contenteditable class="left">{{ value['rmk'] }}
+                          </td>
                         </tr>
 
                         </tbody>
@@ -306,10 +311,25 @@
                               </label>
                             </div>
                           </td>
-                          <td>{{ value['cdId'] }}</td>
-                          <td>{{ value['cdNm'] }}</td>
-                          <td>{{ value['cdSeq'] }}</td>
-                          <td class="left">{{ value['rmk'] || "-" }}</td>
+                          <td @input="updateCellValue($event)" @blur="updateData('code', value, 'cdId')"
+                              @focus="updateCellValue($event)"
+                              contenteditable>
+                            {{ value['cdId'] }}
+                          </td>
+                          <td @input="updateCellValue($event)" @blur="updateData('code', value, 'cdNm')"
+                              @focus="updateCellValue($event)"
+                              contenteditable>
+                            {{ value['cdNm'] }}
+                          </td>
+                          <td @input="updateCellValue($event)" @blur="updateData('code', value, 'cdSeq')"
+                              @focus="updateCellValue($event)"
+                              contenteditable>
+                            {{ value['cdSeq'] }}
+                          </td>
+                          <td @input="updateCellValue($event)" @blur="updateData('code', value, 'rmk')"
+                              @focus="updateCellValue($event)" contenteditable
+                              class="left">{{ value['rmk'] }}
+                          </td>
                         </tr>
 
                         </tbody>
@@ -339,7 +359,7 @@
                         class="page-link"><i
                         class="previous"></i></a></li>
 
-                    <template v-for="num in [...Array(++totalPageCount).keys()].splice(1)" :key="num">
+                    <template v-for="num in [...Array(totalPageCount + 1).keys()].splice(1)" :key="num">
                       <li class="paginate_button page-item"><a @click="changePage(num)"
                                                                aria-controls="kt_table_users"
                                                                :class="{active: num === page}"
@@ -388,6 +408,8 @@ export default {
   },
   data() {
     return {
+      codeCellValue: "",
+      editable: false,
       page: 1,
       selectedRow: {},
       allCodeGroupsSelected: false,
@@ -462,6 +484,25 @@ export default {
 
   },
   methods: {
+    updateCellValue($event) {
+      this.codeCellValue = $event.target.innerText
+    },
+    updateData(type, code, changedField) {
+      if (code[changedField] != this.codeCellValue) {
+        console.log(code[changedField])
+        console.log(this.codeCellValue)
+        let newObject = {...code}
+        newObject[changedField] = this.codeCellValue
+        switch (type) {
+          case 'code':
+            this.$store.dispatch("modifyCode", newObject)
+            break
+          case 'codeGroup':
+            this.$store.dispatch("modifyCodeGroup", newObject)
+            break
+        }
+      }
+    },
     changePage(newPage) {
       this.page = newPage
       this.selectedRow = this.codeGroupData[this.startIndex]
@@ -473,9 +514,9 @@ export default {
       let codeGroupId = ""
       for (let idx in this.checkedCodeGroups.sort((a, b) => (b - a))) {
         try {
-          codeGroupId = this.codeGroupData[this.checkedCodeGroups[idx]]['cdGrpId']
+          codeGroupId = this.codeGroupData[this.checkedCodeGroups[idx] + (this.page - 1) * 10]['cdGrpId']
           this.$store.dispatch("deleteCodeGroup", codeGroupId)
-          this.codeGroupData.splice(this.checkedCodeGroups[idx], 1)
+          this.codeGroupData.splice(this.checkedCodeGroups[idx] + (this.page - 1) * 10, 1)
         } catch (error) {
           console.log(error)
         }
@@ -488,7 +529,6 @@ export default {
         this.selectedRow = null
       }
     },
-    // TODO: implement updating data in db
     codeRemove() {
       let code
       for (let idx in this.checkedCodes.sort().reverse()) {
@@ -552,7 +592,16 @@ export default {
     codeGroupRegFinish() {
       this.codeGroupRegError['codeGroupNoError'] = !this.codeGroupRegData['codeGroupNo']
       this.codeGroupRegError['codeGroupNameError'] = !this.codeGroupRegData['codeGroupName']
-      // TODO: add codeGroup object to codeGroupData
+      if (Object.values(this.codeGroupRegError).some(err => err)) {
+        return
+      }
+      const newCodeGroup = {
+        cdGrpId: this.codeGroupRegData['codeGroupNo'],
+        cdGrpNm: this.codeGroupRegData['codeGroupName'],
+        rmk: this.codeGroupRegData['codeGroupDesc']
+      }
+      this.$store.dispatch("addCodeGroup", newCodeGroup)
+      this.codeGroupReg()
     },
     cleanCodeRegForm() {
       this.codeRegError['codeNoError'] = false

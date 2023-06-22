@@ -85,14 +85,32 @@ export default {
                 console.log(error);
             }
         },
-        // addCodeGroup(_, newCodeGroup) {
-        //     try {
-        //         return axios
-        //             .post(`http://sbas-test.bitflow.ai/api/v1/admin`,{...newCodeGroup})
-        //             .then()
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
+        addCodeGroup(_, newCodeGroup) {
+            try {
+                return axios
+                    .post(`http://sbas-test.bitflow.ai/api/v1/admin/common/regcodegrps`,{...newCodeGroup})
+                    .then()
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        modifyCode(_, newCode) {
+            try {
+                return axios
+                    .post(`http://sbas-test.bitflow.ai/api/v1/admin/common/modcode`,{...newCode})
+                    .then()
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        modifyCodeGroup(_, newCodeGroup) {
+            try {
+                return axios
+                    .post(`http://sbas-test.bitflow.ai/api/v1/admin/common/modcodegrps`,{...newCodeGroup})
+                    .then()
+            } catch (error) {
+                console.log(error);
+            }
+        }
     },
 };
