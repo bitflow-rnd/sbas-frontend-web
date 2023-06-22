@@ -283,7 +283,7 @@
                                 <div class="head-box">
 
                                     <div class="head-txt-box">검색결과 <span
-                                            class="rounded-pill bg-primary text-white px-2 ms-2">99+</span></div>
+                                            class="rounded-pill bg-primary text-white px-2 ms-2">{{userList.length}}</span></div>
                                 </div>
 
                                 <div class="option-box">
@@ -292,8 +292,8 @@
                                        data-bs-toggle="modal" data-bs-target="#kt_modal_view_users"><i
                                             class="fa-regular fa-trash-can"></i> 삭제</a>
 
-                                    <a href="#" class="btn btn-flex btn-sm btn-secondary fs-7 ms-2" data-bs-toggle="modal"
-                                       data-bs-target="#kt_modal_view_users"><i class="fa-solid fa-download"></i> 엑셀다운로드</a>
+                                    <router-link to="" class="btn btn-flex btn-sm btn-secondary fs-7 ms-2" data-bs-toggle="modal"
+                                       data-bs-target="#kt_modal_view_users"><i class="fa-solid fa-download"></i> 엑셀다운로드</router-link>
 
                                     <a href="javascript:userEditModal();"
                                        class="btn btn-sm btn-flex btn-primary align-self-center px-3 ms-2">
@@ -326,7 +326,7 @@
                                         </colgroup>
                                         <thead>
                                         <tr class="small">
-                                            <th>순번</th>
+                                            <th @click="checkInfo">순번</th>
                                             <th>
                                                 <div class="cbox">
                                                     <label>
@@ -348,8 +348,8 @@
                                         </thead>
 
                                         <tbody>
-                                        <tr>
-                                            <td>7</td>
+                                        <tr v-for="(item,i) in userList" :key="i">
+                                            <td>{{i+1}}</td>
                                             <td>
                                                 <div class="cbox">
                                                     <label>
@@ -357,45 +357,42 @@
                                                     </label>
                                                 </div>
                                             </td>
-                                            <td>서울특별시</td>
-                                            <td>보건소</td>
-                                            <td>칠곡경북대병원</td>
-                                            <td>김*선</td>
-                                            <td>주임</td>
-                                            <td>일반</td>
-                                            <td>2022.12.31</td>
-                                            <td>2023.02.28</td>
-                                            <td>등록요청</td>
+                                            <td>{{item.dutyDstr1Cd}}<!--todo 지역번호 조회 함수--></td>
+                                            <td>{{getInstNm(item.instTypeCd)}}</td>
+                                            <td>{{ item.instNm }}</td>
+                                            <td>{{ maskingNm(item.userInfo.userNm) }}</td>
+                                            <td>{{ item.userInfo.ocpCd }}</td>
+                                            <td>{{ getAuthCd(item.authCd) }}</td>
+                                            <td>{{ getrgDt(item.rgstDttm) }}</td>
+                                            <td>{{ getrgDt(item.userInfo.updtDttm)}}</td>
+                                            <td>{{ item.userStatCdNm }}</td>
                                             <td>
-                                                <a href="javascript:confirmPopupOpen('선택하신 사용자상태로 적용하시겠습니까?',function() {
-																confirmPopupClose(); alertPopupOpen('적용 되었습니다.')})"
-                                                   class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center">승인/반려</a>
+                                                <router-link to="" @click="setUsrSts(item)" class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center">{{ getBtn(item.userStatCd) }}</router-link>
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td>7</td>
-                                            <td>
-                                                <div class="cbox">
-                                                    <label>
-                                                        <input type="checkbox" class="all-chk"><i></i>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>서울특별시</td>
-                                            <td>보건소</td>
-                                            <td>칠곡경북대병원</td>
-                                            <td>김*선</td>
-                                            <td>주임</td>
-                                            <td>일반</td>
-                                            <td>2022.12.31</td>
-                                            <td>2023.02.28</td>
-                                            <td>등록요청</td>
-                                            <td>
-                                                <a href="javascript:userViewModal()"
-                                                   class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center">수정</a>
-                                            </td>
-                                        </tr>
+<!--                                    <tr>
+                                        <td>7</td>
+                                        <td>
+                                            <div class="cbox">
+                                                <label>
+                                                    <input type="checkbox" class="all-chk"><i></i>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>서울특별시</td>
+                                        <td>보건소</td>
+                                        <td>칠곡경북대병원</td>
+                                        <td>김*선</td>
+                                        <td>주임</td>
+                                        <td>일반</td>
+                                        <td>2022.12.31</td>
+                                        <td>2023.02.28</td>
+                                        <td>등록요청</td>
+                                        <td>
+                                            <a href="javascript:userViewModal()"
+                                               class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center">수정</a>
+                                        </td>
+                                    </tr>-->
 
 
                                         </tbody>
@@ -405,31 +402,27 @@
                             </div>
 
                         </article>
-
+                        <!--페이징처리-->
                         <div class="row mt-10">
                             <div
                                     class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
                             <div class="col-12 d-flex align-items-center justify-content-center">
                                 <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
                                     <ul class="pagination">
-                                        <li class="paginate_button page-item previous disabled" id="kt_table_users_previous"><a
-                                                href="#" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link"><i
-                                                class="previous"></i></a></li>
-                                        <li class="paginate_button page-item active"><a href="#" aria-controls="kt_table_users"
+                                        <li class="paginate_button page-item previous disabled" id="kt_table_users_previous">
+                                            <router-link to="" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link"><i
+                                                class="previous"></i></router-link></li>
+                                        <li class="paginate_button page-item active"><router-link to="" aria-controls="kt_table_users"
                                                                                         data-dt-idx="1" tabindex="0"
-                                                                                        class="page-link">1</a></li>
-                                        <li class="paginate_button page-item "><a href="#" aria-controls="kt_table_users"
+                                                                                        class="page-link">1</router-link></li>
+<!--                                        <li class="paginate_button page-item "><a href="#" aria-controls="kt_table_users"
                                                                                   data-dt-idx="2" tabindex="0" class="page-link">2</a>
                                         </li>
                                         <li class="paginate_button page-item "><a href="#" aria-controls="kt_table_users"
                                                                                   data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                                        </li>
-                                        <li class="paginate_button page-item next" id="kt_table_users_next"><a href="#"
-                                                                                                               aria-controls="kt_table_users"
-                                                                                                               data-dt-idx="4"
-                                                                                                               tabindex="0"
-                                                                                                               class="page-link"><i
-                                                class="next"></i></a></li>
+                                        </li>-->
+                                        <li class="paginate_button page-item next" id="kt_table_users_next">
+                                            <router-link to="" aria-controls="kt_table_users" data-dt-idx="4" tabindex="0" class="page-link"><i class="next"></i></router-link></li>
                                     </ul>
                                 </div>
                             </div>
@@ -446,9 +439,12 @@
         <!--end::Content wrapper-->
     </div>
   <!--end:::Main-->
-  <!--begin::Modals-->
-  <!--begin::Modal - 내정보-->
-    <div class="modal fade " id="kt_modal_edit_user" tabindex="-1" aria-hidden="true" style=";">
+
+
+<!--begin::Modals-->
+
+<!--사용자 수정 / 사용자 등록 모달 퍼블 없음 - -->
+    <div v-if="usrDetail !==null" v-show="isEdit" class="modal fade " id="kt_modal_edit_user" tabindex="-1" aria-hidden="true" >
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -459,16 +455,16 @@
                     <h2>사용자 정보 등록</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <div @click="toggleModal(0)" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                        fill="currentColor"></rect>
-									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                        fill="currentColor"></rect>
-								</svg>
-							</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                    fill="currentColor"></rect>
+                              <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                    fill="currentColor"></rect>
+                            </svg>
+                        </span>
                         <!--end::Svg Icon-->
                     </div>
                     <!--end::Close-->
@@ -502,7 +498,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" value="ladder@battele.net" readonly>
+                                                    <input type="text" value="usrDetail.userId" readonly>
                                                 </div>
                                             </div>
                                         </td>
@@ -879,9 +875,9 @@
                                                         <label>
                                                             <input type="file">
                                                             <span class="upload-btn-box">
-															<img src="/img/common/img_upload_img.svg" alt="이미지">
-															<span class="txt">클릭하여 업로드</span>
-														</span>
+                                                              <img src="/img/common/img_upload_img.svg" alt="이미지">
+                                                              <span class="txt">클릭하여 업로드</span>
+                                                            </span>
                                                         </label>
 
                                                     </div>
@@ -918,9 +914,9 @@
                                                         <label>
                                                             <input type="file">
                                                             <span class="upload-btn-box">
-															<img src="/img/common/img_upload_img.svg" alt="이미지">
-															<span class="txt">클릭하여 업로드</span>
-														</span>
+                                                              <img src="/img/common/img_upload_img.svg" alt="이미지">
+                                                              <span class="txt">클릭하여 업로드</span>
+                                                            </span>
                                                         </label>
 
                                                     </div>
@@ -973,7 +969,8 @@
         <!--end::Modal dialog-->
     </div>
 
-    <div class="modal fade" id="kt_modal_view_user" tabindex="-1" aria-hidden="true" style=";">
+<!-- 상세정보-승인/반려 모달    -->
+    <div v-if="usrDetail !==null" v-show="isDetail" class="modal fade" id="kt_modal_view_user" tabindex="-1" aria-hidden="true" >
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -984,16 +981,16 @@
                     <h2>사용자 상세 정보</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" @click="toggleModal(1)">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                        fill="currentColor"></rect>
-									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                        fill="currentColor"></rect>
-								</svg>
-							</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                fill="currentColor"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                fill="currentColor"></rect>
+                            </svg>
+                          </span>
                         <!--end::Svg Icon-->
                     </div>
                     <!--end::Close-->
@@ -1006,13 +1003,13 @@
                     <div class="tabs-head-box" style="max-width:460px; margin:0 auto;">
                         <article class="tabs-list-layout1 w-100">
                             <div class="tabs-list full">
-                                <a href="javascript:detailTabsMove(1)" class="tabs-btn active">
+                                <router-link to=""  @click="detailTabsMove(1)" class="tabs-btn" :class="{'active':detail1===true}">
                                     <span class="txt">개요</span>
-                                </a>
+                                </router-link>
 
-                                <a href="javascript:detailTabsMove(2)" class="tabs-btn">
+                                <router-link to="" @click="detailTabsMove(2)"  class="tabs-btn" :class="{'active':detail2===true}">
                                     <span class="txt">접속기록</span>
-                                </a>
+                                </router-link>
                             </div>
                         </article>
                     </div>
@@ -1020,7 +1017,7 @@
 
                     <div class="tabs-group flex-root">
 
-                        <div class="tabs-box" data-tabs="tabs1">
+                        <div v-show="detail1" class="tabs-box" >
                             <article class="table-form-layout1">
                                 <div class="form-head-box">
 
@@ -1044,21 +1041,21 @@
                                             <tr>
                                                 <td rowspan="4" class="p-0">사진영역</td>
                                                 <th>사용자번호</th>
-                                                <td>U000112</td>
+                                                <td>사용자번호</td>
                                                 <th>아이디</th>
-                                                <td>kb5020@naver.com</td>
+                                                <td>{{ usrDetail.userId }}</td>
                                             </tr>
                                             <tr>
                                                 <th>이름</th>
-                                                <td>홍길동</td>
+                                                <td>{{ usrDetail.userNm }}</td>
                                                 <th>휴대전화번호</th>
-                                                <td>010-1234-5678</td>
+                                                <td>{{ gettelno(usrDetail.userInfo.telno) }}</td>
                                             </tr>
                                             <tr>
                                                 <th>생년월일</th>
-                                                <td>1980.5.20</td>
+                                                <td>{{ getbtDt(usrDetail.userInfo.btDt) }}</td>
                                                 <th>성별</th>
-                                                <td>남</td>
+                                                <td>{{getGndr(usrDetail.userInfo.gndr)}}</td>
                                             </tr>
                                             <tr>
                                                 <th>소셜로그인 사용</th>
@@ -1091,9 +1088,9 @@
                                             <tbody>
                                             <tr>
                                                 <th>소속기관 유형</th>
-                                                <td>병상배정반</td>
+                                                <td>{{getInstNm(usrDetail.instTypeCd)}}</td>
                                                 <th>직급</th>
-                                                <td>실장</td>
+                                                <td>{{ usrDetail.userInfo.ocpCd }}</td>
                                             </tr>
 
                                             <tr>
@@ -1104,7 +1101,7 @@
                                                         <article class="permission-selector-layout">
 
                                                             <div class="selector-box" style="cursor: default">
-                                                                <div class="selector-wrap">
+                                                                <div v-show="getPmgr(usrDetail.jobCd)===1" class="selector-wrap">
                                                                     <div class="img-box">
                                                                         <img src="/img/common/img_permission_item1.svg" alt="이미지" class="on">
                                                                         <img src="/img/common/img_permission_item1_off.svg" alt="이미지" class="off">
@@ -1112,7 +1109,36 @@
                                                                     <div class="info-box">
                                                                         <div class="main-box">병상요청그룹</div>
                                                                         <div class="sub-box">보건소, 병상배정반, 의료진</div>
-
+                                                                    </div>
+                                                                </div>
+                                                                <div v-show="getPmgr(usrDetail.jobCd)===2" class="selector-wrap">
+                                                                    <div class="img-box">
+                                                                        <img src="/img/common/img_permission_item2.svg" alt="이미지" class="on">
+                                                                        <img src="/img/common/img_permission_item2_off.svg" alt="이미지" class="off">
+                                                                    </div>
+                                                                    <div class="info-box">
+                                                                        <div class="main-box">병상승인그룹</div>
+                                                                        <div class="sub-box">보건소, 병상배정반, 의료진</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div v-show="getPmgr(usrDetail.jobCd)===3" class="selector-wrap">
+                                                                    <div class="img-box">
+                                                                        <img src="/img/common/img_permission_item3.svg" alt="이미지" class="on">
+                                                                        <img src="/img/common/img_permission_item3_off.svg" alt="이미지" class="off">
+                                                                    </div>
+                                                                    <div class="info-box">
+                                                                        <div class="main-box">병상배정그룹</div>
+                                                                        <div class="sub-box">보건소, 병상배정반, 의료진</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div v-show="getPmgr(usrDetail.jobCd)===4" class="selector-wrap">
+                                                                    <div class="img-box">
+                                                                        <img src="/img/common/img_permission_item4.svg" alt="이미지" class="on">
+                                                                        <img src="/img/common/img_permission_item4_off.svg" alt="이미지" class="off">
+                                                                    </div>
+                                                                    <div class="info-box">
+                                                                        <div class="main-box">시스템관리그룹</div>
+                                                                        <div class="sub-box">보건소, 병상배정반, 의료진</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1245,17 +1271,17 @@
                             <article class="modal-menu-layout1 pt-10">
 
                                 <div class="modal-menu-list">
-                                    <a href="javascript:void(0)" class="modal-menu-btn menu-cancel">취소</a>
+                                    <router-link to=""  class="modal-menu-btn menu-cancel">취소</router-link>
 
-                                    <a href="javascript:alertPopupOpen('저장 되었습니다.')" class="modal-menu-btn menu-primary-outline">수정완료</a>
-                                    <a href="javascript:confirmPopupOpen('사용자를 등록하였습니다')" class="modal-menu-btn menu-primary">등록완료</a>
+                                    <router-link to="" @click="toggleModal(0)" class="modal-menu-btn menu-primary-outline">수정</router-link>
+                                    <router-link v-show="usrDetail.userStatCd==='URST0001'" to="" @click="approve" class="modal-menu-btn menu-primary">승인/반려</router-link>
                                 </div>
 
 
                             </article>
                         </div>
 
-                        <div class="tabs-box" data-tabs="tabs2" style="display: none;">
+                        <div v-show="detail2" class="tabs-box"  >
 
 
                             <div class="d-flex pt-6">
@@ -1506,8 +1532,8 @@
         <!--end::Modal dialog-->
     </div>
 
-  <!--end::Modal - 내정보-->
-    <article class="popup popup-leave" style="">
+<!--탈퇴 팝업창-->
+    <article v-show="isWithdraw" class="popup popup-leave" style="">
         <div class="popup-wrapper">
             <div class="popup-contents">
 
@@ -1517,14 +1543,14 @@
 
                     <div class="head-option-box">
                         <a href="javascript:popupClose('leave')" class="popup-close-btn">
-						<span class="svg-icon svg-icon-1">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                        fill="currentColor"></rect>
-									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                        fill="currentColor"></rect>
-								</svg>
-							</span>
+                        <span class="svg-icon svg-icon-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                    fill="currentColor"></rect>
+                              <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                    fill="currentColor"></rect>
+                            </svg>
+                        </span>
                         </a>
                     </div>
 
@@ -1551,8 +1577,7 @@
 
                         <div>
                             <div class="textbox">
-							<textarea onkeyup="limitTextarea(this,'textarea3',500)" maxlength="500" placeholder="메시지 입력"
-                        style="height: 120px;"></textarea>
+                                <textarea onkeyup="limitTextarea(this,'textarea3',500)" maxlength="500" placeholder="메시지 입력" style="height: 120px;"></textarea>
                                 <div class="limit-box"><span id="textarea3">0</span>/500자</div>
                             </div>
                         </div>
@@ -1564,17 +1589,13 @@
 
                 <div class="popup-foot-box py-5 px-10">
                     <article class="modal-menu-layout1">
-
                         <div class="modal-menu-list">
-
                             <a href="javascript:popupClose('leave')" class="modal-menu-btn menu-cancel">닫기</a>
 
                             <a href="javascript:confirmPopupOpen('탈퇴 후 동일한 ID를 이용한<br/>재가입은 불가능 합니다.<br/>정말 탈퇴하시겠습니까?',
                             function() {confirmPopupClose();alertPopupOpen('회원탈퇴 되었습니다.',function (){popupClose('leave');});})"
                                class="modal-menu-btn menu-primary">저장</a>
                         </div>
-
-
                     </article>
                 </div>
 
@@ -1583,19 +1604,39 @@
         </div>
     </article>
 
+<!--승인/반려창-->
+    <article v-show="isAlert" class="popup popup-confirm" style="display: block;">
+        <div class="popup-wrapper">
+              <div class="popup-contents py-10 px-10" style="width: 300px;">
+                    <article class="modal-alert-layout pb-10">
+                          <div class="alert-view-box pb-6">
+                                <img src="/img/common/ic_alert.svg" alt="이미지">
+                              </div>
+                          <div class="alert-msg-box">'+msg+'</div>
+                        </article>
+                    <article class="modal-menu-layout1">
+                          <div class="modal-menu-list">
+                                <router-link to="" href="javascript:confirmPopupClose()" class="modal-menu-btn menu-cancel" data-type=cancel>취소</router-link>
+                                <router-link to="" @click="alertClose" class="modal-menu-btn menu-primary" data-type=success>확인</router-link>
+                              </div>
+                        </article>
+                  </div>
+            </div>
+        </article>
+
 
   <!--end::Modals-->
 </template>
 
 <script>
-
+import {mapState} from "vuex";
+import {ref} from "vue";
 export default {
     components: {
 
     },
-    name: 'DetlAncmt',
-    props: {
-        msg: String
+    computed:{
+        ...mapState('admin',['userList','usrDetail'])
     },
     mounted() {
     },
@@ -1603,11 +1644,163 @@ export default {
         return {
         }
     },
+    setup(){
+        const addUsr = ref(false);
+        const isEdit = ref(false);
+        const isAlert = ref(false);
+        const errMsg = '';
+        const isWithdraw = ref(false);
+        const isAdd = ref(false);
+        const isDetail = ref(false);
+        const detail1 = ref(true);
+        const detail2 = ref(false);
+        const alertOpen = function (msg){
+            this.errMsg = msg
+            this.isAlert = true;
+        }
+        const alertClose = function(){
+            isAlert.value= !isAlert.value
+        }
+        const toggleModal = function(num){
+          if(num === 0){
+              isDetail.value = false
+              isEdit.value = !isEdit.value;
+          } else if(num === 1){
+              isDetail.value = !isDetail.value;
+          } else if(num===2){
+              isWithdraw.value = !isWithdraw.value;
+          } else {
+              isAdd.value = !isAdd.value;
+          }
+        }
+        return{
+            addUsr,
+            isEdit,
+            isAlert,
+            errMsg,
+            isWithdraw,
+            isAdd,
+            isDetail,
+            detail1,
+            detail2,
+            alertOpen,
+            alertClose,
+            toggleModal,
+        }
+    },
     methods: {
+        checkInfo(){
+            console.log(this.$store.state.userList)
+        },
+        getDutyDstrCd(code){
+          this.$store.dispatch('admin/getDutyDstr',code)
+        },
+        getInstNm(code){
+            if(code==='ORGN0001'){
+                return '지방자치단체'
+            } else if(code==='ORGN0002'){
+                return '구급대'
+            } else if(code==='ORGN0003'){
+                return '보건소'
+            } else if(code==='ORGN000'){
+                return '의료기관'
+            } else{
+                return '전산담당'
+            }
+        },
+        getAuthCd(code){
+            if(code==='일반'){
+                return code;
+            } else if(code === '게스트'){
+                return code;
+            } else if(code==='DTPM0001'){
+                return '일반';
+            } else {
+                return '게스트'
+            }
+        },
+        getrgDt(str){
+            const date = new Date(str);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}.${month}.${day}`;
+        },
+        getbtDt(dt){
+            const year = dt.substring(0, 4);
+            const month = dt.substring(4, 6);
+            const day = dt.substring(6);
+            return `${year}-${month}-${day}`;
+        },
+        gettelno(num){
+            const num1 = num.substring(0, 3);
+            const num2 = num.substring(3, 7);
+            const num3 = num.substring(7);
+            return `${num1}-${num2}-${num3}`;
+        },
+        getGndr(str){
+          if(str === 'M'){
+              return '남'
+          }  else return '여'
+        },
+        getPmgr(code){
+          if(code === 'PMGR0001'){
+              return 1
+          }
+          else if(code === 'PMGR0002'){
+              return 2
+          } else if(code === 'PMGR0003'){
+              return 3
+          } else if(code === 'PMGR0004'){
+              return 4
+          }
+        },
+        maskingNm(nm){
+            return nm;
+        },
+        getBtn(sts) {
+            /*todo 편집권한있는 아이디인지 분별*/
+            if (sts === 'URST0001') {
+                return '승인/반려'
+            } else {
+                return '수정'
+            }
+        },
+        setUsrSts(data){
+            if(data.userStatCd==='URST0001'){
+                this.$store.commit('admin/setUserDetail',data)
+                this.toggleModal(1);
+            } else {
+                this.$store.commit('admin/setUserDetail',data)
+                this.toggleModal(0);
+            }
+        },
+        detailTabsMove(num){
+          if(num===1){
+              this.detail1 = true;
+              this.detail2 = false;
+              return true;
+          }  else {
+              this.detail2 = true;
+              this.detail1 = false;
+              return true;
+          }
+        },
     }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
+.fade{
+    opacity: 100;
+}
+.modal, .popup{
+    display: inline-block;
+    --bs-modal-width: 1500px;
+}
+.modal-dialog{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
 </style>
