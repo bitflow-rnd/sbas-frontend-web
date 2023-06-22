@@ -24,6 +24,7 @@ import ListChnlBak from "../components/user/chnl/ListChnlBak.vue";
 import DashbdView from "../components/common/DashbdView.vue";
 import ListCdGrp from "../components/admin/comm/cd/ListCdGrp.vue";
 import ListMedInst from "../components/admin/organ/ListMedInst.vue";
+import MobileView from "../components/common/MobileView.vue";
 // import Index from "../components/Index.vue";
 // import DashbdAdmin from "../components/admin/dashbd/Index.vue";
 
@@ -175,8 +176,8 @@ const routes = [
     },
     {
         path: "",
-        name: "login",
-        component: LoginView,
+        name: "mobileView",
+        component: MobileView,
     }
 ];
 

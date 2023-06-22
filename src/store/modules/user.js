@@ -10,6 +10,8 @@ export default {
         smsCrtf: null,
         phoneNo: "01082072505",
         smsCrtfSuccess: null,
+        attcId: null,
+
     },
     mutations: {
         loginSuccess(state,payload){
@@ -22,6 +24,10 @@ export default {
         },
         isCrtfSuccess(state,payload){
             state.smsCrtfSuccess=payload
+            console.log(payload)
+        },
+        setAttcId(state,payload){
+            state.attcId = payload
             console.log(payload)
         }
     },
@@ -50,7 +56,7 @@ export default {
                 console.log(response, "로그인 응답값")
 
                 comment.commit('loginSuccess',response.data)
-                localStorage.setItem("userInfo", JSON.stringify(response.data))
+                localStorage.setItem("userToken", response.data?.result)
 
                 return router.push('/dashbd')
             }).catch(e =>{
@@ -81,24 +87,33 @@ export default {
             })
         },
         confirmSms(comment, certNo){
-            const request = {
-                phoneNo: comment.state.phoneNo,
-                certNo: certNo
-            }
-            console.log(request)
-            const url = `${API_PROD}/api/v1/public/user/confirmsms`
-            axios({
-                method:"post",
-                url:url,
-                data:request
-            }).then(response=>{
-                console.log(response,"인증번호 비교")
-                if(this.certNo === this.smsCrtf){
-                    comment.commit('isCrtfSuccess',true)
-                }else{
-                    comment.commit('isCrtfSuccess',false)
+            return new Promise((resolve)=>{
+                const request = {
+                    phoneNo: comment.state.phoneNo,
+                    certNo: certNo
                 }
+                console.log(request)
+                const url = `${API_PROD}/api/v1/public/user/confirmsms`
+                axios({
+                    method:"post",
+                    url:url,
+                    data:request
+                }).then(response=>{
+                    console.log(response,"인증번호 비교")
+                    if(response.data?.code=='00'){
+                        comment.commit('isCrtfSuccess','00')
+                        resolve(true);
+                    }else{
+                        comment.commit('isCrtfSuccess',false)
+                        resolve(false)
+                    }
+                }).catch(e => {
+                    console.log(e)
+                    comment.commit('isCrtfSuccess', false)
+                    resolve(false)
+                })
             })
+
         }
     },
 };

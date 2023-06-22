@@ -9,7 +9,7 @@
         </div>
         <div class="depth-body-box">
           <ul class="depth1">
-            <li class="depth1-box"><router-link to="/admin/user/list" @click="setActive(0)" :class="{'': tabidx === 0}" class="depth1-btn">사용자 관리</router-link></li>
+            <li class="depth1-box"><router-link to="" @click="handlefunc(getUserList,0)" :class="{'': tabidx === 0}" class="depth1-btn">사용자 관리</router-link></li>
           </ul>
         </div>
         <div class="depth-head-box">
@@ -52,8 +52,15 @@ export default {
     }
   },
   methods: {
+    handlefunc(fun,idx){
+      this.setActive(idx);
+      fun();
+    },
     setActive(idx) {
       this.tabidx = idx;
+    },
+    getUserList() {
+        this.$store.dispatch('admin/getUserList')
     }
   }
 }
