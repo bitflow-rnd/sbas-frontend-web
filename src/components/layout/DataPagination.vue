@@ -43,19 +43,23 @@ export default {
     },
     displayRowsCount: {
       type: Number,
-      required: true
+      required: false,
+      default: 10
     },
     displayChangePageButtonsCount: {
       type: Number,
-      required: true
+      required: true,
+      default: 10
     },
     previousPageButtonsCount: {
       type: Number,
-      required: true
+      required: true,
+      default: 4
     },
     nextPageButtonsCount: {
       type: Number,
-      required: true
+      required: true,
+      default: 4
     },
   },
   data() {
@@ -86,7 +90,7 @@ export default {
       }
     },
     hasNextPage() {
-      return this.page === this.totalPageCount;
+      return this.page !== this.totalPageCount;
     }
   },
   methods: {

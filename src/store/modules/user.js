@@ -5,6 +5,7 @@ import {encodingPassword} from "@/util/encodingPasswd";
 import {API_PROD} from "@/util/constantURL";
 
 export default {
+    namespaced: true,
     state:{
         userInfo: null,
         smsCrtf: null,
@@ -114,6 +115,14 @@ export default {
                 })
             })
 
-        }
+        },
+        loadPatientData() {
+            try {
+                return axios
+                    .get(`http://sbas-test.bitflow.ai/api/v1/private/patient/search`)
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
 };

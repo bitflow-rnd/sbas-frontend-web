@@ -99,7 +99,7 @@
 
                     <div class="option-box">
                       <a @click="codeGroupRemove()" class="btn btn-flex btn-xs btn-outline btn-outline-gray"> <i
-                          class="fa-solid fa-plus"></i> 선택삭제</a>
+                          class="fa-solid fa-trash-can"></i> 선택삭제</a>
 
 
                       <a @click="codeGroupReg()" class="btn btn-flex btn-xs btn-outline btn-outline-primary ms-2">
@@ -175,24 +175,24 @@
                           </td>
                         </tr>
 
-                        <tr v-for="(value, idx) in paginatedCodeGroupData" :key="idx" class="cursor"
-                            :class="{'selected': (value['cdGrpId'] === selectedRow.cdGrpId)}"
-                            @click="selectRow(value)">
+                        <tr v-for="codeGroup in paginatedCodeGroupData" :key="codeGroup['cdGrpId']" class="cursor"
+                            :class="{'selected': (codeGroup['cdGrpId'] === selectedRow.cdGrpId)}"
+                            @click="selectRow(codeGroup)">
                           <!--                                                <tr class="cursor">-->
                           <td>
                             <div class="cbox d-flex justify-content-center">
                               <label>
-                                <input type="checkbox" :value="parseInt(idx)" v-model="checkedCodeGroups"><i></i>
+                                <input type="checkbox" :value="codeGroup" v-model="checkedCodeGroups"><i></i>
                               </label>
                             </div>
                           </td>
-                          <td>{{ value['cdGrpId'] }}
+                          <td>{{ codeGroup['cdGrpId'] }}
                           </td>
-                          <td @input="updateCellValue($event)" @blur="updateData('codeGroup', value, 'cdGrpNm')"
-                              @focus="updateCellValue($event)" contenteditable>{{ value['cdGrpNm'] }}
+                          <td @input="updateCellValue($event)" @blur="updateData('codeGroup', codeGroup, 'cdGrpNm')"
+                              @focus="updateCellValue($event)" contenteditable>{{ codeGroup['cdGrpNm'] }}
                           </td>
-                          <td @input="updateCellValue($event)" @blur="updateData('codeGroup', value, 'rmk')"
-                              @focus="updateCellValue($event)" contenteditable class="left">{{ value['rmk'] }}
+                          <td @input="updateCellValue($event)" @blur="updateData('codeGroup', codeGroup, 'rmk')"
+                              @focus="updateCellValue($event)" contenteditable class="left">{{ codeGroup['rmk'] }}
                           </td>
                         </tr>
 
@@ -218,7 +218,7 @@
 
                     <div class="option-box">
                       <a @click="codeRemove()" class="btn btn-flex btn-xs btn-outline btn-outline-gray"> <i
-                          class="fa-solid fa-plus"></i> 선택삭제</a>
+                          class="fa-solid fa-trash-can"></i> 선택삭제</a>
 
 
                       <a @click="codeReg()" class="btn btn-flex btn-xs btn-outline btn-outline-primary ms-2">
@@ -303,32 +303,32 @@
                             </div>
                           </td>
                         </tr>
-                        <tr v-for="(value, idx) in codeData" :key="idx" class="cursor">
+                        <tr v-for="code in codeData" :key="code['cdId']" class="cursor">
                           <td>
                             <div class="cbox d-flex justify-content-center">
                               <label>
-                                <input type="checkbox" :value="idx" v-model="checkedCodes"><i></i>
+                                <input type="checkbox" :value="code" v-model="checkedCodes"><i></i>
                               </label>
                             </div>
                           </td>
-                          <td @input="updateCellValue($event)" @blur="updateData('code', value, 'cdId')"
+                          <td @input="updateCellValue($event)" @blur="updateData('code', code, 'cdId')"
                               @focus="updateCellValue($event)"
                               contenteditable>
-                            {{ value['cdId'] }}
+                            {{ code['cdId'] }}
                           </td>
-                          <td @input="updateCellValue($event)" @blur="updateData('code', value, 'cdNm')"
+                          <td @input="updateCellValue($event)" @blur="updateData('code', code, 'cdNm')"
                               @focus="updateCellValue($event)"
                               contenteditable>
-                            {{ value['cdNm'] }}
+                            {{ code['cdNm'] }}
                           </td>
-                          <td @input="updateCellValue($event)" @blur="updateData('code', value, 'cdSeq')"
+                          <td @input="updateCellValue($event)" @blur="updateData('code', code, 'cdSeq')"
                               @focus="updateCellValue($event)"
                               contenteditable>
-                            {{ value['cdSeq'] }}
+                            {{ code['cdSeq'] }}
                           </td>
-                          <td @input="updateCellValue($event)" @blur="updateData('code', value, 'rmk')"
+                          <td @input="updateCellValue($event)" @blur="updateData('code', code, 'rmk')"
                               @focus="updateCellValue($event)" contenteditable
-                              class="left">{{ value['rmk'] }}
+                              class="left">{{ code['rmk'] }}
                           </td>
                         </tr>
 
@@ -454,7 +454,7 @@ export default {
       this.$store.dispatch("admin/loadCodesData", this.selectedRow.cdGrpId)
           .then(response => (this.codeData = response.data['result']))
       this.allCodesSelected = false
-      // console.log(this.codeData)
+      this.checkedCodes = []
     }
 
   },
@@ -464,16 +464,16 @@ export default {
     },
     updateData(type, code, changedField) {
       if (code[changedField] != this.codeCellValue) {
-        console.log(code[changedField])
-        console.log(this.codeCellValue)
         let newObject = {...code}
         newObject[changedField] = this.codeCellValue
         switch (type) {
           case 'code':
             this.$store.dispatch("admin/modifyCode", newObject)
+            this.codeData[this.codeData.findIndex(val => val === code)][changedField] = this.codeCellValue
             break
           case 'codeGroup':
             this.$store.dispatch("admin/modifyCodeGroup", newObject)
+            this.codeGroupData[this.codeGroupData.findIndex(val => val === code)][changedField] = this.codeCellValue
             break
         }
       }
@@ -486,44 +486,42 @@ export default {
       this.selectedRow = row
     },
     codeGroupRemove() {
-      let codeGroupId = ""
-      for (let idx in this.checkedCodeGroups.sort((a, b) => (b - a))) {
-        try {
-          codeGroupId = this.codeGroupData[this.checkedCodeGroups[idx] + (this.page - 1) * 10]['cdGrpId']
-          this.$store.dispatch("admin/deleteCodeGroup", codeGroupId)
-          this.codeGroupData.splice(this.checkedCodeGroups[idx] + (this.page - 1) * 10, 1)
-        } catch (error) {
-          console.log(error)
-        }
+      this.checkedCodeGroups.forEach(
+          codeGroup => {
+            try {
+              console.log(codeGroup)
+              this.$store.dispatch("admin/deleteCodeGroup", codeGroup['cdGrpId'])
+            } catch (error) {
+              console.log(error)
+            }
+          }
+      )
+      this.codeGroupData = this.codeGroupData.filter(cdGrp => !this.checkedCodeGroups.includes(cdGrp))
 
-      }
       this.checkedCodeGroups = []
       if (this.codeGroupData.length) {
-        this.selectedRow = this.codeGroupData[0]
+        this.selectedRow = this.codeGroupData[this.startIndex]
       } else {
         this.selectedRow = null
       }
     },
     codeRemove() {
-      let code
-      for (let idx in this.checkedCodes.sort().reverse()) {
-        try {
-          code = this.codeData[this.checkedCodes[idx]]
-          this.$store.dispatch("admin/deleteCode", code)
-          this.codeData.splice(this.checkedCodes[idx], 1)
-        } catch (error) {
-          console.log(error)
-        }
-      }
+      this.checkedCodes.forEach(
+          code => {
+            try {
+              this.$store.dispatch("admin/deleteCode", code)
+            } catch (error) {
+              console.log(error)
+            }
+          }
+      )
+      this.codeData = this.codeData.filter(cd => !this.checkedCodes.includes(cd))
       this.checkedCodes = []
-      console.log(this.selectedRow)
     },
     allCodeGroupsChangeState() {
       if (this.allCodeGroupsSelected) {
         this.checkedCodeGroups = []
-        for (let idx in this.codeGroupData) {
-          this.checkedCodeGroups.push(idx)
-        }
+        this.codeGroupData.forEach(codeGroup => this.checkedCodeGroups.push(codeGroup))
       } else {
         this.checkedCodeGroups = []
       }
@@ -531,9 +529,7 @@ export default {
     allCodesChangeState() {
       if (this.allCodesSelected) {
         this.checkedCodes = []
-        for (let idx in this.codeData) {
-          this.checkedCodes.push(idx)
-        }
+        this.codeData.forEach(code => this.checkedCodes.push(code))
       } else {
         this.checkedCodes = []
       }
