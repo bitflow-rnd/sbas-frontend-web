@@ -347,38 +347,11 @@
             </article>
 
 
-            <div class="row mt-10">
-              <div
-                  class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
-              <div class="col-12 d-flex align-items-center justify-content-center">
-                <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
-                  <ul class="pagination">
-                    <li class="paginate_button page-item previous" :class="{disabled: page < 2}"
-                        id="kt_table_users_previous"><a
-                        @click="changePage(page - 1)" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0"
-                        class="page-link"><i
-                        class="previous"></i></a></li>
-
-                    <template v-for="num in [...Array(this.pageEndIndex + 1).keys()].splice(this.pageStartIndex)"
-                              :key="num">
-                      <li class="paginate_button page-item"><a @click="changePage(num)"
-                                                               aria-controls="kt_table_users"
-                                                               :class="{active: num === page}"
-                                                               :data-dt-idx="num" tabindex="0"
-                                                               class="page-link">{{ num }}</a></li>
-                    </template>
-                    <li class="paginate_button page-item next" :class="{disabled: !hasNextPage}"
-                        id="kt_table_users_next"><a
-                        @click="changePage(page + 1)"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="4"
-                        tabindex="0"
-                        class="page-link"><i
-                        class="next"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            <data-pagination @change="changePage" :next-page-buttons-count="nextPageButtonsCount"
+                             :previous-page-buttons-count="previousPageButtonsCount"
+                             :display-change-page-buttons-count="displayChangePageButtonsCount"
+                             :display-rows-count="displayRowsCount"
+                             :data-length="codeGroupData.length"></data-pagination>
 
 
             <!--end::Table-->
@@ -396,8 +369,12 @@
 
 <script>
 
+import DataPagination from "@/components/layout/DataPagination";
+
 export default {
-  components: {},
+  components: {
+    DataPagination
+  },
   name: 'ListCdGrp',
   props: {
     msg: String
@@ -414,7 +391,6 @@ export default {
       previousPageButtonsCount: 4,
       nextPageButtonsCount: 4,
       codeCellValue: "",
-      editable: false,
       page: 1,
       selectedRow: {},
       allCodeGroupsSelected: false,
@@ -448,35 +424,11 @@ export default {
     }
   },
   computed: {
-    totalPageCount() {
-      return Math.ceil(this.codeGroupData.length / this.displayRowsCount)
-    },
     startIndex() {
       return (this.page - 1) * this.displayRowsCount;
     },
     endIndex() {
       return this.page * this.displayRowsCount;
-    },
-    pageStartIndex() {
-      if (this.page < (this.previousPageButtonsCount + 1)) {
-        return 1
-      } else {
-        return this.page - this.previousPageButtonsCount
-      }
-    },
-    pageEndIndex() {
-      if (this.totalPageCount <= this.displayChangePageButtonsCount) {
-        return this.totalPageCount
-      } else if ((this.page + this.nextPageButtonsCount) > this.totalPageCount) {
-        return this.totalPageCount
-      } else if ((this.page + this.nextPageButtonsCount) <= this.displayChangePageButtonsCount) {
-        return this.displayChangePageButtonsCount
-      } else {
-        return this.page + this.nextPageButtonsCount
-      }
-    },
-    hasNextPage() {
-      return this.codeGroupData.length > this.endIndex;
     },
     paginatedCodeGroupData() {
       return this.codeGroupData.slice(this.startIndex, this.endIndex)
