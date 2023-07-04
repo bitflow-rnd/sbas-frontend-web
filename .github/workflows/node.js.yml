@@ -29,6 +29,9 @@ jobs:
         registry-url: "https://npm.pkg.github.com"
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
         
+    - name: Install dependencies        
+      run: yarn install
+        
     - name: Build page
       run: yarn build
 
