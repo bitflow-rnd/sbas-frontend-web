@@ -10,10 +10,12 @@
   "dependencies": {
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
-    "vue": "^3.2.13",
+    "crypto-js": "^4.1.1",
     "mitt": "^3.0.0",
     "v-wave": "^1.5.0",
-    "vuex": "^4.0.2"
+    "vue": "^3.2.13",
+    "vuex": "^4.0.2",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
