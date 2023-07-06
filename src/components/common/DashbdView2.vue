@@ -1,5 +1,7 @@
-ListChnl.vue<template>
-<div></div>
+<template>
+  <div>
+
+  </div>
 </template>
 
 <script>
