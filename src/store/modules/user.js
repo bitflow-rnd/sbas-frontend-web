@@ -124,5 +124,21 @@ export default {
                 console.log(error);
             }
         },
+        loadPatientBasicInfo(_, id) {
+            try {
+                return axios
+                    .get(`http://sbas-test.bitflow.ai/api/v1/private/patient/basicinfo?ptId=${id}`)
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        loadPatientDiseaseInfo(_, id) {
+            try {
+                return axios
+                    .get(`http://sbas-test.bitflow.ai/api/v1/private/patient/disease-info/${id}`)
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
 };
