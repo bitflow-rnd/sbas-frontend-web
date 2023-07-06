@@ -61,6 +61,9 @@ export default {
     },
     getUserList() {
         this.$store.dispatch('admin/getUserList')
+    },
+    getFireStatn(){
+        this.$store.dispatch('admin/getFireStatn')
     }
   }
 }

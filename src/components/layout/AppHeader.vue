@@ -68,7 +68,7 @@
             </router-link>
             <!--end:Menu item-->
             <!--begin:Menu item-->
-            <router-link to="/user/severe" @click="setActive(4)" :class="{'here': tabidx === 4}" class="menu-item me-0 me-lg-1">
+            <router-link to="" @click="setActive(4)" :class="{'here': tabidx === 4}" class="menu-item me-0 me-lg-1">
               <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">중증환자모니터링</span>
@@ -192,6 +192,7 @@ export default {
         fun();
     },
     getUserList() {
+        this.$store.dispatch('admin/getSido')
         this.$store.dispatch('admin/getUserList')
     }
   }

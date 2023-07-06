@@ -1,5 +1,5 @@
 <template>
-  <!--begin::Main-->
+    <!--begin::Main-->
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
         <!--begin::Content wrapper-->
         <div class="d-flex flex-column flex-column-fluid">
@@ -24,8 +24,8 @@
                                 <span class="svg-icon svg-icon-4 mx-n1">
 												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<path
-                                  d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
-                                  fill="currentColor"/>
+                              d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
+                              fill="currentColor"/>
 												</svg>
 											</span>
                                 <!--end::Svg Icon-->
@@ -40,8 +40,8 @@
                                 <span class="svg-icon svg-icon-4 mx-n1">
 												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<path
-                                  d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
-                                  fill="currentColor"/>
+                              d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
+                              fill="currentColor"/>
 												</svg>
 											</span>
                                 <!--end::Svg Icon-->
@@ -49,7 +49,7 @@
                             <!--end::Item-->
                             <!--begin::Item-->
                             <li class="breadcrumb-item text-gray-500 mx-n1"><h1
-                                    class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0">사용자
+                                class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0">사용자
                                 관리</h1></li>
                             <!--end::Item-->
                         </ul>
@@ -283,21 +283,21 @@
                                 <div class="head-box">
 
                                     <div class="head-txt-box">검색결과 <span
-                                            class="rounded-pill bg-primary text-white px-2 ms-2">{{userList.length}}</span></div>
+                                        class="rounded-pill bg-primary text-white px-2 ms-2">{{userList.length}}</span></div>
                                 </div>
 
                                 <div class="option-box">
 
                                     <a href="#" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7"
                                        data-bs-toggle="modal" data-bs-target="#kt_modal_view_users"><i
-                                            class="fa-regular fa-trash-can"></i> 삭제</a>
+                                        class="fa-regular fa-trash-can"></i> 삭제</a>
 
                                     <router-link to="" class="btn btn-flex btn-sm btn-secondary fs-7 ms-2" data-bs-toggle="modal"
-                                       data-bs-target="#kt_modal_view_users"><i class="fa-solid fa-download"></i> 엑셀다운로드</router-link>
+                                                 data-bs-target="#kt_modal_view_users"><i class="fa-solid fa-download"></i> 엑셀다운로드</router-link>
 
-                                    <a href="javascript:userEditModal();"
+                                    <router-link to="" @click="toggleModal(5)"
                                        class="btn btn-sm btn-flex btn-primary align-self-center px-3 ms-2">
-                                        <i class="fa-solid fa-plus"></i> 사용자 등록</a>
+                                        <i class="fa-solid fa-plus"></i> 사용자 등록</router-link>
 
 
                                 </div>
@@ -308,7 +308,7 @@
                             <div class="table-body-box">
 
                                 <div class="table-box with-scroll small">
-                                    <table class="table-layout-fixed">
+                                    <table v-if="userList!==[]" class="table-layout-fixed">
                                         <colgroup>
                                             <col style="width: 70px;">
                                             <col style="width: 50px;">
@@ -360,39 +360,39 @@
                                             <td>{{item.dutyDstr1Cd}}<!--todo 지역번호 조회 함수--></td>
                                             <td>{{getInstNm(item.instTypeCd)}}</td>
                                             <td>{{ item.instNm }}</td>
-                                            <td>{{ maskingNm(item.userInfo.userNm) }}</td>
-                                            <td>{{ item.userInfo.ocpCd }}</td>
+                                            <td v-if="item.userInfo!==undefined">{{ maskingNm(item.userInfo.userNm) }}</td>
+                                            <td v-if="item.userInfo!==undefined">{{ item.userInfo.ocpCd }}</td>
                                             <td>{{ getAuthCd(item.authCd) }}</td>
                                             <td>{{ getrgDt(item.rgstDttm) }}</td>
-                                            <td>{{ getrgDt(item.userInfo.updtDttm)}}</td>
+                                            <td v-if="item.userInfo!==undefined">{{ getrgDt(item.userInfo.updtDttm)}}</td>
                                             <td>{{ item.userStatCdNm }}</td>
                                             <td>
                                                 <router-link to="" @click="setUsrSts(item)" class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center">{{ getBtn(item.userStatCd) }}</router-link>
                                             </td>
                                         </tr>
-<!--                                    <tr>
-                                        <td>7</td>
-                                        <td>
-                                            <div class="cbox">
-                                                <label>
-                                                    <input type="checkbox" class="all-chk"><i></i>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>서울특별시</td>
-                                        <td>보건소</td>
-                                        <td>칠곡경북대병원</td>
-                                        <td>김*선</td>
-                                        <td>주임</td>
-                                        <td>일반</td>
-                                        <td>2022.12.31</td>
-                                        <td>2023.02.28</td>
-                                        <td>등록요청</td>
-                                        <td>
-                                            <a href="javascript:userViewModal()"
-                                               class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center">수정</a>
-                                        </td>
-                                    </tr>-->
+                                        <!--                                    <tr>
+                                                                                <td>7</td>
+                                                                                <td>
+                                                                                    <div class="cbox">
+                                                                                        <label>
+                                                                                            <input type="checkbox" class="all-chk"><i></i>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>서울특별시</td>
+                                                                                <td>보건소</td>
+                                                                                <td>칠곡경북대병원</td>
+                                                                                <td>김*선</td>
+                                                                                <td>주임</td>
+                                                                                <td>일반</td>
+                                                                                <td>2022.12.31</td>
+                                                                                <td>2023.02.28</td>
+                                                                                <td>등록요청</td>
+                                                                                <td>
+                                                                                    <a href="javascript:userViewModal()"
+                                                                                       class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center">수정</a>
+                                                                                </td>
+                                                                            </tr>-->
 
 
                                         </tbody>
@@ -405,7 +405,7 @@
                         <!--페이징처리-->
                         <div class="row mt-10">
                             <div
-                                    class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
+                                class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
                             <div class="col-12 d-flex align-items-center justify-content-center">
                                 <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
                                     <ul class="pagination">
@@ -413,14 +413,14 @@
                                             <router-link to="" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link"><i
                                                 class="previous"></i></router-link></li>
                                         <li class="paginate_button page-item active"><router-link to="" aria-controls="kt_table_users"
-                                                                                        data-dt-idx="1" tabindex="0"
-                                                                                        class="page-link">1</router-link></li>
-<!--                                        <li class="paginate_button page-item "><a href="#" aria-controls="kt_table_users"
-                                                                                  data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                                        </li>
-                                        <li class="paginate_button page-item "><a href="#" aria-controls="kt_table_users"
-                                                                                  data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                                        </li>-->
+                                                                                                  data-dt-idx="1" tabindex="0"
+                                                                                                  class="page-link">1</router-link></li>
+                                        <!--                                        <li class="paginate_button page-item "><a href="#" aria-controls="kt_table_users"
+                                                                                                                          data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                                                                                </li>
+                                                                                <li class="paginate_button page-item "><a href="#" aria-controls="kt_table_users"
+                                                                                                                          data-dt-idx="3" tabindex="0" class="page-link">3</a>
+                                                                                </li>-->
                                         <li class="paginate_button page-item next" id="kt_table_users_next">
                                             <router-link to="" aria-controls="kt_table_users" data-dt-idx="4" tabindex="0" class="page-link"><i class="next"></i></router-link></li>
                                     </ul>
@@ -438,12 +438,535 @@
         </div>
         <!--end::Content wrapper-->
     </div>
-  <!--end:::Main-->
+    <!--end:::Main-->
 
 
-<!--begin::Modals-->
+    <!--begin::Modals-->
+<!-- 사용자등록요청   -->
+    <div v-show="isAdd" class="modal fade " id="kt_modal_edit_user" tabindex="-1" aria-hidden="true" >
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog mw-1500px modal-dialog-centered">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header px-10 py-5 d-flex justify-content-between">
+                    <!--begin::Modal title-->
+                    <h2>사용자 정보 등록</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div @click="toggleModal(5)" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                    fill="currentColor"></rect>
+                              <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                    fill="currentColor"></rect>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
 
-<!--사용자 수정 / 사용자 등록 모달 퍼블 없음 - -->
+                <!--begin::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y py-10 px-10">
+                    <article @submit.prevent="submitAdmin" class="table-form-layout1">
+                        <div class="form-head-box">
+
+                            <div class="head-box">
+                                <div class="head-txt-box fs-16px fw-bold pb-5">사용자 기본 정보</div>
+                            </div>
+
+                        </div>
+                        <div class="form-body-box">
+
+                            <div class="table-box">
+                                <table>
+                                    <colgroup>
+                                        <col style="width: 168px;">
+                                        <col style="width: auto;">
+                                        <col style="width: 168px;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr>
+                                        <th>아이디 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="text" v-model="form.userId">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <th>비밀번호 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="password" v-model="form.pw">
+                                                </div>
+                                            </div>
+                                            <div v-show="false" class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 비밀번호 유효성 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>휴대폰번호 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="text" v-model="form.telno">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <th>비밀번호 확인 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="password">
+                                                </div>
+                                            </div>
+                                            <div v-show="false" class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 비밀번호와 비밀번호 확인 일치 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>이름 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="text" v-model="form.userNm">
+                                                </div>
+                                            </div>
+                                            <div v-show="false" class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 이름 유효성 확인 문구</div>
+                                            </div>
+                                        </td>
+                                        <th>생년월일 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="text" v-model="form.btDt">
+                                                </div>
+                                            </div>
+                                            <div v-show="false" class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 생년월일 유효성 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="table-form-layout1 mt-10">
+                        <div class="form-head-box">
+
+                            <div class="head-box">
+                                <div class="head-txt-box fs-16px fw-bold pb-5">업무 역할</div>
+                            </div>
+
+                        </div>
+                        <div class="form-body-box">
+
+                            <div class="table-box">
+                                <table>
+                                    <colgroup>
+                                        <col style="width: 168px;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr>
+                                        <th>소속기관 유형 <span class="text-primary">*</span></th>
+                                        <td>
+                                            <div class="item-cell-box full">
+                                                <div class="rbox">
+                                                    <label>
+                                                        <input type="radio" v-model="form.instTypeCd" value="ORGN0003">
+                                                        <i></i><span class="txt">보건소</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="rbox ms-4">
+                                                    <label>
+                                                        <input type="radio" v-model="form.instTypeCd" value="ORGN0001" >
+                                                        <i></i><span class="txt">병상배정반</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="rbox ms-4">
+                                                    <label>
+                                                        <input type="radio" v-model="form.instTypeCd" value="ORGN0004">
+                                                        <i></i><span class="txt">의료진</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="rbox ms-4">
+                                                    <label>
+                                                        <input type="radio" v-model="form.instTypeCd" value="ORGN0002" >
+                                                        <i></i><span class="txt">구급대</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="rbox ms-4">
+                                                    <label>
+                                                        <input type="radio" v-model="form.instTypeCd" value="ORGN0005" >
+                                                        <i></i><span class="txt">전산담당</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div v-show="false" class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 소속기관 선택여부 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>권한 그룹 선택 <span class="text-primary">*</span></th>
+                                        <td>
+                                            <div class="item-cell-box full">
+
+                                                <article class="permission-selector-layout">
+
+                                                    <label class="selector-box">
+                                                        <input type="radio" v-model="form.jobCd" value="PMGR0001" >
+                                                        <div class="selector-wrap">
+                                                            <div class="img-box">
+                                                                <img src="/img/common/img_permission_item1.svg" alt="이미지" class="on">
+                                                                <img src="/img/common/img_permission_item1_off.svg" alt="이미지" class="off">
+                                                            </div>
+                                                            <div class="info-box">
+                                                                <div class="main-box">병상요청그룹</div>
+                                                                <div class="sub-box">보건소, 병상배정반, 의료진</div>
+
+                                                            </div>
+                                                        </div>
+                                                    </label>
+
+                                                    <label class="selector-box">
+                                                        <input type="radio" v-model="form.jobCd" value="PMGR0002">
+                                                        <div class="selector-wrap">
+                                                            <div class="img-box">
+                                                                <img src="/img/common/img_permission_item2.svg" alt="이미지" class="on">
+                                                                <img src="/img/common/img_permission_item2_off.svg" alt="이미지" class="off">
+                                                            </div>
+                                                            <div class="info-box">
+                                                                <div class="main-box">병상승인그룹</div>
+                                                                <div class="sub-box">병상배정반</div>
+
+                                                            </div>
+                                                        </div>
+                                                    </label>
+
+                                                    <label class="selector-box">
+                                                        <input type="radio" v-model="form.jobCd" value="PMGR0003" >
+                                                        <div class="selector-wrap">
+                                                            <div class="img-box">
+                                                                <img src="/img/common/img_permission_item3.svg" alt="이미지" class="on">
+                                                                <img src="/img/common/img_permission_item3_off.svg" alt="이미지" class="off">
+                                                            </div>
+                                                            <div class="info-box">
+                                                                <div class="main-box">병상배정그룹</div>
+                                                                <div class="sub-box">의료진</div>
+
+                                                            </div>
+                                                        </div>
+                                                    </label>
+
+                                                    <label class="selector-box">
+                                                        <input type="radio" v-model="form.jobCd" value="PMGR0004">
+                                                        <div class="selector-wrap">
+                                                            <div class="img-box">
+                                                                <img src="/img/common/img_permission_item4.svg" alt="이미지" class="on">
+                                                                <img src="/img/common/img_permission_item4_off.svg" alt="이미지" class="off">
+                                                            </div>
+                                                            <div class="info-box">
+                                                                <div class="main-box">시스템 관리자</div>
+                                                                <div class="sub-box">전산운영</div>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+
+
+                                                </article>
+
+                                            </div>
+                                            <div v-show="false" class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 권한그룹 선택여부 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>세부 권한 선택 <span class="text-primary">*</span></th>
+                                        <td>
+                                            <div class="item-cell-box full">
+                                                <div class="rbox">
+                                                    <label>
+                                                        <input type="radio" v-model="form.authCd" value="DTPM0001">
+                                                        <i></i><span class="txt text-black">일반 <span class="fw-normal text-gray-600 ps-2">일반 업무처리 및 사용자 초대 권한</span></span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="rbox ms-4">
+                                                    <label>
+                                                        <input type="radio" v-model="form.authCd" value="DTPM0002">
+                                                        <i></i><span class="txt text-black">게스트 <span
+                                                        class="fw-normal text-gray-600 ps-2">업무조회만 가능</span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div v-show="false" class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 세부권한 선택여부 확인 문구</div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="table-form-layout1 mt-10">
+                        <div class="form-head-box">
+
+                            <div class="head-box">
+                                <div class="head-txt-box fs-16px fw-bold pb-5">소속기관</div>
+                            </div>
+
+                        </div>
+                        <div class="form-body-box">
+
+                            <div class="table-box">
+                                <table>
+                                    <colgroup>
+                                        <col style="width: 168px;">
+                                        <col style="width: auto;">
+                                        <col style="width: 168px;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr>
+                                        <th>담당/근무지역 <span class="text-primary">*</span></th>
+                                        <td colspan="3" class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="sbox w-175px">
+                                                    <select v-model="form.dutyDstr1Cd">
+                                                        <option>대구광역시</option>
+                                                        <option>서울특별시</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="sbox w-175px ms-2">
+                                                    <select v-model="form.dutyDstr2Cd">
+                                                        <option>전체</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div v-show="false" class="item-cell-box full">
+                                                <div v-show="false" class="text-danger pt-2 fs-12px">※ 주 담당지역 선택여부 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>소속기관 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="sbox w-175px">
+                                                    <select v-model="form.instId">
+                                                        <option>국립암센터</option>
+                                                    </select>
+                                                </div>
+                                                <div class="tbox full ms-2">
+                                                    <input type="text" v-model="form.instNm" placeholder="소속기관명 직접 입력" >
+                                                </div>
+                                            </div>
+                                            <div v-show="false" class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 비밀번호와 비밀번호 확인 일치 확인 문구</div>
+                                            </div>
+
+                                        </td>
+                                        <th>직급 <span class="text-primary">*</span></th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <div class="tbox full">
+                                                    <input type="text" v-model="form.ocpCd">
+                                                </div>
+                                            </div>
+                                            <div v-show="false" class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 직급 입력 여부 확인 문구</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>담당환자 유형 <span class="text-primary">*</span></th>
+                                        <td colspan="3">
+                                            <div class="item-cell-box">
+
+                                                <div class="cbox">
+                                                    <label>
+                                                        <input type="checkbox" v-model="form.ptTypeCd" value="PTTP0001"><i></i>
+                                                        <span class="txt">일반</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="cbox ms-4">
+                                                    <label>
+                                                        <input type="checkbox" v-model="form.ptTypeCd" value="PTTP0002"><i></i>
+                                                        <span class="txt">소아</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="cbox ms-4">
+                                                    <label>
+                                                        <input type="checkbox" v-model="form.ptTypeCd" value="PTTP0003"><i></i>
+                                                        <span class="txt">투석</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="cbox ms-4">
+                                                    <label>
+                                                        <input type="checkbox" v-model="form.ptTypeCd" value="PTTP0004"><i></i>
+                                                        <span class="txt">산모</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="cbox ms-4">
+                                                    <label>
+                                                        <input type="checkbox" v-model="form.ptTypeCd" value="PTTP0005"><i></i>
+                                                        <span class="txt">수술</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="cbox ms-4">
+                                                    <label>
+                                                        <input type="checkbox" v-model="form.ptTypeCd" value="PTTP0006"><i></i>
+                                                        <span class="txt">중환자</span>
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>프로필 이미지</th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+
+                                                <article class="img-upload-layout">
+
+                                                    <div class="upload-box">
+
+                                                        <label>
+                                                            <input type="file">
+                                                            <span class="upload-btn-box">
+                                                              <img src="/img/common/img_upload_img.svg" alt="이미지">
+                                                              <span class="txt">클릭하여 업로드</span>
+                                                            </span>
+                                                        </label>
+
+                                                    </div>
+
+                                                    <div class="result-list">
+                                                        <div class="result-box">
+                                                            <div class="edit-btn-box">
+                                                                <label>
+                                                                    <input type="file">
+                                                                    <img src="/img/common/img_upload_btn.svg" alt="이미지">
+                                                                </label>
+                                                            </div>
+                                                            <img src="/img/common/img_profile_dummy.png" alt="이미지">
+
+                                                            <a href="javascript:void(0)" class="remove-btn" onclick="imgRemove(this)"><img
+                                                                src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
+
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </article>
+
+                                            </div>
+                                        </td>
+                                        <th>소속 증명 정보</th>
+                                        <td class="vertical-top">
+                                            <div class="item-cell-box full">
+                                                <article class="img-upload-layout">
+
+                                                    <div class="upload-box">
+
+                                                        <label>
+                                                            <input type="file">
+                                                            <span class="upload-btn-box">
+                                                              <img src="/img/common/img_upload_img.svg" alt="이미지">
+                                                              <span class="txt">클릭하여 업로드</span>
+                                                            </span>
+                                                        </label>
+
+                                                    </div>
+
+                                                    <div class="result-list">
+                                                        <div class="result-box">
+                                                            <img src="/img/common/img_profile_dummy.png" alt="이미지">
+
+                                                            <a href="javascript:void(0)" class="remove-btn" onclick="imgRemove(this)"><img
+                                                                src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
+
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </article>
+
+                                            </div>
+                                            <div class="item-cell-box full">
+                                                <div class="text-danger pt-2 fs-12px">※ 빠른 승인처리를 위해 해당 기관 소속임을 증명할 수 있는 명함, 또는 신분증 사진을 업로드 해주세요.
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </article>
+
+
+                    <article class="modal-menu-layout1 pt-10">
+
+                        <div class="modal-menu-list">
+                            <router-link to="" @click="toggleModal(5)" class="modal-menu-btn menu-cancel">취소</router-link>
+
+                            <router-link to="" @click="addUsrAdmin" class="modal-menu-btn menu-primary">등록완료</router-link>
+                        </div>
+
+
+                    </article>
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--사용자 수정 / 사용자 등록 모달 퍼블 없음 - -->
     <div v-if="usrDetail !==null" v-show="isEdit" class="modal fade " id="kt_modal_edit_user" tabindex="-1" aria-hidden="true" >
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
@@ -498,7 +1021,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" value="usrDetail.userId" readonly>
+                                                    <input type="text" :value="usrDetail.userId" readonly>
                                                 </div>
                                             </div>
                                         </td>
@@ -520,7 +1043,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" value="010-1234-5678">
+                                                    <input type="text" :value="gettelno(usrDetail.userInfo.telno)">
                                                 </div>
                                             </div>
                                         </td>
@@ -528,7 +1051,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="password" value="ladder@battele.net">
+                                                    <input type="password" value="">
                                                 </div>
                                             </div>
                                             <div class="item-cell-box full">
@@ -542,7 +1065,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" value="010-1234-5678">
+                                                    <input type="text" :value="usrDetail.userNm">
                                                 </div>
                                             </div>
                                             <div class="item-cell-box full">
@@ -553,7 +1076,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" value="1945-07-01">
+                                                    <input type="text" :value="getbtDt(usrDetail.userInfo.btDt)">
                                                 </div>
                                             </div>
                                             <div class="item-cell-box full">
@@ -561,6 +1084,7 @@
                                             </div>
                                         </td>
                                     </tr>
+
 
                                     </tbody>
                                 </table>
@@ -591,35 +1115,35 @@
                                             <div class="item-cell-box full">
                                                 <div class="rbox">
                                                     <label>
-                                                        <input type="radio" name="public" checked>
+                                                        <input type="radio" name="public" value="ORGN0003" :checked="getInstNm(usrDetail.instTypeCd)==='보건소'">
                                                         <i></i><span class="txt">보건소</span>
                                                     </label>
                                                 </div>
 
                                                 <div class="rbox ms-4">
                                                     <label>
-                                                        <input type="radio" name="public">
+                                                        <input type="radio" name="public" value="ORGN0001" :checked="getInstNm(usrDetail.instTypeCd)==='지방자치단체'">
                                                         <i></i><span class="txt">병상배정반</span>
                                                     </label>
                                                 </div>
 
                                                 <div class="rbox ms-4">
                                                     <label>
-                                                        <input type="radio" name="public">
+                                                        <input type="radio" name="public" value="ORGN0004" :checked="getInstNm(usrDetail.instTypeCd)==='의료기관'">
                                                         <i></i><span class="txt">의료진</span>
                                                     </label>
                                                 </div>
 
                                                 <div class="rbox ms-4">
                                                     <label>
-                                                        <input type="radio" name="public">
+                                                        <input type="radio" name="public" value="ORGN0002" :checked="getInstNm(usrDetail.instTypeCd)==='구급대'">
                                                         <i></i><span class="txt">구급대</span>
                                                     </label>
                                                 </div>
 
                                                 <div class="rbox ms-4">
                                                     <label>
-                                                        <input type="radio" name="public">
+                                                        <input type="radio" name="public" value="ORGN0005" :checked="getInstNm(usrDetail.instTypeCd)==='전산담당'">
                                                         <i></i><span class="txt">전산담당</span>
                                                     </label>
                                                 </div>
@@ -638,7 +1162,7 @@
                                                 <article class="permission-selector-layout">
 
                                                     <label class="selector-box">
-                                                        <input type="radio" name="t1">
+                                                        <input type="radio" name="t1" value="PMGR0001" :checked="getPmgr==='1'">
                                                         <div class="selector-wrap">
                                                             <div class="img-box">
                                                                 <img src="/img/common/img_permission_item1.svg" alt="이미지" class="on">
@@ -653,7 +1177,7 @@
                                                     </label>
 
                                                     <label class="selector-box">
-                                                        <input type="radio" name="t1">
+                                                        <input type="radio" name="t1" value="PMGR0002" :checked="getPmgr==='2'">
                                                         <div class="selector-wrap">
                                                             <div class="img-box">
                                                                 <img src="/img/common/img_permission_item2.svg" alt="이미지" class="on">
@@ -668,7 +1192,7 @@
                                                     </label>
 
                                                     <label class="selector-box">
-                                                        <input type="radio" name="t1">
+                                                        <input type="radio" name="t1" value="PMGR0003" :checked="getPmgr==='3'">
                                                         <div class="selector-wrap">
                                                             <div class="img-box">
                                                                 <img src="/img/common/img_permission_item3.svg" alt="이미지" class="on">
@@ -683,7 +1207,7 @@
                                                     </label>
 
                                                     <label class="selector-box">
-                                                        <input type="radio" name="t1">
+                                                        <input type="radio" name="t1" value="PMGR0004" :checked="getPmgr==='4'">
                                                         <div class="selector-wrap">
                                                             <div class="img-box">
                                                                 <img src="/img/common/img_permission_item4.svg" alt="이미지" class="on">
@@ -692,7 +1216,6 @@
                                                             <div class="info-box">
                                                                 <div class="main-box">시스템 관리자</div>
                                                                 <div class="sub-box">전산운영</div>
-
                                                             </div>
                                                         </div>
                                                     </label>
@@ -713,16 +1236,16 @@
                                             <div class="item-cell-box full">
                                                 <div class="rbox">
                                                     <label>
-                                                        <input type="radio" name="permission" checked>
+                                                        <input type="radio" name="permission" :checked="getAuthCd(usrDetail.authCd)==='일반'">
                                                         <i></i><span class="txt text-black">일반 <span class="fw-normal text-gray-600 ps-2">일반 업무처리 및 사용자 초대 권한</span></span>
                                                     </label>
                                                 </div>
 
                                                 <div class="rbox ms-4">
                                                     <label>
-                                                        <input type="radio" name="permission">
+                                                        <input type="radio" name="permission" :checked="getAuthCd(usrDetail.authCd)==='게스트'">
                                                         <i></i><span class="txt text-black">게스트 <span
-                                                            class="fw-normal text-gray-600 ps-2">업무조회만 가능</span></span>
+                                                        class="fw-normal text-gray-600 ps-2">업무조회만 가능</span></span>
                                                     </label>
                                                 </div>
                                             </div>
@@ -803,7 +1326,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" value="ladder@battele.net">
+                                                    <input type="text" :value="usrDetail.userInfo.ocpCd">
                                                 </div>
                                             </div>
                                             <div class="item-cell-box full">
@@ -893,7 +1416,7 @@
                                                             <img src="/img/common/img_profile_dummy.png" alt="이미지">
 
                                                             <a href="javascript:void(0)" class="remove-btn" onclick="imgRemove(this)"><img
-                                                                    src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
+                                                                src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
 
                                                         </div>
 
@@ -926,7 +1449,7 @@
                                                             <img src="/img/common/img_profile_dummy.png" alt="이미지">
 
                                                             <a href="javascript:void(0)" class="remove-btn" onclick="imgRemove(this)"><img
-                                                                    src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
+                                                                src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
 
                                                         </div>
 
@@ -954,9 +1477,9 @@
                     <article class="modal-menu-layout1 pt-10">
 
                         <div class="modal-menu-list">
-                            <a href="javascript:void(0)" class="modal-menu-btn menu-cancel">취소</a>
+                            <router-link to="" @click="toggleModal(0)" class="modal-menu-btn menu-cancel">취소</router-link>
 
-                            <a href="javascript:confirmPopupOpen('사용자를 등록하였습니다')" class="modal-menu-btn menu-primary">등록완료</a>
+                            <router-link to="" @click="editUsrInfo" class="modal-menu-btn menu-primary">등록완료</router-link>
                         </div>
 
 
@@ -969,7 +1492,7 @@
         <!--end::Modal dialog-->
     </div>
 
-<!-- 상세정보-승인/반려 모달    -->
+    <!-- 상세정보-승인/반려 모달    -->
     <div v-if="usrDetail !==null" v-show="isDetail" class="modal fade" id="kt_modal_view_user" tabindex="-1" aria-hidden="true" >
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
@@ -986,9 +1509,9 @@
                         <span class="svg-icon svg-icon-1">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                                fill="currentColor"></rect>
+                                  fill="currentColor"></rect>
                             <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                                fill="currentColor"></rect>
+                                  fill="currentColor"></rect>
                             </svg>
                           </span>
                         <!--end::Svg Icon-->
@@ -1256,8 +1779,8 @@
 
                                                 <th>사용자 탈퇴처리</th>
                                                 <td>
-                                                    <a href="javascript:popupOpen('leave');"
-                                                       class="btn btn-sm btn-flex btn-primary align-self-center px-3">탈퇴처리</a>
+                                                    <router-link to="" @click="toggleModal(2)"
+                                                                 class="btn btn-sm btn-flex btn-primary align-self-center px-3">탈퇴처리</router-link>
 
                                                 </td>
                                             </tr>
@@ -1271,10 +1794,9 @@
                             <article class="modal-menu-layout1 pt-10">
 
                                 <div class="modal-menu-list">
-                                    <router-link to=""  class="modal-menu-btn menu-cancel">취소</router-link>
-
+                                    <router-link to="" @click="toggleModal(1)"  class="modal-menu-btn menu-cancel">취소</router-link>
                                     <router-link to="" @click="toggleModal(0)" class="modal-menu-btn menu-primary-outline">수정</router-link>
-                                    <router-link v-show="usrDetail.userStatCd==='URST0001'" to="" @click="approve" class="modal-menu-btn menu-primary">승인/반려</router-link>
+                                    <router-link v-show="usrDetail.userStatCd==='URST0001'" to="" @click="toggleModal(4)" class="modal-menu-btn menu-primary">승인/반려</router-link>
                                 </div>
 
 
@@ -1332,13 +1854,13 @@
                                     </article>
                                     <div class="row mt-10">
                                         <div
-                                                class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
+                                            class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
                                         <div class="col-12 d-flex align-items-center justify-content-center">
                                             <div class="dataTables_paginate paging_simple_numbers" id="">
                                                 <ul class="pagination">
                                                     <li class="paginate_button page-item previous disabled" id=""><a
-                                                            href="#" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link"><i
-                                                            class="previous"></i></a></li>
+                                                        href="#" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link"><i
+                                                        class="previous"></i></a></li>
                                                     <li class="paginate_button page-item active"><a href="#" aria-controls="kt_table_users"
                                                                                                     data-dt-idx="1" tabindex="0"
                                                                                                     class="page-link">1</a></li>
@@ -1353,7 +1875,7 @@
                                                                                                         data-dt-idx="4"
                                                                                                         tabindex="0"
                                                                                                         class="page-link"><i
-                                                            class="next"></i></a></li>
+                                                        class="next"></i></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1413,13 +1935,13 @@
                                     </article>
                                     <div class="row mt-10">
                                         <div
-                                                class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
+                                            class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
                                         <div class="col-12 d-flex align-items-center justify-content-center">
                                             <div class="dataTables_paginate paging_simple_numbers" id="">
                                                 <ul class="pagination">
                                                     <li class="paginate_button page-item previous disabled" id=""><a
-                                                            href="#" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link"><i
-                                                            class="previous"></i></a></li>
+                                                        href="#" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link"><i
+                                                        class="previous"></i></a></li>
                                                     <li class="paginate_button page-item active"><a href="#" aria-controls="kt_table_users"
                                                                                                     data-dt-idx="1" tabindex="0"
                                                                                                     class="page-link">1</a></li>
@@ -1434,7 +1956,7 @@
                                                                                                         data-dt-idx="4"
                                                                                                         tabindex="0"
                                                                                                         class="page-link"><i
-                                                            class="next"></i></a></li>
+                                                        class="next"></i></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1488,13 +2010,13 @@
                                     </article>
                                     <div class="row mt-10">
                                         <div
-                                                class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
+                                            class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
                                         <div class="col-12 d-flex align-items-center justify-content-center">
                                             <div class="dataTables_paginate paging_simple_numbers" id="">
                                                 <ul class="pagination">
                                                     <li class="paginate_button page-item previous disabled" id=""><a
-                                                            href="#" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link"><i
-                                                            class="previous"></i></a></li>
+                                                        href="#" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link"><i
+                                                        class="previous"></i></a></li>
                                                     <li class="paginate_button page-item active"><a href="#" aria-controls="kt_table_users"
                                                                                                     data-dt-idx="1" tabindex="0"
                                                                                                     class="page-link">1</a></li>
@@ -1509,7 +2031,7 @@
                                                                                                         data-dt-idx="4"
                                                                                                         tabindex="0"
                                                                                                         class="page-link"><i
-                                                            class="next"></i></a></li>
+                                                        class="next"></i></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1532,7 +2054,7 @@
         <!--end::Modal dialog-->
     </div>
 
-<!--탈퇴 팝업창-->
+    <!--탈퇴 팝업창-->
     <article v-show="isWithdraw" class="popup popup-leave" style="">
         <div class="popup-wrapper">
             <div class="popup-contents">
@@ -1541,8 +2063,8 @@
 
                     <div class="head-tit-box">사용자 탈퇴 처리</div>
 
-                    <div class="head-option-box">
-                        <a href="javascript:popupClose('leave')" class="popup-close-btn">
+                    <div @click="toggleModal(2)" class="head-option-box">
+                        <router-link to="" class="popup-close-btn">
                         <span class="svg-icon svg-icon-1">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
@@ -1551,7 +2073,7 @@
                                     fill="currentColor"></rect>
                             </svg>
                         </span>
-                        </a>
+                        </router-link>
                     </div>
 
                 </div>
@@ -1577,8 +2099,8 @@
 
                         <div>
                             <div class="textbox">
-                                <textarea onkeyup="limitTextarea(this,'textarea3',500)" maxlength="500" placeholder="메시지 입력" style="height: 120px;"></textarea>
-                                <div class="limit-box"><span id="textarea3">0</span>/500자</div>
+                                <textarea v-model="content" @input="updateCharacterCount"  maxlength="500" placeholder="메시지 입력" style="height: 120px;"></textarea>
+                                <div class="limit-box"><span>{{ characterCount }}</span>/500자</div>
                             </div>
                         </div>
 
@@ -1590,11 +2112,10 @@
                 <div class="popup-foot-box py-5 px-10">
                     <article class="modal-menu-layout1">
                         <div class="modal-menu-list">
-                            <a href="javascript:popupClose('leave')" class="modal-menu-btn menu-cancel">닫기</a>
+                            <router-link to="" @click="toggleModal(2)" class="modal-menu-btn menu-cancel">닫기</router-link>
 
-                            <a href="javascript:confirmPopupOpen('탈퇴 후 동일한 ID를 이용한<br/>재가입은 불가능 합니다.<br/>정말 탈퇴하시겠습니까?',
-                            function() {confirmPopupClose();alertPopupOpen('회원탈퇴 되었습니다.',function (){popupClose('leave');});})"
-                               class="modal-menu-btn menu-primary">저장</a>
+                            <router-link to="" @click="toggleModal(3)"
+                                         class="modal-menu-btn menu-primary">저장</router-link>
                         </div>
                     </article>
                 </div>
@@ -1604,28 +2125,47 @@
         </div>
     </article>
 
-<!--승인/반려창-->
+    <!--alert창-->
     <article v-show="isAlert" class="popup popup-confirm" style="display: block;">
         <div class="popup-wrapper">
-              <div class="popup-contents py-10 px-10" style="width: 300px;">
-                    <article class="modal-alert-layout pb-10">
-                          <div class="alert-view-box pb-6">
-                                <img src="/img/common/ic_alert.svg" alt="이미지">
-                              </div>
-                          <div class="alert-msg-box">'+msg+'</div>
-                        </article>
-                    <article class="modal-menu-layout1">
-                          <div class="modal-menu-list">
-                                <router-link to="" href="javascript:confirmPopupClose()" class="modal-menu-btn menu-cancel" data-type=cancel>취소</router-link>
-                                <router-link to="" @click="alertClose" class="modal-menu-btn menu-primary" data-type=success>확인</router-link>
-                              </div>
-                        </article>
-                  </div>
+            <div class="popup-contents py-10 px-10" style="width: 300px;">
+                <article class="modal-alert-layout pb-10">
+                    <div class="alert-view-box pb-6">
+                        <img src="/img/common/ic_alert.svg" alt="이미지">
+                    </div>
+                    <div class="alert-msg-box">{{errMsg}}</div>
+                </article>
+                <article class="modal-menu-layout1">
+                    <div class="modal-menu-list">
+<!--                        <router-link to="" @click="alertClose" class="modal-menu-btn menu-cancel" data-type=cancel>취소</router-link>-->
+                        <router-link to="" @click="alertClose" class="modal-menu-btn menu-primary" data-type=success>확인</router-link>
+                    </div>
+                </article>
             </div>
-        </article>
+        </div>
+    </article>
+
+    <article v-show="isAlertWd" class="popup popup-confirm" style="display: block;">
+        <div class="popup-wrapper">
+            <div class="popup-contents py-10 px-10" style="width: 300px;">
+                <article class="modal-alert-layout pb-10">
+                    <div class="alert-view-box pb-6">
+                        <img src="/img/common/ic_alert.svg" alt="이미지">
+                    </div>
+                    <div  class="alert-msg-box">{{this.msgUsr}}</div>
+                </article>
+                <article class="modal-menu-layout1">
+                    <div class="modal-menu-list">
+                        <router-link to="" @click="setWdOrAprv(usrDetail.userId,num,1)" class="modal-menu-btn menu-cancel" data-type=cancel>취소</router-link>
+                        <router-link to="" @click="setWdOrAprv(usrDetail.userId,num,0)" class="modal-menu-btn menu-primary" data-type=success>확인</router-link>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </article>
 
 
-  <!--end::Modals-->
+    <!--end::Modals-->
 </template>
 
 <script>
@@ -1636,12 +2176,31 @@ export default {
 
     },
     computed:{
-        ...mapState('admin',['userList','usrDetail'])
+        ...mapState('admin',['userList','usrDetail']),
     },
     mounted() {
     },
     data() {
         return {
+            content:'',
+            characterCount:0,
+            form:{
+                userId:'',
+                pw:'',
+                userNm:'',
+                telno:'',
+                jobCd:'',
+                ocpCd:'',
+                ptTypeCd:[],
+                instTypeCd:'',
+                instId:'',
+                instNm:'',
+                dutyDstr1Cd:'',
+                dutyDstr2Cd:'',
+                attcId:'',
+                btDt:'',
+                authCd:''
+            },
         }
     },
     setup(){
@@ -1649,36 +2208,52 @@ export default {
         const isEdit = ref(false);
         const isAlert = ref(false);
         const errMsg = '';
+        const msgUsr = '';
+        const num = null;
         const isWithdraw = ref(false);
+        const isAlertWd = ref(false);
         const isAdd = ref(false);
         const isDetail = ref(false);
         const detail1 = ref(true);
         const detail2 = ref(false);
-        const alertOpen = function (msg){
+        const alertOpen = function (msg,idx){
             this.errMsg = msg
             this.isAlert = true;
+            return idx
         }
         const alertClose = function(){
             isAlert.value= !isAlert.value
         }
         const toggleModal = function(num){
-          if(num === 0){
-              isDetail.value = false
-              isEdit.value = !isEdit.value;
-          } else if(num === 1){
-              isDetail.value = !isDetail.value;
-          } else if(num===2){
-              isWithdraw.value = !isWithdraw.value;
-          } else {
-              isAdd.value = !isAdd.value;
-          }
+            if(num === 0){
+                isDetail.value = false
+                isEdit.value = !isEdit.value;
+            } else if(num === 1){
+                isDetail.value = !isDetail.value;
+            } else if(num===2){
+                isDetail.value = false
+                isWithdraw.value = !isWithdraw.value;
+            } else if(num===3){
+                this.msgUsr = '탈퇴 후 동일한 ID를 이용한\n재가입은 불가능 합니다.\n정말 탈퇴하시겠습니까?'
+                this.num=3
+                isAlertWd.value = !isAlertWd.value;
+            } else if(num===4){
+                this.msgUsr = '선택하신 사용자 상태로\n적용하시겠습니까?'
+                this.num=4
+                isAlertWd.value = !isAlertWd.value;
+            }else {
+                isAdd.value = !isAdd.value;
+            }
         }
         return{
             addUsr,
             isEdit,
             isAlert,
             errMsg,
+            msgUsr,
+            num,
             isWithdraw,
+            isAlertWd,
             isAdd,
             isDetail,
             detail1,
@@ -1689,11 +2264,14 @@ export default {
         }
     },
     methods: {
+        updateCharacterCount() {
+            this.characterCount = this.content.length;
+        },
         checkInfo(){
             console.log(this.$store.state.userList)
         },
         getDutyDstrCd(code){
-          this.$store.dispatch('admin/getDutyDstr',code)
+            this.$store.dispatch('admin/getDutyDstr',code)
         },
         getInstNm(code){
             if(code==='ORGN0001'){
@@ -1702,7 +2280,7 @@ export default {
                 return '구급대'
             } else if(code==='ORGN0003'){
                 return '보건소'
-            } else if(code==='ORGN000'){
+            } else if(code==='ORGN0004'){
                 return '의료기관'
             } else{
                 return '전산담당'
@@ -1739,21 +2317,21 @@ export default {
             return `${num1}-${num2}-${num3}`;
         },
         getGndr(str){
-          if(str === 'M'){
-              return '남'
-          }  else return '여'
+            if(str === 'M'){
+                return '남'
+            }  else return '여'
         },
         getPmgr(code){
-          if(code === 'PMGR0001'){
-              return 1
-          }
-          else if(code === 'PMGR0002'){
-              return 2
-          } else if(code === 'PMGR0003'){
-              return 3
-          } else if(code === 'PMGR0004'){
-              return 4
-          }
+            if(code === 'PMGR0001'){
+                return 1
+            }
+            else if(code === 'PMGR0002'){
+                return 2
+            } else if(code === 'PMGR0003'){
+                return 3
+            } else if(code === 'PMGR0004'){
+                return 4
+            }
         },
         maskingNm(nm){
             return nm;
@@ -1776,16 +2354,61 @@ export default {
             }
         },
         detailTabsMove(num){
-          if(num===1){
-              this.detail1 = true;
-              this.detail2 = false;
-              return true;
-          }  else {
-              this.detail2 = true;
-              this.detail1 = false;
-              return true;
-          }
+            if(num===1){
+                this.detail1 = true;
+                this.detail2 = false;
+                return true;
+            }  else {
+                this.detail2 = true;
+                this.detail1 = false;
+                return true;
+            }
         },
+        setWdOrAprv(id,num,idx){
+            if(num===3){
+                if(idx===0){
+                    this.delUsr(id);
+                } else {
+                    this.toggleModal(3)
+                }
+            }else{
+                if(idx===0){
+                    this.aprvUsr(id);
+                } else {
+                    this.toggleModal(4)
+                }
+            }
+        },
+        delUsr(id){
+            if(this.characterCount !==0){
+                console.log(id);
+                /*todo 탈퇴 확인하려면 주석해제*/
+                //this.$store.dispatch('admin/delUsr',id)
+                this.isAlertWd=false
+                this.alertOpen('회원탈퇴 되었습니다.')
+                this.isWithdraw=false
+            } else {
+                this.isAlertWd=false
+                this.alertOpen('회원탈퇴 사유를\n' + '입력해 주세요')
+            }
+        },
+        aprvUsr(id){
+            console.log(id);
+            /*todo 승인 확인하려면 주석해제*/
+            //this.$store.dispatch('admin/aprvUsr',id)
+            this.isAlertWd=false
+            this.alertOpen('적용 되었습니다.')
+            this.isWithdraw=false
+        },
+        editUsrInfo(){
+            this.alertOpen('사용자를 등록하였습니다')
+        },
+        submitAdmin(){
+            /*vuex에 등록됐는지 확인하고 사용자 등록됐다는 알림창 띄우기*/
+        },
+        addUsrAdmin(){
+            this.$store.dispatch('admin/regUsr',this.form)
+        }
     }
 }
 </script>

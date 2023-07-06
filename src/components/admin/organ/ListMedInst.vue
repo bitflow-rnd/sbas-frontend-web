@@ -80,10 +80,9 @@
                             <div class="form-body-box">
 
                                 <div class="table-form-toggle-box">
-                                    <a href="javascript:void(0)" class="table-form-toggle-btn" onclick="tableFormToggle(this)">
-                                        <i class="fa-solid fa-angle-up"></i>
-                                        <i class="fa-solid fa-angle-down"></i>
-                                    </a>
+                                    <router-link to="" class="table-form-toggle-btn" @click="toggleTable">
+                                        <i class="fa-solid" :class="showTable ? 'fa-angle-up' : 'fa-angle-down'"></i>
+                                    </router-link>
                                 </div>
 
                                 <div class="table-box with-toggle">
@@ -100,8 +99,10 @@
                                             <td>
                                                 <div class="item-cell-box">
                                                     <div class="sbox w-175px">
-                                                        <select>
-                                                            <option>시/도 전체</option>
+                                                        <select v-model="data.dstrCd1" @change="getMedinst">
+                                                            <option value="null">시/도 전체</option>
+                                                            <option v-for="(item,i) in cmSido" :key="i"
+                                                                    :value="item.cdId">{{ item.cdNm }}</option>
                                                         </select>
                                                     </div>
 
@@ -116,14 +117,15 @@
                                                 <div class="tbox w-400px with-btn">
                                                     <input type="text" placeholder="의료기관명 또는 ID 입력">
 
-                                                    <a href="javascript:void(0)" class="input-btn">
+                                                    <router-link to=""  class="input-btn">
                                                         <i class="fa-solid fa-magnifying-glass"></i>
-                                                    </a>
+                                                    </router-link>
                                                 </div>
                                             </td>
                                         </tr>
 
-                                        <tr data-toggle="false">
+                            <!--           todo 검색필터                             -->
+                                        <tr>
                                             <th>기관분류</th>
                                             <td colspan="3">
 
@@ -234,7 +236,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr data-toggle=true>
+                                        <tr v-show="showTable">
                                             <th>가용병상</th>
                                             <td>
                                                 <div class="item-cell-box">
@@ -330,7 +332,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr data-toggle="true">
+                                        <tr v-show="showTable">
                                             <th>가용장비</th>
                                             <td colspan="3">
                                                 <div class="item-cell-box">
@@ -402,17 +404,10 @@
 
                                             </td>
                                         </tr>
-
-
-
-
                                         </tbody>
                                     </table>
                                 </div>
-
-
-
-                            </div>
+                           </div>
 
                         </article>
 
@@ -428,7 +423,16 @@
 
                             <div class="table-body-box">
 
-                                <div class="table-box with-scroll small">
+                                <div v-if="medinstList.length===0" class="table-nodata py-40">
+
+                                    <div class="img-box">
+                                        <img src="/img/common/img_nodata.svg" alt="이미지">
+                                    </div>
+
+                                    <div class="txt-box pt-10">조회 결과가 없습니다.</div>
+
+                                </div>
+                                <div v-if="medinstList.length !==0" class="table-box with-scroll small">
                                     <table>
                                         <colgroup>
                                             <col style="width: 70px;">
@@ -505,8 +509,8 @@
                                         </thead>
 
                                         <tbody>
-                                        <tr @click="toggleModal">
-                                            <td>7</td>
+                                        <tr v-for="(item,i) in medinstList.items" :key="i">
+                                            <td>i</td>
                                             <td>
                                                 <div class="cbox d-flex justify-content-center">
                                                     <label>
@@ -516,12 +520,12 @@
                                             </td>
                                             <td><i class="fa-regular fa-circle-check" style="color: #74afeb; font-size:20px;"></i></td>
                                             <td class="text-start">
-                                                <a href="javascript:detailView()" class="text-start text-black">칠곡경북대학교 병원</a>
-                                                <div class="text-gray-600 fs-12px">대구광역시 북구 / 상급종합병원</div>
+                                                <div @click="toggleModal" class="text-start text-black">{{ item.dutyName }}</div>
+                                                <div class="text-gray-600 fs-12px">{{ item.dstrCd1 }} {{ item.dstrCd2 }}/
+                                                    {{ item.dutyDivNam }}</div>
                                             </td>
                                             <td>
-                                                053-200-2000<br/>
-                                                /053-200-2114
+                                                {{ item.dutyTel1 }}
                                             </td>
                                             <td><i class="fa-regular fa-circle-check" style="color: #74afeb; font-size:20px;"></i></td>
                                             <td><i class="fa-regular fa-circle-check" style="color: #74afeb; font-size:20px;"></i></td>
@@ -543,8 +547,7 @@
                                             <td><i class="fa-regular fa-circle-check" style="color: #74afeb; font-size:20px;"></i></td>
                                             <td>12</td>
                                             <td>
-                                                2023.2.12<br/>
-                                                17:33
+                                                {{ getUpDt(item.updtDttm)}}
                                             </td>
                                         </tr>
 
@@ -1627,6 +1630,7 @@
 <script>
 
 import {ref} from "vue";
+import {mapState} from "vuex";
 
 export default {
     components: {
@@ -1636,17 +1640,26 @@ export default {
     props: {
         msg: String
     },
+    computed: {
+        ...mapState('admin',['cmSido','medinstList'])
+    },
     mounted() {
     },
-    setup(){
-      const openModal = ref(false);
 
+    setup(){
+
+      const showTable = ref(false);
+      const openModal = ref(false);
       const toggleModal = function(){
           openModal.value = !openModal.value
-          console.log('실행')
+      }
+      const toggleTable = function(){
+          showTable.value = !showTable.value
       }
 
       return {
+          showTable,
+          toggleTable,
           openModal,
           toggleModal,
       }
@@ -1655,11 +1668,24 @@ export default {
         return{
             tabidx: 0,
             doctorCount: 0, // 의료진 수
+            data:{
+                dutyDivNam:[],
+                dstrCd1:null,
+                dstrCd2:null
+            }
         }
     },
     methods: {
         tabsMove(idx) {
             this.tabidx = idx;
+        },
+        getMedinst(){
+            console.log(this.data)
+            this.$store.dispatch('admin/getMedinst',this.data)
+        },
+        getUpDt(date){
+            return date.slice(0,4)+'.'+date.slice(5,7)+'.'+date.slice(8,10)+'\n'
+            +date.slice(11,16)
         },
     }
 }
