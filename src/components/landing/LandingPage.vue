@@ -5,7 +5,7 @@
             <div class="header-wrap">
 
                 <h1 class="logo-box">
-                    <router-link to="/comm/mobileView" ></router-link>
+                    <router-link to="/" ></router-link>
                 </h1>
 
                 <div class="header-menu-box">
@@ -17,8 +17,8 @@
         </header>
 
         <section class="main" id="fullpage">
-
-            <section class="section section1">
+            <section class="section section1 fp-section fp-table" @wheel="handleScroll">
+                <div class="fp-tableCell">
                 <div class="inner wrap">
 
                     <div class="swiper-group-box">
@@ -26,7 +26,6 @@
                         <div class="swiper swiper-section1">
 
                             <ul class="swiper-wrapper">
-
                                 <li class="swiper-slide">
                                     <div class="item-box">
 
@@ -42,8 +41,6 @@
 
                                     </div>
                                 </li>
-
-
                                 <li class="swiper-slide">
                                     <div class="item-box">
 
@@ -60,7 +57,6 @@
 
                                     </div>
                                 </li>
-
                                 <li class="swiper-slide">
                                     <div class="item-box">
 
@@ -82,9 +78,9 @@
 
                         <div class="navigation-box">
 
-                            <router-link to="" class="navigation-prev-btn"></router-link>
-                            <div class="current-box">1</div>
-                            <router-link to="" class="navigation-next-btn"></router-link>
+                            <a href="" class="navigation-prev-btn"></a>
+                            <div class="current-box" ref="curBox1">{{idx1}}</div>
+                            <a href="" class="navigation-next-btn"></a>
                         </div>
 
 
@@ -97,9 +93,11 @@
 
 
                 </div>
+                </div>
             </section>
 
-            <section class="section section2">
+            <section class="section section2 fp-section fp-table" @wheel="handleScroll">
+                <div class="fp-tableCell">
                 <div class="inner wrap">
 
                     <div class="swiper-group-box type-reverse">
@@ -152,9 +150,9 @@
 
                         <div class="navigation-box">
 
-                            <router-link to="" class="navigation-prev-btn"></router-link>
-                            <div class="current-box">1</div>
-                            <router-link to="" class="navigation-next-btn"></router-link>
+                            <a href="" class="navigation-prev-btn"></a>
+                            <div class="current-box" ref="curBox2">{{idx2}}</div>
+                            <a href="" class="navigation-next-btn"></a>
                         </div>
 
 
@@ -167,9 +165,11 @@
 
 
                 </div>
+                </div>
             </section>
 
-            <section class="section section3">
+            <section class="section section3 fp-section fp-table" @wheel="handleScroll">
+                <div class="fp-tableCell">
                 <div class="inner wrap">
 
                     <div class="swiper-group-box">
@@ -232,9 +232,9 @@
 
                         <div class="navigation-box">
 
-                            <router-link to="" class="navigation-prev-btn"></router-link>
-                            <div class="current-box">1</div>
-                            <router-link to="" class="navigation-next-btn"></router-link>
+                            <a href="" class="navigation-prev-btn"></a>
+                            <div class="current-box" ref="curBox3">{{idx3}}</div>
+                            <a href="" class="navigation-next-btn"></a>
                         </div>
 
 
@@ -247,6 +247,7 @@
 
 
                 </div>
+                </div>
             </section>
 
             <section class="section footer fp-auto-height">
@@ -255,16 +256,16 @@
                         <div class="footer-menu-box">
 
                             <div class="footer-menu-list">
-                                <router-link to="" class="footer-menu-btn type-primary" >병상배정 시스템 로그인</router-link>
-                                <router-link to="" class="footer-menu-btn" >
+                                <router-link to="/login" class="footer-menu-btn type-primary" >병상배정 시스템 로그인</router-link>
+                                <a href="" class="footer-menu-btn" >
                                     <img src="/img/common/img_footer_google.svg" alt="이미지">
-                                </router-link>
-                                <router-link to="" class="footer-menu-btn">
+                                </a>
+                                <a href="" class="footer-menu-btn">
                                     <img src="/img/common/img_footer_apple.svg" alt="이미지">
-                                </router-link>
+                                </a>
                             </div>
 
-                            <router-link to="" class="footer-toggle-btn" ></router-link>
+                            <a href="" class="footer-toggle-btn" ></a>
 
 
                         </div>
@@ -274,22 +275,180 @@
             </section>
 
 
-            <aside class="floating-box">
+<!--            <aside class="floating-box">
                 <div class="floating-img-box">
                     <img src="/img/common/img_scroll_down.svg" alt="이미지" class="down">
                     <img src="/img/common/img_scroll_up.svg" alt="이미지" class="up">
                 </div>
-            </aside>
-
+            </aside>-->
 
         </section>
-
-
+        <aside class="floating-box">
+            <div class="floating-img-box">
+                <img v-if="!pageUp" src="/img/common/img_scroll_down.svg" alt="이미지" class="down">
+                <img v-if="pageUp" src="/img/common/img_scroll_up.svg" alt="이미지" class="up">
+            </div>
+        </aside>
     </div>
 </template>
-<script setup>
+<script>
+import $ from 'jquery'
+import {getScreenPixelSize} from '@/util/ui'
+import Swiper from 'swiper/bundle'
+import 'swiper/css/bundle'
+import 'fullpage.js/dist/jquery.fullpage'
+import 'fullpage.js/dist/jquery.fullpage.css'
 
+
+export default {
+    components: {
+    },
+    name: 'LandingPage',
+    props: {
+        msg: String
+    },
+    mounted() {
+        this.height = getScreenPixelSize();
+        if(!this.isFullpage){
+            this.initFullPage()
+            this.isFullpage = true
+        }
+        this.initSection1Swiper();
+        this.initSection2Swiper();
+        this.initSection3Swiper();
+    },
+    beforeUnmount() {
+        $.fn.fullpage.destroy('all');
+        $('#fullpage').remove();
+        this.isFullpage=false
+    },
+    data() {
+        return {
+            isFullpage:false,
+            sections:['section1','section2','section3','footer'],
+            curruntSection:'',
+            height: null,
+            pageUp :false,
+            idx1: 1,
+            idx2: 1,
+            idx3: 1,
+        }
+    },
+    methods:{
+        initFullPage(){
+            const self = this;
+            $('#fullpage').fullpage({
+                navigation: true,
+
+                // eslint-disable-next-line no-unused-vars
+                onLeave: function (index,nextIndex, direct){
+                    self.pageUp = index === 4;
+                },
+                afterLoad: function (anchor,index){
+                    self.pageUp = index === 4;
+                }
+            });
+        },
+        handleScroll(event){
+            const fullPageInstance = $('#fullpage').fullpage;
+            if(event.deltaY > 0){
+                fullPageInstance.moveSectionDown()
+            }else{
+                fullPageInstance.moveSectionUp()
+            }
+        },
+        initSection1Swiper() {
+            const self = this;
+            this.section1Swiper = new Swiper('.swiper-section1', {
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                },
+                navigation: {
+                    prevEl: '.section1 .navigation-prev-btn',
+                    nextEl: '.section1 .navigation-next-btn',
+                },
+                on: {
+                    slideChange(){
+                        const idx = this.realIndex +1;
+                        self.$nextTick(()=>{
+                            self.$refs.curBox1.innerText = idx;
+                        })
+                    },
+                },
+
+            });
+        },
+        initSection2Swiper() {
+            const self = this;
+            this.section2Swiper = new Swiper('.swiper-section2', {
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                },
+                navigation: {
+                    prevEl: '.section2 .navigation-prev-btn',
+                    nextEl: '.section2 .navigation-next-btn',
+                },
+                on: {
+                    slideChange(){
+                        const idx = this.realIndex +1;
+                        self.$nextTick(()=>{
+                            self.$refs.curBox2.innerText = idx;
+                        })
+                    },
+                },
+
+            });
+        },
+        initSection3Swiper() {
+            const self = this;
+            this.section3Swiper = new Swiper('.swiper-section3', {
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                },
+                navigation: {
+                    prevEl: '.section3 .navigation-prev-btn',
+                    nextEl: '.section3 .navigation-next-btn',
+                },
+                on: {
+                    slideChange(){
+                        const idx = this.realIndex +1;
+                        self.$nextTick(()=>{
+                            self.$refs.curBox3.innerText = idx;
+                        })
+                    },
+                },
+
+            });
+        },
+    }
+}
 </script>
-<style>
+<style scoped>
+@import "./css/reset.css";
+@import "./css/style.css";
+@import "./css/swiper.min.css";
+@import "./css/jquery.fullpage.css";
 
+
+.section.section1,.section.section2,.section.section3 {
+    height: 820px;
+}
+.fp-tableCell{
+    height: 800px;
+}
+.section.footer{
+    z-index: 11;
+}
+.container{
+    padding-bottom: 0;
+}
+.fp-watermark{
+    display: none;
+}
+.floating-img-box .up {
+    display: block !important;
+}
 </style>

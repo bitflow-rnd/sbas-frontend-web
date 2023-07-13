@@ -505,7 +505,7 @@ section.main {
 			background-color: #fff;
 			position: absolute;
 			right: 0;
-			top: 43%;
+			top: 48%;
 			transform: translateY(-50%);
 
 			@include m {
@@ -645,7 +645,7 @@ aside.floating-box {
 
 	position: fixed;
 	left: 50%;
-	bottom: 10px;
+	bottom: 60px;
 	transform: translateX(-50%);
 	z-index: 10;
 

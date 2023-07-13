@@ -1,6 +1,5 @@
 <template>
   <router-view></router-view>
-  <p>ppp</p>
 </template>
 
 <script>
