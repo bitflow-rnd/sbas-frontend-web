@@ -368,6 +368,7 @@ export default {
                 rmk:data.rmk,
                 pstn:data.pstn
             }
+            //const id = data.instId
             console.log(request,"request 구급대원 등록")
             const url = `${API_PROD}/api/v1/admin/organ/reg-fireman`
             axios({
@@ -379,6 +380,7 @@ export default {
                 }
             }).then(response => {
                 console.log(response, "구급대원 등록")
+                //comment.dispatch('getFiremen',{id:id,})
 
                 //comment.commit('setFiremen', response.data)
             }).catch(e => {
@@ -407,6 +409,8 @@ export default {
                 }
             }).then(response => {
                 console.log(response, "구급대원 수정")
+                comment.dispatch('getFiremen',{instId:data.instId,})
+
                 //comment.commit('setFiremen', response.data)
             }).catch(e => {
                 console.log(e)
@@ -415,7 +419,7 @@ export default {
         /*구급대원 삭제*/
         delFM(comment, data) {
             const token= localStorage.getItem('userToken')
-            console.log(data," 수정")
+            console.log(data," 삭제")
             const request ={
                 instId:data.instId,
                 crewId:data.crewId,
@@ -429,7 +433,7 @@ export default {
                     Authorization: `Bearer ${token}`
                 }
             }).then(response => {
-                console.log(response, "구급대원 수정")
+                console.log(response, "구급대원 삭제")
                 //comment.commit('setFiremen', response.data)
             }).catch(e => {
                 console.log(e)
@@ -438,11 +442,6 @@ export default {
 
         getMedinst(comment,data) {
             const request = {
-                pageRequest : {
-                    page: 1,
-                    size: 10
-                },
-                dutyDivNam:[],
                 dstrCd1: data.dstrCd1,
                 dstrCd2: data.dstrCd2
             }

@@ -98,8 +98,8 @@
                                             <th>검색조건</th>
                                             <td>
                                                 <div class="item-cell-box">
-                                                    <div class="sbox w-175px">
-                                                        <select v-model="data.dstrCd1" @change="getMedinst">
+                                                    <div class="sbox w-175px" @click="getSido">
+                                                        <select v-model="search.dstrCd1" @change="getMedinst(search.dstrCd1)">
                                                             <option value="null">시/도 전체</option>
                                                             <option v-for="(item,i) in cmSido" :key="i"
                                                                     :value="item.cdId">{{ item.cdNm }}</option>
@@ -107,8 +107,10 @@
                                                     </div>
 
                                                     <div class="sbox w-175px ms-2">
-                                                        <select>
-                                                            <option>시/군/구 전체</option>
+                                                        <select v-model="search.dstrCd2">
+                                                            <option value="null">시/군/구 전체</option>
+                                                            <option v-for="(item,i) in cmGugun" :key="i"
+                                                                    :value="item.cdId">{{item.cdNm}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -417,7 +419,7 @@
                     <!--begin::Card body-->
                     <div class="card-body p-8">
                         <!--begin::Table-->
-                        <h5>검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">99+</span></h5>
+                        <h5>검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{medinstList.length}}</span></h5>
 
                         <article class="table-list-layout1">
 
@@ -426,7 +428,7 @@
                                 <div v-if="medinstList.length===0" class="table-nodata py-40">
 
                                     <div class="img-box">
-                                        <img src="/img/common/img_nodata.svg" alt="이미지">
+                                        <img src="/img/common/img_nodata.svg" alt="이미지">t
                                     </div>
 
                                     <div class="txt-box pt-10">조회 결과가 없습니다.</div>
@@ -509,8 +511,8 @@
                                         </thead>
 
                                         <tbody>
-                                        <tr v-for="(item,i) in medinstList.items" :key="i">
-                                            <td>i</td>
+                                        <tr v-for="(item,i) in medinstList" :key="i">
+                                            <td>{{i+1}}</td>
                                             <td>
                                                 <div class="cbox d-flex justify-content-center">
                                                     <label>
@@ -519,8 +521,8 @@
                                                 </div>
                                             </td>
                                             <td><i class="fa-regular fa-circle-check" style="color: #74afeb; font-size:20px;"></i></td>
-                                            <td class="text-start">
-                                                <div @click="toggleModal" class="text-start text-black">{{ item.dutyName }}</div>
+                                            <td data-bs-toggle="modal" data-bs-target="#kt_modal_medinst_view" class="text-start">
+                                                <div class="text-start text-black">{{ item.dutyName }}</div>
                                                 <div class="text-gray-600 fs-12px">{{ item.dstrCd1 }} {{ item.dstrCd2 }}/
                                                     {{ item.dutyDivNam }}</div>
                                             </td>
@@ -601,7 +603,7 @@
     </div>
   <!--end:::Main-->
     <!--begin::Modals-->
-    <div v-show="openModal" class="modal fade" id="kt_modal_user_profile_view" tabindex="-1" aria-hidden="true" style="">
+    <div v-show="openModal" class="modal fade" id="kt_modal_medinst_view" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -1631,6 +1633,7 @@
 
 import {ref} from "vue";
 import {mapState} from "vuex";
+import {getSido} from "@/util/ui";
 
 export default {
     components: {
@@ -1641,7 +1644,7 @@ export default {
         msg: String
     },
     computed: {
-        ...mapState('admin',['cmSido','medinstList'])
+        ...mapState('admin',['cmSido','cmGugun','medinstList'])
     },
     mounted() {
     },
@@ -1668,7 +1671,7 @@ export default {
         return{
             tabidx: 0,
             doctorCount: 0, // 의료진 수
-            data:{
+            search:{
                 dutyDivNam:[],
                 dstrCd1:null,
                 dstrCd2:null
@@ -1676,12 +1679,14 @@ export default {
         }
     },
     methods: {
+        getSido,
         tabsMove(idx) {
             this.tabidx = idx;
         },
-        getMedinst(){
-            console.log(this.data)
-            this.$store.dispatch('admin/getMedinst',this.data)
+        getMedinst(code){
+            console.log(this.search)
+            this.$store.dispatch('admin/getMedinst',this.search)
+            this.$store.dispatch('admin/getGuGun',code)
         },
         getUpDt(date){
             return date.slice(0,4)+'.'+date.slice(5,7)+'.'+date.slice(8,10)+'\n'
@@ -1693,17 +1698,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.fade{
-    opacity: 100;
-}
-.modal{
-    display: inline-block;
-    --bs-modal-width: 1000px;
-}
-.modal-dialog{
-    margin-top: 50px;
-    margin-bottom: 50px;
-}
+
 article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
     display: block;
 }

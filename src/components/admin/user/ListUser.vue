@@ -295,9 +295,10 @@
                                     <router-link to="" class="btn btn-flex btn-sm btn-secondary fs-7 ms-2" data-bs-toggle="modal"
                                                  data-bs-target="#kt_modal_view_users"><i class="fa-solid fa-download"></i> 엑셀다운로드</router-link>
 
-                                    <router-link to="" @click="toggleModal(5)"
+                                    <a data-bs-toggle="modal"
+                                       data-bs-target="#kt_modal_reg_user"
                                        class="btn btn-sm btn-flex btn-primary align-self-center px-3 ms-2">
-                                        <i class="fa-solid fa-plus"></i> 사용자 등록</router-link>
+                                        <i class="fa-solid fa-plus"></i> 사용자 등록</a>
 
 
                                 </div>
@@ -366,8 +367,9 @@
                                             <td>{{ getrgDt(item.rgstDttm) }}</td>
                                             <td v-if="item.userInfo!==undefined">{{ getrgDt(item.userInfo.updtDttm)}}</td>
                                             <td>{{ item.userStatCdNm }}</td>
-                                            <td>
-                                                <router-link to="" @click="setUsrSts(item)" class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center">{{ getBtn(item.userStatCd) }}</router-link>
+                                            <td><!--todo userInfo 정보 비교해서 띄우기? -->
+                                                <a :data-bs-toggle="isDetail?'modal':''"
+                                                   :data-bs-target="isDetail?getBtn(item.userStatCd)[1]:''" @click="setUsrSts(item)"  class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center">{{ getBtn(item.userStatCd)[0] }}</a>
                                             </td>
                                         </tr>
                                         <!--                                    <tr>
@@ -443,7 +445,7 @@
 
     <!--begin::Modals-->
 <!-- 사용자등록요청   -->
-    <div v-show="isAdd" class="modal fade " id="kt_modal_edit_user" tabindex="-1" aria-hidden="true" >
+    <div class="modal fade " id="kt_modal_reg_user" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -966,8 +968,8 @@
         </div>
         <!--end::Modal dialog-->
     </div>
-    <!--사용자 수정 / 사용자 등록 모달 퍼블 없음 - -->
-    <div v-if="usrDetail !==null" v-show="isEdit" class="modal fade " id="kt_modal_edit_user" tabindex="-1" aria-hidden="true" >
+    <!--사용자 수정 - -->
+    <div v-if="usrDetail !==null" class="modal fade " id="kt_modal_edit_user" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -975,10 +977,10 @@
                 <!--begin::Modal header-->
                 <div class="modal-header px-10 py-5 d-flex justify-content-between">
                     <!--begin::Modal title-->
-                    <h2>사용자 정보 등록</h2>
+                    <h2>사용자 정보 수정</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div @click="toggleModal(0)" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1493,7 +1495,7 @@
     </div>
 
     <!-- 상세정보-승인/반려 모달    -->
-    <div v-if="usrDetail !==null" v-show="isDetail" class="modal fade" id="kt_modal_view_user" tabindex="-1" aria-hidden="true" >
+    <div v-if="usrDetail !==null" class="modal fade" id="kt_modal_view_user" tabindex="-1" aria-hidden="true" style="" >
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -1504,7 +1506,7 @@
                     <h2>사용자 상세 정보</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" @click="toggleModal(1)">
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1795,7 +1797,8 @@
 
                                 <div class="modal-menu-list">
                                     <router-link to="" @click="toggleModal(1)"  class="modal-menu-btn menu-cancel">취소</router-link>
-                                    <router-link to="" @click="toggleModal(0)" class="modal-menu-btn menu-primary-outline">수정</router-link>
+                                    <a @click="test()" data-bs-toggle="modal"
+                                                 data-bs-target="#kt_modal_edit_user"  class="modal-menu-btn menu-primary-outline">수정</a>
                                     <router-link v-show="usrDetail.userStatCd==='URST0001'" to="" @click="toggleModal(4)" class="modal-menu-btn menu-primary">승인/반려</router-link>
                                 </div>
 
@@ -2226,8 +2229,7 @@ export default {
         }
         const toggleModal = function(num){
             if(num === 0){
-                isDetail.value = false
-                isEdit.value = !isEdit.value;
+                console.log(num)
             } else if(num === 1){
                 isDetail.value = !isDetail.value;
             } else if(num===2){
@@ -2337,20 +2339,19 @@ export default {
             return nm;
         },
         getBtn(sts) {
-            /*todo 편집권한있는 아이디인지 분별*/
             if (sts === 'URST0001') {
-                return '승인/반려'
+                return ['승인/반려','#kt_modal_view_user']
             } else {
-                return '수정'
+                return ['수정','#kt_modal_edit_user']
             }
         },
         setUsrSts(data){
             if(data.userStatCd==='URST0001'){
                 this.$store.commit('admin/setUserDetail',data)
-                this.toggleModal(1);
+                this.isDetail = true
             } else {
                 this.$store.commit('admin/setUserDetail',data)
-                this.toggleModal(0);
+                this.isDetail = true
             }
         },
         detailTabsMove(num){
@@ -2408,22 +2409,16 @@ export default {
         },
         addUsrAdmin(){
             this.$store.dispatch('admin/regUsr',this.form)
+        },test(){
+            console.log('test')
         }
     }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.fade{
-    opacity: 100;
-}
-.modal, .popup{
-    display: inline-block;
-    --bs-modal-width: 1500px;
-}
-.modal-dialog{
-    margin-top: 50px;
-    margin-bottom: 50px;
+<style>
+.modal {
+    --bs-modal-width: 98%;
 }
 </style>

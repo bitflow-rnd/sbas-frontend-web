@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="183" height="129" viewBox="0 0 183 129">
+  <defs>
+    <filter id="사각형_7193" x="0" y="0" width="183" height="129" filterUnits="userSpaceOnUse">
+      <feOffset dy="16" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="15" result="blur"/>
+      <feFlood flood-color="#2f3036" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <rect id="사각형_7194" data-name="사각형 7194" width="11" height="11" transform="translate(955 907)" fill="none" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="그룹_15571" data-name="그룹 15571" transform="translate(-869 -854)">
+    <g transform="matrix(1, 0, 0, 1, 869, 854)" filter="url(#사각형_7193)">
+      <rect id="사각형_7193-2" data-name="사각형 7193" width="93" height="39" rx="19.5" transform="translate(45 29)"/>
+    </g>
+    <text id="SCROLL" transform="translate(961 903)" fill="#fff" font-size="12" font-family="SpoqaHanSansNeo-Regular, Spoqa Han Sans Neo"><tspan x="-22.176" y="0">SCROLL</tspan></text>
+    <g id="마스크_그룹_128" data-name="마스크 그룹 128" clip-path="url(#clip-path)">
+      <path id="패스_8774" data-name="패스 8774" d="M948.652,411.031l3-3-3-3" transform="translate(1368.531 -38.152) rotate(90)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    </g>
+  </g>
+</svg>

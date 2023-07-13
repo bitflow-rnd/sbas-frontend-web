@@ -1,3 +1,5 @@
+
+
 export let alertPopupClose = () => {
     console.log("실행")
     document.querySelector('.popup-alert').remove();
@@ -39,4 +41,22 @@ export let alertPopupOpen = (msg, func) => {
         successElement.removeEventListener('click', alertPopupOpen);
     }
 
+};
+
+export function getSido(){
+    this.$store.dispatch('admin/getSido')
+}
+export function getGugun(code){
+    this.$store.dispatch('admin/getGuGun',code)
+}
+
+export function getScreenPixelSize() {
+    //var screenWidth = window.screen.width;
+    var screenHeight = window.screen.height;
+    var pixelRatio = window.devicePixelRatio || 1;
+
+    //var pixelWidth = screenWidth * pixelRatio;
+    var pixelHeight = screenHeight * pixelRatio;
+
+    return pixelHeight
 }
