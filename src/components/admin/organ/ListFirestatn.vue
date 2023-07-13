@@ -97,8 +97,8 @@
                                                 <th>검색조건</th>
                                                 <td>
                                                     <div class="item-cell-box">
-                                                        <div class="sbox w-175px">
-                                                            <select v-model="search.dstrCd1" @change="getDstrCd2(search.dstrCd1)">
+                                                        <div class="sbox w-175px" @click="getSido()">
+                                                            <select v-model="search.dstrCd1" @change="getGugun(search.dstrCd1)">
                                                                 <option value="null">시/도 전체</option>
                                                                 <option v-for="(item,i) in cmSido" :key="i"
                                                                         :value="item.cdId">{{item.cdNm}}</option>
@@ -159,7 +159,7 @@
                                 </div>
 
                             </article>
-                            <article v-if="firestatnList.length!==0" class="table-list-layout1">
+                            <article v-if="firestatnList.length!==0 && fsDetail !== null" class="table-list-layout1">
 
                                 <div class="table-body-box">
 
@@ -196,7 +196,7 @@
                                             </thead>
 
                                             <tbody>
-                                            <tr @click="getFS(item)" v-for="(item,i) in firestatnList" :key="i">
+                                            <tr :class="{'selected':fsDetail.instId===item.instId}" @click="getFS(item)" v-for="(item,i) in firestatnList" :key="i">
                                                 <td>{{i+1}}</td>
                                                 <td>
                                                     <div class="cbox d-flex justify-content-center">
@@ -254,7 +254,8 @@
 
                         <div class="card-option p-8">
                             <div class="d-flex align-items-center gap-2 gap-lg-3 justify-content-end">
-                                <a href="#" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users"><i class="fa-regular fa-trash-can"></i> 삭제</a>
+<!--                                <a @click="delFM" href="#" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users"><i class="fa-regular fa-trash-can"></i> 삭제</a>-->
+                                <a @click="delFM" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7"><i class="fa-regular fa-trash-can"></i> 삭제</a>
                                 <a @click="handleModal(2,null)" class="btn btn-sm btn-flex btn-primary align-self-center px-3">
                                     <i class="fa-solid fa-plus"></i> 대원등록
                                 </a>
@@ -322,7 +323,8 @@
                                                     <th>
                                                         <div class="cbox">
                                                             <label>
-                                                                <input type="checkbox" class="all-chk"><i></i>
+                                                                <input type="checkbox" class="all-chk"
+                                                                  v-model="allChked" @change="allChk"><i></i>
                                                             </label>
                                                         </div>
                                                     </th>
@@ -338,7 +340,7 @@
                                                     <td>
                                                         <div class="cbox d-flex justify-content-center">
                                                             <label>
-                                                                <input type="checkbox"><i></i>
+                                                                <input v-model="person.chked" @change="setDelInfo(person)" type="checkbox"><i></i>
                                                             </label>
                                                         </div>
                                                     </td>
@@ -466,7 +468,7 @@
                                             <div class="item-cell-box">
 
                                                 <div class="sbox w-175px">
-                                                    <select v-model="fsForm.dstrCd1" @change="getDstrCd2(fsForm.dstrCd1)">
+                                                    <select v-model="fsForm.dstrCd1" @change="getGugun(fsForm.dstrCd1)">
                                                         <option value="null">시/도</option>
                                                         <option v-for="(item,i) in cmSido" :key="i"
                                                                 :value="item.cdId">{{item.cdNm}}</option>
@@ -611,7 +613,7 @@
                                             <div class="item-cell-box">
 
                                                 <div class="sbox w-175px">
-                                                    <select v-model="fsDetail.dstrCd1" @change="getDstrCd2(fsDetail.dstrCd1)">
+                                                    <select v-model="fsDetail.dstrCd1" @change="getGugun(fsDetail.dstrCd1)">
                                                         <option value="null">시/도</option>
                                                         <option v-for="(item,i) in cmSido" :key="i"
                                                                 :value="item.cdId">{{item.cdNm}}</option>
@@ -905,7 +907,7 @@
 
                     <article class="modal-menu-layout1 pt-10">
                         <div class="modal-menu-list">
-                            <router-link to="" @click="onSubmitFM" class="modal-menu-btn menu-primary">저장</router-link>
+                            <router-link to="" @click="onSubmitFM(fsDetail.instId)" class="modal-menu-btn menu-primary">저장</router-link>
                         </div>
                     </article>
 
@@ -1155,6 +1157,7 @@
 
 import {reactive, ref} from "vue";
 import {mapState} from "vuex";
+import {getGugun, getSido} from "@/util/ui";
 
 
 export default {
@@ -1188,6 +1191,8 @@ export default {
             },
             inputValue:null,
             statnDetail:null,
+            delFMInfo:[],
+            allChked:false,
         }
     },
     computed:{
@@ -1201,6 +1206,9 @@ export default {
       const toggleModal = function(idx) {
           console.log(openModal[idx]);
           openModal[idx] = !openModal[idx];
+          if(idx===2){
+              this.fmForm={rmk:''}
+          }
       }
       const alertOpen = function (msg,idx){
           this.errMsg = msg
@@ -1222,6 +1230,8 @@ export default {
       }
     },
     methods: {
+        getSido,
+        getGugun,
         updateCharacterCount() {
             if(this.fsDetail.rmk===null || this.fsForm.rmk===''){
                 this.characterCount=this.content.length
@@ -1244,25 +1254,27 @@ export default {
         getTelno(data){
             return data.slice(0,3)+'-'+data.slice(3,7)+'-'+data.slice(7,12)
         },
-        getDstrCd2(code){
-          console.log(code);
-          this.$store.dispatch('admin/getGuGun',code);
-        },
         onSubmitFS(){
             this.$store.dispatch('admin/regFS',this.fsForm)
             this.alertOpen('저장하였습니다',0)
+            this.$store.dispatch('admin/getFireStatn',this.search)
             this.toggleModal(0)
         },
         onEditFS(){
             console.log(this.fsDetail)
             this.$store.dispatch('admin/editFS',this.fsDetail)
             this.alertOpen('저장하였습니다',1)
+            this.$store.dispatch('admin/getFireStatn',this.search)
+            this.toggleModal(1)
         },
-        onSubmitFM(){
-            console.log(this.fmForm.instId)
-          this.$store.dispatch('admin/regFM',this.fmForm)
-          this.alertOpen('저장하였습니다',2)
-          this.toggleModal(2)
+        onSubmitFM(id){
+            console.log(id)
+            this.fmForm.instId=id
+            this.$store.dispatch('admin/regFM',this.fmForm)
+            this.alertOpen('저장하였습니다',2)
+            this.$store.dispatch('admin/getFireStatn',this.search)
+            this.fmForm={rmk:''}
+            this.toggleModal(2)
         },
         onEditFM(){
           console.log(this.fmDetail)
@@ -1283,7 +1295,23 @@ export default {
             }
 
         },
-
+        allChk(){
+            this.firemenList.items.forEach(fm=>{
+                fm.chked = this.allChked
+                this.setDelInfo(fm)
+            })
+        },
+        setDelInfo(data){
+            const info = {instId: data.instId,crewId:data.crewId }
+            this.delFMInfo.push(info)
+        },
+        delFM(){
+            this.delFMInfo.forEach(fm => {
+                this.$store.dispatch('admin/delFM', fm);
+            });
+            this.alertOpen('삭제하였습니다',5)
+            this.$store.dispatch('admin/getFireStatn',this.search)
+        },
         handleModal(idx,data){
             if(idx===0){
                 console.log(idx)

@@ -852,7 +852,7 @@ export default {
                         pw: this.pw
                     }
                     console.log('제출' + values)
-                    this.$store.dispatch("login",values)
+                    this.$store.dispatch("user/login",values)
                 }
 
             } else{
@@ -890,7 +890,7 @@ export default {
         onEnter(value){
             console.log('가입')
             const value2 = value
-            this.$store.dispatch("signup",value2)
+            this.$store.dispatch("user/signup",value2)
         },
         openFindId(){
             console.log('아이디 찾기')
@@ -910,7 +910,7 @@ export default {
                 btn.textContent = '재발송';
             });
             const num="01082072505"
-            this.$store.dispatch("sendSms",num);
+            this.$store.dispatch("user/sendSms",num);
             this.timerStart();
         },
         certifyNo(num){
@@ -922,7 +922,7 @@ export default {
                 this.alertOpen('인증번호를 6자리로\n'+ '입력해 주세요.');
             }
             else{
-                this.$store.dispatch('confirmSms',num)
+                this.$store.dispatch('user/confirmSms',num)
                     .then((result)=>{
                         console.log(this.$store.state.smsCrtfSuccess)
                         if(result) {
