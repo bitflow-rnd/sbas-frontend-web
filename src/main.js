@@ -13,5 +13,5 @@ app.config.globalProperties.axios = axios;
 app.use(router);
 app.use(VWave);
 app.use(store);
-    
+
 app.mount('#kt_app_root')
