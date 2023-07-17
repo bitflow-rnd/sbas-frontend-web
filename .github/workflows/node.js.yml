@@ -46,6 +46,6 @@ jobs:
           username: ${{ secrets.FTP_USER_SBAS_WEB }}             
           password: ${{ secrets.FTP_PW_SBAS_WEB }}                    
           local_path: './dist/*'
-          remote_path: '/home/bitflow/www/sbas'
+          remote_path: '/C:/sbas/www/public'
           sftp_only: true          
           sftpArgs: '-o ConnectTimeout=5'
