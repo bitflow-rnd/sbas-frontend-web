@@ -534,31 +534,21 @@
                                                 <article class="img-upload-layout">
 
                                                     <div class="upload-box">
-
                                                         <label>
                                                             <input type="file" @change="onFileChange">
                                                             <span class="upload-btn-box">
-															<img src="/img/common/img_upload_img.svg" alt="이미지">
-															<span @click="uploadImg" class="txt">클릭하여 업로드</span>
-														</span>
+                                                              <img src="/img/common/img_upload_img.svg" alt="이미지">
+                                                              <span @click="uploadImg" class="txt">클릭하여 업로드</span>
+                                                            </span>
                                                         </label>
-
                                                     </div>
 
                                                     <div class="result-list">
                                                         <div class="result-box">
-                                                            <img :src="imgUrl" alt="이미지">
-
-                                                            <router-link to="" class="remove-btn" @click="imgRemove"><img
-                                                                src="/img/common/ic_profile_remove.svg" alt="이미지"></router-link>
-
                                                         </div>
-
                                                     </div>
 
-
                                                 </article>
-
                                             </div>
                                             <div class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 빠른 승인처리를 위해 해당 기관 소속임을 증명할 수 있는 명함, 또는 신분증 사진을 업로드 해주세요.
