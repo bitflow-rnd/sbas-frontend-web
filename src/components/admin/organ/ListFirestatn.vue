@@ -286,7 +286,8 @@
                             <!--begin::Card body-->
                             <div class="card-body p-0">
                                 <!--begin::Table-->
-                                <h5>조회결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{ firemenList.length }}</span></h5>
+                                <h5 v-if="firemenList.length!==0">조회결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{ firemenList.count }}</span></h5>
+                                <h5 v-if="firemenList.length===0">조회결과<span class="position-absolute translate-middle rounded-pill bg-primary">0</span></h5>
                                 <article v-if="firemenList.length===0 || firemenList.items.length===0" class="table-list-layout1">
 
                                     <div class="table-body-box">
@@ -1157,7 +1158,7 @@
 
 import {reactive, ref} from "vue";
 import {mapState} from "vuex";
-import {getGugun, getSido} from "@/util/ui";
+import {getGugun, getSido,getTelno} from "@/util/ui";
 
 
 export default {
@@ -1232,6 +1233,7 @@ export default {
     methods: {
         getSido,
         getGugun,
+        getTelno,
         updateCharacterCount() {
             if(this.fsDetail.rmk===null || this.fsForm.rmk===''){
                 this.characterCount=this.content.length
@@ -1250,9 +1252,6 @@ export default {
             const request = {id:data.instId,}
             this.$store.dispatch('admin/getFSDetail',request)
             this.$store.dispatch('admin/getFiremen',request)
-        },
-        getTelno(data){
-            return data.slice(0,3)+'-'+data.slice(3,7)+'-'+data.slice(7,12)
         },
         onSubmitFS(){
             this.$store.dispatch('admin/regFS',this.fsForm)

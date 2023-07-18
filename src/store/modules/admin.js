@@ -1,6 +1,7 @@
 import axios from "axios";
 import {API_PROD} from "@/util/constantURL";
 import router from "@/router/router";
+
 //import Vue from "core-js/internals/task";
 
 export default {
@@ -9,7 +10,7 @@ export default {
         cmSido: null,
         cmGugun: [],
         setFireman: null,
-        usrDetail:null,
+        usrDetail:null                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ,
         userList: [],
         isRegUsr: null,
         firestatnList: [],
@@ -29,9 +30,6 @@ export default {
             state.userList = payload
             //console.log(payload,"payload")
         },
-        setUserInfo(state,payload){
-            state.userList[payload.num].userInfo = payload.res;
-        },
         setUserDetail(state,payload){
             state.usrDetail = payload;
         },
@@ -49,7 +47,7 @@ export default {
         },
         setFSDetail(state,payload){
           state.fsDetail = payload;
-          this.dispatch('admin/getGuGun',state.fsDetail.dstrCd1);
+          //this.dispatch('admin/getGuGun',state.fsDetail.dstrCd1);
         },
         setFMDetail(state,payload){
             state.fmDetail = payload;
@@ -87,7 +85,7 @@ export default {
         /****************user*****************/
         getUserInfo(comment,data){
             const token = localStorage.getItem('userToken')
-            const url = `${API_PROD}/api/v1/private/user/user/${data.id}`
+            const url = `${API_PROD}/api/v1/private/user/user/${data}`
             //console.log(data.num,'숫자')
             return axios({
                 method:"get",
@@ -99,8 +97,7 @@ export default {
             }).then(response =>{
                 if(response.data?.code==='00'){
                     //console.log(response.data?.result)
-                    const dataInfo={res:response.data?.result,num:data.num}
-                    comment.commit('setUserInfo',dataInfo)
+                    comment.commit('setUserDetail',response.data?.result)
                 }
 
             }).catch(e =>{
@@ -118,15 +115,12 @@ export default {
                     Authorization: `Bearer ${token}`
                 }
 
-            }).then(async response =>{
+            }).then(response =>{
                 console.log(response,"사용자목록")
                 if(response.data?.code==='00') {
                     comment.commit('setUserList', response.data?.result.items)
                     //console.log(response.data?.result.items, "확인좀합시다...")
-                    await Promise.all(response.data?.result.items.map((item, i) => {
-                        const data = {id: item.userId, num: i};
-                        return comment.dispatch('getUserInfo', data);
-                    }));
+                    comment.dispatch('getUserInfo',response.data?.result.items[0].userId)
                     router.push('/admin/user/list')
                 }
             }).catch(e =>{
@@ -254,15 +248,23 @@ export default {
                 params:request,
             }).then(response =>{
                 console.log('구급대목록')
-                if(response.data?.result.count!==0){
-                    comment.commit('setFirestatn',response.data?.result.items)
-                    comment.dispatch('getFSDetail',{ id:response.data?.result.items[0].instId,})
-                    const data = {id:response.data?.result.items[0].instId, crewId: null, crewNm:null, telno:null}
-                    console.log(data)
-                    comment.dispatch('getFiremen',data);
+                if(response.data.code==='00'){
+                    if(response.data?.result.count!==0){
+                        comment.commit('setFirestatn',response.data?.result.items)
+                        comment.dispatch('getFSDetail',{ id:response.data?.result.items[0].instId,})
+                        const data = {id:response.data?.result.items[0].instId, crewId: null, crewNm:null, telno:null}
+                        console.log(data)
+                        comment.dispatch('getFiremen',data);
 
-                    return router.push('/admin/organ/firestatn/list');
+                        return router.push('/admin/organ/firestatn/list');
+                    } else {
+                        comment.commit('setFirestatn',[])
+                        comment.commit('setFSDetail',null)
+                        comment.commit('setFiremen',[])
+                        return router.push('/admin/organ/firestatn/list');
+                    }
                 }
+
             }).catch(e=>{
                 console.log(e)
             })

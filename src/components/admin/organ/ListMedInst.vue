@@ -99,7 +99,7 @@
                                             <td>
                                                 <div class="item-cell-box">
                                                     <div class="sbox w-175px" @click="getSido">
-                                                        <select v-model="search.dstrCd1" @change="getMedinst(search.dstrCd1)">
+                                                        <select v-model="search.dstrCd1" @change="getGugun(search.dstrCd1)">
                                                             <option value="null">시/도 전체</option>
                                                             <option v-for="(item,i) in cmSido" :key="i"
                                                                     :value="item.cdId">{{ item.cdNm }}</option>
@@ -117,9 +117,9 @@
                                             </td>
                                             <td colspan="2" class="border-left-1 border-color-gray">
                                                 <div class="tbox w-400px with-btn">
-                                                    <input type="text" placeholder="의료기관명 또는 ID 입력">
+                                                    <input v-model="inputValue" @input="handleChange" type="text" placeholder="의료기관명 또는 ID 입력">
 
-                                                    <router-link to=""  class="input-btn">
+                                                    <router-link to="" @click="getMedinst" class="input-btn">
                                                         <i class="fa-solid fa-magnifying-glass"></i>
                                                     </router-link>
                                                 </div>
@@ -428,7 +428,7 @@
                                 <div v-if="medinstList.length===0" class="table-nodata py-40">
 
                                     <div class="img-box">
-                                        <img src="/img/common/img_nodata.svg" alt="이미지">t
+                                        <img src="/img/common/img_nodata.svg" alt="이미지">
                                     </div>
 
                                     <div class="txt-box pt-10">조회 결과가 없습니다.</div>
@@ -1633,7 +1633,7 @@
 
 import {ref} from "vue";
 import {mapState} from "vuex";
-import {getSido} from "@/util/ui";
+import {getGugun, getSido} from "@/util/ui";
 
 export default {
     components: {
@@ -1675,22 +1675,30 @@ export default {
                 dutyDivNam:[],
                 dstrCd1:null,
                 dstrCd2:null
-            }
+            },
+            inputValue: null,
         }
     },
     methods: {
+        getGugun,
         getSido,
         tabsMove(idx) {
             this.tabidx = idx;
         },
-        getMedinst(code){
+        getMedinst(){
             console.log(this.search)
             this.$store.dispatch('admin/getMedinst',this.search)
-            this.$store.dispatch('admin/getGuGun',code)
         },
         getUpDt(date){
             return date.slice(0,4)+'.'+date.slice(5,7)+'.'+date.slice(8,10)+'\n'
             +date.slice(11,16)
+        },
+        handleChange(){
+            if(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(this.inputValue)) {
+                this.search.dutyName = this.inputValue
+            } else {
+                this.search.hospId = this.inputValue
+            }
         },
     }
 }
