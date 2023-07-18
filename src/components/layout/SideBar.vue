@@ -65,7 +65,7 @@ export default {
     getFireStatn(){
         this.$store.dispatch('admin/getFireStatn')
     }
-  }
+  },
 }
 </script>
 

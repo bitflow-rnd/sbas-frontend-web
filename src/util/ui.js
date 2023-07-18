@@ -14,7 +14,7 @@ export let alertPopupOpen = (msg, func) => {
     _str += '   <div class="popup-contents py-10 px-10" style="width: 300px;">';
     _str += '     <article class="modal-alert-layout pb-10">';
     _str += '       <div class="alert-view-box pb-6">';
-    _str += '         <img src="./img/common/ic_alert.svg" alt="이미지">';
+    _str += '         <img src="/img/common/ic_alert.svg" alt="이미지">';
     _str += '       </div>';
     _str += '       <div class="alert-msg-box">'+msg+'</div>';
     _str += '     </article>';
@@ -50,13 +50,10 @@ export function getGugun(code){
     this.$store.dispatch('admin/getGuGun',code)
 }
 
-export function getScreenPixelSize() {
-    //var screenWidth = window.screen.width;
-    var screenHeight = window.screen.height;
-    var pixelRatio = window.devicePixelRatio || 1;
+export function getTelno(data){
+    return data.slice(0,3)+'-'+data.slice(3,7)+'-'+data.slice(7,12)
+}
 
-    //var pixelWidth = screenWidth * pixelRatio;
-    var pixelHeight = screenHeight * pixelRatio;
-
-    return pixelHeight
+export function maskingNm(nm){
+    return nm.slice(0,1)+'*'+nm.slice(2)
 }

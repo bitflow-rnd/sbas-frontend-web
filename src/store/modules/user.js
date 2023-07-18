@@ -30,6 +30,9 @@ export default {
         setAttcId(state,payload){
             state.attcId = payload
             console.log(payload)
+        },
+        setUserInfo(state,payload){
+            state.userInfo = payload
         }
     },
     actions: {
@@ -45,9 +48,6 @@ export default {
                 pw: encodindPw
             }
 
-            console.log(request)
-            console.log('newData ' + JSON.stringify(formData))
-
             const url = `${API_PROD}/api/v1/public/user/login`
             axios({
                 method:"post",
@@ -58,14 +58,34 @@ export default {
 
                 comment.commit('loginSuccess',response.data)
                 localStorage.setItem("userToken", response.data?.result)
+                comment.dispatch('getUserInfo',id)
 
-                return router.push('/dashbd')
+
             }).catch(e =>{
                 console.log(e)
-                return '2'
             })
         },
+        getUserInfo(comment,id){
+            const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/user/user/${id}`
+            console.log('사용자정보')
+            return axios({
+                method:"get",
+                url: url,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
 
+            }).then(response =>{
+                if(response.data?.code==='00'){
+                    console.log(response.data?.result)
+                    comment.commit('setUserInfo',response.data?.result)
+                    return router.push('/dashbd')
+                }
+            }).catch(e =>{
+                console.log(e)
+            });
+        },
         signup(comment, formData){
             console.log(JSON.stringify(formData))
         },
@@ -101,7 +121,7 @@ export default {
                     data:request
                 }).then(response=>{
                     console.log(response,"인증번호 비교")
-                    if(response.data?.code=='00'){
+                    if(response.data?.code==='00'){
                         comment.commit('isCrtfSuccess','00')
                         resolve(true);
                     }else{

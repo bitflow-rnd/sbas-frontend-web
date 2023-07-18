@@ -361,14 +361,15 @@
                                             <td>{{item.dutyDstr1Cd}}<!--todo 지역번호 조회 함수--></td>
                                             <td>{{getInstNm(item.instTypeCd)}}</td>
                                             <td>{{ item.instNm }}</td>
-                                            <td v-if="item.userInfo!==undefined">{{ maskingNm(item.userInfo.userNm) }}</td>
-                                            <td v-if="item.userInfo!==undefined">{{ item.userInfo.ocpCd }}</td>
+                                            <td> {{ maskingNm(item.userNm) }}</td>
+                                            <td> {{ item.jobCd }}</td>
                                             <td>{{ getAuthCd(item.authCd) }}</td>
                                             <td>{{ getrgDt(item.rgstDttm) }}</td>
-                                            <td v-if="item.userInfo!==undefined">{{ getrgDt(item.userInfo.updtDttm)}}</td>
+
+                                            <td>{{ getrgDt(item.rgstDttm)}}</td>
                                             <td>{{ item.userStatCdNm }}</td>
                                             <td><!--todo userInfo 정보 비교해서 띄우기? -->
-                                                <a :data-bs-toggle="isDetail?'modal':''"
+                                                <a data-bs-toggle='modal'
                                                    :data-bs-target="isDetail?getBtn(item.userStatCd)[1]:''" @click="setUsrSts(item)"  class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center">{{ getBtn(item.userStatCd)[0] }}</a>
                                             </td>
                                         </tr>
@@ -1023,7 +1024,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" :value="usrDetail.userId" readonly>
+                                                    <input type="text" :value="usrDetail.id" readonly>
                                                 </div>
                                             </div>
                                         </td>
@@ -1045,7 +1046,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" :value="gettelno(usrDetail.userInfo.telno)">
+                                                    <input type="text" :value="gettelno(usrDetail.telno)">
                                                 </div>
                                             </div>
                                         </td>
@@ -1078,7 +1079,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" :value="getbtDt(usrDetail.userInfo.btDt)">
+                                                    <input type="text" :value="getbtDt(usrDetail.btDt)">
                                                 </div>
                                             </div>
                                             <div class="item-cell-box full">
@@ -1328,7 +1329,7 @@
                                         <td class="vertical-top">
                                             <div class="item-cell-box full">
                                                 <div class="tbox full">
-                                                    <input type="text" :value="usrDetail.userInfo.ocpCd">
+                                                    <input type="text" :value="usrDetail.ocpCd">
                                                 </div>
                                             </div>
                                             <div class="item-cell-box full">
@@ -1574,13 +1575,13 @@
                                                 <th>이름</th>
                                                 <td>{{ usrDetail.userNm }}</td>
                                                 <th>휴대전화번호</th>
-                                                <td>{{ gettelno(usrDetail.userInfo.telno) }}</td>
+                                                <td>{{ gettelno(usrDetail.telno) }}</td>
                                             </tr>
                                             <tr>
                                                 <th>생년월일</th>
-                                                <td>{{ getbtDt(usrDetail.userInfo.btDt) }}</td>
+                                                <td>{{ getbtDt(usrDetail.btDt) }}</td>
                                                 <th>성별</th>
-                                                <td>{{getGndr(usrDetail.userInfo.gndr)}}</td>
+                                                <td>{{getGndr(usrDetail.gndr)}}</td>
                                             </tr>
                                             <tr>
                                                 <th>소셜로그인 사용</th>
@@ -1615,7 +1616,7 @@
                                                 <th>소속기관 유형</th>
                                                 <td>{{getInstNm(usrDetail.instTypeCd)}}</td>
                                                 <th>직급</th>
-                                                <td>{{ usrDetail.userInfo.ocpCd }}</td>
+                                                <td>{{ usrDetail.ocpCd }}</td>
                                             </tr>
 
                                             <tr>
@@ -2216,7 +2217,7 @@ export default {
         const isWithdraw = ref(false);
         const isAlertWd = ref(false);
         const isAdd = ref(false);
-        const isDetail = ref(false);
+        const isDetail = ref(true);
         const detail1 = ref(true);
         const detail2 = ref(false);
         const alertOpen = function (msg,idx){
@@ -2347,10 +2348,10 @@ export default {
         },
         setUsrSts(data){
             if(data.userStatCd==='URST0001'){
-                this.$store.commit('admin/setUserDetail',data)
+                this.$store.dispatch('admin/getUserInfo',data.userId)
                 this.isDetail = true
             } else {
-                this.$store.commit('admin/setUserDetail',data)
+                this.$store.dispatch('admin/getUserInfo',data.userId)
                 this.isDetail = true
             }
         },
