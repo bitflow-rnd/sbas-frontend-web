@@ -90,9 +90,8 @@
                             <div class="form-body-box">
 
                                 <div class="table-form-toggle-box">
-                                    <a href="javascript:void(0)" class="table-form-toggle-btn" onclick="tableFormToggle(this)">
-                                        <i class="fa-solid fa-angle-up"></i>
-                                        <i class="fa-solid fa-angle-down"></i>
+                                    <a class="table-form-toggle-btn" @click="toggleTable">
+                                        <i class="fa-solid" :class="showTable ? 'fa-angle-up' : 'fa-angle-down'"></i>
                                     </a>
                                 </div>
 
@@ -118,35 +117,35 @@
                                                         <div class="cbox">
                                                             <label>
                                                                 <input type="checkbox" name="state"><i></i>
-                                                                <span class="txt">병상요청 <span class="cnt ms-1">12</span></span>
+                                                                <span class="txt">병상요청 <span class="cnt ms-1">{{ bdCnt[0] }}</span></span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
                                                                 <input type="checkbox" name="state"><i></i>
-                                                                <span class="txt">병상배정반 <span class="cnt ms-1">12</span></span>
+                                                                <span class="txt">병상배정반 <span class="cnt ms-1">{{ bdCnt[1] }}</span></span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
                                                                 <input type="checkbox" name="state"><i></i>
-                                                                <span class="txt">이송 · 배차 <span class="cnt ms-1">12</span></span>
+                                                                <span class="txt">이송 · 배차 <span class="cnt ms-1">{{ bdCnt[2] }}</span></span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
                                                                 <input type="checkbox" name="state"><i></i>
-                                                                <span class="txt">입 ·퇴원 처리 <span class="cnt ms-1">12</span></span>
+                                                                <span class="txt">입 ·퇴원 처리 <span class="cnt ms-1">{{ bdCnt[3] }}</span></span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
                                                                 <input type="checkbox" name="state"><i></i>
-                                                                <span class="txt">완료 <span class="cnt ms-1">12</span></span>
+                                                                <span class="txt">완료 <span class="cnt ms-1">{{ bdCnt[4] }}</span></span>
                                                             </label>
                                                         </div>
 
@@ -178,7 +177,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr data-toggle="true">
+                                        <tr v-show="showTable">
                                             <th>환자유형</th>
                                             <td colspan="3">
                                                 <div class="item-row-box">
@@ -276,7 +275,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr data-toggle="true">
+                                        <tr v-show="showTable">
                                             <th>병상유형</th>
                                             <td colspan="3">
                                                 <div class="item-row-box">
@@ -377,7 +376,7 @@
                                         </tr>
 
 
-                                        <tr data-toggle="true">
+                                        <tr v-show="showTable">
                                             <th>장비정보</th>
                                             <td colspan="7">
                                                 <div class="item-row-box">
@@ -462,10 +461,26 @@
                     <!--begin::Card body-->
                     <div class="card-body p-8">
                         <!--begin::Table-->
-                        <h5>검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">99+</span></h5>
+                        <h5>검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{ bdList.length }}</span></h5>
 
+                        <article v-if="bdList === []" class="table-list-layout1">
 
-                        <article class="table-list-layout1">
+                            <div class="table-body-box">
+
+                                <div class="table-nodata py-40">
+
+                                    <div class="img-box">
+                                        <img src="/img/common/img_nodata.svg" alt="이미지">
+                                    </div>
+
+                                    <div class="txt-box pt-10">조회 결과가 없습니다.</div>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+                        <article v-if="bdList !== [] " class="table-list-layout1">
 
                             <div class="table-body-box">
 
@@ -513,8 +528,8 @@
 
                                         <tbody>
 
-                                        <tr>
-                                            <td>7</td>
+                                        <tr v-for="(item,i) in bdList" :key="i">
+                                            <td>{{i+1}}</td>
                                             <td>
                                                 <div class="cbox d-flex justify-content-center">
                                                     <label>
@@ -522,130 +537,22 @@
                                                     </label>
                                                 </div>
                                             </td>
-                                            <td>병상요청</td>
-                                            <td>조*호</td>
-                                            <td>남</td>
-                                            <td>75</td>
-                                            <td>코로나바이러스감염증-19</td>
+                                            <td>{{ item.bedStatCdNm }}</td>
+                                            <td>{{ maskingNm(item.ptNm) }}</td>
+                                            <td>{{ item.gndr }}</td>
+                                            <td>{{ item.age }}</td>
+                                            <td>{{ item.diagNm }}</td>
                                             <td>중환자</td>
                                             <td>읍압격리</td>
-                                            <td>#투석</td>
-                                            <td>대구 북구 호암로 51</td>
+                                            <td>{{ getTag(item.tagList) }}</td>
+                                            <td>{{ item.bascAddr }}</td>
                                             <td>23:22</td>
                                             <td>
-                                                <a href="javascript:detailModal()"
+                                                <a href="" data-bs-toggle="modal" :data-bs-target="getBtn(item.bedStatCd)[1]"
                                                    class="btn btn-flex btn-xs btn-outline btn-outline-primary w-125px justify-content-center"
-                                                   style="line-height: 1.2">배정 승인·불가</a>
+                                                   style="line-height: 1.2">{{ getBtn(item.bedStatCd)[0] }}</a>
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td>7</td>
-                                            <td>
-                                                <div class="cbox d-flex justify-content-center">
-                                                    <label>
-                                                        <input type="checkbox"><i></i>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>병상요청</td>
-                                            <td>조*호</td>
-                                            <td>남</td>
-                                            <td>75</td>
-                                            <td>코로나바이러스감염증-19</td>
-                                            <td>중환자</td>
-                                            <td>읍압격리</td>
-                                            <td>#투석</td>
-                                            <td>대구 북구 호암로 51</td>
-                                            <td>23:22</td>
-                                            <td>
-                                                <a href="javascript:recommendModal()"
-                                                   class="btn btn-flex btn-xs btn-outline btn-outline-primary w-125px justify-content-center"
-                                                   style="line-height: 1.2">추천병원 선택</a>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>7</td>
-                                            <td>
-                                                <div class="cbox d-flex justify-content-center">
-                                                    <label>
-                                                        <input type="checkbox"><i></i>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>병상요청</td>
-                                            <td>조*호</td>
-                                            <td>남</td>
-                                            <td>75</td>
-                                            <td>코로나바이러스감염증-19</td>
-                                            <td>중환자</td>
-                                            <td>읍압격리</td>
-                                            <td>#투석</td>
-                                            <td>대구 북구 호암로 51</td>
-                                            <td>23:22</td>
-                                            <td>
-                                                <a href="javascript:hospitalizationModal()"
-                                                   class="btn btn-flex btn-xs btn-outline btn-outline-primary w-125px justify-content-center"
-                                                   style="line-height: 1.2">입·퇴원 처리</a>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td>7</td>
-                                            <td>
-                                                <div class="cbox d-flex justify-content-center">
-                                                    <label>
-                                                        <input type="checkbox"><i></i>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>병상요청</td>
-                                            <td>조*호</td>
-                                            <td>남</td>
-                                            <td>75</td>
-                                            <td>코로나바이러스감염증-19</td>
-                                            <td>중환자</td>
-                                            <td>읍압격리</td>
-                                            <td>#투석</td>
-                                            <td>대구 북구 호암로 51</td>
-                                            <td>23:22</td>
-                                            <td>
-                                                <a href="javascript:dispatchModal();"
-                                                   class="btn btn-flex btn-xs btn-outline btn-outline-primary w-125px justify-content-center"
-                                                   style="line-height: 1.2">이송·배차 처리</a>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td>7</td>
-                                            <td>
-                                                <div class="cbox d-flex justify-content-center">
-                                                    <label>
-                                                        <input type="checkbox"><i></i>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>병상요청</td>
-                                            <td>조*호</td>
-                                            <td>남</td>
-                                            <td>75</td>
-                                            <td>코로나바이러스감염증-19</td>
-                                            <td>중환자</td>
-                                            <td>읍압격리</td>
-                                            <td>#투석</td>
-                                            <td>대구 북구 호암로 51</td>
-                                            <td>23:22</td>
-                                            <td>
-                                                <a href="javascript:void(0)"
-                                                   class="btn btn-flex btn-xs btn-outline btn-outline-primary w-125px justify-content-center"
-                                                   style="line-height: 1.2">병상 승인</a>
-                                            </td>
-                                        </tr>
-
-
                                         </tbody>
 
                                     </table>
@@ -697,6 +604,7 @@
 
 
   <!--begin::Modals-->
+<!--  신규병상요청   -->
     <div class="modal fade" id="kt_modal_request" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
@@ -2106,6 +2014,7 @@
         <!--end::Modal dialog-->
     </div>
 
+<!--  추천병원선택   -->
     <div class="modal fade" id="kt_modal_recommend" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
@@ -2715,6 +2624,7 @@
         <!--end::Modal dialog-->
     </div>
 
+<!--  병상배정 세부 내용  -->
     <div class="modal fade" id="kt_modal_detail" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
@@ -3477,6 +3387,7 @@
         <!--end::Modal dialog-->
     </div>
 
+<!--  이송 배차 처리  -->
     <div class="modal fade" id="kt_modal_dispatch" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
@@ -3725,6 +3636,7 @@
         <!--end::Modal dialog-->
     </div>
 
+<!--  입퇴원처리  -->
     <div class="modal fade" id="kt_modal_hospitalization" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
@@ -3941,6 +3853,7 @@
 
         </div>
     </article>
+
     <article class="popup popup-update-check">
         <div class="popup-wrapper">
             <div class="popup-contents py-10 px-10" style="width: 300px;">
@@ -4252,6 +4165,10 @@
 
 <script>
 
+import {mapState} from "vuex";
+import {ref} from "vue";
+import {maskingNm} from "@/util/ui";
+
 export default {
     components: {
 
@@ -4262,11 +4179,45 @@ export default {
     },
     mounted() {
     },
+    setup(){
+      const showTable = ref(false);
+      const toggleTable = function(){
+          showTable.value = !showTable.value;
+      }
+      return{
+          showTable,
+          toggleTable,
+      }
+    },
     data() {
         return {
         }
     },
+    computed:{
+        ...mapState('bedasgn',['bdList','bdCnt'])
+    },
     methods: {
+        maskingNm,
+        getBtn(sts) {
+            if (sts === 'BAST0001') {
+                return ['배정 승인·불가','#kt_modal_request']
+            } else if (sts === 'BAST0002') {
+                return ['추천병원 선택','#kt_modal_recommend']
+            } else if (sts === 'BAST0003') {
+                return ['이송·배차 처리','#kt_modal_dispatch']
+            } else if (sts === 'BAST0004') {
+                return ['입·퇴원 처리','#kt_modal_hospitalization']
+            } else if (sts === 'BAST0005') {
+                return ['완료','#kt_modal_detail']
+            }
+        },
+        getTag(data){
+            let str =''
+            data.forEach(item => {
+                str += '#'+item+' '
+            })
+            return str
+        }
     }
 }
 </script>
