@@ -3,11 +3,13 @@ import createPersistedState from 'vuex-persistedstate';
 import user from "../store/modules/user"
 import admin from "../store/modules/admin"
 import bedasgn from "../store/modules/bedasgn";
+import patnt from "../store/modules/patnt";
 const store = createStore({
     modules: {
         user,
         admin,
         bedasgn,
+        patnt,
     },
     state: {
     },

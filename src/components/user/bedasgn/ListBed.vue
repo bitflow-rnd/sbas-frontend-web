@@ -66,7 +66,8 @@
                            data-bs-target="#kt_modal_view_users"><i class="fa-regular fa-trash-can"></i> 삭제</a>
                         <a href="#" class="btn btn-flex btn-sm btn-secondary fs-7" data-bs-toggle="modal"
                            data-bs-target="#kt_modal_view_users"><i class="fa-solid fa-download"></i> 엑셀다운로드</a>
-                        <a href="javascript:requestModal();" class="btn btn-sm btn-flex btn-primary align-self-center px-3">
+                        <a data-bs-toggle="modal"
+                           data-bs-target="#kt_modal_request" class="btn btn-sm btn-flex btn-primary align-self-center px-3">
                         <i class="fa-solid fa-plus"></i> 신규병상요청
                         </a>
                     </div>
@@ -542,13 +543,13 @@
                                             <td>{{ item.gndr }}</td>
                                             <td>{{ item.age }}</td>
                                             <td>{{ item.diagNm }}</td>
-                                            <td>중환자</td>
+                                            <td>{{ item.svrtTypeCdNm }}</td>
                                             <td>읍압격리</td>
                                             <td>{{ getTag(item.tagList) }}</td>
                                             <td>{{ item.bascAddr }}</td>
-                                            <td>23:22</td>
+                                            <td>{{ getDt(item.updtDttm) }}</td>
                                             <td>
-                                                <a href="" data-bs-toggle="modal" :data-bs-target="getBtn(item.bedStatCd)[1]"
+                                                <a data-bs-toggle='modal' :data-bs-target="getBtn(item.bedStatCd)[1]" @click="openBedMod(item)"
                                                    class="btn btn-flex btn-xs btn-outline btn-outline-primary w-125px justify-content-center"
                                                    style="line-height: 1.2">{{ getBtn(item.bedStatCd)[0] }}</a>
                                             </td>
@@ -616,16 +617,16 @@
                     <h2>병상요청</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <div id="reqest_exit" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                        fill="currentColor"></rect>
-									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                        fill="currentColor"></rect>
-								</svg>
-							</span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                fill="currentColor"></rect>
+                          <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                fill="currentColor"></rect>
+                        </svg>
+                      </span>
                         <!--end::Svg Icon-->
                     </div>
                     <!--end::Close-->
@@ -635,10 +636,10 @@
                         <div class="img-box">
                             <img src="/img/common/ic_request_patient.svg" alt="이미지">
                         </div>
-                        <div class="txt-box">신규 환자 등록</div>
-                        <div class="txt-box">성경희 <span class="text-gray-600 fw-normal">(여 / 76세 / 경상북도 칠곡군 / 010-8833-1234)</span>
+                        <div v-show="ptBI===null" class="txt-box">신규 환자 등록</div>
+                        <div v-if="ptBI!==null&&newPt.mpno" class="txt-box">{{ newPt.ptNm }} <span class="text-gray-600 fw-normal">({{ newPt.gndr }} / {{ getAge(newPt.rrno1, newPt.rrno2) }}세 / {{ newPt.bascAddr }} / {{ getTelno(newPt.mpno) }})</span>
                         </div>
-                        <div class="txt-box"><span class="text-primary">#중증 #투석</span></div>
+                        <div v-show="ptBI!==null && tab !== 1 && svInfo.undrArr !==[]" class="txt-box"><span class="text-primary">{{ getTag(svInfo.undrArr) }}</span></div>
 
 
                     </article>
@@ -652,7 +653,7 @@
 
                         <div class="step-list">
 
-                            <div class="step-box active">
+                            <div class="step-box" :class="{'active':tab===0}">
                                 <div class="order-box">1</div>
                                 <div class="info-box">
                                     <div class="subject-box">1단계</div>
@@ -663,7 +664,7 @@
 
                             </div>
 
-                            <div class="step-box">
+                            <div class="step-box" :class="{'active':tab===1}">
                                 <div class="order-box">2</div>
                                 <div class="info-box">
                                     <div class="subject-box">2단계</div>
@@ -672,7 +673,7 @@
 
                             </div>
 
-                            <div class="step-box">
+                            <div class="step-box" :class="{'active':tab===2}">
                                 <div class="order-box">3</div>
                                 <div class="info-box">
                                     <div class="subject-box">3단계</div>
@@ -681,7 +682,7 @@
 
                             </div>
 
-                            <div class="step-box">
+                            <div class="step-box" :class="{'active':tab===3}">
                                 <div class="order-box">4</div>
                                 <div class="info-box">
                                     <div class="subject-box">4단계</div>
@@ -698,7 +699,7 @@
 
                     <article class="tabs-group-list-layout">
 
-                        <div class="tabs-box" data-tabs="tabs1" style="">
+                        <div class="tabs-box" v-show="tab===0" style="">
                             <div class="d-flex justify-content-end text-danger pb-2">* 필수 입력 항목</div>
 
                             <div class="d-flex">
@@ -775,7 +776,7 @@
 
                                         <div class="form-body-box">
 
-                                            <div class="table-box">
+                                            <form @submit="regNewPt" class="table-box">
                                                 <table>
                                                     <colgroup>
                                                         <col style="width: 168px;">
@@ -789,12 +790,12 @@
                                                         <td>
                                                             <div class="item-cell-box">
                                                                 <div class="tbox">
-                                                                    <input type="text" value="이름">
+                                                                    <input type="text" v-model="newPt.ptNm">
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <th>성별</th>
-                                                        <td>여</td>
+                                                        <td v-if="newPt.rrno2!==undefined">{{getGndr(newPt.rrno2)}}</td>
                                                     </tr>
 
                                                     <tr>
@@ -803,12 +804,11 @@
                                                             <div class="item-row-box">
                                                                 <div class="item-cell-box">
                                                                     <div class="tbox">
-                                                                        <input type="text" value="이름">
+                                                                        <input type="text" v-model="newPt.rrno1">
                                                                     </div>
                                                                     <div class="unit-box mx-2 text-gray-600">-</div>
                                                                     <div class="tbox w-30px" style="min-width: 30px;">
-                                                                        <input type="password" value="*" class="p-0 text-center fs-3x" maxlength="1">
-                                                                    </div>
+                                                                        <input type="password" v-model="newPt.rrno2" class="p-0 text-center fs-3x" maxlength="1"></div>
                                                                     <div class="unit-box ms-2" style="line-height: 30px;">●●●●●●</div>
 
                                                                 </div>
@@ -819,7 +819,7 @@
 
                                                         </td>
                                                         <th>나이 (만)</th>
-                                                        <td>76세</td>
+                                                        <td v-if="newPt.rrno1!==undefined && newPt.rrno2!==undefined">{{getAge(newPt.rrno1,newPt.rrno2)}}</td>
                                                     </tr>
 
                                                     <tr>
@@ -828,9 +828,9 @@
                                                             <div class="item-row-box">
                                                                 <div class="item-cell-box full">
                                                                     <div class="tbox full">
-                                                                        <input type="text" value="03672" readonly>
+                                                                        <input type="text" v-model="newPt.zip" readonly>
                                                                     </div>
-                                                                    <a href="javascript:void(0);"
+                                                                    <a @click="openAddressFinder(0)"
                                                                        class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
                                                                        style="min-width: 80px;">주소검색</a>
                                                                 </div>
@@ -839,7 +839,7 @@
                                                             <div class="item-row-box">
                                                                 <div class="item-cell-box full">
                                                                     <div class="tbox full">
-                                                                        <input type="text" value="경상북도 칠곡군 왜관읍 중앙로">
+                                                                        <input type="text" v-model="newPt.bascAddr">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -847,14 +847,14 @@
                                                             <div class="item-row-box">
                                                                 <div class="item-cell-box full">
                                                                     <div class="tbox full">
-                                                                        <input type="text" value="118 110동 101호">
+                                                                        <input type="text" v-model="newPt.detlAddr">
                                                                     </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="item-row-box">
                                                                 <div class="item-cell-box">
-                                                                    <div class="item-note-box">* 기본주소 입력</div>
+                                                                    <div class="item-note-box">* 상세주소 입력</div>
                                                                 </div>
                                                             </div>
 
@@ -865,7 +865,7 @@
                                                         <td>
                                                             <div class="item-cell-box full">
                                                                 <div class="tbox full">
-                                                                    <input type="text" value="010-7579-1591">
+                                                                    <input type="text" v-model="newPt.mpno">
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -876,7 +876,7 @@
                                                         <td>
                                                             <div class="item-cell-box full">
                                                                 <div class="tbox full">
-                                                                    <input type="text" value="성민호">
+                                                                    <input type="text" v-model="newPt.nokNm">
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -888,7 +888,7 @@
                                                         <td>
                                                             <div class="item-cell-box full">
                                                                 <div class="tbox full">
-                                                                    <input type="text" value="010-7579-1591">
+                                                                    <input type="text" v-model="newPt.telno">
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -903,12 +903,12 @@
                                                                     <div class="toggle-list">
 
                                                                         <label>
-                                                                            <input type="radio" name="toggle1" checked="">
+                                                                            <input type="radio" name="toggle1" value="N" v-model="newPt.dethYn">
                                                                             <span class="txt">생존</span>
                                                                         </label>
 
                                                                         <label>
-                                                                            <input type="radio" name="toggle1">
+                                                                            <input type="radio" name="toggle1" value="Y" v-model="newPt.dethYn">
                                                                             <span class="txt">사망</span>
                                                                         </label>
 
@@ -925,7 +925,7 @@
                                                         <td>
                                                             <div class="item-cell-box full">
                                                                 <div class="tbox full">
-                                                                    <input type="text" value="회사원">
+                                                                    <input type="text" v-model="newPt.job">
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -941,17 +941,17 @@
                                                                         <div class="toggle-list">
 
                                                                             <label>
-                                                                                <input type="radio" name="nation" checked="">
+                                                                                <input type="radio" name="nation" value="NATI0001" v-model="newPt.natiCd">
                                                                                 <span class="txt">대한민국</span>
                                                                             </label>
 
                                                                             <label>
-                                                                                <input type="radio" name="nation">
+                                                                                <input type="radio" name="nation" value="NATI0003" v-model="newPt.natiCd">
                                                                                 <span class="txt">알수없음</span>
                                                                             </label>
 
                                                                             <label>
-                                                                                <input type="radio" name="nation" value="input">
+                                                                                <input type="radio" name="nation" value="NATI0002" v-model="newPt.natiCd">
                                                                                 <span class="txt">직접입력</span>
                                                                             </label>
 
@@ -966,7 +966,7 @@
 
                                                             <div class="item-row-box">
                                                                 <div class="tbox" style="width: 211px;">
-                                                                    <input type="text" value="" placeholder="국가명 입력" readonly class="nation-input">
+                                                                    <input type="text" placeholder="국가명 입력" v-model="newPt.natiNm" :readonly="newPt.natiCd!=='NATI0002'" class="nation-input">
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -975,7 +975,7 @@
 
                                                     </tbody>
                                                 </table>
-                                            </div>
+                                            </form>
                                         </div>
 
 
@@ -985,13 +985,14 @@
 
                             <article class="modal-menu-layout1 pt-10">
                                 <div class="modal-menu-list">
+<!--              todo: 역학조사서를사용하지 않았다면 팝업창 뜰 일 없음                      -->
                                     <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
-                                    <a href="javascript:popupOpen('exist')" class="modal-menu-btn menu-primary">다음</a>
+                                    <a @click="showPopup(0)" class="modal-menu-btn menu-primary">다음</a>
                                 </div>
                             </article>
                         </div>
 
-                        <div class="tabs-box" data-tabs="tabs2" style="display: none;">
+                        <div class="tabs-box" v-show="tab===1" style="display: none;">
                             <div class="d-flex justify-content-end text-danger pb-2">* 필수 입력 항목</div>
 
                             <article class="table-form-layout1">
@@ -1004,7 +1005,7 @@
 
                                 <div class="form-body-box">
 
-                                    <div class="table-box">
+                                    <form @submit="regDsInfo" class="table-box">
                                         <table>
                                             <colgroup>
                                                 <col style="width: 168px;">
@@ -1014,6 +1015,7 @@
                                             </colgroup>
                                             <tbody>
                                             <tr>
+<!--  todo: 담당보건소 select 불러오기 어떤식으로 조회되는지 조사                                               -->
                                                 <th>담당보건소</th>
                                                 <td>
                                                     <div class="item-row-box">
@@ -1033,7 +1035,8 @@
                                                     <div class="item-row-box">
                                                         <div class="item-cell-box">
                                                             <div class="tbox w-350px">
-                                                                <input readonly placeholder="보건소명 직접 입력">
+                                                                <!---  todo: 직접선택 option -> readonly 해제 -->
+                                                                <input placeholder="보건소명 직접 입력" v-model="dsInfo.rcptPhc">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1041,7 +1044,7 @@
                                                 <th>코로나19 증상 및 증후</th>
                                                 <td>
                                                     <div class="textbox">
-                                                        <textarea style="height: 66px;" class="py-2 px-4"></textarea>
+                                                        <textarea style="height: 66px;" class="py-2 px-4" v-model="dsInfo.cv19Symp"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1051,7 +1054,7 @@
                                                 <td>
                                                     <div class="item-cell-box">
                                                         <div class="tbox w-350px">
-                                                            <input type="text" value="" placeholder="질병명 입력">
+                                                            <input type="text" v-model="dsInfo.diagNm" placeholder="질병명 입력">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1059,7 +1062,7 @@
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" placeholder="검사결과 입력 예) 양성">
+                                                            <input type="text" placeholder="검사결과 입력 예) 양성" v-model="dsInfo.dfdgExamRslt">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1071,7 +1074,7 @@
                                                 <td>
                                                     <div class="item-cell-box">
                                                         <div class="tbox w-350px">
-                                                            <input type="text" placeholder="질병급 입력">
+                                                            <input type="text" placeholder="질병급 입력" v-model="dsInfo.diagGrde">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1079,18 +1082,18 @@
                                                 <td>
                                                     <div class="item-cell-box">
                                                         <div class="tbox" style="width: 110px;">
-                                                            <input type="text" placeholder="YYYY-MM-DD">
+                                                            <input type="text" placeholder="YYYY-MM-DD" v-model="dsInfo.occrDt">
                                                         </div>
 
-                                                        <a href="javascript:void(0);"
+                                                        <a @click="dsDtSame"
                                                            class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
                                                            style="min-width: 80px; line-height: 1.2;">전체동일</a>
 
                                                         <div class="tbox ms-3" style="width: 110px;">
-                                                            <input type="text" placeholder="YYYY-MM-DD">
+                                                            <input type="text" placeholder="YYYY-MM-DD" v-model="dsInfo.diagDt">
                                                         </div>
                                                         <div class="tbox ms-3" style="width: 110px;">
-                                                            <input type="text" placeholder="YYYY-MM-DD">
+                                                            <input type="text" placeholder="YYYY-MM-DD" v-model="dsInfo.rptDt">
                                                         </div>
 
                                                     </div>
@@ -1102,7 +1105,7 @@
                                                 <td>
                                                     <div class="item-cell-box">
                                                         <div class="tbox w-350px">
-                                                            <input type="text" value="" placeholder="환자등분류 입력">
+                                                            <input type="text" placeholder="환자등분류 입력" v-model="dsInfo.pcCatg">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1110,7 +1113,7 @@
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" placeholder="PCR 등 검사방법 외">
+                                                            <input type="text" placeholder="PCR 등 검사방법 외" v-model="dsInfo.rmk">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1125,22 +1128,22 @@
                                                             <div class="toggle-list">
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle2-1" checked="">
+                                                                    <input type="radio" name="toggle2-1" value="입원" v-model="dsInfo.admsYn">
                                                                     <span class="txt">입원</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle2-1">
+                                                                    <input type="radio" name="toggle2-1" value="외래" v-model="dsInfo.admsYn">
                                                                     <span class="txt">외래</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle2-1">
+                                                                    <input type="radio" name="toggle2-1" value="재택" v-model="dsInfo.admsYn">
                                                                     <span class="txt">재택</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle2-1">
+                                                                    <input type="radio" name="toggle2-1" value="기타" v-model="dsInfo.admsYn">
                                                                     <span class="txt">기타</span>
                                                                 </label>
 
@@ -1156,11 +1159,11 @@
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox" style="min-width:205px;">
-                                                            <input type="text" placeholder="요양기관기호 입력">
+                                                            <input type="text" placeholder="요양기관기호 입력" v-model="dsInfo.instId">
                                                         </div>
 
                                                         <div class="tbox full ms-3">
-                                                            <input type="text" placeholder="요양기관명 입력">
+                                                            <input type="text" placeholder="요양기관명 입력" v-model="dsInfo.instNm">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1173,9 +1176,9 @@
                                                     <div class="item-row-box">
                                                         <div class="item-cell-box full">
                                                             <div class="tbox full">
-                                                                <input type="text" value="" readonly placeholder="우편번호">
+                                                                <input type="text" readonly v-model="dsInfo.instZip" placeholder="우편번호">
                                                             </div>
-                                                            <a href="javascript:void(0);"
+                                                            <a @click="openAddressFinder(1)"
                                                                class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
                                                                style="min-width: 80px;">주소검색</a>
                                                         </div>
@@ -1184,7 +1187,7 @@
                                                     <div class="item-row-box">
                                                         <div class="item-cell-box full">
                                                             <div class="tbox full">
-                                                                <input type="text" value="" placeholder="기본주소 입력">
+                                                                <input type="text" v-model="dsInfo.instBascAddr" placeholder="기본주소 입력">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1192,7 +1195,7 @@
                                                     <div class="item-row-box">
                                                         <div class="item-cell-box full">
                                                             <div class="tbox full">
-                                                                <input type="text" value="" placeholder="상세주소 입력 (선택)">
+                                                                <input type="text" v-model="dsInfo.instDetlAddr" placeholder="상세주소 입력 (선택)">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1206,11 +1209,11 @@
 
                                                 </td>
 
-                                                <th>상세주소 입력 (선택)</th>
+                                                <th>요양기관 전화번호</th>
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" value="" placeholder="요양기관 전화번호 입력">
+                                                            <input type="text" v-model="dsInfo.instTelno" placeholder="요양기관 전화번호 입력">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1221,7 +1224,7 @@
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" value="" placeholder="진단의사 성명 입력">
+                                                            <input type="text" v-model="dsInfo.diagDrNm" placeholder="진단의사 성명 입력">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1233,7 +1236,7 @@
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" value="" placeholder="신고기관장 성명 입력">
+                                                            <input type="text" v-model="dsInfo.rptChfNm" placeholder="신고기관장 성명 입력">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1294,7 +1297,7 @@
 
                                             </tbody>
                                         </table>
-                                    </div>
+                                    </form>
                                 </div>
 
 
@@ -1302,15 +1305,15 @@
                             <article class="modal-menu-layout1 pt-10">
 
                                 <div class="modal-menu-list">
-                                    <a href="javascript:requestTabMove(1)" class="modal-menu-btn menu-cancel">이전</a>
-                                    <a href="javascript:requestTabMove(3)" class="modal-menu-btn menu-primary">다음</a>
+                                    <router-link to="" @click="backBtn(0)" class="modal-menu-btn menu-cancel">이전</router-link>
+                                    <router-link to="" @click="goAsgn(2)" class="modal-menu-btn menu-primary">다음</router-link>
                                 </div>
 
 
                             </article>
                         </div>
 
-                        <div class="tabs-box" data-tabs="tabs3" style="display: none;">
+                        <div class="tabs-box" v-show="tab===2" style="display: none;">
                             <div class="d-flex justify-content-end text-danger pb-2">* 필수 입력 항목</div>
 
                             <article class="table-form-layout1">
@@ -1323,7 +1326,7 @@
 
                                 <div class="form-body-box">
 
-                                    <div class="table-box">
+                                    <form @submit="regSvInfo" class="table-box">
                                         <table>
                                             <colgroup>
                                                 <col style="width: 168px;">
@@ -1339,42 +1342,49 @@
                                                     <div class="item-cell-box">
                                                         <div class="cbox">
                                                             <label>
-                                                                <input type="checkbox" name="type2"><i></i>
+                                                                <input type="checkbox" name="type2" value="PTTP0003" v-model="svInfo.ptTypeCd"><i></i>
                                                                 <span class="txt">투석</span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
-                                                                <input type="checkbox" name="type2"><i></i>
+                                                                <input type="checkbox" name="type2" value="PTTP0004" v-model="svInfo.ptTypeCd" ><i></i>
                                                                 <span class="txt">임산부</span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
-                                                                <input type="checkbox" name="type2"><i></i>
+                                                                <input type="checkbox" name="type2" value="PTTP0005" v-model="svInfo.ptTypeCd"><i></i>
+                                                                <span class="txt">수술</span>
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="cbox ms-4">
+                                                            <label>
+                                                                <input type="checkbox" name="type2" value="PTTP0008" v-model="svInfo.ptTypeCd"><i></i>
                                                                 <span class="txt">신생아</span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
-                                                                <input type="checkbox" name="type2"><i></i>
+                                                                <input type="checkbox" name="type2" value="PTTP0002" v-model="svInfo.ptTypeCd"><i></i>
                                                                 <span class="txt">소아</span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
-                                                                <input type="checkbox" name="type2"><i></i>
-                                                                <span class="txt">인공호흡기</span>
+                                                                <input type="checkbox" name="type2" value="PTTP0006" v-model="svInfo.ptTypeCd"><i></i>
+                                                                <span class="txt">인공호흡기 사용</span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
-                                                                <input type="checkbox" name="type2"><i></i>
+                                                                <input type="checkbox" name="type2" value="PTTP0007" v-model="svInfo.ptTypeCd"><i></i>
                                                                 <span class="txt">적극적 치료요청</span>
                                                             </label>
                                                         </div>
@@ -1391,35 +1401,35 @@
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0001" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">고혈압</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0002" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">당뇨</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0003" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">고지혈증</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0004" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">심혈관</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0005" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">뇌혈관</span>
                                                                 </label>
                                                             </div>
@@ -1430,35 +1440,42 @@
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0006" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">암</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0007" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">만성폐질환</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0008" v-model="svInfo.undrArr"><i></i>
+                                                                    <span class="txt">폐렴</span>
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="cbox">
+                                                                <label>
+                                                                    <input type="checkbox" name="disease" value="UDDS0009" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">신장질환</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0010" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">정신질환</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0011" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">결핵</span>
                                                                 </label>
                                                             </div>
@@ -1469,14 +1486,14 @@
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0012" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">천식 등 알레르기</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0013" v-model="svInfo.undrArr"><i></i>
                                                                     <span class="txt">면역력저하자</span>
                                                                 </label>
                                                             </div>
@@ -1491,13 +1508,13 @@
 
                                                                 <div class="cbox w-auto">
                                                                     <label>
-                                                                        <input type="checkbox" name="disease"><i></i>
+                                                                        <input type="checkbox" name="disease" value="UDDS0014" v-model="svInfo.undrArr"><i></i>
                                                                         <span class="txt">기타</span>
                                                                     </label>
                                                                 </div>
 
                                                                 <div class="tbox d-inline-flex ms-4 w-300px">
-                                                                    <input type="text" placeholder="직접 입력">
+                                                                    <input type="text" placeholder="직접 입력" v-model="svInfo.undrDsesEtc">
                                                                 </div>
                                                             </div>
 
@@ -1518,32 +1535,32 @@
                                                             <div class="toggle-list">
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle3-1" checked="">
+                                                                    <input type="radio" name="toggle3-1" value="BDTP0003" v-model="svInfo.reqBedTypeCd">
                                                                     <span class="txt">음압격리</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle3-1">
+                                                                    <input type="radio" name="toggle3-1" value="BDTP0002" v-model="svInfo.reqBedTypeCd">
                                                                     <span class="txt">일반격리</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle3-1">
+                                                                    <input type="radio" name="toggle3-1" value="BDTP0005" v-model="svInfo.reqBedTypeCd">
                                                                     <span class="txt">소아음압격리</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle3-1">
+                                                                    <input type="radio" name="toggle3-1" value="BDTP0004" v-model="svInfo.reqBedTypeCd">
                                                                     <span class="txt">소아일반격리</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle3-1">
+                                                                    <input type="radio" name="toggle3-1" value="BDTP0007" v-model="svInfo.reqBedTypeCd">
                                                                     <span class="txt">소아</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle3-1">
+                                                                    <input type="radio" name="toggle3-1" value="BDTP0006" v-model="svInfo.reqBedTypeCd">
                                                                     <span class="txt">일반</span>
                                                                 </label>
 
@@ -1567,17 +1584,17 @@
                                                             <div class="toggle-list">
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle4-1" checked="">
+                                                                    <input type="radio" name="toggle4-1" value="Y" v-model="svInfo.dnrAgreYn">
                                                                     <span class="txt">동의</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle4-1">
+                                                                    <input type="radio" name="toggle4-1" value="N" v-model="svInfo.dnrAgreYn">
                                                                     <span class="txt">비동의</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle4-1">
+                                                                    <input type="radio" name="toggle4-1" value="X" v-model="svInfo.dnrAgreYn">
                                                                     <span class="txt">해당없음</span>
                                                                 </label>
 
@@ -1600,28 +1617,33 @@
 
                                                             <div class="toggle-list">
 
-                                                                <label>
-                                                                    <input type="radio" name="toggle5-1" checked="">
+                                                                <label @click="svInfo.svrtIptTypeCd='SVIP0001'">
+                                                                    <input type="radio" name="toggle5-1" value="SVTP0006" v-model="svInfo.svrtTypeCd">
                                                                     <span class="txt">중환자</span>
                                                                 </label>
 
-                                                                <label>
-                                                                    <input type="radio" name="toggle5-1">
+                                                                <label @click="svInfo.svrtIptTypeCd='SVIP0001'">
+                                                                    <input type="radio" name="toggle5-1" value="SVTP0005" v-model="svInfo.svrtTypeCd">
                                                                     <span class="txt">중증</span>
                                                                 </label>
 
-                                                                <label>
-                                                                    <input type="radio" name="toggle5-1">
+                                                                <label @click="svInfo.svrtIptTypeCd='SVIP0001'">
+                                                                    <input type="radio" name="toggle5-1" value="SVTP0004" v-model="svInfo.svrtTypeCd">
                                                                     <span class="txt">준증증</span>
                                                                 </label>
 
-                                                                <label>
-                                                                    <input type="radio" name="toggle5-1">
+                                                                <label @click="svInfo.svrtIptTypeCd='SVIP0001'">
+                                                                    <input type="radio" name="toggle5-1" value="SVTP0003" v-model="svInfo.svrtTypeCd">
+                                                                    <span class="txt">중등증</span>
+                                                                </label>
+
+                                                                <label @click="svInfo.svrtIptTypeCd='SVIP0001'">
+                                                                    <input type="radio" name="toggle5-1" value="SVTP0001" v-model="svInfo.svrtTypeCd">
                                                                     <span class="txt">일반</span>
                                                                 </label>
 
-                                                                <label>
-                                                                    <input type="radio" name="toggle5-1">
+                                                                <label @click="svInfo.svrtTypeCd=''">
+                                                                    <input type="radio" name="toggle5-1" value="SVIP0002" v-model="svInfo.svrtIptTypeCd">
                                                                     <span class="txt">생체정보AI분석</span>
                                                                 </label>
 
@@ -1635,7 +1657,7 @@
                                                 </td>
                                             </tr>
 
-                                            <tr>
+                                            <tr v-show="svInfo.svrtIptTypeCd==='SVIP0002'">
                                                 <th>의식상태</th>
                                                 <td>
                                                     <div class="item-cell-box full justify-content-between">
@@ -1643,12 +1665,12 @@
 
                                                             <div class="toggle-list">
                                                                 <label>
-                                                                    <input type="radio" name="toggle3-6" checked="">
+                                                                    <input type="radio" name="toggle3-6" value="A" v-model="bioAnlys.avpu">
                                                                     <span class="txt">명료</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle3-6">
+                                                                    <input type="radio" name="toggle3-6" value="V" v-model="bioAnlys.avpu">
                                                                     <span class="txt">비명료</span>
                                                                 </label>
 
@@ -1664,12 +1686,12 @@
 
                                                             <div class="toggle-list">
                                                                 <label>
-                                                                    <input type="radio" name="toggle3-7" checked="">
+                                                                    <input type="radio" name="toggle3-7" value="Y" v-model="bioAnlys.o2Apply">
                                                                     <span class="txt">투여</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle3-7">
+                                                                    <input type="radio" name="toggle3-7" value="N" v-model="bioAnlys.o2Apply">
                                                                     <span class="txt">비투여</span>
                                                                 </label>
 
@@ -1680,12 +1702,12 @@
                                                 </td>
                                             </tr>
 
-                                            <tr>
+                                            <tr v-show="svInfo.svrtIptTypeCd==='SVIP0002'">
                                                 <th>체온(℃)</th>
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" placeholder="">
+                                                            <input type="number" placeholder="" v-model="bioAnlys.bdTemp">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1693,18 +1715,18 @@
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" placeholder="">
+                                                            <input type="number" placeholder="" v-model="bioAnlys.pulse">
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
 
-                                            <tr>
+                                            <tr v-show="svInfo.svrtIptTypeCd==='SVIP0002'">
                                                 <th>분당호흡수(회/분)</th>
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" placeholder="">
+                                                            <input type="number" placeholder="" v-model="bioAnlys.breath">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1712,18 +1734,18 @@
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" placeholder="">
+                                                            <input type="number" placeholder="" v-model="bioAnlys.spo2">
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
 
-                                            <tr>
+                                            <tr v-show="svInfo.svrtIptTypeCd==='SVIP0002'">
                                                 <th>수축기혈압(mmHg)</th>
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" placeholder="">
+                                                            <input type="number" placeholder="" v-model="bioAnlys.sbp">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1731,13 +1753,13 @@
                                                 </td>
                                             </tr>
 
-                                            <tr>
+                                            <tr v-show="svInfo.svrtIptTypeCd==='SVIP0002'">
                                                 <td colspan="4">
 
                                                     <article class="analysis-layout1">
 
                                                         <div class="analysis-submit-box">
-                                                            <a href="javascript:void(0)" class="analysis-submit-btn">분석</a>
+                                                            <a @click="regBioAnlys" class="analysis-submit-btn">분석</a>
                                                             <div class="submit-note-box">* 생체정보를 모두 입력하신 경우 AI 분석이 가능합니다</div>
                                                         </div>
 
@@ -1770,7 +1792,7 @@
 
                                             </tbody>
                                         </table>
-                                    </div>
+                                    </form>
                                 </div>
 
 
@@ -1780,17 +1802,15 @@
                             <article class="modal-menu-layout1 pt-10">
 
                                 <div class="modal-menu-list">
-                                    <a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-cancel">이전</a>
-
-
-                                    <a href="javascript:requestTabMove(4)" class="modal-menu-btn menu-primary">다음</a>
+                                    <router-link to="" @click="backBtn(1)" class="modal-menu-btn menu-cancel">이전</router-link>
+                                    <router-link to="" @click="goAsgn(4)" class="modal-menu-btn menu-primary">다음</router-link>
                                 </div>
 
 
                             </article>
                         </div>
 
-                        <div class="tabs-box" data-tabs="tabs4" style="display: none;">
+                        <div class="tabs-box" v-show="tab===3" style="display: none;">
                             <div class="d-flex justify-content-end text-danger pb-2">* 필수 입력 항목</div>
 
                             <article class="table-form-layout1">
@@ -1803,7 +1823,7 @@
 
                                 <div class="form-body-box">
 
-                                    <div class="table-box">
+                                    <form @submit="regStrtPoint" class="table-box">
                                         <table>
                                             <colgroup>
                                                 <col style="width: 168px;">
@@ -1813,8 +1833,8 @@
                                             </colgroup>
                                             <tbody>
                                             <tr>
-                                                <th>배정요청 지역 <span class="text-primary">*</span></th>
-                                                <td>
+                                                <th :rowspan="spInfo.dprtDstrTypeCd==='DPTP0002'?2:1">배정요청 지역 <span class="text-primary">*</span></th>
+                                                <td :rowspan="spInfo.dprtDstrTypeCd==='DPTP0002'?2:1">
                                                     <div class="item-cell-box full" style="">
                                                         <div class="sbox w-350px">
                                                             <select>
@@ -1827,30 +1847,30 @@
                                                     </div>
                                                 </td>
 
-                                                <th data-type="type1" style=";">보호자 1 연락처</th>
-                                                <td data-type="type1" style=";">
+                                                <th v-show="spInfo.dprtDstrTypeCd!=='DPTP0002'" style=";">보호자 1 연락처</th>
+                                                <td v-show="spInfo.dprtDstrTypeCd!=='DPTP0002'" style=";">
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" placeholder="검사결과 입력 예) 양성">
+                                                            <input type="text" placeholder="보호자1 연락처 입력" @input="validateInput" v-model="spInfo.nok1Telno">
                                                         </div>
                                                     </div>
                                                 </td>
 
 
-                                                <th data-type="type2" style="display: none;">원내배정 여부 <span class="text-primary">*</span></th>
-                                                <td data-type="type2" style="display: none;">
+                                                <th v-show="spInfo.dprtDstrTypeCd==='DPTP0002'" >원내배정 여부 <span class="text-primary">*</span></th>
+                                                <td v-show="spInfo.dprtDstrTypeCd==='DPTP0002'">
                                                     <div class="item-cell-box full justify-content-between">
                                                         <article class="toggle-list-layout2">
 
                                                             <div class="toggle-list">
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle4-1" checked="">
+                                                                    <input type="radio" name="toggle4-1" value="N" v-model="spInfo.inhpAsgnYn">
                                                                     <span class="txt">전원요청</span>
                                                                 </label>
 
                                                                 <label>
-                                                                    <input type="radio" name="toggle4-1">
+                                                                    <input type="radio" name="toggle4-1" value="Y" v-model="spInfo.inhpAsgnYn">
                                                                     <span class="txt">원내배정</span>
                                                                 </label>
 
@@ -1862,28 +1882,40 @@
                                                         * 원내배정 여부 선택
                                                     </div>
                                                 </td>
-                                            </tr>
 
+                                            </tr>
+                                            <tr v-if="spInfo.dprtDstrTypeCd==='DPTP0002'">
+
+                                                <!-- 출발지 병원 -->
+                                                <th>진료과</th>
+                                                <td>
+                                                    <div class="item-cell-box full">
+                                                        <div class="tbox full">
+                                                            <input type="text" placeholder="진료과 입력" v-model="spInfo.deptNm">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                             <tr>
-                                                <th data-type="dynamic">환자 출발지<span class="text-primary">*</span></th>
-                                                <td data-type="dynamic" style="vertical-align: top;">
+                                                <th :rowspan="spInfo.dprtDstrTypeCd==='DPTP0002'?2:1" data-type="dynamic">환자 출발지<span class="text-primary">*</span></th>
+                                                <td :rowspan="spInfo.dprtDstrTypeCd==='DPTP0002'?2:1" data-type="dynamic" style="vertical-align: top;">
                                                     <div class="item-cell-box full justify-content-between">
                                                         <article class="toggle-list-layout2">
 
                                                             <div class="toggle-list">
 
-                                                                <label>
-                                                                    <input type="radio" name="toggle4-2" checked="" value="type1">
+                                                                <label @click="setSpAddr(0)">
+                                                                    <input type="radio" name="toggle4-2" value="DPTP0001" v-model="spInfo.dprtDstrTypeCd">
                                                                     <span class="txt">자택</span>
                                                                 </label>
 
-                                                                <label>
-                                                                    <input type="radio" name="toggle4-2" value="type2">
+                                                                <label @click="setSpAddr(1)">
+                                                                    <input type="radio" name="toggle4-2" value="DPTP0002" v-model="spInfo.dprtDstrTypeCd">
                                                                     <span class="txt">병원</span>
                                                                 </label>
 
-                                                                <label>
-                                                                    <input type="radio" name="toggle4-2" value="type3">
+                                                                <label @click="setSpAddr(2)">
+                                                                    <input type="radio" name="toggle4-2" value="DPTP0003" v-model="spInfo.dprtDstrTypeCd">
                                                                     <span class="txt">기타지역</span>
                                                                 </label>
 
@@ -1895,59 +1927,44 @@
                                                         * 유효성 검사 문구
                                                     </div>
                                                 </td>
-                                                <th data-type="type1">보호자 2 연락처</th>
-                                                <td data-type="type1">
+                                                <th v-show="spInfo.dprtDstrTypeCd!=='DPTP0002'">보호자 2 연락처</th>
+                                                <td v-show="spInfo.dprtDstrTypeCd!=='DPTP0002'">
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" placeholder="검사결과 입력 예) 양성">
+                                                            <input type="text" placeholder="보호자 2 연락처 입력" @input="validateInput" v-model="spInfo.nok2Telno">
                                                         </div>
                                                     </div>
                                                 </td>
-
                                                 <!-- 출발지 병원 -->
-                                                <th data-type="type2" style="display: none;">진료과</th>
-
-                                                <td data-type="type2" style="display: none;">
+                                                <th v-show="spInfo.dprtDstrTypeCd==='DPTP0002'">담당의</th>
+                                                <td v-show="spInfo.dprtDstrTypeCd==='DPTP0002'">
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" placeholder="진료과 입력">
+                                                            <input type="text" placeholder="담당의 이름 입력" v-model="spInfo.spclNm">
                                                         </div>
                                                     </div>
                                                 </td>
-
                                             </tr>
-
                                             <!-- 출발지 병원 -->
-                                            <tr class="" data-type="type2" style="display: none;">
-                                                <th>담당의</th>
-                                                <td>
-                                                    <div class="item-cell-box full">
-                                                        <div class="tbox full">
-                                                            <input type="text" placeholder="담당의 이름 입력">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="" data-type="type2" style="display: none;">
+                                            <tr v-if="spInfo.dprtDstrTypeCd==='DPTP0002'" >
                                                 <th>전화번호</th>
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="tbox full">
-                                                            <input type="text" placeholder="연락 전화번호 입력">
+                                                            <input type="text" placeholder="연락 전화번호 입력" @input="validateInput" v-model="spInfo.chrgTelno">
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
-
                                             <tr>
                                                 <th>출발지 주소</th>
                                                 <td>
                                                     <div class="item-row-box">
                                                         <div class="item-cell-box full">
                                                             <div class="tbox full">
-                                                                <input type="text" value="" readonly placeholder="우편번호">
+                                                                <input type="text" v-model="spInfo.dprtDstrZip" readonly placeholder="우편번호">
                                                             </div>
-                                                            <a href="javascript:void(0);"
+                                                            <a @click="openAddressFinder(3)"
                                                                class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
                                                                style="min-width: 80px;">주소검색</a>
                                                         </div>
@@ -1956,7 +1973,7 @@
                                                     <div class="item-row-box">
                                                         <div class="item-cell-box full">
                                                             <div class="tbox full">
-                                                                <input type="text" value="" placeholder="기본주소 입력">
+                                                                <input type="text" placeholder="기본주소 입력" v-model="spInfo.dprtDstrBascAddr" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1964,19 +1981,16 @@
                                                     <div class="item-row-box">
                                                         <div class="item-cell-box full">
                                                             <div class="tbox full">
-                                                                <input type="text" value="" placeholder="상세주소 입력 (선택)">
+                                                                <input type="text" placeholder="상세주소 입력 (선택)" v-model="spInfo.dprtDstrDetlAddr">
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                                 </td>
-
                                                 <th>요청 메시지</th>
                                                 <td>
                                                     <div class="item-cell-box full">
                                                         <div class="textbox full">
-                                                            <textarea style="height: 85px;" class="py-2 px-4"></textarea>
+                                                            <textarea style="height: 85px;" class="py-2 px-4" v-model="spInfo.msg"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="item-cell-box full pt-2 justify-content-end"
@@ -1988,7 +2002,7 @@
 
                                             </tbody>
                                         </table>
-                                    </div>
+                                    </form>
                                 </div>
 
 
@@ -1996,16 +2010,14 @@
                             <article class="modal-menu-layout1 pt-10">
 
                                 <div class="modal-menu-list">
-                                    <a href="javascript:requestTabMove(3)" class="modal-menu-btn menu-cancel">이전</a>
+                                    <router-link to="" @click="backBtn(2)" class="modal-menu-btn menu-cancel">이전</router-link>
 
-                                    <a href="javascript:alertPopupOpen('메시지 입력')" class="modal-menu-btn menu-primary">병상요청완료</a>
+                                    <router-link to="" @click="goAsgn(5)" class="modal-menu-btn menu-primary">병상요청완료</router-link>
                                 </div>
 
                             </article>
                         </div>
                     </article>
-
-
                 </div>
                 <!--end::Modal body-->
             </div>
@@ -2045,7 +2057,7 @@
                         <div class="img-box">
                             <img src="/img/common/ic_request_patient.svg" alt="이미지">
                         </div>
-                        <div class="txt-box">신규 환자 등록</div>
+<!--                        <div class="txt-box">신규 환자 등록</div>-->
                         <div class="txt-box">성경희 <span class="text-gray-600 fw-normal">(여 / 76세 / 경상북도 칠곡군 / 010-8833-1234)</span>
                         </div>
                         <div class="txt-box"><span class="text-primary">#중증 #투석</span></div>
@@ -2625,7 +2637,7 @@
     </div>
 
 <!--  병상배정 세부 내용  -->
-    <div class="modal fade" id="kt_modal_detail" tabindex="-1" aria-hidden="true" style="">
+    <div v-if="bdDetail!==null" class="modal fade" id="kt_modal_detail" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -2677,7 +2689,7 @@
 
                                     <div class="option-box">
 
-                                        <a href="#none" class="option-btn">
+                                        <a  class="option-btn">
                                             <i class="fa-solid fa-share-nodes text-black" style="font-size:18px;"></i>
                                         </a>
                                     </div>
@@ -2699,7 +2711,7 @@
                                                     <tbody>
                                                     <tr>
                                                         <th>진료과</th>
-                                                        <td>김덕자 (남/88세)</td>
+                                                        <td>{{ bdDetail.ptNm }} ({{ bdDetail.gndr }}/{{bdDetail.age}}세)</td>
                                                     </tr>
 
                                                     <tr>
@@ -2709,8 +2721,7 @@
 
                                                     <tr>
                                                         <th>주소</th>
-                                                        <td>대구광역시 호암로 51<br/>
-                                                            4층 407호
+                                                        <td>{{ bdDetail.bascAddr}}
                                                         </td>
                                                     </tr>
 
@@ -2811,48 +2822,48 @@
 
                                     <article class="tabs-list-layout1 w-100 px-10">
                                         <div class="tabs-list full">
-                                            <a href="javascript:detailTabsMove(1)" class="tabs-btn active">
+                                            <router-link to="" @click="setActive(0)" class="tabs-btn" :class="{'active':tabidx===0}">
                                                 <span class="txt">타임라인</span>
-                                            </a>
+                                            </router-link>
 
-                                            <a href="javascript:detailTabsMove(2)" class="tabs-btn">
+                                            <router-link to="" @click="setActive(1)" class="tabs-btn" :class="{'active':tabidx===1}">
                                                 <span class="txt">질병정보</span>
-                                            </a>
+                                            </router-link>
 
-                                            <a href="javascript:detailTabsMove(3)" class="tabs-btn">
+                                            <router-link to="" @click="setActive(2)" class="tabs-btn" :class="{'active':tabidx===2}">
                                                 <span class="txt">출발·도착 정보</span>
-                                            </a>
+                                            </router-link>
                                         </div>
                                     </article>
 
                                 </div>
 
                                 <div class="detail-tabs-group flex-root" style="height: 100%; min-height:0;">
-                                    <div class="tabs-box flex-root" data-tabs="tabs1" style=";">
+                                    <div class="tabs-box flex-root" v-show="this.tabidx===0" style=";">
 
-                                        <div class="detail-body-box pe-5 flex-root" style="min-height: 0;">
+                                        <div v-if="timeline !==null" class="detail-body-box pe-5 flex-root" style="min-height: 0;">
                                             <article class="timeline-layout1 pb-5" style="height: 100%;">
 
                                                 <div class="timeline-wrap overflow-y-auto ps-10 pe-5" style="height:100%;">
-
-                                                    <div class="text-center py-4 fw-bold">2023년 2월 28일</div>
+<!--todo: 날짜시간 변환 -->
+                                                    <div class="text-center py-4 fw-bold">{{ timeline.items[0].updtDttm }}</div>
 
                                                     <ul>
 
                                                         <li>
                                                             <div class="ic-box">
-                                                                <img src="/img/common/ic_timeline_state0.svg" alt="이미지">
+                                                                <img v-show="timeline.items[0].timeLineStatus === 'complete'" src="/img/common/ic_timeline_state0.svg" alt="이미지">
 
                                                                 <!-- 상태별로 사용 -->
-                                                                <img src="/img/common/ic_timeline_state0_off.svg" alt="이미지">
+                                                                <img v-show="timeline.items[0].timeLineStatus !== 'complete'" src="/img/common/ic_timeline_state0_off.svg" alt="이미지">
                                                             </div>
 
-                                                            <div class="item-box">
+                                                            <div v-show="timeline.items[0].timeLineStatus === 'complete'" class="item-box">
                                                                 <div class="top-item-box">
-                                                                    <div class="state-box">병상요청 (원내배정)</div>
+                                                                    <div class="state-box">{{ timeline.items[0].title }}</div>
                                                                     <div class="date-box">오후 2시 23분</div>
                                                                 </div>
-                                                                <div class="mid-item-box">경북대병원 응급실 / 파트장 / 김혜숙</div>
+                                                                <div class="mid-item-box">{{ timeline.items[0].by }}</div>
                                                                 <div class="bottom-item-box">
 
                                                                     <div class="item-img-group mb-4">
@@ -2868,10 +2879,7 @@
 
                                                                     </div>
 
-                                                                    <div class="msg-box">상기 질환으로 본원에서 f/u 중인 환자로 두차례 s/d (syncope 가능성 있음)<br/>
-                                                                        있었으며, 넘어진 것 기억하지 못하며 지남력 떨어지고 Rt.arm weakness<br/>
-                                                                        발생하여 칠곡경대병원 응급실 내원하여 시행한 응급선별용 PCR검사에서<br/>
-                                                                        양성 확인되었습니다.(E gene 14.2, N2 gene 14.4)
+                                                                    <div class="msg-box">{{timeline.items[0].msg}}
                                                                     </div>
 
                                                                 </div>
@@ -2881,52 +2889,35 @@
 
                                                         <li>
                                                             <div class="ic-box">
-                                                                <img src="/img/common/ic_timeline_state6.svg" alt="이미지">
+                                                                <img v-show="timeline.items[1].timeLineStatus !=='suspend'" src="/img/common/ic_timeline_state6.svg" alt="이미지">
 
                                                                 <!-- 상태별로 사용 -->
-                                                                <img src="/img/common/ic_timeline_state6_off.svg" alt="이미지">
+                                                                <img v-show="timeline.items[1].timeLineStatus ==='suspend'" src="/img/common/ic_timeline_state6_off.svg" alt="이미지">
 
                                                             </div>
 
                                                             <div class="item-box">
                                                                 <div class="top-item-box">
-                                                                    <div class="state-box">승인대기</div>
+                                                                    <div class="state-box">{{ timeline.items[1].title }}</div>
                                                                 </div>
-                                                                <div class="mid-item-box">대구광역시 병상배정반</div>
+                                                                <div class="mid-item-box">{{ timeline.items[1].by }}</div>
 
                                                             </div>
                                                         </li>
 
                                                         <li class="off">
                                                             <div class="ic-box">
-                                                                <img src="/img/common/ic_timeline_state4.svg" alt="이미지">
+                                                                <img v-show="timeline.items[2].timeLineStatus !=='closed'" src="/img/common/ic_timeline_state4.svg" alt="이미지">
 
                                                                 <!-- 상태별로 사용 -->
-                                                                <img src="/img/common/ic_timeline_state4_off.svg" alt="이미지">
+                                                                <img v-show="timeline.items[2].timeLineStatus ==='closed'" src="/img/common/ic_timeline_state4_off.svg" alt="이미지">
                                                             </div>
 
                                                             <div class="item-box">
                                                                 <div class="top-item-box">
-                                                                    <div class="state-box">병상배정</div>
-                                                                    <div class="date-box"></div>
-                                                                </div>
-
-                                                            </div>
-                                                        </li>
-
-                                                        <li class="off">
-                                                            <div class="ic-box">
-                                                                <img src="/img/common/ic_timeline_state5.svg" alt="이미지">
-
-                                                                <!-- 상태별로 사용 -->
-                                                                <img src="/img/common/ic_timeline_state5_off.svg" alt="이미지">
-
-                                                            </div>
-
-                                                            <div class="item-box">
-                                                                <div class="top-item-box">
-                                                                    <div class="state-box">이송</div>
-                                                                    <div class="date-box"></div>
+                                                                    <div class="state-box">{{ timeline.items[2].title }}</div>
+                                                                    <div v-if="timeline.items[2].updtDttm !== null" class="date-box">{{timeline.items[2].updtDttm}}</div>
+                                                                    <div v-if="timeline.items[2].updtDttm === null" class="date-box"></div>
                                                                 </div>
 
                                                             </div>
@@ -2934,18 +2925,38 @@
 
                                                         <li class="off">
                                                             <div class="ic-box">
-                                                                <img src="/img/common/ic_timeline_state3.svg" alt="이미지">
+                                                                <img v-show="timeline.items[3].timeLineStatus !=='closed'" src="/img/common/ic_timeline_state5.svg" alt="이미지">
 
                                                                 <!-- 상태별로 사용 -->
-                                                                <img src="/img/common/ic_timeline_state3_off.svg" alt="이미지">
+                                                                <img v-show="timeline.items[3].timeLineStatus ==='closed'" src="/img/common/ic_timeline_state5_off.svg" alt="이미지">
+
+                                                            </div>
+
+                                                            <div class="item-box">
+                                                                <div class="top-item-box">
+                                                                    <div class="state-box">{{ timeline.items[3].title }}</div>
+                                                                    <div v-if="timeline.items[3].updtDttm !== null" class="date-box">{{timeline.items[3].updtDttm}}</div>
+                                                                    <div v-if="timeline.items[3].updtDttm === null" class="date-box"></div>
+                                                                </div>
+
+                                                            </div>
+                                                        </li>
+
+                                                        <li class="off">
+                                                            <div class="ic-box">
+                                                                <img v-show="timeline.items[4].timeLineStatus !=='closed'" src="/img/common/ic_timeline_state3.svg" alt="이미지">
+
+                                                                <!-- 상태별로 사용 -->
+                                                                <img v-show="timeline.items[4].timeLineStatus ==='closed'" src="/img/common/ic_timeline_state3_off.svg" alt="이미지">
 
 
                                                             </div>
 
                                                             <div class="item-box">
                                                                 <div class="top-item-box">
-                                                                    <div class="state-box">입원</div>
-                                                                    <div class="date-box"></div>
+                                                                    <div class="state-box">{{ timeline.items[4].title }}</div>
+                                                                    <div v-if="timeline.items[4].updtDttm !== null" class="date-box">{{timeline.items[4].updtDttm}}</div>
+                                                                    <div v-if="timeline.items[4].updtDttm === null" class="date-box"></div>
                                                                 </div>
 
                                                             </div>
@@ -3027,7 +3038,7 @@
                                     </div>
 
 
-                                    <div class="tabs-box flex-root" data-tabs="tabs2" style=";">
+                                    <div class="tabs-box flex-root" v-show="this.tabidx===1" style=";">
 
                                         <div class="scroll-wrap px-5 mx-5 mb-5">
 
@@ -3205,7 +3216,7 @@
 
                                     </div>
 
-                                    <div class="tabs-box flex-root" data-tabs="tabs3" style=";">
+                                    <div class="tabs-box flex-root" v-show="this.tabidx===2" style=";">
 
                                         <div class="scroll-wrap px-5 mx-5 mb-5">
 
@@ -3388,7 +3399,7 @@
     </div>
 
 <!--  이송 배차 처리  -->
-    <div class="modal fade" id="kt_modal_dispatch" tabindex="-1" aria-hidden="true" style="">
+    <div v-if="bdDetail!==null" class="modal fade" id="kt_modal_dispatch" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -3418,10 +3429,10 @@
                         <div class="img-box">
                             <img src="/img/common/ic_request_patient.svg" alt="이미지">
                         </div>
-                        <div class="txt-box">신규 환자 등록</div>
-                        <div class="txt-box">성경희 <span class="text-gray-600 fw-normal">(여 / 76세 / 경상북도 칠곡군 / 010-8833-1234)</span>
+<!--                        <div class="txt-box">신규 환자 등록</div>-->
+                        <div class="txt-box">{{ bdDetail.ptNm }} <span class="text-gray-600 fw-normal">({{bdDetail.gndr}} / {{bdDetail.age}}세 / {{ bdDetail.bascAddr }} / 010-8833-1234)</span>
                         </div>
-                        <div class="txt-box"><span class="text-primary">#중증 #투석</span></div>
+                        <div class="txt-box"><span class="text-primary">{{ getTag(bdDetail.tagList) }}</span></div>
 
 
                     </article>
@@ -3554,7 +3565,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th>환자유형</th>
+                                        <th>대표 연락처</th>
                                         <td colspan="2">
                                             <article class="toggle-list-layout2">
 
@@ -3763,8 +3774,27 @@
 
 
   <!--end::Modals-->
-
-    <article class="popup popup-exist" style="">
+<!--  alert창  -->
+    <article v-show="isAlert" class="popup popup-confirm" style="">
+        <div class="popup-wrapper">
+            <div class="popup-contents py-10 px-10" style="width: 300px;">
+                <article class="modal-alert-layout pb-10">
+                    <div class="alert-view-box pb-6">
+                        <img src="/img/common/ic_alert.svg" alt="이미지">
+                    </div>
+                    <div class="alert-msg-box">{{errMsg}}</div>
+                </article>
+                <article class="modal-menu-layout1">
+                    <div class="modal-menu-list">
+                        <router-link to="" @click="cfrmAl(alertIdx)" class="modal-menu-btn menu-primary" data-type=success>확인</router-link>
+                        <router-link v-show="cncBtn" to="" @click="alertClose" class="modal-menu-btn menu-cancel" data-type=cancel>취소</router-link>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </article>
+<!--환자정보 존재 -->
+    <article v-if="existPt!==null" v-show="popup===0" class="popup popup-exist" style="">
         <div class="popup-wrapper">
             <div class="popup-contents">
 
@@ -3773,7 +3803,7 @@
                     <div class="head-tit-box">환자정보 존재</div>
 
                     <div class="head-option-box">
-                        <a href="javascript:popupClose('exist')" class="popup-close-btn">
+                        <div @click="closePopup(0)" class="popup-close-btn">
 						<span class="svg-icon svg-icon-1">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
@@ -3782,7 +3812,7 @@
                         fill="currentColor"></rect>
 								</svg>
 							</span>
-                        </a>
+                        </div>
                     </div>
 
                 </div>
@@ -3797,7 +3827,7 @@
                                     class="d-inline-flex align-items-center justify-content-center w-auto bg-primary h-30px w-50px text-white rounded-4 px-0">
                                 일치
                             </div>
-                            <div class="d-inline-flex w-auto ms-3">이름 : 김덕자 (남/88세)</div>
+                            <div class="d-inline-flex w-auto ms-3">이름 : {{ existPt.ptNm }} ({{ existPt.gndr }}/{{getAge(existPt.rrno1,existPt.rrno2)}}세)</div>
                         </div>
 
                         <div class="exist-box d-flex align-items-center mt-3">
@@ -3805,7 +3835,7 @@
                                     class="d-inline-flex align-items-center justify-content-center w-auto bg-primary h-30px w-50px text-white rounded-4 px-0">
                                 일치
                             </div>
-                            <div class="d-inline-flex w-auto ms-3">주민등록번호 : 780412-1******</div>
+                            <div class="d-inline-flex w-auto ms-3">주민등록번호 : {{ existPt.rrno1 }}-{{existPt.rrno2}}******</div>
                         </div>
 
                         <div class="exist-box d-flex align-items-center mt-3">
@@ -3813,7 +3843,7 @@
                                     class="d-inline-flex align-items-center justify-content-center w-auto bg-primary h-30px w-50px text-white rounded-4 px-0">
                                 일치
                             </div>
-                            <div class="d-inline-flex w-auto ms-3">주소 : 대구시 북구</div>
+                            <div class="d-inline-flex w-auto ms-3">주소 : {{ existPt.dstr1Cd }} {{ existPt.dstrCd2 }}</div>
                         </div>
 
                         <div class="exist-box d-flex align-items-center mt-3">
@@ -3821,7 +3851,7 @@
                                     class="d-inline-flex align-items-center justify-content-center w-auto bg-gray-400 h-30px w-50px text-white rounded-4 px-0">
                                 불일치
                             </div>
-                            <div class="d-inline-flex w-auto ms-3">연락처 : 010-1234-5678</div>
+                            <div class="d-inline-flex w-auto ms-3">연락처 : {{ getTelno(existPt.mpno) }}</div>
                         </div>
 
                         <div class="exist-box d-flex align-items-center mt-6">
@@ -3838,11 +3868,8 @@
                     <article class="modal-menu-layout1">
 
                         <div class="modal-menu-list">
-                            <a href="javascript:popupClose('exist'); requestTabMove(2)"
-                               class="modal-menu-btn menu-primary-outline">신규등록</a>
-
-
-                            <a href="javascript:popupOpen('update-check')" class="modal-menu-btn menu-primary">기존정보 업데이트</a>
+                            <a @click="regNewPt" class="modal-menu-btn menu-primary-outline">신규등록</a>
+                            <a @click="goAsgn(3)" class="modal-menu-btn menu-primary">기존정보 업데이트</a>
                         </div>
 
 
@@ -3853,8 +3880,8 @@
 
         </div>
     </article>
-
-    <article class="popup popup-update-check">
+<!--  역학조사서 비교   -->
+    <article v-show="popup===1" class="popup popup-update-check">
         <div class="popup-wrapper">
             <div class="popup-contents py-10 px-10" style="width: 300px;">
                 <article class="modal-alert-layout pb-10">
@@ -3871,7 +3898,8 @@
         </div>
     </article>
 
-    <article class="popup popup-assignment-request1" style="">
+<!--병상요청승인-->
+    <article v-show="popup===2" class="popup popup-assignment-request1" style="">
         <div class="popup-wrapper">
             <div class="popup-contents">
 
@@ -3930,126 +3958,132 @@
         </div>
     </article>
 
-    <article class="popup popup-assignment-request2" style="">
-        <div class="popup-wrapper">
-            <div class="popup-contents">
 
-                <div class="popup-head-box py-5 px-10">
+<!--  병상배정 승인 todo: 배정반/의료진 보여지는 폼 다르게 만들기  -->
+   <article v-show="popup===3" class="popup popup-assignment-request2" style="">
+                    <div class="popup-wrapper">
+                        <div class="popup-contents">
 
-                    <div class="head-tit-box">병상배정 승인</div>
+                            <div class="popup-head-box py-5 px-10">
 
-                    <div class="head-option-box">
-                        <a href="javascript:popupClose('assignment-request2')" class="popup-close-btn">
-						<span class="svg-icon svg-icon-1">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                        fill="currentColor"></rect>
-									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                        fill="currentColor"></rect>
-								</svg>
-							</span>
-                        </a>
-                    </div>
+                                <div class="head-tit-box">병상배정 승인</div>
 
-                </div>
-
-                <div class="popup-body-box py-5 px-10">
-
-                    <div class="d-flex flex-column pb-6">
-
-                        <div class="fw-medium fs-16px text-black pb-4">배정정보 입력</div>
-
-                        <div class="">
-                            <article class="table-form-layout1">
-
-                                <div class="form-head-box">
-
-
+                                <div class="head-option-box">
+                                    <a href="javascript:popupClose('assignment-request2')" class="popup-close-btn">
+                        <span class="svg-icon svg-icon-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                    fill="currentColor"></rect>
+                              <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                    fill="currentColor"></rect>
+                            </svg>
+                          </span>
+                                    </a>
                                 </div>
 
-
-                                <div class="form-body-box">
-
-                                    <div class="table-box">
-                                        <table>
-                                            <colgroup>
-                                                <col style="width: 127px;">
-                                                <col style="width: auto;">
-                                            </colgroup>
-                                            <tbody>
-                                            <tr>
-                                                <th>병실 (선택)</th>
-                                                <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
-                                            </tr>
-
-                                            <tr>
-                                                <th>진료과 (선택)</th>
-                                                <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
-                                            </tr>
-
-                                            <tr>
-                                                <th>담당의 (선택)</th>
-                                                <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
-                                            </tr>
-
-                                            <tr>
-                                                <th>연락처 (선택)</th>
-                                                <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
-                                            </tr>
-
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-
-                            </article>
-
-
-                        </div>
-
-                    </div>
-
-                    <div>
-
-                        <div class="fw-medium fs-16px text-black pb-4">승인관련 메시지 입력</div>
-
-                        <div>
-                            <div class="textbox">
-                                <textarea onkeyup="limitTextarea(this,'textarea3',500)" maxlength="500" placeholder="메시지 입력" style="height: 120px;"></textarea>
-                                <div class="limit-box"><span id="textarea3">0</span>/500자</div>
                             </div>
+
+                            <div class="popup-body-box py-5 px-10">
+
+                                <div class="d-flex flex-column pb-6">
+
+                                    <div class="fw-medium fs-16px text-black pb-4">배정정보 입력</div>
+
+                                    <div class="">
+                                        <article class="table-form-layout1">
+
+                                            <div class="form-head-box">
+
+
+                                            </div>
+
+
+                                            <div class="form-body-box">
+
+                                                <div class="table-box">
+                                                    <table>
+                                                        <colgroup>
+                                                            <col style="width: 127px;">
+                                                            <col style="width: auto;">
+                                                        </colgroup>
+                                                        <tbody>
+                                                        <tr>
+                                                            <th>병실 (선택)</th>
+                                                            <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>진료과 (선택)</th>
+                                                            <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>담당의 (선택)</th>
+                                                            <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>연락처 (선택)</th>
+                                                            <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
+                                                        </tr>
+
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+
+                                        </article>
+
+
+                                    </div>
+
+                                </div>
+
+                                <div>
+
+                                    <div class="fw-medium fs-16px text-black pb-4">승인관련 메시지 입력</div>
+
+                                    <div>
+                                        <div class="textbox">
+                                            <textarea onkeyup="limitTextarea(this,'textarea3',500)" maxlength="500" placeholder="메시지 입력" style="height: 120px;"></textarea>
+                                            <div class="limit-box"><span id="textarea3">0</span>/500자</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="popup-foot-box py-5 px-10">
+                                <article class="modal-menu-layout1">
+
+                                    <div class="modal-menu-list">
+
+                                        <a href="javascript:confirmPopupOpen('병상요청을<br/>승인 하시겠습니까?',
+                                        function() {confirmPopupClose();alertPopupOpen('승인 되었습니다.',
+                                        function (){alertPopupClose();popupClose('assignment-request2');});})"
+                                           class="modal-menu-btn menu-primary">승인완료</a>
+                                    </div>
+
+
+                                </article>
+                            </div>
+
                         </div>
 
                     </div>
+                </article>
 
 
 
-                </div>
+<!--  배정 불가  -->
 
-                <div class="popup-foot-box py-5 px-10">
-                    <article class="modal-menu-layout1">
-
-                        <div class="modal-menu-list">
-
-                            <a href="javascript:confirmPopupOpen('병상요청을<br/>승인 하시겠습니까?',
-                            function() {confirmPopupClose();alertPopupOpen('승인 되었습니다.',
-                            function (){alertPopupClose();popupClose('assignment-request2');});})"
-                               class="modal-menu-btn menu-primary">승인완료</a>
-                        </div>
-
-
-                    </article>
-                </div>
-
-            </div>
-
-        </div>
-    </article>
-
-    <article class="popup popup-assignment-cancel" style="">
+    <article v-show="popup===4" class="popup popup-assignment-cancel" style="">
         <div class="popup-wrapper">
             <div class="popup-contents">
 
@@ -4161,13 +4195,14 @@
 
         </div>
     </article>
+
 </template>
 
 <script>
 
 import {mapState} from "vuex";
 import {ref} from "vue";
-import {maskingNm} from "@/util/ui";
+import {getDt, getTelno, maskingNm} from "@/util/ui";
 
 export default {
     components: {
@@ -4175,7 +4210,7 @@ export default {
     },
     name: 'ListBed',
     props: {
-        msg: String
+
     },
     mounted() {
     },
@@ -4184,30 +4219,312 @@ export default {
       const toggleTable = function(){
           showTable.value = !showTable.value;
       }
+      const isAlert = ref(false);
+      const cncBtn = ref(false);
+      const errMsg = '';
+
       return{
           showTable,
+          isAlert,
+          errMsg,
+          cncBtn, /* alert 취소버튼 유무 */
           toggleTable,
       }
     },
     data() {
         return {
+            tab:0, /* 병상요청 */
+            tabidx:0, /* 세부내용*/
+            popup:100, /* 팝업창 */
+            alertIdx:100, /* alert창 확인버튼 */
+            rptYn:false,  /* 역조서 유무 */
+            newPt:{
+                gndr:'',
+                zip:'',
+                bascAddr:'',
+                detlAddr:'',
+                natiCd:'',
+                picaVer:null,
+                natiNm:"대한민국",
+                attcId:null,
+            },
+            dsInfo:{
+                ptId:'',
+                occrDt:'',
+                diagDt:'',
+                rptDt:'',
+                instZip:'',
+                instBascAddr:'',
+                instDetlAddr:'',
+                esvyAttcId:null,
+                rptType:null,
+                diagAttcId:null,
+                diagDrNm:'',
+                instId:'',
+            },
+            svInfo:{
+                ptId:'',
+                ptTypeCd:'',
+                svrtIptTypeCd:'SVIP0001',
+                svrtTypeCd:'',
+                undrArr:[],
+            },
+            bioAnlys:{
+            },
+            spInfo:{
+                ptId:'',
+                dprtDstrTypeCd:'',
+                dprtDstrBascAddr:'',
+                dprtDstrDetlAddr:'',
+                dprtDstrZip:'',
+                nok1Telno:'',
+                nok2Telno:'',
+                chrgTelno:'',
+                spclNm:'',
+                dprtHospId:'',
+                inhpAsgnYn:'',
+            }
         }
     },
     computed:{
-        ...mapState('bedasgn',['bdList','bdCnt'])
+        ...mapState('bedasgn',['bdList','bdCnt','bdDetail','newPtInfo','ptDS','ptSv','ptBio','timeline']),
+        ...mapState('patnt',['existPt','ptBI',]),
+
     },
     methods: {
+        getStrType(){
+            if(this.dsInfo.admsYn==='재택'){
+                return 'DPTP0001'
+            } else if(this.dsInfo.admsYn==='기타'){
+                return 'DPTP0003'
+            } else {
+                return 'DPTP0002'
+            }
+        },
+        getTelno,
+        setNull(){
+            console.log('실행')
+            this.tab=0
+            this.tabidx=0
+            this.popup=100
+            this.alertIdx=100
+            this.rptYn = false
+        },
+        alertOpen(idx){
+            this.cncBtn = false
+            if(idx===0){
+                this.errMsg='병상을 요청하시겠습니까?'
+                this.cncBtn = true
+                this.isAlert = true
+                this.alertIdx = 0
+            } else if (idx===1){
+                    //todo: 병상요청api실행
+                    this.$store.dispatch('bedasgn/regStrtPoint',this.spInfo)
+                    this.isAlert = false
+                    this.errMsg = '요청되었습니다.'
+                    this.isAlert = true
+                    this.alertIdx = 1
+            } else if(idx===2) {
+                this.alertClose()
+                const but = document.getElementById('reqest_exit')
+                but.click()
+                this.tab=0
+            } else if(idx===3){
+                this.errMsg = '환자 정보가\n등록되었습니다.'
+                this.isAlert = true
+                this.alertIdx = 3
+            }
+        },
+        cfrmAl(res){
+            if(res===0){
+                console.log(0)
+                this.alertOpen(1)
+            } else if(res===1){
+              console.log('1')
+                this.alertOpen(2)
+            }  else if(res===3){
+              console.log('3')
+                this.alertClose()
+                this.goAsgn(1)
+            }
+        },
+        alertClose(){
+            this.errMsg = ''
+            this.cncBtn = false
+            this.isAlert=false
+            this.alertIdx = 100
+        },
+        setActive(idx) {
+            this.tabidx = idx;
+        },
+        async showPopup(idx){
+            if(idx===0 && !this.rptYn){
+                await this.$store.dispatch('patnt/isExistPt',this.newPt)
+                if(this.existPt !== null){
+                        this.popup=0
+                } else{
+                    await this.$store.dispatch('patnt/regBasicInfo',this.newPt)
+                    if(this.ptBI !== null) {
+                        this.alertOpen(3)
+                    }
+                }
+            }
+        },
+        closePopup(idx){
+          if(idx===0){
+              this.popup = 100
+          }
+        },
+        backBtn(idx){
+            this.tab = idx;
+            this.popup = 100
+        },
+        getUndrDses(arr){
+          if(!Array.isArray(arr) || arr.length === 0){
+              return "";
+          }
+          const strArr = arr.map(item =>String(item));
+          const resStr = strArr.join(';');
+          return resStr
+        },
+        goAsgn(idx){
+            if(idx===2){
+                // 감염병 정보 등록
+                if(this.dsInfo.ptId === ''){
+                    this.dsInfo.ptId = this.ptBI
+                }
+                this.$store.dispatch('bedasgn/regDsInfo',this.dsInfo)
+                this.spInfo.spclNm = this.dsInfo.diagDrNm
+                console.log(this.ptDs)
+                this.tab = idx;
+            } else if(idx ===3){
+                /*기존정보 업데이트*/
+                this.dsInfo.ptId = this.existPt.ptId
+                this.tab = 1;
+            } else if(idx === 4){
+                /* 중증 정보 등록*/
+                if(this.svInfo.ptId === ''){
+                    this.svInfo.ptId = this.ptBI
+                }
+                if(this.svInfo.ptTypeCd === ''){
+                    this.svInfo.ptTypeCd = 'PTTP0001'
+                }
+                this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrArr)
+                this.$store.dispatch('bedasgn/regSvInfo',this.svInfo)
+                this.spInfo.dprtDstrTypeCd = this.getStrType;
+                this.tab = 3;
+            } else if(idx ===5){
+                /*출발지 정보 등록*/
+                this.spInfo.ptId = this.svInfo.ptId
+                if(this.spInfo.inhpAsgnYn === 'Y' && this.spInfo.dprtDstrTypeCd === 'DPTP0002'){
+                    this.spInfo.dprtHospId = this.dsInfo.instId
+                }
+                this.alertOpen(0)
+            }
+          this.popup = 100
+        },
         maskingNm,
+        getDt,
+        getGndr(no2){
+          if(no2==='1'||no2==='3'){
+              this.newPt.gndr='남'
+              return this.newPt.gndr
+          }  else{
+              this.newPt.gndr='여'
+              return this.newPt.gndr
+          }
+        },
+        getAge(no1, no2){
+            const curData = new Date();
+            const curYear = curData.getFullYear();
+            let year;
+            if(no2==='1'||no2==='2'){
+                year = '19'+no1.slice(0,2)
+                return curYear - parseInt(year)
+            } else {
+                year = '20'+no1.slice(0,2)
+                return curYear - parseInt(year)
+            }
+        },
+        openAddressFinder(idx) {
+            const self = this;
+            // eslint-disable-next-line no-undef
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    if(idx===0){
+                        self.newPt.zip = data.zonecode
+                        self.newPt.bascAddr = data.address;
+                    } else if(idx===1){
+                        self.dsInfo.instZip = data.zonecode
+                        self.dsInfo.instBascAddr = data.address;
+                    } else if(idx===3){
+                        self.spInfo.dprtDstrZip = data.zonecode
+                        self.spInfo.dprtDstrBascAddr = data.address;
+                    }
+                },
+            }).open();
+        },
+        regNewPt(){
+            console.log(this.newPt)
+            this.$store.dispatch('patnt/regBasicInfo',this.newPt)
+            /*todo: validation 필요 ~ */
+            this.alertOpen(3)
+        },
+        dsDtSame(){
+          this.dsInfo.diagDt = this.dsInfo.occrDt
+          this.dsInfo.rptDt = this.dsInfo.occrDt
+        },
+        regDsInfo(){
+          console.log(this.ptBI)
+        },
+        regSvInfo(){
+            console.log(this.ptSv)
+        },
+        regStrtPoint(){
+            console.log(this.spInfo)
+        },
+        regBioAnlys(){
+          this.$store.dispatch('patnt/regBioAnlys',this.bioAnlys)
+        },
+        setSpAddr(idx){
+          if(idx===0){
+              /* 자택 주소*/
+              this.spInfo.dprtDstrZip=this.newPt.zip
+              this.spInfo.dprtDstrBascAddr=this.newPt.bascAddr
+              this.spInfo.dprtDstrDetlAddr=this.newPt.detlAddr
+          } else if(idx===1){
+              /*병원 주소 */
+              this.spInfo.dprtDstrZip=this.dsInfo.instZip
+              this.spInfo.dprtDstrBascAddr=this.dsInfo.instBascAddr
+              this.spInfo.dprtDstrDetlAddr=this.dsInfo.instDetlAddr
+          } else {
+              /*기타*/
+              this.spInfo.dprtDstrZip=''
+              this.spInfo.dprtDstrBascAddr=''
+              this.spInfo.dprtDstrDetlAddr=''
+          }
+        },
+        validateInput(){
+            this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[0-9]/g, '');
+            this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[0-9]/g, '');
+            this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[0-9]/g, '');
+        },
         getBtn(sts) {
             if (sts === 'BAST0001') {
-                return ['배정 승인·불가','#kt_modal_request']
+                return ['배정 없음','']
             } else if (sts === 'BAST0002') {
-                return ['추천병원 선택','#kt_modal_recommend']
+                return ['역학조사 중','']
             } else if (sts === 'BAST0003') {
-                return ['이송·배차 처리','#kt_modal_dispatch']
+                return ['승인 대기','#kt_modal_detail']
             } else if (sts === 'BAST0004') {
-                return ['입·퇴원 처리','#kt_modal_hospitalization']
+                return ['배정 대기','#kt_modal_detail']
             } else if (sts === 'BAST0005') {
+                return ['이송·배차 처리','#kt_modal_dispatch']
+            } else if (sts === 'BAST0006') {
+                return ['입·퇴원 처리','#kt_modal_hospitalization']
+            } else if (sts === 'BAST0007') {
+                return ['완료','#kt_modal_detail']
+            }else {
                 return ['완료','#kt_modal_detail']
             }
         },
@@ -4217,11 +4534,20 @@ export default {
                 str += '#'+item+' '
             })
             return str
-        }
+        },
+        openBedMod(data){
+            this.$store.commit('bedasgn/setbdDetail',data)
+            this.$store.dispatch('bedasgn/getTimeline',data)
+            this.$store.dispatch('bedasgn/getDSInfo',data)
+            console.log(data.bedStatCd)
+        },
     }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
+.popup {
+    display: block;
+}
 </style>
