@@ -1,5 +1,6 @@
 
 
+
 export let alertPopupClose = () => {
     console.log("실행")
     document.querySelector('.popup-alert').remove();
@@ -56,4 +57,25 @@ export function getTelno(data){
 
 export function maskingNm(nm){
     return nm.slice(0,1)+'*'+nm.slice(2)
+}
+
+export function getDt(data){
+    const curData = new Date();
+    const curYear = curData.getFullYear();
+    const curMonth = curData.getMonth()+1;
+    const curDate = curData.getDate();
+    const dData = new Date(data);
+    const dYear = dData.getFullYear();
+    const dMonth = dData.getMonth()+1;
+    const dDate = dData.getDate();
+
+    if(curYear===dYear && curMonth === dMonth && curDate === dDate){
+        return dData.getHours()+':'+dData.getMinutes()
+    } else {
+        if(dMonth<10){
+            return dYear+'.0'+dMonth+'.'+dDate+' '+dData.getHours()+':'+dData.getMinutes()
+        } else{
+            return dYear+'.'+dMonth+'.'+dDate+' '+dData.getHours()+':'+dData.getMinutes()
+        }
+    }
 }

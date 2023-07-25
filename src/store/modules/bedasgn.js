@@ -7,14 +7,47 @@ export default {
     state:{
         bdList:[],
         bdCnt:[],
+        bdDetail:null,
+        newPtInfo: null,
+        timeline:null,
+        ptDs:null,
+        ptSv:null,
+        ptBio:null,
+        ptSp:null,
     },
     mutations:{
+        test(state){
+          state.newPtInfo= 1
+        },
         setBdList(state,payload){
             state.bdList.push(...payload.items)
             state.bdCnt.push(payload.count)
+        },
+        resetBdList(state){
+            state.bdList=[]
+            state.bdCnt=[]
+        },
+        setbdDetail(state,payload){
+            state.bdDetail = payload
+        },
+        setTimeline(state,payload){
+            state.timeline = payload
+        },
+        setDisesInfo(state,payload){
+            state.ptDs = payload
+        },
+        setSevrInfo(state,payload){
+            state.ptSv = payload
+        },
+        setBioInfo(state,payload){
+            state.ptBio = payload
+        },
+        setSPInfo(state,payload){
+            state.ptSp = payload
         }
     },
     actions:{
+        /*병상배정목록*/
         getBdList(comment){
             const token = localStorage.getItem('userToken')
             const url = `${API_PROD}/api/v1/private/bedasgn/list`
@@ -29,6 +62,8 @@ export default {
             }).then(response =>{
                 if(response.data?.code==='00'){
                     console.log(response.data?.result)
+                    comment.commit('resetBdList')
+                    comment.commit('setbdDetail',response.data?.result[0].items[0])
                     response.data?.result.forEach(item => {
                         comment.commit('setBdList', item);
                     });
@@ -36,7 +71,128 @@ export default {
                 }
             }).catch(e =>{
                 console.log(e)
+                return router.push('/user/bedasgn/list')
             });
         },
+        /*감염병 정보 등록 */
+        async regDsInfo(comment,data){
+            const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/patient/regdisesinfo`
+            const request = data
+            console.log('병상배정 - 감염병 정보 등록')
+            try{
+                const response = await axios.post(url,request, {
+                    headers:{
+                        Authorization: `Bearer ${token}` // Add the token to the Authorization header
+                    }
+                });
+                if(response.data?.code === '00'){
+                    console.log(response.data?.result)
+                    comment.commit('setDisesInfo',response.data?.result);
+                }
+            } catch (e){
+                console.log(e)
+            }
+        },
+        /*중증 정보 등록 */
+        async regSvInfo(comment,data){
+            const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/patient/regsevrinfo`
+            const request = data
+            console.log('병상배정 - 중증 정보 등록')
+            try{
+                const response = await axios.post(url,request, {
+                    headers:{
+                        Authorization: `Bearer ${token}` // Add the token to the Authorization header
+                    }
+                });
+                if(response.data?.code === '00'){
+                    console.log(response.data?.result)
+                    comment.commit('setSevrInfo',response.data?.result);
+                }
+            } catch (e){
+                console.log(e)
+            }
+        },
+        /*도착지 정보 등록 */
+        async regStrtPoint(comment,data){
+            const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/patient/regstrtpoint`
+            const request = data
+            console.log('병상배정 - 출발지 정보 등록')
+            try{
+                const response = await axios.post(url,request, {
+                    headers:{
+                        Authorization: `Bearer ${token}` // Add the token to the Authorization header
+                    }
+                });
+                if(response.data?.code === '00'){
+                    console.log(response.data?.result)
+                    comment.commit('setSPInfo',response.data?.result);
+                }
+            } catch (e){
+                console.log(e)
+            }
+        },
+        /*타임라인 조회*/
+        async getTimeline(comment,data){
+            const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/patient/timeline/${data.ptId}/${data.bdasSeq}`
+            console.log('병상배정 - 세부정보 - 타임라인')
+            try{
+                const response = await axios.get(url, {
+                    headers:{
+                        Authorization: `Bearer ${token}` // Add the token to the Authorization header
+                    }
+                });
+                if(response.data?.code === '00'){
+                    console.log(response.data?.result)
+                    comment.commit('setTimeline',response.data?.result);
+                }
+            } catch (e){
+                console.log(e)
+            }
+        },
+        /*차수별 질병 정보 조회*/
+        async getDSInfo(comment,data){
+            const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/patient/disease-info/${data.ptId}`
+            console.log('병상배정 - 세부정보 - 질병 정보')
+            try{
+                const response = await axios.get(url, {
+                    headers:{
+                        Authorization: `Bearer ${token}` // Add the token to the Authorization header
+                    }
+                });
+                if(response.data?.code === '00'){
+                    console.log(response.data?.result)
+                    comment.commit('setDisesInfo',response.data?.result);
+                }
+            } catch (e){
+                console.log(e)
+            }
+        },
+
+        /*중증도 분류 정보 등록 -> 안 쓸 거 같음 */
+        async regBioInfo(comment,data){
+            const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/patient/regbioinfo`
+            const request = data
+            console.log('병상배정 - 중증도 분류 정보 등록')
+            try{
+                const response = await axios.post(url,request, {
+                    headers:{
+                        Authorization: `Bearer ${token}` // Add the token to the Authorization header
+                    }
+                });
+                if(response.data?.code === '00'){
+                    console.log(response.data?.result)
+                    comment.commit('setBioInfo',response.data?.result);
+                }
+            } catch (e){
+                console.log(e)
+            }
+        },
+
     }
 }

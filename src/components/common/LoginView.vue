@@ -820,7 +820,7 @@ export default {
     methods: {
         validateInput(idx){
           if(idx===0){
-              this.id = this.id.replace(/[^a-z0-9]/g, '');
+              this.id = this.id.replace(/[^A-Za-z0-9@.\-_]/g, '');
           }
           return false
         },

@@ -467,11 +467,12 @@ export default {
 
 
         loadCodeGroupsData() {
+            const token= localStorage.getItem('userToken')
             try {
                 return axios
                     .get('http://sbas-test.bitflow.ai/api/v1/admin/common/codegrps', {
                         headers: {
-                            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NiYXMtdGVzdC5iaXRmbG93LmFpIiwidXBuIjoiYWRtaW5pc3RyYXRvciIsInN1YiI6Iuq0gOumrOyekCIsInVzZXJObSI6Iuq0gOumrOyekCIsImdyb3VwcyI6WyJVU0VSIl0sImlhdCI6MTY4NjI4NTE5NywiZXhwIjoxNjg4ODc3MTk3LCJqdGkiOiJlZGE3MGZlNy01MjQ2LTQ4MGItOWI5NS01Y2I4MWI5Njg1MzIifQ.bCqHt_PB-dRwrlOqcdtOOJqNrO-sYnPkOfkKiNz_CrPN6VmZTE-1ZbFjleRAhDW8JLh5HIABrdN4BHDLBDNbWmRizH6qGqnUBkCQptXZtwixJzhBTNoOZn8VyDvXpW76mY2gxYjguxAGkJ7UIIROigSsGJnl-Q8ws_iFMCnEtogj8txxZRnDcR0st03QBKx14bNsQfhXZushxOPnXM47ewjasf5hTpidHQgtd_zZ8jYfm2RNnbUsurMXyVHCFsfcVNWIoLSUTGoxUmOAMqX3YwxsfwS1AtQ347zkCLgfWGsgENyB1YKIotSY4fl50GXr0y3QWWUL-PkCfZJTQtwgqQ'
+                            Authorization: `Bearer ${token}`
                         }
                     })
             } catch (error) {
