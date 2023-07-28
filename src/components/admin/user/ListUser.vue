@@ -362,7 +362,7 @@
                                             <td>{{getInstNm(item.instTypeCd)}}</td>
                                             <td>{{ item.instNm }}</td>
                                             <td> {{ maskingNm(item.userNm) }}</td>
-                                            <td> {{ item.jobCd }}</td>
+                                            <td> {{ getJobCd(item.jobCd) }}</td>
                                             <td>{{ getAuthCd(item.authCd) }}</td>
                                             <td>{{ getrgDt(item.rgstDttm) }}</td>
 
@@ -2334,6 +2334,19 @@ export default {
                 return 3
             } else if(code === 'PMGR0004'){
                 return 4
+            }
+        },
+        getJobCd(code){
+           if (code === 'PMGR0001'){
+                return '병상요청그룹'
+            }else if(code === 'PMGR0002'){
+                return '병상승인그룹'
+            } else if(code === 'PMGR0003'){
+                return '병상배정그룹'
+            } else if(code === 'PMGR0004'){
+                return '시스템관리자'
+            } else {
+                return code
             }
         },
         maskingNm(nm){

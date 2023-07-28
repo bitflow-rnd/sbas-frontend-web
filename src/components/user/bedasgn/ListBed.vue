@@ -545,11 +545,11 @@
                                             <td>{{ item.diagNm }}</td>
                                             <td>{{ item.svrtTypeCdNm }}</td>
                                             <td>읍압격리</td>
-                                            <td>{{ getTag(item.tagList) }}</td>
+                                            <td>{{ getTag(item.ptTypeCdNmTagList) }}</td>
                                             <td>{{ item.bascAddr }}</td>
                                             <td>{{ getDt(item.updtDttm) }}</td>
                                             <td>
-                                                <a data-bs-toggle='modal' :data-bs-target="getBtn(item.bedStatCd)[1]" @click="openBedMod(item)"
+                                                <a data-bs-toggle='modal' data-bs-target="#kt_modal_detail" @click="async () => {await openBedMod(item)}"
                                                    class="btn btn-flex btn-xs btn-outline btn-outline-primary w-125px justify-content-center"
                                                    style="line-height: 1.2">{{ getBtn(item.bedStatCd)[0] }}</a>
                                             </td>
@@ -636,10 +636,10 @@
                         <div class="img-box">
                             <img src="/img/common/ic_request_patient.svg" alt="이미지">
                         </div>
-                        <div v-show="ptBI===null" class="txt-box">신규 환자 등록</div>
-                        <div v-if="ptBI!==null&&newPt.mpno" class="txt-box">{{ newPt.ptNm }} <span class="text-gray-600 fw-normal">({{ newPt.gndr }} / {{ getAge(newPt.rrno1, newPt.rrno2) }}세 / {{ newPt.bascAddr }} / {{ getTelno(newPt.mpno) }})</span>
+                        <div v-show="ptBI===null && rptInfo === null" class="txt-box">신규 환자 등록</div>
+                        <div v-if="newPt.mpno" class="txt-box">{{ newPt.ptNm }} <span class="text-gray-600 fw-normal">({{ newPt.gndr }} / {{ getAge(newPt.rrno1, newPt.rrno2) }}세 / {{ newPt.bascAddr }} / {{ getTelno(newPt.mpno) }})</span>
                         </div>
-                        <div v-show="ptBI!==null && tab !== 1 && svInfo.undrArr !==[]" class="txt-box"><span class="text-primary">{{ getTag(svInfo.undrArr) }}</span></div>
+                        <div v-show="tab !== 1 && svInfo.undrDsesCd !==[]" class="txt-box"><span class="text-primary">{{ getTag(svInfo.undrDsesCd) }}</span></div>
 
 
                     </article>
@@ -729,18 +729,16 @@
 
                                                                 <div class="profile-card-box flex-column mx-auto" style="width: 264px;">
                                                                     <div class="profile-view-box " style="width: 100%; height: 264px;">
-                                                                        <img src="/img/common/img_profile_dummy.png" alt="이미지">
-                                                                        <a href="javascript:confirmPopupOpen('역학조사서 이미지를<br/> 삭제하시겠습니까?',
-                                                                        function() {profileImgRemove();confirmPopupClose();alertPopupOpen('역학조사서가 삭제되었습니다.');})"
-                                                                           class="remove-btn"><img src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
+                                                                        <img v-if="preRpt===null" src="/img/common/img_upload_img.svg" alt="이미지">
+                                                                        <img v-if="preRpt!==null" :src="preRpt" alt="이미지">
+                                                                        <a @click="alertOpen(9)" class="remove-btn"><img src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
                                                                     </div>
 
                                                                     <div class="profile-upload-box">
 
                                                                         <div class="upload-box">
-                                                                            <label
-                                                                                    class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary ">
-                                                                                <input type="file">
+                                                                            <label class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary ">
+                                                                                <input type="file" @change="uploadRpt">
                                                                                 수정하기
                                                                             </label>
                                                                         </div>
@@ -1036,7 +1034,7 @@
                                                         <div class="item-cell-box">
                                                             <div class="tbox w-350px">
                                                                 <!---  todo: 직접선택 option -> readonly 해제 -->
-                                                                <input placeholder="보건소명 직접 입력" v-model="dsInfo.rcptPhc">
+                                                                <input placeholder="보건소명 직접 입력(수정필요)" v-model="dsInfo.rcptPhc">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1105,7 +1103,7 @@
                                                 <td>
                                                     <div class="item-cell-box">
                                                         <div class="tbox w-350px">
-                                                            <input type="text" placeholder="환자등분류 입력" v-model="dsInfo.pcCatg">
+                                                            <input type="text" placeholder="환자등분류 입력" v-model="dsInfo.ptCatg">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1342,49 +1340,49 @@
                                                     <div class="item-cell-box">
                                                         <div class="cbox">
                                                             <label>
-                                                                <input type="checkbox" name="type2" value="PTTP0003" v-model="svInfo.ptTypeCd"><i></i>
+                                                                <input type="checkbox" name="type2_1" value="PTTP0003" v-model="svInfo.ptTypeCd"><i></i>
                                                                 <span class="txt">투석</span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
-                                                                <input type="checkbox" name="type2" value="PTTP0004" v-model="svInfo.ptTypeCd" ><i></i>
+                                                                <input type="checkbox" name="type2_2" value="PTTP0004" v-model="svInfo.ptTypeCd" ><i></i>
                                                                 <span class="txt">임산부</span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
-                                                                <input type="checkbox" name="type2" value="PTTP0005" v-model="svInfo.ptTypeCd"><i></i>
+                                                                <input type="checkbox" name="type2_3" value="PTTP0005" v-model="svInfo.ptTypeCd"><i></i>
                                                                 <span class="txt">수술</span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
-                                                                <input type="checkbox" name="type2" value="PTTP0008" v-model="svInfo.ptTypeCd"><i></i>
+                                                                <input type="checkbox" name="type2_4" value="PTTP0008" v-model="svInfo.ptTypeCd"><i></i>
                                                                 <span class="txt">신생아</span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
-                                                                <input type="checkbox" name="type2" value="PTTP0002" v-model="svInfo.ptTypeCd"><i></i>
+                                                                <input type="checkbox" name="type2_5" value="PTTP0002" v-model="svInfo.ptTypeCd"><i></i>
                                                                 <span class="txt">소아</span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
-                                                                <input type="checkbox" name="type2" value="PTTP0006" v-model="svInfo.ptTypeCd"><i></i>
+                                                                <input type="checkbox" name="type2_6" value="PTTP0006" v-model="svInfo.ptTypeCd"><i></i>
                                                                 <span class="txt">인공호흡기 사용</span>
                                                             </label>
                                                         </div>
 
                                                         <div class="cbox ms-4">
                                                             <label>
-                                                                <input type="checkbox" name="type2" value="PTTP0007" v-model="svInfo.ptTypeCd"><i></i>
+                                                                <input type="checkbox" name="type2_7" value="PTTP0007" v-model="svInfo.ptTypeCd"><i></i>
                                                                 <span class="txt">적극적 치료요청</span>
                                                             </label>
                                                         </div>
@@ -1401,35 +1399,35 @@
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0001" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0001" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">고혈압</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0002" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0002" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">당뇨</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0003" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0003" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">고지혈증</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0004" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0004" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">심혈관</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0005" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0005" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">뇌혈관</span>
                                                                 </label>
                                                             </div>
@@ -1440,42 +1438,42 @@
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0006" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0006" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">암</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0007" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0007" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">만성폐질환</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0008" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0008" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">폐렴</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0009" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0009" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">신장질환</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0010" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0010" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">정신질환</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0011" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0011" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">결핵</span>
                                                                 </label>
                                                             </div>
@@ -1486,14 +1484,14 @@
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0012" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0012" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">천식 등 알레르기</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0013" v-model="svInfo.undrArr"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0013" v-model="svInfo.undrDsesCd"><i></i>
                                                                     <span class="txt">면역력저하자</span>
                                                                 </label>
                                                             </div>
@@ -1508,7 +1506,7 @@
 
                                                                 <div class="cbox w-auto">
                                                                     <label>
-                                                                        <input type="checkbox" name="disease" value="UDDS0014" v-model="svInfo.undrArr"><i></i>
+                                                                        <input type="checkbox" name="disease" value="UDDS0014" v-model="svInfo.undrDsesCd"><i></i>
                                                                         <span class="txt">기타</span>
                                                                     </label>
                                                                 </div>
@@ -2637,7 +2635,7 @@
     </div>
 
 <!--  병상배정 세부 내용  -->
-    <div v-if="bdDetail!==null" class="modal fade" id="kt_modal_detail" tabindex="-1" aria-hidden="true" style="">
+    <div class="modal fade" id="kt_modal_detail" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -2654,7 +2652,7 @@
                             <i class="fa-solid fa-share-nodes text-black" style="font-size:18px;"></i>
                         </div>
 
-                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal(0)" data-bs-dismiss="modal">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                             <span class="svg-icon svg-icon-1">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2696,7 +2694,7 @@
 
                                 </div>
 
-                                <div class="detail-body-box px-10">
+                                <div v-if="ptDetail!==null && ptDs !== null" class="detail-body-box px-10">
 
                                     <article class="table-form-layout1">
 
@@ -2711,65 +2709,65 @@
                                                     <tbody>
                                                     <tr>
                                                         <th>진료과</th>
-                                                        <td>{{ bdDetail.ptNm }} ({{ bdDetail.gndr }}/{{bdDetail.age}}세)</td>
+                                                        <td>{{ ptDetail.ptNm }} ({{ ptDetail.gndr }}/{{ptDetail.age}}세)</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>주민등록번호</th>
-                                                        <td>760702-1*******</td>
+                                                        <td>{{ ptDetail.rrno1 }}-{{ptDetail.rrno2}}*******</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>주소</th>
-                                                        <td>{{ bdDetail.bascAddr}}
+                                                        <td>{{ ptDetail.bascAddr}}
                                                         </td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>사망여부</th>
-                                                        <td>생존</td>
+                                                        <td>{{ ptDetail.dethYn==='Y'?'사망':'생존' }}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>국적</th>
-                                                        <td>대한민국</td>
+                                                        <td>{{ ptDetail.natiNm }}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>휴대전화번호</th>
-                                                        <td>010-5678-1234</td>
+                                                        <td>{{ getTelno(ptDetail.mpno) }}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>보호자 이름</th>
-                                                        <td>김덕환</td>
+                                                        <td>{{ ptDetail.nokNm }}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>전화번호</th>
-                                                        <td>-</td>
+                                                        <td>{{ptDetail.telno}}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>직업</th>
-                                                        <td>기타 리스트</td>
+                                                        <td>{{ ptDetail.job }}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>증상 ·징후<br/>
                                                             / 검사결과
                                                         </th>
-                                                        <td>코로나19감염병 / 양성</td>
+                                                        <td>{{ ptDs.diagNm }} / {{ ptDs.dfdgExamRslt }}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>기저질환</th>
-                                                        <td>#고혈압 #당뇨 #고지혈증 #심혈관</td>
+                                                        <td>{{ getTag(ptDs.undrDsesNms) }}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>환자유형</th>
-                                                        <td>#고혈압, #당뇨</td>
+                                                        <td>{{ getTag(ptDs.ptTypeNms) }}</td>
                                                     </tr>
 
                                                     <tr>
@@ -2780,19 +2778,6 @@
                                                             <div class="table-img-box pt-4">
 
                                                                 <a href="javascript:void(0)" class="img-box">
-                                                                    <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                </a>
-
-                                                                <a href="javascript:void(0)" class="img-box">
-                                                                    <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                </a>
-
-                                                                <a href="javascript:void(0)" class="img-box">
-                                                                    <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                </a>
-
-                                                                <a href="javascript:void(0)" class="img-box">
-                                                                    <div class="cnt-box">+5</div>
                                                                     <img src="/img/common/img_dummy_item1.png" alt="이미지">
                                                                 </a>
 
@@ -2845,33 +2830,26 @@
                                             <article class="timeline-layout1 pb-5" style="height: 100%;">
 
                                                 <div class="timeline-wrap overflow-y-auto ps-10 pe-5" style="height:100%;">
-<!--todo: 날짜시간 변환 -->
-                                                    <div class="text-center py-4 fw-bold">{{ timeline.items[0].updtDttm }}</div>
+                                                    <div class="text-center py-4 fw-bold">{{ getTLDt(timeline.items[0].updtDttm,0) }}</div>
 
                                                     <ul>
 
-                                                        <li>
+                                                        <li v-for="(item,idx) in timeline.items" :key="idx" :class="{'off': item.timeLineStatus !== 'complete'}">
                                                             <div class="ic-box">
-                                                                <img v-show="timeline.items[0].timeLineStatus === 'complete'" src="/img/common/ic_timeline_state0.svg" alt="이미지">
-
-                                                                <!-- 상태별로 사용 -->
-                                                                <img v-show="timeline.items[0].timeLineStatus !== 'complete'" src="/img/common/ic_timeline_state0_off.svg" alt="이미지">
+                                                                <img :src="getTLIcon(item.timeLineStatus,idx)" alt="이미지">
                                                             </div>
 
-                                                            <div v-show="timeline.items[0].timeLineStatus === 'complete'" class="item-box">
+                                                            <div class="item-box">
                                                                 <div class="top-item-box">
-                                                                    <div class="state-box">{{ timeline.items[0].title }}</div>
-                                                                    <div class="date-box">오후 2시 23분</div>
+                                                                    <div class="state-box">{{ item.title }}</div>
+                                                                    <div class="date-box">{{ getTLDt(item.updtDttm,1) }}</div>
                                                                 </div>
-                                                                <div class="mid-item-box">{{ timeline.items[0].by }}</div>
+                                                                <div class="mid-item-box">{{ item.by }}</div>
                                                                 <div class="bottom-item-box">
 
+                                                                    <!--todo: timeline에서 받아오는 img 파일이 없는데-->
                                                                     <div class="item-img-group mb-4">
                                                                         <div class="img-list">
-                                                                            <a href="javascript:void(0)" class="img-box">
-                                                                                <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                            </a>
-
                                                                             <a href="javascript:void(0)" class="img-box">
                                                                                 <img src="/img/common/img_dummy_item1.png" alt="이미지">
                                                                             </a>
@@ -2879,84 +2857,9 @@
 
                                                                     </div>
 
-                                                                    <div class="msg-box">{{timeline.items[0].msg}}
+                                                                    <div class="msg-box" v-show="item.msg !== null">{{item.msg}}
                                                                     </div>
 
-                                                                </div>
-
-                                                            </div>
-                                                        </li>
-
-                                                        <li>
-                                                            <div class="ic-box">
-                                                                <img v-show="timeline.items[1].timeLineStatus !=='suspend'" src="/img/common/ic_timeline_state6.svg" alt="이미지">
-
-                                                                <!-- 상태별로 사용 -->
-                                                                <img v-show="timeline.items[1].timeLineStatus ==='suspend'" src="/img/common/ic_timeline_state6_off.svg" alt="이미지">
-
-                                                            </div>
-
-                                                            <div class="item-box">
-                                                                <div class="top-item-box">
-                                                                    <div class="state-box">{{ timeline.items[1].title }}</div>
-                                                                </div>
-                                                                <div class="mid-item-box">{{ timeline.items[1].by }}</div>
-
-                                                            </div>
-                                                        </li>
-
-                                                        <li class="off">
-                                                            <div class="ic-box">
-                                                                <img v-show="timeline.items[2].timeLineStatus !=='closed'" src="/img/common/ic_timeline_state4.svg" alt="이미지">
-
-                                                                <!-- 상태별로 사용 -->
-                                                                <img v-show="timeline.items[2].timeLineStatus ==='closed'" src="/img/common/ic_timeline_state4_off.svg" alt="이미지">
-                                                            </div>
-
-                                                            <div class="item-box">
-                                                                <div class="top-item-box">
-                                                                    <div class="state-box">{{ timeline.items[2].title }}</div>
-                                                                    <div v-if="timeline.items[2].updtDttm !== null" class="date-box">{{timeline.items[2].updtDttm}}</div>
-                                                                    <div v-if="timeline.items[2].updtDttm === null" class="date-box"></div>
-                                                                </div>
-
-                                                            </div>
-                                                        </li>
-
-                                                        <li class="off">
-                                                            <div class="ic-box">
-                                                                <img v-show="timeline.items[3].timeLineStatus !=='closed'" src="/img/common/ic_timeline_state5.svg" alt="이미지">
-
-                                                                <!-- 상태별로 사용 -->
-                                                                <img v-show="timeline.items[3].timeLineStatus ==='closed'" src="/img/common/ic_timeline_state5_off.svg" alt="이미지">
-
-                                                            </div>
-
-                                                            <div class="item-box">
-                                                                <div class="top-item-box">
-                                                                    <div class="state-box">{{ timeline.items[3].title }}</div>
-                                                                    <div v-if="timeline.items[3].updtDttm !== null" class="date-box">{{timeline.items[3].updtDttm}}</div>
-                                                                    <div v-if="timeline.items[3].updtDttm === null" class="date-box"></div>
-                                                                </div>
-
-                                                            </div>
-                                                        </li>
-
-                                                        <li class="off">
-                                                            <div class="ic-box">
-                                                                <img v-show="timeline.items[4].timeLineStatus !=='closed'" src="/img/common/ic_timeline_state3.svg" alt="이미지">
-
-                                                                <!-- 상태별로 사용 -->
-                                                                <img v-show="timeline.items[4].timeLineStatus ==='closed'" src="/img/common/ic_timeline_state3_off.svg" alt="이미지">
-
-
-                                                            </div>
-
-                                                            <div class="item-box">
-                                                                <div class="top-item-box">
-                                                                    <div class="state-box">{{ timeline.items[4].title }}</div>
-                                                                    <div v-if="timeline.items[4].updtDttm !== null" class="date-box">{{timeline.items[4].updtDttm}}</div>
-                                                                    <div v-if="timeline.items[4].updtDttm === null" class="date-box"></div>
                                                                 </div>
 
                                                             </div>
@@ -3013,19 +2916,23 @@
 
                                                     </div>
 
-
-                                                    <div class="menu-group-box">
+                                                    <!--todo: 지자체병상배정반의경우만 노출-->
+                                                    <div v-if="bdDetail!==null" class="menu-group-box">
 
                                                         <article class="modal-menu-layout1">
                                                             <div class="modal-menu-list">
-                                                                <a href="javascript:alertPopupOpen('메시지 입력')"
+                                                                <a v-show="bdDetail.bedStatCd==='BAST0003'||(bdDetail.bedStatCd==='BAST0004'&&userInfo.jobCd==='PMGR0003')" @click="showPopup(1)"
                                                                    class="modal-menu-btn menu-primary-outline radius-0 big">배정 불가</a>
-                                                                <a href="javascript:alertPopupOpen('메시지 입력')"
-                                                                   class="modal-menu-btn menu-primary radius-0 big">병상요청 승인</a>
+                                                                <div v-show="bdDetail.bedStatCd==='BAST0003'||(bdDetail.bedStatCd==='BAST0004'&&userInfo.jobCd==='PMGR0003')" @click="async () => { await showPopup(2)}" :data-bs-toggle="openRcmdModal(this.rcmdModal)[0]" :data-bs-target="openRcmdModal(this.rcmdModal)[1]"
+                                                                   class="modal-menu-btn menu-primary radius-0 big">병상요청 승인</div>
+                                                                <div v-show="bdDetail.bedStatCd==='BAST0005'" data-bs-toggle="modal"
+                                                                     data-bs-target="#kt_modal_dispatch" class="modal-menu-btn menu-primary radius-0 big">이송·배차 처리</div>
+                                                                <div v-show="bdDetail.bedStatCd==='BAST0006'" data-bs-toggle="modal"
+                                                                     data-bs-target="#kt_modal_hospitalization" class="modal-menu-btn menu-primary radius-0 big">입 · 퇴원 처리</div>
+
                                                             </div>
 
                                                         </article>
-
 
                                                     </div>
                                                 </div>
@@ -3040,7 +2947,7 @@
 
                                     <div class="tabs-box flex-root" v-show="this.tabidx===1" style=";">
 
-                                        <div class="scroll-wrap px-5 mx-5 mb-5">
+                                        <div v-if="ptDs!==null" class="scroll-wrap px-5 mx-5 mb-5">
 
                                             <article class="table-form-layout1">
 
@@ -3062,77 +2969,70 @@
                                                             <tbody>
                                                             <tr>
                                                                 <th>담당보건소</th>
-                                                                <td>대구 북구 보건소</td>
+                                                                <td>{{ ptDs.rcptPhc }}</td>
                                                                 <th>입원여부</th>
-                                                                <td>입원</td>
+                                                                <td>{{ ptDs.admsYn }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>코로나19증상 및 징후</th>
-                                                                <td>코로나19감염병</td>
+                                                                <td>{{ ptDs.diagNm }}</td>
                                                                 <th>확진검사결과</th>
-                                                                <td>양성</td>
+                                                                <td>{{ ptDs.dfdgExamRslt }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>질병급</th>
-                                                                <td>2급</td>
+                                                                <td>{{ ptDs.diagGrde }}</td>
                                                                 <th>DNR 동의</th>
-                                                                <td>동의</td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>질병급</th>
-                                                                <td>2급</td>
-                                                                <th>DNR 동의</th>
-                                                                <td>동의</td>
+                                                                <td>{{ ptDs.dnrAgreYn }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>기저질환</th>
-                                                                <td colspan="3">#고혈압 #당뇨 #고지혈증 #심혈관</td>
+                                                                <td colspan="3">{{ getTag(ptDs.undrDsesNms) }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>환자유형</th>
-                                                                <td colspan="3">#임산부 #투석 #인공호흡기사용</td>
+                                                                <td colspan="3">{{ getTag(ptDs.ptTypeNms) }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>중증도 분류</th>
                                                                 <td colspan="3">
-                                                                    <div class="item-cell-box full">중증 / NEWS Score 13</div>
+                                                                    <div class="item-cell-box full">{{ ptDs.svrtTypeNms[0] }} / NEWS Score 13</div>
                                                                     <div class="item-cell-box pt-3 full">
 
                                                                         <article class="category-list-layout1">
 
                                                                             <div class="category-item-box">
                                                                                 <div class="subject-box">체온(℃)</div>
-                                                                                <div class="con-box">39</div>
+                                                                                <div class="con-box">{{ ptDs.bdtp }}</div>
                                                                             </div>
 
                                                                             <div class="category-item-box">
                                                                                 <div class="subject-box">맥박<br/>
                                                                                     (회/분)</div>
-                                                                                <div class="con-box">60</div>
+                                                                                <div class="con-box">{{ ptDs.hr }}</div>
                                                                             </div>
 
                                                                             <div class="category-item-box">
                                                                                 <div class="subject-box">분당호흡수<br/>
                                                                                     (회/분)</div>
-                                                                                <div class="con-box">80</div>
+                                                                                <div class="con-box">{{ ptDs.resp }}</div>
                                                                             </div>
 
                                                                             <div class="category-item-box">
                                                                                 <div class="subject-box">산소포화도<br/>
                                                                                     (%)</div>
-                                                                                <div class="con-box">39</div>
+                                                                                <div class="con-box">{{ ptDs.spo2 }}</div>
                                                                             </div>
 
                                                                             <div class="category-item-box">
                                                                                 <div class="subject-box">수축기혈압<br/>
                                                                                     (mmHg)</div>
-                                                                                <div class="con-box">39</div>
+                                                                                <div class="con-box">{{ ptDs.sbp }}</div>
                                                                             </div>
 
                                                                         </article>
@@ -3144,28 +3044,28 @@
 
                                                             <tr>
                                                                 <th>발병일 / 진단일 / 신고일</th>
-                                                                <td colspan="3">2023.01.02 / 2023.01.04 / 2023.01.04</td>
+                                                                <td colspan="3">{{ ptDs.occrDt.replaceAll('-','.') }} / {{ ptDs.diagDt.replaceAll('-','.') }}  / {{ ptDs.rptDt.replaceAll('-','.') }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>요양기관 기호/명</th>
-                                                                <td>A10378 / 칠곡경북대병원</td>
+                                                                <td>{{ ptDs.instId }} / {{ ptDs.instNm }}</td>
                                                                 <th>요양기관 주소</th>
-                                                                <td>대구 북구 호국로 807</td>
+                                                                <td>{{ ptDs.instAddr }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>요양기관 전화번호</th>
-                                                                <td>053-012-4567</td>
+                                                                <td>{{ ptDs.instTelno }}</td>
                                                                 <th>진단의사 성명</th>
-                                                                <td>권승구</td>
+                                                                <td>{{ ptDs.diagDrNm }}</td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th>신고기관장 성명</th>
-                                                                <td>이재용</td>
+                                                                <td>{{ ptDs.rptChfNm }}</td>
                                                                 <th>요청 병상유형</th>
-                                                                <td>음압격리</td>
+                                                                <td>{{ ptDs.reqBedTypeNm }}</td>
                                                             </tr>
 
                                                             <tr>
@@ -3775,7 +3675,7 @@
 
   <!--end::Modals-->
 <!--  alert창  -->
-    <article v-show="isAlert" class="popup popup-confirm" style="">
+    <article v-show="isAlert" class="popup popup-confirm" style="z-index: 1600">
         <div class="popup-wrapper">
             <div class="popup-contents py-10 px-10" style="width: 300px;">
                 <article class="modal-alert-layout pb-10">
@@ -3824,32 +3724,32 @@
 
                         <div class="exist-box d-flex align-items-center">
                             <div
-                                    class="d-inline-flex align-items-center justify-content-center w-auto bg-primary h-30px w-50px text-white rounded-4 px-0">
-                                일치
+                                    class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0" :class="cmpExist(0)[1]">
+                                {{ cmpExist(0)[0] }}
                             </div>
                             <div class="d-inline-flex w-auto ms-3">이름 : {{ existPt.ptNm }} ({{ existPt.gndr }}/{{getAge(existPt.rrno1,existPt.rrno2)}}세)</div>
                         </div>
 
                         <div class="exist-box d-flex align-items-center mt-3">
                             <div
-                                    class="d-inline-flex align-items-center justify-content-center w-auto bg-primary h-30px w-50px text-white rounded-4 px-0">
-                                일치
+                                class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0" :class="cmpExist(1)[1]">
+                                {{ cmpExist(1)[0] }}
                             </div>
                             <div class="d-inline-flex w-auto ms-3">주민등록번호 : {{ existPt.rrno1 }}-{{existPt.rrno2}}******</div>
                         </div>
 
                         <div class="exist-box d-flex align-items-center mt-3">
                             <div
-                                    class="d-inline-flex align-items-center justify-content-center w-auto bg-primary h-30px w-50px text-white rounded-4 px-0">
-                                일치
+                                class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0" :class="cmpExist(2)[1]">
+                                {{ cmpExist(2)[0] }}
                             </div>
-                            <div class="d-inline-flex w-auto ms-3">주소 : {{ existPt.dstr1Cd }} {{ existPt.dstrCd2 }}</div>
+                            <div class="d-inline-flex w-auto ms-3">주소 : {{ existPt.bascAddr }}</div>
                         </div>
 
                         <div class="exist-box d-flex align-items-center mt-3">
                             <div
-                                    class="d-inline-flex align-items-center justify-content-center w-auto bg-gray-400 h-30px w-50px text-white rounded-4 px-0">
-                                불일치
+                                class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0" :class="cmpExist(3)[1]">
+                                {{ cmpExist(3)[0] }}
                             </div>
                             <div class="d-inline-flex w-auto ms-3">연락처 : {{ getTelno(existPt.mpno) }}</div>
                         </div>
@@ -3898,7 +3798,7 @@
         </div>
     </article>
 
-<!--병상요청승인-->
+<!--병상요청승인 - 배정반 -->
     <article v-show="popup===2" class="popup popup-assignment-request1" style="">
         <div class="popup-wrapper">
             <div class="popup-contents">
@@ -3907,16 +3807,16 @@
 
                     <div class="head-tit-box">병상요청 승인</div>
 
-                    <div class="head-option-box">
-                        <a href="javascript:popupClose('assignment-request1')" class="popup-close-btn">
-						<span class="svg-icon svg-icon-1">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                        fill="currentColor"></rect>
-									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                        fill="currentColor"></rect>
-								</svg>
-							</span>
+                    <div @click="closePopup(0)" class="head-option-box">
+                        <a class="popup-close-btn">
+                        <span class="svg-icon svg-icon-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                    fill="currentColor"></rect>
+                              <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                    fill="currentColor"></rect>
+                            </svg>
+                          </span>
                         </a>
                     </div>
 
@@ -3927,8 +3827,8 @@
                     <div>
                         <div>
                             <div class="textbox">
-                                <textarea onkeyup="limitTextarea(this,'textarea2',500)" maxlength="500" placeholder="메시지 입력" style="height: 200px;"></textarea>
-                                <div class="limit-box"><span id="textarea2">0</span>/500자</div>
+                                <textarea @input="updateCharacterCount(0)" maxlength="500" placeholder="메시지 입력" style="height: 120px;" v-model="aprv.msg"></textarea>
+                                <div class="limit-box"><span id="textarea1">{{characterCount}}</span>/500자</div>
                             </div>
                         </div>
 
@@ -3943,10 +3843,8 @@
 
                         <div class="modal-menu-list">
 
-                            <a href="javascript:confirmPopupOpen('병상요청을<br/>승인 하시겠습니까?',
-                            function() {confirmPopupClose();alertPopupOpen('승인 되었습니다.',
-                            function (){alertPopupClose();popupClose('assignment-request1');});})"
-                               class="modal-menu-btn menu-primary">승인완료</a>
+                            <router-link to="" @click="alertOpen(7)"
+                               class="modal-menu-btn menu-primary">승인완료</router-link>
                         </div>
 
 
@@ -3959,7 +3857,7 @@
     </article>
 
 
-<!--  병상배정 승인 todo: 배정반/의료진 보여지는 폼 다르게 만들기  -->
+<!--  병상배정 승인 - 의료진  -->
    <article v-show="popup===3" class="popup popup-assignment-request2" style="">
                     <div class="popup-wrapper">
                         <div class="popup-contents">
@@ -3968,8 +3866,8 @@
 
                                 <div class="head-tit-box">병상배정 승인</div>
 
-                                <div class="head-option-box">
-                                    <a href="javascript:popupClose('assignment-request2')" class="popup-close-btn">
+                                <div  @click="closePopup(0)" class="head-option-box">
+                                    <a class="popup-close-btn">
                         <span class="svg-icon svg-icon-1">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
@@ -4091,16 +3989,16 @@
 
                     <div class="head-tit-box">배정 불가</div>
 
-                    <div class="head-option-box">
-                        <a href="javascript:popupClose('assignment-cancel')" class="popup-close-btn">
-						<span class="svg-icon svg-icon-1">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                        fill="currentColor"></rect>
-									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                        fill="currentColor"></rect>
-								</svg>
-							</span>
+                    <div @click="closePopup(0)" class="head-option-box">
+                        <a class="popup-close-btn">
+                            <span class="svg-icon svg-icon-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                        fill="currentColor"></rect>
+                                  <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                        fill="currentColor"></rect>
+                                </svg>
+                              </span>
                         </a>
                     </div>
 
@@ -4118,37 +4016,37 @@
                                 <div class="toggle-list">
 
                                     <label>
-                                        <input type="checkbox" name="toggle1" checked>
+                                        <input type="radio" name="toggle1" value="BNRN0001" v-model="aprv.negCd">
                                         <span class="txt">중환자실 부족</span>
                                     </label>
 
                                     <label>
-                                        <input type="checkbox" name="toggle1">
+                                        <input type="radio" name="toggle1-1" value="BNRN0002" v-model="aprv.negCd">
                                         <span class="txt">일반병실 부족</span>
                                     </label>
 
                                     <label>
-                                        <input type="checkbox" name="toggle1">
+                                        <input type="radio" name="toggle1-1" value="BNRN0003" v-model="aprv.negCd">
                                         <span class="txt">응급수술 불가</span>
                                     </label>
 
                                     <label>
-                                        <input type="checkbox" name="toggle1">
-                                        <span class="txt">일반병실 부족</span>
+                                        <input type="radio" name="toggle1-1" value="BNRN0004" v-model="aprv.negCd">
+                                        <span class="txt">의료인 부족</span>
                                     </label>
 
                                     <label>
-                                        <input type="checkbox" name="toggle1">
+                                        <input type="radio" name="toggle1-1" value="BNRN0005" v-model="aprv.negCd">
                                         <span class="txt">응급실 과밀화</span>
                                     </label>
 
                                     <label>
-                                        <input type="checkbox" name="toggle1">
+                                        <input type="radio" name="toggle1-1" value="BNRN0006" v-model="aprv.negCd">
                                         <span class="txt">장비 부족</span>
                                     </label>
 
                                     <label>
-                                        <input type="checkbox" name="toggle1">
+                                        <input type="radio" name="toggle1-1" value="BNRN0007" v-model="aprv.negCd">
                                         <span class="txt">기타</span>
                                     </label>
 
@@ -4165,8 +4063,8 @@
 
                         <div>
                             <div class="textbox">
-                                <textarea onkeyup="limitTextarea(this,'textarea1',500)" maxlength="500" placeholder="메시지 입력" style="height: 120px;"></textarea>
-                                <div class="limit-box"><span id="textarea1">0</span>/500자</div>
+                                <textarea @input="updateCharacterCount(0)" maxlength="500" placeholder="메시지 입력" style="height: 120px;" v-model="aprv.msg"></textarea>
+                                <div class="limit-box"><span id="textarea1">{{characterCount}}</span>/500자</div>
                             </div>
                         </div>
 
@@ -4181,10 +4079,8 @@
 
                         <div class="modal-menu-list">
 
-                            <a href="javascript:confirmPopupOpen('배정불가 처리 하시겠습니까?',
-                            function() {confirmPopupClose();alertPopupOpen('배정불가 처리 되었습니다',
-                            function (){alertPopupClose();popupClose('assignment-cancel');});})"
-                               class="modal-menu-btn menu-primary">미수용 처리</a>
+                            <router-link to=""
+                                @click="alertOpen(5)" class="modal-menu-btn menu-primary">미수용 처리</router-link>
                         </div>
 
 
@@ -4213,6 +4109,8 @@ export default {
 
     },
     mounted() {
+        this.initNewPt = this.newPt
+        this.initDsInfo = this.dsInfo
     },
     setup(){
       const showTable = ref(false);
@@ -4233,7 +4131,12 @@ export default {
     },
     data() {
         return {
-            tab:0, /* 병상요청 */
+            preRpt:null,
+            content:'',
+            characterCount:0,
+            selectedFile:true,
+            imgUrl:null,
+            tab:3, /* 병상요청 */
             tabidx:0, /* 세부내용*/
             popup:100, /* 팝업창 */
             alertIdx:100, /* alert창 확인버튼 */
@@ -4247,6 +4150,8 @@ export default {
                 picaVer:null,
                 natiNm:"대한민국",
                 attcId:null,
+                dethYn:'',
+                mpno:'',
             },
             dsInfo:{
                 ptId:'',
@@ -4264,10 +4169,10 @@ export default {
             },
             svInfo:{
                 ptId:'',
-                ptTypeCd:'',
+                ptTypeCd:[],
                 svrtIptTypeCd:'SVIP0001',
                 svrtTypeCd:'',
-                undrArr:[],
+                undrDsesCd:[],
             },
             bioAnlys:{
             },
@@ -4283,12 +4188,21 @@ export default {
                 spclNm:'',
                 dprtHospId:'',
                 inhpAsgnYn:'',
+            },
+            aprv:{
+                ptId:'',
+                bdasSeq:'',
+                aprvYn:'Y',
+                negCd:null,
+                msg:'',
+                reqHospIdList:[]
             }
         }
     },
     computed:{
-        ...mapState('bedasgn',['bdList','bdCnt','bdDetail','newPtInfo','ptDS','ptSv','ptBio','timeline']),
-        ...mapState('patnt',['existPt','ptBI',]),
+        ...mapState('bedasgn',['bdList','bdCnt','bdDetail','newPtInfo','ptDs','ptSv','ptBio','timeline','rcmdModal']),
+        ...mapState('patnt',['existPt','ptBI','ptDetail','rptInfo','zip']),
+        ...mapState('user',['userInfo','cmSido'])
 
     },
     methods: {
@@ -4318,12 +4232,12 @@ export default {
                 this.isAlert = true
                 this.alertIdx = 0
             } else if (idx===1){
-                    //todo: 병상요청api실행
-                    this.$store.dispatch('bedasgn/regStrtPoint',this.spInfo)
-                    this.isAlert = false
-                    this.errMsg = '요청되었습니다.'
-                    this.isAlert = true
-                    this.alertIdx = 1
+                const data={svrInfo:this.svInfo, dprtInfo:this.spInfo}
+                this.$store.dispatch('bedasgn/regBedassign',data)
+                this.isAlert = false
+                this.errMsg = '요청되었습니다.'
+                this.isAlert = true
+                this.alertIdx = 1
             } else if(idx===2) {
                 this.alertClose()
                 const but = document.getElementById('reqest_exit')
@@ -4333,6 +4247,44 @@ export default {
                 this.errMsg = '환자 정보가\n등록되었습니다.'
                 this.isAlert = true
                 this.alertIdx = 3
+            } else if(idx===4){
+                /*역조서 파싱 */
+                this.errMsg='역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
+                this.isAlert = true
+                this.newPt = this.rptInfo
+                this.alertIdx = 4
+            } else if (idx===5){
+                /* 승인배정반 불가 alert*/
+                this.errMsg='배정불가 처리 하시겠습니까?'
+                this.cncBtn = true
+                this.isAlert = true
+                this.alertIdx = 5
+            } else if(idx===6){
+                /*승인불가 후 alert*/
+                this.errMsg='배정불가 처리 되었습니다'
+                this.isAlert = true
+                this.alertIdx = 6
+            } else if(idx===7){
+                /*배정반 원내승인 */
+                this.errMsg='병상요청을\n승인 하시겠습니까?'
+                this.cncBtn = true
+                this.isAlert = true
+                this.alertIdx = 7
+            } else if(idx===8){
+                /*배정반 원내승인 후 alert*/
+                this.errMsg='승인 되었습니다.'
+                this.isAlert=true
+                this.alertIdx=8
+            } else if(idx ===9){
+                /*역조서 삭제*/
+                this.errMsg='역학조사서 이미지를\n삭제하시겠습니까?'
+                this.cncBtn=true
+                this.isAlert=true
+                this.alertIdx=9
+            } else if(idx===10){
+                this.errMsg='역학조사서가\n삭제되었습니다.'
+                this.isAlert=true
+                this.alertIdx=10
             }
         },
         cfrmAl(res){
@@ -4345,7 +4297,35 @@ export default {
             }  else if(res===3){
               console.log('3')
                 this.alertClose()
-                this.goAsgn(1)
+                this.tab = 1
+            } else if(res===4){
+                this.newPt = this.rptInfo
+                this.alertClose()
+            } else if(res===5){
+                this.aprv.aprvYn='N'
+                this.aprv.ptId = this.bdDetail.ptId
+                this.aprv.bdasSeq = this.bdDetail.bdasSeq
+                this.$store.dispatch('bedasgn/aprvBedAsgn',this.aprv)
+                this.alertClose()
+                this.alertOpen(6)
+            } else if(res===6){
+                this.alertClose()
+            } else if(res===7){
+                this.aprv.ptId = this.bdDetail.ptId
+                this.aprv.bdasSeq = this.bdDetail.bdasSeq
+                this.$store.dispatch('bedasgn/aprvBedAsgn',this.aprv)
+                this.alertClose()
+                this.alertOpen(8)
+            }else if(res===8){
+                this.alertClose()
+            } else if(res===9){
+                this.removeRpt()
+                this.newPt = this.initNewPt
+                this.dsInfo = this.initDsInfo
+                this.alertClose()
+                this.alertOpen(10)
+            }else if(res===10){
+                this.alertClose()
             }
         },
         alertClose(){
@@ -4368,11 +4348,80 @@ export default {
                         this.alertOpen(3)
                     }
                 }
+            } else if(idx===1){
+                /*병상 배정 불가*/
+                this.popup=4
+            } else if(idx===2 && this.timeline!==null){
+                if(this.userInfo.jobCd==='PMGR0002'){
+                    /*병상 요청 승인 - 배정반 */
+                    if(this.timeline.items[0].title.includes('원내')){
+                        console.log('원내배정 - 배정반')
+                        this.popup=2
+                    } else {
+                        console.log('전원요청')
+                    }
+                } else if(this.userInfo.jobCd==='PMGR0003'){
+                    console.log('원내 - 의료진')
+                    this.popup=3
+                }
+            }
+        },
+        getTLDt(date,idx){
+            if(idx===0){
+                return date.slice(0,4)+'년 '+date.slice(5,7)+'월 '+date.slice(8,10)+'일'
+            }else if(idx===1 && date !== null){
+                const time = date.split('T')[1]
+                const hour = time.split(':')[0]
+                if(parseInt(hour)>12){
+                    return '오후 '+ parseInt(hour)-12+'시 '+time.split(':')[1].slice(0,2)+'분'
+                } else {
+                    return '오전 '+hour+'시 '+time.split(':')[1].slice(0,2)+'분'
+                }
+            } else {
+                return ''
+            }
+        },
+        getTLIcon(data, idx) {
+            const iconSuffixes = [
+                "state0",
+                "state6",
+                "state4",
+                "state5",
+                "state3"
+            ];
+            const iconBasePath = "/img/common/ic_timeline_";
+
+            const iconState = data === "complete" ? "" : "_off";
+
+            if (idx >= 0 && idx < iconSuffixes.length) {
+                return `${iconBasePath}${iconSuffixes[idx]}${iconState}.svg`;
+            } else {
+                return "";
+            }
+        },
+        openRcmdModal(idx){
+            if(idx===0){
+                return ['modal','#kt_modal_recommend']
+            } else {
+                return ['','']
             }
         },
         closePopup(idx){
           if(idx===0){
               this.popup = 100
+              this.content=''
+              this.characterCount=0
+          }
+        },
+        closeModal(idx){
+          if(idx===0){
+              /*세부내용 모달*/{
+                  this.tabidx=0
+                  this.$store.commit('bedasgn/setDisesInfo',null)
+                  this.$store.commit('bedasgn/setTimeline',null)
+                  this.$store.commit('patnt/setBasicInfo',null)
+                  this.$store.commit('patnt/setRpt',null)
+              }
           }
         },
         backBtn(idx){
@@ -4387,7 +4436,7 @@ export default {
           const resStr = strArr.join(';');
           return resStr
         },
-        goAsgn(idx){
+        async goAsgn(idx){
             if(idx===2){
                 // 감염병 정보 등록
                 if(this.dsInfo.ptId === ''){
@@ -4399,6 +4448,12 @@ export default {
                 this.tab = idx;
             } else if(idx ===3){
                 /*기존정보 업데이트*/
+                if(this.rptInfo!==null){
+                    /*역조서 입력 시*/
+                    await this.$store.dispatch('patnt/geoCoding',[1,this.rptInfo.instAddr])
+                    this.dsInfo = this.rptInfo
+                    console.log(this.dsInfo.ptId)
+                }
                 this.dsInfo.ptId = this.existPt.ptId
                 this.tab = 1;
             } else if(idx === 4){
@@ -4406,11 +4461,13 @@ export default {
                 if(this.svInfo.ptId === ''){
                     this.svInfo.ptId = this.ptBI
                 }
-                if(this.svInfo.ptTypeCd === ''){
+                if(this.svInfo.ptTypeCd === []){
                     this.svInfo.ptTypeCd = 'PTTP0001'
+                } else {
+                    this.svInfo.ptTypeCd = this.getUndrDses(this.svInfo.ptTypeCd)
                 }
-                this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrArr)
-                this.$store.dispatch('bedasgn/regSvInfo',this.svInfo)
+                this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
+                //this.$store.dispatch('bedasgn/regSvInfo',this.svInfo)
                 this.spInfo.dprtDstrTypeCd = this.getStrType;
                 this.tab = 3;
             } else if(idx ===5){
@@ -4425,6 +4482,15 @@ export default {
         },
         maskingNm,
         getDt,
+        updateCharacterCount(idx) {
+            if(idx===0){
+                if (this.aprv.msg === null || this.aprv.msg === '') {
+                    this.characterCount = this.content.length
+                } else {
+                    this.characterCount = this.aprv.msg.length;
+                }
+            }
+        },
         getGndr(no2){
           if(no2==='1'||no2==='3'){
               this.newPt.gndr='남'
@@ -4464,11 +4530,53 @@ export default {
                 },
             }).open();
         },
+        cmpExist(idx) {
+            const isMatch = (a, b) => a === b;
+            const res1 = ['일치', 'bg-primary'];
+            const res2 = ['불일치', 'bg-gray-400'];
+
+            switch (idx) {
+                case 0:
+                    return isMatch(this.existPt.ptNm, this.newPt.ptNm) ? res1 : res2;
+                case 1:
+                    return isMatch(this.existPt.rrno1, this.newPt.rrno1) && isMatch(this.existPt.rrno2, this.newPt.rrno2) ? res1 : res2;
+                case 2:
+                    return isMatch(this.existPt.bascAddr, this.newPt.bascAddr) ? res1 : res2;
+                default:
+                    return isMatch(this.existPt.mpno, this.newPt.mpno) ? res1 : res2;
+            }
+        },
         regNewPt(){
             console.log(this.newPt)
             this.$store.dispatch('patnt/regBasicInfo',this.newPt)
             /*todo: validation 필요 ~ */
             this.alertOpen(3)
+        },
+        async uploadRpt(event){
+            const fileInput = event.target
+            const file = fileInput.files[0];
+
+            console.log(file)
+            const formData = new FormData();
+            formData.append('param1','edidemreport')
+            formData.append('param2',file)
+            await this.$store.dispatch('patnt/uploadRpt',formData)
+            if(this.rptInfo !== null){
+                console.log('실행')
+                this.alertOpen(4)
+            }
+
+            //역조서 이미지 미리보기 만들기
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                this.preRpt = e.target.result
+            }
+            reader.readAsDataURL(file)
+        },
+        removeRpt(){
+          /*역조서 삭제*/
+            this.$store.dispatch('patnt/removeRpt',this.rptInfo.attcId);
+            this.preRpt = null
         },
         dsDtSame(){
           this.dsInfo.diagDt = this.dsInfo.occrDt
@@ -4505,9 +4613,9 @@ export default {
           }
         },
         validateInput(){
-            this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[0-9]/g, '');
-            this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[0-9]/g, '');
-            this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[0-9]/g, '');
+            this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[^0-9]/g, '');
+            this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[^0-9]/g, '');
+            this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[^0-9]/g, '');
         },
         getBtn(sts) {
             if (sts === 'BAST0001') {
@@ -4517,14 +4625,16 @@ export default {
             } else if (sts === 'BAST0003') {
                 return ['승인 대기','#kt_modal_detail']
             } else if (sts === 'BAST0004') {
-                return ['배정 대기','#kt_modal_detail']
+                return ['배정 대기','#kt_modal_dispatch']
             } else if (sts === 'BAST0005') {
                 return ['이송·배차 처리','#kt_modal_dispatch']
             } else if (sts === 'BAST0006') {
                 return ['입·퇴원 처리','#kt_modal_hospitalization']
             } else if (sts === 'BAST0007') {
                 return ['완료','#kt_modal_detail']
-            }else {
+            } else if(sts===0){ //추천병원 모달 띄우기
+                return ['완료','#kt_modal_recommend']
+            } else {
                 return ['완료','#kt_modal_detail']
             }
         },
@@ -4537,6 +4647,7 @@ export default {
         },
         openBedMod(data){
             this.$store.commit('bedasgn/setbdDetail',data)
+            this.$store.dispatch('patnt/getBasicInfo',data)
             this.$store.dispatch('bedasgn/getTimeline',data)
             this.$store.dispatch('bedasgn/getDSInfo',data)
             console.log(data.bedStatCd)

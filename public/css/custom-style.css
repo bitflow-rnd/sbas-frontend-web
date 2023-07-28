@@ -1558,7 +1558,7 @@ article.modal-alert-layout .alert-msg-box {
 }
 
 article.popup {
-  display: none;
+  display: block;
   position: fixed;
   top: 0;
   left: 0;

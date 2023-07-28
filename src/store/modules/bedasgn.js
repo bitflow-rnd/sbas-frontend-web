@@ -14,10 +14,14 @@ export default {
         ptSv:null,
         ptBio:null,
         ptSp:null,
+        rcmdModal:1,
     },
     mutations:{
         test(state){
           state.newPtInfo= 1
+        },
+        setRCMDModal(state,payload){
+            state.rcmdModal=payload
         },
         setBdList(state,payload){
             state.bdList.push(...payload.items)
@@ -61,7 +65,7 @@ export default {
 
             }).then(response =>{
                 if(response.data?.code==='00'){
-                    console.log(response.data?.result)
+                    //console.log(response.data?.result)
                     comment.commit('resetBdList')
                     comment.commit('setbdDetail',response.data?.result[0].items[0])
                     response.data?.result.forEach(item => {
@@ -74,6 +78,7 @@ export default {
                 return router.push('/user/bedasgn/list')
             });
         },
+
         /*감염병 정보 등록 */
         async regDsInfo(comment,data){
             const token = localStorage.getItem('userToken')
@@ -88,7 +93,7 @@ export default {
                 });
                 if(response.data?.code === '00'){
                     console.log(response.data?.result)
-                    comment.commit('setDisesInfo',response.data?.result);
+                    //comment.commit('setDisesInfo',response.data?.result);
                 }
             } catch (e){
                 console.log(e)
@@ -134,6 +139,26 @@ export default {
                 console.log(e)
             }
         },
+        /*도착지 정보 등록 */
+        async regBedassign(comment,data){
+            const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/patient/bedassignreq`
+            const request = data
+            console.log('병상배정 - 출발지 정보 등록')
+            try{
+                const response = await axios.post(url,request, {
+                    headers:{
+                        Authorization: `Bearer ${token}` // Add the token to the Authorization header
+                    }
+                });
+                if(response.data?.code === '00'){
+                    console.log(response.data?.result)
+                    comment.commit('setSPInfo',response.data?.result);
+                }
+            } catch (e){
+                console.log(e)
+            }
+        },
         /*타임라인 조회*/
         async getTimeline(comment,data){
             const token = localStorage.getItem('userToken')
@@ -146,8 +171,15 @@ export default {
                     }
                 });
                 if(response.data?.code === '00'){
-                    console.log(response.data?.result)
+                    //console.log(response.data?.result)
                     comment.commit('setTimeline',response.data?.result);
+                    const jobCd = comment.rootState.user.userInfo.jobCd
+                    const res = response.data?.result
+                    if(res.items[0].title!==null && jobCd==='PMGR0002' && !res.items[0].title.includes('원내')){
+                        comment.commit('setRCMDModal',0)
+                    } else {
+                        comment.commit('setRCMDModal',1)
+                    }
                 }
             } catch (e){
                 console.log(e)
@@ -165,20 +197,19 @@ export default {
                     }
                 });
                 if(response.data?.code === '00'){
-                    console.log(response.data?.result)
+                    //console.log(response.data?.result)
                     comment.commit('setDisesInfo',response.data?.result);
                 }
             } catch (e){
                 console.log(e)
             }
         },
-
-        /*중증도 분류 정보 등록 -> 안 쓸 거 같음 */
-        async regBioInfo(comment,data){
+        /* 병상 승인 - 병상배정반 */
+        async aprvBedAsgn(comment,data){
             const token = localStorage.getItem('userToken')
-            const url = `${API_PROD}/api/v1/private/patient/regbioinfo`
+            const url = `${API_PROD}/api/v1/private/bedasgn/reqconfirm`
             const request = data
-            console.log('병상배정 - 중증도 분류 정보 등록')
+            console.log('병상승인')
             try{
                 const response = await axios.post(url,request, {
                     headers:{
@@ -187,12 +218,14 @@ export default {
                 });
                 if(response.data?.code === '00'){
                     console.log(response.data?.result)
-                    comment.commit('setBioInfo',response.data?.result);
+                   // comment.commit('setSPInfo',response.data?.result);
                 }
             } catch (e){
                 console.log(e)
             }
         },
+
+
 
     }
 }
