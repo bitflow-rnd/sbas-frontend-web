@@ -7,6 +7,8 @@ import {API_PROD} from "@/util/constantURL";
 export default {
     namespaced: true,
     state:{
+        cmSido: null,
+        cmGugun: [],
         userInfo: null,
         smsCrtf: null,
         phoneNo: "01082072505",
@@ -15,6 +17,12 @@ export default {
 
     },
     mutations: {
+        setSido(state,payload){
+            state.cmSido = payload
+        },
+        setGugun(state,payload){
+            state.cmGugun = payload
+        },
         loginSuccess(state,payload){
             state.userInfo = payload
             console.log(payload)
@@ -36,6 +44,34 @@ export default {
         }
     },
     actions: {
+        /****************commoncode*****************/
+        getSido(comment){
+            const url = `${API_PROD}/api/v1/public/common/sidos`
+
+            axios({
+                method: "get",
+                url: url
+            }).then(response=>{
+                comment.commit('setSido',response.data?.result)
+            }).catch((e=>{
+                console.log(e)
+            }))
+        },
+        getGuGun(comment,code){
+            const url = `${API_PROD}/api/v1/public/common/guguns/SIDO${code}`
+
+            axios({
+                method: "get",
+                url: url
+            }).then(response=>{
+                if(response.data?.code==='00'){
+                    comment.commit('setGugun',response.data?.result)
+                }
+
+            }).catch((e=>{
+                console.log(e)
+            }))
+        },
         login(comment, formData){
 
             console.log(JSON.stringify(formData?.id))

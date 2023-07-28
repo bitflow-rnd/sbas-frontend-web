@@ -717,6 +717,7 @@ import {mapState} from "vuex";
 //import {Form} from "vee-validate";
 import * as yup from "yup";
 import {ref} from "vue";
+import { getSido} from "@/util/ui";
 //import router from "@/router/router";
 
 //import {API_PROD} from "@/util/constantURL";
@@ -818,6 +819,7 @@ export default {
 
     },
     methods: {
+        getSido,
         validateInput(idx){
           if(idx===0){
               this.id = this.id.replace(/[^A-Za-z0-9@.\-_]/g, '');
@@ -842,6 +844,7 @@ export default {
                         pw: this.pw
                     }
                     console.log('제출' + values)
+                    this.getSido()
                     this.$store.dispatch("user/login",values)
                 }
 
