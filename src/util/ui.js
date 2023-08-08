@@ -52,11 +52,191 @@ export function getGugun(code){
 }
 
 export function getTelno(data){
-    return data.slice(0,3)+'-'+data.slice(3,7)+'-'+data.slice(7,12)
+    if(data !== null){
+        return data.slice(0,3)+'-'+data.slice(3,7)+'-'+data.slice(7,12)
+    } else return ''
+
 }
 
 export function maskingNm(nm){
     return nm.slice(0,1)+'*'+nm.slice(2)
+}
+
+export function getTLDt(date,idx){
+    if(idx===0){
+        return date.slice(0,4)+'년 '+date.slice(5,7)+'월 '+date.slice(8,10)+'일'
+    }else if(idx===1 && date !== null){
+        const time = date.split('T')[1]
+        const hour = time.split(':')[0]
+        if(parseInt(hour)>12){
+            return '오후 '+ parseInt(hour)-12+'시 '+time.split(':')[1].slice(0,2)+'분'
+        } else {
+            return '오전 '+hour+'시 '+time.split(':')[1].slice(0,2)+'분'
+        }
+    } else {
+        return ''
+    }
+}
+export function getTag(data){
+    let str =''
+    data.forEach(item => {
+        str += '#'+item+' '
+    })
+    return str
+}
+export function getGndr(no2){
+    if(no2==='1'||no2==='3'){
+        this.newPt.gndr='남'
+        return this.newPt.gndr
+    }  else{
+        this.newPt.gndr='여'
+        return this.newPt.gndr
+    }
+}
+export function getAge (no1, no2){
+    const curData = new Date();
+    const curYear = curData.getFullYear();
+    let year;
+    if(no2==='1'||no2==='2'){
+        year = '19'+no1.slice(0,2)
+        return curYear - parseInt(year)
+    } else {
+        year = '20'+no1.slice(0,2)
+        return curYear - parseInt(year)
+    }
+}
+export async function showPopup(idx) {
+    if (idx === 0 && !this.rptYn) {
+        console.log(this.newPt)
+        await this.$store.dispatch('patnt/isExistPt', this.newPt)
+        if (this.existPt !== null) {
+            this.popup = 0
+        } else {
+            await this.$store.dispatch('patnt/regBasicInfo', this.newPt)
+            if (this.ptBI !== null) {
+                this.alertOpen(3)
+            }
+        }
+    } else if (idx === 1) {
+        /*병상 배정 불가*/
+        this.popup = 4
+    } else if (idx === 2 && this.timeline !== null) {
+        if (this.userInfo.jobCd === 'PMGR0002') {
+            /*병상 요청 승인 - 배정반 */
+            if (this.timeline.items[0].title.includes('원내')) {
+                console.log('원내배정 - 배정반')
+                this.popup = 2
+            } else {
+                console.log('전원요청')
+            }
+        } else if (this.userInfo.jobCd === 'PMGR0003') {
+            console.log('원내 - 의료진')
+            this.popup = 3
+        }
+    }
+}
+export function backBtn(idx){
+    this.tab = idx;
+    this.popup = 100
+}
+export async function goAsgn(idx){
+    if(idx===2){
+        // 감염병 정보 등록
+        if(this.dsInfo.ptId === '' && this.ptBI !== null){
+            this.dsInfo.ptId = this.ptBI
+        } else {
+            this.dsInfo.ptId = this.ptDetail.ptId
+        }
+        this.$store.dispatch('bedasgn/regDsInfo',this.dsInfo)
+        this.spInfo.spclNm = this.dsInfo.diagDrNm
+        console.log(this.ptDs)
+        this.tab = idx;
+    } else if(idx ===3){
+        /*기존정보 업데이트*/
+        if(this.rptInfo!==null){
+            /*역조서 입력 시*/
+            await this.$store.dispatch('patnt/geoCoding',[1,this.rptInfo.instAddr])
+            this.dsInfo = this.rptInfo
+            console.log(this.dsInfo.ptId)
+        }
+        this.dsInfo.ptId = this.existPt.ptId
+        this.tab = 1;
+    } else if(idx === 4){
+        /* 중증 정보 등록*/
+        if(this.svInfo.ptId === ''){
+            this.svInfo.ptId = this.ptBI
+        }
+        if(this.svInfo.ptTypeCd === []){
+            this.svInfo.ptTypeCd = 'PTTP0001'
+        } else {
+            this.svInfo.ptTypeCd = this.getUndrDses(this.svInfo.ptTypeCd)
+        }
+        this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
+        //this.$store.dispatch('bedasgn/regSvInfo',this.svInfo)
+        this.spInfo.dprtDstrTypeCd = this.getStrType;
+        this.tab = 3;
+    } else if(idx ===5){
+        /*출발지 정보 등록*/
+        this.spInfo.ptId = this.svInfo.ptId
+        if(this.spInfo.inhpAsgnYn === 'Y' && this.spInfo.dprtDstrTypeCd === 'DPTP0002'){
+            this.spInfo.dprtHospId = this.dsInfo.instId
+        }
+        this.alertOpen(0)
+    }
+    this.popup = 100
+}
+export function regNewPt(){
+    console.log(this.newPt)
+    this.$store.dispatch('patnt/regBasicInfo',this.newPt)
+    /*todo: validation 필요 ~ */
+    this.alertOpen(3)
+}
+export function openAddressFinder(idx) {
+    const self = this;
+    // eslint-disable-next-line no-undef
+    new daum.Postcode({
+        oncomplete: function (data) {
+            if(idx===0){
+                self.newPt.zip = data.zonecode
+                self.newPt.bascAddr = data.address;
+            } else if(idx===1){
+                self.dsInfo.instZip = data.zonecode
+                self.dsInfo.instBascAddr = data.address;
+            } else if(idx===3){
+                self.spInfo.dprtDstrZip = data.zonecode
+                self.spInfo.dprtDstrBascAddr = data.address;
+            }
+        },
+    }).open();
+}
+export function getTLIcon(data, idx) {
+    const iconSuffixes = [
+        "state0",
+        "state6",
+        "state4",
+        "state5",
+        "state3",
+        "state2"
+    ];
+    const iconBasePath = "/img/common/ic_timeline_";
+
+    const iconState = data.timeLineStatus === "complete" ? "" : "_off";
+
+    if (idx >= 0) {
+        if(data.title.includes('요청')){
+            return `${iconBasePath}${iconSuffixes[0]}${iconState}.svg`;
+        } else if(data.title.includes('승인')){
+            return `${iconBasePath}${iconSuffixes[1]}${iconState}.svg`;
+        } else if(data.title.includes('배정')){
+            return `${iconBasePath}${iconSuffixes[2]}${iconState}.svg`;
+        } else if(data.title.includes('이송')){
+            return `${iconBasePath}${iconSuffixes[3]}${iconState}.svg`;
+        } else if(data.title.includes('불가')){
+            return `${iconBasePath}${iconSuffixes[5]}${iconState}.svg`;
+        } else {
+            return `${iconBasePath}${iconSuffixes[4]}${iconState}.svg`;
+        }
+    }
 }
 
 export function getDt(data){

@@ -774,6 +774,11 @@ article.table-form-layout1 .form-body-box .table-box table tr td .item-cell-box 
   display: inline-flex;
   align-items: center;
 }
+article.table-form-layout1 .form-body-box .table-box table tr td .item-cell-box.rcmd {
+  height: 100%;
+  display: block;
+  margin-top:5px;
+}
 article.table-form-layout1 .form-body-box .table-box table tr td .item-cell-box.full {
   width: 100%;
 }

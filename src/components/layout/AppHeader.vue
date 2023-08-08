@@ -50,7 +50,7 @@
             </router-link>
             <!--end:Menu item-->
             <!--begin:Menu item-->
-            <router-link to="/user/patnt/list" @click="setActive(2)" :class="{'here': tabidx === 2}" class="menu-item me-0 me-lg-1">
+            <router-link to="/user/patnt/list" @click="handlefunc(getPtList,2)" :class="{'here': tabidx === 2}" class="menu-item me-0 me-lg-1">
               <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">환자관리</span>
@@ -1069,6 +1069,9 @@ export default {
       },
       getBdList(){
           this.$store.dispatch('bedasgn/getBdList')
+      },
+      getPtList(){
+          this.$store.dispatch('patnt/getPatntList')
       }
   }
 }
