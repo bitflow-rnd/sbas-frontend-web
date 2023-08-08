@@ -839,6 +839,8 @@
                                                                     <div class="tbox full">
                                                                         <input type="text" v-model="newPt.bascAddr">
                                                                     </div>
+                                                                    <div class="item-note-box flex-shrink-0 ms-2 text-black">
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
@@ -846,6 +848,8 @@
                                                                 <div class="item-cell-box full">
                                                                     <div class="tbox full">
                                                                         <input type="text" v-model="newPt.detlAddr">
+                                                                    </div>
+                                                                    <div class="item-note-box flex-shrink-0 ms-2 text-black">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2025,7 +2029,7 @@
     </div>
 
 <!--  추천병원선택   -->
-    <div class="modal fade" id="kt_modal_recommend" tabindex="-1" aria-hidden="true" style="">
+    <div v-if="bdDetail!==null  && ptDetail !==null" class="modal fade" id="kt_modal_recommend" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -2039,13 +2043,13 @@
                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                        fill="currentColor"></rect>
-									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                        fill="currentColor"></rect>
-								</svg>
-							</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                    fill="currentColor"></rect>
+                              <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                    fill="currentColor"></rect>
+                            </svg>
+                          </span>
                         <!--end::Svg Icon-->
                     </div>
                     <!--end::Close-->
@@ -2055,10 +2059,9 @@
                         <div class="img-box">
                             <img src="/img/common/ic_request_patient.svg" alt="이미지">
                         </div>
-<!--                        <div class="txt-box">신규 환자 등록</div>-->
-                        <div class="txt-box">성경희 <span class="text-gray-600 fw-normal">(여 / 76세 / 경상북도 칠곡군 / 010-8833-1234)</span>
+                        <div class="txt-box">{{ bdDetail.ptNm }} <span class="text-gray-600 fw-normal">({{bdDetail.gndr}} / {{bdDetail.age}}세 / {{ getAddr(bdDetail.bascAddr) }} / {{ getTelno(ptDetail.mpno) }})</span>
                         </div>
-                        <div class="txt-box"><span class="text-primary">#중증 #투석</span></div>
+                        <div class="txt-box"><span class="text-primary">{{ getTag(bdDetail.tagList) }}</span></div>
 
 
                     </article>
@@ -2089,19 +2092,25 @@
                                     <tr>
                                         <th rowspan="2">출발지</th>
                                         <td rowspan="2">
-                                            <div class="item-cell-box">
-
-                                                <div class="cbox">
+                                            <div class="item-cell-box rcmd">
+                                                <div class="rbox">
                                                     <label>
-                                                        <input type="checkbox" name="permission"><i></i>
-                                                        <span class="txt">남</span>
+                                                        <input type="radio" name="permission"><i></i>
+                                                        <span class="txt">위치지정</span>
                                                     </label>
+                                                    <div class="tbox full">
+                                                        <input style="margin-left: 5px;" type="text" v-model="newPt.zip" readonly>
+                                                    </div>
+                                                    <a @click="openAddressFinder(0)"
+                                                       class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
+                                                       style="min-width: 80px;">주소검색</a>
                                                 </div>
-
-                                                <div class="cbox ms-4">
+                                            </div>
+                                            <div class="item-cell-box rcmd">
+                                                <div class="rbox">
                                                     <label>
-                                                        <input type="checkbox" name="permission"><i></i>
-                                                        <span class="txt">여</span>
+                                                        <input type="radio" name="permission"><i></i>
+                                                        <span class="txt">시/도지정</span>
                                                     </label>
                                                 </div>
 
@@ -2620,9 +2629,9 @@
                     <article class="modal-menu-layout1 pt-10">
                         <div class="modal-menu-list">
                             <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
-                            <a href="javascript:popupOpen('assignment-request1')" class="modal-menu-btn menu-cancel">이전</a>
-                            <a href="javascript:popupOpen('assignment-cancel')" class="modal-menu-btn menu-primary-outline">배정불가</a>
-                            <a href="javascript:popupOpen('assignment-request2')" class="modal-menu-btn menu-primary">배정요청</a>
+                            <router-link to="" data-bs-toggle='modal' data-bs-target="#kt_modal_detail" class="modal-menu-btn menu-cancel">이전</router-link>
+                            <router-link to="" @click="showPopup(1)" class="modal-menu-btn menu-primary-outline">배정불가</router-link>
+                            <router-link to="" @click="showPopup(2)" class="modal-menu-btn menu-primary">배정요청</router-link>
                         </div>
                     </article>
 
@@ -2834,12 +2843,12 @@
 
                                                     <ul>
 
-                                                        <li v-for="(item,idx) in timeline.items" :key="idx" :class="{'off': item.timeLineStatus !== 'complete'}">
+                                                        <li v-for="(item,idx) in timeline.items" :key="idx" :class="{'off': item.timeLineStatus === 'complete'}">
                                                             <div class="ic-box">
-                                                                <img :src="getTLIcon(item.timeLineStatus,idx)" alt="이미지">
+                                                                <img :src="getTLIcon(item,idx)" alt="이미지">
                                                             </div>
 
-                                                            <div class="item-box">
+                                                            <div class="item-box" :class="{'suspend':item.timeLineStatus === 'suspend'}">
                                                                 <div class="top-item-box">
                                                                     <div class="state-box">{{ item.title }}</div>
                                                                     <div class="date-box">{{ getTLDt(item.updtDttm,1) }}</div>
@@ -3299,7 +3308,7 @@
     </div>
 
 <!--  이송 배차 처리  -->
-    <div v-if="bdDetail!==null" class="modal fade" id="kt_modal_dispatch" tabindex="-1" aria-hidden="true" style="">
+    <div v-if="bdDetail!==null  && ptDetail !==null" class="modal fade" id="kt_modal_dispatch" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -3313,13 +3322,13 @@
                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                        fill="currentColor"></rect>
-									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                        fill="currentColor"></rect>
-								</svg>
-							</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                    fill="currentColor"></rect>
+                              <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                    fill="currentColor"></rect>
+                            </svg>
+                        </span>
                         <!--end::Svg Icon-->
                     </div>
                     <!--end::Close-->
@@ -3329,8 +3338,7 @@
                         <div class="img-box">
                             <img src="/img/common/ic_request_patient.svg" alt="이미지">
                         </div>
-<!--                        <div class="txt-box">신규 환자 등록</div>-->
-                        <div class="txt-box">{{ bdDetail.ptNm }} <span class="text-gray-600 fw-normal">({{bdDetail.gndr}} / {{bdDetail.age}}세 / {{ bdDetail.bascAddr }} / 010-8833-1234)</span>
+                        <div class="txt-box">{{ bdDetail.ptNm }} <span class="text-gray-600 fw-normal">({{bdDetail.gndr}} / {{bdDetail.age}}세 / {{ getAddr(bdDetail.bascAddr) }} / {{ getTelno(ptDetail.mpno) }})</span>
                         </div>
                         <div class="txt-box"><span class="text-primary">{{ getTag(bdDetail.tagList) }}</span></div>
 
@@ -3548,7 +3556,7 @@
     </div>
 
 <!--  입퇴원처리  -->
-    <div class="modal fade" id="kt_modal_hospitalization" tabindex="-1" aria-hidden="true" style="">
+    <div v-if="bdDetail!==null && ptDetail !==null" class="modal fade" id="kt_modal_hospitalization" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
@@ -3578,10 +3586,9 @@
                         <div class="img-box">
                             <img src="/img/common/ic_request_patient.svg" alt="이미지">
                         </div>
-                        <div class="txt-box">신규 환자 등록</div>
-                        <div class="txt-box">성경희 <span class="text-gray-600 fw-normal">(여 / 76세 / 경상북도 칠곡군 / 010-8833-1234)</span>
+                        <div class="txt-box">{{ bdDetail.ptNm }} <span class="text-gray-600 fw-normal">({{bdDetail.gndr}} / {{bdDetail.age}}세 / {{ getAddr(bdDetail.bascAddr) }} / {{ getTelno(ptDetail.mpno) }})</span>
                         </div>
-                        <div class="txt-box"><span class="text-primary">#중증 #투석</span></div>
+                        <div class="txt-box"><span class="text-primary">{{ getTag(bdDetail.tagList) }}</span></div>
 
 
                     </article>
@@ -3980,7 +3987,6 @@
 
 
 <!--  배정 불가  -->
-
     <article v-show="popup===4" class="popup popup-assignment-cancel" style="">
         <div class="popup-wrapper">
             <div class="popup-contents">
@@ -4098,7 +4104,19 @@
 
 import {mapState} from "vuex";
 import {ref} from "vue";
-import {getDt, getTelno, maskingNm} from "@/util/ui";
+import {
+    backBtn,
+    getAge,
+    getDt, getGndr,
+    getTag,
+    getTelno,
+    getTLDt,
+    getTLIcon, goAsgn,
+    maskingNm,
+    openAddressFinder,
+    regNewPt,
+    showPopup
+} from "@/util/ui";
 
 export default {
     components: {
@@ -4136,7 +4154,7 @@ export default {
             characterCount:0,
             selectedFile:true,
             imgUrl:null,
-            tab:3, /* 병상요청 */
+            tab:0, /* 병상요청 */
             tabidx:0, /* 세부내용*/
             popup:100, /* 팝업창 */
             alertIdx:100, /* alert창 확인버튼 */
@@ -4337,68 +4355,9 @@ export default {
         setActive(idx) {
             this.tabidx = idx;
         },
-        async showPopup(idx){
-            if(idx===0 && !this.rptYn){
-                await this.$store.dispatch('patnt/isExistPt',this.newPt)
-                if(this.existPt !== null){
-                        this.popup=0
-                } else{
-                    await this.$store.dispatch('patnt/regBasicInfo',this.newPt)
-                    if(this.ptBI !== null) {
-                        this.alertOpen(3)
-                    }
-                }
-            } else if(idx===1){
-                /*병상 배정 불가*/
-                this.popup=4
-            } else if(idx===2 && this.timeline!==null){
-                if(this.userInfo.jobCd==='PMGR0002'){
-                    /*병상 요청 승인 - 배정반 */
-                    if(this.timeline.items[0].title.includes('원내')){
-                        console.log('원내배정 - 배정반')
-                        this.popup=2
-                    } else {
-                        console.log('전원요청')
-                    }
-                } else if(this.userInfo.jobCd==='PMGR0003'){
-                    console.log('원내 - 의료진')
-                    this.popup=3
-                }
-            }
-        },
-        getTLDt(date,idx){
-            if(idx===0){
-                return date.slice(0,4)+'년 '+date.slice(5,7)+'월 '+date.slice(8,10)+'일'
-            }else if(idx===1 && date !== null){
-                const time = date.split('T')[1]
-                const hour = time.split(':')[0]
-                if(parseInt(hour)>12){
-                    return '오후 '+ parseInt(hour)-12+'시 '+time.split(':')[1].slice(0,2)+'분'
-                } else {
-                    return '오전 '+hour+'시 '+time.split(':')[1].slice(0,2)+'분'
-                }
-            } else {
-                return ''
-            }
-        },
-        getTLIcon(data, idx) {
-            const iconSuffixes = [
-                "state0",
-                "state6",
-                "state4",
-                "state5",
-                "state3"
-            ];
-            const iconBasePath = "/img/common/ic_timeline_";
-
-            const iconState = data === "complete" ? "" : "_off";
-
-            if (idx >= 0 && idx < iconSuffixes.length) {
-                return `${iconBasePath}${iconSuffixes[idx]}${iconState}.svg`;
-            } else {
-                return "";
-            }
-        },
+        showPopup,
+        getTLDt,
+        getTLIcon,
         openRcmdModal(idx){
             if(idx===0){
                 return ['modal','#kt_modal_recommend']
@@ -4419,15 +4378,12 @@ export default {
                   this.tabidx=0
                   this.$store.commit('bedasgn/setDisesInfo',null)
                   this.$store.commit('bedasgn/setTimeline',null)
-                  this.$store.commit('patnt/setBasicInfo',null)
+                  this.$store.commit('patnt/setBasicInfo',[0,null])
                   this.$store.commit('patnt/setRpt',null)
               }
           }
         },
-        backBtn(idx){
-            this.tab = idx;
-            this.popup = 100
-        },
+        backBtn,
         getUndrDses(arr){
           if(!Array.isArray(arr) || arr.length === 0){
               return "";
@@ -4436,52 +4392,9 @@ export default {
           const resStr = strArr.join(';');
           return resStr
         },
-        async goAsgn(idx){
-            if(idx===2){
-                // 감염병 정보 등록
-                if(this.dsInfo.ptId === ''){
-                    this.dsInfo.ptId = this.ptBI
-                }
-                this.$store.dispatch('bedasgn/regDsInfo',this.dsInfo)
-                this.spInfo.spclNm = this.dsInfo.diagDrNm
-                console.log(this.ptDs)
-                this.tab = idx;
-            } else if(idx ===3){
-                /*기존정보 업데이트*/
-                if(this.rptInfo!==null){
-                    /*역조서 입력 시*/
-                    await this.$store.dispatch('patnt/geoCoding',[1,this.rptInfo.instAddr])
-                    this.dsInfo = this.rptInfo
-                    console.log(this.dsInfo.ptId)
-                }
-                this.dsInfo.ptId = this.existPt.ptId
-                this.tab = 1;
-            } else if(idx === 4){
-                /* 중증 정보 등록*/
-                if(this.svInfo.ptId === ''){
-                    this.svInfo.ptId = this.ptBI
-                }
-                if(this.svInfo.ptTypeCd === []){
-                    this.svInfo.ptTypeCd = 'PTTP0001'
-                } else {
-                    this.svInfo.ptTypeCd = this.getUndrDses(this.svInfo.ptTypeCd)
-                }
-                this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
-                //this.$store.dispatch('bedasgn/regSvInfo',this.svInfo)
-                this.spInfo.dprtDstrTypeCd = this.getStrType;
-                this.tab = 3;
-            } else if(idx ===5){
-                /*출발지 정보 등록*/
-                this.spInfo.ptId = this.svInfo.ptId
-                if(this.spInfo.inhpAsgnYn === 'Y' && this.spInfo.dprtDstrTypeCd === 'DPTP0002'){
-                    this.spInfo.dprtHospId = this.dsInfo.instId
-                }
-                this.alertOpen(0)
-            }
-          this.popup = 100
-        },
+        goAsgn,
         maskingNm,
-        getDt,
+        getDt,getTag,
         updateCharacterCount(idx) {
             if(idx===0){
                 if (this.aprv.msg === null || this.aprv.msg === '') {
@@ -4491,45 +4404,16 @@ export default {
                 }
             }
         },
-        getGndr(no2){
-          if(no2==='1'||no2==='3'){
-              this.newPt.gndr='남'
-              return this.newPt.gndr
-          }  else{
-              this.newPt.gndr='여'
-              return this.newPt.gndr
-          }
+        getGndr,
+        getAge,
+        getAddr(txt){
+          const words = txt.split(' ');
+
+          if(words.length>=2){
+              return words.slice(0,2).join(' ');
+          } else words
         },
-        getAge(no1, no2){
-            const curData = new Date();
-            const curYear = curData.getFullYear();
-            let year;
-            if(no2==='1'||no2==='2'){
-                year = '19'+no1.slice(0,2)
-                return curYear - parseInt(year)
-            } else {
-                year = '20'+no1.slice(0,2)
-                return curYear - parseInt(year)
-            }
-        },
-        openAddressFinder(idx) {
-            const self = this;
-            // eslint-disable-next-line no-undef
-            new daum.Postcode({
-                oncomplete: function (data) {
-                    if(idx===0){
-                        self.newPt.zip = data.zonecode
-                        self.newPt.bascAddr = data.address;
-                    } else if(idx===1){
-                        self.dsInfo.instZip = data.zonecode
-                        self.dsInfo.instBascAddr = data.address;
-                    } else if(idx===3){
-                        self.spInfo.dprtDstrZip = data.zonecode
-                        self.spInfo.dprtDstrBascAddr = data.address;
-                    }
-                },
-            }).open();
-        },
+        openAddressFinder,
         cmpExist(idx) {
             const isMatch = (a, b) => a === b;
             const res1 = ['일치', 'bg-primary'];
@@ -4546,12 +4430,7 @@ export default {
                     return isMatch(this.existPt.mpno, this.newPt.mpno) ? res1 : res2;
             }
         },
-        regNewPt(){
-            console.log(this.newPt)
-            this.$store.dispatch('patnt/regBasicInfo',this.newPt)
-            /*todo: validation 필요 ~ */
-            this.alertOpen(3)
-        },
+        regNewPt,
         async uploadRpt(event){
             const fileInput = event.target
             const file = fileInput.files[0];
@@ -4638,13 +4517,6 @@ export default {
                 return ['완료','#kt_modal_detail']
             }
         },
-        getTag(data){
-            let str =''
-            data.forEach(item => {
-                str += '#'+item+' '
-            })
-            return str
-        },
         openBedMod(data){
             this.$store.commit('bedasgn/setbdDetail',data)
             this.$store.dispatch('patnt/getBasicInfo',data)
@@ -4660,5 +4532,8 @@ export default {
 <style scoped>
 .popup {
     display: block;
+}
+.item-box.suspend {
+    border: 2px solid #74AFEB !important;
 }
 </style>
