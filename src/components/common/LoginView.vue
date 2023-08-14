@@ -813,6 +813,7 @@ export default {
           toggleUserEditModal,
           alertOpen,
           alertClose,
+
           openCertify,
           timerStart
       }

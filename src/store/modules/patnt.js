@@ -9,7 +9,7 @@ export default {
         existPt:null,
         ptDetail:null,
         rptInfo:null,
-        acctRpt:null,
+        attcRpt:null,
     },
     mutations:{
         setPatntList(state,payload){

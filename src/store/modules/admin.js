@@ -470,7 +470,7 @@ export default {
             const token= localStorage.getItem('userToken')
             try {
                 return axios
-                    .get('http://sbas-test.bitflow.ai/api/v1/admin/common/codegrps', {
+                    .get(`${API_PROD}/api/v1/admin/common/codegrps`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
@@ -482,7 +482,7 @@ export default {
         loadCodesData(_, selectedRow) {
             try {
                 return axios
-                    .get(`http://sbas-test.bitflow.ai/api/v1/public/common/codes/${selectedRow}`)
+                    .get(`${API_PROD}/api/v1/public/common/codes/${selectedRow}`)
             } catch (error) {
                 console.log(error);
             }
@@ -490,7 +490,7 @@ export default {
         deleteCode(_, code) {
             try {
                 return axios
-                    .post(`http://sbas-test.bitflow.ai/api/v1/admin/common/delcode`,
+                    .post(`${API_PROD}/api/v1/admin/common/delcode`,
                         {...code}).then()
             } catch (error) {
                 console.log(error);
@@ -499,7 +499,7 @@ export default {
         deleteCodeGroup(_, codeGroupId) {
             try {
                 return axios
-                    .post(`http://sbas-test.bitflow.ai/api/v1/admin/common/delcodegrps/${codeGroupId}`)
+                    .post(`${API_PROD}/api/v1/admin/common/delcodegrps/${codeGroupId}`)
                     .then()
             } catch (error) {
                 console.log(error);
@@ -508,7 +508,7 @@ export default {
         addCode(_, newCode) {
             try {
                 return axios
-                    .post(`http://sbas-test.bitflow.ai/api/v1/admin/common/regcode`,{...newCode})
+                    .post(`${API_PROD}/api/v1/admin/common/regcode`,{...newCode})
                     .then()
             } catch (error) {
                 console.log(error);
@@ -517,7 +517,7 @@ export default {
         addCodeGroup(_, newCodeGroup) {
             try {
                 return axios
-                    .post(`http://sbas-test.bitflow.ai/api/v1/admin/common/regcodegrps`,{...newCodeGroup})
+                    .post(`${API_PROD}/api/v1/admin/common/regcodegrps`,{...newCodeGroup})
                     .then()
             } catch (error) {
                 console.log(error);
@@ -526,7 +526,7 @@ export default {
         modifyCode(_, newCode) {
             try {
                 return axios
-                    .post(`http://sbas-test.bitflow.ai/api/v1/admin/common/modcode`,{...newCode})
+                    .post(`${API_PROD}/api/v1/admin/common/modcode`,{...newCode})
                     .then()
             } catch (error) {
                 console.log(error);
@@ -535,7 +535,7 @@ export default {
         modifyCodeGroup(_, newCodeGroup) {
             try {
                 return axios
-                    .post(`http://sbas-test.bitflow.ai/api/v1/admin/common/modcodegrps`,{...newCodeGroup})
+                    .post(`${API_PROD}/api/v1/admin/common/modcodegrps`,{...newCodeGroup})
                     .then()
             } catch (error) {
                 console.log(error);

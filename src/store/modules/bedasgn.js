@@ -163,7 +163,7 @@ export default {
         async getTimeline(comment,data){
             const token = localStorage.getItem('userToken')
             const url = `${API_PROD}/api/v1/private/patient/timeline/${data.ptId}/${data.bdasSeq}`
-            console.log('병상배정 - 세부정보 - 타임라인')
+            console.log('병상배정 - 세부정보1 - 타임라인')
             try{
                 const response = await axios.get(url, {
                     headers:{
@@ -189,6 +189,7 @@ export default {
         async getDSInfo(comment,data){
             const token = localStorage.getItem('userToken')
             const url = `${API_PROD}/api/v1/private/patient/disease-info/${data.ptId}`
+            // const url = `http://localhost:8080/api/v1/private/patient/disease-info/${data.ptId}`
             console.log('병상배정 - 세부정보 - 질병 정보')
             try{
                 const response = await axios.get(url, {

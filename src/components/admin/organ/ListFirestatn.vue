@@ -1175,12 +1175,12 @@ export default {
         return {
             content:'',
             characterCount:0,
-            search:{
-                instId:null,
-                instNm:null,
-                dstrCd1:null,
-                dstrCd2:null,
-                chrgTelno:null
+            search: {
+              instId: null,
+              instNm: null,
+              dstrCd1: null,
+              dstrCd2: null,
+              chrgTelno: null
             },
             fsForm:{
                 dstrCd1:null,
