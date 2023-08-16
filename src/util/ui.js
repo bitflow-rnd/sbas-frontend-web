@@ -105,6 +105,18 @@ export function getAge (no1, no2){
         return curYear - parseInt(year)
     }
 }
+export function getAuthCd(code){
+    if(code==='일반'){
+        return code;
+    } else if(code === '게스트'){
+        return code;
+    } else if(code==='DTPM0001'){
+        return '일반';
+    } else {
+        return '게스트'
+    }
+}
+
 export async function showPopup(idx) {
     if (idx === 0 && !this.rptYn) {
         console.log(this.newPt)
@@ -128,11 +140,17 @@ export async function showPopup(idx) {
                 this.popup = 2
             } else {
                 console.log('전원요청')
+                this.$store.dispatch('bedasgn/rcmdHpList',this.bdDetail)
             }
         } else if (this.userInfo.jobCd === 'PMGR0003') {
             console.log('원내 - 의료진')
             this.popup = 3
         }
+    } else if (idx === 3){
+        /*추천 병원 선택 후 요청 승인 - 배정반*/
+        this.popup=2
+        console.log(this.aprv)
+        //this.alertOpen(3)
     }
 }
 export function backBtn(idx){

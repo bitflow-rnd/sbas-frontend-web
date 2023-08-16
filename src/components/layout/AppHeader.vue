@@ -116,9 +116,9 @@
                   <!--begin::Username-->
                   <div class="d-flex flex-column">
                     <div class="fw-bold d-flex align-items-center fs-3">{{ userInfo.userNm }}
-                      <span class="badge badge-light-success fw-bold fs-5 px-2 py-1 ms-2">주임</span>
+                      <span class="badge badge-light-success fw-bold fs-5 px-2 py-1 ms-2">{{ userInfo.ocpCd }}</span>
                     </div>
-                    <a class="fw-semibold text-muted text-hover-primary fs-5">hosptpro</a>
+                    <a class="fw-semibold text-muted text-hover-primary fs-5">{{ userInfo.id }}</a>
                   </div>
                   <!--end::Username-->
                 </div>
@@ -147,8 +147,8 @@
           <div class="app-navbar-item ms-3 d-none d-xxl-flex">
             <!--begin::Drawer toggle-->
             <div class="h-35px h-md-40px" id="kt_activities_toggle">
-              <p>{{ userInfo.userNm }} 주임</p>
-              <p class="text-truncate">칠곡경북대병원</p>
+              <p>{{ userInfo.userNm }} {{ userInfo.ocpCd }}</p>
+              <p class="text-truncate">{{userInfo.instNm}}</p>
             </div>
             <!--end::Drawer toggle-->
           </div>
@@ -266,27 +266,27 @@
 
                                             <tr>
                                                 <th>소속기관</th>
-                                                <td>대구서울대병원</td>
+                                                <td>{{userInfo.instNm}}</td>
                                             </tr>
 
                                             <tr>
                                                 <th>권한그룹</th>
-                                                <td>병상요청, 병상배정</td>
+                                                <td>{{ getPmgr(userInfo.jobCd) }}</td>
                                             </tr>
 
                                             <tr>
                                                 <th>세부권한</th>
-                                                <td>{{ userInfo.ocpCd }}</td>
+                                                <td>{{ getAuthCd(userInfo.authCd) }}</td>
                                             </tr>
 
                                             <tr>
                                                 <th>직급</th>
-                                                <td>주임</td>
+                                                <td>{{ userInfo.ocpCd }}</td>
                                             </tr>
 
                                             <tr>
                                                 <th>담당환자 유형</th>
-                                                <td>투석, 신생아</td>
+                                                <td>{{ getptType(userInfo.ptTypeCd) }}</td>
                                             </tr>
 
                                         </table>
@@ -1042,20 +1042,39 @@
 
 <script>
 import {mapState} from "vuex";
-import {getTelno} from "@/util/ui";
+import {getTelno, getAuthCd} from "@/util/ui";
 
 export default {
   name: "AppHeader",
   data () {
     return {
-      tabidx: 0
+        tabidx: 0,
+        ptTpye:{'PTTP0001':'일반','PTTP0002':'소아','PTTP0003':'투석','PTTP0004':'산모',
+                'PTTP0005':'수술','PTTP0006':'인공호흡기 사용','PTTP0007':'적극적 치료요청','PTTP0008':'신생아'}
     }
   },
   computed: {
     ...mapState('user',['userInfo'])
   },
   methods: {
+      getAuthCd,
       getTelno,
+      getPmgr(code){
+        if(code==='PMGR0001'){
+            return '병상요청'
+        }  else if(code==='PMGR0002'){
+            return '병상승인'
+        } else if(code==='PMGR0003'){
+            return '병상배정'
+        } else {
+            return '시스템관리'
+        }
+      },
+      getptType(code){
+        const arr = code.split(";");
+        const res = arr.map(item =>this.ptTpye[item]);
+        return res.join(', ')
+      },
       setActive(idx) {
         this.tabidx = idx;
       },
@@ -1078,4 +1097,7 @@ export default {
 </script>
 
 <style scoped>
+.fs-5 {
+    font-size: 0.85rem !important;
+}
 </style>

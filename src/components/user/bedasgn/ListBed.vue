@@ -791,6 +791,9 @@
                                                                     <input type="text" v-model="newPt.ptNm">
                                                                 </div>
                                                             </div>
+                                                            <div v-if="newPt.ptNm===''" class="item-cell-box full">
+                                                                <div class="text-danger pt-2 fs-12px">※ 이름 유효성 확인 문구</div>
+                                                            </div>
                                                         </td>
                                                         <th>성별</th>
                                                         <td v-if="newPt.rrno2!==undefined">{{getGndr(newPt.rrno2)}}</td>
@@ -811,8 +814,8 @@
 
                                                                 </div>
                                                             </div>
-                                                            <div class="item-row-box">
-                                                                <div class="item-note-box">* 주민등록번호 입력</div>
+                                                            <div v-if="newPt.rrno1===''" class="item-row-box">
+                                                                <div class="text-danger pt-2 fs-12px">* 주민등록번호 입력</div>
                                                             </div>
 
                                                         </td>
@@ -869,6 +872,9 @@
                                                                 <div class="tbox full">
                                                                     <input type="text" v-model="newPt.mpno">
                                                                 </div>
+                                                            </div>
+                                                            <div v-if="newPt.mpno===''" class="item-cell-box full">
+                                                                <div class="text-danger pt-2 fs-12px">※ 전화번호 유효성 확인 문구</div>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2069,7 +2075,7 @@
 
                 <!--begin::Modal header-->
                 <!--begin::Modal body-->
-                <div class="modal-body scroll-y py-10 px-10">
+                <div v-if="rcmdHp!==null" class="modal-body scroll-y py-10 px-10">
 
                     <article class="table-form-layout1 pb-6">
 
@@ -2369,7 +2375,7 @@
 
                             <div class="head-box">
 
-                                <div class="head-txt-box">검색결과 <span class="rounded-pill bg-primary text-white px-2 ms-2">99+</span></div>
+                                <div class="head-txt-box">검색결과 <span class="rounded-pill bg-primary text-white px-2 ms-2">{{ rcmdHp.count }}</span></div>
                             </div>
 
                             <div class="option-box">
@@ -2432,7 +2438,7 @@
 
                         </div>
 
-                        <div class="table-body-box">
+                        <div v-if="rcmdHp.count !== 0" class="table-body-box">
 
                             <div class="table-box with-scroll small">
                                 <table>
@@ -2499,12 +2505,12 @@
                                     </thead>
 
                                     <tbody>
-                                    <tr>
-                                        <td>7</td>
+                                    <tr v-for="(item,i) in rcmdHp.items" :key="i">
+                                        <td>{{ i + 1 }}</td>
                                         <td>
                                             <div class="cbox d-flex justify-content-center">
                                                 <label>
-                                                    <input type="checkbox"><i></i>
+                                                    <input v-model="aprv.reqHospIdList" type="checkbox" :value="item.hospId"><i></i>
                                                 </label>
                                             </div>
                                         </td>
@@ -2518,7 +2524,7 @@
                                         <td class="text-start">
                                             <div class="d-flex align-items-center">
 
-                                                <div class="text-start text-black" style="">칠곡경북대학교 병원</div>
+                                                <div class="text-start text-black" style="">{{ item.hospNm }}</div>
                                                 <div class="label-txt d-inline-flex text-primary px-1 py-1 border border-primary rounded-1 fs-xs ms-2" style="min-width:37px;">AI추천</div>
 
                                             </div>
@@ -2541,54 +2547,8 @@
                                         <td><span class="text-primary">13</span>/55</td>
                                         <td><span class="text-primary">13</span>/55</td>
                                         <td><span class="text-primary">13</span>/55</td>
-                                        <td>150m / 3분</td>
+                                        <td>{{ item.distance }} / 3분</td>
                                     </tr>
-
-                                    <tr>
-                                        <td>7</td>
-                                        <td>
-                                            <div class="cbox d-flex justify-content-center">
-                                                <label>
-                                                    <input type="checkbox"><i></i>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-
-                                            <div class="img-box w-50px h-50px m-auto">
-                                                <img src="/img/common/img_profile_dummy.png" alt="이미지" class="w-100 h-100">
-                                            </div>
-
-                                        </td>
-                                        <td class="text-start">
-                                            <div class="d-flex align-items-center">
-
-                                                <div class="text-start text-black" style="">칠곡경북대학교 병원</div>
-
-                                            </div>
-
-                                            <div class="text-gray-600 fs-12px pt-2">#임산부 #투석 #수술 #신생아 #유아</div>
-                                        </td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-danger">0</span>/1</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td><span class="text-primary">13</span>/55</td>
-                                        <td>150m / 3분</td>
-                                    </tr>
-
-
                                     </tbody>
 
                                 </table>
@@ -2631,7 +2591,7 @@
                             <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
                             <router-link to="" data-bs-toggle='modal' data-bs-target="#kt_modal_detail" class="modal-menu-btn menu-cancel">이전</router-link>
                             <router-link to="" @click="showPopup(1)" class="modal-menu-btn menu-primary-outline">배정불가</router-link>
-                            <router-link to="" @click="showPopup(2)" class="modal-menu-btn menu-primary">배정요청</router-link>
+                            <router-link to="" @click="showPopup(3)" class="modal-menu-btn menu-primary">배정요청</router-link>
                         </div>
                     </article>
 
@@ -2930,11 +2890,11 @@
 
                                                         <article class="modal-menu-layout1">
                                                             <div class="modal-menu-list">
-                                                                <a v-show="bdDetail.bedStatCd==='BAST0003'||(bdDetail.bedStatCd==='BAST0004'&&userInfo.jobCd==='PMGR0003')" @click="showPopup(1)"
+                                                                <a v-show="(bdDetail.bedStatCd==='BAST0003'&&userInfo.jobCd==='PMGR0002')||(bdDetail.bedStatCd==='BAST0004'&&userInfo.jobCd==='PMGR0003')" @click="showPopup(1)"
                                                                    class="modal-menu-btn menu-primary-outline radius-0 big">배정 불가</a>
-                                                                <div v-show="bdDetail.bedStatCd==='BAST0003'||(bdDetail.bedStatCd==='BAST0004'&&userInfo.jobCd==='PMGR0003')" @click="async () => { await showPopup(2)}" :data-bs-toggle="openRcmdModal(this.rcmdModal)[0]" :data-bs-target="openRcmdModal(this.rcmdModal)[1]"
+                                                                <div v-show="(bdDetail.bedStatCd==='BAST0003'&&userInfo.jobCd==='PMGR0002')||(bdDetail.bedStatCd==='BAST0004'&&userInfo.jobCd==='PMGR0003')" @click="async () => { await showPopup(2)}" :data-bs-toggle="openRcmdModal(this.rcmdModal)[0]" :data-bs-target="openRcmdModal(this.rcmdModal)[1]"
                                                                    class="modal-menu-btn menu-primary radius-0 big">병상요청 승인</div>
-                                                                <div v-show="bdDetail.bedStatCd==='BAST0005'" data-bs-toggle="modal"
+                                                                <div v-show="bdDetail.bedStatCd==='BAST0005'" data-bs-toggle="modal" @click="async () => { await loadTrnsfInfo(27)}"
                                                                      data-bs-target="#kt_modal_dispatch" class="modal-menu-btn menu-primary radius-0 big">이송·배차 처리</div>
                                                                 <div v-show="bdDetail.bedStatCd==='BAST0006'" data-bs-toggle="modal"
                                                                      data-bs-target="#kt_modal_hospitalization" class="modal-menu-btn menu-primary radius-0 big">입 · 퇴원 처리</div>
@@ -3053,7 +3013,7 @@
 
                                                             <tr>
                                                                 <th>발병일 / 진단일 / 신고일</th>
-                                                                <td colspan="3">{{ ptDs.occrDt.replaceAll('-','.') }} / {{ ptDs.diagDt.replaceAll('-','.') }}  / {{ ptDs.rptDt.replaceAll('-','.') }}</td>
+                                                                <td colspan="3">{{ ptDs.occrDt }} / {{ ptDs.diagDt }}  / {{ ptDs.rptDt }}</td>
                                                             </tr>
 
                                                             <tr>
@@ -3357,7 +3317,7 @@
                         </div>
 
 
-                        <div class="form-body-box">
+                        <div v-if="firestatnList!==null" class="form-body-box">
 
                             <div class="table-box">
                                 <table>
@@ -3381,13 +3341,16 @@
                                                 </div>
 
                                                 <div class="sbox w-175px ms-3">
-                                                    <select>
-                                                        <option>구급대 선택</option>
+                                                    <select v-model="selectedInst" @change="getFiremen(selectedInst)">
+                                                        <option value="구급대">구급대 선택</option>
+                                                        <option v-for="(item,i) in firestatnList" :key="i" :value="item">{{item.instNm}}</option>
+                                                        <option value="">직접입력</option>
                                                     </select>
                                                 </div>
 
                                                 <div class="tbox w-175px ms-3">
-                                                    <input placeholder="구급대명 직접 입력" readonly>
+                                                    <input v-if="selectedInst===''" v-model="trsfInfo.ambsNm" placeholder="구급대명 직접 입력" >
+                                                    <input v-else v-model="trsfInfo.ambsNm" placeholder="구급대명 직접 입력" readonly >
                                                 </div>
 
                                             </div>
@@ -3400,19 +3363,25 @@
                                             <div class="item-cell-box">
 
                                                 <div class="sbox" style="width: 128px;">
-                                                    <select>
-                                                        <option>대원 선택</option>
+                                                    <select v-model="trsfInfo.crew1Id">
+                                                        <option value="구급대원">구급대원 선택</option>
+                                                        <option v-for="(item,i) in firemenList.items" :key="i" @change="fillFiremen(item,1)">
+                                                            {{ item.crewNm }}</option>
+                                                        <option value="">직접입력</option>
                                                     </select>
                                                 </div>
 
                                                 <div class="tbox w-175px ms-3">
-                                                    <input placeholder="직급 입력" readonly>
+                                                    <input v-if="trsfInfo.crew1Id===''" v-model="trsfInfo.crew1Pstn" placeholder="직급 입력">
+                                                    <input v-else v-model="trsfInfo.crew1Pstn" placeholder="직급 입력" readonly>
                                                 </div>
                                                 <div class="tbox w-175px ms-3">
-                                                    <input placeholder=" 이름 입력" readonly>
+                                                    <input v-if="trsfInfo.crew1Id===''" v-model="trsfInfo.crew1Nm" placeholder=" 이름 입력">
+                                                    <input v-else v-model="trsfInfo.crew1Nm" placeholder=" 이름 입력" readonly>
                                                 </div>
                                                 <div class="tbox w-175px ms-3">
-                                                    <input placeholder=" 전화번호 입력" readonly>
+                                                    <input v-if="trsfInfo.crew1Id===''" v-model="trsfInfo.crew1Telno" placeholder=" 전화번호 입력">
+                                                    <input v-else v-model="trsfInfo.crew1Telno" placeholder=" 전화번호 입력" readonly>
                                                 </div>
 
                                             </div>
@@ -3426,19 +3395,25 @@
                                             <div class="item-cell-box">
 
                                                 <div class="sbox" style="width: 128px;">
-                                                    <select>
-                                                        <option>대원 선택</option>
+                                                    <select v-model="trsfInfo.crew2Id">
+                                                        <option value="구급대원">구급대원 선택</option>
+                                                        <option v-for="(item,i) in firemenList.items" :key="i" @change="fillFiremen(item,2)">
+                                                            {{ item.crewNm }}</option>
+                                                        <option value="">직접입력</option>
                                                     </select>
                                                 </div>
 
                                                 <div class="tbox w-175px ms-3">
-                                                    <input placeholder="직급 입력" readonly>
+                                                    <input v-if="trsfInfo.crew2Id===''" v-model="trsfInfo.crew2Pstn" placeholder="직급 입력">
+                                                    <input v-else v-model="trsfInfo.crew2Pstn" placeholder="직급 입력" readonly>
                                                 </div>
                                                 <div class="tbox w-175px ms-3">
-                                                    <input placeholder=" 이름 입력" readonly>
+                                                    <input v-if="trsfInfo.crew2Id===''" v-model="trsfInfo.crew2Nm" placeholder=" 이름 입력">
+                                                    <input v-else v-model="trsfInfo.crew2Nm" placeholder=" 이름 입력" readonly>
                                                 </div>
                                                 <div class="tbox w-175px ms-3">
-                                                    <input placeholder=" 전화번호 입력" readonly>
+                                                    <input v-if="trsfInfo.crew2Id===''" v-model="trsfInfo.crew2Telno" placeholder=" 전화번호 입력">
+                                                    <input v-else v-model="trsfInfo.crew2Telno" placeholder=" 전화번호 입력" readonly>
                                                 </div>
 
                                             </div>
@@ -3452,19 +3427,25 @@
                                             <div class="item-cell-box">
 
                                                 <div class="sbox" style="width: 128px;">
-                                                    <select>
-                                                        <option>대원 선택</option>
+                                                    <select v-model="trsfInfo.crew3Id">
+                                                        <option value="구급대원">구급대원 선택</option>
+                                                        <option v-for="(item,i) in firemenList.items" :key="i" @change="fillFiremen(item,3)">
+                                                            {{ item.crewNm }}</option>
+                                                        <option value="">직접입력</option>
                                                     </select>
                                                 </div>
 
                                                 <div class="tbox w-175px ms-3">
-                                                    <input placeholder="직급 입력" readonly>
+                                                    <input v-if="trsfInfo.crew3Id===''" v-model="trsfInfo.crew3Pstn" placeholder="직급 입력">
+                                                    <input v-else v-model="trsfInfo.crew3Pstn" placeholder="직급 입력" readonly>
                                                 </div>
                                                 <div class="tbox w-175px ms-3">
-                                                    <input placeholder=" 이름 입력" readonly>
+                                                    <input v-if="trsfInfo.crew3Id===''" v-model="trsfInfo.crew3Nm" placeholder=" 이름 입력">
+                                                    <input v-else v-model="trsfInfo.crew3Nm" placeholder=" 이름 입력" readonly>
                                                 </div>
                                                 <div class="tbox w-175px ms-3">
-                                                    <input placeholder=" 전화번호 입력" readonly>
+                                                    <input v-if="trsfInfo.crew3Id===''" v-model="trsfInfo.crew3Telno" placeholder=" 전화번호 입력">
+                                                    <input v-else v-model="trsfInfo.crew3Telno" placeholder=" 전화번호 입력" readonly>
                                                 </div>
 
                                             </div>
@@ -3480,17 +3461,17 @@
                                                 <div class="toggle-list">
 
                                                     <label>
-                                                        <input type="radio" name="nation" checked="">
+                                                        <input v-model="trsfInfo.chfTelno" :value="trsfInfo.crew1Telno" type="radio" name="nation" >
                                                         <span class="txt">대원#1 </span>
                                                     </label>
 
                                                     <label>
-                                                        <input type="radio" name="nation">
+                                                        <input v-model="trsfInfo.chfTelno" :value="trsfInfo.crew2Telno" type="radio" name="nation">
                                                         <span class="txt">대원#2</span>
                                                     </label>
 
                                                     <label>
-                                                        <input type="radio" name="nation">
+                                                        <input v-model="trsfInfo.chfTelno" :value="trsfInfo.crew3Telno" type="radio" name="nation">
                                                         <span class="txt">대원#3</span>
                                                     </label>
 
@@ -3504,7 +3485,7 @@
 
                                             <div class="item-cell-box full">
                                                 <div class="tbox">
-                                                    <input type="text" placeholder="차량번호 입력">
+                                                    <input v-model="trsfInfo.vecno" type="text" placeholder="차량번호 입력">
                                                 </div>
 
                                                 <div class="ms-3 d-flex">
@@ -3517,14 +3498,14 @@
                                     </tr>
 
                                     <tr>
-                                        <th>환자유형</th>
+                                        <th>전달 메세지</th>
                                         <td colspan="4">
 
                                             <div class="item-cell-box full">
 
                                                 <div class="textbox full">
-                                                    <textarea onkeyup="limitTextarea(this,'textarea4',500)" maxlength="500" placeholder="메시지 입력" style="height: 120px;"></textarea>
-                                                    <div class="limit-box"><span id="textarea4">0</span>/500자</div>
+                                                    <textarea @input="updateCharacterCount(0)" maxlength="500" placeholder="메시지 입력" style="height: 120px;" v-model="trsfInfo.msg"></textarea>
+                                                    <div class="limit-box"><span id="textarea1">{{characterCount}}</span>/500자</div>
                                                 </div>
 
                                             </div>
@@ -3543,7 +3524,7 @@
 
                     <article class="modal-menu-layout1 pt-10">
                         <div class="modal-menu-list">
-                            <a href="javascript:void(0)" class="modal-menu-btn menu-primary">이송처리 완료</a>
+                            <a @click="alertOpen(11)" class="modal-menu-btn menu-primary">이송처리 완료</a>
                         </div>
                     </article>
 
@@ -3914,22 +3895,22 @@
                                                         <tbody>
                                                         <tr>
                                                             <th>병실 (선택)</th>
-                                                            <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
+                                                            <td><div class="tbox full"><input v-model="mediConfirm.roomNm" placeholder="병실번호 입력"></div></td>
                                                         </tr>
 
                                                         <tr>
                                                             <th>진료과 (선택)</th>
-                                                            <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
+                                                            <td><div class="tbox full"><input v-model="mediConfirm.deptNm" placeholder="진료과 입력"></div></td>
                                                         </tr>
 
                                                         <tr>
                                                             <th>담당의 (선택)</th>
-                                                            <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
+                                                            <td><div class="tbox full"><input v-model="mediConfirm.spclNm" placeholder="담당의 입력"></div></td>
                                                         </tr>
 
                                                         <tr>
                                                             <th>연락처 (선택)</th>
-                                                            <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
+                                                            <td><div class="tbox full"><input v-model="mediConfirm.chrgTelno" placeholder="연락처 입력"></div></td>
                                                         </tr>
 
 
@@ -3953,8 +3934,8 @@
 
                                     <div>
                                         <div class="textbox">
-                                            <textarea onkeyup="limitTextarea(this,'textarea3',500)" maxlength="500" placeholder="메시지 입력" style="height: 120px;"></textarea>
-                                            <div class="limit-box"><span id="textarea3">0</span>/500자</div>
+                                            <textarea @input="updateCharacterCount(1)" maxlength="500" placeholder="메시지 입력" style="height: 120px;" v-model="mediConfirm.msg"></textarea>
+                                            <div class="limit-box"><span id="textarea1">{{characterCount}}</span>/500자</div>
                                         </div>
                                     </div>
 
@@ -3969,7 +3950,7 @@
 
                                     <div class="modal-menu-list">
 
-                                        <a href="javascript:confirmPopupOpen('병상요청을<br/>승인 하시겠습니까?',
+                                        <a @click="alertOpen(12)" href="javascript:confirmPopupOpen('병상요청을<br/>승인 하시겠습니까?',
                                         function() {confirmPopupClose();alertPopupOpen('승인 되었습니다.',
                                         function (){alertPopupClose();popupClose('assignment-request2');});})"
                                            class="modal-menu-btn menu-primary">승인완료</a>
@@ -4132,6 +4113,7 @@ export default {
     },
     setup(){
       const showTable = ref(false);
+      const trsfArr = ref([false,false,false,false]);
       const toggleTable = function(){
           showTable.value = !showTable.value;
       }
@@ -4141,6 +4123,7 @@ export default {
 
       return{
           showTable,
+          trsfArr,
           isAlert,
           errMsg,
           cncBtn, /* alert 취소버튼 유무 */
@@ -4160,6 +4143,8 @@ export default {
             alertIdx:100, /* alert창 확인버튼 */
             rptYn:false,  /* 역조서 유무 */
             newPt:{
+                ptNm:'',
+                rrno1:'',
                 gndr:'',
                 zip:'',
                 bascAddr:'',
@@ -4214,13 +4199,29 @@ export default {
                 negCd:null,
                 msg:'',
                 reqHospIdList:[]
-            }
+            },
+            selectedInst:'구급대',
+            trsfInfo:{
+                instId:'',
+                ptId:'',
+                bdasSeq: '',
+                ambsNm:'',
+                crew1Id:'구급대원',
+                crew2Id:'구급대원',
+                crew3Id:'구급대원',
+            },
+            mediConfirm:{
+              ptId:'',
+              aprvYn:'Y',
+              hospId:'',
+            },
         }
     },
     computed:{
-        ...mapState('bedasgn',['bdList','bdCnt','bdDetail','newPtInfo','ptDs','ptSv','ptBio','timeline','rcmdModal']),
+        ...mapState('bedasgn',['bdList','bdCnt','bdDetail','newPtInfo','ptDs','ptSv','ptBio','timeline','rcmdModal','rcmdHp']),
         ...mapState('patnt',['existPt','ptBI','ptDetail','rptInfo','zip']),
-        ...mapState('user',['userInfo','cmSido'])
+        ...mapState('user',['userInfo','cmSido']),
+        ...mapState('admin',['firestatnList','firemenList']),
 
     },
     methods: {
@@ -4303,6 +4304,20 @@ export default {
                 this.errMsg='역학조사서가\n삭제되었습니다.'
                 this.isAlert=true
                 this.alertIdx=10
+            } else if(idx===11){
+                this.errMsg='이송처리하겠습니까?'
+                this.isAlert=true
+                this.alertIdx=11
+            } else if(idx === 12){
+                /*의료진 승인*/
+                this.errMsg='병상요청을<br/>승인 하시겠습니까?'
+                this.cncBtn=true
+                this.isAlert=true
+                this.alertIdx=12
+            } else if(idx===13){
+                this.errMsg='승인 되었습니다.'
+                this.isAlert=true
+                this.alertIdx=13
             }
         },
         cfrmAl(res){
@@ -4328,6 +4343,7 @@ export default {
                 this.alertOpen(6)
             } else if(res===6){
                 this.alertClose()
+                this.setNull()
             } else if(res===7){
                 this.aprv.ptId = this.bdDetail.ptId
                 this.aprv.bdasSeq = this.bdDetail.bdasSeq
@@ -4336,6 +4352,7 @@ export default {
                 this.alertOpen(8)
             }else if(res===8){
                 this.alertClose()
+                this.setNull()
             } else if(res===9){
                 this.removeRpt()
                 this.newPt = this.initNewPt
@@ -4343,6 +4360,21 @@ export default {
                 this.alertClose()
                 this.alertOpen(10)
             }else if(res===10){
+                this.alertClose()
+            } else if(res===11){
+                this.trsfInfo.bdasSeq = this.bdDetail.bdasSeq
+                this.trsfInfo.ptId = this.bdDetail.ptId
+                console.log(this.trsfInfo)
+                this.$store.dispatch('bedasgn/cfmTrsf',this.trsfInfo)
+                this.alertClose()
+            } else if(res===12){
+                this.mediConfirm.ptId = this.bdDetail.ptId
+                this.mediConfirm.bdasSeq = this.bdDetail.bdasSeq
+                this.mediConfirm.hospId = this.userInfo.hospId
+                console.log(this.mediConfirm)
+                this.alertClose()
+                this.alertOpen(13)
+            } else if(res===13){
                 this.alertClose()
             }
         },
@@ -4401,6 +4433,12 @@ export default {
                     this.characterCount = this.content.length
                 } else {
                     this.characterCount = this.aprv.msg.length;
+                }
+            } else if(idx===1){
+                if (this.mediConfirm.msg === null || this.mediConfirm.msg === '') {
+                    this.characterCount = this.content.length
+                } else {
+                    this.characterCount = this.mediConfirm.msg.length;
                 }
             }
         },
@@ -4524,6 +4562,24 @@ export default {
             this.$store.dispatch('bedasgn/getDSInfo',data)
             console.log(data.bedStatCd)
         },
+        loadTrnsfInfo(num){
+            /*요청자 지역코드 받아와야 됨*/
+            const data = {dstrCd1: num}
+            this.$store.dispatch('admin/getFireStatn',data)
+        },
+        getFiremen(data){
+          /*구급대원*/
+          this.trsfInfo.instId=data.instId;
+          this.trsfInfo.ambsNm=data.instNm
+          this.$store.dispatch('admin/getFiremen',data)
+        },
+        fillFiremen(data, idx) {
+            const crewInfo = this.trsfInfo[`crew${idx}`]
+            crewInfo.crewId = data.crewId
+            crewInfo.pstn = data.pstn
+            crewInfo.crewNm = data.crewNm
+            crewInfo.telno = data.telno
+        }
     }
 }
 </script>
