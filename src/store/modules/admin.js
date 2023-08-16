@@ -210,13 +210,8 @@ export default {
         /****************organ*****************/
         getFiremen(comment,data){
             //const token = localStorage.getItem('userToken')
-            console.log(data.id)
-            const request = {
-                instId: data.id,
-                crewId: data.crewId,
-                crewNm: data.crewNm,
-                telno: data.telno
-            }
+            console.log(data.instId)
+            const request = data
             const url =`${API_PROD}/api/v1/private/organ/firemen`
             return axios({
                 method:"get",
@@ -252,16 +247,16 @@ export default {
                     if(response.data?.result.count!==0){
                         comment.commit('setFirestatn',response.data?.result.items)
                         comment.dispatch('getFSDetail',{ id:response.data?.result.items[0].instId,})
-                        const data = {id:response.data?.result.items[0].instId, crewId: null, crewNm:null, telno:null}
+                        const data = {instId:response.data?.result.items[0].instId, crewId: null, crewNm:null, telno:null}
                         console.log(data)
                         comment.dispatch('getFiremen',data);
 
-                        return router.push('/admin/organ/firestatn/list');
+                        //return router.push('/admin/organ/firestatn/list');
                     } else {
                         comment.commit('setFirestatn',[])
                         comment.commit('setFSDetail',null)
                         comment.commit('setFiremen',[])
-                        return router.push('/admin/organ/firestatn/list');
+                        //return router.push('/admin/organ/firestatn/list');
                     }
                 }
 

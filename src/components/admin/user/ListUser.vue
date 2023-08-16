@@ -2175,6 +2175,7 @@
 <script>
 import {mapState} from "vuex";
 import {ref} from "vue";
+import {getAuthCd} from "@/util/ui"
 export default {
     components: {
 
@@ -2289,17 +2290,7 @@ export default {
                 return '전산담당'
             }
         },
-        getAuthCd(code){
-            if(code==='일반'){
-                return code;
-            } else if(code === '게스트'){
-                return code;
-            } else if(code==='DTPM0001'){
-                return '일반';
-            } else {
-                return '게스트'
-            }
-        },
+        getAuthCd,
         getrgDt(str){
             const date = new Date(str);
             const year = date.getFullYear();
