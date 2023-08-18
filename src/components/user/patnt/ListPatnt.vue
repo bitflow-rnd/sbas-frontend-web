@@ -363,7 +363,7 @@
           <h2>환자 등록/수정</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
-          <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+          <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal(0)" data-bs-dismiss="modal">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
             <span class="svg-icon svg-icon-1">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -412,7 +412,7 @@
                                 <img v-if="preRpt===null || preRpt === undefined" src="/img/common/img_upload_img.svg"
                                      alt="이미지">
                                 <img v-if="preRpt!==null && preRpt !== undefined" :src="preRpt" alt="이미지">
-                                <a @click="alertOpen(9)" class="remove-btn"><img src="/img/common/ic_profile_remove.svg"
+                                <a v-if="preRpt!==null" @click="alertOpen(9)" class="remove-btn"><img src="/img/common/ic_profile_remove.svg"
                                                                                  alt="이미지"></a>
                               </div>
 
@@ -421,7 +421,7 @@
                                 <div class="upload-box">
                                   <label
                                       class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary ">
-                                    <input type="file" @change="uploadRpt">
+                                    <input type="file" @change="uploadRpt" :value="reportFile">
                                     수정하기
                                   </label>
                                 </div>
@@ -1349,7 +1349,7 @@
                                   <div class="profile-view-box " style="width: 100%; height: 264px;">
                                     <img v-if="preRpt===null" src="/img/common/img_upload_img.svg" alt="이미지">
                                     <img v-if="preRpt!==null" :src="preRpt" alt="이미지">
-                                    <a @click="alertOpen(9)" class="remove-btn"><img
+                                    <a v-if="preRpt!==null" @click="alertOpen(9)" class="remove-btn"><img
                                         src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
                                   </div>
 
@@ -1358,7 +1358,7 @@
                                     <div class="upload-box">
                                       <label
                                           class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary ">
-                                        <input type="file" @change="uploadRpt">
+                                        <input type="file" @change="uploadRpt" :value="reportFile">
                                         수정하기
                                       </label>
                                     </div>
@@ -2829,6 +2829,8 @@ export default {
     await this.$store.dispatch("severity/getSeverityData", 'PT00000085')
   },
   mounted() {
+    this.initNewPt = this.newPt
+    this.initDsInfo = this.dsInfo
   },
   setup() {
     const isAlert = ref(false);
@@ -2848,6 +2850,7 @@ export default {
       popup: 100, /* 팝업창 */
       rptYn: false,  /* 역조서 유무 */
       preRpt: null, /*역조서 이미지 링크*/
+      reportFile: null,
       newPt: {
         gndr: '',
         zip: '',
@@ -3029,7 +3032,7 @@ export default {
   },
   computed: {
     ...mapState('bedasgn', ['timeline', 'ptDs']),
-    ...mapState('patnt', ['ptDetail', 'existPt', 'ptList', 'attcRpt']),
+    ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
     series() {
       let chartData = [{
@@ -3135,6 +3138,12 @@ export default {
         this.errMsg = '환자 정보가\n등록되었습니다.'
         this.isAlert = true
         this.alertIdx = 3
+      } else if(idx===4) {
+        /*역조서 파싱 */
+        this.errMsg = '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
+        this.isAlert = true
+        this.newPt = this.rptInfo
+        this.alertIdx = 4
       } else if (idx === 9) {
         /*역조서 삭제*/
         this.errMsg = '역학조사서 이미지를\n삭제하시겠습니까?'
@@ -3149,6 +3158,9 @@ export default {
     },
     cfrmAl(res) {
       if (res === 3) {
+        this.alertClose()
+      } else if(res===4){
+        this.newPt = this.rptInfo
         this.alertClose()
       } else if (res === 9) {
         this.removeRpt()
@@ -3167,6 +3179,17 @@ export default {
         this.characterCount = 0
       }
     },
+    closeModal(idx){
+      if(idx===0){
+        /*세부내용 모달*/{
+          this.$store.commit('bedasgn/setDisesInfo',null)
+          this.$store.commit('bedasgn/setTimeline',null)
+          this.$store.commit('patnt/setBasicInfo',[0,null])
+          this.$store.commit('patnt/setRpt',null)
+          this.reportFile = null
+        }
+      }
+    },
     alertClose() {
       this.errMsg = ''
       this.cncBtn = false
@@ -3181,10 +3204,10 @@ export default {
       const formData = new FormData();
       formData.append('param1', 'edidemreport')
       formData.append('param2', file)
-      console.log(formData)
+      // console.log(formData)
       await this.$store.dispatch('patnt/uploadRpt', formData)
       if (this.rptInfo !== null) {
-        console.log('실행')
+        // console.log('실행')
         this.alertOpen(4)
       }
 
@@ -3222,18 +3245,21 @@ export default {
         await this.$store.dispatch('bedasgn/getTimeline', patient);
         await this.$store.dispatch('bedasgn/getDSInfo', patient);
       } else {
-        this.$store.commit('bedasgn/setTimeline', null)
+        this.$store.commit('bedasgn/setTimeline', null);
         this.$store.commit('bedasgn/setDisesInfo', null);
       }
       await this.$store.dispatch('patnt/getBasicInfo', patient);
 
-
-      if (this.ptDs !== null && this.ptDetail !== null) {
-        await this.$store.dispatch('patnt/readEpidRpt', this.ptDetail);
+      if (this.ptDetail !== null) {
         this.newPt = this.ptDetail;
+      }
+      if (this.ptDs !== null) {
+        await this.$store.dispatch('patnt/readEpidRpt', this.ptDetail);
         this.dsInfo = this.ptDs;
         this.preRpt = this.attcRpt;
-        console.log(this.preRpt)
+        console.log(this.preRpt);
+      } else {
+        this.preRpt = null;
       }
 
       /*this.selectedPatient = patient
@@ -3293,6 +3319,7 @@ export default {
         dethYn: '',
         mpno: '',
       }
+      this.preRpt = null
       console.log(this.patientData)
     }
   }
