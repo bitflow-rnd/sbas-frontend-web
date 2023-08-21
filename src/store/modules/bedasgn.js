@@ -15,6 +15,7 @@ export default {
         ptBio:null,
         ptSp:null,
         rcmdModal:1,
+        rcmdHp: null,
     },
     mutations:{
         test(state){
@@ -48,6 +49,12 @@ export default {
         },
         setSPInfo(state,payload){
             state.ptSp = payload
+        },
+        setRcmdHp(state,payload){
+            state.rcmdHp = payload
+        },
+        isTrsf(state,payload){
+            state.isTrsf = payload
         }
     },
     actions:{
@@ -173,9 +180,9 @@ export default {
                 if(response.data?.code === '00'){
                     //console.log(response.data?.result)
                     comment.commit('setTimeline',response.data?.result);
-                    const jobCd = comment.rootState.user.userInfo.jobCd
+                    const userInfo = localStorage.getItem('userInfo')
                     const res = response.data?.result
-                    if(res.items[0].title!==null && jobCd==='PMGR0002' && !res.items[0].title.includes('원내')){
+                    if(res.items[0].title!==null && userInfo.jobCd==='PMGR0002' && !res.items[0].title.includes('원내')){
                         comment.commit('setRCMDModal',0)
                     } else {
                         comment.commit('setRCMDModal',1)
@@ -220,6 +227,44 @@ export default {
                 if(response.data?.code === '00'){
                     console.log(response.data?.result)
                    // comment.commit('setSPInfo',response.data?.result);
+                }
+            } catch (e){
+                console.log(e)
+            }
+        },
+        /* 병원 추천 - 병상배정반 */
+        async rcmdHpList(comment,data){
+            const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/bedasgn/hosp-list/${data.ptId}/${data.bdasSeq}`
+            console.log('추천병원')
+            try{
+                const response = await axios.get(url,{
+                    headers:{
+                        Authorization: `Bearer ${token}` // Add the token to the Authorization header
+                    }
+                });
+                if(response.data?.code === '00'){
+                    comment.commit('setRcmdHp',response.data?.result);
+                }
+            } catch (e){
+                console.log(e)
+            }
+        },
+        /* 이송처리 - 의료진 */
+        async cfmTrsf(comment,data){
+            const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/bedasgn/confirmtransf`
+            const request = data
+            console.log('이송처리')
+            try{
+                const response = await axios.post(url,request, {
+                    headers:{
+                        Authorization: `Bearer ${token}` // Add the token to the Authorization header
+                    }
+                });
+                if(response.data?.code === '00'){
+                    console.log(response.data?.result)
+                    comment.commit('isTrsf',response.data?.result);
                 }
             } catch (e){
                 console.log(e)
