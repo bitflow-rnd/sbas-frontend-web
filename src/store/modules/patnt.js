@@ -224,8 +224,8 @@ export default {
         /*환자 중복 유효성*/
         async isExistPt(comment,data){
             //const token = localStorage.getItem('userToken')
-            // const url = `${API_PROD}/api/v1/private/patient/exist`
-            const url = `http://localhost:8080/api/v1/private/patient/exist`
+            const url = `${API_PROD}/api/v1/private/patient/exist`
+            // const url = `http://localhost:8080/api/v1/private/patient/exist`
             const request = data
             // console.log('중복 유효성')
             try{

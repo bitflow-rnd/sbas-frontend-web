@@ -412,8 +412,9 @@
                                 <img v-if="preRpt===null || preRpt === undefined" src="/img/common/img_upload_img.svg"
                                      alt="이미지">
                                 <img v-if="preRpt!==null && preRpt !== undefined" :src="preRpt" alt="이미지">
-                                <a v-if="preRpt!==null" @click="alertOpen(9)" class="remove-btn"><img src="/img/common/ic_profile_remove.svg"
-                                                                                 alt="이미지"></a>
+                                <a v-if="preRpt!==null" @click="alertOpen(9)" class="remove-btn"><img
+                                    src="/img/common/ic_profile_remove.svg"
+                                    alt="이미지"></a>
                               </div>
 
                               <div class="profile-upload-box">
@@ -1171,13 +1172,13 @@
 
                     <div class="img-upload-result">
                       <div class="img-list">
-<!--                        <div href="javascript:void(0)" class="img-box">-->
-<!--                          <img src="/img/common/img_dummy_item1.png" alt="이미지">-->
-<!--                          <a href="javascript:void(0)" class="remove-btn"-->
-<!--                             onclick="$(this).parents('.img-box').remove();">-->
-<!--                            <img src="/img/common/ic_profile_remove.svg" alt="이미지">-->
-<!--                          </a>-->
-<!--                        </div>-->
+                        <!--                        <div href="javascript:void(0)" class="img-box">-->
+                        <!--                          <img src="/img/common/img_dummy_item1.png" alt="이미지">-->
+                        <!--                          <a href="javascript:void(0)" class="remove-btn"-->
+                        <!--                             onclick="$(this).parents('.img-box').remove();">-->
+                        <!--                            <img src="/img/common/ic_profile_remove.svg" alt="이미지">-->
+                        <!--                          </a>-->
+                        <!--                        </div>-->
                       </div>
                     </div>
 
@@ -2944,9 +2945,22 @@ export default {
             enabled: true
           },
         },
+        colors: ['#676767', '#000000', '#676767', '#00ff26', '#fcce14', '#fc1f1f', '#00ff26', '#00ff26', '#00ff26', '#fcce14', '#fcce14', '#fcce14', '#fc1f1f'],
+        tooltip: {
+          shared: true,
+          y: {
+            formatter: function (val) {
+              return val.toFixed(2)
+            }
+          }
+        },
+        markers: {
+          size: [0, 0, 0, 4, 4, 4, 0, 0, 4, 0, 0, 4, 0]
+        },
         fill: {
           type: 'gradient',
           gradient: {
+            shade: 'dark',
             shadeIntensity: 1,
             inverseColors: false,
             opacityFrom: 0.5,
@@ -2958,9 +2972,9 @@ export default {
           enabled: false
         },
         stroke: {
-          width: [2, 2, 2, 2],
+          width: [2, 2, 2, 2, 2, 2, 1, 1, 2, 1, 1, 2, 1],
           curve: 'smooth',
-          dashArray: [0, 0, 0, 0]
+          dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
         },
         title: {
           text: 'Severity level',
@@ -3003,7 +3017,7 @@ export default {
               y: 0.0,
               y2: 0.3,
               borderColor: '#000000',
-              fillColor: '#fc1f1f',
+              fillColor: '#2eff00',
               opacity: 0.1
             },
             {
@@ -3017,15 +3031,23 @@ export default {
               y: 0.8,
               y2: 1.0,
               borderColor: '#000000',
-              fillColor: '#2eff00',
+              fillColor: '#fc1f1f',
               opacity: 0.1
             }
           ]
         },
         legend: {
-          show: false,
+          show: true,
           position: 'right',
-          offsetY: 50
+          offsetY: 50,
+          height: 2530,
+          formatter: (seriesName, opts) => {
+            if (opts.seriesIndex > 5) return ''
+            return seriesName;
+          },
+          markers: {
+            width: [12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0],
+          }
         }
       },
     }
@@ -3035,19 +3057,127 @@ export default {
     ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
     series() {
-      let chartData = [{
-        name: "prdt",
-        data: []
-      }]
+      let chartData = [
+        {name: "mean + std", data: []},
+        {name: "mean", data: []},
+        {name: "mean - std", data: []},
+        {name: "+1 day", data: []},
+        {name: "+2 days", data: []},
+        {name: "+3 days", data: []},
+        {name: '+1 day + std', data: []},
+        {name: '+1 day - std', data: []},
+        {name: '+1 day vert', data: []},
+        {name: '+2 days + std', data: []},
+        {name: '+2 days - std', data: []},
+        {name: '+2 days vert', data: []},
+        {name: '+3 days mean', data: []}
+      ]
       if (this.severityData.ptId) {
-        this.severityData.probsData.forEach(
+        this.severityData.first.forEach(
             (day) => {
               chartData[0].data.push({
-                x: new Date(`${day.prdtDt.substring(0, 4)}-${day.prdtDt.substring(4, 6)}-${day.prdtDt.substring(6)}`).getTime(),
-                y: parseFloat(day.svrtProb?.replace(',', '.'))
+                x: day.prdtDt,
+                y: parseFloat(day.svrtProb)
               })
             }
         )
+        this.severityData.second.forEach(
+            (day) => {
+              chartData[1].data.push({
+                x: day.prdtDt,
+                y: parseFloat(day.svrtProb)
+              })
+            }
+        )
+        this.severityData.third.forEach(
+            (day) => {
+              chartData[2].data.push({
+                x: day.prdtDt,
+                y: parseFloat(day.svrtProb)
+              })
+            }
+        )
+
+        // Dots for +1, +2 and +3 days data
+        chartData[3].data.push({
+          x: this.severityData.second.at(-3).prdtDt,
+          y: parseFloat(this.severityData.second.at(-3).svrtProb)
+        })
+        chartData[4].data.push({
+          x: this.severityData.second.at(-2).prdtDt,
+          y: parseFloat(this.severityData.second.at(-2).svrtProb)
+        })
+        chartData[5].data.push({
+          x: this.severityData.second.at(-1).prdtDt,
+          y: parseFloat(this.severityData.second.at(-1).svrtProb)
+        })
+
+        // Lines for +1 day data
+        chartData[6].data.push({
+          x: this.severityData.second.at(-4).prdtDt,
+          y: parseFloat(this.severityData.second.at(-4).svrtProb)
+        })
+        chartData[6].data.push({
+          x: this.severityData.first.at(-3).prdtDt,
+          y: parseFloat(this.severityData.first.at(-3).svrtProb)
+        })
+        chartData[7].data.push({
+          x: this.severityData.second.at(-4).prdtDt,
+          y: parseFloat(this.severityData.second.at(-4).svrtProb)
+        })
+        chartData[7].data.push({
+          x: this.severityData.third.at(-3).prdtDt,
+          y: parseFloat(this.severityData.third.at(-3).svrtProb)
+        })
+        chartData[8].data.push({
+          x: this.severityData.first.at(-3).prdtDt,
+          y: parseFloat(this.severityData.first.at(-3).svrtProb)
+        })
+        chartData[8].data.push({
+          x: this.severityData.third.at(-3).prdtDt,
+          y: parseFloat(this.severityData.third.at(-3).svrtProb)
+        })
+
+        // Lines for +2 days data
+        chartData[9].data.push({
+          x: this.severityData.second.at(-3).prdtDt,
+          y: parseFloat(this.severityData.second.at(-3).svrtProb)
+        })
+        chartData[9].data.push({
+          x: this.severityData.first.at(-2).prdtDt,
+          y: parseFloat(this.severityData.first.at(-2).svrtProb)
+        })
+        chartData[10].data.push({
+          x: this.severityData.second.at(-3).prdtDt,
+          y: parseFloat(this.severityData.second.at(-3).svrtProb)
+        })
+        chartData[10].data.push({
+          x: this.severityData.third.at(-2).prdtDt,
+          y: parseFloat(this.severityData.third.at(-2).svrtProb)
+        })
+        chartData[11].data.push({
+          x: this.severityData.first.at(-2).prdtDt,
+          y: parseFloat(this.severityData.first.at(-2).svrtProb)
+        })
+        chartData[11].data.push({
+          x: this.severityData.third.at(-2).prdtDt,
+          y: parseFloat(this.severityData.third.at(-2).svrtProb)
+        })
+
+        // Line for +3 days data
+        chartData[12].data.push({
+          x: this.severityData.second.at(-2).prdtDt,
+          y: parseFloat(this.severityData.second.at(-2).svrtProb)
+        })
+        chartData[12].data.push({
+          x: this.severityData.second.at(-1).prdtDt,
+          y: parseFloat(this.severityData.second.at(-1).svrtProb)
+        })
+
+        chartData[0].data = chartData[0].data.slice(0, -3)
+        chartData[2].data = chartData[2].data.slice(0, -3)
+        chartData[1].data = chartData[1].data.slice(0, -3)
+
       } else {
         chartData = [{
           name: ".",
@@ -3102,7 +3232,6 @@ export default {
   methods: {
     backBtn,
     goAsgn,
-
     getAge,
     getGndr,
     showPopup,
@@ -3114,7 +3243,6 @@ export default {
     async updateExistPt() {
       const data = {ptId: this.existPt.ptId, newPt: this.newPt};
       await this.$store.dispatch('patnt/modiPtInfo', data);
-
       this.closePopup(0);
       this.tab = 1;
     },
@@ -3138,7 +3266,7 @@ export default {
         this.errMsg = '환자 정보가\n등록되었습니다.'
         this.isAlert = true
         this.alertIdx = 3
-      } else if(idx===4) {
+      } else if (idx === 4) {
         /*역조서 파싱 */
         this.errMsg = '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
         this.isAlert = true
@@ -3159,7 +3287,7 @@ export default {
     cfrmAl(res) {
       if (res === 3) {
         this.alertClose()
-      } else if(res===4){
+      } else if (res === 4) {
         this.newPt = this.rptInfo
         this.alertClose()
       } else if (res === 9) {
@@ -3179,13 +3307,14 @@ export default {
         this.characterCount = 0
       }
     },
-    closeModal(idx){
-      if(idx===0){
-        /*세부내용 모달*/{
-          this.$store.commit('bedasgn/setDisesInfo',null)
-          this.$store.commit('bedasgn/setTimeline',null)
-          this.$store.commit('patnt/setBasicInfo',[0,null])
-          this.$store.commit('patnt/setRpt',null)
+    closeModal(idx) {
+      if (idx === 0) {
+        /*세부내용 모달*/
+        {
+          this.$store.commit('bedasgn/setDisesInfo', null)
+          this.$store.commit('bedasgn/setTimeline', null)
+          this.$store.commit('patnt/setBasicInfo', [0, null])
+          this.$store.commit('patnt/setRpt', null)
           this.reportFile = null
         }
       }
@@ -3210,7 +3339,6 @@ export default {
         // console.log('실행')
         this.alertOpen(4)
       }
-
       //역조서 이미지 미리보기 만들기
       const reader = new FileReader()
       reader.onload = (e) => {
@@ -3240,7 +3368,6 @@ export default {
       }
     },
     async selectPatient(patient) {
-      console.log(patient)
       if (patient['bdasSeq']) {
         await this.$store.dispatch('bedasgn/getTimeline', patient);
         await this.$store.dispatch('bedasgn/getDSInfo', patient);
@@ -3254,13 +3381,10 @@ export default {
         this.newPt = this.ptDetail;
       }
       if (this.ptDs !== null) {
-        await this.$store.dispatch('patnt/readEpidRpt', this.ptDetail);
         this.dsInfo = this.ptDs;
-        this.preRpt = this.attcRpt;
-        console.log(this.preRpt);
-      } else {
-        this.preRpt = null;
       }
+      await this.$store.dispatch('patnt/readEpidRpt', this.ptDetail);
+      this.preRpt = this.attcRpt;
 
       /*this.selectedPatient = patient
       const basicInfoIndex = this.patientBasicInfo.findIndex(pt => pt['ptId'] === patient['ptId'])
@@ -3320,7 +3444,6 @@ export default {
         mpno: '',
       }
       this.preRpt = null
-      console.log(this.patientData)
     }
   }
 }
