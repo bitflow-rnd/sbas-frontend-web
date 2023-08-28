@@ -97,7 +97,7 @@ export function getAge (no1, no2){
     const curData = new Date();
     const curYear = curData.getFullYear();
     let year;
-    if(no2==='1'||no2==='2'){
+    if(no2==='1'||no2==='2'||no2==='5'||no2==='6'){
         year = '19'+no1.slice(0,2)
         return curYear - parseInt(year)
     } else {

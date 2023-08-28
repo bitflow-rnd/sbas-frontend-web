@@ -96,8 +96,9 @@ export default {
         async regBasicInfo(comment,data){
             const token = localStorage.getItem('userToken')
             const url = `${API_PROD}/api/v1/private/patient/regbasicinfo`
+            // const url = `http://localhost:8080/api/v1/private/patient/regbasicinfo`
             const request = data
-            console.log('환자 등록 - 기본 정보')
+            // console.log('환자 등록 - 기본 정보')
             try{
                 const response = await axios.post(url,request, {
                     headers:{
@@ -105,7 +106,7 @@ export default {
                     }
                 });
                 if(response.data?.code === '00'){
-                    console.log(response.data?.result)
+                    // console.log(response.data?.result)
                     comment.commit('regBasicInfo',response.data?.result);
                 }
             } catch (e){
@@ -224,8 +225,9 @@ export default {
         async isExistPt(comment,data){
             //const token = localStorage.getItem('userToken')
             const url = `${API_PROD}/api/v1/private/patient/exist`
+            // const url = `http://localhost:8080/api/v1/private/patient/exist`
             const request = data
-            console.log('중복 유효성')
+            // console.log('중복 유효성')
             try{
                 const response = await axios.post(url,request);
                 if(response.data?.code === '00'){
@@ -244,11 +246,11 @@ export default {
             //const token = localStorage.getItem('userToken')
             const url = `${API_PROD}/api/v1/private/patient/bioinfoanlys`
             const request = data
-            console.log('생체정보 분석')
+            // console.log('생체정보 분석')
             try{
                 const response = await axios.post(url,request);
                 if(response.data?.code === '00'){
-                    console.log(response.data?.code)
+                    // console.log(response.data?.code)
                     /*if(response.data?.result.isExist){
                         comment.commit('setExPt',response.data?.result.items);
                     } else {
