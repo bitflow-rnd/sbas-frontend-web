@@ -175,7 +175,7 @@ export default {
         loadPatientData() {
             try {
                 return axios
-                    .get(`http://sbas-test.bitflow.ai/api/v1/private/patient/search`)
+                    .get(`${API_PROD}/api/v1/private/patient/search`)
             } catch (error) {
                 console.log(error);
             }
@@ -183,7 +183,7 @@ export default {
         loadPatientBasicInfo(_, id) {
             try {
                 return axios
-                    .get(`http://sbas-test.bitflow.ai/api/v1/private/patient/basicinfo?ptId=${id}`)
+                    .get(`${API_PROD}/api/v1/private/patient/basicinfo?ptId=${id}`)
             } catch (error) {
                 console.log(error);
             }
@@ -191,7 +191,7 @@ export default {
         loadPatientDiseaseInfo(_, id) {
             try {
                 return axios
-                    .get(`http://sbas-test.bitflow.ai/api/v1/private/patient/disease-info/${id}`)
+                    .get(`${API_PROD}/api/v1/private/patient/disease-info/${id}`)
             } catch (error) {
                 console.log(error);
             }
