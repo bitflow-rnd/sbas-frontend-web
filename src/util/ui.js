@@ -121,6 +121,7 @@ export async function showPopup(idx) {
     if (idx === 0 && !this.rptYn) {
         console.log(this.newPt)
         await this.$store.dispatch('patnt/isExistPt', this.newPt)
+        console.log(this.existPt)
         if (this.existPt !== null) {
             this.popup = 0
         } else {

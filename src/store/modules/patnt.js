@@ -137,15 +137,12 @@ export default {
         },
         /*역조서 삭제*/
         async removeRpt(comment,data){
-            //const token = localStorage.getItem('userToken')
             const url = `${API_PROD}/api/v1/private/patient/delepidreport/${data}`
             console.log(data)
-            //const request = data
             console.log('역학조사서 삭제')
             try{
                 const response = await axios.post(url);
                 if(response.data?.code === '00'){
-                    //console.log(response.data?.result)
                     await comment.commit('setRpt',null);
                 }
             } catch (e){
@@ -154,7 +151,6 @@ export default {
         },
         /*attcId로 역조서 읽기*/
         async readEpidRpt(comment,data){
-            //const token = localStorage.getItem('userToken')
             const url = `${API_PROD}/api/v1/private/patient/read-epidreport/${data.attcId}`
 
 
@@ -162,7 +158,6 @@ export default {
             try{
                 const response = await axios.get(url);
                 if(response.data?.code === '00'){
-                    //console.log(response.data?.result)
                     await comment.commit('setAttcRpt',response.data?.result);
                 } else {
                     comment.commit('setAttcRpt',null)
@@ -184,7 +179,6 @@ export default {
                     }
                 });
                 if(response.data?.status === 'OK'){
-                    //console.log(response.data?.result)
                     if(data[0]===0){
                         console.log('역학조사서 파싱 후 주소')
                         comment.commit('setZip',response.data?.addresses[0]?.addressElements[8]?.longName);
@@ -204,15 +198,12 @@ export default {
         /*환자 기본 정보 조회*/
         async getBasicInfo(comment,data){
             //const token = localStorage.getItem('userToken')
-            const url = `${API_PROD}/api/v1/private/patient/basicinfo`
-
-            const params = {ptId:data.ptId}
+            const url = `${API_PROD}/api/v1/private/patient/basicinfo/${data.ptId}`
 
             console.log('환자 기본 정보 조회'+data.ptId)
             try{
-                const response = await axios.get(url, {params});
+                const response = await axios.get(url);
                 if(response.data?.code === '00'){
-                    //console.log(response.data?.result)
                     await comment.commit('setBasicInfo',[0,response.data?.result]);
                     comment.dispatch('geoCoding',[2,response.data?.result.bascAddr])
                 }
@@ -223,11 +214,8 @@ export default {
 
         /*환자 중복 유효성*/
         async isExistPt(comment,data){
-            //const token = localStorage.getItem('userToken')
             const url = `${API_PROD}/api/v1/private/patient/exist`
-            // const url = `http://localhost:8080/api/v1/private/patient/exist`
             const request = data
-            // console.log('중복 유효성')
             try{
                 const response = await axios.post(url,request);
                 if(response.data?.code === '00'){
