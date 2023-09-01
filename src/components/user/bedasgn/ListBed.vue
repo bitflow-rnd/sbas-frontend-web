@@ -62,13 +62,13 @@
                     <!--end::Page title-->
                     <!--begin::Actions-->
                     <div class="d-flex align-items-center gap-2 gap-lg-3">
-                        <a href="#" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7" data-bs-toggle="modal"
-                           data-bs-target="#kt_modal_view_users"><i class="fa-regular fa-trash-can"></i> 삭제</a>
-                        <a href="#" class="btn btn-flex btn-sm btn-secondary fs-7" data-bs-toggle="modal"
-                           data-bs-target="#kt_modal_view_users"><i class="fa-solid fa-download"></i> 엑셀다운로드</a>
+                        <a href="javascript:void(0);" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7"
+                           data-bs-target="#kt_modal_view_users"><i class="fa-regular fa-trash-can"></i> 삭제</a><!-- data-bs-toggle="modal" -->
+                        <a href="#" class="btn btn-flex btn-sm btn-secondary fs-7"
+                           data-bs-target="#kt_modal_view_users"><i class="fa-solid fa-download"></i> 엑셀다운로드</a><!-- data-bs-toggle="modal" -->
                         <a data-bs-toggle="modal"
                            data-bs-target="#kt_modal_request" class="btn btn-sm btn-flex btn-primary align-self-center px-3">
-                        <i class="fa-solid fa-plus"></i> 신규병상요청
+                          <i class="fa-solid fa-plus"></i> 신규병상요청
                         </a>
                     </div>
                     <!--end::Actions-->
@@ -2806,9 +2806,11 @@
                                                                     <!--todo: timeline에서 받아오는 img 파일이 없는데-->
                                                                     <div class="item-img-group mb-4">
                                                                         <div class="img-list">
+                                                                          <!--
                                                                             <a href="javascript:void(0)" class="img-box">
                                                                                 <img src="/img/common/img_dummy_item1.png" alt="이미지">
                                                                             </a>
+                                                                            -->
                                                                         </div>
 
                                                                     </div>
@@ -4679,7 +4681,8 @@ export default {
     display: block;
 }
 .item-box.suspend {
-    border: 2px solid #74AFEB !important;
+  border: 3px solid #74AFEB !important;
+  background-color: #74AFEB33;
 }
 #map {
   position: absolute !important;
@@ -4689,5 +4692,6 @@ export default {
   padding: 0;
   top: 0;
   left: 0;
+  border-top: 1px solid #555;
 }
 </style>

@@ -14,7 +14,7 @@
           <template v-for="num in [...Array(this.pageEndIndex + 1).keys()].splice(this.pageStartIndex)"
                     :key="num">
             <li class="paginate_button page-item"><a @click="changePage(num)"
-                                                     aria-controls="kt_table_users"
+                                                     aria-controls="kt_table_users" role="button"
                                                      :class="{active: num === page}"
                                                      :data-dt-idx="num" tabindex="0"
                                                      class="page-link">{{ num }}</a></li>

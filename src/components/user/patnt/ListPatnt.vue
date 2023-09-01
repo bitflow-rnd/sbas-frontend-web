@@ -254,8 +254,8 @@
                 <div class="table-box with-scroll small">
                   <table>
                     <colgroup>
+                      <col style="width: 35px;">
                       <col style="width: 70px;">
-                      <col style="width: 50px;">
                       <col style="width: 100px;">
                       <col style="width: 100px;">
                       <col style="width: 100px;">
@@ -271,7 +271,6 @@
                     </colgroup>
                     <thead>
                     <tr class="small">
-                      <th>순번</th>
                       <th>
                         <div class="cbox">
                           <label>
@@ -281,6 +280,7 @@
                           </label>
                         </div>
                       </th>
+                      <th>순번</th>
                       <th>이름</th>
                       <th>나이</th>
                       <th>성별</th>
@@ -298,7 +298,6 @@
                     <tbody>
                     <tr v-for="(pt, idx) in paginatedPatientData" :key="idx" @click="selectPatient(pt)"
                         data-bs-target="#kt_modal_patnt_detail" data-bs-toggle="modal">
-                      <td>{{ startIndex + idx + 1 }}</td>
                       <td>
                         <div class="cbox d-flex justify-content-center">
                           <label>
@@ -306,15 +305,16 @@
                           </label>
                         </div>
                       </td>
+                      <td>{{ startIndex + idx + 1 }}</td>
                       <td>{{ pt['ptNm'] }}</td>
-                      <td>{{ pt['age'] }}</td>
-                      <td>{{ pt['gndr'] }}</td>
-                      <td>{{ pt['tagList'].join(', ') }}</td>
+                      <td>{{ pt['age'] }}세</td>
+                      <td>{{ pt['gndr'] }}자</td>
+                      <td>{{ pt['tagList'].length>0?pt['tagList'].join(', '):'-' }}</td>
                       <td>{{ pt['mpno'] }}</td>
                       <td>{{ pt['natiCd'] }}</td>
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
-                      <td>{{ pt['hospNm'] }}</td>
-                      <td>{{ pt['bedStatCdNm'] }}</td>
+                      <td>{{ pt['hospNm']?pt['hospNm']:'-' }}</td>
+                      <td>{{ pt['bedStatCdNm']?pt['bedStatCdNm']:'-' }}</td>
                       <td>{{ getDate(pt['updtDttm']) }}</td>
                       <td>
                         <a class="btn btn-flex btn-xs btn-outline btn-outline-primary"
@@ -1144,9 +1144,11 @@
                               <!--todo: timeline에서 받아오는 img 파일이 없는데-->
                               <div class="item-img-group mb-4">
                                 <div class="img-list">
+                                  <!--
                                   <a href="javascript:void(0)" class="img-box">
                                     <img src="/img/common/img_dummy_item1.png" alt="이미지">
                                   </a>
+                                  -->
                                 </div>
 
                               </div>
@@ -3457,7 +3459,8 @@ export default {
 }
 
 .item-box.suspend {
-  border: 2px solid #74AFEB !important;
+  border: 3px solid #74AFEB !important;
+  background-color: #74AFEB33;
 }
 
 .popup {

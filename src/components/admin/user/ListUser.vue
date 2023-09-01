@@ -311,7 +311,7 @@
                                 <div class="table-box with-scroll small">
                                     <table v-if="userList!==[]" class="table-layout-fixed">
                                         <colgroup>
-                                            <col style="width: 70px;">
+                                            <col style="width: 35px;">
                                             <col style="width: 50px;">
                                             <col style="width: 100px;">
                                             <col style="width: 100px;">
@@ -327,7 +327,6 @@
                                         </colgroup>
                                         <thead>
                                         <tr class="small">
-                                            <th @click="checkInfo">순번</th>
                                             <th>
                                                 <div class="cbox">
                                                     <label>
@@ -335,6 +334,7 @@
                                                     </label>
                                                 </div>
                                             </th>
+                                          <th @click="checkInfo">순번</th>
                                             <th>주 담당지역</th>
                                             <th>기관유형</th>
                                             <th>소속기관</th>
@@ -350,7 +350,6 @@
 
                                         <tbody>
                                         <tr v-for="(item,i) in userList" :key="i">
-                                            <td>{{i+1}}</td>
                                             <td>
                                                 <div class="cbox">
                                                     <label>
@@ -358,6 +357,7 @@
                                                     </label>
                                                 </div>
                                             </td>
+                                            <td>{{i+1}}</td>
                                             <td>{{item.dutyDstr1Cd}}<!--todo 지역번호 조회 함수--></td>
                                             <td>{{getInstNm(item.instTypeCd)}}</td>
                                             <td>{{ item.instNm }}</td>
@@ -365,7 +365,6 @@
                                             <td> {{ getJobCd(item.jobCd) }}</td>
                                             <td>{{ getAuthCd(item.authCd) }}</td>
                                             <td>{{ getrgDt(item.rgstDttm) }}</td>
-
                                             <td>{{ getrgDt(item.rgstDttm)}}</td>
                                             <td>{{ item.userStatCdNm }}</td>
                                             <td><!--todo userInfo 정보 비교해서 띄우기? -->
