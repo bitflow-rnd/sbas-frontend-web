@@ -2798,9 +2798,9 @@
                                                             <div class="item-box" :class="{'suspend':item.timeLineStatus === 'suspend'}">
                                                                 <div class="top-item-box">
                                                                     <div class="state-box">{{ item.title }}</div>
-                                                                    <div class="date-box">{{ getTLDt(item.updtDttm,1) }}</div>
+                                                                    <div class="date-box" v-if="item.updtDttm">{{ getTLDt(item.updtDttm,1) }}</div>
                                                                 </div>
-                                                                <div class="mid-item-box">{{ item.by }}</div>
+                                                                <div class="mid-item-box" v-if="item.by">{{ item.by }}</div>
                                                                 <div class="bottom-item-box">
 
                                                                     <!--todo: timeline에서 받아오는 img 파일이 없는데-->
@@ -2813,7 +2813,7 @@
 
                                                                     </div>
 
-                                                                    <div class="msg-box" v-show="item.msg !== null">{{item.msg}}
+                                                                    <div class="msg-box" v-if="item.msg">{{item.msg}}
                                                                     </div>
 
                                                                 </div>
@@ -2862,9 +2862,9 @@
 
                                                         <article class="modal-menu-layout1">
                                                             <div class="modal-menu-list">
-                                                                <a v-show="(bdDetail.bedStatCd==='BAST0003'&&userInfo.jobCd==='PMGR0002')||(bdDetail.bedStatCd==='BAST0004'&&userInfo.jobCd==='PMGR0003')" @click="showPopup(1)"
+                                                                <a v-show="(bdDetail.bedStatCd==='BAST0003')||(bdDetail.bedStatCd==='BAST0004')" @click="showPopup(1)"
                                                                    class="modal-menu-btn menu-primary-outline radius-0 big">배정 불가</a>
-                                                                <div v-show="(bdDetail.bedStatCd==='BAST0003'&&userInfo.jobCd==='PMGR0002')||(bdDetail.bedStatCd==='BAST0004'&&userInfo.jobCd==='PMGR0003')" @click="async () => { await showPopup(2)}" :data-bs-toggle="openRcmdModal(this.rcmdModal)[0]" :data-bs-target="openRcmdModal(this.rcmdModal)[1]"
+                                                                <div v-show="(bdDetail.bedStatCd==='BAST0003')||(bdDetail.bedStatCd==='BAST0004')" @click="async () => { await showPopup(2)}" :data-bs-toggle="openRcmdModal(this.rcmdModal)[0]" :data-bs-target="openRcmdModal(this.rcmdModal)[1]"
                                                                    class="modal-menu-btn menu-primary radius-0 big">병상요청 승인</div>
                                                                 <div v-show="bdDetail.bedStatCd==='BAST0005'" data-bs-toggle="modal" @click="async () => { await loadTrnsfInfo(27)}"
                                                                      data-bs-target="#kt_modal_dispatch" class="modal-menu-btn menu-primary radius-0 big">이송·배차 처리</div>
@@ -3556,21 +3556,75 @@
                                     <tbody>
                                     <tr>
                                         <th>병원명</th>
-                                        <td colspan="3">칠곡경북대학교병원</td>
+                                        <td colspan="3">{{ getChrgTL(timeline.items,0) }}</td>
                                     </tr>
 
                                     <tr>
+                                        <th>처리 유형</th>
+                                        <td>
+                                            <div class="item-cell-box full justify-content-between">
+                                            <article class="toggle-list-layout2">
+
+                                                <div class="toggle-list">
+
+                                                    <label @click="setHosptlzdiscg(1)">
+                                                        <input type="radio" name="toggle4-3" value="IOST0001" v-model="hosptlzdiscg.admsStatCd">
+                                                        <span class="txt">입원</span>
+                                                    </label>
+
+                                                    <label @click="setHosptlzdiscg(2)">
+                                                        <input type="radio" name="toggle4-3" value="IOST0002" v-model="hosptlzdiscg.admsStatCd">
+                                                        <span class="txt">퇴원</span>
+                                                    </label>
+
+                                                    <label @click="setHosptlzdiscg(3)">
+                                                        <input type="radio" name="toggle4-3" value="IOST0003" v-model="hosptlzdiscg.admsStatCd">
+                                                        <span class="txt">재택회송</span>
+                                                    </label>
+                                                </div>
+
+                                            </article>
+                                        </div>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="hosptlzdiscg.admsStatCd==='IOST0002'">
+                                        <th>퇴원 사유</th>
+                                        <td><div class="item-cell-box full justify-content-between">
+                                            <article class="toggle-list-layout2">
+
+                                                <div class="toggle-list">
+
+                                                    <label>
+                                                        <input type="radio" name="toggle4-4" value="DCRN0001" v-model="hosptlzdiscg.dschRsnCd">
+                                                        <span class="txt">입원 불필요</span>
+                                                    </label>
+
+                                                    <label>
+                                                        <input type="radio" name="toggle4-4" value="DCRN0002" v-model="hosptlzdiscg.dschRsnCd">
+                                                        <span class="txt">입원 거부</span>
+                                                    </label>
+
+                                                    <label @click="setHosptlzdiscg(3)">
+                                                        <input type="radio" name="toggle4-4" value="DCRN0003" v-model="hosptlzdiscg.dschRsnCd">
+                                                        <span class="txt">재택 승인</span>
+                                                    </label>
+                                                </div>
+
+                                            </article>
+                                        </div></td>
+                                    </tr>
+                                    <tr>
                                         <th>진료과</th>
-                                        <td><div class="tbox full"><input placeholder="진료과 입력"></div></td>
+                                        <td><div class="tbox full"><input v-model="hosptlzdiscg.deptNm" placeholder="진료과 입력"></div></td>
                                         <th>병실</th>
-                                        <td><div class="tbox full"><input placeholder="병실번호 입력"></div></td>
+                                        <td><div class="tbox full"><input v-model="hosptlzdiscg.wardNm" placeholder="병실번호 입력"></div></td>
                                     </tr>
 
                                     <tr>
                                         <th>담당의</th>
-                                        <td><div class="tbox full"><input placeholder="담당의 이름 입력"></div></td>
+                                        <td><div class="tbox full"><input v-model="hosptlzdiscg.spclNm" placeholder="담당의 이름 입력"></div></td>
                                         <th>연락처</th>
-                                        <td><div class="tbox full"><input placeholder="의료진 연락처 입력"></div></td>
+                                        <td><div class="tbox full"><input v-model="hosptlzdiscg.chrgTelno" placeholder="의료진 연락처 입력"></div></td>
                                     </tr>
 
 
@@ -3581,8 +3635,8 @@
                                             <div class="item-cell-box full">
 
                                                 <div class="textbox full">
-                                                    <textarea onkeyup="limitTextarea(this,'textarea5',500)" maxlength="500" placeholder="입원 / 퇴원 / 회송 사유 등 전달 메시지 입력" style="height: 120px;"></textarea>
-                                                    <div class="limit-box"><span id="textarea5">0</span>/500자</div>
+                                                    <textarea @input="updateCharacterCount(2)" maxlength="500" placeholder="입원 / 퇴원 / 회송 사유 등 전달 메시지 입력" style="height: 120px;" v-model="hosptlzdiscg.msg"></textarea>
+                                                    <div class="limit-box"><span id="textarea1">{{characterCount}}</span>/500자</div>
                                                 </div>
 
                                             </div>
@@ -3601,9 +3655,8 @@
 
                     <article class="modal-menu-layout1 pt-10">
                         <div class="modal-menu-list">
-                            <a href="javascript:void(0)" class="modal-menu-btn menu-cancel">재택회송</a>
-                            <a href="javascript:void(0)" class="modal-menu-btn menu-primary-outline">퇴원처리</a>
-                            <a href="javascript:void(0)" class="modal-menu-btn menu-primary">입원처리</a>
+                            <router-link to="" data-bs-toggle='modal' data-bs-target="#kt_modal_hospitalization" class="modal-menu-btn menu-cancel">이전</router-link>
+                            <router-link to="" @click="alertOpen(14)" class="modal-menu-btn menu-primary-outline">처리</router-link>
                         </div>
                     </article>
 
@@ -3907,10 +3960,8 @@
 
                                     <div class="modal-menu-list">
 
-                                        <a @click="alertOpen(12)" href="javascript:confirmPopupOpen('병상요청을<br/>승인 하시겠습니까?',
-                                        function() {confirmPopupClose();alertPopupOpen('승인 되었습니다.',
-                                        function (){alertPopupClose();popupClose('assignment-request2');});})"
-                                           class="modal-menu-btn menu-primary">승인완료</a>
+                                        <router-link to="" @click="alertOpen(12)"
+                                           class="modal-menu-btn menu-primary">승인완료</router-link>
                                     </div>
 
 
@@ -4172,6 +4223,14 @@ export default {
               aprvYn:'Y',
               hospId:'',
             },
+            hosptlzdiscg:{
+                ptId:'',
+                bdasSeq:'',
+                hospId: '',
+                msg:'',
+                admsStatCd:'IOST0001',
+                dschRsnCd:'',
+            }
         }
     },
     computed:{
@@ -4275,6 +4334,11 @@ export default {
                 this.errMsg='승인 되었습니다.'
                 this.isAlert=true
                 this.alertIdx=13
+            } else if(idx === 14){
+                this.errMsg='입/퇴원 처리하시겠습니까?'
+                this.isAlert=true
+                this.cncBtn=true
+                this.alertIdx=14
             }
         },
         cfrmAl(res){
@@ -4329,10 +4393,20 @@ export default {
                 this.mediConfirm.bdasSeq = this.bdDetail.bdasSeq
                 this.mediConfirm.hospId = this.userInfo.hospId
                 console.log(this.mediConfirm)
+                // todo 의료진 병상배정 확인
                 this.alertClose()
                 this.alertOpen(13)
             } else if(res===13){
                 this.alertClose()
+            } else if(res===14){
+                this.hosptlzdiscg.bdasSeq = this.bdDetail.bdasSeq
+                this.hosptlzdiscg.ptId = this.bdDetail.ptId
+                this.hosptlzdiscg.roomNm = this.hosptlzdiscg.wardNm
+                this.hosptlzdiscg.hospId = this.getChrgTL(this.timeline.items,1)
+                console.log(this.hosptlzdiscg)
+                this.$store.dispatch('bedasgn/cfmHosp',this.hosptlzdiscg)
+                this.alertClose()
+                this.alertOpen(13)
             }
         },
         alertClose(){
@@ -4396,6 +4470,12 @@ export default {
                     this.characterCount = this.content.length
                 } else {
                     this.characterCount = this.mediConfirm.msg.length;
+                }
+            } else if(idx===2){
+                if (this.hosptlzdiscg.msg === null || this.hosptlzdiscg.msg === '') {
+                    this.characterCount = this.content.length
+                } else {
+                    this.characterCount = this.hosptlzdiscg.msg.length;
                 }
             }
         },
@@ -4517,6 +4597,7 @@ export default {
             this.$store.dispatch('patnt/getBasicInfo',data)
             this.$store.dispatch('bedasgn/getTimeline',data)
             this.$store.dispatch('bedasgn/getDSInfo',data)
+            this.$store.dispatch('bedasgn/getBdasHisInfo',data)
             console.log(data.bedStatCd)
         },
         loadTrnsfInfo(num){
@@ -4536,6 +4617,33 @@ export default {
             crewInfo.pstn = data.pstn
             crewInfo.crewNm = data.crewNm
             crewInfo.telno = data.telno
+        },
+        getChrgTL(data,idx){
+            if(data !== null){
+                const result = data.find(item => item.title.includes('입원'))
+
+                if (result) {
+                    switch (idx){
+                        case 0:
+                            return result.chrgInstNm
+                        case 1:
+                            return result.chrgInstId
+                    }
+                }
+            }
+        },
+        setHosptlzdiscg(idx){
+            switch(idx){
+                case 1:
+                    this.hosptlzdiscg.admsStatCd = 'IOST0001'
+                    break
+                case 2:
+                    this.hosptlzdiscg.admsStatCd = 'IOST0002'
+                    break
+                case 3:
+                    this.hosptlzdiscg.admsStatCd = 'IOST0003'
+                    break
+            }
         }
     }
 }
