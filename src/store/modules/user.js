@@ -1,5 +1,4 @@
 import axios from "axios";
-//import store from ""
 import router from "@/router/router";
 import {encodingPassword} from "@/util/encodingPasswd";
 import {API_PROD} from "@/util/constantURL";
@@ -15,6 +14,12 @@ export default {
         smsCrtfSuccess: null,
         attcId: null,
 
+    },
+    getters: {
+        getUserInfo: () => {
+            console.log('getters.getUserInfo')
+            return localStorage.getItem("userInfo")
+        }
     },
     mutations: {
         setSido(state,payload){
@@ -41,6 +46,7 @@ export default {
         },
         setUserInfo(state,payload){
             state.userInfo = payload
+            localStorage.setItem("userInfo", payload)
         }
     },
     actions: {

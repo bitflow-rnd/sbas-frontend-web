@@ -71,7 +71,7 @@ export function getTLDt(date,idx){
 
         if(dd.getHours()>12){
             return '오후 '+ (dd.getHours()-12)+'시 '+dd.getMinutes()+'분'
-        } else {
+    }else if(idx===1 && date !== null && date !== undefined){
             return '오전 '+dd.getHours()+'시 '+dd.getMinutes()+'분'
         }
     } else {
