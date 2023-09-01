@@ -22,18 +22,18 @@
               <li class="breadcrumb-item">
                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
                 <span class="svg-icon svg-icon-4 mx-n1">
-												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path
-                              d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
-                              fill="currentColor"/>
-												</svg>
-											</span>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
+                      fill="currentColor"/>
+                  </svg>
+                </span>
                 <!--end::Svg Icon-->
               </li>
               <!--end::Item-->
               <!--begin::Item-->
               <li class="breadcrumb-item text-gray-500 mx-n1"><h1
-                  class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0">연락처/메시지</h1></li>
+                  class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0">
+                연락처/메시지</h1></li>
               <!--end::Item-->
             </ul>
             <!--end::Breadcrumb-->
@@ -171,7 +171,7 @@
 
                     <div class="list-body-box">
 
-                      <div v-for="(user, idx) in usersList.items" :key="idx" class="item-box">
+                      <div v-for="(user, idx) in usersList.items" :key="idx" role="button" class="item-box">
                         <div class="item-info-box">
                           <div class="profile-box">
                             <img src="/img/common/img_profile_default.svg" alt="이미지">
@@ -317,47 +317,6 @@
 
                     <div class="list-row">
 
-                      <div class="list-head-box">
-
-                        <div class="head-box">업무처리현황</div>
-
-                      </div>
-
-                      <div class="list-body-box">
-
-                        <div class="current-item-list">
-
-                          <div class="current-item-box">
-                            <div class="current-label-box">총</div>
-                            <div class="current-con-box">143 건</div>
-                          </div>
-
-                          <div class="current-item-box">
-                            <div class="current-label-box">완료</div>
-                            <div class="current-con-box"><span class="text-primary">133</span> 건</div>
-                          </div>
-
-                          <div class="current-item-box">
-                            <div class="current-label-box">미처리</div>
-                            <div class="current-con-box"><span class="text-danger">133</span> 건</div>
-                          </div>
-
-                        </div>
-
-
-                      </div>
-
-
-                    </div>
-
-                    <div class="list-row">
-
-                      <div class="list-head-box">
-
-                        <div class="head-box">상세정보</div>
-
-                      </div>
-
                       <div class="list-body-box">
 
                         <div class="inner-item-list">
@@ -417,11 +376,11 @@
                         <span class="txt">개요</span>
                       </a>
 
-                      <a href="javascript:tabsMove('tabs2')" class="tabs-btn">
+                      <a href="javascript:tabsMove('tabs2')" class="tabs-btn d-none">
                         <span class="txt">보안</span>
                       </a>
 
-                      <a href="javascript:tabsMove('tabs3')" class="tabs-btn">
+                      <a href="javascript:tabsMove('tabs3')" class="tabs-btn d-none">
                         <span class="txt">접속기록</span>
                       </a>
                     </div>
@@ -443,8 +402,7 @@
 
                         <div class="head-box">
 
-                          <div class="subject-box">활동</div>
-                          <div class="sub-box">총 143건</div>
+                          <div class="subject-box">최근활동</div>
 
                         </div>
 
@@ -473,7 +431,7 @@
 
                         <ul>
                           <li>
-                            <a href="javascript:void(0)" class="item-box state-ing">
+                            <a href="javascript:void(0)" class="item-box state-ing" role="button">
 
                               <div class="info-box">
 
@@ -493,7 +451,7 @@
                           </li>
 
                           <li>
-                            <a href="javascript:void(0)" class="item-box state-ing">
+                            <a href="javascript:void(0)" class="item-box state-ing" role="button">
 
                               <div class="info-box">
 
@@ -1019,5 +977,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
+.cntc-message-board .item-box:hover {
+  background-color: #74AFEB22;
+}
 </style>

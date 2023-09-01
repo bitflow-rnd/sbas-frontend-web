@@ -14,12 +14,16 @@ export default {
         smsCrtfSuccess: null,
         attcId: null,
         usersList: null,
-
+        selectedTabIdx: 0
     },
     getters: {
         getUserInfo: () => {
             console.log('getters.getUserInfo')
             return localStorage.getItem("userInfo")
+        },
+        getSelectedTabIdx: (state) => {
+            console.log('getSelectedTabIdx')
+            return state.selectedTabIdx
         }
     },
     mutations: {
@@ -51,6 +55,10 @@ export default {
         },
         setUsersList(state, payload) {
             state.usersList = payload
+        },
+        setSelectedTabIdx: (state, payload) => {
+            console.log('setSelectedTabIdx', payload)
+            state.selectedTabIdx = payload
         }
     },
     actions: {

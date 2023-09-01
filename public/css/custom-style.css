@@ -263,7 +263,7 @@ section.cntc-message-board .board-body-box .list-wrap .list-group-box .list-body
   letter-spacing: -0.05em;
 }
 section.cntc-info-view {
-  width: 391px;
+  width: 520px;
   border-left: 1px solid #86898D;
   border-right: 1px solid #86898D;
 }
@@ -381,7 +381,6 @@ section.cntc-activity .activity-body-box {
 }
 section.cntc-activity .activity-body-box .tabs-group-box {
   overflow-y: auto;
-  max-height: calc(100vh - 286px);
   margin-right: -20px;
   padding-right: 20px;
 }
