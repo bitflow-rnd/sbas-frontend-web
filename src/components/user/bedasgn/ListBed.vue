@@ -1261,21 +1261,6 @@
 
                                                             <div class="img-upload-result">
                                                                 <div class="img-list">
-                                                                    <div href="javascript:void(0)" class="img-box">
-                                                                        <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                        <a href="javascript:void(0)" class="remove-btn"
-                                                                           onclick="$(this).parents('.img-box').remove();">
-                                                                            <img src="/img/common/ic_profile_remove.svg" alt="이미지">
-                                                                        </a>
-                                                                    </div>
-
-                                                                    <div href="javascript:void(0)" class="img-box">
-                                                                        <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                        <a href="javascript:void(0)" class="remove-btn"
-                                                                           onclick="$(this).parents('.img-box').remove();">
-                                                                            <img src="/img/common/ic_profile_remove.svg" alt="이미지">
-                                                                        </a>
-                                                                    </div>
                                                                 </div>
                                                             </div>
 
