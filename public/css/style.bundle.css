@@ -5663,9 +5663,8 @@ textarea.form-control-lg {
 }
 
 .modal-dialog {
-  position: relative;
-  width: auto;
-  margin: var(--bs-modal-margin);
+  position: fixed;
+  width: 100%;
   pointer-events: none;
 }
 .modal.fade .modal-dialog {
@@ -5678,7 +5677,10 @@ textarea.form-control-lg {
   }
 }
 .modal.show .modal-dialog {
-  transform: none;
+  max-width: 1920px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
 }
 .modal.modal-static .modal-dialog {
   transform: scale(1.02);
@@ -5706,6 +5708,7 @@ textarea.form-control-lg {
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 1024px;
   color: var(--bs-modal-color);
   pointer-events: auto;
   background-color: var(--bs-modal-bg);

@@ -2652,7 +2652,7 @@
 
                                     <article class="table-form-layout1">
 
-                                        <div class="form-body-box overflow-y-auto mb-5" style="height:590px">
+                                        <div class="form-body-box overflow-y-auto mb-5">
 
                                             <div class="table-box pe-5">
                                                 <table>
@@ -2732,7 +2732,9 @@
                                                             <div class="table-img-box pt-4">
 
                                                                 <a href="javascript:void(0)" class="img-box">
+                                                                    <!--
                                                                     <img src="/img/common/img_dummy_item1.png" alt="이미지">
+                                                                    -->
                                                                 </a>
 
                                                             </div>
@@ -2755,7 +2757,7 @@
 
                             </div>
 
-                            <div class="detail-info-box full d-flex flex-column" style="height: 665px;">
+                            <div class="detail-info-box full d-flex flex-column">
 
                                 <div class="detail-head-box px-10 h-80px">
 
@@ -2831,21 +2833,6 @@
 
                                                 <div class="img-upload-result">
                                                     <div class="img-list">
-                                                        <div href="javascript:void(0)" class="img-box">
-                                                            <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                            <a href="javascript:void(0)" class="remove-btn"
-                                                               onclick="$(this).parents('.img-box').remove();">
-                                                                <img src="/img/common/ic_profile_remove.svg" alt="이미지">
-                                                            </a>
-                                                        </div>
-
-                                                        <div href="javascript:void(0)" class="img-box">
-                                                            <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                            <a href="javascript:void(0)" class="remove-btn"
-                                                               onclick="$(this).parents('.img-box').remove();">
-                                                                <img src="/img/common/ic_profile_remove.svg" alt="이미지">
-                                                            </a>
-                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -3032,21 +3019,6 @@
                                                                         <div class="upload-result-wrap">
                                                                             <div class="img-upload-result">
                                                                                 <div class="img-list">
-                                                                                    <a href="javascript:void(0)" class="img-box">
-                                                                                        <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                                    </a>
-
-                                                                                    <a href="javascript:void(0)" class="img-box">
-                                                                                        <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                                    </a>
-
-                                                                                    <a href="javascript:void(0)" class="img-box">
-                                                                                        <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                                    </a>
-
-                                                                                    <a href="javascript:void(0)" class="img-box">
-                                                                                        <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                                    </a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

@@ -1092,7 +1092,7 @@
               </div>
 
 
-              <div class="detail-info-box full d-flex flex-column" style="height: 665px;">
+              <div class="detail-info-box full d-flex flex-column">
 
                 <div class="detail-head-box px-10 h-80px">
 
