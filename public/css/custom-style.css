@@ -51,10 +51,6 @@ section.app-lnb .lnb-wrap .depth-group .depth-body-box ul.depth1 li.depth1-box a
   background-color: rgba(243, 224, 224, 0.6);
 }
 
-.app-container {
-  background-color: #f3f3f5;
-}
-
 section.cntc-dashboard {
   display: flex;
 }

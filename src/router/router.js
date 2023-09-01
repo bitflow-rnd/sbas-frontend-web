@@ -1,5 +1,4 @@
-import {createRouter, createWebHashHistory} from "vue-router";
-
+import {createRouter, createWebHistory} from "vue-router";
 import LayoutUser from "../components/layout/LayoutUser.vue";
 import MobileMain from "../components/MobileMain.vue";
 import LoginView from "../components/common/LoginView.vue";
@@ -8,7 +7,6 @@ import InitPw from "../components/common/InitPw.vue";
 import ReqUserReg from "../components/common/ReqUserReg.vue";
 import RegMyOrgan from "../components/common/RegMyOrgan.vue";
 import FindId from "../components/common/FindId.vue";
-//import Dashbd from "../components/common/Dashbd.vue";
 import ListPatnt from "../components/user/patnt/ListPatnt.vue";
 import ListAncmt from "../components/admin/comm/ListAncmt.vue";
 import ListUsgTerm from "../components/admin/comm/ListUsgTerm.vue";
@@ -25,6 +23,8 @@ import DashbdView from "../components/common/DashbdView.vue";
 import ListCdGrp from "../components/admin/comm/cd/ListCdGrp.vue";
 import ListMedInst from "../components/admin/organ/ListMedInst.vue";
 import LandingPage from "../components/landing/LandingPage.vue";
+
+//import Dashbd from "../components/common/Dashbd.vue";
 // import Index from "../components/Index.vue";
 // import DashbdAdmin from "../components/admin/dashbd/Index.vue";
 
@@ -182,7 +182,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     // base: process.env.BASE_URL,
     routes: routes,
     scrollBehavior() {
