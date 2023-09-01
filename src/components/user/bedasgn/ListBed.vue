@@ -110,8 +110,8 @@
                                         </colgroup>
                                         <tbody>
                                         <tr data-toggle="false">
-                                            <th>검색조건</th>
-                                            <td colspan="3">
+                                            <th>배정상태</th>
+                                            <td colspan="4">
                                                 <div class="item-row-box">
 
                                                     <div class="item-cell-box">
@@ -146,7 +146,8 @@
                                                         <div class="cbox ms-4">
                                                             <label>
                                                                 <input type="checkbox" name="state"><i></i>
-                                                                <span class="txt">완료 <span class="cnt ms-1">{{ bdCnt[4] }}</span></span>
+                                                                <span class="txt">완료 </span>
+                                                                  <!-- <span class="cnt ms-1">{{ bdCnt[4] }}</span>-->
                                                             </label>
                                                         </div>
 
@@ -155,7 +156,9 @@
                                                 </div>
 
                                             </td>
-                                            <td colspan="4" class="border-left-1 border-color-gray">
+
+                                            <td colspan="3" class="border-left-1 border-color-gray">
+
                                                 <div class="item-cell-box full">
 
                                                     <div class="tbox full with-btn">
@@ -486,7 +489,7 @@
                             <div class="table-body-box">
 
                                 <div class="table-box with-scroll small">
-                                    <table>
+                                    <table class="list-table-hoverable">
                                         <colgroup>
                                             <col style="width: 35px;">
                                             <col style="width: 70px;">
@@ -550,8 +553,8 @@
                                             <td>{{ getDt(item.updtDttm) }}</td>
                                             <td>
                                                 <a data-bs-toggle='modal' data-bs-target="#kt_modal_detail" @click="async () => {await openBedMod(item)}"
-                                                   class="btn btn-flex btn-xs btn-outline btn-outline-primary w-125px justify-content-center"
-                                                   style="line-height: 1.2">{{ getBtn(item.bedStatCd)[0] }}</a>
+                                                   class="btn btn-flex btn-xs btn-outline btn-outline-primary justify-content-center"
+                                                   >{{ getBtn(item.bedStatCd)[0] }}</a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -4683,6 +4686,13 @@ export default {
 .item-box.suspend {
   border: 3px solid #74AFEB !important;
   background-color: #74AFEB33;
+}
+.btn.btn-outline.btn-outline-primary {
+  padding-left: 0.4rem; padding-right: 0.4rem; min-width: 100px;
+}
+.list-table-hoverable tr { cursor: pointer; }
+.list-table-hoverable tr:hover td {
+  background-color: #74AFEB22;
 }
 #map {
   position: absolute !important;

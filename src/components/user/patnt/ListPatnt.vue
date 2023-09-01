@@ -98,36 +98,6 @@
                       <col style="width: auto;">
                     </colgroup>
                     <tbody>
-                    <tr>
-                      <th>주 담당지역 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="item-cell-box" v-for="(gender, idx) in genders" :key="idx">
-
-                          <div class="cbox me-4">
-                            <label>
-                              <input v-model="filterPatient['gender']" type="checkbox" name="gender"
-                                     :value="gender"><i></i>
-                              <span class="txt">{{ gender }}</span>
-                            </label>
-                          </div>
-
-                        </div>
-                      </td>
-                      <th>국적</th>
-                      <td>
-                        <div class="item-cell-box">
-                          <div class="sbox w-175px">
-                            <select v-model="filterPatient['nationality']">
-                              <option>전체</option>
-                              <option>대한민국</option>
-                              <option>외국인</option>
-                              <option>정보미등록</option>
-                            </select>
-                          </div>
-
-                        </div>
-                      </td>
-                    </tr>
 
                     <tr>
                       <th>지역</th>
@@ -176,52 +146,14 @@
                     </tr>
 
                     <tr>
-                      <th>기간검색</th>
-                      <td colspan="3">
-                        <div class="item-cell-box">
-                          <div class="sbox w-175px me-5">
-                            <select v-model="filterPatient['searchDateField']">
-                              <option>등록일</option>
-                            </select>
-                          </div>
-                          <template v-for="(range, idx) in dateRanges" :key="idx">
-                            <div class="rbox me-4">
-                              <label>
-                                <input type="radio" v-model="filterPatient['searchDateRange']" :value="range"
-                                       name="range"><i></i>
-                                <span class="txt">{{ range }}</span>
-                              </label>
-                            </div>
-                          </template>
-                          <div class="tbox w-150px ms-10 with-calendar">
-                            <input type="text" :disabled="enableDatePicker" class="date-picker"
-                                   placeholder="2023-01-23">
-                          </div>
-                          <div class="unit-box ms-2 text-gray-600">~</div>
-                          <div class="tbox w-150px ms-2 with-calendar">
-                            <input type="text" :disabled="enableDatePicker" class="date-picker"
-                                   placeholder="2023-01-23">
-                          </div>
-                        </div>
-
-                      </td>
-                    </tr>
-
-                    <tr>
                       <th>검색어</th>
                       <td colspan="3">
                         <div class="item-cell-box">
 
-                          <div class="sbox w-175px me-5">
-                            <select v-model="filterPatient['searchField']">
-                              <option>환자이름</option>
-                            </select>
-                          </div>
-
                           <div class="tbox w-400px with-btn">
-                            <input type="text" v-model="filterPatient['searchText']" placeholder="검색어 입력">
+                            <input type="text" v-model="filterPatient['searchText']" placeholder="환자명 또는 생년월일 6자리">
 
-                            <a @click="search()" class="input-btn">
+                            <a @click="search()" class="input-btn" role="button">
                               <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                           </div>
@@ -252,7 +184,7 @@
               <div class="table-body-box">
 
                 <div class="table-box with-scroll small">
-                  <table>
+                  <table class="list-table-hoverable">
                     <colgroup>
                       <col style="width: 35px;">
                       <col style="width: 70px;">
@@ -3454,7 +3386,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
 .modal {
   --bs-modal-width: 98%;
 }
@@ -3470,4 +3402,9 @@ export default {
 .chart-container {
   min-height: initial;
 }
+.list-table-hoverable tr { cursor: pointer; }
+.list-table-hoverable tr:hover td {
+ background-color: #74AFEB22;
+}
 </style>
+

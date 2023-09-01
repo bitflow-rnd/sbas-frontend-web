@@ -5678,9 +5678,13 @@ textarea.form-control-lg {
 }
 .modal.show .modal-dialog {
   max-width: 1920px;
+  max-height: 1280px;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   margin: 0;
+  width: calc(100% - 6rem);
+  height: calc(100% - 4rem);
 }
 .modal.modal-static .modal-dialog {
   transform: scale(1.02);

@@ -47,8 +47,8 @@ section.app-lnb .lnb-wrap .depth-group .depth-body-box ul.depth1 li.depth1-box a
   letter-spacing: -0.05em;
 }
 section.app-lnb .lnb-wrap .depth-group .depth-body-box ul.depth1 li.depth1-box a.depth1-btn.active {
-  color: #FF8D93;
-  background-color: rgba(243, 224, 224, 0.6);
+  color: white;
+  background-color: #2196F3;
 }
 
 section.cntc-dashboard {
@@ -631,7 +631,6 @@ article.table-list-layout1 .table-body-box .table-box table tbody tr.selected td
 }
 article.table-list-layout1 .table-body-box .table-box table tbody tr td {
   border: 1px solid #DADBDC;
-  background-color: #fff;
   text-align: center;
   height: 44.5px;
   padding: 5px;
