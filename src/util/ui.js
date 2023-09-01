@@ -65,7 +65,7 @@ export function maskingNm(nm){
 export function getTLDt(date,idx){
     if(idx===0){
         return date.slice(0,4)+'년 '+date.slice(5,7)+'월 '+date.slice(8,10)+'일'
-    }else if(idx===1 && date !== null){
+    }else if(idx===1 && date !== null && date !== undefined){
         const time = date.split('T')[1]
         const hour = time.split(':')[0]
         if(parseInt(hour)>12){
