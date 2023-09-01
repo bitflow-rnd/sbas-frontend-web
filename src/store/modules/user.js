@@ -13,6 +13,7 @@ export default {
         phoneNo: "01082072505",
         smsCrtfSuccess: null,
         attcId: null,
+        usersList: null,
 
     },
     getters: {
@@ -47,6 +48,9 @@ export default {
         setUserInfo(state,payload){
             state.userInfo = payload
             localStorage.setItem("userInfo", payload)
+        },
+        setUsersList(state, payload) {
+            state.usersList = payload
         }
     },
     actions: {
@@ -177,6 +181,18 @@ export default {
                 })
             })
 
+        },
+        getUsersList(comment){
+            const url = `${API_PROD}/api/v1/private/user/all-users`
+
+            axios({
+                method: "get",
+                url: url
+            }).then(response=>{
+                comment.commit('setUsersList',response.data?.result)
+            }).catch((e=>{
+                console.log(e)
+            }))
         },
         loadPatientData() {
             try {

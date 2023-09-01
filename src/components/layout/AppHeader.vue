@@ -59,7 +59,7 @@
             </router-link>
             <!--end:Menu item-->
             <!--begin:Menu item-->
-            <router-link to="/user/cntc/list" @click="setActive(3)" :class="{'here': tabidx === 3}" class="menu-item me-0 me-lg-1">
+            <router-link to="/user/cntc/list" @click="handlefunc(getUsersList,3)" :class="{'here': tabidx === 3}" class="menu-item me-0 me-lg-1">
               <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">연락처/메시지</span>
@@ -1046,58 +1046,63 @@ import {getTelno, getAuthCd} from "@/util/ui";
 
 export default {
   name: "AppHeader",
-  data () {
+  data() {
     return {
-        tabidx: 0,
-        ptTpye:{'PTTP0001':'일반','PTTP0002':'소아','PTTP0003':'투석','PTTP0004':'산모',
-                'PTTP0005':'수술','PTTP0006':'인공호흡기 사용','PTTP0007':'적극적 치료요청','PTTP0008':'신생아'}
+      tabidx: 0,
+      ptTpye: {
+        'PTTP0001': '일반', 'PTTP0002': '소아', 'PTTP0003': '투석', 'PTTP0004': '산모',
+        'PTTP0005': '수술', 'PTTP0006': '인공호흡기 사용', 'PTTP0007': '적극적 치료요청', 'PTTP0008': '신생아'
+      }
     }
   },
   computed: {
-    ...mapState('user',['userInfo'])
+    ...mapState('user', ['userInfo'])
   },
   methods: {
-      getAuthCd,
-      getTelno,
-      getPmgr(code){
-        if(code==='PMGR0001'){
-            return '병상요청'
-        }  else if(code==='PMGR0002'){
-            return '병상승인'
-        } else if(code==='PMGR0003'){
-            return '병상배정'
-        } else {
-            return '시스템관리'
-        }
-      },
-      getptType(code){
-        const arr = code.split(";");
-        const res = arr.map(item =>this.ptTpye[item]);
-        return res.join(', ')
-      },
-      setActive(idx) {
-        this.tabidx = idx;
-      },
-      handlefunc(fun,idx){
-          this.setActive(idx);
-          fun();
-      },
-      getUserList() {
-          this.$store.dispatch('admin/getSido')
-          this.$store.dispatch('admin/getUserList')
-      },
-      getBdList(){
-          this.$store.dispatch('bedasgn/getBdList')
-      },
-      getPtList(){
-          this.$store.dispatch('patnt/getPatntList')
+    getAuthCd,
+    getTelno,
+    getPmgr(code) {
+      if (code === 'PMGR0001') {
+        return '병상요청'
+      } else if (code === 'PMGR0002') {
+        return '병상승인'
+      } else if (code === 'PMGR0003') {
+        return '병상배정'
+      } else {
+        return '시스템관리'
       }
+    },
+    getptType(code) {
+      const arr = code.split(";");
+      const res = arr.map(item => this.ptTpye[item]);
+      return res.join(', ')
+    },
+    setActive(idx) {
+      this.tabidx = idx;
+    },
+    handlefunc(fun, idx) {
+      this.setActive(idx);
+      fun();
+    },
+    getUserList() {
+      this.$store.dispatch('admin/getSido')
+      this.$store.dispatch('admin/getUserList')
+    },
+    getUsersList() {
+      this.$store.dispatch('user/getUsersList')
+    },
+    getBdList() {
+      this.$store.dispatch('bedasgn/getBdList')
+    },
+    getPtList() {
+      this.$store.dispatch('patnt/getPatntList')
+    }
   }
 }
 </script>
 
 <style scoped>
 .fs-5 {
-    font-size: 0.85rem !important;
+  font-size: 0.85rem !important;
 }
 </style>
