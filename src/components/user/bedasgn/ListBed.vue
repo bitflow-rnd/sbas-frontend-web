@@ -3060,13 +3060,15 @@
                                                     <div class="table-box">
                                                         <table>
                                                             <colgroup>
-                                                                <col style="width:273px;">
+                                                                <col style="width: 369px;">
                                                                 <col style="width: 168px;">
                                                                 <col style="width: auto;">
                                                             </colgroup>
                                                             <tbody>
                                                             <tr>
-                                                                <td class="p-0" rowspan="9">맵 영역</td>
+                                                                <td class="p-0" rowspan="9">
+                                                                  <div id="map"></div>
+                                                                </td>
                                                                 <th class="bg-accent" colspan="2">담당보건소</th>
                                                             </tr>
                                                             <tr>
@@ -4118,6 +4120,7 @@ export default {
     mounted() {
         this.initNewPt = this.newPt
         this.initDsInfo = this.dsInfo
+        this.loadNaverMapAsync()
     },
     setup(){
       const showTable = ref(false);
@@ -4241,6 +4244,27 @@ export default {
 
     },
     methods: {
+        loadNaverMapAsync() {
+          // 네이버 지도 API 로드
+          const script = document.createElement("script")
+          script.src =
+              "https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1ewyt3v33o"
+          script.async = true
+          script.defer = true
+          document.head.appendChild(script)
+
+          script.onload = () => {
+            // 네이버 지도 생성
+            new window.naver.maps.Map("map", {
+              center: new window.naver.maps.LatLng(37.5670135, 126.9783740),
+              zoom: 10,
+              zoomControlOptions: {
+                style: window.naver.maps.ZoomControlStyle.SMALL,
+                position: window.naver.maps.Position.TOP_RIGHT,
+              }
+            })
+          }
+        },
         getStrType(){
             if(this.dsInfo.admsYn==='재택'){
                 return 'DPTP0001'
@@ -4656,5 +4680,14 @@ export default {
 }
 .item-box.suspend {
     border: 2px solid #74AFEB !important;
+}
+#map {
+  position: absolute !important;
+  width: 368px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
 }
 </style>
