@@ -211,7 +211,7 @@
 
                         <div class="profile-card-box">
                             <div class="profile-view-box">
-                                <img src="/img/common/img_profile_dummy.png" alt="이미지">
+                                <img src="@/assets/img-hosp-def.jpg" alt="이미지">
                             </div>
                             <div class="profile-info-box">
 
@@ -1105,4 +1105,5 @@ export default {
 .fs-5 {
   font-size: 0.85rem !important;
 }
+.profile-view-box > img { opacity: 0.7; }
 </style>

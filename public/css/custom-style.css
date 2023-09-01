@@ -1424,6 +1424,8 @@ article.modal-profile-layout1 .profile-card-box .profile-view-box img {
   max-height: 100%;
   height: 100%;
   width: 100%;
+  border: 1px solid #333;
+  border-radius: 9px;
 }
 article.modal-profile-layout1 .profile-card-box .profile-view-box.full {
   width: 100%;
@@ -1509,6 +1511,7 @@ article.modal-menu-layout1 .modal-menu-list .modal-menu-btn {
   letter-spacing: -0.05em;
   border-radius: 100px;
   border: 1px solid transparent;
+  cursor: pointer;
 }
 article.modal-menu-layout1 .modal-menu-list .modal-menu-btn.radius-0 {
   border-radius: 0;

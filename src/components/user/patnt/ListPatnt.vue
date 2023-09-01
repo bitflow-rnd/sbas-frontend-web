@@ -475,7 +475,7 @@
                           </div>
                         </td>
                         <th>성별</th>
-                        <td v-if="newPt.rrno2!==undefined">{{ getGndr(newPt.rrno2) }}</td>
+                        <td v-if="newPt.rrno2!==undefined">{{ getGndr(newPt.rrno2) }}자</td>
                       </tr>
 
                       <tr>
@@ -501,7 +501,7 @@
                         </td>
                         <th>나이 (만)</th>
                         <td v-if="newPt.rrno1!==undefined && newPt.rrno2!==undefined">
-                          {{ getAge(newPt.rrno1, newPt.rrno2) }}
+                          {{ getAge(newPt.rrno1, newPt.rrno2) }}세
                         </td>
                       </tr>
 
@@ -830,10 +830,11 @@
           <!--begin::Close-->
 
           <div class="btn-list">
+            <!--
             <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
               <i class="fa-solid fa-share-nodes text-black" style="font-size:18px;"></i>
             </div>
-
+            -->
             <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
               <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
               <span class="svg-icon svg-icon-1">
@@ -881,7 +882,7 @@
 
                   <article class="table-form-layout1">
 
-                    <div class="form-body-box overflow-y-auto" style="height:500px">
+                    <div class="form-body-box overflow-y-auto">
 
                       <div class="table-box pe-5">
                         <table>
@@ -910,26 +911,25 @@
 
                           <tr>
                             <th>나이</th>
-                            <td>{{ ptDetail.age }}</td>
+                            <td>{{ ptDetail.age }}세</td>
                           </tr>
 
                           <tr>
                             <th>성별</th>
-                            <td>{{ ptDetail.gndr }}</td>
+                            <td>{{ ptDetail.gndr }}자</td>
                           </tr>
 
                           <tr>
                             <th>주소</th>
                             <td>
                               [{{ ptDetail.zip }}]<br/>
-                              {{ ptDetail.bascAddr }}<br/>
-                              {{ ptDetail.detlAddr }}
+                              {{ ptDetail.bascAddr }}&nbsp;{{ ptDetail.detlAddr }}
                             </td>
                           </tr>
 
                           <tr>
                             <th>사망여부</th>
-                            <td>{{ ptDetail.dethYn }}</td>
+                            <td>{{ ptDetail.dethYn==='Y'?'사망':'생존' }}</td>
                           </tr>
 
                           <tr>
@@ -944,17 +944,17 @@
 
                           <tr>
                             <th>전화번호</th>
-                            <td>{{ ptDetail.telno }}</td>
+                            <td>{{ ptDetail.telno?ptDetail.telno:'-' }}</td>
                           </tr>
 
                           <tr>
                             <th>보호자 이름</th>
-                            <td>{{ ptDetail.nokNm }}</td>
+                            <td>{{ ptDetail.nokNm?ptDetail.nokNm:'-' }}</td>
                           </tr>
 
                           <tr>
                             <th>직업</th>
-                            <td>{{ ptDetail.job }}</td>
+                            <td>{{ ptDetail.job?ptDetail.job:'-' }}</td>
                           </tr>
 
                           <tr>
@@ -974,7 +974,7 @@
                       </div>
 
                       <div class="table-img-box pt-4">
-
+                        <!--
                         <a href="javascript:void(0)" class="img-box">
                           <img src="/img/common/img_dummy_item1.png" alt="이미지">
                         </a>
@@ -991,6 +991,7 @@
                           <div class="cnt-box">+5</div>
                           <img src="/img/common/img_dummy_item1.png" alt="이미지">
                         </a>
+                        -->
 
                       </div>
 
@@ -1034,7 +1035,7 @@
 
                   <article class="table-list-layout2">
 
-                    <div class="table-body-box overflow-y-auto" style="height: 500px;">
+                    <div class="table-body-box overflow-y-auto">
 
                       <div class="table-box pe-5">
                         <table>

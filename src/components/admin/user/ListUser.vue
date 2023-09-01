@@ -1571,7 +1571,9 @@
                                             </colgroup>
                                             <tbody>
                                             <tr>
-                                                <td rowspan="4" class="p-0">사진영역</td>
+                                                <td rowspan="4" class="p-0">
+                                                  <img src="" />
+                                                </td>
                                                 <th>사용자번호</th>
                                                 <td>사용자번호</td>
                                                 <th>아이디</th>
