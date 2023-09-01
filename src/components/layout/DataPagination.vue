@@ -72,7 +72,8 @@ export default {
       return Math.ceil(this.dataLength / this.displayRowsCount)
     },
     pageStartIndex() {
-      if (this.page < (this.previousPageButtonsCount + 1)) {
+      if ((this.page < (this.previousPageButtonsCount + 1)) ||
+          (this.totalPageCount <= this.displayChangePageButtonsCount)) {
         return 1
       } else {
         return this.page - this.previousPageButtonsCount
