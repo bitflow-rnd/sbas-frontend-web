@@ -296,9 +296,9 @@
                     </thead>
 
                     <tbody>
-                    <tr v-for="(pt, idx) in ptList.items" :key="idx" @click="selectPatient(pt)"
+                    <tr v-for="(pt, idx) in paginatedPatientData" :key="idx" @click="selectPatient(pt)"
                         data-bs-target="#kt_modal_patnt_detail" data-bs-toggle="modal">
-                      <td>{{ idx + 1 }}</td>
+                      <td>{{ startIndex + idx + 1 }}</td>
                       <td>
                         <div class="cbox d-flex justify-content-center">
                           <label>
@@ -306,7 +306,7 @@
                           </label>
                         </div>
                       </td>
-                      <td :style="pt['bdasSeq'] ? {color : 'red'} : {}">{{ pt['ptNm'] }}</td>
+                      <td>{{ pt['ptNm'] }}</td>
                       <td>{{ pt['age'] }}</td>
                       <td>{{ pt['gndr'] }}</td>
                       <td>{{ pt['tagList'].join(', ') }}</td>
@@ -3203,21 +3203,22 @@ export default {
     },
     // TODO: address, hospital, date
     filteredPatientData() {
-      return this.patientData.filter((pt) => {
-        const gender = this.filterPatient['gender'].length === 0
-            ? true : this.filterPatient['gender'].some(x => pt['gndr'].includes(x))
-        const nationality = this.filterPatient['nationality'] === '전체'
-            ? true : pt['natiCd'] === this.filterPatient['nationality']
-        const address = true
-        const hospital = true
-        const status = this.filterPatient['assignmentStatus'].length === 0
-            ? true : this.filterPatient['assignmentStatus'].some(x => pt['statCdNm'].includes(x))
-        const date = this.filterPatient['searchDateRange'] === '전체'
-            ? true : false
-        const text = pt[this.filterPatient['searchFieldMap'][this.filterPatient['searchField']]]
-            .includes(this.filterPatient['searchText'])
-        return gender && nationality && address && hospital && status && date && text
-      })
+      // return this.patientData.filter((pt) => {
+      //   const gender = this.filterPatient['gender'].length === 0
+      //       ? true : this.filterPatient['gender'].some(x => pt['gndr'].includes(x))
+      //   const nationality = this.filterPatient['nationality'] === '전체'
+      //       ? true : pt['natiCd'] === this.filterPatient['nationality']
+      //   const address = true
+      //   const hospital = true
+      //   const status = this.filterPatient['assignmentStatus'].length === 0
+      //       ? true : this.filterPatient['assignmentStatus'].some(x => pt['statCdNm'].includes(x))
+      //   const date = this.filterPatient['searchDateRange'] === '전체'
+      //       ? true : false
+      //   const text = pt[this.filterPatient['searchFieldMap'][this.filterPatient['searchField']]]
+      //       .includes(this.filterPatient['searchText'])
+      //   return gender && nationality && address && hospital && status && date && text
+      // })
+      return this.ptList['items']
     }
   },
   //정예준
