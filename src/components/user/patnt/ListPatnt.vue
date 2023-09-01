@@ -51,7 +51,7 @@
               <li class="breadcrumb-item text-gray-500 mx-n1"><h1
                   class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0">환자
                 정보 관리</h1></li>
-              <li class="breadcrumb-item ml-2"><span>&nbsp;설명란</span></li>
+              <li class="breadcrumb-item ml-2"><span>&nbsp;병상배정 이력이 있거나, 배정 예정 중인 환자 목록입니다.</span></li>
               <!--end::Item-->
             </ul>
             <!--end::Breadcrumb-->
@@ -66,7 +66,7 @@
             <a @click="showValue()" class="btn btn-sm btn-flex btn-primary align-self-center px-3"
                data-bs-toggle="modal"
                data-bs-target="#kt_modal_patnt">
-              <i class="fa-solid fa-plus"></i> 등록
+              <i class="fa-solid fa-plus"></i> 환자등록
             </a>
           </div>
           <!--end::Actions-->

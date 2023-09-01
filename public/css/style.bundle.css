@@ -5708,7 +5708,8 @@ textarea.form-control-lg {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 1024px;
+  height: 100%;
+  max-height: 1280px;
   color: var(--bs-modal-color);
   pointer-events: auto;
   background-color: var(--bs-modal-bg);
@@ -28962,7 +28963,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 .menu,
 .menu-wrapper {
   display: flex;
-  padding: 22px 0 0 0;
+  padding: 23px 0 0 0;
   margin: 0;
   list-style: none;
 }
@@ -33080,7 +33081,8 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   padding-left: 0.5rem;
 }
 .breadcrumb .breadcrumb-item:last-child {
-  padding-right: 0;
+  padding-right: 0; margin-left: 100px;
+  color: #595959;
 }
 .breadcrumb .breadcrumb-item:after {
   padding-left: 0.5rem;
@@ -33426,8 +33428,9 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 
 .btn.btn-outline.btn-outline-primary {
   color: #181C32;
-  border-color: #181C32;
+  border-color: #aaa;
   background-color: white; /* var(--bs-primary); */
+  box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px !important;
 }
 .btn.btn-outline.btn-outline-primary i,
 .btn.btn-outline.btn-outline-primary .svg-icon {

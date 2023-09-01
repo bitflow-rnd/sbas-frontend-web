@@ -33,8 +33,7 @@
               <!--end::Item-->
               <!--begin::Item-->
               <li class="breadcrumb-item text-gray-500 mx-n1"><h1
-                  class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0">병상배정
-                현황</h1></li>
+                  class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0">연락처/메시지</h1></li>
               <!--end::Item-->
             </ul>
             <!--end::Breadcrumb-->
@@ -159,89 +158,11 @@
                 <div class="list-wrap">
 
                   <div class="list-group-box">
-                    <div class="list-head-box" :class="{'hide': listBoxesHide['request']}">
-
-                      <a href="javascript:void(0)" class="head-box d-flex flex-center justify-content-between"
-                         @click="listBoxesHide['request'] = !listBoxesHide['request']">
-                        <div class="head-tit-box">등록요청</div>
-                        <i class="fa-solid fa-angle-down" style="color: #9fa1ab;"></i>
-                        <i class="fa-solid fa-angle-up" style="color: #9fa1ab;"></i>
-                      </a>
-
-                    </div>
-
-                    <div class="list-body-box">
-
-                      <!--                      <div class="item-box">-->
-
-                      <!--                        <div class="item-info-box">-->
-                      <!--                          <div class="profile-box">-->
-                      <!--                            <img src="/img/common/img_profile_default.svg" alt="이미지">-->
-                      <!--                          </div>-->
-
-                      <!--                          <div class="info-box">-->
-                      <!--                            <div class="subject-box">우상욱 팀장</div>-->
-                      <!--                            <div class="con-box">병상배정반 / 대구광역시</div>-->
-
-                      <!--                          </div>-->
-
-                      <!--                        </div>-->
-
-                      <!--                        <div class="item-option-box">-->
-                      <!--                          <article class="state-label-item">-->
-                      <!--                            <a href="javascript:popupOpen('state')"-->
-                      <!--                               class="state-label-box bg-danger text-white">승인/반려</a>-->
-                      <!--                          </article>-->
-                      <!--                        </div>-->
-
-                      <!--                      </div>-->
-
-
-                    </div>
-                  </div>
-
-                  <div class="list-group-box">
-                    <div class="list-head-box" :class="{'hide': listBoxesHide['favourite']}">
-
-                      <a href="javascript:void(0)" class="head-box d-flex flex-center justify-content-between"
-                         @click="listBoxesHide['favourite'] = !listBoxesHide['favourite']">
-                        <div class="head-tit-box">즐겨찾기</div>
-                        <i class="fa-solid fa-angle-down" style="color: #9fa1ab;"></i>
-                        <i class="fa-solid fa-angle-up" style="color: #9fa1ab;"></i>
-                      </a>
-
-                    </div>
-
-                    <div class="list-body-box">
-
-                      <!--                      <div class="item-box">-->
-
-                      <!--                        <div class="item-info-box">-->
-                      <!--                          <div class="profile-box">-->
-                      <!--                            <img src="/img/common/img_profile_default.svg" alt="이미지">-->
-                      <!--                          </div>-->
-
-                      <!--                          <div class="info-box">-->
-                      <!--                            <div class="subject-box">김성준 소방교</div>-->
-                      <!--                            <div class="con-box">의료진 / 대구광역시 / 칠곡경북대학교병원</div>-->
-
-                      <!--                          </div>-->
-
-                      <!--                        </div>-->
-
-                      <!--                        <div class="item-option-box"></div>-->
-
-                      <!--                      </div>-->
-
-                    </div>
-                  </div>
-
-                  <div class="list-group-box">
                     <div class="list-head-box" :class="{'hide': listBoxesHide['organization']}">
 
                       <a href="javascript:void(0)" class="head-box d-flex flex-center justify-content-between"
                          @click="listBoxesHide['organization'] = !listBoxesHide['organization']">
-                        <div class="head-tit-box">내 조직</div>
+                        <div class="head-tit-box">내 연락처</div> <!-- 내 조직 -->
                         <i class="fa-solid fa-angle-down" style="color: #9fa1ab;"></i>
                         <i class="fa-solid fa-angle-up" style="color: #9fa1ab;"></i>
                       </a>
@@ -270,29 +191,32 @@
                         <div class="item-option-box"></div>
                       </div>
 
-                      <!--                      <div class="item-box">-->
-
-                      <!--                        <div class="item-info-box">-->
-                      <!--                          <div class="profile-box">-->
-                      <!--                            <img src="/img/common/img_profile_default.svg" alt="이미지">-->
-                      <!--                          </div>-->
-
-                      <!--                          <div class="info-box">-->
-                      <!--                            <div class="subject-box">김성준 소방교</div>-->
-                      <!--                            <div class="con-box">의료진 / 대구광역시 / 칠곡경북대학교병원</div>-->
-
-                      <!--                          </div>-->
-
-                      <!--                        </div>-->
-
-                      <!--                        <div class="item-option-box"></div>-->
-
-                      <!--                      </div>-->
-
                     </div>
+
                   </div>
 
-                  <div class="list-group-box">
+                  <div class="list-group-box d-none">
+
+                    <div class="list-head-box" :class="{'hide': listBoxesHide['request']}">
+
+                      <a href="javascript:void(0)" class="head-box d-flex flex-center justify-content-between"
+                         @click="listBoxesHide['request'] = !listBoxesHide['request']">
+                        <div class="head-tit-box">등록요청</div>
+                        <i class="fa-solid fa-angle-down" style="color: #9fa1ab;"></i>
+                        <i class="fa-solid fa-angle-up" style="color: #9fa1ab;"></i>
+                      </a>
+
+                    </div>
+                    <div class="list-head-box" :class="{'hide': listBoxesHide['favourite']}">
+
+                      <a href="javascript:void(0)" class="head-box d-flex flex-center justify-content-between"
+                         @click="listBoxesHide['favourite'] = !listBoxesHide['favourite']">
+                        <div class="head-tit-box">즐겨찾기</div>
+                        <i class="fa-solid fa-angle-down" style="color: #9fa1ab;"></i>
+                        <i class="fa-solid fa-angle-up" style="color: #9fa1ab;"></i>
+                      </a>
+
+                    </div>
                     <div class="list-head-box" :class="{'hide': listBoxesHide['mayKnow']}">
 
                       <a href="javascript:void(0)" class="head-box d-flex flex-center justify-content-between"
@@ -346,7 +270,7 @@
               <div class="view-head-box">
 
                 <div class="view-img-box">
-                  <img src="/img/common/img_dummy_item1.png" alt="이미지">
+                  <img src="@/assets/img-hosp-def.jpg" alt="이미지">
                 </div>
 
                 <div class="view-basic-box">

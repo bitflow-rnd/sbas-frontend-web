@@ -4254,10 +4254,10 @@ export default {
           document.head.appendChild(script)
 
           script.onload = () => {
-            // 네이버 지도 생성
+            // 네이버 지도 생성 // 35.9561644!4d128.5653029
             new window.naver.maps.Map("map", {
-              center: new window.naver.maps.LatLng(37.5670135, 126.9783740),
-              zoom: 10,
+              center: new window.naver.maps.LatLng(35.9561644, 128.5653029),
+              zoom: 15,
               zoomControlOptions: {
                 style: window.naver.maps.ZoomControlStyle.SMALL,
                 position: window.naver.maps.Position.TOP_RIGHT,

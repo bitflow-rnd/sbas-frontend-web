@@ -275,6 +275,7 @@ section.cntc-info-view .view-head-box .view-img-box img {
   max-height: 100%;
   width: 100%;
   height: 100%;
+  opacity: 0.7;
 }
 section.cntc-info-view .view-head-box .view-basic-box .item-box {
   display: flex;
@@ -701,7 +702,7 @@ article.table-form-layout2 .form-body-box .row .con-box .item-cell-box {
 article.table-form-layout1 .table-form-toggle-box {
   position: absolute;
   right: 0px;
-  bottom: 10px;
+  bottom: 12px;
 }
 article.table-form-layout1 .table-form-toggle-box .table-form-toggle-btn {
   display: inline-flex;
@@ -763,7 +764,7 @@ article.table-form-layout1 .form-body-box .table-box table tr th.bg-accent {
 }
 article.table-form-layout1 .form-body-box .table-box table tr td {
   box-sizing: border-box;
-  padding: 8px 16px;
+  padding: 8px 32px 8px;
 }
 article.table-form-layout1 .form-body-box .table-box table tr td .item-cell-box {
   height: 100%;
