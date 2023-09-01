@@ -4,6 +4,12 @@ module.exports = defineConfig({
   transpileDependencies: true,
   // outputDir: path.resolve(__dirname, "../www"),
   publicPath: '',
-  pluginOptions: {
+  pluginOptions: {},
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://dev.smartbas.org'
+      },
+    }
   }
 })

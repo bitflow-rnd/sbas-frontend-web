@@ -1100,4 +1100,5 @@ export default {
 .fs-5 {
     font-size: 0.85rem !important;
 }
+.menu-link { background-color: white; }
 </style>

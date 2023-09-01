@@ -1,4 +1,4 @@
-import { createWebHashHistory, createRouter } from "vue-router";
+import {createRouter, createWebHashHistory} from "vue-router";
 
 import LayoutUser from "../components/layout/LayoutUser.vue";
 import MobileMain from "../components/MobileMain.vue";
