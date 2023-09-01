@@ -28959,7 +28959,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 .menu,
 .menu-wrapper {
   display: flex;
-  padding: 21px 0 0 0;
+  padding: 22px 0 0 0;
   margin: 0;
   list-style: none;
 }
@@ -33424,7 +33424,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 .btn.btn-outline.btn-outline-primary {
   color: #181C32;
   border-color: #181C32;
-  background-color: var(--bs-primary);
+  background-color: white; /* var(--bs-primary); */
 }
 .btn.btn-outline.btn-outline-primary i,
 .btn.btn-outline.btn-outline-primary .svg-icon {
@@ -48008,7 +48008,7 @@ body,
   }
 }
 .app-wrapper {
-  display: flex;
+  display: flex; background-color: white;
 }
 
 @media (min-width: 992px) {

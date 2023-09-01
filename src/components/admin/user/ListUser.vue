@@ -884,15 +884,16 @@
                                                     </div>
 
                                                     <div class="result-list">
-                                                        <div class="result-box">
-                                                            <div class="edit-btn-box">
+                                                        <div class="result-box d-none">
+                                                            <div class="edit-btn-box ">
                                                                 <label>
                                                                     <input type="file">
                                                                     <img src="/img/common/img_upload_btn.svg" alt="이미지">
                                                                 </label>
                                                             </div>
+                                                            <!--
                                                             <img src="/img/common/img_profile_dummy.png" alt="이미지">
-
+                                                            -->
                                                             <a href="javascript:void(0)" class="remove-btn" onclick="imgRemove(this)"><img
                                                                 src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
 
@@ -924,7 +925,9 @@
 
                                                     <div class="result-list">
                                                         <div class="result-box">
+                                                            <!--
                                                             <img src="/img/common/img_profile_dummy.png" alt="이미지">
+                                                            -->
 
                                                             <a href="javascript:void(0)" class="remove-btn" onclick="imgRemove(this)"><img
                                                                 src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
@@ -1409,14 +1412,16 @@
                                                     </div>
 
                                                     <div class="result-list">
-                                                        <div class="result-box">
+                                                        <div class="result-box d-none">
                                                             <div class="edit-btn-box">
                                                                 <label>
                                                                     <input type="file">
                                                                     <img src="/img/common/img_upload_btn.svg" alt="이미지">
                                                                 </label>
                                                             </div>
+                                                            <!--
                                                             <img src="/img/common/img_profile_dummy.png" alt="이미지">
+                                                            -->
 
                                                             <a href="javascript:void(0)" class="remove-btn" onclick="imgRemove(this)"><img
                                                                 src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
@@ -1448,8 +1453,10 @@
                                                     </div>
 
                                                     <div class="result-list">
-                                                        <div class="result-box">
+                                                        <div class="result-box d-none">
+                                                            <!--
                                                             <img src="/img/common/img_profile_dummy.png" alt="이미지">
+                                                            -->
 
                                                             <a href="javascript:void(0)" class="remove-btn" onclick="imgRemove(this)"><img
                                                                 src="/img/common/ic_profile_remove.svg" alt="이미지"></a>
@@ -1482,7 +1489,7 @@
                         <div class="modal-menu-list">
                             <router-link to="" @click="toggleModal(0)" class="modal-menu-btn menu-cancel">취소</router-link>
 
-                            <router-link to="" @click="editUsrInfo" class="modal-menu-btn menu-primary">등록완료</router-link>
+                            <router-link to="" @click="editUsrInfo" class="modal-menu-btn menu-primary">수정완료</router-link>
                         </div>
 
 
@@ -1722,7 +1729,9 @@
                                                     <article class="img-upload-layout">
                                                         <div class="result-list">
                                                             <div class="result-box">
+                                                                <!--
                                                                 <img src="/img/common/img_profile_dummy.png" alt="이미지">
+                                                                -->
                                                             </div>
 
                                                         </div>

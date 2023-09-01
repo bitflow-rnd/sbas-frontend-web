@@ -1,5 +1,4 @@
 import axios from "axios";
-//import store from ""
 import router from "@/router/router";
 import {encodingPassword} from "@/util/encodingPasswd";
 import {API_PROD} from "@/util/constantURL";
@@ -16,6 +15,12 @@ export default {
         attcId: null,
         usersList: null,
 
+    },
+    getters: {
+        getUserInfo: () => {
+            console.log('getters.getUserInfo')
+            return localStorage.getItem("userInfo")
+        }
     },
     mutations: {
         setSido(state,payload){
@@ -42,6 +47,7 @@ export default {
         },
         setUserInfo(state,payload){
             state.userInfo = payload
+            localStorage.setItem("userInfo", payload)
         },
         setUsersList(state, payload) {
             state.usersList = payload
@@ -191,7 +197,7 @@ export default {
         loadPatientData() {
             try {
                 return axios
-                    .get(`http://sbas-test.bitflow.ai/api/v1/private/patient/search`)
+                    .get(`${API_PROD}/api/v1/private/patient/search`)
             } catch (error) {
                 console.log(error);
             }
@@ -199,7 +205,7 @@ export default {
         loadPatientBasicInfo(_, id) {
             try {
                 return axios
-                    .get(`http://sbas-test.bitflow.ai/api/v1/private/patient/basicinfo?ptId=${id}`)
+                    .get(`${API_PROD}/api/v1/private/patient/basicinfo?ptId=${id}`)
             } catch (error) {
                 console.log(error);
             }
@@ -207,7 +213,7 @@ export default {
         loadPatientDiseaseInfo(_, id) {
             try {
                 return axios
-                    .get(`http://sbas-test.bitflow.ai/api/v1/private/patient/disease-info/${id}`)
+                    .get(`${API_PROD}/api/v1/private/patient/disease-info/${id}`)
             } catch (error) {
                 console.log(error);
             }

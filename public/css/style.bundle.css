@@ -5663,9 +5663,8 @@ textarea.form-control-lg {
 }
 
 .modal-dialog {
-  position: relative;
-  width: auto;
-  margin: var(--bs-modal-margin);
+  position: fixed;
+  width: 100%;
   pointer-events: none;
 }
 .modal.fade .modal-dialog {
@@ -5678,7 +5677,10 @@ textarea.form-control-lg {
   }
 }
 .modal.show .modal-dialog {
-  transform: none;
+  max-width: 1920px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
 }
 .modal.modal-static .modal-dialog {
   transform: scale(1.02);
@@ -5706,6 +5708,7 @@ textarea.form-control-lg {
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 1024px;
   color: var(--bs-modal-color);
   pointer-events: auto;
   background-color: var(--bs-modal-bg);
@@ -28959,7 +28962,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 .menu,
 .menu-wrapper {
   display: flex;
-  padding: 21px 0 0 0;
+  padding: 22px 0 0 0;
   margin: 0;
   list-style: none;
 }
@@ -33424,7 +33427,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 .btn.btn-outline.btn-outline-primary {
   color: #181C32;
   border-color: #181C32;
-  background-color: var(--bs-primary);
+  background-color: white; /* var(--bs-primary); */
 }
 .btn.btn-outline.btn-outline-primary i,
 .btn.btn-outline.btn-outline-primary .svg-icon {
@@ -46578,15 +46581,6 @@ body,
   align-items: stretch;
 }
 
-.app-header {
-  transition: none;
-  display: flex;
-  align-items: stretch;
-  background-color: var(--bs-app-header-base-bg-color);
-  box-shadow: var(--bs-app-header-base-box-shadow);
-  border-bottom: var(--bs-app-header-base-border-bottom);
-}
-
 @media (min-width: 992px) {
   :root {
     --bs-app-header-height: 70px;
@@ -46603,9 +46597,17 @@ body,
   [data-kt-app-header-minimize=on] {
     --bs-app-header-height: 70px;
   }
-  .app-header {
+.app-container {
     height: var(--bs-app-header-height);
-  }
+    align-items: stretch;
+    transition: none;
+    display: flex;
+    background-color: white;
+    box-shadow: var(--bs-app-header-base-box-shadow);
+    border-bottom: var(--bs-app-header-base-border-bottom);
+}
+.app-wrapper > .app-container { border-bottom: 0; }
+
   [data-kt-app-header-fixed=true] .app-header {
     z-index: 107;
     position: fixed;
@@ -46667,10 +46669,6 @@ body,
   [data-kt-app-header-minimize=on] {
     --bs-app-header-height: 70px;
     --bs-app-header-height-actual: 70px;
-  }
-  .app-header {
-    height: var(--bs-app-header-height);
-    align-items: stretch;
   }
   .app-header .app-header-mobile-drawer {
     display: none;
@@ -48008,7 +48006,7 @@ body,
   }
 }
 .app-wrapper {
-  display: flex;
+  display: flex; background-color: #f3f3f3;
 }
 
 @media (min-width: 992px) {
