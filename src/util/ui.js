@@ -63,15 +63,16 @@ export function maskingNm(nm){
 }
 
 export function getTLDt(date,idx){
+    /*표준시라서  +9 해줘야 함 */
+    let dd = new Date(date);
     if(idx===0){
-        return date.slice(0,4)+'년 '+date.slice(5,7)+'월 '+date.slice(8,10)+'일'
-    }else if(idx===1 && date !== null){
-        const time = date.split('T')[1]
-        const hour = time.split(':')[0]
-        if(parseInt(hour)>12){
-            return '오후 '+ parseInt(hour)-12+'시 '+time.split(':')[1].slice(0,2)+'분'
+        return dd.getFullYear()+'년 '+(dd.getMonth()+1)+'월 '+dd.getDate()+'일'
+    }else if(idx===1){
+
+        if(dd.getHours()>12){
+            return '오후 '+ (dd.getHours()-12)+'시 '+dd.getMinutes()+'분'
         } else {
-            return '오전 '+hour+'시 '+time.split(':')[1].slice(0,2)+'분'
+            return '오전 '+dd.getHours()+'시 '+dd.getMinutes()+'분'
         }
     } else {
         return ''
@@ -134,14 +135,15 @@ export async function showPopup(idx) {
         /*병상 배정 불가*/
         this.popup = 4
     } else if (idx === 2 && this.timeline !== null) {
-        if (this.userInfo.jobCd === 'PMGR0002') {
+        console.log('요청'+this.userInfo.jobCd)
+        if (this.userInfo.jobCd === 'PMGR0002' ) {
             /*병상 요청 승인 - 배정반 */
             if (this.timeline.items[0].title.includes('원내')) {
                 console.log('원내배정 - 배정반')
                 this.popup = 2
             } else {
                 console.log('전원요청')
-                this.$store.dispatch('bedasgn/rcmdHpList',this.bdDetail)
+                await this.$store.dispatch('bedasgn/rcmdHpList',this.bdDetail)
             }
         } else if (this.userInfo.jobCd === 'PMGR0003') {
             console.log('원내 - 의료진')
@@ -161,7 +163,7 @@ export function backBtn(idx){
 export async function goAsgn(idx){
     if(idx===2){
         // 감염병 정보 등록
-        if(this.dsInfo.ptId === '' && this.ptBI !== null){
+        if(this.dsInfo.ptId === '' && this.ptBI !== null){/* cpdbr wjdqh - rkadudqj*/
             this.dsInfo.ptId = this.ptBI
         } else {
             this.dsInfo.ptId = this.ptDetail.ptId
