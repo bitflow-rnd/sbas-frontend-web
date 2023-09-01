@@ -49,6 +49,8 @@ section.app-lnb .lnb-wrap .depth-group .depth-body-box ul.depth1 li.depth1-box a
 section.app-lnb .lnb-wrap .depth-group .depth-body-box ul.depth1 li.depth1-box a.depth1-btn.active {
   color: white;
   background-color: #2196F3;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: .1em .1em 0 hsl(200 50% 30%);
 }
 
 section.cntc-dashboard {
@@ -268,7 +270,7 @@ section.cntc-info-view {
   border-right: 1px solid #86898D;
 }
 section.cntc-info-view .view-head-box .view-img-box {
-  height: 243px;
+  height: 350px;
 }
 section.cntc-info-view .view-head-box .view-img-box img {
   max-width: 100%;
