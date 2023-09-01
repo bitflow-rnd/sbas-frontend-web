@@ -10,6 +10,7 @@ export default {
         ptDetail:null,
         rptInfo:null,
         attcRpt:null,
+        startLoc: null
     },
     mutations:{
         setPatntList(state,payload){
@@ -28,7 +29,9 @@ export default {
                 state.ptDetail = {...state.ptDetail,
                                     zip:payload[1]}
             }
-
+        },
+        setStartLoc(state, payload) {
+            state.startLoc = payload
         },
         setZip(state,payload){
             state.rptInfo={...state.rptInfo,
@@ -186,7 +189,9 @@ export default {
                         comment.commit('setInstZip',response.data?.addresses[0]?.addressElements[8]?.longName)
                     } else {
                         console.log('환자정보 조회 후 우편번호')
+                        comment.commit('setStartLoc', { x: response.data?.addresses[0]?.x, y: response.data?.addresses[0]?.y })
                         comment.commit('setBasicInfo',[1,response.data?.addresses[0]?.addressElements[8]?.longName])
+
                     }
 
                 }

@@ -91,7 +91,7 @@
                             <div class="form-body-box">
 
                                 <div class="table-form-toggle-box">
-                                    <a class="table-form-toggle-btn" @click="toggleTable">
+                                    <a class="table-form-toggle-btn" @click="toggleTable" role="button">
                                         <i class="fa-solid" :class="showTable ? 'fa-angle-up' : 'fa-angle-down'"></i>
                                     </a>
                                 </div>
@@ -488,8 +488,8 @@
                                 <div class="table-box with-scroll small">
                                     <table>
                                         <colgroup>
+                                            <col style="width: 35px;">
                                             <col style="width: 70px;">
-                                            <col style="width: 50px;">
                                             <col style="width: 100px;">
                                             <col style="width: 100px;">
                                             <col style="width: 100px;">
@@ -498,21 +498,21 @@
                                             <col style="width: 100px;">
                                             <col style="width: 100px;">
                                             <col style="width: 100px;">
-                                            <col style="width: 100px;">
-                                            <col style="width: 100px;">
+                                            <col style="width: 300px;">
+                                            <col style="width: 140px;">
                                             <col style="width: 100px;">
 
                                         </colgroup>
                                         <thead>
                                         <tr class="small">
+                                          <th>
+                                            <div class="cbox">
+                                              <label>
+                                                <input type="checkbox" class="all-chk"><i></i>
+                                              </label>
+                                            </div>
+                                          </th>
                                             <th>순번</th>
-                                            <th>
-                                                <div class="cbox">
-                                                    <label>
-                                                        <input type="checkbox" class="all-chk"><i></i>
-                                                    </label>
-                                                </div>
-                                            </th>
                                             <th>배정상태</th>
                                             <th>환자이름</th>
                                             <th>성별</th>
@@ -530,7 +530,6 @@
                                         <tbody>
 
                                         <tr v-for="(item,i) in bdList" :key="i">
-                                            <td>{{i+1}}</td>
                                             <td>
                                                 <div class="cbox d-flex justify-content-center">
                                                     <label>
@@ -538,11 +537,12 @@
                                                     </label>
                                                 </div>
                                             </td>
+                                            <td>{{i+1}}</td>
                                             <td>{{ item.bedStatCdNm }}</td>
                                             <td>{{ maskingNm(item.ptNm) }}</td>
-                                            <td>{{ item.gndr }}</td>
-                                            <td>{{ item.age }}</td>
-                                            <td>{{ item.diagNm }}</td>
+                                            <td>{{ item.gndr }}자</td>
+                                            <td>{{ item.age }}세</td>
+                                            <td>{{ item.diagNm?item.diagNm:'-' }}</td>
                                             <td>{{ item.svrtTypeCdNm }}</td>
                                             <td>읍압격리</td>
                                             <td>{{ getTag(item.ptTypeCdNmTagList) }}</td>

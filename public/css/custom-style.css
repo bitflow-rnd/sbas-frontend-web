@@ -764,7 +764,7 @@ article.table-form-layout1 .form-body-box .table-box table tr th.bg-accent {
 }
 article.table-form-layout1 .form-body-box .table-box table tr td {
   box-sizing: border-box;
-  padding: 8px 32px 8px;
+  padding: 0 32px;
 }
 article.table-form-layout1 .form-body-box .table-box table tr td .item-cell-box {
   height: 100%;
@@ -1118,8 +1118,8 @@ article.tabs-list-layout1 .tabs-list .tabs-btn .cnt {
   font-size: 10px;
   line-height: 1.2;
   letter-spacing: -0.05em;
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
 }
 
 article.toggle-list-layout1 .toggle-list {

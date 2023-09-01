@@ -336,7 +336,7 @@
                              :display-rows-count="displayRowsCount"
                              :data-length="filteredPatientData.length"></data-pagination>
 
-            <div id="chart" class="container d-flex justify-content-center">
+            <div id="chart" class="container d-flex justify-content-center chart-container">
               <apexchart ref="severityChart" class="col-lg-8" type="area" height="350" :options="chartOptions"
                          :series="series"></apexchart>
             </div>
@@ -3462,5 +3462,8 @@ export default {
 
 .popup {
   display: block;
+}
+.chart-container {
+  min-height: initial;
 }
 </style>

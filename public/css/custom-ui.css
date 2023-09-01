@@ -97,7 +97,7 @@
   color: #707070;
 }
 .tbox.with-btn input {
-  padding-right: 40px;
+  padding-right: 40px; height: 36px; border-radius: 9px; box-shadow: inset 2px 1px 2px #00000020;
 }
 .tbox.with-calendar {
   position: relative;
@@ -264,7 +264,7 @@
   display: inline-flex;
   width: 20px;
   height: 20px;
-  border-radius: 4px;
+  border-radius: 4px; background-color: white;
   border: 1px solid rgba(134, 137, 141, 0.4);
 }
 .cbox label .txt {
