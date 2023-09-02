@@ -41,7 +41,10 @@
 
             <div class="list-body-box">
 
-              <h2>최근 이력 없음</h2>
+              <div class="img-box">
+                <img src="/img/common/img_nodata.svg" alt="이미지">
+                <h2>최근 이력 없음</h2>
+              </div>
 
             </div>
 
@@ -65,8 +68,9 @@ export default {
 
 <style scoped>
 .activity-list-group { padding: 2rem 0; }
-h2 { font-size: 2rem; color: #666; font-weight: normal; text-align: center;
+.img-box { text-align: center;
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.img-box > h2 { font-size: 2rem; color: #666; font-weight: normal; margin-top: 12px; }
 .view-img-box { border-bottom: 1px solid #666; }
 .tabs-group-box, .tabs-box, .activity-list-group, .list-body-box { height: 100%; }
 .activity-list-group { position: relative; }
