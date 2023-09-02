@@ -1037,7 +1037,7 @@
                                                     <input type="password" value="">
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="false" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 비밀번호 유효성 확인 문구</div>
                                             </div>
                                         </td>
@@ -1073,7 +1073,7 @@
                                                     <input type="text" :value="usrDetail.userNm">
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="false" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 이름 유효성 확인 문구</div>
                                             </div>
                                         </td>
@@ -1084,7 +1084,7 @@
                                                     <input type="text" :value="getbtDt(usrDetail.btDt)">
                                                 </div>
                                             </div>
-                                            <div class="item-cell-box full">
+                                            <div v-if="false" class="item-cell-box full">
                                                 <div class="text-danger pt-2 fs-12px">※ 생년월일 유효성 확인 문구</div>
                                             </div>
                                         </td>

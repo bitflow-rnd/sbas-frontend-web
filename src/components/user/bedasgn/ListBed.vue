@@ -115,39 +115,11 @@
                                                 <div class="item-row-box">
 
                                                     <div class="item-cell-box">
-                                                        <div class="cbox">
+                                                        <div v-for="(item,idx) in bdList2" :key="idx"
+                                                             class="cbox" :class="{'ms-4':item.title !== '병상요청'}">
                                                             <label>
-                                                                <input type="checkbox" name="state"><i></i>
-                                                                <span class="txt">병상요청 <span class="cnt ms-1">{{ bdCnt[0] }}</span></span>
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="cbox ms-4">
-                                                            <label>
-                                                                <input type="checkbox" name="state"><i></i>
-                                                                <span class="txt">병상배정반 <span class="cnt ms-1">{{ bdCnt[1] }}</span></span>
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="cbox ms-4">
-                                                            <label>
-                                                                <input type="checkbox" name="state"><i></i>
-                                                                <span class="txt">이송 · 배차 <span class="cnt ms-1">{{ bdCnt[2] }}</span></span>
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="cbox ms-4">
-                                                            <label>
-                                                                <input type="checkbox" name="state"><i></i>
-                                                                <span class="txt">입 ·퇴원 처리 <span class="cnt ms-1">{{ bdCnt[3] }}</span></span>
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="cbox ms-4">
-                                                            <label>
-                                                                <input type="checkbox" name="state"><i></i>
-                                                                <span class="txt">완료 </span>
-                                                                  <!-- <span class="cnt ms-1">{{ bdCnt[4] }}</span>-->
+                                                                <input type="checkbox" name="state" v-model="filter.selectedStates" :value="idx"><i></i>
+                                                                <span class="txt">{{ item.title }} <span v-show="item.title !== '완료'" class="cnt ms-1">{{ item.count }}</span></span>
                                                             </label>
                                                         </div>
 
@@ -465,7 +437,7 @@
                     <!--begin::Card body-->
                     <div class="card-body p-8">
                         <!--begin::Table-->
-                        <h5>검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{ bdList.length }}</span></h5>
+                        <h5>검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{countBdList()}}</span></h5>
 
                         <article v-if="bdList === []" class="table-list-layout1">
 
@@ -530,9 +502,9 @@
                                         </tr>
                                         </thead>
 
-                                        <tbody>
+                                        <tbody  v-for="(item,i) in sortedBdList" :key="i">
 
-                                        <tr v-for="(item,i) in bdList" :key="i">
+                                        <tr>
                                             <td>
                                                 <div class="cbox d-flex justify-content-center">
                                                     <label>
@@ -540,7 +512,7 @@
                                                     </label>
                                                 </div>
                                             </td>
-                                            <td>{{i+1}}</td>
+                                            <td>{{sortedBdList.length - i}}</td>
                                             <td>{{ item.bedStatCdNm }}</td>
                                             <td>{{ maskingNm(item.ptNm) }}</td>
                                             <td>{{ item.gndr }}자</td>
@@ -794,7 +766,7 @@
                                                                     <input type="text" v-model="newPt.ptNm">
                                                                 </div>
                                                             </div>
-                                                            <div v-if="newPt.ptNm===''" class="item-cell-box full">
+                                                            <div v-if="false" class="item-cell-box full">
                                                                 <div class="text-danger pt-2 fs-12px">※ 이름 유효성 확인 문구</div>
                                                             </div>
                                                         </td>
@@ -817,7 +789,7 @@
 
                                                                 </div>
                                                             </div>
-                                                            <div v-if="newPt.rrno1===''" class="item-row-box">
+                                                            <div v-if="false" class="item-row-box">
                                                                 <div class="text-danger pt-2 fs-12px">* 주민등록번호 입력</div>
                                                             </div>
 
@@ -876,7 +848,7 @@
                                                                     <input type="text" v-model="newPt.mpno">
                                                                 </div>
                                                             </div>
-                                                            <div v-if="newPt.mpno===''" class="item-cell-box full">
+                                                            <div v-if="false" class="item-cell-box full">
                                                                 <div class="text-danger pt-2 fs-12px">※ 전화번호 유효성 확인 문구</div>
                                                             </div>
                                                         </td>
@@ -2609,7 +2581,7 @@
                             <i class="fa-solid fa-share-nodes text-black" style="font-size:18px;"></i>
                         </div>
 
-                        <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal(0)" data-bs-dismiss="modal">
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" @click="async () => { await closeModal(0)}" data-bs-dismiss="modal">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                             <span class="svg-icon svg-icon-1">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2697,17 +2669,17 @@
 
                                                     <tr>
                                                         <th>보호자 이름</th>
-                                                        <td>{{ ptDetail.nokNm }}</td>
+                                                        <td>{{ ptDetail.nokNm?ptDetail.nokNm:'-' }}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>전화번호</th>
-                                                        <td>{{ptDetail.telno}}</td>
+                                                        <td>{{ptDetail.telno?ptDetail.telno:'-'}}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <th>직업</th>
-                                                        <td>{{ ptDetail.job }}</td>
+                                                        <td>{{ ptDetail.job?ptDetail.job:'-' }}</td>
                                                     </tr>
 
                                                     <tr>
@@ -2785,7 +2757,7 @@
                                 <div class="detail-tabs-group flex-root" style="height: 100%; min-height:0;">
                                     <div class="tabs-box flex-root" v-show="this.tabidx===0" style=";">
 
-                                        <div v-if="timeline !==null" class="detail-body-box pe-5 flex-root" style="min-height: 0;">
+                                        <div v-if="timeline !==null && timeline !== undefined" class="detail-body-box pe-5 flex-root" style="min-height: 0;">
                                             <article class="timeline-layout1 pb-5" style="height: 100%;">
 
                                                 <div class="timeline-wrap overflow-y-auto ps-10 pe-5" style="height:100%;">
@@ -2793,20 +2765,20 @@
 
                                                     <ul>
 
-                                                        <li v-for="(item,idx) in timeline.items" :key="idx" :class="{'off': item.timeLineStatus === 'complete'}">
-                                                            <div class="ic-box">
+                                                        <li v-for="(item,idx) in timeline.items" :key="idx"
+                                                            :class="{'off': item.timeLineStatus === 'complete',
+                                                                     'custom-style': idx < timeline.items.length - 1 && timeline.items[idx + 1].timeLineStatus === 'closed'}">
+                                                            <div class="ic-box" v-if="item.timeLineStatus !== 'closed'">
                                                                 <img :src="getTLIcon(item,idx)" alt="이미지">
                                                             </div>
 
-                                                            <div class="item-box" :class="{'suspend':item.timeLineStatus === 'suspend'}">
+                                                            <div class="item-box" :class="{'suspend':item.timeLineStatus === 'suspend'}" v-if="item.timeLineStatus !== 'closed'">
                                                                 <div class="top-item-box">
                                                                     <div class="state-box">{{ item.title }}</div>
                                                                     <div class="date-box" v-if="item.updtDttm">{{ getTLDt(item.updtDttm,1) }}</div>
                                                                 </div>
                                                                 <div class="mid-item-box" v-if="item.by">{{ item.by }}</div>
                                                                 <div class="bottom-item-box">
-
-                                                                    <!--todo: timeline에서 받아오는 img 파일이 없는데-->
                                                                     <div class="item-img-group mb-4">
                                                                         <div class="img-list">
                                                                           <!--
@@ -2855,7 +2827,7 @@
                                                             <input type="text" placeholder="메세지 입력">
                                                         </div>
                                                         <div class="msg-send-box">
-                                                            <a href="#none" class="send-btn">
+                                                            <a href="" class="send-btn">
                                                                 <img src="/img/common/ic_msg_send.svg" alt="이미지">
                                                             </a>
                                                         </div>
@@ -2947,8 +2919,9 @@
                                                             <tr>
                                                                 <th>중증도 분류</th>
                                                                 <td colspan="3">
-                                                                    <div class="item-cell-box full">{{ ptDs.svrtTypeNms[0] }} / NEWS Score 13</div>
-                                                                    <div class="item-cell-box pt-3 full">
+<!-- todo: 중증도 분석 AI 점수 데이터 받아오기 필요                                                                    -->
+                                                                    <div class="item-cell-box full">{{ ptDs.svrtTypeNms[0] }} <!--/ NEWS Score 13--></div>
+                                                                    <div v-if="ptDs.bdtp !== null" class="item-cell-box pt-3 full">
 
                                                                         <article class="category-list-layout1">
 
@@ -3234,7 +3207,7 @@
 <!--  이송 배차 처리  -->
     <div v-if="bdDetail!==null  && ptDetail !==null" class="modal fade" id="kt_modal_dispatch" tabindex="-1" aria-hidden="true" style="">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog mw-1500px modal-dialog-centered">
+        <div v-if="ptDetail.bedStatCd === 'BAST0005'" class="modal-dialog mw-1500px modal-dialog-centered">
             <!--begin::Modal content-->
             <div class="modal-content">
                 <!--begin::Modal header-->
@@ -3326,7 +3299,8 @@
                                         <td colspan="3">
                                             <div class="item-cell-box">
 
-                                                <div class="sbox" style="width: 128px;">
+<!--todo: @change 수정하기 v-for랑 같이 작동 안 됨-->
+                                                <div v-if="firemenList.items" class="sbox" style="width: 128px;">
                                                     <select v-model="trsfInfo.crew1Id">
                                                         <option value="구급대원">구급대원 선택</option>
                                                         <option v-for="(item,i) in firemenList.items" :key="i" @change="fillFiremen(item,1)">
@@ -3358,7 +3332,7 @@
                                         <td colspan="3">
                                             <div class="item-cell-box">
 
-                                                <div class="sbox" style="width: 128px;">
+                                                <div v-if="firemenList.items" class="sbox" style="width: 128px;">
                                                     <select v-model="trsfInfo.crew2Id">
                                                         <option value="구급대원">구급대원 선택</option>
                                                         <option v-for="(item,i) in firemenList.items" :key="i" @change="fillFiremen(item,2)">
@@ -3390,7 +3364,7 @@
                                         <td colspan="3">
                                             <div class="item-cell-box">
 
-                                                <div class="sbox" style="width: 128px;">
+                                                <div v-if="firemenList.items" class="sbox" style="width: 128px;">
                                                     <select v-model="trsfInfo.crew3Id">
                                                         <option value="구급대원">구급대원 선택</option>
                                                         <option v-for="(item,i) in firemenList.items" :key="i" @change="fillFiremen(item,3)">
@@ -3468,7 +3442,7 @@
                                             <div class="item-cell-box full">
 
                                                 <div class="textbox full">
-                                                    <textarea @input="updateCharacterCount(0)" maxlength="500" placeholder="메시지 입력" style="height: 120px;" v-model="trsfInfo.msg"></textarea>
+                                                    <textarea @input="updateCharacterCount(3)" maxlength="500" placeholder="메시지 입력" style="height: 120px;" v-model="trsfInfo.msg"></textarea>
                                                     <div class="limit-box"><span id="textarea1">{{characterCount}}</span>/500자</div>
                                                 </div>
 
@@ -3485,7 +3459,7 @@
                         </div>
 
                     </article>
-
+<!--todo: items null값에서 읽어온다고 오류나는데 . .. 이유를 모르겠음 ㅜㅜ vuex 확인 필요-->
                     <article class="modal-menu-layout1 pt-10">
                         <div class="modal-menu-list">
                             <a @click="alertOpen(11)" class="modal-menu-btn menu-primary">이송처리 완료</a>
@@ -4098,8 +4072,8 @@
 
 <script>
 
-import {mapState} from "vuex";
-import {ref} from "vue";
+import {mapState} from 'vuex'
+import {ref} from 'vue'
 import {
     backBtn,
     getAge,
@@ -4112,7 +4086,7 @@ import {
     openAddressFinder,
     regNewPt,
     showPopup
-} from "@/util/ui";
+} from '@/util/ui'
 
 export default {
     components: {
@@ -4122,20 +4096,23 @@ export default {
     props: {
 
     },
+    created() {
+        this.getBdList()
+    },
     mounted() {
         this.initNewPt = this.newPt
         this.initDsInfo = this.dsInfo
         this.loadNaverMapAsync()
     },
     setup(){
-      const showTable = ref(false);
-      const trsfArr = ref([false,false,false,false]);
+      const showTable = ref(false)
+      const trsfArr = ref([false,false,false,false])
       const toggleTable = function(){
-          showTable.value = !showTable.value;
+          showTable.value = !showTable.value
       }
-      const isAlert = ref(false);
-      const cncBtn = ref(false);
-      const errMsg = '';
+      const isAlert = ref(false)
+      const cncBtn = ref(false)
+      const errMsg = ''
 
       return{
           showTable,
@@ -4146,8 +4123,27 @@ export default {
           toggleTable,
       }
     },
+    watch: {
+        selectedStates(newValue) {
+            if (newValue.length === 0) {
+                this.selectedStates = []
+            }
+        },
+    },
     data() {
         return {
+            filter:{
+              states:[
+                  {label:'병상요청', value:'BAST0003'},
+                  {label:'병상배정', value:'BAST0004'},
+                  {label:'이송 · 배차', value:'BAST0005'},
+                  {label:'입 ·퇴원 처리', value:'BAST0006'},
+                  {label:'완료', value:'BAST0007'},
+                  {label:'완료', value:'BAST0008'},
+              ],
+                selectedStates:[],
+                selectedRow:0
+            },
             preRpt:null,
             content:'',
             characterCount:0,
@@ -4167,7 +4163,7 @@ export default {
                 detlAddr:'',
                 natiCd:'',
                 picaVer:null,
-                natiNm:"대한민국",
+                natiNm:'대한민국',
                 attcId:null,
                 dethYn:'',
                 mpno:'',
@@ -4227,9 +4223,11 @@ export default {
                 crew3Id:'구급대원',
             },
             mediConfirm:{
-              ptId:'',
-              aprvYn:'Y',
-              hospId:'',
+                ptId:'',
+                aprvYn:'Y',
+                hospId:'',
+                negCd:'',
+                asgnReqSeq:0
             },
             hosptlzdiscg:{
                 ptId:'',
@@ -4242,25 +4240,53 @@ export default {
         }
     },
     computed:{
-        ...mapState('bedasgn',['bdList','bdCnt','bdDetail','newPtInfo','ptDs','ptSv','ptBio','timeline','rcmdModal','rcmdHp']),
+        ...mapState('bedasgn',['bdList','bdList2','bdCnt','bdDetail','newPtInfo','ptDs','ptSv','ptBio','timeline','rcmdModal','rcmdHp']),
         ...mapState('patnt',['existPt','ptBI','ptDetail','rptInfo','zip']),
         ...mapState('user',['userInfo','cmSido']),
         ...mapState('admin',['firestatnList','firemenList']),
 
+        sortedBdList(){
+            let list = []
+            if(this.bdList2 !== null && this.bdList2 !== undefined){
+                list = this.bdList2.reduce((acc,item,idx) => {
+                    return acc.concat(item.items.map((innerItem) => {
+                        innerItem.state = idx
+                        return innerItem
+                    }))
+                }, [])
+            }
+
+            if(this.filter.selectedStates.length===0){
+                return list
+            } else {
+                return list.filter((item) => this.filter.selectedStates.includes(item.state))
+            }
+        }
+
     },
     methods: {
+        getBdList() {
+            this.$store.dispatch('bedasgn/getBdList')
+        },
+        countBdList(){
+            if(this.filter.selectedStates.length ===0){
+                return this.bdCnt.reduce((i,count) => i+count, 0)
+            } else {
+                return this.filter.selectedStates.reduce((i,state) => i + this.bdCnt[state],0)
+            }
+        },
         loadNaverMapAsync() {
           // 네이버 지도 API 로드
-          const script = document.createElement("script")
+          const script = document.createElement('script')
           script.src =
-              "https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1ewyt3v33o"
+              'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1ewyt3v33o'
           script.async = true
           script.defer = true
           document.head.appendChild(script)
 
           script.onload = () => {
             // 네이버 지도 생성 // 35.9561644!4d128.5653029
-            new window.naver.maps.Map("map", {
+            new window.naver.maps.Map('map', {
               center: new window.naver.maps.LatLng(35.9561644, 128.5653029),
               zoom: 15,
               zoomControlOptions: {
@@ -4421,8 +4447,9 @@ export default {
                 this.mediConfirm.ptId = this.bdDetail.ptId
                 this.mediConfirm.bdasSeq = this.bdDetail.bdasSeq
                 this.mediConfirm.hospId = this.userInfo.hospId
+                this.mediConfirm.asgnReqSeq++
                 console.log(this.mediConfirm)
-                // todo 의료진 병상배정 확인
+                this.$store.dispatch('bedasgn/cfmMedi',this.mediConfirm)
                 this.alertClose()
                 this.alertOpen(13)
             } else if(res===13){
@@ -4445,7 +4472,7 @@ export default {
             this.alertIdx = 100
         },
         setActive(idx) {
-            this.tabidx = idx;
+            this.tabidx = idx
         },
         showPopup,
         getTLDt,
@@ -4478,69 +4505,57 @@ export default {
         backBtn,
         getUndrDses(arr){
           if(!Array.isArray(arr) || arr.length === 0){
-              return "";
+              return ''
           }
-          const strArr = arr.map(item =>String(item));
-          const resStr = strArr.join(';');
+          const strArr = arr.map(item =>String(item))
+          const resStr = strArr.join(';')
           return resStr
         },
         goAsgn,
         maskingNm,
         getDt,getTag,
         updateCharacterCount(idx) {
-            if(idx===0){
-                if (this.aprv.msg === null || this.aprv.msg === '') {
-                    this.characterCount = this.content.length
-                } else {
-                    this.characterCount = this.aprv.msg.length;
-                }
-            } else if(idx===1){
-                if (this.mediConfirm.msg === null || this.mediConfirm.msg === '') {
-                    this.characterCount = this.content.length
-                } else {
-                    this.characterCount = this.mediConfirm.msg.length;
-                }
-            } else if(idx===2){
-                if (this.hosptlzdiscg.msg === null || this.hosptlzdiscg.msg === '') {
-                    this.characterCount = this.content.length
-                } else {
-                    this.characterCount = this.hosptlzdiscg.msg.length;
-                }
+            const messageProps = [this.aprv, this.mediConfirm, this.hosptlzdiscg, this.trsfInfo]
+            const currentMessage = messageProps[idx].msg
+            if (currentMessage === null || currentMessage === '') {
+                this.characterCount = this.content.length
+            } else {
+                this.characterCount = currentMessage.length
             }
         },
         getGndr,
         getAge,
         getAddr(txt){
-          const words = txt.split(' ');
+          const words = txt.split(' ')
 
           if(words.length>=2){
-              return words.slice(0,2).join(' ');
+              return words.slice(0,2).join(' ')
           } else words
         },
         openAddressFinder,
         cmpExist(idx) {
-            const isMatch = (a, b) => a === b;
-            const res1 = ['일치', 'bg-primary'];
-            const res2 = ['불일치', 'bg-gray-400'];
+            const isMatch = (a, b) => a === b
+            const res1 = ['일치', 'bg-primary']
+            const res2 = ['불일치', 'bg-gray-400']
 
             switch (idx) {
                 case 0:
-                    return isMatch(this.existPt.ptNm, this.newPt.ptNm) ? res1 : res2;
+                    return isMatch(this.existPt.ptNm, this.newPt.ptNm) ? res1 : res2
                 case 1:
-                    return isMatch(this.existPt.rrno1, this.newPt.rrno1) && isMatch(this.existPt.rrno2, this.newPt.rrno2) ? res1 : res2;
+                    return isMatch(this.existPt.rrno1, this.newPt.rrno1) && isMatch(this.existPt.rrno2, this.newPt.rrno2) ? res1 : res2
                 case 2:
-                    return isMatch(this.existPt.bascAddr, this.newPt.bascAddr) ? res1 : res2;
+                    return isMatch(this.existPt.bascAddr, this.newPt.bascAddr) ? res1 : res2
                 default:
-                    return isMatch(this.existPt.mpno, this.newPt.mpno) ? res1 : res2;
+                    return isMatch(this.existPt.mpno, this.newPt.mpno) ? res1 : res2
             }
         },
         regNewPt,
         async uploadRpt(event){
             const fileInput = event.target
-            const file = fileInput.files[0];
+            const file = fileInput.files[0]
 
             console.log(file)
-            const formData = new FormData();
+            const formData = new FormData()
             formData.append('param1','edidemreport')
             formData.append('param2',file)
             await this.$store.dispatch('patnt/uploadRpt',formData)
@@ -4558,7 +4573,7 @@ export default {
         },
         removeRpt(){
           /*역조서 삭제*/
-            this.$store.dispatch('patnt/removeRpt',this.rptInfo.attcId);
+            this.$store.dispatch('patnt/removeRpt',this.rptInfo.attcId)
             this.preRpt = null
         },
         dsDtSame(){
@@ -4596,9 +4611,9 @@ export default {
           }
         },
         validateInput(){
-            this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[^0-9]/g, '');
-            this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[^0-9]/g, '');
-            this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[^0-9]/g, '');
+            this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[^0-9]/g, '')
+            this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[^0-9]/g, '')
+            this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[^0-9]/g, '')
         },
         getBtn(sts) {
             if (sts === 'BAST0001') {
@@ -4627,6 +4642,7 @@ export default {
             this.$store.dispatch('bedasgn/getTimeline',data)
             this.$store.dispatch('bedasgn/getDSInfo',data)
             this.$store.dispatch('bedasgn/getBdasHisInfo',data)
+           // this.$store.dispatch('admin/getFireStatn',{dstrCd1: 27})
             console.log(data.bedStatCd)
         },
         loadTrnsfInfo(num){
@@ -4678,7 +4694,7 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped>
 .popup {
     display: block;
@@ -4703,5 +4719,8 @@ export default {
   top: 0;
   left: 0;
   border-top: 1px solid #555;
+}
+li.custom-style::before {
+    display: none;
 }
 </style>

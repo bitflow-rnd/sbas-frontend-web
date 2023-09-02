@@ -15,7 +15,7 @@ export default {
         isRegUsr: null,
         firestatnList: [],
         medinstList: [],
-        firemenList: [],
+        firemenList: {item:[],count:0},
         fsDetail:null,
         fmDetail:null,
     },

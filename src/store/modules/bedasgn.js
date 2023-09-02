@@ -28,9 +28,13 @@ export default {
             state.bdList.push(...payload.items)
             state.bdCnt.push(payload.count)
         },
+        setBdList2(state,payload){
+            state.bdList2 = payload
+        },
         resetBdList(state){
             state.bdList=[]
             state.bdCnt=[]
+            state.bdList2=[]
         },
         setbdDetail(state,payload){
             state.bdDetail = payload
@@ -62,31 +66,34 @@ export default {
     },
     actions:{
         /*병상배정목록*/
-        getBdList(comment){
-            const token = localStorage.getItem('userToken')
-            const url = `${API_PROD}/api/v1/private/bedasgn/list`
-            console.log('병상배정목록')
-            return axios({
-                method:"get",
-                url: url,
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+        async getBdList(comment) {
+            try {
+                const token = localStorage.getItem('userToken');
+                const url = `${API_PROD}/api/v1/private/bedasgn/list`;
+                console.log('병상배정목록');
 
-            }).then(response =>{
-                if(response.data?.code==='00'){
-                    //console.log(response.data?.result)
-                    comment.commit('resetBdList')
-                    comment.commit('setbdDetail',response.data?.result[0].items[0])
+                const response = await axios({
+                    method: "get",
+                    url: url,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                if (response.data?.code === '00') {
+                    console.log(response.data)
+                    comment.commit('resetBdList');
+                    comment.commit('setbdDetail', response.data?.result[0].items[0]);
                     response.data?.result.forEach(item => {
                         comment.commit('setBdList', item);
                     });
-                    return router.push('/user/bedasgn/list')
+                    comment.commit('setBdList2', response.data?.result);
+                    return router.push('/user/bedasgn/list');
                 }
-            }).catch(e =>{
-                console.log(e)
-                return router.push('/user/bedasgn/list')
-            });
+            } catch (e) {
+                console.error(e);
+                return router.push('/user/bedasgn/list');
+            }
         },
 
         /*감염병 정보 등록 */
@@ -246,6 +253,26 @@ export default {
                 if(response.data?.code === '00'){
                     console.log(response.data?.result)
                    // comment.commit('setSPInfo',response.data?.result);
+                }
+            } catch (e){
+                console.log(e)
+            }
+        },
+        /* 병상 승인 - 의료진 */
+        async cfmMedi(comment,data){
+            const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/bedasgn/asgnconfirm`
+            const request = data
+            console.log('배정승인 - 의료진')
+            try{
+                const response = await axios.post(url,request, {
+                    headers:{
+                        Authorization: `Bearer ${token}` // Add the token to the Authorization header
+                    }
+                });
+                if(response.data?.code === '00'){
+                    console.log(response.data?.result)
+                    comment.commit('isCfmMedi',response.data?.result);
                 }
             } catch (e){
                 console.log(e)
