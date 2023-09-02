@@ -14,8 +14,11 @@ export default {
   components: {
     apexchart: VueApexCharts,
   },
-  async created() {
-    await this.$store.dispatch("severity/getSeverityData", 'PT00000085')
+  props: {
+    severityData: {
+      type: Object,
+      required: true
+    },
   },
   data() {
     return {
