@@ -242,7 +242,7 @@
 
             <div class="profile-card-box">
               <div class="profile-view-box">
-                <img src="@/assets/img-hosp-def.jpg" alt="이미지">
+                <img src="@/assets/img/img-hosp-def.jpg" alt="이미지">
               </div>
               <div class="profile-info-box">
 
