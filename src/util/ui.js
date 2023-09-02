@@ -53,7 +53,7 @@ export function getTLDt(date,idx){
                   '오전 '+dd.getHours()+'시 '+dd.getMinutes()+'분'
             }
         }
-    } else {
+    else {
         return '';
     }
 }
