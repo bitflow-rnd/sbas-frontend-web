@@ -84,7 +84,7 @@
             </router-link>
             <!--end:Menu item-->
             <!--begin:Menu item-->
-            <router-link to="" @click="setActive(4)"
+            <router-link to="/user/svrt/dashbd" @click="setActive(4)"
                          class="menu-item me-0 me-lg-1"
                          :class="{'here': selectedTabIdx === 4}">
               <!--begin:Menu link-->
@@ -242,7 +242,7 @@
 
             <div class="profile-card-box">
               <div class="profile-view-box">
-                <img src="@/assets/img-hosp-def.jpg" alt="이미지">
+                <img src="@/assets/img/img-hosp-def.jpg" alt="이미지">
               </div>
               <div class="profile-info-box">
 
@@ -950,14 +950,14 @@
           <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
             <span class="svg-icon svg-icon-1">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                               xmlns="http://www.w3.org/2000/svg">
-                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                  transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
-                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                                  fill="currentColor"></rect>
-                          </svg>
-                        </span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                   xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                      transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                      fill="currentColor"></rect>
+              </svg>
+            </span>
             <!--end::Svg Icon-->
           </div>
           <!--end::Close-->

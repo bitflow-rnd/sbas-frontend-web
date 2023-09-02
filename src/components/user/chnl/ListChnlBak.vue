@@ -13,9 +13,9 @@
                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7">
                             <!--begin::Item-->
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1 mx-n1">
-                                <a href="/index.html" class="text-hover-primary">
+                                <router-link to="/dashbd" class="text-hover-primary">
                                     <i class="fonticon-home text-gray-700 fs-4"></i>
-                                </a>
+                                </router-link>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
