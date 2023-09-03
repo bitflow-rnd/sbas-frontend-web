@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4 v-if="model.ptDetail">
+    <h4 v-if="model.ptDetail" @click="selectPatient" role="button">
       {{ model.ptDetail.ptNm }}({{ model.ptDetail.age }}세 / {{ model.ptDetail.gndr }},
       {{ model.ptDetail.bascAddr }})
     </h4>
@@ -20,7 +20,7 @@
 <script setup>
 import VueApexCharts from 'vue3-apexcharts'
 import { sverityLineChartOptions } from '@/util/chart_util'
-import { defineProps, onMounted, reactive } from 'vue'
+import { defineEmits, defineProps, onMounted, reactive } from 'vue'
 import { useStore } from 'vuex'
 
 const props = defineProps({
@@ -29,7 +29,7 @@ const props = defineProps({
     required: true
   }
 })
-
+const emit = defineEmits(['onPatientSelected'])
 const store = useStore()
 let model = reactive({
   series: [],
@@ -47,6 +47,10 @@ onMounted(() => {
     })
   }
 })
+
+function selectPatient() {
+  emit('onPatientSelected', model.ptDetail)
+}
 
 function updateChart(result) {
   // console.log('updateChart', JSON.stringify(result))

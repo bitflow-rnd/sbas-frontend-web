@@ -1,6 +1,6 @@
 <template>
   <!--  환자 상세 정보  -->
-  <div class="modal fade" tabindex="-1" aria-hidden="true">
+  <div class="modal" tabindex="-1" aria-hidden="true" id="modal-patient-detail">
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-1500px modal-dialog-centered">
       <!--begin::Modal content-->
@@ -9,8 +9,7 @@
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
           <h2>환자 상세 정보</h2>
           <div class="btn-list">
-            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-              <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+            <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal">
               <span class="svg-icon svg-icon-1">
                 <svg
                   width="24"
@@ -48,7 +47,7 @@
         <!--begin::Modal header-->
         <!--begin::Modal body-->
         <div class="modal-body scroll-y py-10 px-10">
-          <article v-if="model.ptDetail !== null" class="detail-layout1">
+          <article v-if="model.ptDetail" class="detail-layout1">
             <div class="detail-wrap">
               <div class="detail-info-box">
                 <div class="detail-head-box px-10">
@@ -138,12 +137,12 @@
 
                             <tr>
                               <th>기저질환</th>
-                              <td>{{ getTag(ptDs?.undrDsesNms || []) }}</td>
+                              <td>{{ getTag(model.ptDs?.undrDsesNms || []) }}</td>
                             </tr>
 
                             <tr>
                               <th>환자유형</th>
-                              <td>{{ getTag(ptDs?.ptTypeNms || []) }}</td>
+                              <td>{{ getTag(model.ptDs?.ptTypeNms || []) }}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -188,21 +187,16 @@
                             <col style="width: auto" />
                           </colgroup>
                           <tr>
-                            <td class="py-5 px-3 text-center text-gray-700 fw-medium fs-6">3차</td>
+                            <td class="py-5 px-3 text-center text-gray-700 fw-medium fs-6">1차</td>
                             <td class="py-5 px-3">
                               <div class="top-info-box d-flex align-items-center">
-                                <div
-                                  class="d-inline-flex align-items-center justify-content-center w-auto bg-primary h-25px w-65px text-white rounded-2 px-0 w-auto"
-                                >
-                                  병상요청
-                                </div>
                                 <div
                                   class="d-inline-flex align-items-center justify-content-center w-auto bg-gray-500 h-25px w-65px text-white rounded-2 px-0 w-auto"
                                 >
                                   완료
                                 </div>
 
-                                <div class="eclipse-box mx-3">asdf</div>
+                                <div class="eclipse-box mx-3">{{ model.ptDetail.ptNm }}</div>
                                 <div class="date-box text-gray-700 fw-regular">2023-03-11</div>
                               </div>
                               <div class="bottom-info-box d-flex mt-2">
@@ -236,7 +230,7 @@
                 <div class="detail-head-box px-10 h-80px">
                   <div class="head-box">
                     <div class="head-txt-box">타임라인</div>
-                    <div v-if="timeline !== null" class="head-sub-box mt-2 d-flex">
+                    <div v-if="model.model !== null" class="head-sub-box mt-2 d-flex">
                       <div
                         class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2"
                       >
@@ -261,17 +255,17 @@
                 <div class="detail-body-box pe-5 flex-root" style="min-height: 0">
                   <article class="timeline-layout1 pb-5" style="height: 100%">
                     <div
-                      v-if="timeline"
+                      v-if="model.timeline"
                       class="timeline-wrap overflow-y-auto ps-10 pe-5"
                       style="height: 100%"
                     >
                       <div class="text-center py-4 fw-bold">
-                        {{ getTLDt(timeline.items[0].updtDttm, 0) }}
+                        {{ getTLDt(model.timeline.items[0].updtDttm, 0) }}
                       </div>
 
                       <ul>
                         <li
-                          v-for="(item, idx) in timeline.items"
+                          v-for="(item, idx) in model.timeline.items"
                           :key="idx"
                           :class="{ off: item.timeLineStatus === 'complete' }"
                         >
@@ -291,23 +285,16 @@
                             <div class="bottom-item-box">
                               <!--todo: timeline에서 받아오는 img 파일이 없는데-->
                               <div class="item-img-group mb-4">
-                                <div class="img-list">
-                                  <!--
-                                  <a href="javascript:void(0)" class="img-box">
-                                    <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                  </a>
-                                  -->
-                                </div>
+                                <div class="img-list"></div>
                               </div>
-
                               <div class="msg-box" v-show="item.msg !== null">{{ item.msg }}</div>
                             </div>
                           </div>
                         </li>
                       </ul>
                     </div>
-                    <div v-if="timeline === null" class="timeline-wrap overflow-y-auto ps-10 pe-5">
-                      병상이력이 없습니다
+                    <div v-if="!model.timeline" class="timeline-wrap overflow-y-auto ps-10 pe-5">
+                      병상배정 이력이 없습니다
                     </div>
                   </article>
                 </div>
@@ -349,29 +336,42 @@
 </template>
 
 <script setup>
-import { reactive, defineProps } from 'vue'
+import { reactive, defineProps, onMounted, defineEmits } from 'vue'
 import { getTag, getTelno, getTLDt, getTLIcon } from '@/util/ui'
 import { useStore } from 'vuex'
 
+const emit = defineEmits(['closeModal'])
 const props = defineProps({
   ptDetail: {
-    type: String,
+    type: Object,
     required: true
   }
 })
 const store = useStore()
 
-const timeline = store.getters['bedasgn/timeline']
-const ptDs = store.getters['bedasgn/ptDs']
+let model = reactive({
+  ptDetail: props.ptDetail,
+  timeline: store.getters['bedasgn/timeline'],
+  ptDs: store.getters['bedasgn/ptDs']
+})
+
 // const ptBI = store.getters['patnt/ptBI']
 // const existPt = store.getters['patnt/existPt']
 // const rptInfo = store.getters['patnt/rptInfo']
 // const attcRpt = store.getters['patnt/attcRpt']
 // const severityData = store.getters['severity/severityData']
 
-let model = reactive({
-  ptDetail: props.ptDetail
+onMounted(() => {
+  console.log('ptDetail', JSON.stringify(props.ptDetail))
 })
+
+function closeModal() {
+  emit('closeModal')
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+.modal {
+  display: block;
+}
+</style>

@@ -16,17 +16,13 @@
                 <h1
                   class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0"
                 >
-                  중증환자대시보드
+                  중증환자 대시보드
                 </h1>
               </li>
               <li class="breadcrumb-item ml-2">
                 <span>&nbsp;입원환자 중 중증환자 정보를 요약하여 확인 하실 수 있습니다</span>
               </li>
-              <!--end::Item-->
             </ul>
-            <!--end::Breadcrumb-->
-            <!--begin::Title-->
-            <!--end::Title-->
           </div>
           <!--end::Page title-->
         </div>
@@ -46,13 +42,13 @@
               </colgroup>
               <tr>
                 <td rowspan="2">
-                  <sevr-patnt-list-unit />
+                  <sevr-patnt-list-unit @onPatientSelected="onPatientSelected" />
                 </td>
                 <td>
                   <pie-chart />
                 </td>
                 <td>
-                  <svrt-chart-unit :pt-id="'PT00000085'" />
+                  <svrt-chart-unit :pt-id="'PT00000085'" @onPatientSelected="onPatientSelected" />
                 </td>
               </tr>
 
@@ -61,7 +57,7 @@
                   <pie-chart-location />
                 </td>
                 <td>
-                  <svrt-chart-unit :pt-id="'PT00000086'" />
+                  <svrt-chart-unit :pt-id="'PT00000086'" @onPatientSelected="onPatientSelected" />
                 </td>
               </tr>
             </table>
@@ -74,6 +70,8 @@
     <!--end::Content wrapper-->
   </div>
   <!--end:::Main-->
+
+  <patnt-detl-modal v-if="model.ptDetail" :pt-detail="model.ptDetail" @closeModal="closeModal" />
 </template>
 
 <script setup>
@@ -81,6 +79,20 @@ import SvrtChartUnit from '@/components/user/unit/SvrtChartUnit'
 import PieChart from '@/components/user/unit/PieChart'
 import PieChartLocation from '@/components/user/unit/PieChartLocation'
 import SevrPatntListUnit from '@/components/user/unit/SevrPatntListUnit'
+import PatntDetlModal from '@/components/user/modal/PatntDetlModal'
+import { reactive } from 'vue'
+
+let model = reactive({
+  ptDetail: null
+})
+
+function onPatientSelected(data) {
+  model.ptDetail = data
+}
+
+function closeModal() {
+  model.ptDetail = null
+}
 </script>
 
 <style scoped>

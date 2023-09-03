@@ -37,19 +37,16 @@
       </div>
     </div>
   </article>
-
-  <patnt-detl-modal v-if="model.ptDetail" :pt-detail="model.ptDetail" />
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, defineEmits } from 'vue'
 import { useStore } from 'vuex'
-import PatntDetlModal from '@/components/user/modal/PatntDetlModal'
 
+const emit = defineEmits(['onPatientSelected'])
 const store = useStore()
 let model = reactive({
-  list: [],
-  ptDetail: null
+  list: []
 })
 
 onMounted(() => {
@@ -74,18 +71,7 @@ async function selectPatient(patient) {
     store.commit('bedasgn/setDisesInfo', null)
   }
   await store.dispatch('patnt/getBasicInfo', patient)
-
-  model.ptDetail = patient
-  /*
-  if (this.ptDetail !== null) {
-    this.newPt = this.ptDetail
-  }
-  if (this.ptDs !== null) {
-    this.dsInfo = this.ptDs
-  }
-  await store.dispatch('patnt/readEpidRpt', this.ptDetail)
-  this.preRpt = this.attcRpt
-  */
+  emit('onPatientSelected', patient)
 }
 
 function getDate(data) {
