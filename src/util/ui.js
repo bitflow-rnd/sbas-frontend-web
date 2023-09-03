@@ -53,15 +53,17 @@ export function getTLDt(date,idx){
                   '오전 '+dd.getHours()+'시 '+dd.getMinutes()+'분'
             }
         }
-    } else {
+    else {
         return '';
     }
 }
 export function getTag(data){
     let str =''
-    data.forEach(item => {
-        str += '#'+item+' '
-    })
+    if(data.length !== 0 && data) {
+        data.forEach((item) => {
+            str += '#'+item+' '
+        })
+    }
     return str
 }
 export function getGndr(no2){
@@ -144,8 +146,10 @@ export async function goAsgn(idx){
         // 감염병 정보 등록
         if(this.dsInfo.ptId === '' && this.ptBI !== null){/* cpdbr wjdqh - rkadudqj*/
             this.dsInfo.ptId = this.ptBI
-        } else {
+        } else if(this.ptDetail !== null)  {
             this.dsInfo.ptId = this.ptDetail.ptId
+        } else {
+            console.log(this.dsInfo.ptId)
         }
         this.$store.dispatch('bedasgn/regDsInfo',this.dsInfo)
         this.spInfo.spclNm = this.dsInfo.diagDrNm
@@ -164,14 +168,14 @@ export async function goAsgn(idx){
     } else if(idx === 4){
         /* 중증 정보 등록*/
         if(this.svInfo.ptId === ''){
-            this.svInfo.ptId = this.ptBI
+            this.svInfo.ptId = this.dsInfo.ptId
         }
         if(this.svInfo.ptTypeCd === []){
             this.svInfo.ptTypeCd = 'PTTP0001'
         } else {
             this.svInfo.ptTypeCd = this.getUndrDses(this.svInfo.ptTypeCd)
         }
-        this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
+        //this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
         //this.$store.dispatch('bedasgn/regSvInfo',this.svInfo)
         this.spInfo.dprtDstrTypeCd = this.getStrType
         this.tab = 3
@@ -181,6 +185,7 @@ export async function goAsgn(idx){
         if(this.spInfo.inhpAsgnYn === 'Y' && this.spInfo.dprtDstrTypeCd === 'DPTP0002'){
             this.spInfo.dprtHospId = this.dsInfo.instId
         }
+
         this.alertOpen(0)
     }
     this.popup = 100

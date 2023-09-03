@@ -162,7 +162,7 @@
               <!--end::Menu item-->
               <!--begin::Menu item-->
               <div class="menu-item px-5">
-                <a href="/authentication/layouts/corporate/sign-in.html" class="menu-link px-5">로그아웃</a>
+                <router-link to="/" class="menu-link px-5">로그아웃</router-link>
               </div>
               <!--end::Menu item-->
             </div>

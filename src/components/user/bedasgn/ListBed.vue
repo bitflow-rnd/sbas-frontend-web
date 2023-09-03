@@ -592,7 +592,7 @@
                     <h2>병상요청</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div id="reqest_exit" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <div @click="setNull" id="reqest_exit" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -614,7 +614,7 @@
                         <div v-show="ptBI===null && rptInfo === null" class="txt-box">신규 환자 등록</div>
                         <div v-if="newPt.mpno" class="txt-box">{{ newPt.ptNm }} <span class="text-gray-600 fw-normal">({{ newPt.gndr }} / {{ getAge(newPt.rrno1, newPt.rrno2) }}세 / {{ newPt.bascAddr }} / {{ getTelno(newPt.mpno) }})</span>
                         </div>
-                        <div v-show="tab !== 1 && svInfo.undrDsesCd !==[]" class="txt-box"><span class="text-primary">{{ getTag(svInfo.undrDsesCd) }}</span></div>
+                        <div v-show="tab !== 1 && undrDsesCdArr !==[]" class="txt-box"><span class="text-primary">{{ getTag(undrDsesCdArr) }}</span></div>
 
 
                     </article>
@@ -1369,35 +1369,35 @@
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0001" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0001" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">고혈압</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0002" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0002" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">당뇨</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0003" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0003" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">고지혈증</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0004" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0004" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">심혈관</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0005" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0005" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">뇌혈관</span>
                                                                 </label>
                                                             </div>
@@ -1408,42 +1408,42 @@
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0006" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0006" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">암</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0007" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0007" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">만성폐질환</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0008" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0008" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">폐렴</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0009" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0009" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">신장질환</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0010" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0010" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">정신질환</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0011" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0011" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">결핵</span>
                                                                 </label>
                                                             </div>
@@ -1454,14 +1454,14 @@
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0012" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0012" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">천식 등 알레르기</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="cbox">
                                                                 <label>
-                                                                    <input type="checkbox" name="disease" value="UDDS0013" v-model="svInfo.undrDsesCd"><i></i>
+                                                                    <input type="checkbox" name="disease" value="UDDS0013" v-model="undrDsesCdArr"><i></i>
                                                                     <span class="txt">면역력저하자</span>
                                                                 </label>
                                                             </div>
@@ -1476,7 +1476,7 @@
 
                                                                 <div class="cbox w-auto">
                                                                     <label>
-                                                                        <input type="checkbox" name="disease" value="UDDS0014" v-model="svInfo.undrDsesCd"><i></i>
+                                                                        <input type="checkbox" name="disease" value="UDDS0014" v-model="undrDsesCdArr"><i></i>
                                                                         <span class="txt">기타</span>
                                                                     </label>
                                                                 </div>
@@ -2835,11 +2835,11 @@
                                                     </div>
 
                                                     <!--todo: 지자체병상배정반의경우만 노출-->
-                                                    <div v-if="bdDetail!==null" class="menu-group-box">
+                                                    <div v-if="bdDetail!==null && timeline !== null" class="menu-group-box">
 
                                                         <article class="modal-menu-layout1">
                                                             <div class="modal-menu-list">
-                                                                <a v-show="(bdDetail.bedStatCd==='BAST0003')||(bdDetail.bedStatCd==='BAST0004')" @click="showPopup(1)"
+                                                                <a v-show="(bdDetail.bedStatCd==='BAST0003')||(bdDetail.bedStatCd==='BAST0004') " @click="showPopup(1)"
                                                                    class="modal-menu-btn menu-primary-outline radius-0 big">배정 불가</a>
                                                                 <div v-show="(bdDetail.bedStatCd==='BAST0003')||(bdDetail.bedStatCd==='BAST0004')" @click="async () => { await showPopup(2)}" :data-bs-toggle="openRcmdModal(this.rcmdModal)[0]" :data-bs-target="openRcmdModal(this.rcmdModal)[1]"
                                                                    class="modal-menu-btn menu-primary radius-0 big">병상요청 승인</div>
@@ -4102,26 +4102,28 @@ export default {
     mounted() {
         this.initNewPt = this.newPt
         this.initDsInfo = this.dsInfo
+        this.initRptInfo = this.rptInfo
         this.loadNaverMapAsync()
     },
     setup(){
-      const showTable = ref(false)
-      const trsfArr = ref([false,false,false,false])
-      const toggleTable = function(){
-          showTable.value = !showTable.value
-      }
-      const isAlert = ref(false)
-      const cncBtn = ref(false)
-      const errMsg = ''
-
-      return{
-          showTable,
-          trsfArr,
-          isAlert,
-          errMsg,
-          cncBtn, /* alert 취소버튼 유무 */
-          toggleTable,
-      }
+          const showTable = ref(false)
+          const trsfArr = ref([false,false,false,false])
+          const toggleTable = function(){
+              showTable.value = !showTable.value
+          }
+          const isAlert = ref(false)
+          const cncBtn = ref(false)
+          const errMsg = ''
+          const userId = localStorage.userInfo.userId
+          return{
+              showTable,
+              trsfArr,
+              isAlert,
+              errMsg,
+              cncBtn, /* alert 취소버튼 유무 */
+              toggleTable,
+              userId
+          }
     },
     watch: {
         selectedStates(newValue) {
@@ -4189,6 +4191,7 @@ export default {
                 svrtTypeCd:'',
                 undrDsesCd:[],
             },
+            undrDsesCdArr:[],
             bioAnlys:{
             },
             spInfo:{
@@ -4202,7 +4205,9 @@ export default {
                 chrgTelno:'',
                 spclNm:'',
                 dprtHospId:'',
-                inhpAsgnYn:'',
+                inhpAsgnYn:'N',
+                reqDstr1Cd:'27',
+                reqDstr2Cd:'2711',
             },
             aprv:{
                 ptId:'',
@@ -4313,6 +4318,10 @@ export default {
             this.popup=100
             this.alertIdx=100
             this.rptYn = false
+            this.newPt = this.initNewPt
+            this.dsInfo = this.initDsInfo
+            this.$store.commit('patnt/setRpt',null)
+            this.preRpt=null
         },
         alertOpen(idx){
             this.cncBtn = false
@@ -4322,6 +4331,7 @@ export default {
                 this.isAlert = true
                 this.alertIdx = 0
             } else if (idx===1){
+                this.svInfo.undrDsesCd = this.getUndrDses(this.undrDsesCdArr)
                 const data={svrInfo:this.svInfo, dprtInfo:this.spInfo}
                 this.$store.dispatch('bedasgn/regBedassign',data)
                 this.isAlert = false
