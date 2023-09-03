@@ -5,7 +5,7 @@
       class="col-lg-8"
       type="area"
       height="350"
-      :options="sverityLineChartOptions"
+      :options="chartOptions"
       :series="series"
     ></apexchart>
   </div>
@@ -13,7 +13,6 @@
 
 <script>
 import VueApexCharts from 'vue3-apexcharts'
-import { sverityLineChartOptions } from '@/util/chart_util'
 import { mapState } from 'vuex'
 
 export default {
@@ -21,8 +20,11 @@ export default {
   components: {
     apexchart: VueApexCharts
   },
-  async created() {
-    await this.$store.dispatch('severity/getSeverityData', 'PT00000085')
+  props: {
+    severityData: {
+      type: Object,
+      required: true
+    }
   },
   data() {
     return {

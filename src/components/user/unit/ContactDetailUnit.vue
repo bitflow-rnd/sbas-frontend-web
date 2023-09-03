@@ -19,10 +19,12 @@
 
             <div class="info-box">
               <div class="subject-box">
-                <div class="subject-txt"><b>김회숙</b> 대리</div>
+                <div class="subject-txt"><b>{{ user['userNm'] }}</b> {{ user['ocpCd'] }}</div>
                 <div class="label-txt text-primary">게스트</div>
               </div>
-              <div class="con-box">의료진 / 대구광역시 / 칠곡경북대학교병원</div>
+              <div class="con-box">{{
+                  `${user['jobCd']} / ${user['dutyDstr1Cd']} / ${user['instNm']}`
+                }}</div>
 
             </div>
 
@@ -63,7 +65,7 @@
 
                 <div class="inner-item-box">
                   <div class="subject-box">연락처</div>
-                  <div class="con-box">010-1234-2345</div>
+                  <div class="con-box">{{ getTelno(user['telno']) }}</div>
 
                   <a href="javascript:void(0)" class="chat-btn"
                      style="background-image: url('/img/common/ic_floating_chat.svg');"></a>
@@ -76,7 +78,7 @@
 
                 <div class="inner-item-box">
                   <div class="subject-box">최근 활동</div>
-                  <div class="con-box">2023년 3월 10일, 오후 5시 30분</div>
+                  <div class="con-box">{{ getTLDt(user['updtDttm'], 2) }}</div>
                 </div>
 
               </div>
@@ -96,8 +98,22 @@
 </template>
 
 <script>
+import {
+  getTelno,
+  getTLDt
+} from "@/util/ui";
 export default {
-  name: "ContactDetailUnit"
+  name: "ContactDetailUnit",
+  props: {
+    user: {
+      type: Object,
+      required: true
+    },
+  },
+  methods: {
+    getTelno,
+    getTLDt
+  }
 }
 </script>
 

@@ -2,47 +2,10 @@
 
 
 export let alertPopupClose = () => {
-    console.log("실행")
-    document.querySelector('.popup-alert').remove();
-};
+    console.log('실행')
+    document.querySelector('.popup-alert').remove()
+}
 
-export let alertPopupOpen = (msg, func) => {
-
-    let _str = ''
-
-    _str += '<article class="popup popup-alert" style="display: block;">';
-    _str += ' <div class="popup-wrapper">';
-    _str += '   <div class="popup-contents py-10 px-10" style="width: 300px;">';
-    _str += '     <article class="modal-alert-layout pb-10">';
-    _str += '       <div class="alert-view-box pb-6">';
-    _str += '         <img src="/img/common/ic_alert.svg" alt="이미지">';
-    _str += '       </div>';
-    _str += '       <div class="alert-msg-box">'+msg+'</div>';
-    _str += '     </article>';
-    _str += '     <article class="modal-menu-layout1">';
-    _str += '       <div class="modal-menu-list">';
-    _str += '         <a @click="alertClose" class="modal-menu-btn menu-primary" data-type=success>확인</a>';
-    _str += '       </div>';
-    _str += '     </article>';
-    _str += '   </div>';
-    _str += ' </div>';
-    _str += '</article>';
-
-    document.body.insertAdjacentHTML('beforeend', _str);
-
-    if (func !== null) {
-        console.log("null아님")
-        var successElement = document.querySelector('article.popup-alert [data-type=success]');
-        successElement.addEventListener('click', function() {
-            func();
-        });
-    } else {
-        console.log("null임")
-        successElement = document.querySelector('article.popup-alert [data-type="success"]');
-        successElement.removeEventListener('click', alertPopupOpen);
-    }
-
-};
 
 export function getSido(){
     this.$store.dispatch('admin/getSido')
@@ -52,7 +15,7 @@ export function getGugun(code){
 }
 
 export function getTelno(data){
-    if(data !== null){
+    if(data !== null && data !== undefined){
         return data.slice(0,3)+'-'+data.slice(3,7)+'-'+data.slice(7,12)
     } else return ''
 
@@ -62,9 +25,14 @@ export function maskingNm(nm){
     return nm.slice(0,1)+'*'+nm.slice(2)
 }
 
+/*
+idx === 0: YYYY년 MM월 DD일
+idx === 1: (오후/오전) hh시 mm분
+idx === 2: YYYY년 MM월 DD일,(오후/오전) hh시 mm분
+*/
 export function getTLDt(date,idx){
     /*표준시라서  +9 해줘야 함 */
-    let dd = new Date(date);
+    let dd = new Date(date)
     if(idx===0){
         return dd.getFullYear()+'년 '+(dd.getMonth()+1)+'월 '+dd.getDate()+'일'
     }else if(idx===1){
@@ -73,9 +41,20 @@ export function getTLDt(date,idx){
             return '오후 '+ (dd.getHours()-12)+'시 '+dd.getMinutes()+'분'
     }else if(idx===1 && date !== null && date !== undefined){
             return '오전 '+dd.getHours()+'시 '+dd.getMinutes()+'분'
+            } else {
+                return '오전 '+dd.getHours()+'시 '+dd.getMinutes()+'분'
+            }
+        } else if (idx === 2) {
+            if (dd.getHours() > 12) {
+                return dd.getFullYear()+'년 '+(dd.getMonth()+1)+'월 '+dd.getDate()+'일,' +
+                  '오후 '+ (dd.getHours()-12)+'시 '+dd.getMinutes()+'분'
+            } else {
+                return dd.getFullYear()+'년 '+(dd.getMonth()+1)+'월 '+dd.getDate()+'일,' +
+                  '오전 '+dd.getHours()+'시 '+dd.getMinutes()+'분'
+            }
         }
-    } else {
-        return ''
+    else {
+        return '';
     }
 }
 export function getTag(data){
@@ -95,9 +74,9 @@ export function getGndr(no2){
     }
 }
 export function getAge (no1, no2){
-    const curData = new Date();
-    const curYear = curData.getFullYear();
-    let year;
+    const curData = new Date()
+    const curYear = curData.getFullYear()
+    let year
     if(no2==='1'||no2==='2'||no2==='5'||no2==='6'){
         year = '19'+no1.slice(0,2)
         return curYear - parseInt(year)
@@ -108,11 +87,11 @@ export function getAge (no1, no2){
 }
 export function getAuthCd(code){
     if(code==='일반'){
-        return code;
+        return code
     } else if(code === '게스트'){
-        return code;
+        return code
     } else if(code==='DTPM0001'){
-        return '일반';
+        return '일반'
     } else {
         return '게스트'
     }
@@ -157,7 +136,7 @@ export async function showPopup(idx) {
     }
 }
 export function backBtn(idx){
-    this.tab = idx;
+    this.tab = idx
     this.popup = 100
 }
 export async function goAsgn(idx){
@@ -171,7 +150,7 @@ export async function goAsgn(idx){
         this.$store.dispatch('bedasgn/regDsInfo',this.dsInfo)
         this.spInfo.spclNm = this.dsInfo.diagDrNm
         console.log(this.ptDs)
-        this.tab = idx;
+        this.tab = idx
     } else if(idx ===3){
         /*기존정보 업데이트*/
         if(this.rptInfo!==null){
@@ -181,7 +160,7 @@ export async function goAsgn(idx){
             console.log(this.dsInfo.ptId)
         }
         this.dsInfo.ptId = this.existPt.ptId
-        this.tab = 1;
+        this.tab = 1
     } else if(idx === 4){
         /* 중증 정보 등록*/
         if(this.svInfo.ptId === ''){
@@ -194,8 +173,8 @@ export async function goAsgn(idx){
         }
         this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
         //this.$store.dispatch('bedasgn/regSvInfo',this.svInfo)
-        this.spInfo.dprtDstrTypeCd = this.getStrType;
-        this.tab = 3;
+        this.spInfo.dprtDstrTypeCd = this.getStrType
+        this.tab = 3
     } else if(idx ===5){
         /*출발지 정보 등록*/
         this.spInfo.ptId = this.svInfo.ptId
@@ -213,62 +192,62 @@ export function regNewPt(){
     this.alertOpen(3)
 }
 export function openAddressFinder(idx) {
-    const self = this;
+    const self = this
     // eslint-disable-next-line no-undef
     new daum.Postcode({
         oncomplete: function (data) {
             if(idx===0){
                 self.newPt.zip = data.zonecode
-                self.newPt.bascAddr = data.address;
+                self.newPt.bascAddr = data.address
             } else if(idx===1){
                 self.dsInfo.instZip = data.zonecode
-                self.dsInfo.instBascAddr = data.address;
+                self.dsInfo.instBascAddr = data.address
             } else if(idx===3){
                 self.spInfo.dprtDstrZip = data.zonecode
-                self.spInfo.dprtDstrBascAddr = data.address;
+                self.spInfo.dprtDstrBascAddr = data.address
             }
         },
-    }).open();
+    }).open()
 }
 export function getTLIcon(data, idx) {
     const iconSuffixes = [
-        "state0",
-        "state6",
-        "state4",
-        "state5",
-        "state3",
-        "state2"
-    ];
-    const iconBasePath = "/img/common/ic_timeline_";
+        'state0',
+        'state6',
+        'state4',
+        'state5',
+        'state3',
+        'state2'
+    ]
+    const iconBasePath = '/img/common/ic_timeline_'
 
-    const iconState = data.timeLineStatus === "complete" ? "" : "_off";
+    const iconState = data.timeLineStatus === 'complete' ? '' : '_off'
 
     if (idx >= 0) {
         if(data.title.includes('요청')){
-            return `${iconBasePath}${iconSuffixes[0]}${iconState}.svg`;
+            return `${iconBasePath}${iconSuffixes[0]}${iconState}.svg`
         } else if(data.title.includes('승인')){
-            return `${iconBasePath}${iconSuffixes[1]}${iconState}.svg`;
+            return `${iconBasePath}${iconSuffixes[1]}${iconState}.svg`
         } else if(data.title.includes('배정')){
-            return `${iconBasePath}${iconSuffixes[2]}${iconState}.svg`;
+            return `${iconBasePath}${iconSuffixes[2]}${iconState}.svg`
         } else if(data.title.includes('이송')){
-            return `${iconBasePath}${iconSuffixes[3]}${iconState}.svg`;
+            return `${iconBasePath}${iconSuffixes[3]}${iconState}.svg`
         } else if(data.title.includes('불가')){
-            return `${iconBasePath}${iconSuffixes[5]}${iconState}.svg`;
+            return `${iconBasePath}${iconSuffixes[5]}${iconState}.svg`
         } else {
-            return `${iconBasePath}${iconSuffixes[4]}${iconState}.svg`;
+            return `${iconBasePath}${iconSuffixes[4]}${iconState}.svg`
         }
     }
 }
 
 export function getDt(data){
-    const curData = new Date();
-    const curYear = curData.getFullYear();
-    const curMonth = curData.getMonth()+1;
-    const curDate = curData.getDate();
-    const dData = new Date(data);
-    const dYear = dData.getFullYear();
-    const dMonth = dData.getMonth()+1;
-    const dDate = dData.getDate();
+    const curData = new Date()
+    const curYear = curData.getFullYear()
+    const curMonth = curData.getMonth()+1
+    const curDate = curData.getDate()
+    const dData = new Date(data)
+    const dYear = dData.getFullYear()
+    const dMonth = dData.getMonth()+1
+    const dDate = dData.getDate()
 
     if(curYear===dYear && curMonth === dMonth && curDate === dDate){
         return dData.getHours()+':'+dData.getMinutes()
