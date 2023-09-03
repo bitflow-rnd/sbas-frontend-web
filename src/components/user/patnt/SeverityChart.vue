@@ -1,21 +1,28 @@
 <template>
   <div id="chart" class="container d-flex justify-content-center chart-container">
-    <apexchart ref="severityChart" class="col-lg-8" type="area" height="350" :options="chartOptions"
-               :series="series"></apexchart>
+    <apexchart
+      ref="severityChart"
+      class="col-lg-8"
+      type="area"
+      height="350"
+      :options="sverityLineChartOptions"
+      :series="series"
+    ></apexchart>
   </div>
 </template>
 
 <script>
-import VueApexCharts from "vue3-apexcharts";
-import {mapState} from "vuex";
+import VueApexCharts from 'vue3-apexcharts'
+import { sverityLineChartOptions } from '@/util/chart_util'
+import { mapState } from 'vuex'
 
 export default {
-  name: "SeverityChart",
+  name: 'SeverityChart',
   components: {
-    apexchart: VueApexCharts,
+    apexchart: VueApexCharts
   },
   async created() {
-    await this.$store.dispatch("severity/getSeverityData", 'PT00000085')
+    await this.$store.dispatch('severity/getSeverityData', 'PT00000085')
   },
   data() {
     return {
@@ -25,9 +32,23 @@ export default {
           type: 'line',
           zoom: {
             enabled: true
-          },
+          }
         },
-        colors: ['#676767', '#000000', '#676767', '#00ff26', '#fcce14', '#fc1f1f', '#00ff26', '#00ff26', '#00ff26', '#fcce14', '#fcce14', '#fcce14', '#fc1f1f'],
+        colors: [
+          '#676767',
+          '#000000',
+          '#676767',
+          '#00ff26',
+          '#fcce14',
+          '#fc1f1f',
+          '#00ff26',
+          '#00ff26',
+          '#00ff26',
+          '#fcce14',
+          '#fcce14',
+          '#fcce14',
+          '#fc1f1f'
+        ],
         tooltip: {
           shared: true,
           y: {
@@ -48,7 +69,7 @@ export default {
             opacityFrom: 0.5,
             opacityTo: 0,
             stops: [0, 0, 100]
-          },
+          }
         },
         dataLabels: {
           enabled: false
@@ -72,11 +93,11 @@ export default {
             }
           },
           title: {
-            text: "probability"
-          },
+            text: 'probability'
+          }
         },
         xaxis: {
-          type: 'datetime',
+          type: 'datetime'
         },
         annotations: {
           yaxis: [
@@ -85,15 +106,14 @@ export default {
               borderColor: '#f36666',
               opacity: 0.5,
               borderWidth: 1,
-              strokeDashArray: 5,
-
+              strokeDashArray: 5
             },
             {
               y: 0.8,
               borderColor: '#ffb009',
               opacity: 0.5,
               borderWidth: 1,
-              strokeDashArray: 5,
+              strokeDashArray: 5
             },
             {
               y: 0.0,
@@ -125,58 +145,52 @@ export default {
           height: 2530,
           formatter: (seriesName, opts) => {
             if (opts.seriesIndex > 5) return ''
-            return seriesName;
+            return seriesName
           },
           markers: {
-            width: [12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0],
+            width: [12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0]
           }
         }
-      },
+      }
     }
   },
   computed: {
     ...mapState('severity', ['severityData']),
     series() {
       let chartData = [
-        {name: "mean + std", data: []},
-        {name: "mean", data: []},
-        {name: "mean - std", data: []},
-        {name: "+1 day", data: []},
-        {name: "+2 days", data: []},
-        {name: "+3 days", data: []},
-        {name: '+1 day + std', data: []},
-        {name: '+1 day - std', data: []},
-        {name: '+1 day vert', data: []},
-        {name: '+2 days + std', data: []},
-        {name: '+2 days - std', data: []},
-        {name: '+2 days vert', data: []},
-        {name: '+3 days mean', data: []}
+        { name: 'mean + std', data: [] },
+        { name: 'mean', data: [] },
+        { name: 'mean - std', data: [] },
+        { name: '+1 day', data: [] },
+        { name: '+2 days', data: [] },
+        { name: '+3 days', data: [] },
+        { name: '+1 day + std', data: [] },
+        { name: '+1 day - std', data: [] },
+        { name: '+1 day vert', data: [] },
+        { name: '+2 days + std', data: [] },
+        { name: '+2 days - std', data: [] },
+        { name: '+2 days vert', data: [] },
+        { name: '+3 days mean', data: [] }
       ]
       if (this.severityData.ptId) {
-        this.severityData.first.forEach(
-            (day) => {
-              chartData[0].data.push({
-                x: day.prdtDt,
-                y: parseFloat(day.svrtProb)
-              })
-            }
-        )
-        this.severityData.second.forEach(
-            (day) => {
-              chartData[1].data.push({
-                x: day.prdtDt,
-                y: parseFloat(day.svrtProb)
-              })
-            }
-        )
-        this.severityData.third.forEach(
-            (day) => {
-              chartData[2].data.push({
-                x: day.prdtDt,
-                y: parseFloat(day.svrtProb)
-              })
-            }
-        )
+        this.severityData.first.forEach((day) => {
+          chartData[0].data.push({
+            x: day.prdtDt,
+            y: parseFloat(day.svrtProb)
+          })
+        })
+        this.severityData.second.forEach((day) => {
+          chartData[1].data.push({
+            x: day.prdtDt,
+            y: parseFloat(day.svrtProb)
+          })
+        })
+        this.severityData.third.forEach((day) => {
+          chartData[2].data.push({
+            x: day.prdtDt,
+            y: parseFloat(day.svrtProb)
+          })
+        })
 
         // Dots for +1, +2 and +3 days data
         chartData[3].data.push({
@@ -257,18 +271,21 @@ export default {
         chartData[0].data = chartData[0].data.slice(0, -3)
         chartData[2].data = chartData[2].data.slice(0, -3)
         chartData[1].data = chartData[1].data.slice(0, -3)
-
       } else {
-        chartData = [{
-          name: ".",
-          data: [{
-            x: "1970-01-21",
-            y: 0
-          }]
-        }]
+        chartData = [
+          {
+            name: '.',
+            data: [
+              {
+                x: '1970-01-21',
+                y: 0
+              }
+            ]
+          }
+        ]
       }
       return chartData
-    },
+    }
   }
 }
 </script>

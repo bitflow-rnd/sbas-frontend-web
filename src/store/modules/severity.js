@@ -13,6 +13,8 @@ export default {
             third: []
         }
     },
+    getters: {
+    },
     mutations: {
         setSeverityData(state, payload) {
             state.severityData.ptId = null
