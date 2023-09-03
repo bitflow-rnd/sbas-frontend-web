@@ -54,7 +54,7 @@
               <div class="col-4"></div>
 
               <div class="col-4">
-                <svrt-chart-unit :pt-id="'PT00000085'" />
+                <svrt-chart-unit :pt-id="'PT00000086'" />
               </div>
             </div>
           </div>

@@ -1,5 +1,11 @@
 <template>
-  <div id="chart" class="container d-flex justify-content-center chart-container">
+  <div>
+    <h4 v-if="model.ptDetail">
+      {{ model.ptDetail.ptNm }}({{ model.ptDetail.age }}세 / {{ model.ptDetail.gndr }},
+      {{ model.ptDetail.bascAddr }})
+    </h4>
+  </div>
+  <div id="chart" class="d-flex justify-content-center chart-container">
     <vue-apex-charts
       ref="severityChart"
       class="severity-chart"
@@ -26,13 +32,18 @@ const props = defineProps({
 
 const store = useStore()
 let model = reactive({
-  series: []
+  series: [],
+  ptDetail: store.getters['patnt/getPtDetail']
 })
 
 onMounted(() => {
   if (props.ptId) {
     store.dispatch('severity/getSeverityData2', props.ptId).then((result) => {
       updateChart(result)
+    })
+    store.dispatch('patnt/getBasicInfo2', { ptId: props.ptId }).then((result) => {
+      console.log('ptDetail', result)
+      model.ptDetail = result
     })
   }
 })
@@ -154,7 +165,6 @@ function updateChart(result) {
   chartData[2].data = chartData[2].data.slice(0, -3)
   chartData[1].data = chartData[1].data.slice(0, -3)
   model.series = chartData
-  console.log('series', JSON.stringify(model.series))
 }
 </script>
 
