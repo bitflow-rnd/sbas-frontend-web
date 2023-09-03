@@ -1,19 +1,20 @@
 <template>
   <div id="chart" class="container d-flex justify-content-center chart-container">
-    <apexchart
+    <vue-apex-charts
       ref="severityChart"
-      class="col-lg-8"
+      class="severity-chart"
       type="area"
       height="350"
       :options="sverityLineChartOptions"
-      :series="series"
-    ></apexchart>
+      :series="model.series"
+    ></vue-apex-charts>
   </div>
 </template>
 
 <script setup>
+import VueApexCharts from 'vue3-apexcharts'
 import { sverityLineChartOptions } from '@/util/chart_util'
-import { computed, defineProps, onMounted, reactive } from 'vue'
+import { defineProps, onMounted, reactive } from 'vue'
 import { useStore } from 'vuex'
 
 const props = defineProps({
@@ -24,14 +25,25 @@ const props = defineProps({
 })
 
 const store = useStore()
-let severityData = reactive({})
-
-console.log('severityData', severityData)
-onMounted(() => {
-  store.dispatch('severity/getSeverityData', props.ptId)
+let model = reactive({
+  series: []
 })
 
-const series = computed(() => {
+onMounted(() => {
+  if (props.ptId) {
+    store.dispatch('severity/getSeverityData2', props.ptId).then((result) => {
+      updateChart(result)
+    })
+  }
+})
+
+function updateChart(result) {
+  // console.log('updateChart', JSON.stringify(result))
+
+  if (typeof result === 'undefined' || result.length < 1) {
+    return
+  }
+
   let chartData = [
     { name: 'mean + std', data: [] },
     { name: 'mean', data: [] },
@@ -47,124 +59,108 @@ const series = computed(() => {
     { name: '+2 days vert', data: [] },
     { name: '+3 days mean', data: [] }
   ]
-  if (props.ptId) {
-    severityData.first.forEach((day) => {
-      chartData[0].data.push({
-        x: day.prdtDt,
-        y: parseFloat(day.svrtProb)
-      })
-    })
-    severityData.second.forEach((day) => {
-      chartData[1].data.push({
-        x: day.prdtDt,
-        y: parseFloat(day.svrtProb)
-      })
-    })
-    severityData.third.forEach((day) => {
-      chartData[2].data.push({
-        x: day.prdtDt,
-        y: parseFloat(day.svrtProb)
-      })
-    })
 
-    // Dots for +1, +2 and +3 days data
-    chartData[3].data.push({
-      x: severityData.second.at(-3).prdtDt,
-      y: parseFloat(severityData.second.at(-3).svrtProb)
+  result.first.forEach((day) => {
+    chartData[0].data.push({
+      x: day.prdtDt,
+      y: parseFloat(day.svrtProb)
     })
-    chartData[4].data.push({
-      x: severityData.second.at(-2).prdtDt,
-      y: parseFloat(severityData.second.at(-2).svrtProb)
+  })
+  result.second.forEach((day) => {
+    chartData[1].data.push({
+      x: day.prdtDt,
+      y: parseFloat(day.svrtProb)
     })
-    chartData[5].data.push({
-      x: severityData.second.at(-1).prdtDt,
-      y: parseFloat(severityData.second.at(-1).svrtProb)
+  })
+  result.third.forEach((day) => {
+    chartData[2].data.push({
+      x: day.prdtDt,
+      y: parseFloat(day.svrtProb)
     })
-
-    // Lines for +1 day data
-    chartData[6].data.push({
-      x: severityData.second.at(-4).prdtDt,
-      y: parseFloat(severityData.second.at(-4).svrtProb)
-    })
-    chartData[6].data.push({
-      x: severityData.first.at(-3).prdtDt,
-      y: parseFloat(severityData.first.at(-3).svrtProb)
-    })
-    chartData[7].data.push({
-      x: severityData.second.at(-4).prdtDt,
-      y: parseFloat(severityData.second.at(-4).svrtProb)
-    })
-    chartData[7].data.push({
-      x: severityData.third.at(-3).prdtDt,
-      y: parseFloat(severityData.third.at(-3).svrtProb)
-    })
-    chartData[8].data.push({
-      x: severityData.first.at(-3).prdtDt,
-      y: parseFloat(severityData.first.at(-3).svrtProb)
-    })
-    chartData[8].data.push({
-      x: severityData.third.at(-3).prdtDt,
-      y: parseFloat(severityData.third.at(-3).svrtProb)
-    })
-
-    // Lines for +2 days data
-    chartData[9].data.push({
-      x: severityData.second.at(-3).prdtDt,
-      y: parseFloat(severityData.second.at(-3).svrtProb)
-    })
-    chartData[9].data.push({
-      x: severityData.first.at(-2).prdtDt,
-      y: parseFloat(severityData.first.at(-2).svrtProb)
-    })
-    chartData[10].data.push({
-      x: severityData.second.at(-3).prdtDt,
-      y: parseFloat(severityData.second.at(-3).svrtProb)
-    })
-    chartData[10].data.push({
-      x: severityData.third.at(-2).prdtDt,
-      y: parseFloat(severityData.third.at(-2).svrtProb)
-    })
-    chartData[11].data.push({
-      x: severityData.first.at(-2).prdtDt,
-      y: parseFloat(severityData.first.at(-2).svrtProb)
-    })
-    chartData[11].data.push({
-      x: severityData.third.at(-2).prdtDt,
-      y: parseFloat(severityData.third.at(-2).svrtProb)
-    })
-
-    // Line for +3 days data
-    chartData[12].data.push({
-      x: severityData.second.at(-2).prdtDt,
-      y: parseFloat(severityData.second.at(-2).svrtProb)
-    })
-    chartData[12].data.push({
-      x: severityData.second.at(-1).prdtDt,
-      y: parseFloat(severityData.second.at(-1).svrtProb)
-    })
-
-    chartData[0].data = chartData[0].data.slice(0, -3)
-    chartData[2].data = chartData[2].data.slice(0, -3)
-    chartData[1].data = chartData[1].data.slice(0, -3)
-  } else {
-    chartData = [
-      {
-        name: '.',
-        data: [
-          {
-            x: '1970-01-21',
-            y: 0
-          }
-        ]
-      }
-    ]
-  }
-  return chartData
-})
+  })
+  // Dots for +1, +2 and +3 days data
+  chartData[3].data.push({
+    x: result.second.at(-3).prdtDt,
+    y: parseFloat(result.second.at(-3).svrtProb)
+  })
+  chartData[4].data.push({
+    x: result.second.at(-2).prdtDt,
+    y: parseFloat(result.second.at(-2).svrtProb)
+  })
+  chartData[5].data.push({
+    x: result.second.at(-1).prdtDt,
+    y: parseFloat(result.second.at(-1).svrtProb)
+  })
+  // Lines for +1 day data
+  chartData[6].data.push({
+    x: result.second.at(-4).prdtDt,
+    y: parseFloat(result.second.at(-4).svrtProb)
+  })
+  chartData[6].data.push({
+    x: result.first.at(-3).prdtDt,
+    y: parseFloat(result.first.at(-3).svrtProb)
+  })
+  chartData[7].data.push({
+    x: result.second.at(-4).prdtDt,
+    y: parseFloat(result.second.at(-4).svrtProb)
+  })
+  chartData[7].data.push({
+    x: result.third.at(-3).prdtDt,
+    y: parseFloat(result.third.at(-3).svrtProb)
+  })
+  chartData[8].data.push({
+    x: result.first.at(-3).prdtDt,
+    y: parseFloat(result.first.at(-3).svrtProb)
+  })
+  chartData[8].data.push({
+    x: result.third.at(-3).prdtDt,
+    y: parseFloat(result.third.at(-3).svrtProb)
+  })
+  // Lines for +2 days data
+  chartData[9].data.push({
+    x: result.second.at(-3).prdtDt,
+    y: parseFloat(result.second.at(-3).svrtProb)
+  })
+  chartData[9].data.push({
+    x: result.first.at(-2).prdtDt,
+    y: parseFloat(result.first.at(-2).svrtProb)
+  })
+  chartData[10].data.push({
+    x: result.second.at(-3).prdtDt,
+    y: parseFloat(result.second.at(-3).svrtProb)
+  })
+  chartData[10].data.push({
+    x: result.third.at(-2).prdtDt,
+    y: parseFloat(result.third.at(-2).svrtProb)
+  })
+  chartData[11].data.push({
+    x: result.first.at(-2).prdtDt,
+    y: parseFloat(result.first.at(-2).svrtProb)
+  })
+  chartData[11].data.push({
+    x: result.third.at(-2).prdtDt,
+    y: parseFloat(result.third.at(-2).svrtProb)
+  })
+  // Line for +3 days data
+  chartData[12].data.push({
+    x: result.second.at(-2).prdtDt,
+    y: parseFloat(result.second.at(-2).svrtProb)
+  })
+  chartData[12].data.push({
+    x: result.second.at(-1).prdtDt,
+    y: parseFloat(result.second.at(-1).svrtProb)
+  })
+  chartData[0].data = chartData[0].data.slice(0, -3)
+  chartData[2].data = chartData[2].data.slice(0, -3)
+  chartData[1].data = chartData[1].data.slice(0, -3)
+  model.series = chartData
+  console.log('series', JSON.stringify(model.series))
+}
 </script>
 
 <style scoped>
-.chart-container {
-  min-height: initial;
+.severity-chart {
+  width: 100%;
+  height: 350px;
 }
 </style>

@@ -2899,6 +2899,9 @@ section.login .login-wrap .login-contents .con-head-box .main-box {
   font-weight: 700;
   letter-spacing: -0.05em;
 }
+.chart-container {
+  min-height: initial;
+}
 @media (max-width: 1024px) {
   section.login .login-wrap .login-contents .con-head-box .main-box {
     font-size: 28px;
@@ -3071,6 +3074,7 @@ section.login .login-wrap .login-contents .con-body-box .login-note-box .note-wr
   border-radius: 50%;
   transform: translateY(-50%);
 }
+
 @media (max-width: 1024px) {
   section.login .login-wrap .login-contents .con-body-box .login-note-box .note-wrap .row:after {
     width: 2px;
