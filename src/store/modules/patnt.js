@@ -177,9 +177,11 @@ export default {
     },
     /*attcId로 역조서 읽기*/
     async readEpidRpt(comment, data) {
+      if (!data || !data.attcId) {
+        return
+      }
       const url = `${API_PROD}/api/v1/private/patient/read-epidreport/${data.attcId}`
 
-      console.log('환자 기본 정보 조회' + data.attcId)
       try {
         const response = await axios.get(url)
         if (response.data?.code === '00') {

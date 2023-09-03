@@ -319,6 +319,7 @@
     <!--end::Content wrapper-->
   </div>
   <!--end:::Main-->
+
   <!--환자등록/수정 -->
   <div class="modal fade" id="kt_modal_patnt" tabindex="-1" aria-hidden="true" style="">
     <!--begin::Modal dialog-->

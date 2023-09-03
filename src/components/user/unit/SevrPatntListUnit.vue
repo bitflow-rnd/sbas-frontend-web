@@ -19,7 +19,7 @@
                   {{ pt.bedStatCdNm ? pt.bedStatCdNm : '-' }}
                 </td>
                 <td>{{ pt.ptNm }} ({{ pt.age }}세,{{ pt.gndr }})</td>
-                <td>
+                <td class="red">
                   {{ pt.hospNm ? pt.hospNm : '중증' }}
                 </td>
                 <td>
@@ -37,15 +37,19 @@
       </div>
     </div>
   </article>
+
+  <patnt-detl-modal v-if="model.ptDetail" :pt-detail="model.ptDetail" />
 </template>
 
 <script setup>
 import { onMounted, reactive } from 'vue'
 import { useStore } from 'vuex'
+import PatntDetlModal from '@/components/user/modal/PatntDetlModal'
 
 const store = useStore()
 let model = reactive({
-  list: []
+  list: [],
+  ptDetail: null
 })
 
 onMounted(() => {
@@ -57,13 +61,31 @@ onMounted(() => {
       }
     }
     list.length = list.length > 15 ? 15 : list.length
-    console.log('items', JSON.stringify(list))
     model.list = list
   })
 })
 
-function selectPatient(pt) {
-  console.log('pt', JSON.stringify(pt))
+async function selectPatient(patient) {
+  if (patient['bdasSeq']) {
+    await store.dispatch('bedasgn/getTimeline', patient)
+    await store.dispatch('bedasgn/getDSInfo', patient)
+  } else {
+    store.commit('bedasgn/setTimeline', null)
+    store.commit('bedasgn/setDisesInfo', null)
+  }
+  await store.dispatch('patnt/getBasicInfo', patient)
+
+  model.ptDetail = patient
+  /*
+  if (this.ptDetail !== null) {
+    this.newPt = this.ptDetail
+  }
+  if (this.ptDs !== null) {
+    this.dsInfo = this.ptDs
+  }
+  await store.dispatch('patnt/readEpidRpt', this.ptDetail)
+  this.preRpt = this.attcRpt
+  */
 }
 
 function getDate(data) {
@@ -81,4 +103,8 @@ function getDate(data) {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.red {
+  color: red;
+}
+</style>
