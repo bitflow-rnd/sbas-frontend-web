@@ -82,6 +82,25 @@ export default {
         console.log(e)
       }
     },
+    getSevrPatntListWidget(comment, data) {
+      const url = `${API_PROD}/api/v1/private/patient/search`
+      const params = data
+      return new Promise((resolve, reject) => {
+        axios
+          .get(url, { params })
+          .then((response) => {
+            if (response.data?.code === '00') {
+              resolve(response.data?.result)
+            } else {
+              reject()
+            }
+          })
+          .catch((e) => {
+            console.log(e)
+            reject(e)
+          })
+      })
+    },
     /*환자 정보 수정*/
     async modiPtInfo(comment, data) {
       //const token = localStorage.getItem('userToken')

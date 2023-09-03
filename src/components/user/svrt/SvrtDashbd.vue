@@ -34,29 +34,37 @@
       </div>
       <!--end::Toolbar-->
       <!--begin::Content-->
-      <div id="kt_app_content" class="app-content flex-column-fluid">
+      <div class="app-content flex-column-fluid">
         <div class="card">
           <!--begin:: Cardheader-->
           <div class="card-header border-0 p-8 container-fluid">
-            <div class="row">
-              <div class="col-4"></div>
+            <table>
+              <colgroup>
+                <col style="width: 33.3%" />
+                <col style="width: 33.3%" />
+                <col style="width: 33.3%" />
+              </colgroup>
+              <tr>
+                <td rowspan="2">
+                  <sevr-patnt-list-unit />
+                </td>
+                <td>
+                  <pie-chart />
+                </td>
+                <td>
+                  <svrt-chart-unit :pt-id="'PT00000085'" />
+                </td>
+              </tr>
 
-              <div class="col-4"></div>
-
-              <div class="col-4">
-                <svrt-chart-unit :pt-id="'PT00000085'" />
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-4"></div>
-
-              <div class="col-4"></div>
-
-              <div class="col-4">
-                <svrt-chart-unit :pt-id="'PT00000086'" />
-              </div>
-            </div>
+              <tr>
+                <td>
+                  <pie-chart-location />
+                </td>
+                <td>
+                  <svrt-chart-unit :pt-id="'PT00000086'" />
+                </td>
+              </tr>
+            </table>
           </div>
           <!--end::Card header-->
         </div>
@@ -70,6 +78,16 @@
 
 <script setup>
 import SvrtChartUnit from '@/components/user/unit/SvrtChartUnit'
+import PieChart from '@/components/user/unit/PieChart'
+import PieChartLocation from '@/components/user/unit/PieChartLocation'
+import SevrPatntListUnit from '@/components/user/unit/SevrPatntListUnit'
 </script>
 
-<style scoped></style>
+<style scoped>
+.card-header.p-8 {
+  padding-bottom: 22px;
+}
+td {
+  padding: 1rem 1.5rem;
+}
+</style>

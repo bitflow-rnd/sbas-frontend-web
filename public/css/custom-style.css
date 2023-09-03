@@ -2902,6 +2902,11 @@ section.login .login-wrap .login-contents .con-head-box .main-box {
 .chart-container {
   min-height: initial;
 }
+.app-toolbar-wrapper .btn-secondary { display: none; }
+.list-table-hoverable tr { cursor: pointer; }
+.list-table-hoverable tr:hover td {
+  background-color: #74AFEB22;
+}
 @media (max-width: 1024px) {
   section.login .login-wrap .login-contents .con-head-box .main-box {
     font-size: 28px;
