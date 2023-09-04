@@ -17,7 +17,7 @@
       <div class="card-body" id="kt_chat_messenger_body">
         <!--begin::Messages-->
         <div
-          class="scroll-y me-n5 pe-5 h-300px h-lg-auto"
+          class="scroll-y me-n5 pe-5 h-300px h-lg-auto message-room-in"
           data-kt-element="messages"
           data-kt-scroll="true"
           data-kt-scroll-activate="{default: false, lg: true}"
@@ -130,9 +130,13 @@ h2 {
 .card-body > .scroll-y > div + div {
   margin-top: 24px;
 }
+.msg-send-layout1 {
+  padding-left: 0;
+}
 .detail-foot-box {
   position: absolute;
   bottom: 0;
   width: -webkit-fill-available;
+  background-color: white;
 }
 </style>

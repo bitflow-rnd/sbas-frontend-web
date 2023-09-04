@@ -2904,6 +2904,14 @@ section.login .login-wrap .login-contents .con-head-box .main-box {
 .list-table-hoverable tr:hover td {
   background-color: #74AFEB22;
 }
+.message-room-in div.rounded {
+  font-weight: normal !important;
+  font-size: 1.4rem;
+  line-height: 2.3rem;
+  min-width: 600px;
+  color: #555555 !important;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 .card-option .btn-secondary, .option-box .btn-secondary { display: none; }
 @media (max-width: 1024px) {
   section.login .login-wrap .login-contents .con-head-box .main-box {
