@@ -178,7 +178,7 @@
                               <input
                                 type="text"
                                 v-model="filterPatient['searchText']"
-                                placeholder="환자명 또는 생년월일 6자리"
+                                placeholder="환자 이름, 생년월일 6자리 또는 휴대폰번호 입력"
                               />
 
                               <a @click="search()" class="input-btn" role="button">

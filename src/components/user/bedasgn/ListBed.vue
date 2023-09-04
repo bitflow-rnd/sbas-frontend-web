@@ -174,7 +174,7 @@
                             <div class="tbox full with-btn">
                               <input
                                 type="text"
-                                placeholder="이름, 생년월일 또는 휴대폰 번호 입력"
+                                placeholder="환자 이름, 생년월일 6자리 또는 휴대폰번호 입력"
                               />
 
                               <a href="javascript:void(0)" class="input-btn">
