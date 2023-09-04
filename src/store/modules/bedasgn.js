@@ -91,7 +91,7 @@ export default {
         if (response.data?.code === '00') {
           console.log(response.data)
           comment.commit('resetBdList')
-          comment.commit('setbdDetail', response.data?.result[0].items[0])
+          //comment.commit('setbdDetail', response.data?.result[0].items[0])
           response.data?.result.forEach((item) => {
             comment.commit('setBdList', item)
           })
