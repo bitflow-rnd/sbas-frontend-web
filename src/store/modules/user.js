@@ -244,8 +244,8 @@ export default {
           })
       })
     },
-    getChatMessageListSync(roomno) {
-      const url = `${API_PROD}/api/v1/private/talk/my-chat/${roomno}`
+    getChatMessageListSync(comment, roomId) {
+      const url = `${API_PROD}/api/v1/private/talk/my-chat/${roomId}`
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',

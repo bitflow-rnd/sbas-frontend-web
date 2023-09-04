@@ -7,7 +7,7 @@
         <!--begin::Title-->
         <div class="card-title">
           <!--begin::Room name-->
-          <h2 class="text-start">투석업무 채널</h2>
+          <h2 class="text-start">{{ model.roomInfo.tkrmNm }}</h2>
           <!--begin::Room name-->
         </div>
         <!--end::Title-->
@@ -25,73 +25,11 @@
           data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
           data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
           data-kt-scroll-offset="5px"
+          v-if="model.messageList && model.messageList.length > 0"
         >
-          <!--begin::Message(in)-->
-          <div class="d-flex justify-content-start mb-10">
-            <!--begin::Wrapper-->
-            <div class="d-flex flex-column align-items-start">
-              <!--begin::User-->
-              <div class="d-flex align-items-center mb-2">
-                <!--begin::Avatar-->
-                <div class="symbol symbol-35px symbol-circle">
-                  <img alt="Pic" src="/img/avatars/ic-user-default.svg" />
-                </div>
-                <!--end::Avatar-->
-                <!--begin::Details-->
-                <div class="ms-3">
-                  <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1"
-                    >Brian Cox</a
-                  >
-                  <span class="text-muted fs-7 mb-1">2 mins</span>
-                </div>
-                <!--end::Details-->
-              </div>
-              <!--end::User-->
-              <!--begin::Text-->
-              <div
-                class="p-5 rounded bg-light-info text-dark fw-semibold mw-lg-400px text-start"
-                data-kt-element="message-text"
-              >
-                How likely are you to recommend our company to your friends and family ?
-              </div>
-              <!--end::Text-->
-            </div>
-            <!--end::Wrapper-->
-          </div>
-          <!--end::Message(in)-->
-
-          <!--begin::Message(out)-->
-          <div class="d-flex justify-content-end mb-10">
-            <!--begin::Wrapper-->
-            <div class="d-flex flex-column align-items-end">
-              <!--begin::User-->
-              <div class="d-flex align-items-center mb-2">
-                <!--begin::Details-->
-                <div class="me-3">
-                  <span class="text-muted fs-7 mb-1">5분전</span>
-                  <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">나</a>
-                </div>
-                <!--end::Details-->
-                <!--begin::Avatar-->
-                <div class="symbol symbol-35px symbol-circle">
-                  <img alt="Pic" src="/img/avatars/ic-user-default.svg" />
-                </div>
-                <!--end::Avatar-->
-              </div>
-              <!--end::User-->
-              <!--begin::Text-->
-              <div
-                class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end"
-                data-kt-element="message-text"
-              >
-                Hey there, we’re just writing to let you know that you’ve been subscribed to a
-                repository on GitHub.
-              </div>
-              <!--end::Text-->
-            </div>
-            <!--end::Wrapper-->
-          </div>
-          <!--end::Message(out)-->
+          <template v-for="(item, idx) in model.messageList" :key="idx">
+            <my-msg :item="item" />
+          </template>
         </div>
         <!--end::Messages-->
       </div>
@@ -127,7 +65,34 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { defineProps, onMounted, reactive } from 'vue'
+import { useStore } from 'vuex'
+import MyMsg from '@/components/user/unit/MyMsg'
+
+const store = useStore()
+// const emit = defineEmits('onUserSelected')
+
+const props = defineProps({
+  roomInfo: {
+    type: Object,
+    required: true
+  }
+})
+
+let model = reactive({
+  roomInfo: props.roomInfo,
+  messageList: []
+})
+
+onMounted(() => {
+  console.log('roomInfo', JSON.stringify(model.roomInfo))
+  store.dispatch('user/getChatMessageListSync', model.roomInfo.tkrmId).then((result) => {
+    // console.log('getChatMessageListSync', JSON.stringify(result))
+    model.messageList = result
+  })
+})
+</script>
 
 <style scoped>
 h2 {
@@ -135,12 +100,20 @@ h2 {
   color: #666;
   font-weight: normal;
   text-align: center;
+  line-height: 50px;
 }
 .card-header {
   padding-bottom: 0;
 }
 .card-title {
   height: 50px;
+}
+.card-body {
+  overflow-y: scroll;
+  max-height: 855px;
+}
+.card-body > .scroll-y > div + div {
+  margin-top: 24px;
 }
 .detail-foot-box {
   position: absolute;

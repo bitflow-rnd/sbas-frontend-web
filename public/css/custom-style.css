@@ -2898,7 +2898,7 @@ section.login .login-wrap .login-contents .con-head-box .main-box {
 .chart-container {
   min-height: initial;
 }
-.fa-share-nodes { display: none; }
+.btn > i.fa-share-nodes, .option-btn i.fa-share-nodes { display: none; }
 .app-toolbar-wrapper .btn-secondary { display: none; }
 .list-table-hoverable tr { cursor: pointer; }
 .list-table-hoverable tr:hover td {

@@ -143,7 +143,7 @@
               </div>
 
               <contact-list v-if="model.mode === 'contact'" @onUserSelected="onUserSelected" />
-              <message-list v-if="model.mode === 'message'" @onRoomSelected="onRoomSelected" />
+              <message-room-list v-if="model.mode === 'message'" @onRoomSelected="onRoomSelected" />
             </section>
 
             <!-- contact detail -->
@@ -159,8 +159,11 @@
             <contact-detail-right-unit v-if="model.mode === 'contact' && model.selectedUser" />
             <!-- contact detail right -->
 
-            <no-message-room-detail v-if="model.mode === 'message' && !model.selectedRoom" />
-            <message-room-detail v-if="model.mode === 'message' && model.selectedRoom" />
+            <no-message-room-detail v-if="model.mode === 'message' && !model.roomInfo" />
+            <message-room-detail
+              v-if="model.mode === 'message' && model.roomInfo"
+              :roomInfo="model.roomInfo"
+            />
           </section>
         </div>
       </div>
@@ -177,7 +180,7 @@ import NoContactDetailUnit from '@/components/user/unit/NoContactDetailUnit'
 import NoContactDetailRightUnit from '@/components/user/unit/NoContactDetailRightUnit'
 import ContactDetailRightUnit from '@/components/user/unit/ContactDetailRightUnit'
 import ContactList from '@/components/user/unit/ContactList'
-import MessageList from '@/components/user/unit/MessageList'
+import MessageRoomList from '@/components/user/unit/MessageRoomList'
 import { reactive, ref } from 'vue'
 import MessageRoomDetail from '@/components/user/unit/MessageRoomDetail'
 import NoMessageRoomDetail from '@/components/user/unit/NoMessageRoomDetail'
@@ -188,14 +191,15 @@ const tab2 = ref()
 let model = reactive({
   mode: 'contact',
   selectedUser: null,
-  selectedRoom: null
+  roomInfo: null
 })
 
 function onUserSelected(user) {
   model.selectedUser = user
 }
 function onRoomSelected(room) {
-  model.selectedRoom = room
+  console.log('room', JSON.stringify(room))
+  model.roomInfo = room
 }
 function onTabSelected(idx) {
   if (idx === 0) {
