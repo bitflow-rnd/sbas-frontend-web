@@ -96,7 +96,7 @@
               ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
             >
             <!-- data-bs-toggle="modal" -->
-            <a
+            <a v-show="this.userInfo.jobCd==='PMGR0001' "
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_request"
               class="btn btn-sm btn-flex btn-primary align-self-center px-3"
@@ -2999,7 +2999,7 @@
             <div
               class="btn btn-sm btn-icon btn-active-color-primary"
               @click="
-                ;async () => {
+                async () => {
                   await closeModal(0)
                 }
               "
@@ -3295,7 +3295,7 @@
                                     bdDetail.bedStatCd === 'BAST0004'
                                   "
                                   @click="
-                                    ;async () => {
+                                    async () => {
                                       await showPopup(2)
                                     }
                                   "
@@ -3309,7 +3309,7 @@
                                   v-show="bdDetail.bedStatCd === 'BAST0005'"
                                   data-bs-toggle="modal"
                                   @click="
-                                    ;async () => {
+                                    async () => {
                                       await loadTrnsfInfo(27)
                                     }
                                   "
@@ -4450,6 +4450,7 @@
     </div>
   </article>
   <!--  역학조사서 비교   -->
+<!--  todo: 나오게 되는 조건 확인 필요   -->
   <article v-show="popup === 1" class="popup popup-update-check">
     <div class="popup-wrapper">
       <div class="popup-contents py-10 px-10" style="width: 300px">
@@ -4860,7 +4861,7 @@ export default {
       isAlert,
       errMsg,
       cncBtn /* alert 취소버튼 유무 */,
-      toggleTable
+      toggleTable,
     }
   },
   watch: {
