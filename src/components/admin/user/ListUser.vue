@@ -358,7 +358,7 @@
                                                 </div>
                                             </td>
                                             <td>{{i+1}}</td>
-                                            <td>{{item.dutyDstr1Cd}}<!--todo 지역번호 조회 함수--></td>
+                                            <td>{{item.dutyDstr1CdNm }}</td>
                                             <td>{{getInstNm(item.instTypeCd)}}</td>
                                             <td>{{ item.instNm }}</td>
                                             <td> {{ maskingNm(item.userNm) }}</td>
