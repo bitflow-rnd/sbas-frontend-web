@@ -1690,8 +1690,11 @@ export default {
             this.$store.dispatch('admin/getMedinst',this.search)
         },
         getUpDt(date){
-            return date.slice(0,4)+'.'+date.slice(5,7)+'.'+date.slice(8,10)+'\n'
-            +date.slice(11,16)
+            if(date !== null && date !== undefined){
+                return date.slice(0,4)+'.'+date.slice(5,7)+'.'+date.slice(8,10)+'\n'
+                    +date.slice(11,16)
+            } else return ''
+
         },
         handleChange(){
             if(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(this.inputValue)) {

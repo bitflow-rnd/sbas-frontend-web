@@ -233,15 +233,13 @@ export default {
             });
         },
         /*구급대 목록 조회*/
-        getFireStatn(comment,request){
+        async getFireStatn(comment,request){
            // const token = localStorage.getItem('userToken')
            // console.log(data.cd1, data.cd2)
             const url = `${API_PROD}/api/v1/public/organ/firestatns`
-            axios({
-                method:"get",
-                url:url,
-                params:request,
-            }).then(response =>{
+            const params = request
+            try {
+                const response = await axios.get(url, {params})
                 console.log('구급대목록')
                 if(response.data.code==='00'){
                     if(response.data?.result.count!==0){
@@ -251,7 +249,7 @@ export default {
                         console.log(data)
                         comment.dispatch('getFiremen',data);
 
-                        //return router.push('/admin/organ/firestatn/list');
+                        return router.push('/admin/organ/firestatn/list');
                     } else {
                         comment.commit('setFirestatn',[])
                         comment.commit('setFSDetail',null)
@@ -260,9 +258,10 @@ export default {
                     }
                 }
 
-            }).catch(e=>{
+            } catch(e){
                 console.log(e)
-            })
+            }
+
         },
         /*구급대 상세 조회*/
         getFSDetail(comment,request){
