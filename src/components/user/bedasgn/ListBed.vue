@@ -506,8 +506,14 @@
                       </tr>
                     </thead>
 
-                    <tbody v-for="(item, i) in sortedBdList" :key="i">
-                      <tr>
+                    <tbody v-if="sortedBdList.length===0">
+                    <tr>
+                        <td colspan="16">내역이 없습니다</td>
+                    </tr>
+                    </tbody>
+
+                    <tbody v-if="sortedBdList.length!==0">
+                      <tr v-for="(item, i) in sortedBdList" :key="i">
                         <td>
                           <div class="cbox d-flex justify-content-center">
                             <label> <input type="checkbox" /><i></i> </label>
@@ -634,6 +640,7 @@
           <!--end::Modal title-->
           <!--begin::Close-->
           <div
+                  @click="closeModal(0)"
             id="reqest_exit"
             class="btn btn-sm btn-icon btn-active-color-primary"
             data-bs-dismiss="modal"
@@ -831,7 +838,7 @@
                                 <div class="item-row-box">
                                   <div class="item-cell-box">
                                     <div class="tbox">
-                                      <input type="text" v-model="newPt.rrno1" />
+                                      <input type="text" v-model="newPt.rrno1" maxlength="6" />
                                     </div>
                                     <div class="unit-box mx-2 text-gray-600">-</div>
                                     <div class="tbox w-30px" style="min-width: 30px">
@@ -903,7 +910,7 @@
                               <td>
                                 <div class="item-cell-box full">
                                   <div class="tbox full">
-                                    <input type="text" v-model="newPt.mpno" />
+                                    <input type="text" @input="validateInput(1)" v-model="newPt.mpno" />
                                   </div>
                                 </div>
                                 <div v-if="false" class="item-cell-box full">
@@ -930,7 +937,7 @@
                               <td>
                                 <div class="item-cell-box full">
                                   <div class="tbox full">
-                                    <input type="text" v-model="newPt.telno" />
+                                    <input type="text" @input="validateInput(1)" v-model="newPt.telno" />
                                   </div>
                                 </div>
                               </td>
@@ -2127,7 +2134,7 @@
                                 <input
                                   type="text"
                                   placeholder="보호자1 연락처 입력"
-                                  @input="validateInput"
+                                  @input="validateInput(0)"
                                   v-model="spInfo.nok1Telno"
                                 />
                               </div>
@@ -2247,7 +2254,7 @@
                                 <input
                                   type="text"
                                   placeholder="보호자 2 연락처 입력"
-                                  @input="validateInput"
+                                  @input="validateInput(0)"
                                   v-model="spInfo.nok2Telno"
                                 />
                               </div>
@@ -2276,7 +2283,7 @@
                                 <input
                                   type="text"
                                   placeholder="연락 전화번호 입력"
-                                  @input="validateInput"
+                                  @input="validateInput(0)"
                                   v-model="spInfo.chrgTelno"
                                 />
                               </div>
@@ -3277,7 +3284,6 @@
                             </div>
                           </div>
 
-                          <!--todo: 지자체병상배정반의경우만 노출-->
                           <div v-if="bdDetail !== null" class="menu-group-box">
                             <article class="modal-menu-layout1">
                               <div class="modal-menu-list">
@@ -3309,21 +3315,15 @@
                                 >
                                   병상요청 승인
                                 </div>
-                                <div
-                                  v-show="
-                                    bdDetail.bedStatCd === 'BAST0004' &&
-                                    userInfo.jobCd &&
-                                    userInfo.id === this.chrgUserId
-                                  "
-                                  @click="
-                                    ;async () => {
-                                      await showPopup(2)
-                                    }
-                                  "
-                                  class="modal-menu-btn menu-primary radius-0 big"
-                                >
-                                  병상요청 승인
-                                </div>
+
+                                  <div
+                                          v-show="bdDetail.bedStatCd === 'BAST0004' && userInfo.jobCd && userInfo.id === this.chrgUserId"
+                                          @click="async () => {await showPopup(2)}"
+                                          class="modal-menu-btn menu-primary radius-0 big"
+                                  >
+                                      병상요청 승인
+                                  </div>
+
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0005' &&
@@ -4875,7 +4875,8 @@ export default {
     const showTable = ref(false)
     const trsfArr = ref([false, false, false, false])
     const toggleTable = function () {
-      showTable.value = !showTable.value
+        /*todo : 필터 작업 끝내고 수정 필요*/
+      showTable.value = false
     }
     const isAlert = ref(false)
     const cncBtn = ref(false)
@@ -4933,7 +4934,8 @@ export default {
         natiNm: '대한민국',
         attcId: null,
         dethYn: '',
-        mpno: ''
+        mpno: '',
+        telno:'',
       },
       dsInfo: {
         ptId: '',
@@ -5276,6 +5278,8 @@ export default {
           this.$store.commit('bedasgn/setTimeline', null)
           this.$store.commit('patnt/setBasicInfo', [0, null])
           this.$store.commit('patnt/setRpt', null)
+          this.newPt = this.initNewPt
+          this.dsInfo = this.initDsInfo
         }
       }
     },
@@ -5391,10 +5395,16 @@ export default {
         this.spInfo.dprtDstrDetlAddr = ''
       }
     },
-    validateInput() {
-      this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[^0-9]/g, '')
-      this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[^0-9]/g, '')
-      this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[^0-9]/g, '')
+    validateInput(idx) {
+        if(idx===0){
+            this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[^0-9]/g, '')
+            this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[^0-9]/g, '')
+            this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[^0-9]/g, '')
+        } else if(idx===1){
+            this.newPt.mpno = this.newPt.mpno.replace(/[^0-9]/g, '')
+            this.newPt.telno = this.newPt.telno.replace(/[^0-9]/g, '')
+        }
+
     },
     getBtn(sts) {
       if (sts === 'BAST0001') {
