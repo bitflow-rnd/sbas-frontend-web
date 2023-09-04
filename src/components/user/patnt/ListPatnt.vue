@@ -953,7 +953,7 @@
                 </div>
 
                 <div class="detail-foot-box">
-                  <article class="modal-menu-layout1 py-10">
+                  <article class="modal-menu-layout1 pb-5">
                     <div class="modal-menu-list">
                       <router-link
                         to=""
@@ -986,7 +986,7 @@
                             <col style="width: auto" />
                           </colgroup>
                           <tr>
-                            <td class="py-5 px-3 text-center text-gray-700 fw-medium fs-6">3차</td>
+                            <td class="py-5 px-3 text-center text-gray-700 fw-medium fs-6">1차</td>
                             <td class="py-5 px-3">
                               <div class="top-info-box d-flex align-items-center">
                                 <div
@@ -995,12 +995,12 @@
                                   병상요청
                                 </div>
                                 <div
-                                  class="d-inline-flex align-items-center justify-content-center w-auto bg-gray-500 h-25px w-65px text-white rounded-2 px-0 w-auto"
+                                  class="d-inline-flex align-items-center justify-content-center w-auto bg-gray-500 h-25px w-65px text-white rounded-2 px-0 w-auto d-none"
                                 >
                                   완료
                                 </div>
 
-                                <div class="eclipse-box mx-3">asdf</div>
+                                <div class="eclipse-box mx-3">대구북구보건소</div>
                                 <div class="date-box text-gray-700 fw-regular">2023-03-11</div>
                               </div>
                               <div class="bottom-info-box d-flex mt-2">
@@ -1016,7 +1016,7 @@
                 </div>
 
                 <div class="detail-foot-box">
-                  <article class="modal-menu-layout1 py-10">
+                  <article class="modal-menu-layout1 pb-5">
                     <div class="modal-menu-list">
                       <router-link
                         to=""
@@ -3472,5 +3472,17 @@ export default {
 }
 .head-sub-box {
   margin-left: 12px;
+}
+.detail-info-box {
+  position: relative;
+}
+.detail-layout1,
+.detail-wrap {
+  height: 100%;
+}
+.detail-foot-box {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 </style>

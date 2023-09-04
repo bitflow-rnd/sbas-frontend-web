@@ -380,4 +380,12 @@ function closeModal() {
 .modal {
   display: block;
 }
+.detail-info-box {
+  position: relative;
+}
+.detail-foot-box {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 </style>
