@@ -150,6 +150,9 @@ export async function goAsgn(idx){
         } else {
             console.log(this.dsInfo.ptId)
         }
+        if(this.dsInfo.rcptPhc === 1){
+            this.dsInfo.rcptPhc = this.medinstInfo.rcptPhc
+        }
         this.$store.dispatch('bedasgn/regDsInfo',this.dsInfo)
         this.spInfo.spclNm = this.dsInfo.diagDrNm
         console.log(this.ptDs)

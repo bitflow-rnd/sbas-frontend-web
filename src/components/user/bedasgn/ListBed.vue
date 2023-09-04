@@ -1084,19 +1084,23 @@
                       </colgroup>
                       <tbody>
                         <tr>
-                          <!--  todo: 담당보건소 select 불러오기 어떤식으로 조회되는지 조사                                               -->
+                          <!-- 의료기관 목록 getMedinst dutyDivNams== 보건소로 둠                                              -->
                           <th>담당보건소</th>
                           <td>
                             <div class="item-row-box">
                               <div class="item-cell-box">
                                 <div class="sbox" style="width: 170px">
-                                  <select>
-                                    <option>대구광역시</option>
+                                  <select v-model="medinstInfo.dstrCd1" @change="getMedInst">
+                                      <option value=''>지역 선택</option>
+                                    <option value="27">대구광역시</option>
                                   </select>
                                 </div>
                                 <div class="sbox ms-3" style="width: 170px">
-                                  <select>
-                                    <option>보건소 선택</option>
+                                  <select v-model="dsInfo.rcptPhc">
+                                    <option value='0'>보건소 선택</option>
+                                    <option v-for="(item,i) in medinstList.items" :key="i"
+                                            :value='item.dutyName'>{{ item.dutyName }}</option>
+                                    <option value='1'>직접입력</option>
                                   </select>
                                 </div>
                               </div>
@@ -1104,10 +1108,9 @@
                             <div class="item-row-box">
                               <div class="item-cell-box">
                                 <div class="tbox w-350px">
-                                  <!---  todo: 직접선택 option -> readonly 해제 -->
-                                  <input
-                                    placeholder="보건소명 직접 입력(수정필요)"
-                                    v-model="dsInfo.rcptPhc"
+                                  <input type="text"
+                                    placeholder="보건소명 직접 입력"
+                                    v-model="medinstInfo.rcptPhc" :readonly="dsInfo.rcptPhc!=='1'"
                                   />
                                 </div>
                               </div>
@@ -4940,6 +4943,10 @@ export default {
       popup: 100 /* 팝업창 */,
       alertIdx: 100 /* alert창 확인버튼 */,
       rptYn: false /* 역조서 유무 */,
+        medinstInfo:{
+          dstrCd1: '',
+          dutyName:'',
+        },
       newPt: {
         ptNm: '',
         rrno1: '',
@@ -4967,7 +4974,9 @@ export default {
         rptType: null,
         diagAttcId: null,
         diagDrNm: '',
-        instId: ''
+        instId: '',
+        rcptPhc:0,
+
       },
       svInfo: {
         ptId: '',
@@ -5048,7 +5057,7 @@ export default {
     ]),
     ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip']),
     ...mapState('user', ['userInfo', 'cmSido']),
-    ...mapState('admin', ['firestatnList', 'firemenList']),
+    ...mapState('admin', ['firestatnList', 'firemenList','medinstList']),
 
     sortedBdList() {
       let list = []
@@ -5081,6 +5090,11 @@ export default {
         return this.filter.selectedStates.reduce((i, state) => i + this.bdCnt[state], 0)
       }
     },
+      getMedInst(){
+        let data = this.medinstInfo
+          data['dutyDivNams'] = '보건소'
+          this.$store.dispatch('admin/getMedinst',data)
+      },
     loadNaverMapAsync() {
       // 네이버 지도 API 로드
       const script = document.createElement('script')

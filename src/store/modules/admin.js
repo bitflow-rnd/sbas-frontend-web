@@ -436,28 +436,26 @@ export default {
             })
         },
 
-        getMedinst(comment,data) {
-            const request = {
-                dstrCd1: data.dstrCd1,
-                dstrCd2: data.dstrCd2
-            }
-            console.log(request,'axios',data)
-            console.log('의료기관 목록')
-            const url =  `${API_PROD}/api/v1/public/organ/medinsts`
-            axios({
-                method:"get",
-                url: url,
-                params: request
-            }).then(response =>{
-                comment.commit('setMedinst',response.data?.result)
-            }).catch(e=>{
+        async getMedinst(comment,request){
+
+            // const token = localStorage.getItem('userToken')
+            // console.log(data.cd1, data.cd2)
+            const url = `${API_PROD}/api/v1/public/organ/medinsts`
+            const params = request
+            try {
+                const response = await axios.get(url, {params})
+                console.log('의료기관 목록')
+                if(response.data.code==='00'){
+                    comment.commit('setMedinst',response.data?.result)
+                    console.log(response.data)
+
+                }
+
+            } catch(e){
                 console.log(e)
-            })
+            }
+
         },
-
-
-
-
 
 
         loadCodeGroupsData() {
