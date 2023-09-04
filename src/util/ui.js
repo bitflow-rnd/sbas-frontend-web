@@ -244,18 +244,17 @@ export function getDt(data){
     const curYear = curData.getFullYear()
     const curMonth = curData.getMonth()+1
     const curDate = curData.getDate()
+
     const dData = new Date(data)
     const dYear = dData.getFullYear()
     const dMonth = dData.getMonth()+1
     const dDate = dData.getDate()
+    const dHours = String(dData.getHours()).padStart(2,'0')
+    const dMinutes = String(dData.getMinutes()).padStart(2,'0')
 
     if(curYear===dYear && curMonth === dMonth && curDate === dDate){
-        return dData.getHours()+':'+dData.getMinutes()
+        return `${dHours}:${dMinutes}`
     } else {
-        if(dMonth<10){
-            return dYear+'.0'+dMonth+'.'+dDate+' '+dData.getHours()+':'+dData.getMinutes()
-        } else{
-            return dYear+'.'+dMonth+'.'+dDate+' '+dData.getHours()+':'+dData.getMinutes()
-        }
+        return `${dYear}.${String(dMonth).padStart(2, '0')}.${String(dDate).padStart(2, '0')} ${dHours}:${dMinutes}`
     }
 }
