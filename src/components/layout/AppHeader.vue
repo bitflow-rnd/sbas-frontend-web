@@ -1080,9 +1080,12 @@ export default {
       }
     },
     getptType(code) {
-      const arr = code.split(";");
-      const res = arr.map(item => this.ptTpye[item]);
-      return res.join(', ')
+        if(code !== undefined && code !== null){
+            const arr = code.split(";");
+            const res = arr.map(item => this.ptTpye[item]);
+            return res.join(', ')
+        }
+        else return ''
     },
     setActive(idx) {
       this.$store.commit('user/setSelectedTabIdx', idx)

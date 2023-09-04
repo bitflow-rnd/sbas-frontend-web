@@ -528,7 +528,7 @@
                             data-bs-toggle="modal"
                             data-bs-target="#kt_modal_detail"
                             @click="
-                              ;async () => {
+                              async () => {
                                 await openBedMod(item)
                               }
                             "
