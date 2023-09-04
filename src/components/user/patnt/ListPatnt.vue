@@ -325,8 +325,6 @@
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
           <!--begin::Modal title-->
           <h2>환자 등록/수정</h2>
-          <!--end::Modal title-->
-          <!--begin::Close-->
           <div
             class="btn btn-sm btn-icon btn-active-color-primary"
             @click="closeModal(0)"
@@ -938,12 +936,12 @@
 
                             <tr>
                               <th>기저질환</th>
-                              <td>{{ getTag(ptDs?.undrDsesNms || []) }}</td>
+                              <td>{{ ptDs ? getTag(ptDs?.undrDsesNms || []) : '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>환자유형</th>
-                              <td>{{ getTag(ptDs?.ptTypeNms || []) }}</td>
+                              <td>{{ ptDs ? getTag(ptDs?.ptTypeNms || []) : '-' }}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -1034,19 +1032,18 @@
 
               <div class="detail-info-box full d-flex flex-column">
                 <div class="detail-head-box px-10 h-80px">
-                  <div class="head-box">
+                  <div class="head-box d-flex">
                     <div class="head-txt-box">타임라인</div>
-                    <div v-if="timeline !== null" class="head-sub-box mt-2 d-flex">
+                    <div v-if="timeline !== null" class="head-sub-box">
                       <div
                         class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2"
                       >
                         1차
                       </div>
-
                       <div
                         class="d-inline-flex align-items-center justify-content-center w-auto text-gray-700 ms-2"
                       >
-                        2023년 2월 28일 (수)
+                        {{ getTLDt(timeline.items[0].updtDttm, 0) }}
                       </div>
                     </div>
                   </div>
@@ -1065,10 +1062,6 @@
                       class="timeline-wrap overflow-y-auto ps-10 pe-5"
                       style="height: 100%"
                     >
-                      <div class="text-center py-4 fw-bold">
-                        {{ getTLDt(timeline.items[0].updtDttm, 0) }}
-                      </div>
-
                       <ul>
                         <li
                           v-for="(item, idx) in timeline.items"
@@ -1085,21 +1078,16 @@
                           >
                             <div class="top-item-box">
                               <div class="state-box">{{ item.title }}</div>
-                              <div class="date-box">{{ getTLDt(item.updtDttm, 1) }}</div>
+                              <div class="date-box">
+                                {{ item.updtDttm ? getTLDt(item.updtDttm, 1) : '' }}
+                              </div>
                             </div>
                             <div class="mid-item-box">{{ item.by }}</div>
                             <div class="bottom-item-box">
                               <!--todo: timeline에서 받아오는 img 파일이 없는데-->
                               <div class="item-img-group mb-4">
-                                <div class="img-list">
-                                  <!--
-                                  <a href="javascript:void(0)" class="img-box">
-                                    <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                  </a>
-                                  -->
-                                </div>
+                                <div class="img-list"></div>
                               </div>
-
                               <div class="msg-box" v-show="item.msg !== null">{{ item.msg }}</div>
                             </div>
                           </div>
@@ -1107,7 +1095,7 @@
                       </ul>
                     </div>
                     <div v-if="timeline === null" class="timeline-wrap overflow-y-auto ps-10 pe-5">
-                      병상이력이 없습니다
+                      병상배정 이력이 없습니다
                     </div>
                   </article>
                 </div>
@@ -1126,7 +1114,7 @@
                         </label>
                       </div>
                       <div class="msg-input-box">
-                        <input type="text" placeholder="메세지 입력" />
+                        <input type="text" placeholder="메시지 입력" />
                       </div>
                       <div class="msg-send-box">
                         <a href="#none" class="send-btn">
@@ -1349,7 +1337,7 @@
                                 </div>
                               </td>
                               <th>성별</th>
-                              <td v-if="newPt.rrno2 !== undefined">{{ getGndr(newPt.rrno2) }}</td>
+                              <td v-if="newPt.rrno2 !== undefined">{{ getGndr(newPt.rrno2) }}자</td>
                             </tr>
 
                             <tr>
@@ -1380,7 +1368,7 @@
                               </td>
                               <th>나이 (만)</th>
                               <td v-if="newPt.rrno1 !== undefined && newPt.rrno2 !== undefined">
-                                {{ getAge(newPt.rrno1, newPt.rrno2) }}
+                                {{ getAge(newPt.rrno1, newPt.rrno2) }}세
                               </td>
                             </tr>
 
@@ -3481,5 +3469,8 @@ export default {
 }
 .chart-container {
   min-height: initial;
+}
+.head-sub-box {
+  margin-left: 12px;
 }
 </style>
