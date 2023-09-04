@@ -7,7 +7,7 @@
         <!--begin::Title-->
         <div class="card-title">
           <!--begin::Room name-->
-          <h2 class="text-start">{{ model.roomInfo.tkrmNm }}</h2>
+          <h2 class="text-start">{{ model.roomInfo ? model.roomInfo.tkrmNm : '' }}</h2>
           <!--begin::Room name-->
         </div>
         <!--end::Title-->
@@ -28,7 +28,8 @@
           v-if="model.messageList && model.messageList.length > 0"
         >
           <template v-for="(item, idx) in model.messageList" :key="idx">
-            <my-msg :item="item" />
+            <my-msg v-if="item.rgstUserId === 'jiseong12'" :item="item" />
+            <other-msg v-if="item.rgstUserId !== 'jiseong12'" :item="item" />
           </template>
         </div>
         <!--end::Messages-->
@@ -66,9 +67,10 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, reactive } from 'vue'
+import { defineProps, onMounted, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
 import MyMsg from '@/components/user/unit/MyMsg'
+import OtherMsg from '@/components/user/unit/OtherMsg'
 
 const store = useStore()
 // const emit = defineEmits('onUserSelected')
@@ -81,17 +83,30 @@ const props = defineProps({
 })
 
 let model = reactive({
-  roomInfo: props.roomInfo,
+  roomInfo: null,
   messageList: []
 })
 
+watch(
+  () => props.roomInfo,
+  (first, second) => {
+    console.log('first second', first, second)
+    loadMessages()
+  }
+)
+
 onMounted(() => {
+  loadMessages()
+})
+
+function loadMessages() {
   console.log('roomInfo', JSON.stringify(model.roomInfo))
+  model.roomInfo = props.roomInfo
   store.dispatch('user/getChatMessageListSync', model.roomInfo.tkrmId).then((result) => {
     // console.log('getChatMessageListSync', JSON.stringify(result))
     model.messageList = result
   })
-})
+}
 </script>
 
 <style scoped>
