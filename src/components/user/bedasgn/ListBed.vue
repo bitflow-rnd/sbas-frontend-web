@@ -506,13 +506,13 @@
                       </tr>
                     </thead>
 
-                    <tbody v-if="sortedBdList.length===0">
-                    <tr>
+                    <tbody v-if="sortedBdList.length === 0">
+                      <tr>
                         <td colspan="16">내역이 없습니다</td>
-                    </tr>
+                      </tr>
                     </tbody>
 
-                    <tbody v-if="sortedBdList.length!==0">
+                    <tbody v-if="sortedBdList.length !== 0">
                       <tr v-for="(item, i) in sortedBdList" :key="i">
                         <td>
                           <div class="cbox d-flex justify-content-center">
@@ -640,7 +640,7 @@
           <!--end::Modal title-->
           <!--begin::Close-->
           <div
-                  @click="closeModal(0)"
+            @click="closeModal(0)"
             id="reqest_exit"
             class="btn btn-sm btn-icon btn-active-color-primary"
             data-bs-dismiss="modal"
@@ -910,7 +910,11 @@
                               <td>
                                 <div class="item-cell-box full">
                                   <div class="tbox full">
-                                    <input type="text" @input="validateInput(1)" v-model="newPt.mpno" />
+                                    <input
+                                      type="text"
+                                      @input="validateInput(1)"
+                                      v-model="newPt.mpno"
+                                    />
                                   </div>
                                 </div>
                                 <div v-if="false" class="item-cell-box full">
@@ -937,7 +941,11 @@
                               <td>
                                 <div class="item-cell-box full">
                                   <div class="tbox full">
-                                    <input type="text" @input="validateInput(1)" v-model="newPt.telno" />
+                                    <input
+                                      type="text"
+                                      @input="validateInput(1)"
+                                      v-model="newPt.telno"
+                                    />
                                   </div>
                                 </div>
                               </td>
@@ -3316,13 +3324,21 @@
                                   병상요청 승인
                                 </div>
 
-                                  <div
-                                          v-show="bdDetail.bedStatCd === 'BAST0004' && userInfo.jobCd && userInfo.id === this.chrgUserId"
-                                          @click="async () => {await showPopup(2)}"
-                                          class="modal-menu-btn menu-primary radius-0 big"
-                                  >
-                                      병상요청 승인
-                                  </div>
+                                <div
+                                  v-show="
+                                    bdDetail.bedStatCd === 'BAST0004' &&
+                                    userInfo.jobCd &&
+                                    userInfo.id === this.chrgUserId
+                                  "
+                                  @click="
+                                    ;async () => {
+                                      await showPopup(2)
+                                    }
+                                  "
+                                  class="modal-menu-btn menu-primary radius-0 big"
+                                >
+                                  병상요청 승인
+                                </div>
 
                                 <div
                                   v-show="
@@ -4875,7 +4891,7 @@ export default {
     const showTable = ref(false)
     const trsfArr = ref([false, false, false, false])
     const toggleTable = function () {
-        /*todo : 필터 작업 끝내고 수정 필요*/
+      /*todo : 필터 작업 끝내고 수정 필요*/
       showTable.value = false
     }
     const isAlert = ref(false)
@@ -4935,7 +4951,7 @@ export default {
         attcId: null,
         dethYn: '',
         mpno: '',
-        telno:'',
+        telno: ''
       },
       dsInfo: {
         ptId: '',
@@ -5070,13 +5086,17 @@ export default {
 
       script.onload = () => {
         // 네이버 지도 생성 // 35.9561644!4d128.5653029
-        new window.naver.maps.Map('map', {
+        const map = new window.naver.maps.Map('map', {
           center: new window.naver.maps.LatLng(35.9561644, 128.5653029),
           zoom: 15,
           zoomControlOptions: {
             style: window.naver.maps.ZoomControlStyle.SMALL,
             position: window.naver.maps.Position.TOP_RIGHT
           }
+        })
+        new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(35.9561644, 128.5653029),
+          map: map
         })
       }
     },
@@ -5396,15 +5416,14 @@ export default {
       }
     },
     validateInput(idx) {
-        if(idx===0){
-            this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[^0-9]/g, '')
-            this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[^0-9]/g, '')
-            this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[^0-9]/g, '')
-        } else if(idx===1){
-            this.newPt.mpno = this.newPt.mpno.replace(/[^0-9]/g, '')
-            this.newPt.telno = this.newPt.telno.replace(/[^0-9]/g, '')
-        }
-
+      if (idx === 0) {
+        this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[^0-9]/g, '')
+        this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[^0-9]/g, '')
+        this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[^0-9]/g, '')
+      } else if (idx === 1) {
+        this.newPt.mpno = this.newPt.mpno.replace(/[^0-9]/g, '')
+        this.newPt.telno = this.newPt.telno.replace(/[^0-9]/g, '')
+      }
     },
     getBtn(sts) {
       if (sts === 'BAST0001') {

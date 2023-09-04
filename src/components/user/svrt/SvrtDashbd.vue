@@ -60,6 +60,11 @@
                   <svrt-chart-unit :pt-id="'PT00000086'" @onPatientSelected="onPatientSelected" />
                 </td>
               </tr>
+              <tr>
+                <td colspan="2">
+                  <svrt-trend-chart-unit />
+                </td>
+              </tr>
             </table>
           </div>
           <!--end::Card header-->
@@ -80,6 +85,7 @@ import PieChart from '@/components/user/unit/PieChart'
 import PieChartLocation from '@/components/user/unit/PieChartLocation'
 import SevrPatntListUnit from '@/components/user/unit/SevrPatntListUnit'
 import PatntDetlModal from '@/components/user/modal/PatntDetlModal'
+import SvrtTrendChartUnit from '@/components/user/unit/SvrtTrendChartUnit'
 import { reactive } from 'vue'
 
 let model = reactive({

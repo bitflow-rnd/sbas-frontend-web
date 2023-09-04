@@ -1533,13 +1533,17 @@ export default {
     },
     loadNaverMapAsync() {
       // 네이버 지도 생성 // 35.9561644!4d128.5653029
-      new window.naver.maps.Map('map', {
+      const map = new window.naver.maps.Map('map', {
         center: new window.naver.maps.LatLng(35.9561644, 128.5653029),
         zoom: 15,
         zoomControlOptions: {
           style: window.naver.maps.ZoomControlStyle.SMALL,
           position: window.naver.maps.Position.TOP_RIGHT
         }
+      })
+      new window.naver.maps.Marker({
+        position: new window.naver.maps.LatLng(35.9561644, 128.5653029),
+        map: map
       })
     },
     updateCharacterCount() {
