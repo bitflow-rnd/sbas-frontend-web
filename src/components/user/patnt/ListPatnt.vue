@@ -152,7 +152,7 @@
 
                       <tr>
                         <th>배정상태</th>
-                        <td colspan="3">
+                        <td>
                           <div
                             class="item-cell-box"
                             v-for="(status, idx) in assignmentStatuses"
@@ -171,11 +171,8 @@
                             </div>
                           </div>
                         </td>
-                      </tr>
-
-                      <tr>
                         <th>검색어</th>
-                        <td colspan="3">
+                        <td>
                           <div class="item-cell-box">
                             <div class="tbox w-400px with-btn">
                               <input
@@ -243,6 +240,7 @@
                           </div>
                         </th>
                         <th>순번</th>
+                        <th>배정상태</th>
                         <th>이름</th>
                         <th>나이</th>
                         <th>성별</th>
@@ -251,7 +249,6 @@
                         <th>국적</th>
                         <th>거주지</th>
                         <th>배정병원</th>
-                        <th>배정상태</th>
                         <th>최근 업데이트일</th>
                         <th>작업</th>
                       </tr>
@@ -273,15 +270,15 @@
                           </div>
                         </td>
                         <td>{{ startIndex + idx + 1 }}</td>
+                        <td>{{ pt['bedStatCdNm'] ? pt['bedStatCdNm'] : '환자정보등록' }}</td>
                         <td>{{ pt['ptNm'] }}</td>
                         <td>{{ pt['age'] }}세</td>
                         <td>{{ pt['gndr'] }}자</td>
                         <td>{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
                         <td>{{ pt['mpno'] }}</td>
-                        <td>{{ pt['natiCd'] }}</td>
+                        <td>{{ pt['natiCdNm'] }}</td>
                         <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
                         <td>{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
-                        <td>{{ pt['bedStatCdNm'] ? pt['bedStatCdNm'] : '-' }}</td>
                         <td>{{ getDate(pt['updtDttm']) }}</td>
                         <td>
                           <a
@@ -306,8 +303,6 @@
               :display-rows-count="displayRowsCount"
               :data-length="filteredPatientData.length"
             ></data-pagination>
-
-            <severity-chart :severity-data="severityData"></severity-chart>
 
             <!--end::Table-->
           </div>
@@ -954,26 +949,7 @@
                         </table>
                       </div>
 
-                      <div class="table-img-box pt-4">
-                        <!--
-                        <a href="javascript:void(0)" class="img-box">
-                          <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                        </a>
-
-                        <a href="javascript:void(0)" class="img-box">
-                          <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                        </a>
-
-                        <a href="javascript:void(0)" class="img-box">
-                          <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                        </a>
-
-                        <a href="javascript:void(0)" class="img-box">
-                          <div class="cnt-box">+5</div>
-                          <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                        </a>
-                        -->
-                      </div>
+                      <div class="table-img-box pt-4"></div>
                     </div>
                   </article>
                 </div>
@@ -1139,15 +1115,7 @@
                 <div class="detail-foot-box">
                   <article class="msg-send-layout1">
                     <div class="img-upload-result">
-                      <div class="img-list">
-                        <!--                        <div href="javascript:void(0)" class="img-box">-->
-                        <!--                          <img src="/img/common/img_dummy_item1.png" alt="이미지">-->
-                        <!--                          <a href="javascript:void(0)" class="remove-btn"-->
-                        <!--                             onclick="$(this).parents('.img-box').remove();">-->
-                        <!--                            <img src="/img/common/ic_profile_remove.svg" alt="이미지">-->
-                        <!--                          </a>-->
-                        <!--                        </div>-->
-                      </div>
+                      <div class="img-list"></div>
                     </div>
 
                     <div class="msg-group-box">
@@ -3094,7 +3062,6 @@
 
 <script>
 import DataPagination from '@/components/layout/DataPagination'
-import SeverityChart from '@/components/user/unit/SeverityChart.vue'
 import { mapState } from 'vuex'
 import {
   backBtn,
@@ -3113,8 +3080,7 @@ import { ref } from 'vue'
 
 export default {
   components: {
-    DataPagination,
-    SeverityChart
+    DataPagination
   },
   name: 'ListPatnt',
   props: {
