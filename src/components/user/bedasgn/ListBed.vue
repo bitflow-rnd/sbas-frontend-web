@@ -3282,8 +3282,8 @@
                               <div class="modal-menu-list">
                                 <a
                                   v-show="
-                                    bdDetail.bedStatCd === 'BAST0003' ||
-                                    bdDetail.bedStatCd === 'BAST0004'
+                                    bdDetail.bedStatCd === 'BAST0003' && userInfo.jobCd === 'PMGR0002' ||
+                                    bdDetail.bedStatCd === 'BAST0004' && userInfo.jobCd === 'PMGR0003' && userInfo.id === this.chrgUserId
                                   "
                                   @click="showPopup(1)"
                                   class="modal-menu-btn menu-primary-outline radius-0 big"
@@ -3291,22 +3291,33 @@
                                 >
                                 <div
                                   v-show="
-                                    bdDetail.bedStatCd === 'BAST0003' ||
-                                    bdDetail.bedStatCd === 'BAST0004'
+                                    bdDetail.bedStatCd === 'BAST0003' && userInfo.jobCd === 'PMGR0002'
                                   "
                                   @click="
                                     async () => {
                                       await showPopup(2)
                                     }
                                   "
-                                  :data-bs-toggle="openRcmdModal(this.rcmdModal)[0]"
-                                  :data-bs-target="openRcmdModal(this.rcmdModal)[1]"
+                                  data-bs-toggle='modal'
+                                  data-bs-target='#kt_modal_recommend'
                                   class="modal-menu-btn menu-primary radius-0 big"
                                 >
                                   병상요청 승인
                                 </div>
+                                  <div
+                                          v-show="
+                                                       bdDetail.bedStatCd === 'BAST0004' && userInfo.jobCd && userInfo.id === this.chrgUserId"
+                                          @click="
+                                    async () => {
+                                      await showPopup(2)
+                                    }
+                                  "
+                                          class="modal-menu-btn menu-primary radius-0 big"
+                                  >
+                                      병상요청 승인
+                                  </div>
                                 <div
-                                  v-show="bdDetail.bedStatCd === 'BAST0005'"
+                                  v-show="bdDetail.bedStatCd === 'BAST0005'&& userInfo.jobCd === 'PMGR0002'"
                                   data-bs-toggle="modal"
                                   @click="
                                     async () => {
@@ -3319,7 +3330,7 @@
                                   이송·배차 처리
                                 </div>
                                 <div
-                                  v-show="bdDetail.bedStatCd === 'BAST0006'"
+                                  v-show="bdDetail.bedStatCd === 'BAST0006'&& userInfo.jobCd === 'PMGR0003'"
                                   data-bs-toggle="modal"
                                   data-bs-target="#kt_modal_hospitalization"
                                   class="modal-menu-btn menu-primary radius-0 big"
@@ -4832,6 +4843,7 @@ import {
   regNewPt,
   showPopup
 } from '@/util/ui'
+import user from "@/store/modules/user";
 
 export default {
   components: {},
@@ -4869,7 +4881,7 @@ export default {
       if (newValue.length === 0) {
         this.selectedStates = []
       }
-    }
+    },
   },
   data() {
     return {
@@ -4976,10 +4988,14 @@ export default {
         msg: '',
         admsStatCd: 'IOST0001',
         dschRsnCd: ''
-      }
+      },
+        chrgUserId:'',
     }
   },
   computed: {
+      user() {
+          return user
+      },
     ...mapState('bedasgn', [
       'bdList',
       'bdList2',
@@ -5230,13 +5246,6 @@ export default {
     showPopup,
     getTLDt,
     getTLIcon,
-    openRcmdModal(idx) {
-      if (idx === 0) {
-        return ['modal', '#kt_modal_recommend']
-      } else {
-        return ['', '']
-      }
-    },
     closePopup(idx) {
       if (idx === 0) {
         this.popup = 100
@@ -5395,15 +5404,22 @@ export default {
         return ['완료', '#kt_modal_detail']
       }
     },
-    openBedMod(data) {
+    async openBedMod(data) {
       this.$store.commit('bedasgn/setbdDetail', data)
       this.$store.dispatch('patnt/getBasicInfo', data)
-      this.$store.dispatch('bedasgn/getTimeline', data)
+      await this.$store.dispatch('bedasgn/getTimeline', data)
       this.$store.dispatch('bedasgn/getDSInfo', data)
       this.$store.dispatch('bedasgn/getBdasHisInfo', data)
       // this.$store.dispatch('admin/getFireStatn',{dstrCd1: 27})
-      console.log(data.bedStatCd)
+      //console.log(data.bedStatCd)
+        this.getChrgId()
     },
+      getChrgId(){
+        if(this.timeline!== null){
+            const suspendStatus = this.timeline.items.find(item => item.timeLineStatus === 'suspend')
+            this.chrgUserId = suspendStatus.chrgUserId
+        }
+      },
     loadTrnsfInfo(num) {
       /*요청자 지역코드 받아와야 됨*/
       const data = { dstrCd1: num }
