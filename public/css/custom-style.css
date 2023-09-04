@@ -107,42 +107,42 @@ section.cntc-message-board .board-head-box .head-mid-box .input-group-box .input
 section.cntc-message-board .board-body-box {
   padding-bottom: 48px;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap {
+.board-body-box .chat-list-wrap {
   border-top: 1px solid #DADBDC;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap .item-box {
+.board-body-box .chat-list-wrap .item-box {
   display: flex;
   justify-content: space-between;
   padding: 23px 32px;
   border-bottom: 1px solid #DADBDC;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-box {
+.board-body-box .chat-list-wrap .item-box .item-info-box {
   display: inline-flex;
   align-items: center;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-box .profile-box {
+.board-body-box .chat-list-wrap .item-box .item-info-box .profile-box {
   border-radius: 50%;
   overflow: hidden;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-box .profile-box img {
+.board-body-box .chat-list-wrap .item-box .item-info-box .profile-box img {
   width: 100%;
   height: 100%;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-box .info-box {
+.board-body-box .chat-list-wrap .item-box .item-info-box .info-box {
   padding-left: 10px;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-box .info-box .subject-box {
+.board-body-box .chat-list-wrap .item-box .item-info-box .info-box .subject-box {
   display: flex;
   align-items: center;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-box .info-box .subject-box .subject-txt {
+.board-body-box .chat-list-wrap .item-box .item-info-box .info-box .subject-box .subject-txt {
   color: #000;
   font-size: 15px;
   line-height: 1.2;
   letter-spacing: -0.05em;
   font-weight: 500;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-box .info-box .subject-box .new {
+.board-body-box .chat-list-wrap .item-box .item-info-box .info-box .subject-box .new {
   padding-right: 1px;
   margin-left: 4px;
   display: inline-flex;
@@ -156,7 +156,7 @@ section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-
   width: 16px;
   height: 16px;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-box .info-box .subject-box .label-txt {
+.board-body-box .chat-list-wrap .item-box .item-info-box .info-box .subject-box .label-txt {
   margin-left: 9px;
   display: inline-flex;
   align-items: center;
@@ -170,7 +170,7 @@ section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-
   height: 22px;
   line-height: 1.2;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-box .info-box .con-box {
+.board-body-box .chat-list-wrap .item-box .item-info-box .info-box .con-box {
   color: #838693;
   padding-top: 7px;
   font-size: 13px;
@@ -182,7 +182,7 @@ section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-info-
   width: 100%;
   max-width: 100%;
 }
-section.cntc-message-board .board-body-box .chat-list-wrap .item-box .item-option-box .time-box {
+.board-body-box .chat-list-wrap .item-box .item-option-box .time-box {
   color: #838693;
   font-size: 12px;
   letter-spacing: -0.05em;
@@ -266,8 +266,7 @@ section.cntc-message-board .board-body-box .list-wrap .list-group-box .list-body
 }
 section.cntc-info-view {
   width: 520px;
-  border-left: 1px solid #86898D;
-  border-right: 1px solid #86898D;
+  border-right: 1px dashed #999;
 }
 section.cntc-info-view .view-head-box .view-img-box img {
   max-width: 100%;

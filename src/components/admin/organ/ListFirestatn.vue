@@ -200,7 +200,7 @@
                   <div class="table-box with-scroll small">
                     <table>
                       <colgroup>
-                        <col style="width: 70px" />
+                        <col style="width: 35px" />
                         <col style="width: 50px" />
                         <col style="width: 100px" />
                         <col style="width: 100px" />
@@ -211,12 +211,12 @@
                       </colgroup>
                       <thead>
                         <tr class="small">
-                          <th>순번</th>
                           <th>
                             <div class="cbox">
                               <label> <input type="checkbox" class="all-chk" /><i></i> </label>
                             </div>
                           </th>
+                          <th>순번</th>
                           <th>지역(시/도)</th>
                           <th>지역(시/군/구)</th>
                           <th>구급대 (119안전센터)</th>
@@ -233,12 +233,12 @@
                           v-for="(item, i) in firestatnList"
                           :key="i"
                         >
-                          <td>{{ i + 1 }}</td>
                           <td>
                             <div class="cbox d-flex justify-content-center">
                               <label> <input type="checkbox" /><i></i> </label>
                             </div>
                           </td>
+                          <td>{{ i + 1 }}</td>
                           <td>{{ item.dstrCd1 }}</td>
                           <td>{{ item.dstrCd2 }}</td>
                           <td>{{ item.instNm }}</td>

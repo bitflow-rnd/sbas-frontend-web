@@ -228,6 +228,38 @@ export default {
           })
       })
     },
+    getMessageRoomListSync() {
+      const url = `${API_PROD}/api/v1/private/talk/all-chats`
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'get',
+          url: url
+        })
+          .then((response) => {
+            resolve(response.data?.result)
+          })
+          .catch((e) => {
+            console.log(e)
+            reject(e)
+          })
+      })
+    },
+    getChatMessageListSync(roomno) {
+      const url = `${API_PROD}/api/v1/private/talk/my-chat/${roomno}`
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'get',
+          url: url
+        })
+          .then((response) => {
+            resolve(response.data?.result)
+          })
+          .catch((e) => {
+            console.log(e)
+            reject(e)
+          })
+      })
+    },
     loadPatientData() {
       try {
         return axios.get(`${API_PROD}/api/v1/private/patient/search`)

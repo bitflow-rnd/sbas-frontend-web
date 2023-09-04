@@ -143,17 +143,24 @@
               </div>
 
               <contact-list v-if="model.mode === 'contact'" @onUserSelected="onUserSelected" />
+              <message-list v-if="model.mode === 'message'" @onRoomSelected="onRoomSelected" />
             </section>
 
             <!-- contact detail -->
-            <no-contact-detail-unit v-if="!model.selectedUser" />
-            <contact-detail-unit v-if="model.selectedUser" :user="model.selectedUser" />
+            <no-contact-detail-unit v-if="model.mode === 'contact' && !model.selectedUser" />
+            <contact-detail-unit
+              v-if="model.mode === 'contact' && model.selectedUser"
+              :user="model.selectedUser"
+            />
             <!-- contact detail -->
 
             <!-- contact detail right -->
-            <no-contact-detail-right-unit v-if="!model.selectedUser" />
-            <contact-detail-right-unit v-if="model.selectedUser" />
+            <no-contact-detail-right-unit v-if="model.mode === 'contact' && !model.selectedUser" />
+            <contact-detail-right-unit v-if="model.mode === 'contact' && model.selectedUser" />
             <!-- contact detail right -->
+
+            <no-message-room-detail v-if="model.mode === 'message' && !model.selectedRoom" />
+            <message-room-detail v-if="model.mode === 'message' && model.selectedRoom" />
           </section>
         </div>
       </div>
@@ -170,18 +177,25 @@ import NoContactDetailUnit from '@/components/user/unit/NoContactDetailUnit'
 import NoContactDetailRightUnit from '@/components/user/unit/NoContactDetailRightUnit'
 import ContactDetailRightUnit from '@/components/user/unit/ContactDetailRightUnit'
 import ContactList from '@/components/user/unit/ContactList'
+import MessageList from '@/components/user/unit/MessageList'
 import { reactive, ref } from 'vue'
+import MessageRoomDetail from '@/components/user/unit/MessageRoomDetail'
+import NoMessageRoomDetail from '@/components/user/unit/NoMessageRoomDetail'
 
 const tab1 = ref()
 const tab2 = ref()
 
 let model = reactive({
   mode: 'contact',
-  selectedUser: null
+  selectedUser: null,
+  selectedRoom: null
 })
 
 function onUserSelected(user) {
   model.selectedUser = user
+}
+function onRoomSelected(room) {
+  model.selectedRoom = room
 }
 function onTabSelected(idx) {
   if (idx === 0) {
@@ -202,6 +216,9 @@ function onTabSelected(idx) {
 }
 .cntc-dashboard > section {
   width: 25%;
+}
+.cntc-message-board {
+  border-right: 1px dashed #999;
 }
 .cntc-dashboard {
   height: 100%;
