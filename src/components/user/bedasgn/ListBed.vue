@@ -96,7 +96,8 @@
               ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
             >
             <!-- data-bs-toggle="modal" -->
-            <a v-show="this.userInfo.jobCd==='PMGR0001' "
+            <a
+              v-show="this.userInfo.jobCd === 'PMGR0001'"
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_request"
               class="btn btn-sm btn-flex btn-primary align-self-center px-3"
@@ -173,7 +174,7 @@
                             <div class="tbox full with-btn">
                               <input
                                 type="text"
-                                placeholder="이름, 생년월일 또는 휴대폰 번호 입력"
+                                placeholder="환자 이름, 생년월일 6자리 또는 휴대폰번호 입력"
                               />
 
                               <a href="javascript:void(0)" class="input-btn">
@@ -534,7 +535,7 @@
                             data-bs-toggle="modal"
                             data-bs-target="#kt_modal_detail"
                             @click="
-                              async () => {
+                              ;async () => {
                                 await openBedMod(item)
                               }
                             "
@@ -3006,7 +3007,7 @@
             <div
               class="btn btn-sm btn-icon btn-active-color-primary"
               @click="
-                async () => {
+                ;async () => {
                   await closeModal(0)
                 }
               "
@@ -3274,7 +3275,7 @@
                               </label>
                             </div>
                             <div class="msg-input-box">
-                              <input type="text" placeholder="메세지 입력" />
+                              <input type="text" placeholder="메시지 입력" />
                             </div>
                             <div class="msg-send-box">
                               <a href="" class="send-btn">
@@ -3288,8 +3289,11 @@
                               <div class="modal-menu-list">
                                 <a
                                   v-show="
-                                    bdDetail.bedStatCd === 'BAST0003' && userInfo.jobCd === 'PMGR0002' ||
-                                    bdDetail.bedStatCd === 'BAST0004' && userInfo.jobCd === 'PMGR0003' && userInfo.id === this.chrgUserId
+                                    (bdDetail.bedStatCd === 'BAST0003' &&
+                                      userInfo.jobCd === 'PMGR0002') ||
+                                    (bdDetail.bedStatCd === 'BAST0004' &&
+                                      userInfo.jobCd === 'PMGR0003' &&
+                                      userInfo.id === this.chrgUserId)
                                   "
                                   @click="showPopup(1)"
                                   class="modal-menu-btn menu-primary-outline radius-0 big"
@@ -3297,19 +3301,21 @@
                                 >
                                 <div
                                   v-show="
-                                    bdDetail.bedStatCd === 'BAST0003' && userInfo.jobCd === 'PMGR0002'
+                                    bdDetail.bedStatCd === 'BAST0003' &&
+                                    userInfo.jobCd === 'PMGR0002'
                                   "
                                   @click="
-                                    async () => {
+                                    ;async () => {
                                       await showPopup(2)
                                     }
                                   "
-                                  data-bs-toggle='modal'
-                                  data-bs-target='#kt_modal_recommend'
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#kt_modal_recommend"
                                   class="modal-menu-btn menu-primary radius-0 big"
                                 >
                                   병상요청 승인
                                 </div>
+
                                   <div
                                           v-show="bdDetail.bedStatCd === 'BAST0004' && userInfo.jobCd && userInfo.id === this.chrgUserId"
                                           @click="async () => {await showPopup(2)}"
@@ -3317,11 +3323,15 @@
                                   >
                                       병상요청 승인
                                   </div>
+
                                 <div
-                                  v-show="bdDetail.bedStatCd === 'BAST0005'&& userInfo.jobCd === 'PMGR0002'"
+                                  v-show="
+                                    bdDetail.bedStatCd === 'BAST0005' &&
+                                    userInfo.jobCd === 'PMGR0002'
+                                  "
                                   data-bs-toggle="modal"
                                   @click="
-                                    async () => {
+                                    ;async () => {
                                       await loadTrnsfInfo(27)
                                     }
                                   "
@@ -3331,7 +3341,10 @@
                                   이송·배차 처리
                                 </div>
                                 <div
-                                  v-show="bdDetail.bedStatCd === 'BAST0006'&& userInfo.jobCd === 'PMGR0003'"
+                                  v-show="
+                                    bdDetail.bedStatCd === 'BAST0006' &&
+                                    userInfo.jobCd === 'PMGR0003'
+                                  "
                                   data-bs-toggle="modal"
                                   data-bs-target="#kt_modal_hospitalization"
                                   class="modal-menu-btn menu-primary radius-0 big"
@@ -3541,7 +3554,7 @@
                                   <td>010-3345-6859</td>
                                 </tr>
                                 <tr>
-                                  <th>요청 메세지</th>
+                                  <th>요청 메시지</th>
                                   <td>호흡곤란이 있으시니 인공호흡 준비해주시기 바랍니다.</td>
                                 </tr>
                               </tbody>
@@ -4029,7 +4042,7 @@
                     </tr>
 
                     <tr>
-                      <th>전달 메세지</th>
+                      <th>전달 메시지</th>
                       <td colspan="4">
                         <div class="item-cell-box full">
                           <div class="textbox full">
@@ -4462,7 +4475,7 @@
     </div>
   </article>
   <!--  역학조사서 비교   -->
-<!--  todo: 나오게 되는 조건 확인 필요   -->
+  <!--  todo: 나오게 되는 조건 확인 필요   -->
   <article v-show="popup === 1" class="popup popup-update-check">
     <div class="popup-wrapper">
       <div class="popup-contents py-10 px-10" style="width: 300px">
@@ -4844,7 +4857,7 @@ import {
   regNewPt,
   showPopup
 } from '@/util/ui'
-import user from "@/store/modules/user";
+import user from '@/store/modules/user'
 
 export default {
   components: {},
@@ -4875,7 +4888,7 @@ export default {
       isAlert,
       errMsg,
       cncBtn /* alert 취소버튼 유무 */,
-      toggleTable,
+      toggleTable
     }
   },
   watch: {
@@ -4883,7 +4896,7 @@ export default {
       if (newValue.length === 0) {
         this.selectedStates = []
       }
-    },
+    }
   },
   data() {
     return {
@@ -4992,13 +5005,13 @@ export default {
         admsStatCd: 'IOST0001',
         dschRsnCd: ''
       },
-        chrgUserId:'',
+      chrgUserId: ''
     }
   },
   computed: {
-      user() {
-          return user
-      },
+    user() {
+      return user
+    },
     ...mapState('bedasgn', [
       'bdList',
       'bdList2',
@@ -5423,14 +5436,14 @@ export default {
       this.$store.dispatch('bedasgn/getBdasHisInfo', data)
       // this.$store.dispatch('admin/getFireStatn',{dstrCd1: 27})
       //console.log(data.bedStatCd)
-        this.getChrgId()
+      this.getChrgId()
     },
-      getChrgId(){
-        if(this.timeline!== null){
-            const suspendStatus = this.timeline.items.find(item => item.timeLineStatus === 'suspend')
-            this.chrgUserId = suspendStatus.chrgUserId
-        }
-      },
+    getChrgId() {
+      if (this.timeline !== null) {
+        const suspendStatus = this.timeline.items.find((item) => item.timeLineStatus === 'suspend')
+        this.chrgUserId = suspendStatus.chrgUserId
+      }
+    },
     loadTrnsfInfo(num) {
       /*요청자 지역코드 받아와야 됨*/
       const data = { dstrCd1: num }

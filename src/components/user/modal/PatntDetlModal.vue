@@ -117,7 +117,13 @@
 
                             <tr>
                               <th>휴대전화번호</th>
-                              <td>{{ getTelno(model.ptDetail.mpno) }}</td>
+                              <td>
+                                {{
+                                  model.ptDetail.mpno && model.ptDetail.mpno !== ''
+                                    ? getTelno(model.ptDetail.mpno)
+                                    : '-'
+                                }}
+                              </td>
                             </tr>
 
                             <tr>
@@ -313,7 +319,7 @@
                         </label>
                       </div>
                       <div class="msg-input-box">
-                        <input type="text" placeholder="메세지 입력" />
+                        <input type="text" placeholder="메시지 입력" />
                       </div>
                       <div class="msg-send-box">
                         <a href="#none" class="send-btn">

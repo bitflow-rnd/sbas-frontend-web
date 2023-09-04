@@ -72,7 +72,7 @@
                       </a>
 
                       <a href="javascript:void(0)" class="tabs-btn active">
-                        <span class="txt">메세지</span>
+                        <span class="txt">메시지</span>
                         <span class="cnt bg-primary">17</span>
                       </a>
                     </div>
