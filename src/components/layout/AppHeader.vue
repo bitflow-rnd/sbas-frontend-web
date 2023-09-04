@@ -923,7 +923,7 @@
                       <div class="item-row-box">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" placeholder="휴대폰번호 입력" />
+                            <input type="text" placeholder="이름 입력" />
                           </div>
                         </div>
                       </div>
@@ -965,20 +965,16 @@
                           <div class="rbox ms-4">
                             <label>
                               <input type="radio" name="invite" /><i></i>
-                              <span class="txt text-black">내 조직</span>
+                              <span class="txt text-black">다른 기관</span>
                             </label>
                           </div>
                         </div>
-                      </div>
-
-                      <div class="item-row-box mt-3">
-                        <div class="item-note-box">* 숫자만 입력 해주세요</div>
                       </div>
                     </td>
                   </tr>
 
                   <tr>
-                    <th>내 조직으로 초대 <span class="text-primary">*</span></th>
+                    <th>사용 권한 <span class="text-primary">*</span></th>
                     <td>
                       <div class="item-row-box">
                         <div class="item-cell-box">
