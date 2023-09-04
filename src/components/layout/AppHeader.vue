@@ -194,7 +194,7 @@
                     <div class="fw-bold d-flex align-items-center fs-3">
                       {{ userInfo.userNm }}
                       <span class="badge badge-light-success fw-bold fs-5 px-2 py-1 ms-2">
-                        {{ userInfo.ocpCd }}자 그룹
+                        {{ userInfo.ocpCd }}그룹
                       </span>
                     </div>
                     <a class="user-id fw-semibold text-muted text-hover-primary fs-5">{{
@@ -234,7 +234,7 @@
           <div class="app-navbar-item ms-3 d-none d-xxl-flex">
             <!--begin::Drawer toggle-->
             <div class="h-35px h-md-40px" id="kt_activities_toggle">
-              <p>{{ userInfo.userNm }} {{ userInfo.ocpCd }}</p>
+              <p>{{ userInfo.userNm }} {{ userInfo.ocpCd }}그룹</p>
               <p class="text-truncate">{{ userInfo.instNm }}</p>
             </div>
             <!--end::Drawer toggle-->

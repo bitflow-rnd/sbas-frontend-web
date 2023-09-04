@@ -954,7 +954,9 @@
                   </colgroup>
                   <tbody>
                     <tr>
-                      <td rowspan="6" class="p-0">지도 영역</td>
+                      <td rowspan="6" class="p-0">
+                        <div id="map"></div>
+                      </td>
                       <th>구급대 ID</th>
                       <td>{{ fsDetail.instId }}</td>
                       <th>구급대 명</th>
@@ -1449,7 +1451,9 @@ export default {
   props: {
     msg: String
   },
-  mounted() {},
+  mounted() {
+    this.initNaverMap()
+  },
   data() {
     return {
       content: '',
@@ -1519,6 +1523,25 @@ export default {
     getSido,
     getGugun,
     getTelno,
+    initNaverMap() {
+      // 네이버 지도 API 로드
+      const script = document.createElement('script')
+      script.src = 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1ewyt3v33o'
+      script.async = true
+      script.defer = true
+      document.head.appendChild(script)
+    },
+    loadNaverMapAsync() {
+      // 네이버 지도 생성 // 35.9561644!4d128.5653029
+      new window.naver.maps.Map('map', {
+        center: new window.naver.maps.LatLng(35.9561644, 128.5653029),
+        zoom: 15,
+        zoomControlOptions: {
+          style: window.naver.maps.ZoomControlStyle.SMALL,
+          position: window.naver.maps.Position.TOP_RIGHT
+        }
+      })
+    },
     updateCharacterCount() {
       if (this.fsDetail.rmk === null || this.fsForm.rmk === '') {
         this.characterCount = this.content.length
@@ -1604,6 +1627,7 @@ export default {
         this.$store.dispatch('admin/getFSDetail', request)
         this.$store.dispatch('admin/getFiremen', request)
         this.toggleModal(idx)
+        this.loadNaverMapAsync()
       } else if (idx === 2) {
         /*구급대원등록*/ console.log('대원등록')
         this.toggleModal(idx)
@@ -1634,5 +1658,15 @@ export default {
   display: inline-block;
   opacity: 100;
   --bs-modal-width: 1200px;
+}
+#map {
+  position: absolute !important;
+  width: 530px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  border-top: 1px solid #555;
 }
 </style>
