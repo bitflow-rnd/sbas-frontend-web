@@ -2907,6 +2907,7 @@ section.login .login-wrap .login-contents .con-head-box .main-box {
 .list-table-hoverable tr:hover td {
   background-color: #74AFEB22;
 }
+.card-option .btn-secondary, .option-box .btn-secondary { display: none; }
 @media (max-width: 1024px) {
   section.login .login-wrap .login-contents .con-head-box .main-box {
     font-size: 28px;
