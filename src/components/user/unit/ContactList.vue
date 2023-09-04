@@ -31,10 +31,11 @@
 
               <div class="info-box">
                 <div class="subject-box">
-                  {{ `${user['userNm']} ${user['ocpCd']}` }}
+                  {{ user['userNm'] }}
+                  <div class="label-txt text-primary">{{ user['jobCd'] }}</div>
                 </div>
                 <div class="con-box">
-                  {{ `${user['jobCd']} / ${user['dutyDstr1Cd']} / ${user['instNm']}` }}
+                  {{ `${user['ocpCd']} / ${user['dutyDstr1Cd']} / ${user['instNm']}` }}
                 </div>
               </div>
             </div>
@@ -124,4 +125,8 @@ function onSelectUser(user) {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.subject-box {
+  font-size: 1.3rem;
+}
+</style>

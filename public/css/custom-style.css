@@ -2912,6 +2912,7 @@ section.login .login-wrap .login-contents .con-head-box .main-box {
   color: #555555 !important;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+.like-btn { display: none; }
 .card-option .btn-secondary, .option-box .btn-secondary { display: none; }
 @media (max-width: 1024px) {
   section.login .login-wrap .login-contents .con-head-box .main-box {

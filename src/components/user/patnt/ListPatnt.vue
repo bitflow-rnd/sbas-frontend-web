@@ -3147,7 +3147,7 @@ export default {
         dprtHospId: '',
         inhpAsgnYn: ''
       },
-      assignmentStatuses: ['병상요청', '병상배정', '이송/배차', '입·퇴원처리', '완료', '해당없음'],
+      assignmentStatuses: ['병상요청', '병상배정', '이송·배차', '입·퇴원처리', '완료', '환자등록'],
       genders: ['남', '여'],
       dateRanges: ['1개월', '3개월', '6개월', '1년', '전체', '직접지정'],
       selectedPatient: null,

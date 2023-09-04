@@ -1,33 +1,28 @@
 <template>
-
   <section class="cntc-info-view">
-
     <div class="view-head-box">
-
       <div class="view-img-box">
-        <img src="@/assets/img/img-hosp-def.jpg" alt="이미지">
+        <img src="@/assets/img/img-hosp-def.jpg" alt="이미지" />
       </div>
 
       <div class="view-basic-box">
-
         <div class="item-box">
-
           <div class="item-info-box">
             <div class="profile-box">
-              <img src="/img/common/img_profile_default.svg" alt="이미지">
+              <img src="/img/common/img_profile_default.svg" alt="이미지" />
             </div>
 
             <div class="info-box">
               <div class="subject-box">
-                <div class="subject-txt"><b>{{ user['userNm'] }}</b> {{ user['ocpCd'] }}</div>
-                <div class="label-txt text-primary">게스트</div>
+                <div class="subject-txt">
+                  <b>{{ user['userNm'] }}</b>
+                </div>
+                <div class="label-txt text-primary">{{ user['jobCd'] }}</div>
               </div>
-              <div class="con-box">{{
-                  `${user['jobCd']} / ${user['dutyDstr1Cd']} / ${user['instNm']}`
-                }}</div>
-
+              <div class="con-box">
+                {{ `${user['ocpCd']} / ${user['dutyDstr1Cd']} / ${user['instNm']}` }}
+              </div>
             </div>
-
           </div>
 
           <div class="item-option-box">
@@ -38,26 +33,16 @@
               </a>
             </article>
           </div>
-
-
         </div>
-
       </div>
-
     </div>
 
     <div class="view-body-box">
-
       <article class="list-layout1">
-
         <div class="list-wrap">
-
           <div class="list-row">
-
             <div class="list-body-box">
-
               <div class="inner-item-list">
-
                 <div class="inner-item-box">
                   <div class="subject-box">주 담당지역</div>
                   <div class="con-box">대구광역시</div>
@@ -67,8 +52,11 @@
                   <div class="subject-box">연락처</div>
                   <div class="con-box">{{ getTelno(user['telno']) }}</div>
 
-                  <a href="javascript:void(0)" class="chat-btn"
-                     style="background-image: url('/img/common/ic_floating_chat.svg');"></a>
+                  <a
+                    href="javascript:void(0)"
+                    class="chat-btn"
+                    style="background-image: url('/img/common/ic_floating_chat.svg')"
+                  ></a>
                 </div>
 
                 <div class="inner-item-box">
@@ -80,35 +68,24 @@
                   <div class="subject-box">최근 활동</div>
                   <div class="con-box">{{ getTLDt(user['updtDttm'], 2) }}</div>
                 </div>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </article>
-
     </div>
-
   </section>
-
 </template>
 
 <script>
-import {
-  getTelno,
-  getTLDt
-} from "@/util/ui";
+import { getTelno, getTLDt } from '@/util/ui'
 export default {
-  name: "ContactDetailUnit",
+  name: 'ContactDetailUnit',
   props: {
     user: {
       type: Object,
       required: true
-    },
+    }
   },
   methods: {
     getTelno,
@@ -117,6 +94,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
