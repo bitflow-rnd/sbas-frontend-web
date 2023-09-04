@@ -115,7 +115,7 @@ export async function showPopup(idx) {
         this.popup = 4
     } else if (idx === 2 && this.timeline !== null) {
         console.log('요청'+this.userInfo.jobCd)
-        if (this.userInfo.jobCd === 'PMGR0002' ) {
+        if (this.userInfo.jobCd === 'PMGR0002' && this.bdDetail.bedStatCd !== 'BAST0004') {
             /*병상 요청 승인 - 배정반 */
             if (this.timeline.items[0].title.includes('원내')) {
                 console.log('원내배정 - 배정반')
@@ -125,8 +125,9 @@ export async function showPopup(idx) {
                 await this.$store.dispatch('bedasgn/rcmdHpList',this.bdDetail)
             }
         } else if (this.userInfo.jobCd === 'PMGR0003') {
-            console.log('원내 - 의료진')
-            this.popup = 3
+            console.log('의료진')
+                console.log('해당')
+                this.popup = 3
         }
     } else if (idx === 3){
         /*추천 병원 선택 후 요청 승인 - 배정반*/
