@@ -535,7 +535,7 @@
                             data-bs-toggle="modal"
                             data-bs-target="#kt_modal_detail"
                             @click="
-                              ;async () => {
+                              async () => {
                                 await openBedMod(item)
                               }
                             "
@@ -691,8 +691,8 @@
                 {{ newPt.bascAddr }} / {{ getTelno(newPt.mpno) }})</span
               >
             </div>
-            <div v-show="tab !== 1 && svInfo.undrDsesCd !== []" class="txt-box">
-              <span class="text-primary">{{ getTag(svInfo.undrDsesCd) }}</span>
+            <div v-show="tab !== 1 && undrDsesCdArr !== []" class="txt-box">
+              <span class="text-primary">{{ showUdrDses(undrDsesCdArr) }}</span>
             </div>
           </article>
         </div>
@@ -914,6 +914,7 @@
                                       type="text"
                                       @input="validateInput(1)"
                                       v-model="newPt.mpno"
+                                      maxlength="11"
                                     />
                                   </div>
                                 </div>
@@ -1554,7 +1555,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0001"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">고혈압</span>
                                   </label>
@@ -1566,7 +1567,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0002"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">당뇨</span>
                                   </label>
@@ -1578,7 +1579,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0003"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">고지혈증</span>
                                   </label>
@@ -1590,7 +1591,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0004"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">심혈관</span>
                                   </label>
@@ -1602,7 +1603,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0005"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">뇌혈관</span>
                                   </label>
@@ -1616,7 +1617,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0006"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">암</span>
                                   </label>
@@ -1628,7 +1629,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0007"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">만성폐질환</span>
                                   </label>
@@ -1640,7 +1641,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0008"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">폐렴</span>
                                   </label>
@@ -1652,7 +1653,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0009"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">신장질환</span>
                                   </label>
@@ -1664,7 +1665,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0010"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">정신질환</span>
                                   </label>
@@ -1676,7 +1677,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0011"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">결핵</span>
                                   </label>
@@ -1690,7 +1691,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0012"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">천식 등 알레르기</span>
                                   </label>
@@ -1702,7 +1703,7 @@
                                       type="checkbox"
                                       name="disease"
                                       value="UDDS0013"
-                                      v-model="svInfo.undrDsesCd"
+                                      v-model="undrDsesCdArr"
                                     /><i></i>
                                     <span class="txt">면역력저하자</span>
                                   </label>
@@ -1717,7 +1718,7 @@
                                         type="checkbox"
                                         name="disease"
                                         value="UDDS0014"
-                                        v-model="svInfo.undrDsesCd"
+                                        v-model="undrDsesCdArr"
                                       /><i></i>
                                       <span class="txt">기타</span>
                                     </label>
@@ -3015,7 +3016,7 @@
             <div
               class="btn btn-sm btn-icon btn-active-color-primary"
               @click="
-                ;async () => {
+                async () => {
                   await closeModal(0)
                 }
               "
@@ -3313,7 +3314,7 @@
                                     userInfo.jobCd === 'PMGR0002'
                                   "
                                   @click="
-                                    ;async () => {
+                                    async () => {
                                       await showPopup(2)
                                     }
                                   "
@@ -3331,7 +3332,7 @@
                                     userInfo.id === this.chrgUserId
                                   "
                                   @click="
-                                    ;async () => {
+                                    async () => {
                                       await showPopup(2)
                                     }
                                   "
@@ -3347,7 +3348,7 @@
                                   "
                                   data-bs-toggle="modal"
                                   @click="
-                                    ;async () => {
+                                    async () => {
                                       await loadTrnsfInfo(27)
                                     }
                                   "
@@ -4875,6 +4876,7 @@ import {
 } from '@/util/ui'
 import user from '@/store/modules/user'
 
+
 export default {
   components: {},
   name: 'ListBed',
@@ -4986,7 +4988,9 @@ export default {
         chrgTelno: '',
         spclNm: '',
         dprtHospId: '',
-        inhpAsgnYn: ''
+          inhpAsgnYn:'N',
+          reqDstr1Cd:'27',
+          reqDstr2Cd:'2711'
       },
       aprv: {
         ptId: '',
@@ -5021,7 +5025,8 @@ export default {
         admsStatCd: 'IOST0001',
         dschRsnCd: ''
       },
-      chrgUserId: ''
+      chrgUserId: '',
+        undrDsesCdArr:[],
     }
   },
   computed: {
@@ -5101,6 +5106,7 @@ export default {
       }
     },
     getStrType() {
+        console.log(this.dsInfo.admsYn)
       if (this.dsInfo.admsYn === '재택') {
         return 'DPTP0001'
       } else if (this.dsInfo.admsYn === '기타') {
@@ -5109,6 +5115,34 @@ export default {
         return 'DPTP0002'
       }
     },
+      showUdrDses(arr){
+        if(this.undrDsesCdArr.length !== 0){
+            const data = {
+                'UDDS0001': '고혈압',
+                'UDDS0002': '당뇨',
+                'UDDS0003': '고지혈증',
+                'UDDS0004': '심혈관',
+                'UDDS0005': '뇌혈관',
+                'UDDS0006': '암',
+                'UDDS0007': '만성폐질환',
+                'UDDS0008': '폐럼',
+                'UDDS0009': '신장질환',
+                'UDDS0010': '정신질환',
+                'UDDS0011': '결핵',
+                'UDDS0012': '천식 등 알레르기',
+                'UDDS0013': '면역력저하자',
+                'UDDS0014': '기타'
+            }
+            const res = []
+            arr.forEach((key)=>{
+                if(Object.prototype.hasOwnProperty.call(data, key)){
+                    res.push(data[key])
+                }
+            })
+            return res
+        }
+        else return ''
+      },
     getTelno,
     setNull() {
       console.log('실행')
@@ -5117,6 +5151,10 @@ export default {
       this.popup = 100
       this.alertIdx = 100
       this.rptYn = false
+      this.newPt = this.initNewPt
+      this.dsInfo = this.initDsInfo
+      this.$store.commit('patnt/setRpt',null)
+      this.preRpt=null
     },
     alertOpen(idx) {
       this.cncBtn = false
@@ -5126,7 +5164,9 @@ export default {
         this.isAlert = true
         this.alertIdx = 0
       } else if (idx === 1) {
+          this.svInfo.undrDsesCd = this.getUndrDses(this.undrDsesCdArr)
         const data = { svrInfo: this.svInfo, dprtInfo: this.spInfo }
+          console.log(data)
         this.$store.dispatch('bedasgn/regBedassign', data)
         this.isAlert = false
         this.errMsg = '요청되었습니다.'
@@ -5137,6 +5177,7 @@ export default {
         const but = document.getElementById('reqest_exit')
         but.click()
         this.tab = 0
+          this.getBdList()
       } else if (idx === 3) {
         this.errMsg = '환자 정보가\n등록되었습니다.'
         this.isAlert = true
@@ -5307,10 +5348,14 @@ export default {
     getUndrDses(arr) {
       if (!Array.isArray(arr) || arr.length === 0) {
         return ''
+      } else {
+          console.log(arr)
+          const strArr = arr.map((item) => String(item))
+          const resStr = strArr.join(';')
+          console.log(resStr)
+          return resStr
       }
-      const strArr = arr.map((item) => String(item))
-      const resStr = strArr.join(';')
-      return resStr
+
     },
     goAsgn,
     maskingNm,
