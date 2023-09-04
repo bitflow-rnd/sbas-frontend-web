@@ -57,6 +57,7 @@
         <!--end::Toolbar wrapper-->
       </div>
       <!--end::Toolbar-->
+
       <!--begin::Content-->
       <div id="kt_app_content" class="app-content flex-column-fluid">
         <div class="card overflow-hidden">
@@ -66,12 +67,11 @@
                 <div class="head-top-box">
                   <article class="tabs-list-layout1">
                     <div class="tabs-list">
-                      <a href="javascript:void(0)" class="tabs-btn active">
+                      <a @click="onTabSelected(0)" class="tabs-btn active" role="button" ref="tab1">
                         <span class="txt">연락처</span>
                         <span class="cnt bg-primary">17</span>
                       </a>
-
-                      <a href="javascript:void(0)" class="tabs-btn">
+                      <a @click="onTabSelected(1)" class="tabs-btn" role="button" ref="tab2">
                         <span class="txt">메시지</span>
                       </a>
                     </div>
@@ -142,110 +142,17 @@
                 </div>
               </div>
 
-              <div class="board-body-box">
-                <div class="list-wrap">
-                  <div class="list-group-box">
-                    <div class="list-head-box" :class="{ hide: listBoxesHide['organization'] }">
-                      <a
-                        href="javascript:void(0)"
-                        class="head-box d-flex flex-center justify-content-between"
-                        @click="listBoxesHide['organization'] = !listBoxesHide['organization']"
-                      >
-                        <div class="head-tit-box">내 연락처</div>
-                        <!-- 내 조직 -->
-                        <i class="fa-solid fa-angle-down" style="color: #9fa1ab"></i>
-                        <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
-                      </a>
-                    </div>
-
-                    <div class="list-body-box">
-                      <div
-                        v-for="(user, idx) in usersList.items"
-                        :key="idx"
-                        role="button"
-                        class="item-box"
-                        @click="selectedUser = user"
-                        :style="user === selectedUser ? { 'background-color': '#74AFEB22' } : {}"
-                      >
-                        <div class="item-info-box">
-                          <div class="profile-box">
-                            <img src="/img/common/img_profile_default.svg" alt="이미지" />
-                          </div>
-
-                          <div class="info-box">
-                            <div class="subject-box">
-                              {{ `${user['userNm']} ${user['ocpCd']}` }}
-                            </div>
-                            <div class="con-box">
-                              {{ `${user['jobCd']} / ${user['dutyDstr1Cd']} / ${user['instNm']}` }}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="item-option-box"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="list-group-box d-none">
-                    <div class="list-head-box" :class="{ hide: listBoxesHide['request'] }">
-                      <a
-                        href="javascript:void(0)"
-                        class="head-box d-flex flex-center justify-content-between"
-                        @click="listBoxesHide['request'] = !listBoxesHide['request']"
-                      >
-                        <div class="head-tit-box">등록요청</div>
-                        <i class="fa-solid fa-angle-down" style="color: #9fa1ab"></i>
-                        <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
-                      </a>
-                    </div>
-                    <div class="list-head-box" :class="{ hide: listBoxesHide['favourite'] }">
-                      <a
-                        href="javascript:void(0)"
-                        class="head-box d-flex flex-center justify-content-between"
-                        @click="listBoxesHide['favourite'] = !listBoxesHide['favourite']"
-                      >
-                        <div class="head-tit-box">즐겨찾기</div>
-                        <i class="fa-solid fa-angle-down" style="color: #9fa1ab"></i>
-                        <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
-                      </a>
-                    </div>
-                    <div class="list-head-box" :class="{ hide: listBoxesHide['mayKnow'] }">
-                      <a
-                        href="javascript:void(0)"
-                        class="head-box d-flex flex-center justify-content-between"
-                        @click="listBoxesHide['mayKnow'] = !listBoxesHide['mayKnow']"
-                      >
-                        <div class="head-tit-box">알 수도 있는 사람</div>
-                        <i class="fa-solid fa-angle-down" style="color: #9fa1ab"></i>
-                        <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
-                      </a>
-                    </div>
-
-                    <div class="list-body-box"></div>
-                  </div>
-                </div>
-
-                <div class="list-menu-box d-flex justify-content-center pt-8">
-                  <a
-                    href="#none"
-                    class="btn btn-flex bg-primary text-white rounded-pill"
-                    data-bs-toggle="modal"
-                    data-bs-target="#kt_modal_user_invite"
-                    >사용자 초대</a
-                  >
-                </div>
-              </div>
+              <contact-list v-if="model.mode === 'contact'" @onUserSelected="onUserSelected" />
             </section>
 
             <!-- contact detail -->
-            <no-contact-detail-unit v-if="!selectedUser" />
-            <contact-detail-unit v-if="selectedUser" :user="selectedUser" />
+            <no-contact-detail-unit v-if="!model.selectedUser" />
+            <contact-detail-unit v-if="model.selectedUser" :user="model.selectedUser" />
             <!-- contact detail -->
 
             <!-- contact detail right -->
-            <no-contact-detail-right-unit v-if="!selectedUser" />
-            <contact-detail-right-unit v-if="selectedUser" />
+            <no-contact-detail-right-unit v-if="!model.selectedUser" />
+            <contact-detail-right-unit v-if="model.selectedUser" />
             <!-- contact detail right -->
           </section>
         </div>
@@ -257,47 +164,49 @@
   <!--end:::Main-->
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script setup>
 import ContactDetailUnit from '@/components/user/unit/ContactDetailUnit'
 import NoContactDetailUnit from '@/components/user/unit/NoContactDetailUnit'
 import NoContactDetailRightUnit from '@/components/user/unit/NoContactDetailRightUnit'
 import ContactDetailRightUnit from '@/components/user/unit/ContactDetailRightUnit'
+import ContactList from '@/components/user/unit/ContactList'
+import { reactive, ref } from 'vue'
 
-export default {
-  components: {
-    ContactDetailRightUnit,
-    NoContactDetailRightUnit,
-    ContactDetailUnit,
-    NoContactDetailUnit
-  },
-  name: 'ListCntc',
-  props: {
-    msg: String
-  },
-  mounted() {},
-  data() {
-    return {
-      selectedUser: '',
-      listBoxesHide: {
-        request: false,
-        favourite: false,
-        organization: false,
-        mayKnow: false
-      }
-    }
-  },
-  computed: {
-    ...mapState('user', ['usersList'])
-  },
-  watch: {},
-  methods: {}
+const tab1 = ref()
+const tab2 = ref()
+
+let model = reactive({
+  mode: 'contact',
+  selectedUser: null
+})
+
+function onUserSelected(user) {
+  model.selectedUser = user
+}
+function onTabSelected(idx) {
+  if (idx === 0) {
+    model.mode = 'contact'
+    tab2.value.classList.remove('active')
+    tab1.value.classList.add('active')
+  } else {
+    model.mode = 'message'
+    tab1.value.classList.remove('active')
+    tab2.value.classList.add('active')
+  }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .cntc-message-board .item-box:hover {
   background-color: #74afeb22;
+}
+.cntc-dashboard > section {
+  width: 25%;
+}
+.cntc-dashboard {
+  height: 100%;
+}
+.view-img-box img {
+  height: 450px;
 }
 </style>

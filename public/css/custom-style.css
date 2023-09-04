@@ -269,9 +269,6 @@ section.cntc-info-view {
   border-left: 1px solid #86898D;
   border-right: 1px solid #86898D;
 }
-section.cntc-info-view .view-head-box .view-img-box {
-  height: 350px;
-}
 section.cntc-info-view .view-head-box .view-img-box img {
   max-width: 100%;
   max-height: 100%;
