@@ -148,7 +148,7 @@
             </div>
             <!--end::Card header-->
             <!--begin::Card body-->
-            <div class="card-body p-8">
+            <div v-if="firestatnList !== undefined && firestatnList !== null" class="card-body p-8">
               <!--begin::Table-->
               <h5>조회결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{
                   firestatnList.length

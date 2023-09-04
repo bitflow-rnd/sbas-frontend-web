@@ -32,8 +32,8 @@
           <ul class="depth1">
             <li class="depth1-box"><router-link to="#none" @click="setActive(5)" :class="{'active': tabidx === 5}" class="depth1-btn">병상배정반 관리</router-link></li>
 <!--            <li class="depth1-box"><router-link to="#none" @click="setActive(6)" :class="{'active': tabidx === 6}" class="depth1-btn">보건소 관리</router-link></li>-->
-            <li class="depth1-box"><router-link to="/admin/organ/medinst/list" @click="setActive(7)" :class="{'active': tabidx === 7}" class="depth1-btn">의료기관 관리</router-link></li>
-            <li class="depth1-box"><router-link to="/admin/organ/firestatn/list" @click="setActive(8)" :class="{'active': tabidx === 8}" class="depth1-btn">구급대 관리</router-link></li>
+            <li class="depth1-box"><router-link to="/admin/organ/medinst/list" @click="handlefunc(getMediList,7)" :class="{'active': tabidx === 7}" class="depth1-btn">의료기관 관리</router-link></li>
+            <li class="depth1-box"><router-link to="" @click="handlefunc(getFireStatn,8)" :class="{'active': tabidx === 8}" class="depth1-btn">구급대 관리</router-link></li>
 <!--            <li class="depth1-box"><router-link to="#none" @click="setActive(9)" :class="{'active': tabidx === 9}" class="depth1-btn">전산담당 관리</router-link></li>-->
           </ul>
         </div>
@@ -64,7 +64,10 @@ export default {
     },
     getFireStatn(){
         this.$store.dispatch('admin/getFireStatn')
-    }
+    },
+      getMediList(){
+        this.$store.dispatch('admin/getMedinst',{dstrCd1:null,dstrCd2:null})
+      }
   },
 }
 </script>
