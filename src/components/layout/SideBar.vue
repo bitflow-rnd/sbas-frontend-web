@@ -47,7 +47,7 @@
             </li>
             <li class="depth1-box">
               <router-link
-                to=""
+                to='/admin/organ/firestatn/list'
                 @click="handlefunc(getFireStatn, 8)"
                 :class="{ active: tabidx === 8 }"
                 class="depth1-btn"

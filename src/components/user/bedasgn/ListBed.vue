@@ -97,7 +97,6 @@
             >
             <!-- data-bs-toggle="modal" -->
             <a
-              v-show="this.userInfo.jobCd === 'PMGR0001'"
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_request"
               class="btn btn-sm btn-flex btn-primary align-self-center px-3"
@@ -3142,17 +3141,17 @@
                                 증상 ·징후<br />
                                 / 검사결과
                               </th>
-                              <td>{{ ptDs.diagNm }} / {{ ptDs.dfdgExamRslt }}</td>
+                              <td>{{ ptDs.diagNm ? ptDs.diagNm :'-' }} / {{ ptDs.dfdgExamRslt ? ptDs.dfdgExamRslt : '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>기저질환</th>
-                              <td>{{ getTag(ptDs.undrDsesNms) }}</td>
+                              <td>{{ getTag(ptDs.undrDsesNms) ? getTag(ptDs.undrDsesNms) :'-' }}</td>
                             </tr>
 
                             <tr>
                               <th>환자유형</th>
-                              <td>{{ getTag(ptDs.ptTypeNms) }}</td>
+                              <td>{{ getTag(ptDs.ptTypeNms) ? getTag(ptDs.ptTypeNms) :'-'}}</td>
                             </tr>
 
                             <tr>
@@ -3255,11 +3254,6 @@
                                 <div class="bottom-item-box">
                                   <div class="item-img-group mb-4">
                                     <div class="img-list">
-                                      <!--
-                                                                            <a href="javascript:void(0)" class="img-box">
-                                                                                <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                            </a>
-                                                                            -->
                                     </div>
                                   </div>
 
@@ -3363,6 +3357,7 @@
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0006' &&
+
                                     userInfo.jobCd === 'PMGR0002'
                                   "
                                   data-bs-toggle="modal"
@@ -3396,33 +3391,33 @@
                               <tbody>
                                 <tr>
                                   <th>담당보건소</th>
-                                  <td>{{ ptDs.rcptPhc }}</td>
+                                  <td>{{ ptDs.rcptPhc?ptDs.rcptPhc:'-' }}</td>
                                   <th>입원여부</th>
-                                  <td>{{ ptDs.admsYn }}</td>
+                                  <td>{{ ptDs.admsYn?ptDs.admsYn : '-' }}</td>
                                 </tr>
 
                                 <tr>
                                   <th>코로나19증상 및 징후</th>
-                                  <td>{{ ptDs.diagNm }}</td>
+                                  <td>{{ ptDs.diagNm?ptDs.diagNm : '-' }}</td>
                                   <th>확진검사결과</th>
-                                  <td>{{ ptDs.dfdgExamRslt }}</td>
+                                  <td>{{ ptDs.dfdgExamRslt?ptDs.dfdgExamRslt : '-' }}</td>
                                 </tr>
 
                                 <tr>
                                   <th>질병급</th>
-                                  <td>{{ ptDs.diagGrde }}</td>
+                                  <td>{{ ptDs.diagGrdept?Ds.diagGrde : '-' }}</td>
                                   <th>DNR 동의</th>
-                                  <td>{{ ptDs.dnrAgreYn }}</td>
+                                  <td>{{ ptDs.dnrAgreYn ? ptDs.dnrAgreYn: '-' }}</td>
                                 </tr>
 
                                 <tr>
                                   <th>기저질환</th>
-                                  <td colspan="3">{{ getTag(ptDs.undrDsesNms) }}</td>
+                                  <td colspan="3">{{ getTag(ptDs.undrDsesNms) ? getTag(ptDs.undrDsesNms) : '-' }}</td>
                                 </tr>
 
                                 <tr>
                                   <th>환자유형</th>
-                                  <td colspan="3">{{ getTag(ptDs.ptTypeNms) }}</td>
+                                  <td colspan="3">{{ getTag(ptDs.ptTypeNms) ? getTag(ptDs.ptTypeNms) : '-' }}</td>
                                 </tr>
 
                                 <tr>
@@ -3430,14 +3425,14 @@
                                   <td colspan="3">
                                     <!-- todo: 중증도 분석 AI 점수 데이터 받아오기 필요                                                                    -->
                                     <div class="item-cell-box full">
-                                      {{ ptDs.svrtTypeNms[0] }}
+                                      {{ ptDs.svrtTypeNms[0] ?ptDs.svrtTypeNms[0] : '-' }}
                                       <!--/ NEWS Score 13-->
                                     </div>
                                     <div v-if="ptDs.bdtp !== null" class="item-cell-box pt-3 full">
                                       <article class="category-list-layout1">
                                         <div class="category-item-box">
                                           <div class="subject-box">체온(℃)</div>
-                                          <div class="con-box">{{ ptDs.bdtp }}</div>
+                                          <div class="con-box">{{ ptDs.bdtp ?ptDs.bdtp : '-' }}</div>
                                         </div>
 
                                         <div class="category-item-box">
@@ -3445,7 +3440,7 @@
                                             맥박<br />
                                             (회/분)
                                           </div>
-                                          <div class="con-box">{{ ptDs.hr }}</div>
+                                          <div class="con-box">{{ ptDs.hr ? ptDs.hr: '-' }}</div>
                                         </div>
 
                                         <div class="category-item-box">
@@ -3453,7 +3448,7 @@
                                             분당호흡수<br />
                                             (회/분)
                                           </div>
-                                          <div class="con-box">{{ ptDs.resp }}</div>
+                                          <div class="con-box">{{ ptDs.resp ? ptDs.resp : '-' }}</div>
                                         </div>
 
                                         <div class="category-item-box">
@@ -3461,7 +3456,7 @@
                                             산소포화도<br />
                                             (%)
                                           </div>
-                                          <div class="con-box">{{ ptDs.spo2 }}</div>
+                                          <div class="con-box">{{ ptDs.spo2 ? ptDs.spo2: '-' }}</div>
                                         </div>
 
                                         <div class="category-item-box">
@@ -3469,7 +3464,7 @@
                                             수축기혈압<br />
                                             (mmHg)
                                           </div>
-                                          <div class="con-box">{{ ptDs.sbp }}</div>
+                                          <div class="con-box">{{ ptDs.sbp ?ptDs.sbp: '-' }}</div>
                                         </div>
                                       </article>
                                     </div>
@@ -3479,29 +3474,29 @@
                                 <tr>
                                   <th>발병일 / 진단일 / 신고일</th>
                                   <td colspan="3">
-                                    {{ ptDs.occrDt }} / {{ ptDs.diagDt }} / {{ ptDs.rptDt }}
+                                    {{ ptDs.occrDt ? ptDs.occrDt: '- ' }}/ {{ ptDs.diagDt ? ptDs.diagDt: ' - ' }} / {{ ptDs.rptDt ? ptDs.rptDt : ' -' }}
                                   </td>
                                 </tr>
 
                                 <tr>
                                   <th>요양기관 기호/명</th>
-                                  <td>{{ ptDs.instId }} / {{ ptDs.instNm }}</td>
+                                  <td>{{ ptDs.instId ? ptDs.instId: '- ' }} / {{ ptDs.instNm ? ptDs.instNm :  ' -' }}</td>
                                   <th>요양기관 주소</th>
-                                  <td>{{ ptDs.instAddr }}</td>
+                                  <td>{{ ptDs.instAddr ? ptDs.instAdd : '-' }}</td>
                                 </tr>
 
                                 <tr>
                                   <th>요양기관 전화번호</th>
-                                  <td>{{ ptDs.instTelno }}</td>
+                                  <td>{{ ptDs.instTelno ?ptDs.instTelno : '-' }}</td>
                                   <th>진단의사 성명</th>
-                                  <td>{{ ptDs.diagDrNm }}</td>
+                                  <td>{{ ptDs.diagDrNm ? ptDs.diagDrNm : '-' }}</td>
                                 </tr>
 
                                 <tr>
                                   <th>신고기관장 성명</th>
-                                  <td>{{ ptDs.rptChfNm }}</td>
+                                  <td>{{ ptDs.rptChfNm ? ptDs.rptChfNm : '-' }}</td>
                                   <th>요청 병상유형</th>
-                                  <td>{{ ptDs.reqBedTypeNm }}</td>
+                                  <td>{{ ptDs.reqBedTypeNm ? ptDs.reqBedTypeNm : '-'  }}</td>
                                 </tr>
 
                                 <tr>
@@ -3524,8 +3519,8 @@
                     </div>
                   </div>
 
-                  <div class="tabs-box flex-root" v-show="this.tabidx === 2" style="">
-                    <div class="scroll-wrap px-5 mx-5 mb-5">
+                  <div class="tabs-box flex-root"  v-show="this.tabidx === 2" style="">
+                    <div v-if="transInfo!==undefined" class="scroll-wrap px-5 mx-5 mb-5">
                       <article class="table-form-layout1">
                         <div class="form-head-box fs-3 fw-bold pb-4">
                           이송중 <span class="text-primary">거리 2.3km, 예상 소요시간 25분</span>
@@ -3550,16 +3545,16 @@
 
                                 <tr>
                                   <th>배정 요청 지역</th>
-                                  <td>대구광역시</td>
+                                  <td>{{transInfo.reqDstr1CdNm?transInfo.reqDstr1CdNm:'-'}}</td>
                                 </tr>
 
                                 <tr>
                                   <th>환자 출발지</th>
-                                  <td>자택</td>
+                                  <td>{{ transInfo.dprtDstrTypeCdNm?transInfo.dprtDstrTypeCdNm:'-' }}</td>
                                 </tr>
                                 <tr>
                                   <th>주소</th>
-                                  <td>대구광역시 북구 호암로 51 르아르망디 빌라 309호</td>
+                                  <td>{{transInfo.dprtDstrBascAddr?transInfo.dprtDstrBascAddr:'-'}}{{transInfo.dprtDstrDetlAddr?transInfo.dprtDstrDetlAddr:''}}</td>
                                 </tr>
                                 <tr>
                                   <th>위도, 경도</th>
@@ -3567,15 +3562,15 @@
                                 </tr>
                                 <tr>
                                   <th>보호자 1 연락처</th>
-                                  <td>010-2222-3344</td>
+                                  <td>{{transInfo.nok1Telno?transInfo.nok1Telno:'-'}}</td>
                                 </tr>
                                 <tr>
                                   <th>보호자 2 연락처</th>
-                                  <td>010-3345-6859</td>
+                                  <td>{{transInfo.nok2Telno?transInfo.nok2Telno:'-'}}</td>
                                 </tr>
                                 <tr>
                                   <th>요청 메시지</th>
-                                  <td>호흡곤란이 있으시니 인공호흡 준비해주시기 바랍니다.</td>
+                                  <td>{{transInfo.msg?transInfo.msg:'-'}}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -3595,7 +3590,7 @@
                                 <tr>
                                   <th colspan="4" class="bg-accent">이송 정보</th>
                                 </tr>
-                                <tr>
+                                <tr v-if="!transCondition1">
                                   <td class="p-0" colspan="4">
                                     <div
                                       class="d-flex align-items-center justify-content-center flex-column py-5"
@@ -3609,23 +3604,23 @@
                                     </div>
                                   </td>
                                 </tr>
-                                <tr>
+                                <tr v-else>
                                   <th>구급대명</th>
-                                  <td>대구 북구 대명</td>
+                                  <td>대구 북구 대명 수정</td>
                                   <th>차량번호</th>
-                                  <td>382차3838</td>
+                                  <td>382차3838 수정</td>
                                 </tr>
-                                <tr>
+                                <tr v-if="transCondition1">
                                   <th>대원 / 연락처</th>
                                   <td colspan="3">
-                                    사. 김찬기, 교. 이주원, 위. 박장혁 / 010-2565-7080
+                                    사. 김찬기, 교. 이주원, 위. 박장혁 수정 / 010-2565-7080 수정
                                   </td>
                                 </tr>
 
                                 <tr>
                                   <th colspan="4" class="bg-accent">도착지 정보</th>
                                 </tr>
-                                <tr>
+                                <tr v-if="!transCondition2">
                                   <td class="p-0" colspan="4">
                                     <div
                                       class="d-flex align-items-center justify-content-center flex-column py-5"
@@ -3639,38 +3634,38 @@
                                     </div>
                                   </td>
                                 </tr>
-                                <tr>
+                                <tr v-if="transCondition2">
                                   <th>의료기관</th>
-                                  <td>대구서울대병원</td>
+                                  <td>대구서울대병원 수정</td>
                                   <th>전화번호</th>
-                                  <td>010-2233-5554</td>
+                                  <td>{{ transInfo.chrgTelno ? transInfo.chrgTelno : '-' }}</td>
                                 </tr>
 
-                                <tr>
+                                <tr v-if="transCondition2">
                                   <th>주소</th>
                                   <td>대구광역시 중구 호암로 51 대구서울대병원 7103호</td>
                                   <th>위도, 경도</th>
                                   <td>132.12121044, 38.121212121</td>
                                 </tr>
 
-                                <tr>
+                                <tr v-if="transCondition2">
                                   <th>병실</th>
-                                  <td>7402호</td>
+                                  <td>7402호 수정</td>
                                   <th>원내 배정 여부</th>
-                                  <td>전원요청</td>
+                                  <td>{{ transInfo.inhpAsgnYn ==='Y'?'원내배정':'전원요청' }}</td>
                                 </tr>
 
-                                <tr>
+                                <tr v-if="transCondition2">
                                   <th>진료과</th>
-                                  <td>감염내과</td>
+                                  <td>{{ transInfo.deptNm ? transInfo.deptNm :'-' }}</td>
                                 </tr>
-                                <tr>
+                                <tr v-if="transCondition2">
                                   <th>담당의</th>
-                                  <td>김강식</td>
+                                  <td>{{ transInfo.spclNm ? transInfo.spclNm :'-' }}</td>
                                 </tr>
-                                <tr>
+                                <tr v-if="transCondition2">
                                   <th>승인 메시지</th>
-                                  <td>응급실 앞에서 대기하고 있겠습니다.</td>
+                                  <td>응급실 앞에서 대기하고 있겠습니다. 수정</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -4923,6 +4918,8 @@ export default {
   },
   data() {
     return {
+      transCondition1:false,
+      transCondition2:false,
       filter: {
         states: [
           { label: '병상요청', value: 'BAST0003' },
@@ -5055,7 +5052,8 @@ export default {
       'ptBio',
       'timeline',
       'rcmdModal',
-      'rcmdHp'
+      'rcmdHp',
+      'transInfo'
     ]),
     ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip']),
     ...mapState('user', ['userInfo', 'cmSido']),
@@ -5201,7 +5199,8 @@ export default {
           this.undrDsesCdArr=[]
           this.setNull()
           /*신규병상요청 끝*/
-      } else if (idx === 3) {s
+      } else if (idx === 3) {
+
         this.errMsg = '환자 정보가\n등록되었습니다.'
         this.isAlert = true
         this.alertIdx = 3
@@ -5250,7 +5249,7 @@ export default {
         this.alertIdx = 11
       } else if (idx === 12) {
         /*의료진 승인*/
-        this.errMsg = '병상요청을<br/>승인 하시겠습니까?'
+        this.errMsg = '병상요청을 승인 하시겠습니까?'
         this.cncBtn = true
         this.isAlert = true
         this.alertIdx = 12
@@ -5316,7 +5315,7 @@ export default {
       } else if (res === 12) {
         this.mediConfirm.ptId = this.bdDetail.ptId
         this.mediConfirm.bdasSeq = this.bdDetail.bdasSeq
-        this.mediConfirm.hospId = this.userInfo.hospId
+        this.mediConfirm.hospId = this.userInfo.instId
         this.mediConfirm.asgnReqSeq++
         console.log(this.mediConfirm)
         this.$store.dispatch('bedasgn/cfmMedi', this.mediConfirm)
@@ -5388,7 +5387,7 @@ export default {
     updateCharacterCount(idx) {
       const messageProps = [this.aprv, this.mediConfirm, this.hosptlzdiscg, this.trsfInfo]
       const currentMessage = messageProps[idx].msg
-      if (currentMessage === null || currentMessage === '') {
+      if (currentMessage === null || currentMessage === '' && currentMessage === undefined) {
         this.characterCount = this.content.length
       } else {
         this.characterCount = currentMessage.length
@@ -5522,8 +5521,12 @@ export default {
       await this.$store.dispatch('bedasgn/getTimeline', data)
       this.$store.dispatch('bedasgn/getDSInfo', data)
       this.$store.dispatch('bedasgn/getBdasHisInfo', data)
+      this.$store.dispatch('bedasgn/getTransInfo',data)
       // this.$store.dispatch('admin/getFireStatn',{dstrCd1: 27})
       //console.log(data.bedStatCd)
+      this.transCondition1 = this.bdDetail.bedStatCd==='BAST0005' || this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
+      this.transCondition2 = this.bdDetail.bedStatCd==='BAST0004' || this.bdDetail.bedStatCd==='BAST0005' || this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
+
       this.getChrgId()
     },
     getChrgId() {
