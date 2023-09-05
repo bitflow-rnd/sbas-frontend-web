@@ -115,21 +115,21 @@
                           <div class="item-cell-box">
                             <div class="rbox">
                               <label>
-                                <input type="radio" name="type" checked /><i></i>
+                                <input type="radio" name="type1" checked /><i></i>
                                 <span class="txt">전체</span>
                               </label>
                             </div>
 
                             <div class="rbox ms-4">
                               <label>
-                                <input type="radio" name="type" /><i></i>
+                                <input type="radio" name="type1" /><i></i>
                                 <span class="txt">공지</span>
                               </label>
                             </div>
 
                             <div class="rbox ms-4">
                               <label>
-                                <input type="radio" name="type" /><i></i>
+                                <input type="radio" name="type1" /><i></i>
                                 <span class="txt">일반</span>
                               </label>
                             </div>
@@ -248,7 +248,7 @@
               <div class="table-head-box pb-4">
                 <div class="head-box">
                   <div class="head-txt-box">
-                    검색결과 <span class="rounded-pill bg-primary text-white px-2 ms-2">99+</span>
+                    검색결과 <span class="rounded-pill bg-primary text-white px-2 ms-2">2</span>
                   </div>
                 </div>
 
@@ -289,7 +289,7 @@
 
                     <tbody>
                       <tr @click="showDetail(1)">
-                        <td>7</td>
+                        <td>2</td>
                         <td><span class="rounded-pill bg-primary text-white px-2">공지</span></td>
                         <td class="left">
                           <div class="txt-with-label">
@@ -310,8 +310,8 @@
                             style="color: #74afeb; font-size: 20px"
                           ></i>
                         </td>
-                        <td>2023.06.12 09시</td>
-                        <td>홍길동 (sbamaster)</td>
+                        <td>2023.09.03 09시</td>
+                        <td>주서연<br/>(sbasub-1)</td>
                         <td>
                           <a
                             role="button"
@@ -323,7 +323,7 @@
                       </tr>
 
                       <tr @click="showDetail(2)">
-                        <td>7</td>
+                        <td>1</td>
                         <td>
                           <span
                             class="rounded-pill border border-1 border-gray-600 text-gray-600 px-2"
@@ -336,7 +336,7 @@
                           </div>
                         </td>
                         <td>-</td>
-                        <td>2023-06-01 ~ 2023-09-01</td>
+                        <td>2023-06-01 ~ 2023-10-01</td>
                         <td>
                           <i
                             class="fa-regular fa-circle-check"
@@ -344,7 +344,7 @@
                           ></i>
                         </td>
                         <td>2023.06.12 09시</td>
-                        <td>홍길동 (sbamaster)</td>
+                        <td>곽택연 (sbamaster)</td>
                         <td>
                           <a
                             role="button"
@@ -389,26 +389,6 @@
                         tabindex="0"
                         class="page-link"
                         >1</a
-                      >
-                    </li>
-                    <li class="paginate_button page-item">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="2"
-                        tabindex="0"
-                        class="page-link"
-                        >2</a
-                      >
-                    </li>
-                    <li class="paginate_button page-item">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="3"
-                        tabindex="0"
-                        class="page-link"
-                        >3</a
                       >
                     </li>
                     <li class="paginate_button page-item next" id="kt_table_users_next">

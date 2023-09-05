@@ -239,7 +239,7 @@ export default {
         async getFireStatn(comment,request){
            // const token = localStorage.getItem('userToken')
            // console.log(data.cd1, data.cd2)
-            const url = `${API_PROD}/api/v1/public/organ/firestatns`
+            const url = `${API_PROD}/api/v1/public/organ/firestatns?dstrCd1=27`
             const params = request
             try {
                 const response = await axios.get(url, {params})

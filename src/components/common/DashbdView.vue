@@ -21,14 +21,6 @@
                         <!--end::Title-->
                     </div>
                     <!--end::Page title-->
-                    <!--begin::Actions-->
-                    <div class="d-flex align-items-center gap-2 gap-lg-3">
-                        <label class="form-check form-switch form-check-custom form-check-solid ">
-                            <span class="form-check-label fw-semibold text-muted pe-3 text-gray-900">현황카드 자동선택</span>
-                            <input class="form-check-input" type="checkbox" value="1" checked="checked">
-                        </label>
-                    </div>
-                    <!--end::Actions-->
                 </div>
                 <!--end::Toolbar wrapper-->
             </div>
@@ -41,13 +33,6 @@
                         <!--begin::Card toolbar-->
 
                         <div class="dashboard-header">
-
-                            <article class="dashboard-tabs-list pb-8">
-                                <div class="list-wrap">
-                                    <a href="javascript:dashboardChange(1)" class="dashboard-tabs-btn active" data-dashboard="1">요약 현황</a>
-                                    <a href="javascript:dashboardChange(2)" class="dashboard-tabs-btn" data-dashboard="2">오늘의 현황</a>
-                                </div>
-                            </article>
 
                             <div class="dashboard-head-box d-flex justify-content-between align-items-end pb-5">
 

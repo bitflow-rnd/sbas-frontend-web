@@ -206,7 +206,7 @@
                         <col style="width: 100px" />
                         <col style="width: 100px" />
                         <col style="width: 100px" />
-                        <col style="width: 100px" />
+                        <col style="width: 50px" />
                         <col style="width: 100px" />
                       </colgroup>
                       <thead>
@@ -244,7 +244,7 @@
                           <td>{{ item.dstrCd2 }}</td>
                           <td>{{ item.instNm }}</td>
                           <td>{{ item.chrgTelno }}</td>
-                          <td>{{ item.crewCount }}</td>
+                          <td>{{ item.crewCount?item.crewCount:'0' }}</td>
                           <td>
                             <a
                               @click="handleModal(5, item)"
@@ -423,7 +423,7 @@
                             <th>이름</th>
                             <th>직급</th>
                             <th>전화번호</th>
-                            <th>액션</th>
+                            <th>작업</th>
                           </tr>
                         </thead>
 
@@ -450,6 +450,9 @@
                                 >수정</a
                               >
                             </td>
+                          </tr>
+                          <tr v-if="firemenList.count===0">
+                            <td colspan="5">등록된 구급대원이 없습니다</td>
                           </tr>
                         </tbody>
                       </table>
@@ -793,7 +796,7 @@
                         <div class="item-cell-box">
                           <div class="sbox w-175px">
                             <select v-model="fsDetail.dstrCd1" @change="getGugun(fsDetail.dstrCd1)">
-                              <option value="null">시/도</option>
+                              <option value="">시/도</option>
                               <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
                               </option>
@@ -977,7 +980,7 @@
                     </tr>
                     <tr>
                       <th>담당자명</th>
-                      <td>{{ fsDetail.chrgNm }}</td>
+                      <td>{{ fsDetail.chrgNm?fsDetail.chrgNm:'윤성림' }}</td>
                       <th>연락처</th>
                       <td>{{ fsDetail.chrgTelno }}</td>
                     </tr>

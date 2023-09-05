@@ -53,7 +53,7 @@
 
         <!--begin::Modal header-->
         <!--begin::Modal body-->
-        <div class="modal-body scroll-y py-10 px-10">
+        <div class="modal-body scroll-y pb-10 pt-0 px-10">
           <article class="board-view-layout1">
             <div class="view-head-box py-6 px-6">
               <div class="head-main-box">
@@ -64,18 +64,19 @@
               </div>
 
               <div class="head-sub-box pt-3">
-                <span class="sub-txt text-gray-600">등록일 : 2023-04-05</span>
-                <span class="sub-txt text-gray-600">등록자 : 홍길동</span>
+                <span class="sub-txt text-gray-600">등록일 : 2023-09-02</span>
+                <span class="sub-txt text-gray-600">등록자 : 곽택연</span>
               </div>
             </div>
 
             <div class="view-body-box py-8 px-6">
               <div class="view-contents">
-                [시스템 유지보수 안내] 보다 안정화된 서비스 제공을 위해 아래와 같이 시스템 유지보수
-                및 점검을 진행할 예정입니다. 점검시간 중 홈페이지 서비스 제공이 일시 중지될
-                예정이오니 양해 부탁드립니다.<br />1. 점검 시간: 2023. 6. 9.(금) 20:00 ~ 6. 10.(토)
-                12:00 <br />2. 중단 서비스: 스마트 감염병 병상배정 시스템<br />3. 점검 내용: 시스템
-                백업<br />※ 점검 시간은 작업 진행에 따라 변경될 수 있습니다.
+                [시스템 유지보수 안내]<br/><br/>보다 안정화된 서비스 제공을 위해 아래와 같이 시스템 유지보수
+                및 점검을 진행할 예정입니다.<br/>점검시간 중 홈페이지 및 모바일 서비스 제공이 일시 중지될
+                예정이오니 양해 부탁드립니다.<br /><br />1. 점검 시간: 2023. 6. 9.(금) 24:00 ~ 6. 10.(토)
+                02:00 <br />2. 중단 서비스: 스마트 감염병 병상배정 시스템<br />3. 점검 내용: 시스템
+                백업<br />※ 점검 시간은 작업 진행에 따라 변경될 수 있습니다.<br/><br/>
+                <img class="atch-1" src='@/assets/img/img-maintenance.webp' />
               </div>
             </div>
 
@@ -87,7 +88,7 @@
                   <div class="file-upload-list">
                     <div class="file-upload-item">
                       <span class="txt">Project Notice.jpg</span>
-                      <a href="javascript:void(0)" onclick="fileRemove(this)">
+                      <a href="javascript:void(0)">
                         <i class="fa-solid fa-xmark" style="color: #74afeb"></i>
                       </a>
                     </div>
@@ -107,4 +108,10 @@
 
 <script setup></script>
 
-<style scoped></style>
+<style scoped>
+.view-contents { position: relative; min-height: 500px; }
+.label-box { margin-top: 5px; }
+article.board-view-layout1 .view-head-box .head-main-box .subject-box { font-size: 1.5rem; }
+.atch-1 { position: absolute; right: 0; top: 0; width: 690px;
+  border: 1px solid #333; }
+</style>

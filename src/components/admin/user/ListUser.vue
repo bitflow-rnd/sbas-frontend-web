@@ -1169,7 +1169,7 @@
                           </div>
                         </div>
                         <div class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">
+                          <div class="text-danger pt-2 fs-12px d-none">
                             ※ 비밀번호와 비밀번호 확인 일치 확인 문구
                           </div>
                         </div>
@@ -1284,7 +1284,7 @@
                             </label>
                           </div>
                         </div>
-                        <div class="item-cell-box full">
+                        <div class="item-cell-box full d-none">
                           <div class="text-danger pt-2 fs-12px">※ 소속기관 선택여부 확인 문구</div>
                         </div>
                       </td>
@@ -1405,7 +1405,7 @@
                           </article>
                         </div>
                         <div class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 권한그룹 선택여부 확인 문구</div>
+                          <div class="text-danger pt-2 fs-12px d-none">※ 권한그룹 선택여부 확인 문구</div>
                         </div>
                       </td>
                     </tr>
@@ -1449,7 +1449,7 @@
                           </div>
                         </div>
                         <div class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 세부권한 선택여부 확인 문구</div>
+                          <div class="text-danger pt-2 fs-12px d-none">※ 세부권한 선택여부 확인 문구</div>
                         </div>
                       </td>
                     </tr>
@@ -1493,7 +1493,7 @@
                           </div>
                         </div>
                         <div class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">
+                          <div class="text-danger pt-2 fs-12px d-none">
                             ※ 주 담당지역 선택여부 확인 문구
                           </div>
                         </div>
@@ -1514,7 +1514,7 @@
                           </div>
                         </div>
                         <div class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">
+                          <div class="text-danger pt-2 fs-12px d-none">
                             ※ 비밀번호와 비밀번호 확인 일치 확인 문구
                           </div>
                         </div>
@@ -1527,7 +1527,7 @@
                           </div>
                         </div>
                         <div class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 직급 입력 여부 확인 문구</div>
+                          <div class="text-danger pt-2 fs-12px d-none">※ 직급 입력 여부 확인 문구</div>
                         </div>
                       </td>
                     </tr>
@@ -1650,7 +1650,7 @@
                           </article>
                         </div>
                         <div class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">
+                          <div class="text-danger pt-2 fs-12px d-none">
                             ※ 빠른 승인처리를 위해 해당 기관 소속임을 증명할 수 있는 명함, 또는
                             신분증 사진을 업로드 해주세요.
                           </div>

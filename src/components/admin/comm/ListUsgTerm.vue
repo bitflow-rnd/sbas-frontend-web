@@ -110,71 +110,6 @@
                       <col style="width: auto" />
                     </colgroup>
                     <tbody>
-                      <tr>
-                        <th>약관 선택</th>
-                        <td colspan="3">
-                          <div class="item-cell-box">
-                            <div class="sbox w-175px me-5">
-                              <select>
-                                <option>약관명 전체</option>
-                              </select>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <th>동의 조건</th>
-                        <td>
-                          <div class="item-cell-box">
-                            <div class="rbox">
-                              <label>
-                                <input type="radio" name="type" checked /><i></i>
-                                <span class="txt">전체</span>
-                              </label>
-                            </div>
-
-                            <div class="rbox ms-4">
-                              <label>
-                                <input type="radio" name="type" /><i></i>
-                                <span class="txt">필수</span>
-                              </label>
-                            </div>
-
-                            <div class="rbox ms-4">
-                              <label>
-                                <input type="radio" name="type" /><i></i>
-                                <span class="txt">선택</span>
-                              </label>
-                            </div>
-                          </div>
-                        </td>
-                        <th>노출여부</th>
-                        <td>
-                          <div class="item-cell-box">
-                            <div class="rbox">
-                              <label>
-                                <input type="radio" name="type2" checked /><i></i>
-                                <span class="txt">전체</span>
-                              </label>
-                            </div>
-
-                            <div class="rbox ms-4">
-                              <label>
-                                <input type="radio" name="type2" /><i></i>
-                                <span class="txt">공지</span>
-                              </label>
-                            </div>
-
-                            <div class="rbox ms-4">
-                              <label>
-                                <input type="radio" name="type2" /><i></i>
-                                <span class="txt">일반</span>
-                              </label>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
 
                       <tr>
                         <th>기간검색</th>
@@ -234,7 +169,7 @@
 
                       <tr>
                         <th>검색어</th>
-                        <td colspan="3">
+                        <td>
                           <div class="item-cell-box">
                             <div class="tbox w-500px with-btn">
                               <input type="text" placeholder="제목 또는 내용 입력" />
@@ -242,6 +177,31 @@
                               <a href="javascript:void(0)" class="input-btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                               </a>
+                            </div>
+                          </div>
+                        </td>
+                        <th>노출여부</th>
+                        <td>
+                          <div class="item-cell-box">
+                            <div class="rbox">
+                              <label>
+                                <input type="radio" name="type2" checked /><i></i>
+                                <span class="txt">전체</span>
+                              </label>
+                            </div>
+
+                            <div class="rbox ms-4">
+                              <label>
+                                <input type="radio" name="type2" /><i></i>
+                                <span class="txt">공지</span>
+                              </label>
+                            </div>
+
+                            <div class="rbox ms-4">
+                              <label>
+                                <input type="radio" name="type2" /><i></i>
+                                <span class="txt">일반</span>
+                              </label>
                             </div>
                           </div>
                         </td>
@@ -262,7 +222,7 @@
               <div class="table-head-box pb-4">
                 <div class="head-box">
                   <div class="head-txt-box">
-                    검색결과 <span class="rounded-pill bg-primary text-white px-2 ms-2">99+</span>
+                    검색결과 <span class="rounded-pill bg-primary text-white px-2 ms-2">2</span>
                   </div>
                 </div>
 
@@ -307,7 +267,7 @@
 
                     <tbody>
                       <tr @click="showDetail(1)">
-                        <td>7</td>
+                        <td>2</td>
                         <td>SBA0101</td>
                         <td>필수</td>
                         <td>2023-07-11</td>
@@ -328,7 +288,7 @@
                       </tr>
 
                       <tr @click="showDetail(2)">
-                        <td>7</td>
+                        <td>1</td>
                         <td>SBA0101</td>
                         <td>필수</td>
                         <td>2023-07-11</td>
@@ -381,26 +341,6 @@
                         tabindex="0"
                         class="page-link"
                         >1</a
-                      >
-                    </li>
-                    <li class="paginate_button page-item">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="2"
-                        tabindex="0"
-                        class="page-link"
-                        >2</a
-                      >
-                    </li>
-                    <li class="paginate_button page-item">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="3"
-                        tabindex="0"
-                        class="page-link"
-                        >3</a
                       >
                     </li>
                     <li class="paginate_button page-item next" id="kt_table_users_next">

@@ -82,23 +82,17 @@
           <div class="d-flex align-items-center gap-2 gap-lg-3">
             <a
               href="#"
-              class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7"
-              data-bs-toggle="modal"
-              data-bs-target="#kt_modal_view_users"
+              class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7 d-none"
               ><i class="fa-regular fa-trash-can"></i> 삭제</a
             >
             <a
               href="#"
               class="btn btn-flex btn-sm btn-secondary fs-7"
-              data-bs-toggle="modal"
-              data-bs-target="#kt_modal_view_users"
               ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
             >
             <a
               href="#"
-              class="btn btn-sm btn-flex btn-primary align-self-center px-3"
-              data-bs-toggle="modal"
-              data-bs-target="#kt_modal_invite_friends"
+              class="btn btn-sm btn-flex btn-primary align-self-center px-3 d-none"
             >
               <i class="fa-solid fa-plus"></i> 병상요청
             </a>
@@ -463,11 +457,11 @@
                 <div v-if="medinstList.items.length !== 0" class="table-box with-scroll small">
                   <table>
                     <colgroup>
-                      <col style="width: 70px" />
-                      <col style="width: 50px" />
-                      <col style="width: 70px" />
+                      <col style="width: 40px" />
+                      <col style="width: 60px" />
+                      <col style="width: 40px" class='d-none' />
+                      <col style="width: 190px" />
                       <col style="width: 150px" />
-                      <col style="width: 100px" />
                       <col style="width: 60px" />
                       <col style="width: 60px" />
                       <col style="width: 60px" />
@@ -486,22 +480,22 @@
                       <col style="width: 60px" />
                       <col style="width: 60px" />
                       <col style="width: 60px" />
-                      <col style="width: 90px" />
-                      <col style="width: 90px" />
+                      <col style="width: 65px" />
+                      <col style="width: 70px" />
                     </colgroup>
                     <thead>
                       <tr class="small">
-                        <th rowspan="2">순번</th>
                         <th rowspan="2">
                           <div class="cbox">
                             <label> <input type="checkbox" class="all-chk" /><i></i> </label>
                           </div>
                         </th>
-                        <th rowspan="2">이미지</th>
+                        <th rowspan="2">순번</th>
+                        <th rowspan="2" class='d-none'>이미지</th>
                         <th rowspan="2">의료기관명</th>
                         <th rowspan="2">
                           대표전화/<br />
-                          응급실전화
+                          응급실
                         </th>
                         <th colspan="5">감염병 격리병상</th>
                         <th colspan="4">중환자 병상</th>
@@ -512,8 +506,7 @@
                           의료진 수
                         </th>
                         <th rowspan="2">
-                          동기화<br />
-                          일시
+                          업데이트
                         </th>
                       </tr>
                       <tr>
@@ -543,28 +536,25 @@
 
                     <tbody>
                       <tr v-for="(item, i) in medinstList.items" :key="i" @click="openMedInstDetail(item)">
-                        <td>{{ medinstList.items.length-i }}</td>
                         <td  @click="toggleCheckbox">
                           <div  @click="toggleCheckbox" class="cbox d-flex justify-content-center">
                             <label> <input type="checkbox" @click="toggleCheckbox"  /><i></i> </label>
                           </div>
                         </td>
-                        <td>
+                        <td>{{ medinstList.items.length-i }}</td>
+                        <td class='d-none'>
                           <i
                             class="fa-regular fa-circle-check"
                             style="color: #74afeb; font-size: 20px"
                           ></i>
                         </td>
-                        <td
-
-                          class="text-start"
-                        >
+                        <td class="text-start" role='button'>
                           <div class="text-start text-black">{{ item.dutyName }}</div>
                           <div class="text-gray-600 fs-12px">
                               {{ item.dutyDivNam }}
                           </div>
                         </td>
-                        <td>
+                        <td role='button'>
                           {{ item.dutyTel1 }} <br>/ {{ item.dutyTel3 }}
                         </td>
                         <td>
@@ -931,14 +921,11 @@
 
                             <tr>
                               <th rowspan="6">간이약도</th>
-                              <td rowspan="6">
-                                <div class="" style="max-width: 300px">
-                                  <div class="h-200px" style="" id ='map'></div>
-
-                                  <div class="pt-4 ">
-                                    위도 : {{ medinstDetail.infoHosp.wgs84Lat }} /<br> 경도 : {{ medinstDetail.infoHosp.wgs84Lon }}
-                                  </div>
-                                </div>
+                              <td rowspan="6" class='map-wrapper'>
+                                <div id='map'></div>
+                                <p class="pt-4 ">
+                                  위도 : {{ medinstDetail.infoHosp.wgs84Lat }} , 경도 : {{ medinstDetail.infoHosp.wgs84Lon }}
+                                </p>
                               </td>
                               <th>대표전화</th>
                               <td>{{medinstDetail.infoHosp.dutyTel1}}</td>
@@ -2046,12 +2033,10 @@ export default {
       if (date !== null && date !== undefined) {
         return (
           date.slice(0, 4) +
-          '.' +
+          '\n' +
           date.slice(5, 7) +
           '.' +
-          date.slice(8, 10) +
-          '\n' +
-          date.slice(11, 16)
+          date.slice(8, 10)
         )
       } else return ''
     },
@@ -2109,13 +2094,16 @@ article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
     opacity: 0.4 !important;
     display: block !important;
 }
+.map-wrapper { padding: 0; height: 400px; position: relative; }
 #map {
-    position: absolute;
-    width: 368px;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    border-top: 1px solid #555;
+  position: absolute !important;
+  max-width: 709px;
+  width: -webkit-fill-available;
+  height: 100%;
+  left: 0;
+  top: 0;
+  padding: 0;
+  border: 1px solid #555;
 }
 .popup {
     display: block;

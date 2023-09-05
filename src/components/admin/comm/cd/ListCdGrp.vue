@@ -32,7 +32,7 @@
               </li>
               <!--end::Item-->
               <!--begin::Item-->
-              <li class="breadcrumb-item text-gray-700 fw-semibold lh-1 mx-n1 fs-6">기관정보 관리</li>
+              <li class="breadcrumb-item text-gray-700 fw-semibold lh-1 mx-n1 fs-6">시스템 관리</li>
               <!--end::Item-->
               <!--begin::Item-->
               <li class="breadcrumb-item">
@@ -49,7 +49,7 @@
               <!--end::Item-->
               <!--begin::Item-->
               <li class="breadcrumb-item text-gray-500 mx-n1"><h1
-                  class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0">의료기관
+                  class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0">공통코드
                 관리</h1></li>
               <!--end::Item-->
             </ul>
@@ -58,18 +58,6 @@
             <!--end::Title-->
           </div>
           <!--end::Page title-->
-          <!--begin::Actions-->
-          <div class="d-flex align-items-center gap-2 gap-lg-3">
-            <a href="#" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7" data-bs-toggle="modal"
-               data-bs-target="#kt_modal_view_users"><i class="fa-regular fa-trash-can"></i> 삭제</a>
-            <a href="#" class="btn btn-flex btn-sm btn-secondary fs-7" data-bs-toggle="modal"
-               data-bs-target="#kt_modal_view_users"><i class="fa-solid fa-download"></i> 엑셀다운로드</a>
-            <a href="#" class="btn btn-sm btn-flex btn-primary align-self-center px-3" data-bs-toggle="modal"
-               data-bs-target="#kt_modal_invite_friends">
-              <i class="fa-solid fa-plus"></i> 병상요청
-            </a>
-          </div>
-          <!--end::Actions-->
         </div>
         <!--end::Toolbar wrapper-->
       </div>

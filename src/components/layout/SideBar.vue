@@ -5,7 +5,7 @@
       <div class="depth-group">
         <div class="depth-head-box">
           <i class="fa-solid fa-users"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-          <div class="head-txt-box">사용자 관리</div>
+          <div class="head-txt-box">사용자 및 기관 관리</div>
         </div>
         <div class="depth-body-box">
           <ul class="depth1">
@@ -18,6 +18,7 @@
                 >사용자 관리</router-link
               >
             </li>
+            <!--
           </ul>
         </div>
         <div class="depth-head-box">
@@ -26,15 +27,7 @@
         </div>
         <div class="depth-body-box">
           <ul class="depth1">
-            <li class="depth1-box">
-              <router-link
-                to="#none"
-                @click="setActive(5)"
-                :class="{ active: tabidx === 5 }"
-                class="depth1-btn"
-                >병상배정반 관리</router-link
-              >
-            </li>
+            -->
             <!--            <li class="depth1-box"><router-link to="#none" @click="setActive(6)" :class="{'active': tabidx === 6}" class="depth1-btn">보건소 관리</router-link></li>-->
             <li class="depth1-box">
               <router-link
@@ -52,6 +45,15 @@
                 :class="{ active: tabidx === 8 }"
                 class="depth1-btn"
                 >구급대 관리</router-link
+              >
+            </li>
+            <li class="depth1-box d-none">
+              <router-link
+                to="#none"
+                @click="setActive(5)"
+                :class="{ active: tabidx === 5 }"
+                class="depth1-btn"
+              >병상배정반 관리</router-link
               >
             </li>
             <!--            <li class="depth1-box"><router-link to="#none" @click="setActive(9)" :class="{'active': tabidx === 9}" class="depth1-btn">전산담당 관리</router-link></li>-->
