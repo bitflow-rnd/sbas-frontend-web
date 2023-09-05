@@ -3520,9 +3520,9 @@
                   </div>
 
                   <div class="tabs-box flex-root"  v-show="this.tabidx === 2" style="">
-                    <div v-if="transInfo!==undefined" class="scroll-wrap px-5 mx-5 mb-5">
+                    <div v-if="transInfo!==undefined && startLoc !== null" class="scroll-wrap px-5 mx-5 mb-5">
                       <article class="table-form-layout1">
-                        <div class="form-head-box fs-3 fw-bold pb-4">
+                        <div v-if="bdDetail.bedStatCd==='BAST0006'" class="form-head-box fs-3 fw-bold pb-4">
                           이송중 <span class="text-primary">거리 2.3km, 예상 소요시간 25분</span>
                         </div>
 
@@ -3554,11 +3554,11 @@
                                 </tr>
                                 <tr>
                                   <th>주소</th>
-                                  <td>{{transInfo.dprtDstrBascAddr?transInfo.dprtDstrBascAddr:'-'}}{{transInfo.dprtDstrDetlAddr?transInfo.dprtDstrDetlAddr:''}}</td>
+                                  <td>{{transInfo.dprtDstrBascAddr?transInfo.dprtDstrBascAddr:'-'}}&nbsp;{{transInfo.dprtDstrDetlAddr?transInfo.dprtDstrDetlAddr:''}}</td>
                                 </tr>
                                 <tr>
                                   <th>위도, 경도</th>
-                                  <td>132.12121044, 38.121212121</td>
+                                  <td>{{ startLoc.x }}, {{ startLoc.y }}</td>
                                 </tr>
                                 <tr>
                                   <th>보호자 1 연락처</th>
@@ -4887,7 +4887,7 @@ export default {
     this.initDsInfo = this.dsInfo
     this.initSvInfo = this.svInfo
     this.initSpInfo = this.spInfo
-    this.loadNaverMapAsync()
+    this.initNaverMap()
   },
   setup() {
     const showTable = ref(false)
@@ -5055,7 +5055,7 @@ export default {
       'rcmdHp',
       'transInfo'
     ]),
-    ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip']),
+    ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip','startLoc']),
     ...mapState('user', ['userInfo', 'cmSido']),
     ...mapState('admin', ['firestatnList', 'firemenList','medinstList']),
 
@@ -5095,29 +5095,28 @@ export default {
           data['dutyDivNams'] = '보건소'
           this.$store.dispatch('admin/getMedinst',data)
       },
+    initNaverMap() {
+        // 네이버 지도 API 로드
+        const script = document.createElement('script')
+        script.src = 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1ewyt3v33o'
+        script.async = true
+        script.defer = true
+        document.head.appendChild(script)
+    },
     loadNaverMapAsync() {
-      // 네이버 지도 API 로드
-      const script = document.createElement('script')
-      script.src = 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1ewyt3v33o'
-      script.async = true
-      script.defer = true
-      document.head.appendChild(script)
-
-      script.onload = () => {
-        // 네이버 지도 생성 // 35.9561644!4d128.5653029
-        const map = new window.naver.maps.Map('map', {
-          center: new window.naver.maps.LatLng(35.9561644, 128.5653029),
+      // 네이버 지도 생성 // 35.9561644!4d128.5653029
+      const map = new window.naver.maps.Map('map', {
+          center: new window.naver.maps.LatLng(this.startLoc.y, this.startLoc.x),
           zoom: 15,
           zoomControlOptions: {
-            style: window.naver.maps.ZoomControlStyle.SMALL,
-            position: window.naver.maps.Position.TOP_RIGHT
+              style: window.naver.maps.ZoomControlStyle.SMALL,
+              position: window.naver.maps.Position.TOP_RIGHT
           }
-        })
-        new window.naver.maps.Marker({
-          position: new window.naver.maps.LatLng(35.9561644, 128.5653029),
+      })
+      new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(this.startLoc.y, this.startLoc.x),
           map: map
-        })
-      }
+      })
     },
     getStrType() {
         console.log(this.dsInfo.admsYn)
@@ -5342,6 +5341,7 @@ export default {
     },
     setActive(idx) {
       this.tabidx = idx
+      this.loadNaverMapAsync()
     },
     showPopup,
     getTLDt,
@@ -5520,13 +5520,12 @@ export default {
       this.$store.dispatch('patnt/getBasicInfo', data)
       await this.$store.dispatch('bedasgn/getTimeline', data)
       this.$store.dispatch('bedasgn/getDSInfo', data)
-      this.$store.dispatch('bedasgn/getBdasHisInfo', data)
+      //this.$store.dispatch('bedasgn/getBdasHisInfo', data)
       this.$store.dispatch('bedasgn/getTransInfo',data)
       // this.$store.dispatch('admin/getFireStatn',{dstrCd1: 27})
       //console.log(data.bedStatCd)
-      this.transCondition1 = this.bdDetail.bedStatCd==='BAST0005' || this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
-      this.transCondition2 = this.bdDetail.bedStatCd==='BAST0004' || this.bdDetail.bedStatCd==='BAST0005' || this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
-
+      this.transCondition1 = this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
+      this.transCondition2 = this.bdDetail.bedStatCd==='BAST0005' || this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
       this.getChrgId()
     },
     getChrgId() {
