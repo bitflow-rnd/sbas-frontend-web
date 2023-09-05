@@ -59,7 +59,7 @@ export function getTLDt(date,idx){
 }
 export function getTag(data){
     let str =''
-    data.forEach(item => {
+    data.forEach((item) => {
         str += '#'+item+' '
     })
     return str
@@ -112,7 +112,9 @@ export async function showPopup(idx) {
         }
     } else if (idx === 1) {
         /*병상 배정 불가*/
+        this.closeModal()
         this.popup = 4
+        document.getElementById('deniedAsgn').focus()
     } else if (idx === 2 && this.timeline !== null) {
         console.log('요청'+this.userInfo.jobCd)
         if (this.userInfo.jobCd === 'PMGR0002' && this.bdDetail.bedStatCd !== 'BAST0004') {
@@ -145,8 +147,13 @@ export async function goAsgn(idx){
         // 감염병 정보 등록
         if(this.dsInfo.ptId === '' && this.ptBI !== null){/* cpdbr wjdqh - rkadudqj*/
             this.dsInfo.ptId = this.ptBI
-        } else {
+        } else if(this.ptDetail !== null)  {
             this.dsInfo.ptId = this.ptDetail.ptId
+        } else {
+            console.log(this.dsInfo.ptId)
+        }
+        if(this.dsInfo.rcptPhc === 1){
+            this.dsInfo.rcptPhc = this.medinstInfo.rcptPhc
         }
         this.$store.dispatch('bedasgn/regDsInfo',this.dsInfo)
         this.spInfo.spclNm = this.dsInfo.diagDrNm
@@ -165,14 +172,14 @@ export async function goAsgn(idx){
     } else if(idx === 4){
         /* 중증 정보 등록*/
         if(this.svInfo.ptId === ''){
-            this.svInfo.ptId = this.ptBI
+            this.svInfo.ptId = this.dsInfo.ptId
         }
         if(this.svInfo.ptTypeCd === []){
             this.svInfo.ptTypeCd = 'PTTP0001'
         } else {
             this.svInfo.ptTypeCd = this.getUndrDses(this.svInfo.ptTypeCd)
         }
-        this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
+        //this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
         //this.$store.dispatch('bedasgn/regSvInfo',this.svInfo)
         this.spInfo.dprtDstrTypeCd = this.getStrType
         this.tab = 3
