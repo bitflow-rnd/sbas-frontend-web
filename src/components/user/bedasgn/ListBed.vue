@@ -5001,7 +5001,7 @@ export default {
         dprtHospId: '',
           inhpAsgnYn:'N',
           reqDstr1Cd:'27',
-          reqDstr2Cd:'2711'
+          reqDstr2Cd:''
       },
       aprv: {
         ptId: '',
