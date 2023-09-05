@@ -3357,11 +3357,8 @@
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0006' &&
-<<<<<<< Updated upstream
-                                    userInfo.jobCd === 'PMGR0003'
-=======
-                                    userInfo.jobCd === 'PMGR0003' && userInfo.id === this.chrgUserId
->>>>>>> Stashed changes
+
+                                    userInfo.jobCd === 'PMGR0002'
                                   "
                                   data-bs-toggle="modal"
                                   data-bs-target="#kt_modal_hospitalization"
@@ -4888,6 +4885,8 @@ export default {
   mounted() {
     this.initNewPt = this.newPt
     this.initDsInfo = this.dsInfo
+    this.initSvInfo = this.svInfo
+    this.initSpInfo = this.spInfo
     this.loadNaverMapAsync()
   },
   setup() {
@@ -4983,7 +4982,7 @@ export default {
         ptTypeCd: [],
         svrtIptTypeCd: 'SVIP0001',
         svrtTypeCd: '',
-        undrDsesCd: []
+        undrsesCd: []
       },
       bioAnlys: {},
       spInfo: {
@@ -4999,7 +4998,7 @@ export default {
         dprtHospId: '',
           inhpAsgnYn:'N',
           reqDstr1Cd:'27',
-          reqDstr2Cd:'2711'
+          reqDstr2Cd:''
       },
       aprv: {
         ptId: '',
@@ -5168,8 +5167,11 @@ export default {
       this.rptYn = false
       this.newPt = this.initNewPt
       this.dsInfo = this.initDsInfo
-      this.$store.commit('patnt/setRpt',null)
+      this.svInfo = this.initSvInfo
+      this.spInfo =  this.initSpInfo
+        this.$store.commit('patnt/setRpt',null)
       this.preRpt=null
+        this.undrDsesCdArr=[]
     },
     alertOpen(idx) {
       this.cncBtn = false
@@ -5193,14 +5195,12 @@ export default {
         but.click()
         this.tab = 0
           this.getBdList()
-<<<<<<< Updated upstream
-=======
           this.preRpt=null
           this.undrDsesCdArr=[]
           this.setNull()
           /*신규병상요청 끝*/
->>>>>>> Stashed changes
       } else if (idx === 3) {
+
         this.errMsg = '환자 정보가\n등록되었습니다.'
         this.isAlert = true
         this.alertIdx = 3
@@ -5297,6 +5297,7 @@ export default {
       } else if (res === 8) {
         this.alertClose()
         this.setNull()
+        this.getBdList()
       } else if (res === 9) {
         this.removeRpt()
         this.newPt = this.initNewPt
@@ -5530,8 +5531,11 @@ export default {
     },
     getChrgId() {
       if (this.timeline !== null) {
-        const suspendStatus = this.timeline.items.find((item) => item.timeLineStatus === 'suspend')
-        this.chrgUserId = suspendStatus.chrgUserId
+          if(this.timeline.items.find((item) => item.timeLineStatus === 'suspend')){
+              const suspendStatus = this.timeline.items.find((item) => item.timeLineStatus === 'suspend')
+              this.chrgUserId = suspendStatus.chrgUserId
+          }
+
       }
     },
     loadTrnsfInfo(num) {

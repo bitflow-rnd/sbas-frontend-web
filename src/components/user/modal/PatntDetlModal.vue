@@ -1,6 +1,6 @@
 <template>
   <!--  환자 상세 정보  -->
-  <div class="modal" tabindex="-1" aria-hidden="true" id="modal-patient-detail">
+  <div class="modal show" tabindex="-1" aria-hidden="true" id="modal-patient-detail">
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-1500px modal-dialog-centered">
       <!--begin::Modal content-->

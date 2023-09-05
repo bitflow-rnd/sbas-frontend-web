@@ -34,11 +34,11 @@
         <div class="card">
           <!--begin:: Cardheader-->
           <div class="card-header border-0 p-8 container-fluid">
-            <table>
+            <table class="dashbd-table">
               <colgroup>
-                <col style="width: 33.3%" />
-                <col style="width: 33.3%" />
-                <col style="width: 33.3%" />
+                <col style="width: 35%" />
+                <col style="width: 25%" />
+                <col style="width: 40%" />
               </colgroup>
               <tr>
                 <td rowspan="2">
@@ -104,6 +104,9 @@ function closeModal() {
 <style scoped>
 .card-header.p-8 {
   padding-bottom: 22px;
+}
+.dashbd-table {
+  width: 100%;
 }
 td {
   padding: 1rem 1.5rem;
