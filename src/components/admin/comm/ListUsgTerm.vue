@@ -312,7 +312,7 @@
                         <td>필수</td>
                         <td>2023-07-11</td>
                         <td>서비스 이용약관</td>
-                        <td class="left">약관 제목이 들어갑니다.</td>
+                        <td class="left">(개정) 스마트 병상배정 시스템 이용약관</td>
                         <td>Y</td>
                         <td>홍길동 (sbamaster)</td>
                         <td>-</td>
@@ -332,8 +332,8 @@
                         <td>SBA0101</td>
                         <td>필수</td>
                         <td>2023-07-11</td>
-                        <td>서비스 이용약관</td>
-                        <td class="left">약관 제목이 들어갑니다.</td>
+                        <td>개인정보 취급방침</td>
+                        <td class="left">스마트 병상배정 시스템 개인정보 취급방침</td>
                         <td>Y</td>
                         <td>홍길동 (sbamaster)</td>
                         <td>-</td>

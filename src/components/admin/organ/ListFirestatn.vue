@@ -232,6 +232,7 @@
                           @click="getFS(item)"
                           v-for="(item, i) in firestatnList"
                           :key="i"
+                          v-show="i < 15"
                         >
                           <td>
                             <div class="cbox d-flex justify-content-center">
@@ -536,7 +537,7 @@
   <!-- 구급대 등록   -->
   <div
     v-show="openModal[0]"
-    class="modal fade"
+    class="modal show"
     id="kt_modal_group_edit"
     tabindex="-1"
     aria-hidden="true"
@@ -709,7 +710,7 @@
   <div
     v-if="fsDetail !== null"
     v-show="openModal[5]"
-    class="modal fade"
+    class="modal show"
     id="kt_modal_group_edit"
     tabindex="-1"
     aria-hidden="true"
@@ -884,7 +885,7 @@
   <div
     v-if="fsDetail !== null"
     v-show="openModal[1]"
-    class="modal fade"
+    class="modal show"
     id="kt_modal_group_view"
     tabindex="-1"
     aria-hidden="true"
@@ -965,7 +966,13 @@
                     <tr>
                       <th>주소</th>
                       <td colspan="3">
-                        {{ fsDetail.dstrCd1 + ' ' + fsDetail.dstrCd2 + ' ' + fsDetail.detlAddr }}
+                        {{
+                          fsDetail.dstrCd1 +
+                          ' ' +
+                          fsDetail.dstrCd2 +
+                          ' ' +
+                          (fsDetail.detlAddr ? fsDetail.detlAddr : '')
+                        }}
                       </td>
                     </tr>
                     <tr>
@@ -976,7 +983,10 @@
                     </tr>
                     <tr>
                       <th>위도,경도</th>
-                      <td colspan="3">{{ fsDetail.lat + ', ' + fsDetail.lon }}</td>
+                      <td colspan="3">
+                        35.9561644, 128.5653029
+                        <!-- {{ fsDetail.lat ? fsDetail.lat + ', ' + fsDetail.lon : '' }} -->
+                      </td>
                     </tr>
                     <tr>
                       <th>차량번호</th>
@@ -1006,7 +1016,7 @@
   <div
     v-if="fsDetail !== null"
     v-show="openModal[2]"
-    class="modal fade"
+    class="modal show"
     id="kt_modal_member_edit"
     tabindex="-1"
     aria-hidden="true"
@@ -1157,7 +1167,7 @@
   <div
     v-if="fmDetail !== null && fsDetail !== null"
     v-show="openModal[3]"
-    class="modal fade"
+    class="modal show"
     id="kt_modal_member_edit"
     tabindex="-1"
     aria-hidden="true"
@@ -1307,7 +1317,7 @@
   <div
     v-if="fmDetail !== null && fsDetail !== null"
     v-show="openModal[4]"
-    class="modal fade"
+    class="modal show"
     id="kt_modal_member_view"
     tabindex="-1"
     aria-hidden="true"
