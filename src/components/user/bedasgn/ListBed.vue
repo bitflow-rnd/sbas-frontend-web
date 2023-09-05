@@ -3941,7 +3941,7 @@
                       <th>#3</th>
                       <td colspan="3">
                         <div class="item-cell-box">
-                          <div v-if="firemenList.items" class="sbox" style="width: 128px">
+                          <div v-if="firemenList.items !== null && firemenList.items !== undefined" class="sbox" style="width: 128px">
                             <select v-model="trsfInfo.crew3Id">
                               <option value="구급대원">구급대원 선택</option>
                               <option
@@ -4184,7 +4184,7 @@
                   <tbody>
                     <tr>
                       <th>병원명</th>
-                      <td colspan="3">{{ getChrgTL(timeline.items, 0) }}</td>
+                      <td colspan="3">{{ timeline ? getChrgTL(timeline.items, 0):'' }}</td>
                     </tr>
 
                     <tr>
