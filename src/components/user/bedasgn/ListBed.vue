@@ -3363,7 +3363,7 @@
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0006' &&
-                                    userInfo.jobCd === 'PMGR0003'
+                                    userInfo.jobCd === 'PMGR0002'
                                   "
                                   data-bs-toggle="modal"
                                   data-bs-target="#kt_modal_hospitalization"
@@ -5293,7 +5293,6 @@ export default {
         this.aprv.ptId = this.bdDetail.ptId
         this.aprv.bdasSeq = this.bdDetail.bdasSeq
         this.$store.dispatch('bedasgn/aprvBedAsgn', this.aprv)
-        this.getBdList()
         this.alertClose()
         this.alertOpen(8)
       } else if (res === 8) {
