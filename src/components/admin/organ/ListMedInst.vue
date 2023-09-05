@@ -117,7 +117,7 @@
             <article class="table-form-layout1">
               <div class="form-head-box"></div>
 
-              <div class="form-body-box">
+              <div v-if="medinstList!== undefined" class="form-body-box">
                 <div class="table-form-toggle-box">
                   <router-link to="" class="table-form-toggle-btn" @click="toggleTable">
                     <i class="fa-solid" :class="showTable ? 'fa-angle-up' : 'fa-angle-down'"></i>
@@ -443,24 +443,24 @@
           </div>
           <!--end::Card header-->
           <!--begin::Card body-->
-          <div class="card-body p-8">
+          <div v-if='medinstList.items !== undefined' class="card-body p-8">
             <!--begin::Table-->
             <h5>
               검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{
-                medinstList.length
+                medinstList.items.length
               }}</span>
             </h5>
 
             <article class="table-list-layout1">
               <div class="table-body-box">
-                <div v-if="medinstList.length === 0" class="table-nodata py-40">
+                <div v-if="medinstList.items.length === 0" class="table-nodata py-40">
                   <div class="img-box">
                     <img src="/img/common/img_nodata.svg" alt="이미지" />
                   </div>
 
                   <div class="txt-box pt-10">조회 결과가 없습니다.</div>
                 </div>
-                <div v-if="medinstList.length !== 0" class="table-box with-scroll small">
+                <div v-if="medinstList.items.length !== 0" class="table-box with-scroll small">
                   <table>
                     <colgroup>
                       <col style="width: 70px" />
@@ -542,8 +542,8 @@
                     </thead>
 
                     <tbody>
-                      <tr v-for="(item, i) in medinstList" :key="i">
-                        <td>{{ i + 1 }}</td>
+                      <tr v-for="(item, i) in medinstList.items" :key="i">
+                        <td>{{ medinstList.items.length-i }}</td>
                         <td>
                           <div class="cbox d-flex justify-content-center">
                             <label> <input type="checkbox" /><i></i> </label>
@@ -562,11 +562,11 @@
                         >
                           <div class="text-start text-black">{{ item.dutyName }}</div>
                           <div class="text-gray-600 fs-12px">
-                            {{ item.dstrCd1 }} {{ item.dstrCd2 }}/ {{ item.dutyDivNam }}
+                              {{ item.dutyDivNam }}
                           </div>
                         </td>
                         <td>
-                          {{ item.dutyTel1 }}
+                          {{ item.dutyTel1 }} <br>/ {{ item.dutyTel3 }}
                         </td>
                         <td>
                           <i
@@ -750,7 +750,7 @@
                   </ul>
                 </div>
               </div>
-            </div>
+
 
             <!--end::Table-->
           </div>

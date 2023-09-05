@@ -65,6 +65,9 @@ export default {
     setRcmdHp(state, payload) {
       state.rcmdHp = payload
     },
+    setTransInfo(state, payload) {
+      state.transInfo = payload
+    },
     isTrsf(state, payload) {
       state.isTrsf = payload
     },
@@ -246,6 +249,27 @@ export default {
         console.log(e)
       }
     },
+    /*출도착정보조회*/
+    async getTransInfo(comment, data) {
+      const token = localStorage.getItem('userToken')
+      const url = `${API_PROD}/api/v1/private/patient/transinfo/${data.ptId}/${data.bdasSeq}`
+      // const url = `http://localhost:8080/api/v1/private/patient/disease-info/${data.ptId}`
+      console.log('병상배정 - 출도착정보조회')
+      try {
+        const response = await axios.get(url,{
+          headers: {
+            Authorization: `Bearer ${token}` // Add the token to the Authorization header
+          }
+          })
+        if (response.data?.code === '00') {
+          console.log(response.data?.result)
+          comment.commit('setTransInfo',response.data?.result);
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
     /* 병상 승인 - 병상배정반 */
     async aprvBedAsgn(comment, data) {
       const token = localStorage.getItem('userToken')
@@ -280,7 +304,7 @@ export default {
         })
         if (response.data?.code === '00') {
           console.log(response.data?.result)
-          comment.commit('isCfmMedi', response.data?.result)
+          //comment.commit('isCfmMedi', response.data?.result)
         }
       } catch (e) {
         console.log(e)

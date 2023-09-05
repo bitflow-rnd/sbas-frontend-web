@@ -249,7 +249,7 @@ export default {
                         console.log(data)
                         comment.dispatch('getFiremen',data);
 
-                        return router.push('/admin/organ/firestatn/list');
+                        //return router.push('/admin/organ/firestatn/list');
                     } else {
                         comment.commit('setFirestatn',[])
                         comment.commit('setFSDetail',null)
