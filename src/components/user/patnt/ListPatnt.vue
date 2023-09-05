@@ -1087,7 +1087,7 @@
                               <div class="item-img-group mb-4">
                                 <div class="img-list"></div>
                               </div>
-                              <div class="msg-box" v-show="item.msg !== null">{{ item.msg }}</div>
+                              <div class="msg-box" v-if="item.msg">{{ item.msg }}</div>
                             </div>
                           </div>
                         </li>
@@ -1896,7 +1896,7 @@
                           <th>기타 진단 이미지·영상 <span class="text-primary">*</span></th>
                           <td colspan="3">
                             <article class="upload-form-layout1">
-                              <div class="upload-result-wrap">
+                              <div class="upload-result-wrap d-none">
                                 <div class="img-upload-result">
                                   <div class="img-list">
                                     <div href="javascript:void(0)" class="img-box">

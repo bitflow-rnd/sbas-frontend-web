@@ -1,6 +1,6 @@
 <template>
   <article class="table-list-layout1">
-    <h3>중증환자 발생 목록</h3>
+    <h3>중증환자 발생/예측 목록</h3>
     <div class="table-body-box">
       <div class="table-box with-scroll small">
         <table class="list-table-hoverable">
@@ -9,7 +9,8 @@
               <th>배정상태</th>
               <th>인적사항</th>
               <th>중증도</th>
-              <th>최근업데이트</th>
+              <th>NEWS</th>
+              <th>예측일</th>
             </tr>
           </thead>
           <tbody v-if="model.list">
@@ -22,6 +23,7 @@
                 <td class="red">
                   {{ pt.hospNm ? pt.hospNm : '중증' }}
                 </td>
+                <td>13</td>
                 <td>
                   {{ getDate(pt.updtDttm) }}
                 </td>
