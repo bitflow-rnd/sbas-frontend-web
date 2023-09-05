@@ -5333,12 +5333,6 @@ export default {
         this.alertOpen(13)
       }
     },
-    alertClose() {
-      this.errMsg = ''
-      this.cncBtn = false
-      this.isAlert = false
-      this.alertIdx = 100
-    },
     setActive(idx) {
       this.tabidx = idx
       this.loadNaverMapAsync()
@@ -5556,7 +5550,7 @@ export default {
       crewInfo.telno = data.telno
     },
     getChrgTL(data, idx) {
-      if (data !== null) {
+      if (data.length !== 0 ) {
         const result = data.find((item) => item.title.includes('입원'))
 
         if (result) {
