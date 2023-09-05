@@ -1345,7 +1345,9 @@ article.like-btn .like-btn.on .fa-regular {
 article.like-btn .like-btn .fa-solid {
   display: none;
 }
-
+.timeline-wrap {
+  padding-bottom: 90px;
+}
 .modal.show { background-color: rgba(0,0,0,0.4); }
 .modal .modal-header h2 {
   margin: 0; font-size: 1.5rem;
@@ -1353,7 +1355,9 @@ article.like-btn .like-btn .fa-solid {
 .modal .modal-header .svg-icon {
   color: #000;
 }
-
+.view-contents { font-size: 1.4rem;
+  line-height: 2.8rem;
+}
 article.modal-profile-layout1 .profile-upload-box .upload-box {
   display: inline-flex;
 }

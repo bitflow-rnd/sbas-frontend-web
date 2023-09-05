@@ -47,7 +47,7 @@
             </li>
             <li class="depth1-box">
               <router-link
-                to='/admin/organ/firestatn/list'
+                to="/admin/organ/firestatn/list"
                 @click="handlefunc(getFireStatn, 8)"
                 :class="{ active: tabidx === 8 }"
                 class="depth1-btn"
@@ -90,7 +90,7 @@
                 >약관/방침 관리</router-link
               >
             </li>
-            <li class="depth1-box">
+            <li class="depth1-box d-none">
               <router-link
                 to="#none"
                 @click="setActive(4)"
