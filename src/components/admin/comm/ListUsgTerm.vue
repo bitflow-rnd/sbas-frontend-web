@@ -85,14 +85,6 @@
               data-bs-target="#kt_modal_view_users"
               ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
             >
-            <a
-              href="#"
-              class="btn btn-sm btn-flex btn-primary align-self-center px-3"
-              data-bs-toggle="modal"
-              data-bs-target="#kt_modal_bedasgn_detail"
-            >
-              <i class="fa-solid fa-plus"></i> 등록
-            </a>
           </div>
           <!--end::Actions-->
         </div>
@@ -275,12 +267,8 @@
                 </div>
 
                 <div class="option-box">
-                  <a
-                    href="javascript:void(0)"
-                    class="btn btn-flex btn-xs btn-primary py-2"
-                    data-bs-toggle="modal"
-                    data-bs-target="#kt_modal_edit_board"
-                    >약관/방침 등록</a
+                  <a @click="showReg" role="button" class="btn btn-flex btn-xs btn-primary py-2"
+                    ><i class="fa-solid fa-plus"></i> 약관/방침 등록</a
                   >
                 </div>
               </div>
@@ -318,7 +306,7 @@
                     </thead>
 
                     <tbody>
-                      <tr>
+                      <tr @click="showDetail(1)">
                         <td>7</td>
                         <td>SBA0101</td>
                         <td>필수</td>
@@ -331,14 +319,15 @@
                         <td>-</td>
                         <td>
                           <a
-                            href="javascript:detailView()"
+                            role="button"
+                            @click="showMod($event, 1)"
                             class="btn btn-flex btn-xs btn-outline btn-outline-primary"
                             >수정</a
                           >
                         </td>
                       </tr>
 
-                      <tr>
+                      <tr @click="showDetail(2)">
                         <td>7</td>
                         <td>SBA0101</td>
                         <td>필수</td>
@@ -351,7 +340,8 @@
                         <td>-</td>
                         <td>
                           <a
-                            href="javascript:detailView()"
+                            role="button"
+                            @click="showMod($event, 2)"
                             class="btn btn-flex btn-xs btn-outline btn-outline-primary"
                             >수정</a
                           >
@@ -439,305 +429,53 @@
   </div>
   <!--end:::Main-->
 
-  <!--begin::Modals-->
-  <!--begin::Modal - 내정보-->
-  <div class="modal fade" id="kt_modal_edit_board" tabindex="-1" aria-hidden="true" style="">
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog mw-1500px modal-dialog-centered">
-      <!--begin::Modal content-->
-      <div class="modal-content">
-        <!--begin::Modal header-->
-        <div class="modal-header px-10 py-5 d-flex justify-content-between">
-          <!--begin::Modal title-->
-          <h2>약관/방침 등록/수정</h2>
-          <!--end::Modal title-->
-          <!--begin::Close-->
-          <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class="svg-icon svg-icon-1">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  opacity="0.5"
-                  x="6"
-                  y="17.3137"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(-45 6 17.3137)"
-                  fill="currentColor"
-                ></rect>
-                <rect
-                  x="7.41422"
-                  y="6"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(45 7.41422 6)"
-                  fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-            <!--end::Svg Icon-->
-          </div>
-          <!--end::Close-->
-        </div>
+  <!-- 약관 상세 모달 -->
+  <usg-term-detl-modal v-if="model.mode === 'detl'" @closeModal="closeModal" />
+  <!-- 약관 상세 모달 -->
 
-        <!--begin::Modal header-->
-        <!--begin::Modal body-->
-        <div class="modal-body scroll-y py-10 px-10">
-          <article class="table-form-layout1">
-            <div class="form-head-box"></div>
-
-            <div class="form-body-box">
-              <div class="table-box">
-                <table>
-                  <colgroup>
-                    <col style="width: 168px" />
-                    <col style="width: auto" />
-                    <col style="width: 168px" />
-                    <col style="width: auto" />
-                  </colgroup>
-                  <tbody>
-                    <tr>
-                      <th>약관구분 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="sbox w-175px me-5">
-                          <select>
-                            <option>서비스 이용약관</option>
-                          </select>
-                        </div>
-                      </td>
-                      <th>시행일 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="tbox w-150px with-calendar me-5">
-                          <input type="text" class="date-picker" placeholder="2023-01-23" />
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>제목 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="item-cell-box full">
-                          <div class="tbox full">
-                            <input type="text" value="" />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <th>내용 <span class="text-primary">*</span></th>
-                      <td>
-                        <MdEditor v-model="text" />
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <th>동의 조건 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="item-cell-box">
-                          <div class="rbox">
-                            <label>
-                              <input type="radio" name="agree" checked />
-                              <i></i><span class="txt">필수</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" name="agree" />
-                              <i></i><span class="txt">선택</span>
-                            </label>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <th>노출 여부 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="item-cell-box">
-                          <div class="rbox">
-                            <label>
-                              <input type="radio" name="public" checked />
-                              <i></i><span class="txt">노출</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" name="public" />
-                              <i></i><span class="txt">미노출</span>
-                            </label>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-
-          <article class="modal-menu-layout1 pt-10">
-            <div class="modal-menu-list">
-              <a
-                href="javascript:void(0)"
-                class="modal-menu-btn menu-cancel"
-                data-bs-dismiss="modal"
-                >닫기</a
-              >
-              <a
-                href="javascript:confirmPopupOpen('저장 하시겠습니까?',function() {confirmPopupClose(); alertPopupOpen('저장 되었습니다');	})"
-                class="modal-menu-btn menu-primary"
-                >저장</a
-              >
-            </div>
-          </article>
-        </div>
-        <!--end::Modal body-->
-      </div>
-      <!--end::Modal content-->
-    </div>
-    <!--end::Modal dialog-->
-  </div>
-
-  <div class="modal fade" id="kt_modal_board_view" tabindex="-1" aria-hidden="true">
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog mw-800px modal-dialog-centered">
-      <!--begin::Modal content-->
-      <div class="modal-content">
-        <!--begin::Modal header-->
-        <div class="modal-header px-10 py-5 d-flex justify-content-between">
-          <!--begin::Modal title-->
-          <h2>병상배정 서비스 이용약관</h2>
-          <!--end::Modal title-->
-          <!--begin::Close-->
-
-          <div class="btn-list">
-            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-              <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-              <span class="svg-icon svg-icon-1">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    opacity="0.5"
-                    x="6"
-                    y="17.3137"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(-45 6 17.3137)"
-                    fill="currentColor"
-                  ></rect>
-                  <rect
-                    x="7.41422"
-                    y="6"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(45 7.41422 6)"
-                    fill="currentColor"
-                  ></rect>
-                </svg>
-              </span>
-              <!--end::Svg Icon-->
-            </div>
-          </div>
-
-          <!--end::Close-->
-        </div>
-
-        <!--begin::Modal header-->
-        <!--begin::Modal body-->
-        <div class="modal-body scroll-y py-10 px-10">
-          <article class="table-form-layout1">
-            <div class="form-head-box"></div>
-
-            <div class="form-body-box">
-              <div class="table-box">
-                <table>
-                  <colgroup>
-                    <col style="width: 168px" />
-                    <col style="width: auto" />
-                    <col style="width: 168px" />
-                    <col style="width: auto" />
-                  </colgroup>
-                  <tbody>
-                    <tr>
-                      <th>번호</th>
-                      <td>1</td>
-                      <th>약관코드</th>
-                      <td>SBA0101</td>
-                    </tr>
-
-                    <tr>
-                      <th>약관 구분</th>
-                      <td>서비스 이용약관</td>
-                      <th>시행일</th>
-                      <td>2023-05-05</td>
-                    </tr>
-
-                    <tr>
-                      <th>동의 조건</th>
-                      <td>필수</td>
-                      <th>노출 여부</th>
-                      <td>노출</td>
-                    </tr>
-
-                    <tr>
-                      <th>등록일시</th>
-                      <td>2023-05-05 10:00</td>
-                      <th>등록자</th>
-                      <td>홍길동(honggd)</td>
-                    </tr>
-
-                    <tr>
-                      <th>수정일시</th>
-                      <td>2023-05-06 10:00</td>
-                      <th>수정자</th>
-                      <td>홍길동(honggd)</td>
-                    </tr>
-                    <tr>
-                      <th>내용</th>
-                      <td colspan="3">
-                        약관 내용이 들어갑니다. 약관 내용이 들어갑니다. 약관 내용이 들어갑니다. 약관
-                        내용이 들어갑니다. 약관 내용이 들어갑니다. 약관 내용이 들어갑니다.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-        </div>
-        <!--end::Modal body-->
-      </div>
-      <!--end::Modal content-->
-    </div>
-    <!--end::Modal dialog-->
-  </div>
-  <!--end::Modal - 내정보-->
+  <!-- 약관 등록/수정 모달 -->
+  <usg-term-reg-modal
+    v-if="model.mode === 'reg' || model.mode === 'mod'"
+    :mode="model.mode"
+    :seq="model.seq"
+    @closeModal="closeModal"
+  />
+  <!-- 약관 등록/수정 모달 -->
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { MdEditor } from 'md-editor-v3'
-import 'md-editor-v3/lib/style.css'
+import UsgTermRegModal from '@/components/user/modal/UsgTermRegModal'
+import UsgTermDetlModal from '@/components/user/modal/UsgTermDetlModal'
+import { reactive } from 'vue'
 
-const text = ref('Hello Editor!')
+let model = reactive({
+  mode: '',
+  seq: null
+})
+
+function showDetail(seq) {
+  model.mode = 'detl'
+  model.seq = seq
+}
+
+function showReg() {
+  model.mode = 'reg'
+}
+
+function showMod(e, seq) {
+  model.mode = 'mod'
+  model.seq = seq
+  e.stopPropagation()
+}
+
+function closeModal() {
+  model.mode = ''
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style></style>
+<style scoped>
+.modal {
+  display: block;
+}
+</style>
