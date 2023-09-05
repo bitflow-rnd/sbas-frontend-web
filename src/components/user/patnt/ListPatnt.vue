@@ -966,7 +966,7 @@
                 </div>
               </div>
 
-              <div class="detail-info-box">
+              <div v-if="bdasHis !== undefined" class="detail-info-box">
                 <div class="detail-head-box px-10">
                   <div class="head-box">
                     <div class="head-txt-box">병상배정 이력</div>
@@ -984,27 +984,28 @@
                             <col style="width: 50px" />
                             <col style="width: auto" />
                           </colgroup>
-                          <tr>
-                            <td class="py-5 px-3 text-center text-gray-700 fw-medium fs-6">1차</td>
+                          <tr v-for="(item,i) in bdasHis.items" :key="i">
+                            <td class="py-5 px-3 text-center text-gray-700 fw-medium fs-6">{{item.order}}차</td>
                             <td class="py-5 px-3">
                               <div class="top-info-box d-flex align-items-center">
                                 <div
                                   class="d-inline-flex align-items-center justify-content-center w-auto bg-primary h-25px w-65px text-white rounded-2 px-0 w-auto"
+                                  :class = "{'bg-gray-500' : item.bedStatCdNm === '완료'}"
                                 >
-                                  병상요청
+                                    {{ item.bedStatCdNm }}
                                 </div>
                                 <div
                                   class="d-inline-flex align-items-center justify-content-center w-auto bg-gray-500 h-25px w-65px text-white rounded-2 px-0 w-auto d-none"
                                 >
-                                  완료
+                                    뭐야?
                                 </div>
 
-                                <div class="eclipse-box mx-3">대구북구보건소</div>
-                                <div class="date-box text-gray-700 fw-regular">2023-03-11</div>
+                                <div class="eclipse-box mx-3">{{ item.hospNm ? item.hospNm : '-' }}</div>
+                                <div class="date-box text-gray-700 fw-regular">{{ item.updttDttm ? getDt(item.updtDttm) : '' }}</div>
                               </div>
                               <div class="bottom-info-box d-flex mt-2">
-                                <div class="name-box">칠곡경북대병원</div>
-                                <div class="tag-box text-primary ms-2">#중증 #투석</div>
+<!--                                <div class="name-box">{{ item.hospNm ? item.hospNm : '-' }}</div>-->
+                                <div class="tag-box text-primary ms-2">{{ item.tagList ? getTag(item.tagList) : '-' }}</div>
                               </div>
                             </td>
                           </tr>
@@ -1033,7 +1034,7 @@
                 <div class="detail-head-box px-10 h-80px">
                   <div class="head-box d-flex">
                     <div class="head-txt-box">타임라인</div>
-                    <div v-if="timeline !== null" class="head-sub-box">
+                    <div v-if="timeline !== null && timeline !== undefined" class="head-sub-box">
                       <div
                         class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2"
                       >
@@ -1062,18 +1063,24 @@
                       style="height: 100%"
                     >
                       <ul>
-                        <li
-                          v-for="(item, idx) in timeline.items"
-                          :key="idx"
-                          :class="{ off: item.timeLineStatus === 'complete' }"
-                        >
-                          <div class="ic-box">
+                          <li
+                              v-for="(item, idx) in timeline.items"
+                              :key="idx"
+                              :class="{
+                              off: item.timeLineStatus === 'complete',
+                              'custom-style':
+                                idx < timeline.items.length - 1 &&
+                                timeline.items[idx + 1].timeLineStatus === 'closed'
+                            }"
+                          >
+                          <div class="ic-box" v-if="item.timeLineStatus !== 'closed'">
                             <img :src="getTLIcon(item, idx)" alt="이미지" />
                           </div>
 
                           <div
                             class="item-box"
                             :class="{ suspend: item.timeLineStatus === 'suspend' }"
+                            v-if="item.timeLineStatus !== 'closed'"
                           >
                             <div class="top-item-box">
                               <div class="state-box">{{ item.title }}</div>
@@ -1083,11 +1090,10 @@
                             </div>
                             <div class="mid-item-box">{{ item.by }}</div>
                             <div class="bottom-item-box">
-                              <!--todo: timeline에서 받아오는 img 파일이 없는데-->
                               <div class="item-img-group mb-4">
                                 <div class="img-list"></div>
                               </div>
-                              <div class="msg-box" v-show="item.msg !== null">{{ item.msg }}</div>
+                              <div class="msg-box" v-if="item.msg">{{ item.msg }}</div>
                             </div>
                           </div>
                         </li>
@@ -3053,17 +3059,17 @@
 import DataPagination from '@/components/layout/DataPagination'
 import { mapState } from 'vuex'
 import {
-  backBtn,
-  getAge,
-  getGndr,
-  getTag,
-  getTelno,
-  getTLDt,
-  getTLIcon,
-  goAsgn,
-  openAddressFinder,
-  regNewPt,
-  showPopup
+    backBtn,
+    getAge, getDt,
+    getGndr,
+    getTag,
+    getTelno,
+    getTLDt,
+    getTLIcon,
+    goAsgn,
+    openAddressFinder,
+    regNewPt,
+    showPopup
 } from '@/util/ui'
 import { ref } from 'vue'
 
@@ -3188,7 +3194,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('bedasgn', ['timeline', 'ptDs']),
+    ...mapState('bedasgn', ['timeline', 'ptDs','bdasHis']),
     ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
     startIndex() {
@@ -3233,6 +3239,7 @@ export default {
     }
   },
   methods: {
+      getDt,
     backBtn,
     goAsgn,
     getAge,
@@ -3383,6 +3390,7 @@ export default {
         this.$store.commit('bedasgn/setDisesInfo', null)
       }
       await this.$store.dispatch('patnt/getBasicInfo', patient)
+      await this.$store.dispatch('bedasgn/getBdasHisInfo', patient)
 
       if (this.ptDetail !== null) {
         this.newPt = this.ptDetail
@@ -3485,5 +3493,12 @@ export default {
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+li.custom-style::before {
+    display: none;
+}
+.bg-gray-500 {
+    --bs-bg-rgb-color: var(--bs-gray-500-rgb);
+    background-color: var(--bs-gray-500) !important;
 }
 </style>

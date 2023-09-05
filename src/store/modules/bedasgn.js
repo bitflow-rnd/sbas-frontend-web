@@ -68,6 +68,9 @@ export default {
     setTransInfo(state, payload) {
       state.transInfo = payload
     },
+    setBdasHisInfo(state, payload) {
+      state.bdasHis = payload
+    },
     isTrsf(state, payload) {
       state.isTrsf = payload
     },
@@ -243,7 +246,7 @@ export default {
         const response = await axios.get(url)
         if (response.data?.code === '00') {
           console.log(response.data?.result)
-          // comment.commit('setDisesInfo',response.data?.result);
+           comment.commit('setBdasHisInfo',response.data?.result);
         }
       } catch (e) {
         console.log(e)

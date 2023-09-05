@@ -347,7 +347,7 @@
                             <label> <input type="checkbox" class="all-chk" /><i></i> </label>
                           </div>
                         </td>
-                        <td>{{ userList.length-1 }}</td>
+                        <td>{{ userList.length-i }}</td>
                         <td>{{ item.dutyDstr1CdNm }}</td>
                         <td>{{ getInstNm(item.instTypeCd) }}</td>
                         <td>{{ item.instNm }}</td>
