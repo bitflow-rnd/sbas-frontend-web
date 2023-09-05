@@ -4737,7 +4737,7 @@
   </article>
 
   <!--  배정 불가  -->
-  <article v-show="popup === 4" class="popup popup-assignment-cancel" style="">
+  <article v-show="popup === 4" class="popup popup-assignment-cancel"  tabindex="-3" style="">
     <div class="popup-wrapper">
       <div class="popup-contents">
         <div class="popup-head-box py-5 px-10">
@@ -4829,7 +4829,7 @@
 
             <div>
               <div class="textbox">
-                <textarea
+                <textarea id="deniedAsgn"
                   @input="updateCharacterCount(0)"
                   maxlength="500"
                   placeholder="메시지 입력"

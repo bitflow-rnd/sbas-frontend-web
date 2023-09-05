@@ -112,7 +112,9 @@ export async function showPopup(idx) {
         }
     } else if (idx === 1) {
         /*병상 배정 불가*/
+        this.closeModal()
         this.popup = 4
+        document.getElementById('deniedAsgn').focus()
     } else if (idx === 2 && this.timeline !== null) {
         console.log('요청'+this.userInfo.jobCd)
         if (this.userInfo.jobCd === 'PMGR0002' && this.bdDetail.bedStatCd !== 'BAST0004') {
