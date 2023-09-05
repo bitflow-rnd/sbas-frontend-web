@@ -1896,6 +1896,7 @@
     </div>
     <!--end::Modal dialog-->
   </div>
+  </div>
 
   <!--end::Modals-->
 </template>
