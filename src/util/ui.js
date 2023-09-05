@@ -138,6 +138,9 @@ export async function showPopup(idx) {
         //this.alertOpen(3)
     }
 }
+export function toggleCheckbox() {
+    event.stopPropagation()
+}
 export function backBtn(idx){
     this.tab = idx
     this.popup = 100

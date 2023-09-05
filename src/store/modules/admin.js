@@ -45,6 +45,9 @@ export default {
         setMedinst(state,payload){
             state.medinstList = payload;
         },
+        setMedinstDetail(state,payload){
+            state.medinstDetail = payload;
+        },
         setFSDetail(state,payload){
           state.fsDetail = payload;
           //this.dispatch('admin/getGuGun',state.fsDetail.dstrCd1);
@@ -456,6 +459,50 @@ export default {
             }
 
         },
+        /*의료기관 상세*/
+        async getMedinstDetail(comment,request){
+
+            // const token = localStorage.getItem('userToken')
+            // console.log(data.cd1, data.cd2)
+            const url = `${API_PROD}/api/v1/public/organ/medinst/${request.hpId}`
+
+            try {
+                const response = await axios.get(url)
+                console.log('의료기관 상세')
+                if(response.data.code==='00'){
+                    comment.commit('setMedinstDetail',response.data?.result)
+                    console.log(response.data)
+
+                }
+
+            } catch(e){
+                console.log(e)
+            }
+
+        },
+        /*의료기관 이미지 삭제*/
+
+        removeMedinstImg(comment, request) {
+            const token = localStorage.getItem('userToken')
+            // console.log(data.cd1, data.cd2)
+            const url = `${API_PROD}/api/v1/public/organ/delete-medinstimg/${request.hpId}`;
+
+            return axios.get(url,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(response => {
+                    console.log('의료기관  이미지 삭제');
+                    if (response.data.code === '00') {
+                       // comment.commit('setMedinstDetail', response.data?.result);
+                        console.log(response.data);
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
 
 
         loadCodeGroupsData() {

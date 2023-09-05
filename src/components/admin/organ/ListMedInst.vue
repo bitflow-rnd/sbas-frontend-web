@@ -542,11 +542,11 @@
                     </thead>
 
                     <tbody>
-                      <tr v-for="(item, i) in medinstList.items" :key="i">
+                      <tr v-for="(item, i) in medinstList.items" :key="i" @click="openMedInstDetail(item)">
                         <td>{{ medinstList.items.length-i }}</td>
-                        <td>
-                          <div class="cbox d-flex justify-content-center">
-                            <label> <input type="checkbox" /><i></i> </label>
+                        <td  @click="toggleCheckbox">
+                          <div  @click="toggleCheckbox" class="cbox d-flex justify-content-center">
+                            <label> <input type="checkbox" @click="toggleCheckbox"  /><i></i> </label>
                           </div>
                         </td>
                         <td>
@@ -556,8 +556,7 @@
                           ></i>
                         </td>
                         <td
-                          data-bs-toggle="modal"
-                          data-bs-target="#kt_modal_medinst_view"
+
                           class="text-start"
                         >
                           <div class="text-start text-black">{{ item.dutyName }}</div>
@@ -764,15 +763,15 @@
   <!--end:::Main-->
   <!--begin::Modals-->
   <div
-    v-show="openModal"
+    v-show="showModal"
     class="modal fade"
     id="kt_modal_medinst_view"
     tabindex="-1"
-    aria-hidden="true"
-    style=""
+    aria-hidden="false"
+    :class="{'show' : showModal}"
   >
     <!--begin::Modal dialog-->
-    <div class="modal-dialog mw-1500px modal-dialog-centered">
+    <div v-if="medinstDetail !== undefined" class="modal-dialog mw-1500px modal-dialog-centered">
       <!--begin::Modal content-->
       <div class="modal-content">
         <!--begin::Modal header-->
@@ -781,9 +780,9 @@
           <h2>의료기관 세부 정보</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
-          <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+          <div class="btn btn-sm btn-icon btn-active-color-primary">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span @click="toggleModal" class="svg-icon svg-icon-1">
+            <span @click="closeModal" class="svg-icon svg-icon-1">
               <svg
                 width="24"
                 height="24"
@@ -820,7 +819,7 @@
             <div class="img-box">
               <img src="/img/common/ic_lnb_organ.svg" alt="이미지" />
             </div>
-            <div class="txt-box">칠곡경북대학교병원</div>
+            <div class="txt-box">{{ medinstDetail.infoHosp.dutyName }}</div>
           </article>
         </div>
 
@@ -877,13 +876,11 @@
                                       class="profile-view-box"
                                       style="width: 220px; height: 220px"
                                     >
-                                      <img src="/img/common/img_profile_dummy.png" alt="이미지" />
-                                      <a
-                                        href="javascript:confirmPopupOpen('기관 이미지를<br/>삭제하시겠습니까?',
-                                                                        function() { profileImgRemove();confirmPopupClose();alertPopupOpen('기관 이미지가<br/>삭제되었습니다.');})"
+                                      <img v-if="medinstDetail.infoHosp.attcId===null ||medinstDetail.infoHosp.attcId ==='' " src="/img/common/img_upload_img.svg" alt="이미지" />
+                                      <router-link to="" @click="alertOpen(0)"
                                         class="remove-btn"
                                         ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
-                                      /></a>
+                                      /></router-link>
                                     </div>
 
                                     <div class="profile-upload-box d-flex align-items-center pt-4">
@@ -904,47 +901,47 @@
                                 </article>
                               </td>
                               <th>기관ID (구ID)</th>
-                              <td>A1300010 (11100109)</td>
+                              <td>{{ medinstDetail.infoHosp.hpId }} (11100109)</td>
                             </tr>
 
                             <tr>
                               <th>기관명</th>
-                              <td>칠곡경북대학교병원</td>
+                              <td>{{ medinstDetail.infoHosp.dutyName }}</td>
                             </tr>
 
                             <tr>
                               <th>병원분류</th>
-                              <td>상급종합병원</td>
+                              <td>{{ medinstDetail.infoHosp.dutyDivNam }}</td>
                             </tr>
 
                             <tr>
                               <th>병원분류명</th>
-                              <td>상급종합병원</td>
+                              <td>{{ medinstDetail.infoHosp.dutyDivNam }}</td>
                             </tr>
 
                             <tr>
                               <th>응급의료기관분류</th>
-                              <td>지역응급의료센터</td>
+                              <td>지역응급의료센터 수정</td>
                             </tr>
 
                             <tr>
                               <th>응급의료기관분류명</th>
-                              <td>지역응급의료센터</td>
+                              <td>지역응급의료센터 수정</td>
                             </tr>
 
                             <tr>
                               <th rowspan="6">간이약도</th>
                               <td rowspan="6">
                                 <div class="" style="max-width: 300px">
-                                  <div class="h-200px" style="">지도 영역</div>
+                                  <div class="h-200px" style="" id ='map'></div>
 
-                                  <div class="pt-4 text-center">
-                                    위도 : 37.5327845 / 경도 : 126.859536
+                                  <div class="pt-4 ">
+                                    위도 : {{ medinstDetail.infoHosp.wgs84Lat }} /<br> 경도 : {{ medinstDetail.infoHosp.wgs84Lon }}
                                   </div>
                                 </div>
                               </td>
                               <th>대표전화</th>
-                              <td>1533-8888</td>
+                              <td>{{medinstDetail.infoHosp.dutyTel1}}</td>
                             </tr>
 
                             <tr>
@@ -964,17 +961,16 @@
 
                             <tr>
                               <th>주소</th>
-                              <td>
+                              <td><!--todo: 우편번호 필요한지 확인-->
                                 <div class="eclipse-line2-box">
-                                  (41404) 대구광역시 북구 호국로 807, 칠곡경북대학교병원(임상실습동
-                                  1~11층 포함) (학정동) 주소 최대 2줄 표시
+                                    {{medinstDetail.infoHosp.dutyAddr }}
                                 </div>
                               </td>
                             </tr>
 
                             <tr>
                               <th>기관설명</th>
-                              <td>-</td>
+                              <td>{{medinstDetail.infoHosp.dutyInf ? medinstDetail.infoHosp.dutyInf : '-'}}</td>
                             </tr>
 
                             <tr>
@@ -1896,15 +1892,49 @@
     </div>
     <!--end::Modal dialog-->
   </div>
-  </div>
 
+  </div>
+    <div v-show="showModal" class="modal-backdrop fade" ></div>
   <!--end::Modals-->
+  <!--  alert창  -->
+    <article v-show="isAlert" class="popup popup-confirm" style="z-index: 1600">
+        <div class="popup-wrapper">
+            <div class="popup-contents py-10 px-10" style="width: 300px">
+                <article class="modal-alert-layout pb-10">
+                    <div class="alert-view-box pb-6">
+                        <img src="/img/common/ic_alert.svg" alt="이미지" />
+                    </div>
+                    <div class="alert-msg-box">{{ errMsg }}</div>
+                </article>
+                <article class="modal-menu-layout1">
+                    <div class="modal-menu-list">
+                        <router-link
+                                to=""
+                                @click="alertOpen(alertIdx)"
+                                class="modal-menu-btn menu-primary"
+                                data-type="success"
+                        >확인
+                        </router-link>
+                        <router-link
+                                v-show="cncBtn"
+                                to=""
+                                @click="alertClose"
+                                class="modal-menu-btn menu-cancel"
+                                data-type="cancel"
+                        >
+                            취소
+                        </router-link>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </article>
 </template>
 
 <script>
 import { ref } from 'vue'
 import { mapState } from 'vuex'
-import { getGugun, getSido } from '@/util/ui'
+import {getGugun, getSido, toggleCheckbox} from '@/util/ui'
 
 export default {
   components: {},
@@ -1913,30 +1943,39 @@ export default {
     msg: String
   },
   computed: {
-    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList'])
+    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList','medinstDetail'])
   },
-  mounted() {},
+  mounted() {
+      this.initNaverMap()
+  },
 
   setup() {
     const showTable = ref(false)
-    const openModal = ref(false)
-    const toggleModal = function () {
-      openModal.value = !openModal.value
-    }
+
     const toggleTable = function () {
       showTable.value = !showTable.value
     }
 
+    const isAlert = ref(false)
+    const cncBtn = ref(false)
+    const errMsg = ''
+
     return {
       showTable,
       toggleTable,
-      openModal,
-      toggleModal
+      isAlert,
+      errMsg,
+      cncBtn /* alert 취소버튼 유무 */
+
+
+
     }
   },
   data() {
     return {
+      showModal: false,
       tabidx: 0,
+      alertIdx: 100,
       doctorCount: 0, // 의료진 수
       search: {
         dutyDivNam: [],
@@ -1947,6 +1986,50 @@ export default {
     }
   },
   methods: {
+    async openMedInstDetail(data){
+        await this.$store.dispatch('admin/getMedinstDetail',data)
+        this.showModal= true
+        if(this.medinstDetail !== undefined){
+            this.loadNaverMapAsync()
+        }
+    },
+    closeModal(){
+        console.log('실행')
+        this.showModal = false
+        this.tabidx = 0
+    },
+    alertOpen(idx) {
+
+          this.cncBtn = false
+      if(idx===0){
+          /*기관이미지 삭제*/
+          this.errMsg = '기관 이미지를 삭제하시겠습니까?'
+          this.cncBtn = true
+          this.isAlert = true
+          this.alertIdx = 0
+      } else if(idx===1){
+          this.errMsg = '기관 이미지가 삭제되었습니다.'
+          this.isAlert = true
+          this.alertIdx = 1
+      }
+    },
+    cfrmAl(res) {
+        if (res === 0) {
+            console.log(0)
+            this.removeInstImg()
+            this.alertOpen(1)
+        } else if (res === 1) {
+            console.log('1')
+            this.alertClose()
+        }
+    },
+    alertClose() {
+        this.errMsg = ''
+        this.cncBtn = false
+        this.isAlert = false
+        this.alertIdx = 100
+    },
+    toggleCheckbox,
     getGugun,
     getSido,
     tabsMove(idx) {
@@ -1955,6 +2038,9 @@ export default {
     getMedinst() {
       console.log(this.search)
       this.$store.dispatch('admin/getMedinst', this.search)
+    },
+    removeInstImg(){
+        this.$store.dispatch('admin/removeMedinstImg',this.medinstDetail)
     },
     getUpDt(date) {
       if (date !== null && date !== undefined) {
@@ -1975,7 +2061,31 @@ export default {
       } else {
         this.search.hospId = this.inputValue
       }
-    }
+    },
+    initNaverMap() {
+        // 네이버 지도 API 로드
+        const script = document.createElement('script')
+        script.src = 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1ewyt3v33o'
+        script.async = true
+        script.defer = true
+        document.head.appendChild(script)
+    },
+    loadNaverMapAsync() {
+        // 네이버 지도 생성 // 35.9561644!4d128.5653029
+        const map = new window.naver.maps.Map('map', {
+            center: new window.naver.maps.LatLng(this.medinstDetail.infoHosp.wgs84Lat, this.medinstDetail.infoHosp.wgs84Lon),
+            zoom: 15,
+            zoomControlOptions: {
+                style: window.naver.maps.ZoomControlStyle.SMALL,
+                position: window.naver.maps.Position.TOP_RIGHT
+            }
+        })
+        new window.naver.maps.Marker({
+            position: new window.naver.maps.LatLng(this.medinstDetail.infoHosp.wgs84Lat, this.medinstDetail.infoHosp.wgs84Lon),
+            map: map
+        })
+    },
+
   }
 }
 </script>
@@ -1985,4 +2095,30 @@ export default {
 article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
   display: block;
 }
+
+
+.modal.show {
+    background-color: rgba(0,0,0,0.4);
+    display: block;
+}
+.modal-dialog {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.modal-backdrop .fade {
+    opacity: 0.4 !important;
+    display: block !important;
+}
+#map {
+    position: absolute;
+    width: 368px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #555;
+}
+.popup {
+    display: block;
+}
+
 </style>
