@@ -14,17 +14,11 @@
       </div>
       <!--end::Card header-->
       <!--begin::Card body-->
-      <div class="card-body" id="kt_chat_messenger_body">
+      <div class="card-body" id="kt_chat_messenger_body" ref='chatRoomScroll'>
         <!--begin::Messages-->
         <div
+
           class="scroll-y me-n5 pe-5 h-300px h-lg-auto message-room-in"
-          data-kt-element="messages"
-          data-kt-scroll="true"
-          data-kt-scroll-activate="{default: false, lg: true}"
-          data-kt-scroll-max-height="auto"
-          data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
-          data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
-          data-kt-scroll-offset="5px"
           v-if="model.messageList && model.messageList.length > 0"
         >
           <template v-for="(item, idx) in model.messageList" :key="idx">
@@ -50,10 +44,10 @@
               </label>
             </div>
             <div class="msg-input-box">
-              <input type="text" placeholder="메시지 입력" />
+              <input ref='messageTxt' type="text" placeholder="메시지 입력" />
             </div>
             <div class="msg-send-box">
-              <a href="#none" class="send-btn">
+              <a @click='sendMessage' class="send-btn" role='button'>
                 <img src="/img/common/ic_msg_send.svg" alt="이미지" />
               </a>
             </div>
@@ -71,9 +65,13 @@ import { defineProps, onMounted, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
 import MyMsg from '@/components/user/unit/MyMsg'
 import OtherMsg from '@/components/user/unit/OtherMsg'
+import { ref, inject } from 'vue'
+import { onMessage, onOpen, onClose, onError } from 'vue3-websocket'
 
 const store = useStore()
-// const emit = defineEmits('onUserSelected')
+const chatRoomScroll = ref()
+const messageTxt = ref()
+const socket = inject('socket')
 
 const props = defineProps({
   roomInfo: {
@@ -92,6 +90,8 @@ watch(
   (first, second) => {
     console.log('first second', first, second)
     loadMessages()
+    console.log('scroll', chatRoomScroll.value.scrollHeight)
+    // chatRoomScroll.value.scrollIntoView({ behavior: 'smooth' })
   }
 )
 
@@ -105,8 +105,33 @@ function loadMessages() {
   store.dispatch('user/getChatMessageListSync', model.roomInfo.tkrmId).then((result) => {
     // console.log('getChatMessageListSync', JSON.stringify(result))
     model.messageList = result
+    chatRoomScroll.value.scrollTop = chatRoomScroll.value.scrollHeight
   })
 }
+
+function sendMessage() {
+  console.log('sendMessage', messageTxt.value.value)
+  socket.value.send(messageTxt.value.value)
+  messageTxt.value.value = ''
+  loadMessages()
+}
+
+onOpen(() => {
+  console.log('WS connection is stable! ~uWu~')
+})
+
+onMessage(message => {
+  console.log('Got a message from the WS: ', message)
+  loadMessages()
+})
+
+onClose(() => {
+  console.log('No way, connection has been closed 😥')
+})
+
+onError(error => {
+  console.error('Error: ', error)
+})
 </script>
 
 <style scoped>

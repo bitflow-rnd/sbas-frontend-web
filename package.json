@@ -24,7 +24,8 @@
     "vue3-apexcharts": "^1.4.4",
     "vuex": "^4.0.2",
     "vuex-persistedstate": "^4.1.0",
-    "yup": "^1.2.0"
+    "yup": "^1.2.0",
+    "vue3-websocket" : "^1.0.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

@@ -6548,6 +6548,11 @@ vue3-apexcharts@^1.4.4:
   resolved "https://registry.npmjs.org/vue3-apexcharts/-/vue3-apexcharts-1.4.4.tgz"
   integrity sha512-TH89uZrxGjaDvkaYAISvj8+k6Bf1rUKFillc8oJirs5XZEPiwM1ELKZQ786wz0rfPqkSHHny2lqqUCK7Rw+LcQ==
 
+vue3-websocket@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/vue3-websocket/-/vue3-websocket-1.0.11.tgz#0489284d7f4a972a2386f831edbb169a673aea08"
+  integrity sha512-M/94CACXrrvhghKTRPEOl1m9ojd7mwfIaSpBPvnQ2UWFLL72A+/T2wSXNAH1zzqrgVXMujaVXfJ9TD1yhI4kKQ==
+
 vue@^3.2.13:
   version "3.3.4"
   resolved "https://registry.npmjs.org/vue/-/vue-3.3.4.tgz"

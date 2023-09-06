@@ -11,6 +11,11 @@ module.exports = defineConfig({
       '/api': {
         target: 'http://dev.smartbas.org'
       },
+      '/chat-rooms': {
+        target: 'ws://dev.smartbas.org/chat-rooms/3/TEST-APR-1',
+        ws: true,
+        changeOrigin: true
+      }
     }
   }
 })
