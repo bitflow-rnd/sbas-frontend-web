@@ -5676,6 +5676,7 @@ textarea.form-control-lg {
   /* transition: transform 0.3s ease-out; */
   /* transform: translate(0, -50%); */
 }
+.modal-dialog .modal-body { padding-top: 0 !important; }
 @media (prefers-reduced-motion: reduce) {
   .modal.fade .modal-dialog {
     transition: none;
@@ -33294,13 +33295,13 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 }
 
 .btn.btn-outline.btn-outline-light {
-  color: #181C32;
-  border-color: #181C32;
+  color: #595959;
+  border-color: #888;
   background-color: var(--bs-light);
 }
 .btn.btn-outline.btn-outline-light i,
 .btn.btn-outline.btn-outline-light .svg-icon {
-  color: #181C32;
+  color: #595959;
   font-size: 0.92rem;
 }
 .btn.btn-outline.btn-outline-light.dropdown-toggle:after {

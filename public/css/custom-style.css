@@ -272,11 +272,11 @@ section.cntc-info-view {
   border-right: 1px dashed #999;
 }
 section.cntc-info-view .view-head-box .view-img-box img {
-  max-width: 100%;
-  max-height: 100%;
-  width: 100%;
-  height: 100%;
-  opacity: 0.7;
+  border-radius: 9px;
+  border: 1px solid #333;
+  margin: 6px 8px;
+  width: calc(100% - 1.2rem);
+  opacity: 0.5;
 }
 section.cntc-info-view .view-head-box .view-basic-box .item-box {
   display: flex;
@@ -700,8 +700,8 @@ article.table-form-layout2 .form-body-box .row .con-box .item-cell-box {
 
 article.table-form-layout1 .table-form-toggle-box {
   position: absolute;
-  right: 0px;
-  bottom: 12px;
+  right: 0;
+  top: 16px;
 }
 article.table-form-layout1 .table-form-toggle-box .table-form-toggle-btn {
   display: inline-flex;
@@ -709,7 +709,9 @@ article.table-form-layout1 .table-form-toggle-box .table-form-toggle-btn {
   justify-content: center;
   width: 23px;
   height: 23px;
-  border: 1px solid #DADBDC;
+  border: 1px solid #888;
+  border-radius: 5px;
+  padding-top: 2px;
 }
 article.table-form-layout1 .table-form-toggle-box .table-form-toggle-btn.show .fa-angle-down {
   display: none;
@@ -1737,12 +1739,12 @@ article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
   width: 48px;
   height: 48px;
   background-color: #74afeb;
   border: 2px solid #888;
   border-left-width: 0;
+  border-radius: 0 4px 4px 0;
 }
 article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn img {
   max-width: 100%;
@@ -2922,6 +2924,7 @@ section.login .login-wrap .login-contents .con-head-box .main-box {
 .list-table-hoverable tr:hover td {
   background-color: #74AFEB22;
 }
+.card-header { padding-left: 1.6rem; padding-right: 1.6rem; }
 input[type=checkbox] + i, .form-body-box select, .form-body-box input[type=text]
   , .card-header input[type=text] {
   border: 1px solid #888; color: #888; }
@@ -2939,6 +2942,7 @@ input[type=checkbox] + i, .form-body-box select, .form-body-box input[type=text]
 .like-btn { display: none; }
 .card-option .btn-secondary, .option-box .btn-secondary { display: none; }
 #kt_app_content .card-header { padding-bottom: 0 !important; }
+#kt_app_content .card-body { overflow-y: scroll; }
 @media (max-width: 1024px) {
   section.login .login-wrap .login-contents .con-head-box .main-box {
     font-size: 28px;

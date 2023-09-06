@@ -178,5 +178,5 @@ article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn {
 }
 article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn.on { background-color: #74afeb; }
 h2 > i { margin-right: 6px }
-#chatRoomScroll { scroll-behavior: smooth; }
+#chatRoomScroll { scroll-behavior: smooth; background-color: #f3f8f8; }
 </style>
