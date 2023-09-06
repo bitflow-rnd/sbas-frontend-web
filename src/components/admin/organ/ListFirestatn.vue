@@ -356,18 +356,14 @@
 
             <div class="card-sub-wrap p-8">
               <!--begin::Card header-->
-              <div class="card-header border-0 p-0 pb-6">
-                <h5 class="pb-5 mb-0">구급대원 목록</h5>
-
-                <article class="card-header-search-form">
-                  <div class="tbox full with-btn">
-                    <input type="text" placeholder="대원이름 또는 ID 입력" />
-
-                    <a href="javascript:void(0)" class="input-btn">
-                      <i class="fa-solid fa-magnifying-glass"></i>
-                    </a>
-                  </div>
-                </article>
+              <div class="card-header border-0 p-0 pb-6 d-flex">
+                <h5 class="mt-2 flex-grow-1">구급대원 목록</h5>
+                <div class="tbox w-300px with-btn">
+                  <input type="text" placeholder="대원이름 또는 ID 입력" />
+                  <a href="javascript:void(0)" class="input-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </a>
+                </div>
               </div>
               <!--end::Card header-->
               <!--begin::Card body-->
@@ -888,7 +884,7 @@
   <div
     v-if="fsDetail !== null"
     v-show="openModal[1]"
-    class="modal show"
+    class="modal show modal-amb-detl"
     id="kt_modal_group_view"
     tabindex="-1"
     aria-hidden="true"
@@ -1675,6 +1671,11 @@ export default {
   display: inline-block;
   opacity: 100;
   --bs-modal-width: 1200px;
+}
+.modal-amb-detl .modal-body {
+  background-image: url('@/assets/img/img-ambulance.webp');
+  background-position: right 60px bottom 60px;
+  background-repeat: no-repeat;
 }
 #map {
   position: absolute !important;

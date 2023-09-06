@@ -4869,7 +4869,7 @@ textarea.form-control-lg {
   background-color: var(--bs-breadcrumb-bg);
   border-radius: var(--bs-breadcrumb-border-radius);
 }
-
+.breadcrumb i.fa-house { font-size: 1.1rem; color: var(--bs-text-muted); }
 .breadcrumb-item + .breadcrumb-item {
   padding-left: var(--bs-breadcrumb-item-padding-x);
 }
@@ -46149,8 +46149,9 @@ label.rating-label:hover ~ .rating-label > i, label.rating-label:hover ~ .rating
 
 i.bi, i[class^=fonticon-], i[class*=" fonticon-"], i[class^=fa-], i[class*=" fa-"], i[class^=la-], i[class*=" la-"] {
   line-height: 1;
-  font-size: 1rem;
-  color: var(--bs-text-muted);
+  font-size: 1.7rem;
+  /* color: var(--bs-text-muted); */
+  color: #74AFEB;
 }
 
 a {

@@ -9,8 +9,9 @@
               <th>배정상태</th>
               <th>인적사항</th>
               <th>중증도</th>
-              <th>NEWS</th>
-              <th>예측일</th>
+              <th>NEWS<br/>Score</th>
+              <th>분석일</th>
+              <th>위험일</th>
             </tr>
           </thead>
           <tbody v-if="model.list">
@@ -27,6 +28,7 @@
                 <td>
                   {{ getDate(pt.updtDttm) }}
                 </td>
+                <td>{{ idx<5?'오늘':idx<10?'D+1':'D+2' }}</td>
               </tr>
             </template>
           </tbody>

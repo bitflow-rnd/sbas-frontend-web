@@ -2651,7 +2651,7 @@
                           </div>
                         </div>
                       </td>
-                      <td class="border-left-1 border-color-gray" colspan="2">
+                      <td colspan="2">
                         <div class="tbox w-400px with-btn">
                           <input type="text" placeholder="의료기관명 검색" />
 

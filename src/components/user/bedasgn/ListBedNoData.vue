@@ -147,7 +147,7 @@
                                                 </div>
 
                                             </td>
-                                            <td colspan="4" class="border-left-1 border-color-gray">
+                                            <td colspan="4">
                                                 <div class="item-cell-box full">
 
                                                     <div class="tbox full with-btn">

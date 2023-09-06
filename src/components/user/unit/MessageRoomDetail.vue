@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
+  <div class="flex-lg-row-fluid">
     <!--begin::Messenger-->
     <div id="kt_chat_messenger">
       <!--begin::Card header-->
@@ -7,7 +7,7 @@
         <!--begin::Title-->
         <div class="card-title">
           <!--begin::Room name-->
-          <h2 class="text-start">{{ model.roomInfo ? model.roomInfo.tkrmNm : '' }}</h2>
+          <h2 class="text-start"><i class="fa-regular fa-comment-dots"></i> {{ model.roomInfo ? model.roomInfo.tkrmNm : '' }}</h2>
           <!--begin::Room name-->
         </div>
         <!--end::Title-->
@@ -16,7 +16,7 @@
       <!--begin::Card body-->
       <div class="card-body" ref='chatRoomScroll' id='chatRoomScroll'>
         <!--begin::Messages-->
-        <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto message-room-in"
+        <div class="scroll-y me-n5 pe-5 mx-3 h-300px h-lg-auto message-room-in"
           v-if="model.messageList && model.messageList.length > 0">
           <template v-for="(item, idx) in model.messageList" :key="idx">
             <my-msg v-if="item.rgstUserId === 'jiseong12'" :item="item" />
@@ -42,7 +42,7 @@
             </div>
             <div class="msg-input-box">
               <input ref='messageTxt' type="text" placeholder="메시지를 입력해주세요" @input='onMessageChange'
-                v-model='model.messageTxt' />
+                v-model='model.messageTxt' @keyup.enter='sendMessage' />
             </div>
             <div class="msg-send-box">
               <a @click='sendMessage' ref='btnSend' class="send-btn" role='button'>
@@ -122,7 +122,7 @@ function onMessageChange() {
 function sendMessage() {
   console.log('sendMessage', messageTxt.value.value)
   socket.value.send(messageTxt.value.value)
-  messageTxt.value.value = ''
+  model.messageTxt = ''
   loadMessages()
 }
 
@@ -165,9 +165,6 @@ h2 {
 .card-body > .scroll-y > div + div {
   margin-top: 24px;
 }
-.msg-send-layout1 {
-  padding-left: 0;
-}
 .detail-foot-box {
   position: absolute;
   bottom: 0;
@@ -176,7 +173,10 @@ h2 {
 }
 article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn {
   background-color: lightgray;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn.on { background-color: #74afeb; }
+h2 > i { margin-right: 6px }
 #chatRoomScroll { scroll-behavior: smooth; }
 </style>

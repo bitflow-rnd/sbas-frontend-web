@@ -158,6 +158,28 @@
             >
           </div>
 
+
+          <!--begin::Activities-->
+          <div class="app-navbar-item ms-3 d-none d-xxl-flex">
+            <!--begin::Drawer toggle-->
+
+            <div
+              class="btn btn-icon btn-custom w-35px h-35px w-md-40px h-md-40px position-relative"
+              data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+              data-kt-menu-attach="parent"
+              data-kt-menu-placement="bottom-end"
+            >
+              <i class="fa-regular fa-bell"></i>
+              <span
+                class="d-none position-absolute top-0 start-100 translate-middle badge badge-sm rounded-pill mt-3 bg-primary"
+              >99+</span
+              >
+            </div>
+            <!--end::Drawer toggle-->
+          </div>
+          <!--end::Activities-->
+
+
           <!--begin::User menu-->
           <div class="app-navbar-item" id="kt_header_user_menu_toggle">
             <!--begin::Menu wrapper-->
@@ -198,8 +220,8 @@
                       </span>
                     </div>
                     <a class="user-id fw-semibold text-muted text-hover-primary fs-5">{{
-                      userInfo.id
-                    }}</a>
+                        userInfo.id
+                      }}</a>
                   </div>
                   <!--end::Username-->
                 </div>
@@ -215,7 +237,7 @@
                   data-bs-toggle="modal"
                   data-bs-target="#kt_modal_user_profile_view"
                   class="menu-link px-5"
-                  >내 정보</a
+                >내 정보</a
                 >
               </div>
               <!--end::Menu item-->
@@ -230,31 +252,12 @@
           </div>
           <!--end::User menu-->
 
-          <!--begin::Activities-->
-          <div class="app-navbar-item ms-3 d-none d-xxl-flex">
-            <!--begin::Drawer toggle-->
-            <div class="h-35px h-md-40px" id="kt_activities_toggle">
-              <p>{{ userInfo.userNm }} {{ userInfo.ocpCd }}그룹</p>
-              <p class="text-truncate">{{ userInfo.instNm }}</p>
-            </div>
-            <!--end::Drawer toggle-->
-          </div>
-          <!--end::Activities-->
-
           <!--begin::Notifications-->
           <div class="app-navbar-item ms-3 ms-lg-4">
             <!--begin::Menu- wrapper-->
-            <div
-              class="btn btn-icon btn-custom w-35px h-35px w-md-40px h-md-40px position-relative"
-              data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-              data-kt-menu-attach="parent"
-              data-kt-menu-placement="bottom-end"
-            >
-              <i class="fa-regular fa-bell"></i>
-              <span
-                class="d-none position-absolute top-0 start-100 translate-middle badge badge-sm rounded-pill mt-3 bg-primary"
-                >99+</span
-              >
+            <div class="h-35px h-md-40px" id="kt_activities_toggle">
+              <p>{{ userInfo.userNm }} {{ userInfo.ocpCd }}</p>
+              <p class="text-truncate">{{ userInfo.instNm }}</p>
             </div>
             <!--end::Menu wrapper-->
           </div>

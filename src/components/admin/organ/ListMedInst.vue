@@ -150,7 +150,7 @@
                             </div>
                           </div>
                         </td>
-                        <td colspan="2" class="border-left-1 border-color-gray">
+                        <td colspan="2">
                           <div class="tbox w-400px with-btn">
                             <input
                               v-model="inputValue"

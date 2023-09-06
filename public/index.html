@@ -8,7 +8,9 @@
 
 <link rel="shortcut icon" href="/img/logos/favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="/img/logos/favicon-96x96.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="/fa6/css/fontawesome.css" rel="stylesheet">
+<link href="/fa6/css/brands.css" rel="stylesheet">
+<link href="/fa6/css/solid.css" rel="stylesheet">
 <link href="/css/plugins.css" rel="stylesheet" type="text/css" />
 <link href="/css/style.bundle.css" rel="stylesheet" type="text/css" />
 <link href="/css/custom-ui.css" rel="stylesheet" type="text/css" />
@@ -22,11 +24,11 @@ body { max-width: 100%; overflow-x: hidden; }
 .app-header-logo > a > img { height: 5.39rem; }
 .app-sidebar { display: none; }
 .app-toolbar { padding: 0 !important; }
-.app-toolbar-wrapper { padding: 1.54rem 0 1rem 0.7rem !important; }
+.app-toolbar-wrapper { padding: 1.54rem 0.7rem 1rem 1rem !important; min-height: 69px; }
 .app-navbar-item > div > p { margin-bottom: 0.31rem; }
 .app-navbar-item > div > p:first-child { line-height: 1.27; font-size: 1.15rem; font-weight: bold; }
 .app-navbar-item > div > p:nth-child(2) { line-height: 1.3;  }
-.app-content { padding-top: 0; padding-bottom: 30px; min-height: 1024px; }
+.app-content { padding-top: 0; padding-bottom: 30px; min-height: 920px; }
 .app-content > .row { height: 100%; }
 .separator { border-bottom: 1px solid #ddd; }
 .card-header.p-8, .card-body.p-8 { padding: 22px 24px !important; }
@@ -63,9 +65,9 @@ td .symbol img{
 #kt_app_root { height: 100%; }
 #kt_app_header_middle_wrapper { padding-right: 9px; }
 
-@media (max-width: 991px) {
-    #kt_app_header_menu_wrapper {
-        display: none !important;
+@media (max-width: 1920px) {
+    .app-content {
+        height: 920px;
     }
 }
 @media (max-width: 1119px) {
@@ -74,6 +76,11 @@ td .symbol img{
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+}
+@media (max-width: 991px) {
+    #kt_app_header_menu_wrapper {
+        display: none !important;
     }
 }
 @media (min-width: 992px) {
