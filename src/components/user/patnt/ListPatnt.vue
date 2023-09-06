@@ -1044,7 +1044,8 @@
               <div class="detail-info-box full d-flex flex-column">
                 <div class="detail-head-box px-10 h-80px">
                   <div class="head-box d-flex">
-                    <div class="head-txt-box">타임라인</div>
+                    <div class="head-txt-box" @click='timelineSection' role='button'>타임라인</div><div> / </div>
+                    <div class="head-txt-box" @click='sevrSection' role='button'>중증도 정보</div>
                     <div v-if="timeline !== null && timeline !== undefined" class="head-sub-box">
                       <div
                         class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2"
@@ -1056,6 +1057,10 @@
                       >
                         {{ getTLDt(timeline.items[0].updtDttm, 0) }}
                       </div>
+                    </div>
+
+                    <div v-if="model.mode==='svrt'" class='chart-apex'>
+                      <svrt-chart-unit :pt-id="'PT00000085'" />
                     </div>
                   </div>
 
@@ -1110,7 +1115,7 @@
                         </li>
                       </ul>
                     </div>
-                    <div v-if="timeline === null" class="timeline-wrap overflow-y-auto ps-10 pe-5">
+                    <div v-if="model.mode==='timeline' && timeline === null" class="timeline-wrap overflow-y-auto ps-10 pe-5">
                       병상배정 이력이 없습니다
                     </div>
                   </article>
@@ -3068,6 +3073,7 @@
 
 <script>
 import DataPagination from '@/components/layout/DataPagination'
+import SvrtChartUnit from '@/components/user/unit/SvrtChartUnit'
 import { mapState } from 'vuex'
 import {
     backBtn,
@@ -3082,10 +3088,11 @@ import {
     regNewPt,
     showPopup
 } from '@/util/ui'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 export default {
   components: {
+    SvrtChartUnit,
     DataPagination
   },
   name: 'ListPatnt',
@@ -3103,11 +3110,15 @@ export default {
     const isAlert = ref(false)
     const cncBtn = ref(false)
     const errMsg = ''
+    let model = reactive({
+      timeline: ''
+    })
 
     return {
       isAlert,
       errMsg,
-      cncBtn /* alert 취소버튼 유무 */
+      cncBtn, /* alert 취소버튼 유무 */
+      model
     }
   },
   data() {
@@ -3468,6 +3479,13 @@ export default {
         mpno: ''
       }
       this.preRpt = null
+    },
+    timelineSection() {
+      this.model.mode = 'timeline'
+
+    },
+    sevrSection() {
+      this.model.mode = 'svrt'
     }
   }
 }
@@ -3525,4 +3543,5 @@ article.detail-layout1 .detail-wrap .detail-head-box .head-box .head-txt-box {
 }
 td > .btn-primary-outline { width: 85px; }
 .pt-nm { line-height: 24px; }
+.chart-apex { width: 100%; position: absolute; left: 0; top: 100px; height: 350px; }
 </style>
