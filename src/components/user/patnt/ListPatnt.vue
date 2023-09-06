@@ -271,7 +271,12 @@
                         </td>
                         <td>{{ startIndex + idx + 1 }}</td>
                         <td>{{ pt['bedStatCdNm'] ? pt['bedStatCdNm'] : '환자정보등록' }}</td>
-                        <td>{{ pt['ptNm'].length>1?(pt['ptNm'].substring(0, 1)+'*'+pt['ptNm'].substring(2, pt['ptNm'].length)):pt['ptNm'] }}</td>
+                        <td>
+                          <div class='d-inline-flex text-center'>
+                            <div class='pt-nm'>{{ pt['ptNm'].length>1?(pt['ptNm'].substring(0, 1)+'*'+pt['ptNm'].substring(2, pt['ptNm'].length)):pt['ptNm'] }}</div>
+                          <div class="btn-primary-outline" v-if="pt.ptId==='PT00000085' || pt.ptId==='PT00000086'">※ 관찰환자</div>
+                          </div>
+                        </td>
                         <td>{{ pt['age'] }}세</td>
                         <td>{{ pt['gndr'] }}자</td>
                         <td>{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
@@ -849,8 +854,9 @@
             <div class="detail-wrap">
               <div class="detail-info-box">
                 <div class="detail-head-box px-10">
-                  <div class="head-box">
+                  <div class="head-box d-flex">
                     <div class="head-txt-box">환자정보</div>
+                    <div class="btn-primary-outline" v-if="ptDetail.ptId==='PT00000085' || ptDetail.ptId==='PT00000086'">※ 관찰환자</div>
                   </div>
 
                   <div class="option-box">
@@ -954,6 +960,11 @@
                 <div class="detail-foot-box">
                   <article class="modal-menu-layout1 pb-5">
                     <div class="modal-menu-list">
+                      <a
+                        href='javascript:void(0)'
+                        class="modal-menu-btn menu-primary-outline"
+                      >관찰환자 등록
+                      </a>
                       <router-link
                         to=""
                         data-bs-target="#kt_modal_patnt"
@@ -3501,4 +3512,17 @@ li.custom-style::before {
     --bs-bg-rgb-color: var(--bs-gray-500-rgb);
     background-color: var(--bs-gray-500) !important;
 }
+article.detail-layout1 .detail-wrap .detail-head-box .head-box .head-txt-box {
+  line-height: 28px;
+}
+.btn-primary-outline {
+  border: 1px solid #82b7ed;
+  color: #82b7ed;
+  background-color: #fff;
+  margin-left: 12px;
+  border-radius: 19px;
+  padding: 4px 9px 4px 6px;
+}
+td > .btn-primary-outline { width: 85px; }
+.pt-nm { line-height: 24px; }
 </style>

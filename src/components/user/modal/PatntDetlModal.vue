@@ -162,13 +162,17 @@
                 <div class="detail-foot-box">
                   <article class="modal-menu-layout1 py-10">
                     <div class="modal-menu-list">
-                      <router-link
-                        to=""
+                      <a
+                        href='javascript:void(0)'
+                        class="modal-menu-btn menu-primary"
+                      >관찰환자 등록
+                      </a>
+                      <a href='javascript:void(0)'
                         data-bs-target="#kt_modal_patnt"
                         data-bs-toggle="modal"
                         class="modal-menu-btn menu-primary"
                         >수정
-                      </router-link>
+                      </a>
                     </div>
                   </article>
                 </div>
