@@ -872,7 +872,7 @@
                       <div class="table-box pe-5">
                         <table>
                           <colgroup>
-                            <col style="width: 168px" />
+                            <col style="width: 128px" />
                             <col style="width: auto" />
                           </colgroup>
                           <tbody>
@@ -1043,9 +1043,12 @@
 
               <div class="detail-info-box full d-flex flex-column">
                 <div class="detail-head-box px-10 h-80px">
+
                   <div class="head-box d-flex">
+
                     <div class="head-txt-box" @click='timelineSection' role='button'>타임라인</div><div> / </div>
                     <div class="head-txt-box" @click='sevrSection' role='button'>중증도 정보</div>
+
                     <div v-if="timeline !== null && timeline !== undefined" class="head-sub-box">
                       <div
                         class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2"
@@ -1062,6 +1065,7 @@
                     <div v-if="model.mode==='svrt'" class='chart-apex'>
                       <svrt-chart-unit :pt-id="'PT00000085'" />
                     </div>
+
                   </div>
 
                   <div class="option-box">
@@ -3543,5 +3547,5 @@ article.detail-layout1 .detail-wrap .detail-head-box .head-box .head-txt-box {
 }
 td > .btn-primary-outline { width: 85px; }
 .pt-nm { line-height: 24px; }
-.chart-apex { width: 100%; position: absolute; left: 0; top: 100px; height: 350px; }
+.chart-apex { width: 100%; position: absolute; left: 0; top: 100px; height: 350px; background-color: white; }
 </style>

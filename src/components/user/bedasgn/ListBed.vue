@@ -168,7 +168,7 @@
                           </div>
                         </td>
 
-                        <td colspan="3" class="border-left-1 border-color-gray">
+                        <td colspan="3">
                           <div class="item-cell-box full">
                             <div class="tbox full with-btn">
                               <input

@@ -14,13 +14,10 @@
       </div>
       <!--end::Card header-->
       <!--begin::Card body-->
-      <div class="card-body" id="kt_chat_messenger_body" ref='chatRoomScroll'>
+      <div class="card-body" ref='chatRoomScroll' id='chatRoomScroll'>
         <!--begin::Messages-->
-        <div
-
-          class="scroll-y me-n5 pe-5 h-300px h-lg-auto message-room-in"
-          v-if="model.messageList && model.messageList.length > 0"
-        >
+        <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto message-room-in"
+          v-if="model.messageList && model.messageList.length > 0">
           <template v-for="(item, idx) in model.messageList" :key="idx">
             <my-msg v-if="item.rgstUserId === 'jiseong12'" :item="item" />
             <other-msg v-if="item.rgstUserId !== 'jiseong12'" :item="item" />
@@ -44,10 +41,11 @@
               </label>
             </div>
             <div class="msg-input-box">
-              <input ref='messageTxt' type="text" placeholder="메시지 입력" />
+              <input ref='messageTxt' type="text" placeholder="메시지를 입력해주세요" @input='onMessageChange'
+                v-model='model.messageTxt' />
             </div>
             <div class="msg-send-box">
-              <a @click='sendMessage' class="send-btn" role='button'>
+              <a @click='sendMessage' ref='btnSend' class="send-btn" role='button'>
                 <img src="/img/common/ic_msg_send.svg" alt="이미지" />
               </a>
             </div>
@@ -70,6 +68,7 @@ import { onMessage, onOpen, onClose, onError } from 'vue3-websocket'
 
 const store = useStore()
 const chatRoomScroll = ref()
+const btnSend = ref()
 const messageTxt = ref()
 const socket = inject('socket')
 
@@ -82,7 +81,8 @@ const props = defineProps({
 
 let model = reactive({
   roomInfo: null,
-  messageList: []
+  messageList: [],
+  messageTxt: ''
 })
 
 watch(
@@ -105,8 +105,18 @@ function loadMessages() {
   store.dispatch('user/getChatMessageListSync', model.roomInfo.tkrmId).then((result) => {
     // console.log('getChatMessageListSync', JSON.stringify(result))
     model.messageList = result
-    chatRoomScroll.value.scrollTop = chatRoomScroll.value.scrollHeight
+    setTimeout(function() {
+      chatRoomScroll.value.scrollTop = chatRoomScroll.value.scrollHeight
+    }, 100)
   })
+}
+
+function onMessageChange() {
+  if (model.messageTxt.length>0) {
+    btnSend.value.classList.add('on')
+  } else {
+    btnSend.value.classList.remove('on')
+  }
 }
 
 function sendMessage() {
@@ -164,4 +174,9 @@ h2 {
   width: -webkit-fill-available;
   background-color: white;
 }
+article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn {
+  background-color: lightgray;
+}
+article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn.on { background-color: #74afeb; }
+#chatRoomScroll { scroll-behavior: smooth; }
 </style>

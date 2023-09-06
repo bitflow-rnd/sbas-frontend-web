@@ -68,7 +68,7 @@
                       <div class="table-box pe-5">
                         <table>
                           <colgroup>
-                            <col style="width: 168px" />
+                            <col style="width: 128px" />
                             <col style="width: auto" />
                           </colgroup>
                           <tbody>
