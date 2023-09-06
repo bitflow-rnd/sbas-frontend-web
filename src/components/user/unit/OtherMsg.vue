@@ -23,9 +23,8 @@
       <!--begin::Text-->
       <div
         class="p-5 rounded bg-light-info text-dark fw-semibold mw-lg-400px text-start"
-        data-kt-element="message-text"
+        data-kt-element="message-text" v-html="props.item.msg.split('\n').join('<br />')"
       >
-        {{ props.item.msg }}
       </div>
       <!--end::Text-->
     </div>

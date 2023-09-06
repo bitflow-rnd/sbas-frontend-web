@@ -1240,7 +1240,7 @@ article.check-list-layout1 .list-box {
   flex-flow: row wrap;
 }
 article.check-list-layout1 .list-box .item-box {
-  margin: 6px;
+  margin: 6px 5px;
 }
 article.check-list-layout1 .list-box .item-box label {
   display: inline-flex;
@@ -1263,7 +1263,7 @@ article.check-list-layout1 .list-box .item-box label .txt {
   border: 1px solid #e0e0e3;
   height: 27px;
   line-height: 1.2;
-  padding: 0 16px;
+  padding: 0 10px;
   border-radius: 100px;
   color: rgba(103, 106, 122, 0.8);
 }

@@ -271,12 +271,12 @@
                         </td>
                         <td>{{ startIndex + idx + 1 }}</td>
                         <td>{{ pt['bedStatCdNm'] ? pt['bedStatCdNm'] : '환자정보등록' }}</td>
-                        <td>{{ pt['ptNm'] }}</td>
+                        <td>{{ pt['ptNm'].length>1?(pt['ptNm'].substring(0, 1)+'*'+pt['ptNm'].substring(2, pt['ptNm'].length)):pt['ptNm'] }}</td>
                         <td>{{ pt['age'] }}세</td>
                         <td>{{ pt['gndr'] }}자</td>
                         <td>{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
-                        <td>{{ pt['mpno'] }}</td>
-                        <td>{{ pt['natiCdNm'] }}</td>
+                        <td>{{ pt['mpno']?pt['mpno']:'-' }}</td>
+                        <td>{{ pt['natiCdNm']?pt['natiCdNm']:'-' }}</td>
                         <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
                         <td>{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                         <td>{{ getDate(pt['updtDttm']) }}</td>
