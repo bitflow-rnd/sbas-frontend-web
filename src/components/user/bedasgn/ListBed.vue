@@ -5333,6 +5333,12 @@ export default {
         this.alertOpen(13)
       }
     },
+    alertClose(){
+      this.errMsg = ''
+      this.cncBtn = false
+      this.isAlert=false
+      this.alertIdx = 100
+    },
     setActive(idx) {
       this.tabidx = idx
       this.loadNaverMapAsync()
