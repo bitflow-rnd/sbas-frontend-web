@@ -625,6 +625,12 @@
     <div class="modal-dialog mw-1500px modal-dialog-centered">
       <!--begin::Modal content-->
       <div class="modal-content">
+          <!--    Progress Loader      -->
+          <div class="d-flex justify-content-center m-5 spinner" v-if="isSpinner===1">
+              <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+              </div>
+          </div>
         <!--begin::Modal header-->
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
           <!--begin::Modal title-->
@@ -5028,7 +5034,7 @@ export default {
       'rcmdHp',
       'transInfo'
     ]),
-    ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip','startLoc']),
+    ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip','startLoc','isSpinner']),
     ...mapState('user', ['userInfo', 'cmSido']),
     ...mapState('admin', ['firestatnList', 'firemenList','medinstList']),
 
@@ -5652,5 +5658,10 @@ export default {
 
 li.custom-style::before {
   display: none;
+}
+.spinner {
+    position : fixed;
+    left: calc(50% - 32px);
+    top: calc(30% - 32px);
 }
 </style>
