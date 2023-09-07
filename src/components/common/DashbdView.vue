@@ -83,11 +83,63 @@
 
                                         <div class="top-box">
                                             <div class="subject-box">
+                                                <div class="label-txt bg-primary">전국</div>
+                                                <div class="subject-txt">감염병 환자 현황</div>
+                                            </div>
+                                            <div class="remove-box">
+                                                <a href="javascript:void(0)">
+                                                    <i class="fa-solid fa-circle-minus minus"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="bottom-box text-end pt-4">
+
+                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">3,796</span> <span class="text-black fw-bold" style="font-size: 20px;">명</span></div>
+                                            <div class="rate-box">
+                                                <span class="text-gray-600">전 주 대비</span>
+                                                <span class="text-primary">13.4% ▲</span>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="card-box">
+
+                                        <div class="top-box">
+                                            <div class="subject-box">
+                                              <div class="label-txt bg-primary">최다</div>
+                                              <div class="subject-txt">수용 지역</div>
+                                            </div>
+                                            <div class="remove-box">
+                                                <a href="javascript:void(0)">
+                                                    <i class="fa-solid fa-circle-minus minus"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="bottom-box text-end pt-4">
+
+                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">대구광역시</span></div>
+                                            <div class="rate-box">
+                                                <span class="text-gray-600">전 주 대비</span>
+                                                <span class="text-primary">13.4% ▲</span>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="card-box">
+
+                                        <div class="top-box">
+                                            <div class="subject-box">
                                                 <div class="label-txt bg-primary">최다</div>
-                                                <div class="subject-txt">코로나바이러스-19 감염환자 현황</div>
+                                                <div class="subject-txt">최다 수용 의료기관</div>
                                             </div>
                                             <div class="remove-box">
-                                                <a href="javascript:void(0)" onclick="cardRemove(this)">
+                                                <a href="javascript:void(0)">
                                                     <i class="fa-solid fa-circle-minus minus"></i>
                                                 </a>
                                             </div>
@@ -95,10 +147,10 @@
 
                                         <div class="bottom-box text-end pt-4">
 
-                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">3,796</span> <span class="text-black fw-bold" style="font-size: 20px;">명</span></div>
+                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">칠곡경북대병원</span></div>
                                             <div class="rate-box">
-                                                <span class="text-gray-600">지난 7일전 대비</span>
-                                                <span class="text-primary">13.4% ▲</span>
+                                                <span class="text-gray-600">전 주 대비</span>
+                                                <span class="text-danger">7.4% ▲</span>
                                             </div>
 
                                         </div>
@@ -109,10 +161,11 @@
 
                                         <div class="top-box">
                                             <div class="subject-box">
-                                                <span class="subject-txt">코로나바이러스-19 감염환자 현황 (병상배정 內)</span>
+                                              <div class="label-txt bg-primary">월간</div>
+                                              <div class="subject-txt">최다 배정 Staff</div>
                                             </div>
                                             <div class="remove-box">
-                                                <a href="javascript:void(0)" onclick="cardRemove(this)">
+                                                <a href="javascript:void(0)">
                                                     <i class="fa-solid fa-circle-minus minus"></i>
                                                 </a>
                                             </div>
@@ -120,9 +173,9 @@
 
                                         <div class="bottom-box text-end pt-4">
 
-                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">3,796</span> <span class="text-black fw-bold" style="font-size: 20px;">명</span></div>
+                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">선*경</span> <span class="text-black fw-bold" style="font-size: 20px;">452명</span></div>
                                             <div class="rate-box">
-                                                <span class="text-gray-600">지난 7일전 대비</span>
+                                                <span class="text-gray-600">전 주 대비</span>
                                                 <span class="text-primary">13.4% ▲</span>
                                             </div>
 
@@ -132,81 +185,31 @@
 
                                     <div class="card-box">
 
-                                        <div class="top-box">
-                                            <div class="subject-box">
-                                                <div class="label-txt bg-primary">최다</div>
-                                                <div class="subject-txt">코로나바이러스-19 감염환자 현황</div>
-                                            </div>
-                                            <div class="remove-box">
-                                                <a href="javascript:void(0)" onclick="cardRemove(this)">
-                                                    <i class="fa-solid fa-circle-minus minus"></i>
-                                                </a>
-                                            </div>
+                                      <div class="top-box">
+                                        <div class="subject-box">
+                                          <div class="label-txt bg-primary">월간</div>
+                                          <div class="subject-txt">최다 배정요청 Staff</div>
                                         </div>
+                                        <div class="remove-box">
+                                          <a href="javascript:void(0)">
+                                            <i class="fa-solid fa-circle-minus minus"></i>
+                                          </a>
+                                        </div>
+                                      </div>
 
                                         <div class="bottom-box text-end pt-4">
 
-                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">3,796</span> <span class="text-black fw-bold" style="font-size: 20px;">명</span></div>
+                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">함*호</span> <span class="text-black fw-bold" style="font-size: 20px;">395명</span></div>
                                             <div class="rate-box">
-                                                <span class="text-gray-600">지난 7일전 대비</span>
-                                                <span class="text-danger">13.4% ▼</span>
+                                                <span class="text-gray-600">전 주 대비</span>
+                                                <span class="text-danger">5.4% ▼</span>
                                             </div>
 
                                         </div>
 
                                     </div>
 
-                                    <div class="card-box">
-
-                                        <div class="top-box">
-                                            <div class="subject-box">
-                                                <span class="subject-txt">코로나바이러스-19 감염환자 현황 (병상배정 內)</span>
-                                            </div>
-                                            <div class="remove-box">
-                                                <a href="javascript:void(0)" onclick="cardRemove(this)">
-                                                    <i class="fa-solid fa-circle-minus minus"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="bottom-box text-end pt-4">
-
-                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">3,796</span> <span class="text-black fw-bold" style="font-size: 20px;">명</span></div>
-                                            <div class="rate-box">
-                                                <span class="text-gray-600">지난 7일전 대비</span>
-                                                <span class="text-primary">13.4% ▲</span>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="card-box">
-
-                                        <div class="top-box">
-                                            <div class="subject-box">
-                                                <span class="subject-txt">코로나바이러스-19 감염환자 현황 (병상배정 內)</span>
-                                            </div>
-                                            <div class="remove-box">
-                                                <a href="javascript:void(0)" onclick="cardRemove(this)">
-                                                    <i class="fa-solid fa-circle-minus minus"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="bottom-box text-end pt-4">
-
-                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">3,796</span> <span class="text-black fw-bold" style="font-size: 20px;">명</span></div>
-                                            <div class="rate-box">
-                                                <span class="text-gray-600">지난 7일전 대비</span>
-                                                <span class="text-primary">13.4% ▲</span>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    <a href="javascript:popupOpen('card-select')" class="card-box">
+                                    <a href="javascript:void(0);" class="card-box">
 
                                         <div class="card-add-btn-box">
                                             <img src="/img/common/ic_dashboard_add.svg" alt="이미지">
@@ -375,4 +378,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.app-content > .card { background-image: url('@/assets/img/img-staff.webp');
+  background-position: right 0 bottom 0;
+  background-repeat: no-repeat;
+}
+.label-txt.bg-primary { margin-right: 9px;}
+.rate-box > span:first-child { margin-right: 7px; }
 </style>
