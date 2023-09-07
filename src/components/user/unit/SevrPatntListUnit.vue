@@ -9,7 +9,7 @@
               <th>배정상태</th>
               <th>인적사항</th>
               <th>중증도</th>
-              <th>NEWS<br/>Score</th>
+              <th>중증<br/>Score</th>
               <th>분석일</th>
               <th>위험일</th>
             </tr>
@@ -24,11 +24,11 @@
                 <td class="red">
                   {{ pt.hospNm ? pt.hospNm : '중증' }}
                 </td>
-                <td>13</td>
+                <td>{{ idx<5?0.9:idx<10?0.8:0.7 }}</td>
                 <td>
                   {{ getDate(pt.updtDttm) }}
                 </td>
-                <td>{{ idx<5?'오늘':idx<10?'D+1':'D+2' }}</td>
+                <td v-html="idx<5?'<b style=\'color: red\'>오늘</b>':idx<10?'<b style=\'color: orange\'>D+1</b>':'D+2'"></td>
               </tr>
             </template>
           </tbody>

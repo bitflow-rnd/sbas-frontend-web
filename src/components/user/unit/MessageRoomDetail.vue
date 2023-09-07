@@ -16,11 +16,11 @@
       <!--begin::Card body-->
       <div class="card-body" ref='chatRoomScroll' id='chatRoomScroll'>
         <!--begin::Messages-->
-        <div class="scroll-y me-n5 pe-5 mx-3 h-300px h-lg-auto message-room-in"
+        <div class="scroll-y me-n5 pe-5 mx-3 h-300px h-lg-auto message-room-in" ref='messageRoomIn'
           v-if="model.messageList && model.messageList.length > 0">
           <template v-for="(item, idx) in model.messageList" :key="idx">
-            <my-msg v-if="item.rgstUserId === 'jiseong12'" :item="item" />
-            <other-msg v-if="item.rgstUserId !== 'jiseong12'" :item="item" />
+            <my-msg v-if="item.rgstUserId === 'TEST-APR-1'" :item="item" />
+            <other-msg v-if="item.rgstUserId !== 'TEST-APR-1'" :item="item" />
           </template>
         </div>
         <!--end::Messages-->
@@ -70,6 +70,7 @@ const store = useStore()
 const chatRoomScroll = ref()
 const btnSend = ref()
 const messageTxt = ref()
+const messageRoomIn = ref()
 const socket = inject('socket')
 
 const props = defineProps({
@@ -99,6 +100,16 @@ onMounted(() => {
   loadMessages()
 })
 
+function addMyMsg(msg) {
+  const myMsg = new MyMsg({
+    propsData: {
+      rgstUserId: 'TEST-APR-1',
+      msg: msg
+    }
+  }).$mount();
+  messageRoomIn.value.appendChild(myMsg.$el);
+}
+
 function loadMessages() {
   console.log('roomInfo', JSON.stringify(model.roomInfo))
   model.roomInfo = props.roomInfo
@@ -122,8 +133,9 @@ function onMessageChange() {
 function sendMessage() {
   console.log('sendMessage', messageTxt.value.value)
   socket.value.send(messageTxt.value.value)
+  addMyMsg(messageTxt.value.value)
   model.messageTxt = ''
-  loadMessages()
+  // loadMessages()
 }
 
 onOpen(() => {
