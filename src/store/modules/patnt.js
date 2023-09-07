@@ -10,7 +10,8 @@ export default {
     ptDetail: null,
     rptInfo: null,
     attcRpt: null,
-    startLoc: null
+    startLoc: null,
+    isSpinner:0
   },
   getters: {
     getPtDetail: (state) => {
@@ -61,6 +62,9 @@ export default {
     },
     setRpt(state, payload) {
       state.rptInfo = payload
+    },
+    startSpinner(state,payload){
+      state.isSpinner = payload
     }
   },
   actions: {
@@ -140,6 +144,7 @@ export default {
     },
     /*역조서 업로드*/
     async uploadRpt(comment, data) {
+      comment.commit('startSpinner',1)
       const token = localStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/upldepidreport`
       console.log(data)
@@ -154,6 +159,7 @@ export default {
         if (response.data?.code === '00') {
           //console.log(response.data?.result)
           await comment.commit('uploadRpt', response.data?.result)
+          comment.commit('startSpinner',0)
           comment.dispatch('geoCoding', [0, response.data?.result.baseAddr])
         }
       } catch (e) {

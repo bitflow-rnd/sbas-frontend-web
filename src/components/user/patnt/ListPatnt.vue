@@ -781,7 +781,7 @@
             <div class="modal-menu-list pt-5">
               <!--              <a href="javascript:alertPopupOpen('메시지 입력')" class="modal-menu-btn menu-cancel">이전</a>-->
 
-              <a @click="showPopup(0)" class="modal-menu-btn menu-primary">다음</a>
+              <a @click="openPopup(0)" class="modal-menu-btn menu-primary">다음</a>
             </div>
           </article>
         </div>
@@ -1582,7 +1582,7 @@
                 <div class="modal-menu-list">
                   <!--              todo: 역학조사서를사용하지 않았다면 팝업창 뜰 일 없음                      -->
                   <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
-                  <a @click="showPopup(0)" class="modal-menu-btn menu-primary">다음</a>
+                  <a @click="openPopup(0)" class="modal-menu-btn menu-primary">다음</a>
                 </div>
               </article>
             </div>
@@ -3090,7 +3090,7 @@ import {
     goAsgn,
     openAddressFinder,
     regNewPt,
-    showPopup
+    openPopup
 } from '@/util/ui'
 import { ref, reactive } from 'vue'
 
@@ -3270,7 +3270,7 @@ export default {
     goAsgn,
     getAge,
     getGndr,
-    showPopup,
+    openPopup,
     getTag,
     getTelno,
     getTLDt,

@@ -420,7 +420,7 @@
                 <div class="modal-menu-list">
                   <!--              todo: 역학조사서를사용하지 않았다면 팝업창 뜰 일 없음                      -->
                   <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
-                  <a @click="showPopup(0)" class="modal-menu-btn menu-primary">다음</a>
+                  <a @click="openPopup(0)" class="modal-menu-btn menu-primary">다음</a>
                 </div>
               </article>
             </div>
