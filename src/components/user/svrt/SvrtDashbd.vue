@@ -36,9 +36,9 @@
           <div class="card-header border-0 p-8 container-fluid">
             <table class="dashbd-table">
               <colgroup>
-                <col style="width: 35%" />
-                <col style="width: 25%" />
-                <col style="width: 40%" />
+                <col style="width: auto" />
+                <col style="width: 350px" />
+                <col style="width: 45%" />
               </colgroup>
               <tr>
                 <td rowspan="2">
@@ -48,7 +48,7 @@
                   <pie-chart />
                 </td>
                 <td>
-                  <svrt-chart-unit :pt-id="'PT00000305'" @onPatientSelected="onPatientSelected" />
+                  <svrt-chart-unit :pt-id="'PT00000086'" @onPatientSelected="onPatientSelected" />
                 </td>
               </tr>
 
@@ -57,7 +57,7 @@
                   <pie-chart-location />
                 </td>
                 <td>
-                  <svrt-chart-unit :pt-id="'PT00000086'" @onPatientSelected="onPatientSelected" />
+                  <svrt-chart-unit :pt-id="'PT00000305'" @onPatientSelected="onPatientSelected" />
                 </td>
               </tr>
               <tr>
@@ -108,6 +108,7 @@ function closeModal() {
 .dashbd-table {
   width: 100%;
 }
+.dashbd-table td:first-child { vertical-align: top; }
 td {
   padding: 1rem 1.5rem;
 }

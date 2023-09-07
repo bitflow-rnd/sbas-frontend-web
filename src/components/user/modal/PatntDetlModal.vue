@@ -150,8 +150,10 @@
                               <th>환자유형</th>
                               <td>{{ getTag(model.ptDs?.ptTypeNms || []) }}</td>
                             </tr>
+
                           </tbody>
                         </table>
+                        <svrt-chart-unit-no-title :pt-id="'PT00000086'" class='mt-5' />
                       </div>
 
                       <div class="table-img-box pt-4"></div>
@@ -224,8 +226,6 @@
                     <div class="modal-menu-list">
                       <router-link
                         to=""
-                        data-bs-target="#kt_modal_request"
-                        data-bs-toggle="modal"
                         class="modal-menu-btn menu-primary"
                         >병상요청
                       </router-link>
@@ -347,6 +347,7 @@
 import { reactive, defineProps, onMounted, defineEmits } from 'vue'
 import { getTag, getTelno, getTLDt, getTLIcon } from '@/util/ui'
 import { useStore } from 'vuex'
+import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
 
 const emit = defineEmits(['closeModal'])
 const props = defineProps({

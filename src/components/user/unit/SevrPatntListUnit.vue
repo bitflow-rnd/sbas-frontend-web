@@ -26,7 +26,7 @@
                 </td>
                 <td>{{ idx<5?0.9:idx<10?0.8:0.7 }}</td>
                 <td>
-                  {{ getDate(pt.updtDttm) }}
+                  2023.09.08
                 </td>
                 <td v-html="idx<5?'<b style=\'color: red\'>오늘</b>':idx<10?'<b style=\'color: orange\'>D+1</b>':'D+2'"></td>
               </tr>
@@ -78,7 +78,7 @@ async function selectPatient(patient) {
   let ptDetail = store.getters['patnt/getPtDetail']
   emit('onPatientSelected', ptDetail)
 }
-
+/*
 function getDate(data) {
   const dData = new Date(data)
   const dYear = dData.getFullYear()
@@ -92,6 +92,7 @@ function getDate(data) {
   }
   return dYear + '.' + dMonth + '.' + dDate
 }
+*/
 </script>
 
 <style scoped>
