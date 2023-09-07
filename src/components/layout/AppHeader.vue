@@ -181,7 +181,7 @@
 
 
           <!--begin::User menu-->
-          <div class="app-navbar-item" id="kt_header_user_menu_toggle">
+          <div class="app-navbar-item ms-lg-3" id="kt_header_user_menu_toggle">
             <!--begin::Menu wrapper-->
             <div
               class="cursor-pointer symbol symbol-35px symbol-md-40px"
@@ -245,7 +245,7 @@
           <!--end::User menu-->
 
           <!--begin::Notifications-->
-          <div class="app-navbar-item ms-3 ms-lg-4">
+          <div class="app-navbar-item ms-3 ms-lg-2">
             <!--begin::Menu- wrapper-->
             <div class="h-35px h-md-40px" id="kt_activities_toggle">
               <p>{{ userInfo.userNm }} {{ userInfo.ocpCd }}</p>

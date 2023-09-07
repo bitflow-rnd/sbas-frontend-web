@@ -145,4 +145,5 @@ export default {
 .depth-head-box > i {
   color: #3f90e2;
 }
+.depth-head-box > i { font-size: 1.2rem; }
 </style>

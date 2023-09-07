@@ -525,7 +525,7 @@
                         <td>읍압격리</td>
                         <td>{{ getTag(item.ptTypeCdNmTagList) }}</td>
                         <td>{{ item.bascAddr }}</td>
-                        <td>{{ getDt(item.updtDttm) }}</td>
+                        <td v-html='getDtBlue(item.updtDttm)'></td>
                         <td>
                           <a
                             @click="
@@ -1400,7 +1400,7 @@
                         </tr>
 
                         <tr>
-                          <th>기타 진단 이미지·영상 <span class="text-primary">*</span></th>
+                          <th>기타 진단 이미지·영상</th>
                           <td colspan="3">
                             <article class="upload-form-layout1">
                               <div class="upload-result-wrap">
@@ -4838,6 +4838,7 @@ import {
   backBtn,
   getAge,
   getDt,
+  getDtBlue,
   getGndr,
   getTag,
   getTelno,
@@ -5390,6 +5391,7 @@ export default {
     goAsgn,
     maskingNm,
     getDt,
+    getDtBlue,
     getTag,
     updateCharacterCount(idx) {
       const messageProps = [this.aprv, this.mediConfirm, this.hosptlzdiscg, this.trsfInfo]

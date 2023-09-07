@@ -757,7 +757,7 @@
                         </tr>
 
                         <tr>
-                          <th>기타 진단 이미지·영상 <span class="text-primary">*</span></th>
+                          <th>기타 진단 이미지·영상</th>
                           <td colspan="3">
                             <article class="upload-form-layout1">
                               <div class="upload-result-wrap">
