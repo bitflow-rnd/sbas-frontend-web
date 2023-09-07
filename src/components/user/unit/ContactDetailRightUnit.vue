@@ -57,7 +57,7 @@
                       </div>
 
                       <div class="user-box">
-                        <div class="subject-box"><b>송*웅</b> (남/63세/경북 포항시)</div>
+                        <div class="subject-box"><b>송*웅</b>&nbsp;&nbsp;(남/63세/경북 포항시)</div>
                         <div class="con-box">#투석 #중증 #고혈압</div>
                       </div>
                     </div>
@@ -75,7 +75,7 @@
                       </div>
 
                       <div class="user-box">
-                        <div class="subject-box"><b>임*선</b> (여/23세/서울특별시 송파구)</div>
+                        <div class="subject-box"><b>임*선</b>&nbsp;&nbsp;(여/23세/서울특별시 송파구)</div>
                         <div class="con-box">#준중증 #임산부</div>
                       </div>
                     </div>
@@ -429,6 +429,7 @@ h2 {
   text-align: center;
 }
 .activity-head-box { padding: 12px 32px; }
+section.cntc-activity .activity-head-box { padding: 12px 32px; }
 .view-img-box {
   border-bottom: 1px solid #666;
 }

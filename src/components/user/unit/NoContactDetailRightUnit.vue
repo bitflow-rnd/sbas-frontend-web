@@ -63,6 +63,7 @@ export default {
   font-weight: normal;
   margin-top: 12px;
 }
+section.cntc-activity .activity-head-box { padding: 12px 32px; }
 .tabs-group-box,
 .tabs-box,
 .activity-list-group,

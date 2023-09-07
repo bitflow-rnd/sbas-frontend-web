@@ -17,9 +17,8 @@ export default {
     selectedTabIdx: 0
   },
   getters: {
-    getUserInfo: () => {
-      console.log('getters.getUserInfo')
-      return localStorage.getItem('userInfo')
+    getUserInfo: (state) => {
+      return state.userInfo
     },
     getSelectedTabIdx: (state) => {
       console.log('getSelectedTabIdx')

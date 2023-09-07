@@ -274,7 +274,7 @@
                         <td>
                           <div class='d-inline-flex text-center'>
                             <div class='pt-nm'>{{ pt['ptNm'].length>1?(pt['ptNm'].substring(0, 1)+'*'+pt['ptNm'].substring(2, pt['ptNm'].length)):pt['ptNm'] }}</div>
-                          <div class="btn-primary-outline" v-if="pt.ptId==='PT00000085' || pt.ptId==='PT00000086'">※ 관찰환자</div>
+                          <div class="btn-primary-outline" v-if="pt.ptId==='PT00000305' || pt.ptId==='PT00000086'">※ 관찰환자</div>
                           </div>
                         </td>
                         <td>{{ pt['age'] }}세</td>
@@ -1218,7 +1218,7 @@
           </div>
           <!--end::Close-->
 
-          <article class="floating-request-box">
+          <article class="floating-request-box d-none">
             <div class="img-box">
               <img src="/img/common/ic_request_patient.svg" alt="이미지" />
             </div>

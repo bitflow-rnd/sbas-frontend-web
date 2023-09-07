@@ -1,6 +1,6 @@
 <template>
   <!--begin::Message(out)-->
-  <div class="d-flex flex-column align-items-end">
+  <div class="d-flex flex-column align-items-end mb-10">
     <div class="d-flex align-items-center mb-2">
       <div class="me-3">
         <span class="text-muted fs-7 mb-1">{{ getDate(props.item.rgstDttm) }}</span>

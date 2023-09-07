@@ -7,7 +7,7 @@
         <!--begin::Title-->
         <div class="card-title">
           <!--begin::Room name-->
-          <h2 class="text-start"><i class="fa-regular fa-comment-dots"></i> {{ model.roomInfo ? model.roomInfo.tkrmNm : '' }}</h2>
+          <h2 class="text-start"><i class="fa-regular fa-comment-dots"></i> {{ props.roomInfo ? props.roomInfo.tkrmNm : '' }}</h2>
           <!--begin::Room name-->
         </div>
         <!--end::Title-->
@@ -19,8 +19,8 @@
         <div class="me-n5 pe-5 mx-3 h-300px h-lg-auto message-room-in" ref='messageRoomIn'
           v-if="model.messageList && model.messageList.length > 0">
           <template v-for="(item, idx) in model.messageList" :key="idx">
-            <my-msg v-if="item.rgstUserId === 'TEST-APR-1'" :item="item" />
-            <other-msg v-if="item.rgstUserId !== 'TEST-APR-1'" :item="item" />
+            <my-msg v-if="item.updtUserId === model.userInfo.id" :item="item" />
+            <other-msg v-if="item.updtUserId !== model.userInfo.id" :item="item" />
           </template>
         </div>
         <!--end::Messages-->
@@ -59,19 +59,19 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, reactive, watch } from 'vue'
+import { defineProps, onBeforeUnmount, onMounted, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
 import MyMsg from '@/components/user/unit/MyMsg'
 import OtherMsg from '@/components/user/unit/OtherMsg'
-import { ref, inject } from 'vue'
-import { onMessage, onOpen, onClose, onError } from 'vue3-websocket'
+import { ref } from 'vue'
+// import { onMessage, onOpen, onClose, onError } from 'vue3-websocket'
 
 const store = useStore()
 const chatRoomScroll = ref()
 const btnSend = ref()
 const messageTxt = ref()
 const messageRoomIn = ref()
-const socket = inject('socket')
+// const socket = inject('socket')
 
 const props = defineProps({
   roomInfo: {
@@ -83,35 +83,51 @@ const props = defineProps({
 let model = reactive({
   roomInfo: null,
   messageList: [],
-  messageTxt: ''
+  messageTxt: '',
+  userInfo: null
 })
+
+let socket
 
 watch(
   () => props.roomInfo,
   (first, second) => {
     console.log('first second', first, second)
-    loadMessages()
     console.log('scroll', chatRoomScroll.value.scrollHeight)
-    // chatRoomScroll.value.scrollIntoView({ behavior: 'smooth' })
   }
 )
 
 onMounted(() => {
-  loadMessages()
+  console.warn('room', JSON.stringify(props.roomInfo))
+  model.userInfo = store.getters['user/getUserInfo']
+  console.log('userInfo', JSON.stringify(model.userInfo))
+  connectWebsocket()
+  socket.onmessage = (event) => {
+    try {
+      const msgs = JSON.parse(event.data)
+      console.log('type', typeof(msgs))
+      if (typeof(msgs)==='object' && msgs.length>0) {
+        console.log('messageList', msgs[0])
+        model.messageList = msgs[0]
+      } else {
+        loadMessages()
+      }
+    } catch (e) {
+      console.log('event.data', event.data)
+      loadMessages()
+    }
+   }
 })
 
-function addMyMsg(msg) {
-  const myMsg = new MyMsg({
-    propsData: {
-      rgstUserId: 'TEST-APR-1',
-      msg: msg
-    }
-  }).$mount();
-  messageRoomIn.value.appendChild(myMsg.$el);
+function connectWebsocket() {
+  socket = new WebSocket('ws://dev.smartbas.org/chat-rooms/room/' + props.roomInfo.tkrmId);
 }
+onBeforeUnmount(() => {
+  socket.close()
+})
 
 function loadMessages() {
-  console.log('roomInfo', JSON.stringify(model.roomInfo))
+  console.log(`room ${props.roomInfo.tkrmNm} refresh`)
   model.roomInfo = props.roomInfo
   store.dispatch('user/getChatMessageListSync', model.roomInfo.tkrmId).then((result) => {
     // console.log('getChatMessageListSync', JSON.stringify(result))
@@ -132,28 +148,16 @@ function onMessageChange() {
 
 function sendMessage() {
   console.log('sendMessage', messageTxt.value.value)
-  socket.value.send(messageTxt.value.value)
-  addMyMsg(messageTxt.value.value)
+  try {
+    socket.send(model.userInfo.id + "|" + messageTxt.value.value)
+  } catch (e) {
+    connectWebsocket()
+    socket.send(model.userInfo.id + "|" + messageTxt.value.value)
+  }
+  // addMyMsg(messageTxt.value.value)
   model.messageTxt = ''
   // loadMessages()
 }
-
-onOpen(() => {
-  console.log('WS connection is stable! ~uWu~')
-})
-
-onMessage(message => {
-  console.log('Got a message from the WS: ', message)
-  loadMessages()
-})
-
-onClose(() => {
-  console.log('No way, connection has been closed 😥')
-})
-
-onError(error => {
-  console.error('Error: ', error)
-})
 </script>
 
 <style scoped>

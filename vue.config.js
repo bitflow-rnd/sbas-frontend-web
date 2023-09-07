@@ -12,7 +12,7 @@ module.exports = defineConfig({
         target: 'http://dev.smartbas.org'
       },
       '/chat-rooms': {
-        target: 'ws://dev.smartbas.org/chat-rooms/3/TEST-APR-1',
+        target: 'ws://dev.smartbas.org/chat-rooms',
         ws: true,
         changeOrigin: true
       }
