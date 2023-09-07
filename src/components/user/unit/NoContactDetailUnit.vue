@@ -20,7 +20,7 @@
           <div class="list-row">
             <div class="list-body-box">
               <div class="inner-item-list">
-                <h2>조회할 Staff의 연락처를 선택해주세요</h2>
+                <h2>연락처를 선택해주세요</h2>
               </div>
             </div>
           </div>

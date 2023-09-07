@@ -16,7 +16,7 @@
       <!--begin::Card body-->
       <div class="card-body" ref='chatRoomScroll' id='chatRoomScroll'>
         <!--begin::Messages-->
-        <div class="scroll-y me-n5 pe-5 mx-3 h-300px h-lg-auto message-room-in" ref='messageRoomIn'
+        <div class="me-n5 pe-5 mx-3 h-300px h-lg-auto message-room-in" ref='messageRoomIn'
           v-if="model.messageList && model.messageList.length > 0">
           <template v-for="(item, idx) in model.messageList" :key="idx">
             <my-msg v-if="item.rgstUserId === 'TEST-APR-1'" :item="item" />
@@ -190,5 +190,20 @@ article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn {
 }
 article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn.on { background-color: #74afeb; }
 h2 > i { margin-right: 6px }
+#chatRoomScroll::-webkit-scrollbar {
+  width: 20px;
+}
+#chatRoomScroll::-webkit-scrollbar-thumb {
+  background-color: #74AFEB;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 1px solid #595959;
+  width: 12px
+}
+#chatRoomScroll::-webkit-scrollbar-track {
+  background-color: lightgray;
+  border-left: 1px solid #aaa;
+  box-shadow: inset 0 0 5px white;
+}
 #chatRoomScroll { scroll-behavior: smooth; background-color: #f3f8f8; }
 </style>

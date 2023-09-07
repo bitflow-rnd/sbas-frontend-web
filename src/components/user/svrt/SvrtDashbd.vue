@@ -48,7 +48,7 @@
                   <pie-chart />
                 </td>
                 <td>
-                  <svrt-chart-unit :pt-id="'PT00000085'" @onPatientSelected="onPatientSelected" />
+                  <svrt-chart-unit :pt-id="'PT00000305'" @onPatientSelected="onPatientSelected" />
                 </td>
               </tr>
 

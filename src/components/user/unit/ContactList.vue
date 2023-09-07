@@ -86,10 +86,8 @@
 
     <div class="list-menu-box d-flex justify-content-center pt-8">
       <a
-        href="#none"
+        @click="$emit('showUserInvite')"
         class="btn btn-flex bg-primary text-white rounded-pill"
-        data-bs-toggle="modal"
-        data-bs-target="#kt_modal_user_invite"
         >사용자 초대</a
       >
     </div>

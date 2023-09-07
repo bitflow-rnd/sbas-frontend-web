@@ -101,6 +101,38 @@ export function getAuthCd(code){
     }
 }
 
+export function getPmgr(code) {
+    if (code === 'PMGR0001') {
+        return '병상요청'
+    } else if (code === 'PMGR0002') {
+        return '병상승인'
+    } else if (code === 'PMGR0003') {
+        return '병상배정'
+    } else {
+        return '시스템관리'
+    }
+}
+
+
+export function getPtType(code) {
+    if (code !== undefined && code !== null) {
+        const arr = code.split(';')
+        const res = arr.map((item) => ptType[item])
+        return res.join(', ')
+    } else return ''
+}
+
+export const ptType = {
+    PTTP0001: '일반',
+    PTTP0002: '소아',
+    PTTP0003: '투석',
+    PTTP0004: '산모',
+    PTTP0005: '수술',
+    PTTP0006: '인공호흡기 사용',
+    PTTP0007: '적극적 치료요청',
+    PTTP0008: '신생아'
+}
+
 export async function openPopup(idx) {
     if (idx === 0 && !this.rptYn) {
         console.log(this.newPt)

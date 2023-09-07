@@ -100,7 +100,7 @@
                             <tr>
                               <th>주소</th>
                               <td>
-                                [{{ model.ptDetail.zip }}]<br />
+                                {{ model.ptDetail.zip?'['+model.ptDetail.zip+']\n':'' }}
                                 {{ model.ptDetail.bascAddr }}&nbsp;{{ model.ptDetail.detlAddr }}
                               </td>
                             </tr>
@@ -168,8 +168,6 @@
                       >관찰환자 등록
                       </a>
                       <a href='javascript:void(0)'
-                        data-bs-target="#kt_modal_patnt"
-                        data-bs-toggle="modal"
                         class="modal-menu-btn menu-primary"
                         >수정
                       </a>
@@ -240,7 +238,7 @@
                 <div class="detail-head-box px-10 h-80px">
                   <div class="head-box">
                     <div class="head-txt-box">타임라인</div>
-                    <div v-if="model.model !== null" class="head-sub-box mt-2 d-flex">
+                    <div v-if="model.timeline" class="head-sub-box mt-2 d-flex">
                       <div
                         class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2"
                       >
@@ -392,4 +390,5 @@ function closeModal() {
   bottom: 0;
   width: 100%;
 }
+.detail-layout1, .detail-wrap { height: 100%; }
 </style>

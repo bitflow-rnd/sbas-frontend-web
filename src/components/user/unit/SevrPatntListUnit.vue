@@ -1,6 +1,6 @@
 <template>
   <article class="table-list-layout1">
-    <h3>중증환자 발생/예측 목록</h3>
+    <h3>중증환자 발생/예측 현황</h3>
     <div class="table-body-box">
       <div class="table-box with-scroll small">
         <table class="list-table-hoverable">
@@ -22,7 +22,7 @@
                 </td>
                 <td>{{ pt.ptNm }} ({{ pt.age }}세,{{ pt.gndr }})</td>
                 <td class="red">
-                  {{ pt.hospNm ? pt.hospNm : '중증' }}
+                  {{ idx<5?'중증':idx<10?'준중증':'준등증' }}
                 </td>
                 <td>{{ idx<5?0.9:idx<10?0.8:0.7 }}</td>
                 <td>
