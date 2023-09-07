@@ -374,6 +374,8 @@ onMounted(() => {
 })
 
 function closeModal() {
+  store.commit('bedasgn/setTimeline', null)
+  store.commit('bedasgn/setDisesInfo', null)
   emit('closeModal')
 }
 </script>
