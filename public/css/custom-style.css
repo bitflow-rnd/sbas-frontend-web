@@ -628,7 +628,7 @@ article.table-list-layout1 .table-body-box .table-box table tbody tr.cursor {
   cursor: pointer;
 }
 article.table-list-layout1 .table-body-box .table-box table tbody tr.selected td {
-  background-color: rgba(243, 224, 224, 0.6);
+  background-color: rgba(116, 175, 235, 0.133);
 }
 article.table-list-layout1 .table-body-box .table-box table tbody tr td {
   border: 1px solid #DADBDC;
@@ -2924,11 +2924,30 @@ section.login .login-wrap .login-contents .con-head-box .main-box {
 .list-table-hoverable tr:hover td {
   background-color: #74AFEB22;
 }
+article.toggle-list-layout2 .toggle-list label .txt {
+  border: 1px solid #888;
+  color: #595959;
+}
+article.toggle-list-layout2 .toggle-list label:first-child .txt {
+  border-right-width: 0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+article.toggle-list-layout2 .toggle-list label:last-child .txt {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
 .card-header { padding-left: 1.6rem; padding-right: 1.6rem; }
 input[type=checkbox] + i, .form-body-box select, .form-body-box input[type=text]
-  , .card-header input[type=text] {
-  border: 1px solid #888; color: #888; }
-.form-body-box input[type=text], .card-header input[type=text] { border-radius: 30px; }
+  , .form-body-box input[type=password], .card-header input[type=text]
+  , .item-cell-box > .rbox > label > i
+  , .form-body-box input, .form-body-box .textbox {
+  border: 1px solid #888 !important; color: #595959 !important; }
+.form-body-box .textbox textarea { background-color: initial; }
+.form-body-box input, .form-body-box .textbox { border-radius: 6px; background-color: initial; }
+.form-body-box input[type=text], .card-header input[type=text]
+, .form-body-box input[type=password] { border-radius: 30px; color: #888; }
+.form-body-box .sbox select { line-height: initial; }
 .message-room-in { padding-bottom: 100px; }
 .message-room-in div.rounded {
   font-weight: normal !important;

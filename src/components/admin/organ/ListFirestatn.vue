@@ -638,7 +638,7 @@
                           <div class="tbox w-450px ms-3">
                             <input
                               v-model="fsForm.detlAddr"
-                              placeholder="상세주소 입력 (선택사항)"
+                              placeholder="상세주소 입력 (선택)"
                             />
                           </div>
                         </div>
@@ -649,7 +649,7 @@
                       <td>
                         <div class="item-cell-box full">
                           <div class="tbox w-175px full">
-                            <input v-model="fsForm.chrgNm" placeholder="담당자 입력 (선택사항)" />
+                            <input v-model="fsForm.chrgNm" placeholder="담당자 입력 (선택)" />
                           </div>
                         </div>
                       </td>
@@ -659,7 +659,7 @@
                           <div class="tbox w-175px full">
                             <input
                               v-model="fsForm.chrgTelno"
-                              placeholder="담당자 연락처 입력 (선택사항)"
+                              placeholder="담당자 연락처 입력 (선택)"
                             />
                           </div>
                         </div>
@@ -811,7 +811,7 @@
                           <div class="tbox w-450px ms-3">
                             <input
                               v-model="fsDetail.detlAddr"
-                              placeholder="상세주소 입력 (선택사항)"
+                              placeholder="상세주소 입력 (선택)"
                             />
                           </div>
                         </div>
@@ -822,7 +822,7 @@
                       <td>
                         <div class="item-cell-box full">
                           <div class="tbox w-175px full">
-                            <input v-model="fsDetail.chrgNm" placeholder="담당자 입력 (선택사항)" />
+                            <input v-model="fsDetail.chrgNm" placeholder="담당자 입력 (선택)" />
                           </div>
                         </div>
                       </td>
@@ -832,7 +832,7 @@
                           <div class="tbox w-175px full">
                             <input
                               v-model="fsDetail.chrgTelno"
-                              placeholder="담당자 연락처 입력 (선택사항)"
+                              placeholder="담당자 연락처 입력 (선택)"
                             />
                           </div>
                         </div>

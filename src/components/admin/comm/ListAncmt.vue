@@ -311,7 +311,7 @@
                           ></i>
                         </td>
                         <td>2023.09.03 09시</td>
-                        <td>주서연<br/>(sbasub-1)</td>
+                        <td>주서연</td>
                         <td>
                           <a
                             role="button"
@@ -344,7 +344,7 @@
                           ></i>
                         </td>
                         <td>2023.06.12 09시</td>
-                        <td>곽택연 (sbamaster)</td>
+                        <td>곽택연</td>
                         <td>
                           <a
                             role="button"
