@@ -85,20 +85,17 @@
             <a
               href="javascript:void(0);"
               class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7"
-              data-bs-target="#kt_modal_view_users"
               ><i class="fa-regular fa-trash-can"></i> 삭제</a
             >
             <!-- data-bs-toggle="modal" -->
             <a
               href="#"
               class="btn btn-flex btn-sm btn-secondary fs-7"
-              data-bs-target="#kt_modal_view_users"
               ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
             >
             <!-- data-bs-toggle="modal" -->
             <a
-              data-bs-toggle="modal"
-              data-bs-target="#kt_modal_request"
+              @click="openModal(0)"
               class="btn btn-sm btn-flex btn-primary align-self-center px-3"
             >
               <i class="fa-solid fa-plus"></i> 신규병상요청
@@ -531,12 +528,8 @@
                         <td>{{ getDt(item.updtDttm) }}</td>
                         <td>
                           <a
-                            data-bs-toggle="modal"
-                            data-bs-target="#kt_modal_detail"
                             @click="
-                              async () => {
-                                await openBedMod(item)
-                              }
+                              openBedMod(item)
                             "
                             class="btn btn-flex btn-xs btn-outline btn-outline-primary justify-content-center"
                             >{{ getBtn(item.bedStatCd)[0] }}</a
@@ -626,8 +619,8 @@
   <!--end:::Main-->
 
   <!--begin::Modals-->
-  <!--  신규병상요청   -->
-  <div class="modal fade" id="kt_modal_request" tabindex="-1" aria-hidden="true">
+  <!--  신규병상요청 0  -->
+  <div class="modal fade" id="kt_modal_request" tabindex="-1" aria-hidden="true" :class="{'show' : showModal===0}" v-show="showModal===0">
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-1500px modal-dialog-centered">
       <!--begin::Modal content-->
@@ -642,7 +635,6 @@
             @click="closeModal(0)"
             id="reqest_exit"
             class="btn btn-sm btn-icon btn-active-color-primary"
-            data-bs-dismiss="modal"
           >
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
             <span class="svg-icon svg-icon-1">
@@ -837,12 +829,13 @@
                                 <div class="item-row-box">
                                   <div class="item-cell-box">
                                     <div class="tbox">
-                                      <input type="text" v-model="newPt.rrno1" maxlength="6" />
+                                      <input @input="validateInput(2)" type="text" v-model="newPt.rrno1" maxlength="6" />
                                     </div>
                                     <div class="unit-box mx-2 text-gray-600">-</div>
                                     <div class="tbox w-30px" style="min-width: 30px">
                                       <input
                                         type="password"
+                                        @input="validateInput(2)"
                                         v-model="newPt.rrno2"
                                         class="p-0 text-center fs-3x"
                                         maxlength="1"
@@ -1061,7 +1054,7 @@
                 <div class="modal-menu-list">
                   <!--              todo: 역학조사서를사용하지 않았다면 팝업창 뜰 일 없음                      -->
                   <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
-                  <a @click="showPopup(0)" class="modal-menu-btn menu-primary">다음</a>
+                  <a @click="openPopup(0)" class="modal-menu-btn menu-primary">다음</a>
                 </div>
               </article>
             </div>
@@ -2393,7 +2386,7 @@
     <!--end::Modal dialog-->
   </div>
 
-  <!--  추천병원선택   -->
+  <!--  추천병원선택 1  -->
   <div
     v-if="bdDetail !== null && ptDetail !== null"
     class="modal fade"
@@ -2401,6 +2394,7 @@
     tabindex="-1"
     aria-hidden="true"
     style=""
+    :class="{'show' : showModal===1}" v-show="showModal===1"
   >
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-1500px modal-dialog-centered">
@@ -2412,7 +2406,7 @@
           <h2>추천병원 선택</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
-          <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+          <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal(1)">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
             <span class="svg-icon svg-icon-1">
               <svg
@@ -2976,15 +2970,14 @@
               <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
               <router-link
                 to=""
-                data-bs-toggle="modal"
-                data-bs-target="#kt_modal_detail"
+                @click="openModal(2)"
                 class="modal-menu-btn menu-cancel"
                 >이전
               </router-link>
-              <router-link to="" @click="showPopup(1)" class="modal-menu-btn menu-primary-outline"
+              <router-link to="" @click="openPopup(1)" class="modal-menu-btn menu-primary-outline"
                 >배정불가</router-link
               >
-              <router-link to="" @click="showPopup(3)" class="modal-menu-btn menu-primary"
+              <router-link to="" @click="openPopup(3)" class="modal-menu-btn menu-primary"
                 >배정요청</router-link
               >
             </div>
@@ -2997,8 +2990,8 @@
     <!--end::Modal dialog-->
   </div>
 
-  <!--  병상배정 세부 내용  -->
-  <div class="modal fade" id="kt_modal_detail" tabindex="-1" aria-hidden="true" style="">
+  <!--  병상배정 세부 내용 2 -->
+  <div class="modal fade" id="kt_modal_detail" tabindex="-1" aria-hidden="true" style="" :class="{'show' : showModal===2}" v-show="showModal===2">
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-1500px modal-dialog-centered">
       <!--begin::Modal content-->
@@ -3011,18 +3004,14 @@
           <!--begin::Close-->
 
           <div class="btn-list">
-            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+            <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal(2)">
               <i class="fa-solid fa-share-nodes text-black" style="font-size: 18px"></i>
             </div>
 
             <div
               class="btn btn-sm btn-icon btn-active-color-primary"
-              @click="
-                async () => {
-                  await closeModal(0)
-                }
-              "
-              data-bs-dismiss="modal"
+              id="asgnDetail-exist"
+              @click="closeModal(2)"
             >
               <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
               <span class="svg-icon svg-icon-1">
@@ -3299,9 +3288,9 @@
                                       userInfo.jobCd === 'PMGR0002') ||
                                     (bdDetail.bedStatCd === 'BAST0004' &&
                                       userInfo.jobCd === 'PMGR0003' &&
-                                      userInfo.id === this.chrgUserId)
+                                      this.chrgUserId.some(item=>item.chrgUserId===userInfo.id))
                                   "
-                                  @click="showPopup(1)"
+                                  @click="openPopup(1)"
                                   class="modal-menu-btn menu-primary-outline radius-0 big"
                                   >배정 불가</a
                                 >
@@ -3310,13 +3299,7 @@
                                     bdDetail.bedStatCd === 'BAST0003' &&
                                     userInfo.jobCd === 'PMGR0002'
                                   "
-                                  @click="
-                                    async () => {
-                                      await showPopup(2)
-                                    }
-                                  "
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#kt_modal_recommend"
+                                  @click="openPopup(2)"
                                   class="modal-menu-btn menu-primary radius-0 big"
                                 >
                                   병상요청 승인
@@ -3325,14 +3308,10 @@
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0004' &&
-                                    userInfo.jobCd &&
-                                    userInfo.id === this.chrgUserId
+                                    userInfo.jobCd === 'PMGR0003' &&
+                                   this.chrgUserId.some(item=>item.chrgUserId===userInfo.id)
                                   "
-                                  @click="
-                                    async () => {
-                                      await showPopup(2)
-                                    }
-                                  "
+                                  @click="openPopup(2)"
                                   class="modal-menu-btn menu-primary radius-0 big"
                                 >
                                   병상요청 승인
@@ -3343,25 +3322,16 @@
                                     bdDetail.bedStatCd === 'BAST0005' &&
                                     userInfo.jobCd === 'PMGR0002'
                                   "
-                                  data-bs-toggle="modal"
-                                  @click="
-                                    async () => {
-                                      await loadTrnsfInfo(27)
-                                    }
-                                  "
-                                  data-bs-target="#kt_modal_dispatch"
+                                  @click="loadTrnsfInfo(27)"
                                   class="modal-menu-btn menu-primary radius-0 big"
                                 >
                                   이송·배차 처리
                                 </div>
                                 <div
                                   v-show="
-                                    bdDetail.bedStatCd === 'BAST0006' &&
-
-                                    userInfo.jobCd === 'PMGR0002'
+                                    bdDetail.bedStatCd === 'BAST0006' && this.chrgUserId.some(item=>item===userInfo.id) && (userInfo.jobCd === 'PMGR0003' || userInfo.jobCd === 'PMGR0002')
                                   "
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#kt_modal_hospitalization"
+                                  @click="openModal(4)"
                                   class="modal-menu-btn menu-primary radius-0 big"
                                 >
                                   입 · 퇴원 처리
@@ -3686,7 +3656,7 @@
     <!--end::Modal dialog-->
   </div>
 
-  <!--  이송 배차 처리  -->
+  <!--  이송 배차 처리 3 -->
   <div
     v-if="bdDetail !== null && ptDetail !== null"
     class="modal fade"
@@ -3694,6 +3664,7 @@
     tabindex="-1"
     aria-hidden="true"
     style=""
+    :class="{'show' : showModal===3}" v-show="showModal===3"
   >
     <!--begin::Modal dialog-->
     <div
@@ -3708,7 +3679,7 @@
           <h2>이송·배차 처리</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
-          <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+          <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal(3)">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
             <span class="svg-icon svg-icon-1">
               <svg
@@ -4095,7 +4066,7 @@
     <!--end::Modal dialog-->
   </div>
 
-  <!--  입퇴원처리  -->
+  <!--  입퇴원처리 4 -->
   <div
     v-if="bdDetail !== null && ptDetail !== null"
     class="modal fade"
@@ -4103,6 +4074,7 @@
     tabindex="-1"
     aria-hidden="true"
     style=""
+    :class="{'show' : showModal===4}" v-show="showModal===4"
   >
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-1500px modal-dialog-centered">
@@ -4114,7 +4086,7 @@
           <h2>입·퇴원 처리</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
-          <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+          <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal(4)">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
             <span class="svg-icon svg-icon-1">
               <svg
@@ -4330,8 +4302,7 @@
             <div class="modal-menu-list">
               <router-link
                 to=""
-                data-bs-toggle="modal"
-                data-bs-target="#kt_modal_hospitalization"
+                @click="alertClose"
                 class="modal-menu-btn menu-cancel"
                 >이전
               </router-link>
@@ -4870,7 +4841,7 @@ import {
   maskingNm,
   openAddressFinder,
   regNewPt,
-  showPopup
+  openPopup
 } from '@/util/ui'
 import user from '@/store/modules/user'
 
@@ -4918,6 +4889,7 @@ export default {
   },
   data() {
     return {
+      showModal: null,
       transCondition1:false,
       transCondition2:false,
       filter: {
@@ -4949,6 +4921,7 @@ export default {
       newPt: {
         ptNm: '',
         rrno1: '',
+        rrno2: '',
         gndr: '',
         zip: '',
         bascAddr: '',
@@ -4998,7 +4971,7 @@ export default {
         dprtHospId: '',
           inhpAsgnYn:'N',
           reqDstr1Cd:'27',
-          reqDstr2Cd:''
+          reqDstr2Cd:null
       },
       aprv: {
         ptId: '',
@@ -5023,7 +4996,7 @@ export default {
         aprvYn: 'Y',
         hospId: '',
         negCd: '',
-        asgnReqSeq: 0
+        asgnReqSeq: null
       },
       hosptlzdiscg: {
         ptId: '',
@@ -5033,7 +5006,7 @@ export default {
         admsStatCd: 'IOST0001',
         dschRsnCd: ''
       },
-      chrgUserId: '',
+      chrgUserId: [],
         undrDsesCdArr:[],
     }
   },
@@ -5080,6 +5053,30 @@ export default {
     }
   },
   methods: {
+    openModal(idx){
+      this.showModal=null
+      this.showModal = idx
+    },
+    closeModal(idx) {
+        if(idx === 0){
+            this.showModal = null
+            this.setNull()
+        } else if (idx === 2) {
+            /*세부내용 모달*/
+            this.showModal = null
+            this.tabidx = 0
+            this.$store.commit('bedasgn/setDisesInfo', null)
+            this.$store.commit('bedasgn/setTimeline', null)
+            this.$store.commit('patnt/setBasicInfo', [0, null])
+            this.$store.commit('patnt/setRpt', null)
+            this.newPt = this.initNewPt
+            this.dsInfo = this.initDsInfo
+
+        } else {
+            this.showModal = null
+        }
+        this.getBdList()
+    },
     getBdList() {
       this.$store.dispatch('bedasgn/getBdList')
     },
@@ -5190,10 +5187,7 @@ export default {
         this.alertIdx = 1
       } else if (idx === 2) {
         this.alertClose()
-        const but = document.getElementById('reqest_exit')
-        but.click()
-        this.tab = 0
-          this.getBdList()
+        this.closeModal()
           this.preRpt=null
           this.undrDsesCdArr=[]
           this.setNull()
@@ -5215,7 +5209,11 @@ export default {
         this.errMsg = '배정불가 처리 하시겠습니까?'
         this.cncBtn = true
         this.isAlert = true
-        this.alertIdx = 5
+          if(this.userInfo.jobCd==='PMGR0002'){
+              this.alertIdx = 5
+          } else if(this.userInfo.jobCd==='PMGR0003'){
+              this.alertIdx = 14
+          }
       } else if (idx === 6) {
         /*승인불가 후 alert*/
         this.errMsg = '배정불가 처리 되었습니다'
@@ -5260,10 +5258,10 @@ export default {
         this.errMsg = '입/퇴원 처리하시겠습니까?'
         this.isAlert = true
         this.cncBtn = true
-        this.alertIdx = 14
+        this.alertIdx = 15
       }
     },
-    cfrmAl(res) {
+    async cfrmAl(res) {
       if (res === 0) {
         console.log(0)
         this.alertOpen(1)
@@ -5295,8 +5293,8 @@ export default {
         this.alertOpen(8)
       } else if (res === 8) {
         this.alertClose()
+        this.closeModal()
         this.setNull()
-        this.getBdList()
       } else if (res === 9) {
         this.removeRpt()
         this.newPt = this.initNewPt
@@ -5309,29 +5307,46 @@ export default {
         this.trsfInfo.bdasSeq = this.bdDetail.bdasSeq
         this.trsfInfo.ptId = this.bdDetail.ptId
         console.log(this.trsfInfo)
-        this.$store.dispatch('bedasgn/cfmTrsf', this.trsfInfo)
+        await this.$store.dispatch('bedasgn/cfmTrsf', this.trsfInfo)
         this.alertClose()
+        this.popup=100
+        this.closeModal()
       } else if (res === 12) {
         this.mediConfirm.ptId = this.bdDetail.ptId
         this.mediConfirm.bdasSeq = this.bdDetail.bdasSeq
         this.mediConfirm.hospId = this.userInfo.instId
-        this.mediConfirm.asgnReqSeq++
+        this.mediConfirm.asgnReqSeq = this.getAsgnReqSeq()
         console.log(this.mediConfirm)
         this.$store.dispatch('bedasgn/cfmMedi', this.mediConfirm)
         this.alertClose()
         this.alertOpen(13)
       } else if (res === 13) {
         this.alertClose()
+        this.popup=100
+        this.closeModal()
+        this.tab = 0
       } else if (res === 14) {
-        this.hosptlzdiscg.bdasSeq = this.bdDetail.bdasSeq
-        this.hosptlzdiscg.ptId = this.bdDetail.ptId
-        this.hosptlzdiscg.roomNm = this.hosptlzdiscg.wardNm
-        this.hosptlzdiscg.hospId = this.getChrgTL(this.timeline.items, 1)
-        console.log(this.hosptlzdiscg)
-        this.$store.dispatch('bedasgn/cfmHosp', this.hosptlzdiscg)
-        this.alertClose()
-        this.alertOpen(13)
+          this.mediConfirm.ptId       = this.bdDetail.ptId
+          this.mediConfirm.bdasSeq    = this.bdDetail.bdasSeq
+          this.mediConfirm.hospId     = this.userInfo.instId
+          this.mediConfirm.asgnReqSeq = this.getAsgnReqSeq()
+          this.mediConfirm.negCd = this.aprv.negCd
+          this.mediConfirm.aprvYn = 'N'
+          console.log(this.mediConfirm)
+          this.$store.dispatch('bedasgn/cfmMedi', this.mediConfirm)
+          this.alertClose()
+          this.alertOpen(13)
+      } else if (res === 15) {
+          this.hosptlzdiscg.bdasSeq = this.bdDetail.bdasSeq
+          this.hosptlzdiscg.ptId = this.bdDetail.ptId
+          this.hosptlzdiscg.roomNm = this.hosptlzdiscg.wardNm
+          this.hosptlzdiscg.hospId = this.getChrgTL(this.timeline.items, 1)
+          console.log(this.hosptlzdiscg)
+          this.$store.dispatch('bedasgn/cfmHosp', this.hosptlzdiscg)
+          this.alertClose()
+          this.alertOpen(13)
       }
+      console.log(res)
     },
     alertClose(){
       this.errMsg = ''
@@ -5343,7 +5358,7 @@ export default {
       this.tabidx = idx
       this.loadNaverMapAsync()
     },
-    showPopup,
+    openPopup,
     getTLDt,
     getTLIcon,
     closePopup(idx) {
@@ -5351,20 +5366,6 @@ export default {
         this.popup = 100
         this.content = ''
         this.characterCount = 0
-      }
-    },
-    closeModal(idx) {
-      if (idx === 0) {
-        /*세부내용 모달*/
-        {
-          this.tabidx = 0
-          this.$store.commit('bedasgn/setDisesInfo', null)
-          this.$store.commit('bedasgn/setTimeline', null)
-          this.$store.commit('patnt/setBasicInfo', [0, null])
-          this.$store.commit('patnt/setRpt', null)
-          this.newPt = this.initNewPt
-          this.dsInfo = this.initDsInfo
-        }
       }
     },
     backBtn,
@@ -5387,7 +5388,7 @@ export default {
     updateCharacterCount(idx) {
       const messageProps = [this.aprv, this.mediConfirm, this.hosptlzdiscg, this.trsfInfo]
       const currentMessage = messageProps[idx].msg
-      if (currentMessage === null || currentMessage === '' && currentMessage === undefined) {
+      if (currentMessage === null || currentMessage === '' || currentMessage === undefined) {
         this.characterCount = this.content.length
       } else {
         this.characterCount = currentMessage.length
@@ -5491,6 +5492,9 @@ export default {
       } else if (idx === 1) {
         this.newPt.mpno = this.newPt.mpno.replace(/[^0-9]/g, '')
         this.newPt.telno = this.newPt.telno.replace(/[^0-9]/g, '')
+      } else if (idx === 2){
+        this.newPt.rrno1 = this.newPt.rrno1.replace(/[^0-9]/g, '')
+        this.newPt.rrno2 = this.newPt.rrno2.replace(/[^0-9]/g, '')
       }
     },
     getBtn(sts) {
@@ -5527,20 +5531,40 @@ export default {
       this.transCondition1 = this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
       this.transCondition2 = this.bdDetail.bedStatCd==='BAST0005' || this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
       this.getChrgId()
+      this.openModal(2)
+    },
+    getAsgnReqSeq(){
+      let asgnReqSeq
+      this.chrgUserId.forEach((item)=>{
+          if(item.chrgUserId === this.userInfo.id){
+              asgnReqSeq = item.asgnReqSeq
+          }
+      })
+      return asgnReqSeq
     },
     getChrgId() {
       if (this.timeline !== null) {
-          if(this.timeline.items.find((item) => item.timeLineStatus === 'suspend')){
-              const suspendStatus = this.timeline.items.find((item) => item.timeLineStatus === 'suspend')
-              this.chrgUserId = suspendStatus.chrgUserId
-          }
-
+          this.chrgUserId=[]
+          this.timeline.items.forEach((item) =>{
+              if(item.timeLineStatus === 'suspend'){
+                  if(item.asgnReqSeq){
+                      console.log('의료진 배정')
+                      this.chrgUserId.push({chrgUserId:item.chrgUserId, asgnReqSeq:item.asgnReqSeq})
+                      console.log(this.chrgUserId)
+                  }else if(item.chrgUserId) {
+                      console.log('해당')
+                      this.chrgUserId.push(item.chrgUserId)
+                      console.log(this.chrgUserId)
+                  }
+              }
+          })
       }
     },
     loadTrnsfInfo(num) {
       /*요청자 지역코드 받아와야 됨*/
       const data = { dstrCd1: num }
       this.$store.dispatch('admin/getFireStatn', data)
+      this.openModal(3)
     },
     getFiremen(data) {
       /*구급대원*/
@@ -5588,6 +5612,10 @@ export default {
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped>
+.modal.show {
+    background-color: rgba(0,0,0,0.4);
+    display: block;
+}
 .popup {
   display: block;
 }
