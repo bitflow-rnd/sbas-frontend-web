@@ -3189,7 +3189,7 @@ export default {
       patientData: [],
       patientBasicInfo: [],
       patientDiseaseInfo: [],
-      displayRowsCount: 10,
+      displayRowsCount: 15,
       displayChangePageButtonsCount: 10,
       previousPageButtonsCount: 4,
       nextPageButtonsCount: 4,

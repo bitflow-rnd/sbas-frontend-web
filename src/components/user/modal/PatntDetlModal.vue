@@ -361,8 +361,8 @@ const store = useStore()
 
 let model = reactive({
   ptDetail: props.ptDetail,
-  timeline: store.getters['bedasgn/timeline'],
-  ptDs: store.getters['bedasgn/ptDs']
+  timeline: store.getters['bedasgn/getTimeline'],
+  ptDs: store.getters['bedasgn/getPtDs']
 })
 
 // const ptBI = store.getters['patnt/ptBI']
