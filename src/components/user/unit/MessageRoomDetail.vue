@@ -7,7 +7,7 @@
         <!--begin::Title-->
         <div class="card-title">
           <!--begin::Room name-->
-          <h2 class="text-start"><i class="fa-regular fa-comment-dots"></i> {{ props.roomInfo ? props.roomInfo.tkrmNm : '' }}</h2>
+          <h2 class="text-start"><i class="fa-regular fa-comment-dots"></i> {{ model.roomInfo ? model.roomInfo.tkrmNm : '' }}</h2>
           <!--begin::Room name-->
         </div>
         <!--end::Title-->
@@ -94,6 +94,8 @@ watch(
   (first, second) => {
     console.log('first second', first, second)
     console.log('scroll', chatRoomScroll.value.scrollHeight)
+    model.roomInfo = second
+    loadMessages()
   }
 )
 
@@ -120,7 +122,11 @@ onMounted(() => {
 })
 
 function connectWebsocket() {
-  socket = new WebSocket('ws://dev.smartbas.org/chat-rooms/room/' + props.roomInfo.tkrmId);
+  socket = new WebSocket('ws://dev.smartbas.org/chat-rooms/room/'
+    + props.roomInfo.tkrmId);
+  socket.onopen = function () {
+    socket.send("hello|" + model.userInfo.id)
+  }
 }
 onBeforeUnmount(() => {
   socket.close()
