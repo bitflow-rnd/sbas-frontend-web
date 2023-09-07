@@ -65,24 +65,28 @@ export function getTag(data){
     return str
 }
 export function getGndr(no2){
-    if(no2==='1'||no2==='3'){
-        this.newPt.gndr='남'
-        return this.newPt.gndr
-    }  else{
-        this.newPt.gndr='여'
-        return this.newPt.gndr
+    if(no2 !== ''){
+        if (no2 === '1' || no2 === '3') {
+            this.newPt.gndr = '남'
+            return this.newPt.gndr
+        } else {
+            this.newPt.gndr = '여'
+            return this.newPt.gndr
+        }
     }
 }
 export function getAge (no1, no2){
     const curData = new Date()
     const curYear = curData.getFullYear()
     let year
-    if(no2==='1'||no2==='2'||no2==='5'||no2==='6'){
-        year = '19'+no1.slice(0,2)
-        return curYear - parseInt(year)
-    } else {
-        year = '20'+no1.slice(0,2)
-        return curYear - parseInt(year)
+    if(no2 !== '') {
+        if (no2 === '1' || no2 === '2' || no2 === '5' || no2 === '6') {
+            year = '19' + no1.slice(0, 2)
+            return curYear - parseInt(year)
+        } else {
+            year = '20' + no1.slice(0, 2)
+            return curYear - parseInt(year)
+        }
     }
 }
 export function getAuthCd(code){
@@ -97,7 +101,7 @@ export function getAuthCd(code){
     }
 }
 
-export async function showPopup(idx) {
+export async function openPopup(idx) {
     if (idx === 0 && !this.rptYn) {
         console.log(this.newPt)
         await this.$store.dispatch('patnt/isExistPt', this.newPt)
@@ -112,7 +116,6 @@ export async function showPopup(idx) {
         }
     } else if (idx === 1) {
         /*병상 배정 불가*/
-        this.closeModal()
         this.popup = 4
         document.getElementById('deniedAsgn').focus()
     } else if (idx === 2 && this.timeline !== null) {
@@ -125,6 +128,7 @@ export async function showPopup(idx) {
             } else {
                 console.log('전원요청')
                 await this.$store.dispatch('bedasgn/rcmdHpList',this.bdDetail)
+                this.openModal(1)
             }
         } else if (this.userInfo.jobCd === 'PMGR0003') {
             console.log('의료진')
