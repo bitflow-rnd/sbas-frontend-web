@@ -5662,6 +5662,6 @@ li.custom-style::before {
 .spinner {
     position : fixed;
     left: calc(50% - 32px);
-    top: calc(30% - 32px);
+    top: calc(50% - 32px);
 }
 </style>
