@@ -75,7 +75,6 @@ export default {
       try {
         const response = await axios.get(url, { params })
         if (response.data?.code === '00') {
-          //console.log(response.data?.result)
           await comment.commit('setPatntList', response.data?.result)
         }
       } catch (e) {
@@ -198,7 +197,6 @@ export default {
       const token = localStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/test/geocoding-test`
       const request = { query: data[1] }
-
       try {
         const response = await axios.post(url, request, {
           headers: {
@@ -237,7 +235,7 @@ export default {
         const response = await axios.get(url)
         if (response.data?.code === '00') {
           await comment.commit('setBasicInfo', [0, response.data?.result])
-          comment.dispatch('geoCoding', [2, response.data?.result.bascAddr])
+          await comment.dispatch('geoCoding', [2, response.data?.result.bascAddr])
         }
       } catch (e) {
         console.log(e)
