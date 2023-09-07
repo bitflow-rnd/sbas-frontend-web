@@ -1,7 +1,7 @@
 <template>
   <div>
     <h4 v-if="model.ptDetail" @click="selectPatient" role="button" class='patient-info'>
-      <i class="fa-solid fa-bed-pulse"></i> {{ model.ptDetail.ptNm }}({{ model.ptDetail.age }}세 / {{ model.ptDetail.gndr }},
+      <i class="fa-solid fa-bed-pulse"></i> {{ model.ptDetail.ptNm }}({{ model.ptDetail.age }}세 / {{ model.ptDetail.gndr }} /
       {{ model.ptDetail.bascAddr }})
     </h4>
   </div>

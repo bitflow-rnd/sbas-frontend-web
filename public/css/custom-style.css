@@ -273,7 +273,7 @@ section.cntc-info-view {
 }
 section.cntc-info-view .view-head-box .view-img-box img {
   border-radius: 9px;
-  border: 1px solid #333;
+  border: 1px solid #888;
   margin: 6px 8px;
   width: calc(100% - 1.2rem);
   opacity: 0.5;

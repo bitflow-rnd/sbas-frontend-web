@@ -266,7 +266,7 @@
                     </thead>
 
                     <tbody>
-                      <tr @click="showDetail(1)">
+                      <tr @click="showDetail(1)" role='button'>
                         <td>2</td>
                         <td>SBA0101</td>
                         <td>필수</td>
@@ -287,7 +287,7 @@
                         </td>
                       </tr>
 
-                      <tr @click="showDetail(2)">
+                      <tr @click="showDetail(2)" role='button'>
                         <td>1</td>
                         <td>SBA0101</td>
                         <td>필수</td>

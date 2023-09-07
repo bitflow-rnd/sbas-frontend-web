@@ -153,7 +153,7 @@
 
                           </tbody>
                         </table>
-                        <svrt-chart-unit-no-title :pt-id="'PT00000086'" class='mt-5' />
+                        <svrt-chart-unit-no-title :pt-id="model.ptDetail.ptId" class='mt-5' />
                       </div>
 
                       <div class="table-img-box pt-4"></div>

@@ -1,6 +1,6 @@
 <template>
   <h4>
-    <i class="fa-solid fa-bed-pulse"></i> 중증환자 발생 추이 (최근 6개월)
+    <i class="fa-solid fa-bed-pulse"></i> 중증환자 발생 추이 (최근 1주)
   </h4>
   <div id="chart" class="d-flex justify-content-center chart-container">
     <vue-apex-charts

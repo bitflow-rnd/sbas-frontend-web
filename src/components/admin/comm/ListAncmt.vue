@@ -109,7 +109,7 @@
                       <col style="width: auto" />
                     </colgroup>
                     <tbody>
-                      <tr>
+                      <tr >
                         <th>공지유형</th>
                         <td>
                           <div class="item-cell-box">
@@ -288,7 +288,7 @@
                     </thead>
 
                     <tbody>
-                      <tr @click="showDetail(1)">
+                      <tr @click="showDetail(1)" role='button'>
                         <td>2</td>
                         <td><span class="rounded-pill bg-primary text-white px-2">공지</span></td>
                         <td class="left">
@@ -322,7 +322,7 @@
                         </td>
                       </tr>
 
-                      <tr @click="showDetail(2)">
+                      <tr @click="showDetail(2)" role='button'>
                         <td>1</td>
                         <td>
                           <span

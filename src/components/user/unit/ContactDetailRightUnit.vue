@@ -53,12 +53,12 @@
                   <a href="javascript:void(0)" class="item-box state-ing" role="button">
                     <div class="info-box">
                       <div class="state-box">
-                        <div class="state-txt type-ing">승인대기</div>
+                        <div class="state-txt type-ing">배정완료</div>
                       </div>
 
                       <div class="user-box">
-                        <div class="subject-box"><b>송진호</b> (남/43세/경북 포항시)</div>
-                        <div class="con-box">#투석 #음압격리 #임산부</div>
+                        <div class="subject-box"><b>송*웅</b> (남/63세/경북 포항시)</div>
+                        <div class="con-box">#투석 #중증 #고혈압</div>
                       </div>
                     </div>
 
@@ -66,22 +66,6 @@
                   </a>
                 </li>
 
-                <li>
-                  <a href="javascript:void(0)" class="item-box state-ing" role="button">
-                    <div class="info-box">
-                      <div class="state-box">
-                        <div class="state-txt type-ing">승인대기</div>
-                      </div>
-
-                      <div class="user-box">
-                        <div class="subject-box"><b>송진호</b> (남/43세/경북 포항시)</div>
-                        <div class="con-box">#투석 #음압격리 #임산부</div>
-                      </div>
-                    </div>
-
-                    <div class="date-box">2023년 3월 1일 13시 43분</div>
-                  </a>
-                </li>
 
                 <li>
                   <a href="javascript:void(0)" class="item-box state-finish">
@@ -91,8 +75,8 @@
                       </div>
 
                       <div class="user-box">
-                        <div class="subject-box"><b>송진호</b> (여/23세/서울특별시 송파구)</div>
-                        <div class="con-box">#투석 #음압격리 #임산부</div>
+                        <div class="subject-box"><b>임*선</b> (여/23세/서울특별시 송파구)</div>
+                        <div class="con-box">#준중증 #임산부</div>
                       </div>
                     </div>
 
@@ -100,86 +84,6 @@
                   </a>
                 </li>
 
-                <li>
-                  <a href="javascript:void(0)" class="item-box state-finish">
-                    <div class="info-box">
-                      <div class="state-box">
-                        <div class="state-txt type-finish">승인대기</div>
-                      </div>
-
-                      <div class="user-box">
-                        <div class="subject-box"><b>송진호</b> (여/23세/서울특별시 송파구)</div>
-                        <div class="con-box">#투석 #음압격리 #임산부</div>
-                      </div>
-                    </div>
-
-                    <div class="date-box">2023년 3월 1일 13시 43분</div>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)" class="item-box state-finish">
-                    <div class="info-box">
-                      <div class="state-box">
-                        <div class="state-txt type-finish">승인대기</div>
-                      </div>
-
-                      <div class="user-box">
-                        <div class="subject-box"><b>송진호</b> (여/23세/서울특별시 송파구)</div>
-                        <div class="con-box">#투석 #음압격리 #임산부</div>
-                      </div>
-                    </div>
-
-                    <div class="date-box">2023년 3월 1일 13시 43분</div>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)" class="item-box state-finish">
-                    <div class="info-box">
-                      <div class="state-box">
-                        <div class="state-txt type-finish">승인대기</div>
-                      </div>
-
-                      <div class="user-box">
-                        <div class="subject-box"><b>송진호</b> (여/23세/서울특별시 송파구)</div>
-                        <div class="con-box">#투석 #음압격리 #임산부</div>
-                      </div>
-                    </div>
-
-                    <div class="date-box">2023년 3월 1일 13시 43분</div>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)" class="item-box state-finish">
-                    <div class="info-box">
-                      <div class="state-box">
-                        <div class="state-txt type-finish">승인대기</div>
-                      </div>
-
-                      <div class="user-box">
-                        <div class="subject-box"><b>송진호</b> (여/23세/서울특별시 송파구)</div>
-                        <div class="con-box">#투석 #음압격리 #임산부</div>
-                      </div>
-                    </div>
-
-                    <div class="date-box">2023년 3월 1일 13시 43분</div>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)" class="item-box state-finish">
-                    <div class="info-box">
-                      <div class="state-box">
-                        <div class="state-txt type-finish">승인대기</div>
-                      </div>
-
-                      <div class="user-box">
-                        <div class="subject-box"><b>송진호</b> (여/23세/서울특별시 송파구)</div>
-                        <div class="con-box">#투석 #음압격리 #임산부</div>
-                      </div>
-                    </div>
-
-                    <div class="date-box">2023년 3월 1일 13시 43분</div>
-                  </a>
-                </li>
               </ul>
             </div>
           </article>
@@ -524,6 +428,7 @@ h2 {
   font-weight: normal;
   text-align: center;
 }
+.activity-head-box { padding: 12px 32px; }
 .view-img-box {
   border-bottom: 1px solid #666;
 }

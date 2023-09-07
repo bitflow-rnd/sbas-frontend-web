@@ -37,7 +37,7 @@
                             <div class="dashboard-head-box d-flex justify-content-between align-items-end pb-5">
 
                                 <div class="head-box">
-                                    <span class="text-black fs-3 fw-bold">요약 현황</span> <span class="text-gray-600">(집계기준 : 2023-03-16 00:00 ~ 2023-03-16 23:59)</span>
+                                    <span class="text-black fs-3 fw-bold">요약 현황</span> <span class="text-gray-600">(집계기준 : 2023-08-01 00:00 ~ 2023-08-31 23:59)</span>
                                 </div>
 
                                 <div class="option-box d-inline-flex align-items-center">
@@ -136,7 +136,7 @@
                                         <div class="top-box">
                                             <div class="subject-box">
                                                 <div class="label-txt bg-primary">최다</div>
-                                                <div class="subject-txt">최다 수용 의료기관</div>
+                                                <div class="subject-txt">수용 의료기관</div>
                                             </div>
                                             <div class="remove-box">
                                                 <a href="javascript:void(0)">
@@ -162,7 +162,7 @@
                                         <div class="top-box">
                                             <div class="subject-box">
                                               <div class="label-txt bg-primary">월간</div>
-                                              <div class="subject-txt">최다 배정 Staff</div>
+                                              <div class="subject-txt">배정 Staff</div>
                                             </div>
                                             <div class="remove-box">
                                                 <a href="javascript:void(0)">
@@ -188,7 +188,7 @@
                                       <div class="top-box">
                                         <div class="subject-box">
                                           <div class="label-txt bg-primary">월간</div>
-                                          <div class="subject-txt">최다 배정요청 Staff</div>
+                                          <div class="subject-txt">배정요청 Staff</div>
                                         </div>
                                         <div class="remove-box">
                                           <a href="javascript:void(0)">

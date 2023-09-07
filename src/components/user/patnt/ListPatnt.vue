@@ -954,6 +954,10 @@
 
                       <div class="table-img-box pt-4"></div>
                     </div>
+
+                    <svrt-chart-unit-no-title :pt-id="ptDetail.ptId" class='mt-5'
+                    v-if="ptDetail.ptId==='PT00000086' || ptDetail.ptId==='PT00000305'"/>
+
                   </article>
                 </div>
 
@@ -990,7 +994,8 @@
                   <article class="table-list-layout2">
                     <div class="table-body-box overflow-y-auto">
                       <div class="table-box pe-5">
-                        <table>
+
+                        <table v-if='bdasHis.items && bdasHis.items.length>0'>
                           <colgroup>
                             <col style="width: 50px" />
                             <col style="width: auto" />
@@ -1021,6 +1026,12 @@
                             </td>
                           </tr>
                         </table>
+
+                        <div class="img-box" v-if='!bdasHis.items || bdasHis.items.length===0'>
+                          <img src="/img/common/img_nodata.svg" alt="이미지">
+                          <h2 data-v-70fc8ce7="">최근 이력 없음</h2>
+                        </div>
+
                       </div>
                     </div>
                   </article>
@@ -1113,36 +1124,37 @@
                         </li>
                       </ul>
                     </div>
-                    <div v-if="model.mode==='timeline' && timeline === null" class="timeline-wrap overflow-y-auto ps-10 pe-5">
-                      병상배정 이력이 없습니다
+
+                    <div v-if="timeline === null" class="img-box" data-v-70fc8ce7=""><img src="/img/common/img_nodata.svg" alt="이미지" data-v-70fc8ce7=""><h2 data-v-70fc8ce7="">최근 이력 없음</h2></div>
+                    <div class="detail-foot-box">
+                      <article class="msg-send-layout1">
+                        <div class="img-upload-result">
+                          <div class="img-list"></div>
+                        </div>
+
+                        <div class="msg-group-box">
+                          <div class="img-upload-box">
+                            <label>
+                              <input type="file" />
+                              <img src="/img/common/ic_msg_img_upload.svg" alt="이미지" />
+                            </label>
+                          </div>
+                          <div class="msg-input-box">
+                            <input type="text" placeholder="메시지 입력" />
+                          </div>
+                          <div class="msg-send-box">
+                            <a href="#none" class="send-btn">
+                              <img src="/img/common/ic_msg_send.svg" alt="이미지" />
+                            </a>
+                          </div>
+                        </div>
+                      </article>
                     </div>
+
                   </article>
+
                 </div>
 
-                <div class="detail-foot-box">
-                  <article class="msg-send-layout1">
-                    <div class="img-upload-result">
-                      <div class="img-list"></div>
-                    </div>
-
-                    <div class="msg-group-box">
-                      <div class="img-upload-box">
-                        <label>
-                          <input type="file" />
-                          <img src="/img/common/ic_msg_img_upload.svg" alt="이미지" />
-                        </label>
-                      </div>
-                      <div class="msg-input-box">
-                        <input type="text" placeholder="메시지 입력" />
-                      </div>
-                      <div class="msg-send-box">
-                        <a href="#none" class="send-btn">
-                          <img src="/img/common/ic_msg_send.svg" alt="이미지" />
-                        </a>
-                      </div>
-                    </div>
-                  </article>
-                </div>
               </div>
             </div>
           </article>
@@ -3072,6 +3084,7 @@
 <script>
 import DataPagination from '@/components/layout/DataPagination'
 import { mapState } from 'vuex'
+import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle'
 import {
     backBtn,
     getAge, getDt,
@@ -3089,7 +3102,8 @@ import { ref, reactive } from 'vue'
 
 export default {
   components: {
-    DataPagination
+    DataPagination,
+    SvrtChartUnitNoTitle
   },
   name: 'ListPatnt',
   props: {
@@ -3539,5 +3553,7 @@ article.detail-layout1 .detail-wrap .detail-head-box .head-box .head-txt-box {
 }
 td > .btn-primary-outline { width: 85px; }
 .pt-nm { line-height: 24px; }
+.img-box { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.img-box > h2 { color: #595959; font-weight: normal; margin-top: 12px; }
 .chart-apex { width: 100%; position: absolute; left: 0; top: 100px; height: 350px; background-color: white; }
 </style>
