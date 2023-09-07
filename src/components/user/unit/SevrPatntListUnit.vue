@@ -75,7 +75,8 @@ async function selectPatient(patient) {
     store.commit('bedasgn/setDisesInfo', null)
   }
   await store.dispatch('patnt/getBasicInfo', patient)
-  emit('onPatientSelected', patient)
+  let ptDetail = store.getters['patnt/getPtDetail']
+  emit('onPatientSelected', ptDetail)
 }
 
 function getDate(data) {
