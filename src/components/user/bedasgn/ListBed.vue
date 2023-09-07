@@ -768,7 +768,7 @@
                                     >
                                       <img
                                         v-if="preRpt === null"
-                                        src="/img/common/img_upload_img.svg"
+                                        src="@/assets/img/img-no-img.webp"
                                         alt="이미지"
                                       />
                                       <img v-if="preRpt !== null" :src="preRpt" alt="이미지" />
@@ -783,7 +783,7 @@
                                           class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary"
                                         >
                                           <input type="file" @change="uploadRpt" />
-                                          수정하기
+                                          수정
                                         </label>
                                       </div>
                                     </div>
@@ -816,7 +816,7 @@
                               <td>
                                 <div class="item-cell-box">
                                   <div class="tbox">
-                                    <input type="text" v-model="newPt.ptNm" />
+                                    <input type="text" v-model="newPt.ptNm" placeholder='환자이름 입력'/>
                                   </div>
                                 </div>
                                 <div v-if="false" class="item-cell-box full">
@@ -3795,7 +3795,7 @@
                       <th>#1</th>
                       <td colspan="3">
                         <div class="item-cell-box">
-                          <!--todo: @change 수정하기 v-for랑 같이 작동 안 됨-->
+                          <!--todo: @change 수정 v-for랑 같이 작동 안 됨-->
                           <div v-if="firemenList.items" class="sbox" style="width: 128px">
                             <select v-model="trsfInfo.crew1Id">
                               <option value="구급대원">구급대원 선택</option>

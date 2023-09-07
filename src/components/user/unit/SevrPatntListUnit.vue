@@ -1,6 +1,8 @@
 <template>
   <article class="table-list-layout1">
-    <h3>중증환자 발생/예측 현황</h3>
+    <h4>
+      <i class="fa-solid fa-bed-pulse"></i> 중증환자 발생/예측 현황
+    </h4>
     <div class="table-body-box">
       <div class="table-box with-scroll small">
         <table class="list-table-hoverable">
@@ -99,4 +101,7 @@ function getDate(data) {
 .red {
   color: red;
 }
+
+h4 { margin-left: 12px; }
+h4 > i { margin-right: 9px; }
 </style>

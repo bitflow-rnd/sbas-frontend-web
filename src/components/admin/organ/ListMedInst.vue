@@ -866,7 +866,7 @@
                                       class="profile-view-box"
                                       style="width: 220px; height: 220px"
                                     >
-                                      <img v-if="medinstDetail.infoHosp.attcId===null ||medinstDetail.infoHosp.attcId ==='' " src="/img/common/img_upload_img.svg" alt="이미지" />
+                                      <img v-if="medinstDetail.infoHosp.attcId===null ||medinstDetail.infoHosp.attcId ==='' " src="@/assets/img/img-no-img.webp" alt="이미지" />
                                       <router-link to="" v-if="medinstDetail.infoHosp.attcId!==null && medinstDetail.infoHosp.attcId !==''" @click="alertOpen(0)"
                                         class="remove-btn"
                                         ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
@@ -879,7 +879,7 @@
                                           class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 btn-outline btn-outline-primary"
                                         >
                                           <input type="file" />
-                                          수정하기
+                                          수정
                                         </label>
                                       </div>
 

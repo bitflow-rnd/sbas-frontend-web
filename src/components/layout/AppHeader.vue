@@ -160,19 +160,19 @@
 
 
           <!--begin::Activities-->
-          <div class="app-navbar-item ms-3 d-none d-xxl-flex">
+          <div class="app-navbar-item ms-2 me-2 d-none d-xxl-flex">
             <!--begin::Drawer toggle-->
 
             <div
-              class="btn btn-icon btn-custom w-35px h-35px w-md-40px h-md-40px position-relative"
+              class="bell-wrapper btn btn-icon btn-custom w-35px h-35px w-md-40px h-md-40px position-relative"
               data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
               data-kt-menu-attach="parent"
               data-kt-menu-placement="bottom-end"
             >
-              <i class="fa-regular fa-bell"></i>
-              <span
-                class="d-none position-absolute top-0 start-100 translate-middle badge badge-sm rounded-pill mt-3 bg-primary"
-              >99+</span
+              <img src='@/assets/img/ic-bell.webp' />
+              <div
+                class="badge-bell position-absolute top-0 start-100 translate-middle badge badge-sm rounded-pill mt-3 bg-primary"
+              >1</div
               >
             </div>
             <!--end::Drawer toggle-->
@@ -760,5 +760,7 @@ export default {
 .profile-view-box > img {
   opacity: 0.7;
 }
+.bell-wrapper { position: relative; }
+.badge-bell { padding: 2px 0 3px 4px; }
 .modal { display: block; }
 </style>

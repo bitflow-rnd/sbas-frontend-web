@@ -141,7 +141,7 @@
                                     >
                                       <img
                                         v-if="preRpt === null"
-                                        src="/img/common/img_upload_img.svg"
+                                        src="@/assets/img/img-no-img.webp"
                                         alt="이미지"
                                       />
                                       <img v-if="preRpt !== null" :src="preRpt" alt="이미지" />
@@ -163,7 +163,7 @@
                                             @change="uploadRpt"
                                             :value="reportFile"
                                           />
-                                          수정하기
+                                          수정
                                         </label>
                                       </div>
                                     </div>
@@ -196,7 +196,7 @@
                               <td>
                                 <div class="item-cell-box">
                                   <div class="tbox">
-                                    <input type="text" v-model="newPt.ptNm" />
+                                    <input type="text" v-model="newPt.ptNm" placeholder='환자이름 입력'/>
                                   </div>
                                 </div>
                               </td>

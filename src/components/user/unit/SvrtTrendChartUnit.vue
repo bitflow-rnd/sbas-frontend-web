@@ -1,4 +1,7 @@
 <template>
+  <h4>
+    <i class="fa-solid fa-bed-pulse"></i> 중증환자 발생 추이 (최근 6개월)
+  </h4>
   <div id="chart" class="d-flex justify-content-center chart-container">
     <vue-apex-charts
       ref="severityChart"
@@ -31,4 +34,6 @@ let model = reactive({
   width: 100%;
   height: 350px;
 }
+h4 { margin-left: 24px; }
+h4 > i { margin-right: 9px; }
 </style>

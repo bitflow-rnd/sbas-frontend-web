@@ -398,7 +398,7 @@
                                 <div class="profile-view-box" style="width: 100%; height: 264px">
                                   <img
                                     v-if="preRpt === null || preRpt === undefined"
-                                    src="/img/common/img_upload_img.svg"
+                                    src="@/assets/img/img-no-img.webp"
                                     alt="이미지"
                                   />
                                   <img
@@ -417,7 +417,7 @@
                                       class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary"
                                     >
                                       <input type="file" @change="uploadRpt" :value="reportFile" />
-                                      수정하기
+                                      수정
                                     </label>
                                   </div>
                                 </div>
@@ -1046,10 +1046,9 @@
 
                   <div class="head-box d-flex">
 
-                    <div class="head-txt-box" @click='timelineSection' role='button'>타임라인</div><div> / </div>
-                    <div class="head-txt-box" @click='sevrSection' role='button'>중증도 정보</div>
+                    <div class="head-txt-box" @click='timelineSection' role='button'>타임라인</div>
 
-                    <div v-if="timeline !== null && timeline !== undefined" class="head-sub-box">
+                    <div v-if="timeline !== null && timeline !== undefined" class="head-sub-box mt-1">
                       <div
                         class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2"
                       >
@@ -1061,11 +1060,6 @@
                         {{ getTLDt(timeline.items[0].updtDttm, 0) }}
                       </div>
                     </div>
-
-                    <div v-if="model.mode==='svrt'" class='chart-apex'>
-                      <svrt-chart-unit :pt-id="'PT00000085'" />
-                    </div>
-
                   </div>
 
                   <div class="option-box">
@@ -1303,7 +1297,7 @@
                                     >
                                       <img
                                         v-if="preRpt === null"
-                                        src="/img/common/img_upload_img.svg"
+                                        src="@/assets/img/img-no-img.webp"
                                         alt="이미지"
                                       />
                                       <img v-if="preRpt !== null" :src="preRpt" alt="이미지" />
@@ -1325,7 +1319,7 @@
                                             @change="uploadRpt"
                                             :value="reportFile"
                                           />
-                                          수정하기
+                                          수정
                                         </label>
                                       </div>
                                     </div>
@@ -1358,7 +1352,7 @@
                               <td>
                                 <div class="item-cell-box">
                                   <div class="tbox">
-                                    <input type="text" v-model="newPt.ptNm" />
+                                    <input type="text" v-model="newPt.ptNm" placeholder='환자이름 입력'/>
                                   </div>
                                 </div>
                               </td>
@@ -3077,7 +3071,6 @@
 
 <script>
 import DataPagination from '@/components/layout/DataPagination'
-import SvrtChartUnit from '@/components/user/unit/SvrtChartUnit'
 import { mapState } from 'vuex'
 import {
     backBtn,
@@ -3096,7 +3089,6 @@ import { ref, reactive } from 'vue'
 
 export default {
   components: {
-    SvrtChartUnit,
     DataPagination
   },
   name: 'ListPatnt',
@@ -3265,7 +3257,7 @@ export default {
     }
   },
   methods: {
-      getDt,
+    getDt,
     backBtn,
     goAsgn,
     getAge,

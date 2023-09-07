@@ -236,9 +236,9 @@
 
               <div class="detail-info-box full d-flex flex-column">
                 <div class="detail-head-box px-10 h-80px">
-                  <div class="head-box">
+                  <div class="head-box d-inline-flex">
                     <div class="head-txt-box">타임라인</div>
-                    <div v-if="model.timeline" class="head-sub-box mt-2 d-flex">
+                    <div v-if="model.timeline" class="head-sub-box">
                       <div
                         class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2"
                       >
@@ -248,7 +248,7 @@
                       <div
                         class="d-inline-flex align-items-center justify-content-center w-auto text-gray-700 ms-2"
                       >
-                        2023년 2월 28일 (수)
+                        {{ getTLDt(model.timeline.items[0].updtDttm, 0) }} (수)
                       </div>
                     </div>
                   </div>
@@ -267,38 +267,38 @@
                       class="timeline-wrap overflow-y-auto ps-10 pe-5"
                       style="height: 100%"
                     >
-                      <div class="text-center py-4 fw-bold">
-                        {{ getTLDt(model.timeline.items[0].updtDttm, 0) }}
-                      </div>
 
                       <ul>
-                        <li
+                        <template
                           v-for="(item, idx) in model.timeline.items"
-                          :key="idx"
-                          :class="{ off: item.timeLineStatus === 'complete' }"
-                        >
-                          <div class="ic-box">
-                            <img :src="getTLIcon(item, idx)" alt="이미지" />
-                          </div>
-
-                          <div
-                            class="item-box"
-                            :class="{ suspend: item.timeLineStatus === 'suspend' }"
+                          :key="idx">
+                          <li
+                            v-if='item.updtDttm'
+                            :class="{ off: item.timeLineStatus === 'complete' }"
                           >
-                            <div class="top-item-box">
-                              <div class="state-box">{{ item.title }}</div>
-                              <div class="date-box">{{ getTLDt(item.updtDttm, 1) }}</div>
+                            <div class="ic-box">
+                              <img :src="getTLIcon(item, idx)" alt="이미지" />
                             </div>
-                            <div class="mid-item-box">{{ item.by }}</div>
-                            <div class="bottom-item-box">
-                              <!--todo: timeline에서 받아오는 img 파일이 없는데-->
-                              <div class="item-img-group mb-4">
-                                <div class="img-list"></div>
+
+                            <div
+                              class="item-box"
+                              :class="{ suspend: item.timeLineStatus === 'suspend' }"
+                            >
+                              <div class="top-item-box">
+                                <div class="state-box">{{ item.title }}</div>
+                                <div class="date-box">{{ getTLDt(item.updtDttm, 1) }}</div>
                               </div>
-                              <div class="msg-box" v-show="item.msg !== null">{{ item.msg }}</div>
+                              <div class="mid-item-box">{{ item.by }}</div>
+                              <div class="bottom-item-box">
+                                <!--todo: timeline에서 받아오는 img 파일이 없는데-->
+                                <div class="item-img-group mb-4">
+                                  <div class="img-list"></div>
+                                </div>
+                                <div class="msg-box" v-show="item.msg !== null">{{ item.msg }}</div>
+                              </div>
                             </div>
-                          </div>
-                        </li>
+                          </li>
+                        </template>
                       </ul>
                     </div>
                     <div v-if="!model.timeline" class="timeline-wrap overflow-y-auto ps-10 pe-5">
@@ -393,5 +393,6 @@ function closeModal() {
   bottom: 0;
   width: 100%;
 }
+.head-sub-box { margin-left: 12px; }
 .detail-layout1, .detail-wrap { height: 100%; }
 </style>

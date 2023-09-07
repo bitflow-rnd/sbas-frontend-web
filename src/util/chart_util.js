@@ -270,10 +270,7 @@ export const trendLineChartOptions = {
   stroke: {
     curve: 'smooth'
   },
-  title: {
-    text: '중증환자 발생 추이 (최근 6개월)',
-    align: 'left'
-  },
+  title: { },
   grid: {
     borderColor: '#e7e7e7',
     row: {

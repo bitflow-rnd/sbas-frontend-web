@@ -91,7 +91,7 @@
 
 
                       <a @click="codeGroupReg()" class="btn btn-flex btn-xs btn-outline btn-outline-primary ms-2">
-                        <i class="fa-solid fa-plus" style="color:#74AFEB;"></i> 그룹코드 추가</a>
+                        <i class="fa-solid fa-plus"></i> 그룹코드 추가</a>
 
 
                     </div>
@@ -210,7 +210,7 @@
 
 
                       <a @click="codeReg()" class="btn btn-flex btn-xs btn-outline btn-outline-primary ms-2">
-                        <i class="fa-solid fa-plus" style="color:#74AFEB;"></i> 코드 추가</a>
+                        <i class="fa-solid fa-plus"></i> 코드 추가</a>
 
 
                     </div>

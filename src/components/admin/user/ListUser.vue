@@ -966,7 +966,7 @@
                               <label>
                                 <input type="file" />
                                 <span class="upload-btn-box">
-                                  <img src="/img/common/img_upload_img.svg" alt="이미지" />
+                                  <img src="@/assets/img/img-no-img.webp" alt="이미지" />
                                   <span class="txt">클릭하여 업로드</span>
                                 </span>
                               </label>
@@ -1002,7 +1002,7 @@
                               <label>
                                 <input type="file" />
                                 <span class="upload-btn-box">
-                                  <img src="/img/common/img_upload_img.svg" alt="이미지" />
+                                  <img src="@/assets/img/img-no-img.webp" alt="이미지" />
                                   <span class="txt">클릭하여 업로드</span>
                                 </span>
                               </label>
@@ -1590,7 +1590,7 @@
                               <label>
                                 <input type="file" />
                                 <span class="upload-btn-box">
-                                  <img src="/img/common/img_upload_img.svg" alt="이미지" />
+                                  <img src="@/assets/img/img-no-img.webp" alt="이미지" />
                                   <span class="txt">클릭하여 업로드</span>
                                 </span>
                               </label>
@@ -1627,7 +1627,7 @@
                               <label>
                                 <input type="file" />
                                 <span class="upload-btn-box">
-                                  <img src="/img/common/img_upload_img.svg" alt="이미지" />
+                                  <img src="@/assets/img/img-no-img.webp" alt="이미지" />
                                   <span class="txt">클릭하여 업로드</span>
                                 </span>
                               </label>

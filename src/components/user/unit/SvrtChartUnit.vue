@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h4 v-if="model.ptDetail" @click="selectPatient" role="button">
-      {{ model.ptDetail.ptNm }}({{ model.ptDetail.age }}세 / {{ model.ptDetail.gndr }},
+    <h4 v-if="model.ptDetail" @click="selectPatient" role="button" class='patient-info'>
+      <i class="fa-solid fa-bed-pulse"></i> {{ model.ptDetail.ptNm }}({{ model.ptDetail.age }}세 / {{ model.ptDetail.gndr }},
       {{ model.ptDetail.bascAddr }})
     </h4>
   </div>
@@ -177,4 +177,6 @@ function updateChart(result) {
   width: 100%;
   height: 350px;
 }
+.patient-info { margin-left: 24px; }
+.patient-info > i { margin-right: 9px; }
 </style>
