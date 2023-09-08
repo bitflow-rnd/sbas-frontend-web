@@ -112,4 +112,9 @@ function closeModal() {
 td {
   padding: 1rem 1.5rem;
 }
+@media (max-width: 1920px) {
+  .app-content {
+    height: fit-content;
+  }
+}
 </style>
