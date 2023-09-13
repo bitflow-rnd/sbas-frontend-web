@@ -734,6 +734,7 @@ export default {
     },
     getPtList() {
       this.$store.dispatch('patnt/getPatntList')
+      this.$store.dispatch('admin/getSido')
     },
     showUserDetail() {
       this.mode = 'myinfo'
