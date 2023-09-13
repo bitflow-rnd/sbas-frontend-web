@@ -3285,8 +3285,8 @@ export default {
     filterData() {
       return {
         ptNm: this.filterPatient['searchText'],
-        // rrno1: this.filterPatient['searchText'],
-        // mpno: this.filterPatient['searchText'],
+        rrno1: this.filterPatient['searchText'],
+        mpno: this.filterPatient['searchText'],
         bedStatCd: this.filterPatient['assignmentStatus'].length ? this.filterPatient['assignmentStatus'].toString() : null
       }
     }
