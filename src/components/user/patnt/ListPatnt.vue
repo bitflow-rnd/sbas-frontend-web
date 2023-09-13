@@ -126,14 +126,21 @@
                       <td>
                         <div class="item-cell-box">
                           <div class="sbox w-175px">
-                            <select>
-                              <option>시/도 전체</option>
+                            <select v-model="filterPatient['address']['first']"
+                                    @change="getSecondAddress(filterPatient['address']['first']); search()">
+                              <option value="" id="null">시/도 전체</option>
+                              <option v-for="(item,idx) in cmSido" :key="idx"
+                                      :value="item['cdId']">{{ item['cdNm'] }}
+                              </option>
                             </select>
                           </div>
 
                           <div class="sbox w-175px ms-2">
-                            <select>
-                              <option>시/군/구 전체</option>
+                            <select v-model="filterPatient['address']['second']" @change="search()">
+                              <option value="" id="null">군/구 전체</option>
+                              <option v-for="(item,idx) in cmGugun" :key="idx"
+                                      :value="item['cdId']">{{ item['cdNm'] }}
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -142,7 +149,7 @@
                       <td>
                         <div class="item-cell-box">
                           <div class="sbox w-175px">
-                            <select disabled>
+                            <select :disabled="enableHospitalPicker">
                               <option>병원 전체</option>
                             </select>
                           </div>
@@ -258,7 +265,7 @@
 
                     <tbody>
                     <tr
-                        v-for="(pt, idx) in filteredPatientData"
+                        v-for="(pt, idx) in ptList['items']"
                         :key="idx"
                         @click="selectPatient(pt)"
                         data-bs-target="#kt_modal_patnt_detail"
@@ -3131,8 +3138,7 @@ export default {
   props: {
     msg: String
   },
-  async created() {
-    await this.$store.dispatch('severity/getSeverityData', 'PT00000085')
+  created() {
   },
   mounted() {
     this.initNewPt = this.newPt
@@ -3231,72 +3237,46 @@ export default {
       checkedPatients: [],
       allPatientsSelected: false,
       filterPatient: {
-        gender: [],
-        nationality: '전체',
         address: {
           first: '',
           second: ''
         },
         assignmentStatus: [],
-        searchDateField: '등록일',
-        searchDateFieldMap: {
-          등록일: 'updtDttm'
-        },
-        searchDateRange: '전체',
-        searchDateFrom: '',
-        searchDateTo: '',
-        searchField: '환자이름',
-        searchFieldMap: {
-          환자이름: 'ptNm'
-        },
         searchText: ''
       }
     }
   },
   computed: {
+    ...mapState('admin', ['cmSido', 'cmGugun']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHis']),
     ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
     startIndex() {
-      return (this.page - 1) * this.displayRowsCount
+      return (this.page - 1) * this.displayRowsCount;
     },
     endIndex() {
-      return this.page * this.displayRowsCount
-    },
-    // TODO: address, hospital, date
-    filteredPatientData() {
-      // return this.patientData.filter((pt) => {
-      //   const gender = this.filterPatient['gender'].length === 0
-      //       ? true : this.filterPatient['gender'].some(x => pt['gndr'].includes(x))
-      //   const nationality = this.filterPatient['nationality'] === '전체'
-      //       ? true : pt['natiCd'] === this.filterPatient['nationality']
-      //   const address = true
-      //   const hospital = true
-      //   const status = this.filterPatient['assignmentStatus'].length === 0
-      //       ? true : this.filterPatient['assignmentStatus'].some(x => pt['statCdNm'].includes(x))
-      //   const date = this.filterPatient['searchDateRange'] === '전체'
-      //       ? true : false
-      //   const text = pt[this.filterPatient['searchFieldMap'][this.filterPatient['searchField']]]
-      //       .includes(this.filterPatient['searchText'])
-      //   return gender && nationality && address && hospital && status && date && text
-      // })
-      return this.ptList['items']
+      return this.page * this.displayRowsCount;
     },
     filterData() {
       return {
         ptNm: this.filterPatient['searchText'],
         rrno1: this.filterPatient['searchText'],
         mpno: this.filterPatient['searchText'],
+        dstr1Cd: this.filterPatient['address']['first'],
+        dstr2Cd: this.filterPatient['address']['second'],
         bedStatCd: this.filterPatient['assignmentStatus'].length ? this.filterPatient['assignmentStatus'].toString() : null
       }
-    }
+    },
+    enableHospitalPicker() {
+      return this.filterPatient['address']['second'] === "";
+    },
   },
   //정예준
   watch: {
     checkedPatients() {
-      this.allPatientsSelected = this.checkedPatients.length === this.patientData.length
+      this.allPatientsSelected = this.checkedPatients.length === this.patientData.length;
       if (!this.patientData.length) {
-        this.allPatientsSelected = false
+        this.allPatientsSelected = false;
       }
     }
   },
@@ -3311,73 +3291,78 @@ export default {
     getTelno,
     getTLDt,
     getTLIcon,
-    regNewPt,
-    async updateExistPt() {
-      const data = {ptId: this.existPt.ptId, newPt: this.newPt}
-      await this.$store.dispatch('patnt/modiPtInfo', data)
-      this.closePopup(0)
-      this.tab = 1
-    },
     openAddressFinder,
+    regNewPt,
+    getSecondAddress(address) {
+      if (address) {
+        this.$store.dispatch('admin/getGuGun', address);
+      }
+    },
+    async updateExistPt() {
+      const data = {ptId: this.existPt.ptId, newPt: this.newPt};
+      await this.$store.dispatch('patnt/modiPtInfo', data);
+      this.closePopup(0);
+      this.tab = 1;
+    },
     getDate(data) {
-      const dData = new Date(data)
-      const dYear = dData.getFullYear()
-      let dMonth = dData.getMonth() + 1
-      let dDate = dData.getDate()
+      const dData = new Date(data);
+      const dYear = dData.getFullYear();
+      let dMonth = dData.getMonth() + 1;
+      let dDate = dData.getDate();
 
       if (dMonth < 10) {
-        dMonth = '0' + dMonth
+        dMonth = '0' + dMonth;
       }
       if (dDate < 10) {
-        dDate = '0' + dDate
+        dDate = '0' + dDate;
       }
-      return dYear + '.' + dMonth + '.' + dDate
+      return dYear + '.' + dMonth + '.' + dDate;
     },
     alertOpen(idx) {
       if (idx === 3) {
-        this.errMsg = '환자 정보가\n등록되었습니다.'
-        this.isAlert = true
-        this.alertIdx = 3
+        this.errMsg = '환자 정보가\n등록되었습니다.';
+        this.isAlert = true;
+        this.alertIdx = 3;
       } else if (idx === 4) {
         /*역조서 파싱 */
         this.errMsg =
-            '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
-        this.isAlert = true
-        this.newPt = this.rptInfo
-        this.alertIdx = 4
+            '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.';
+        this.isAlert = true;
+        this.newPt = this.rptInfo;
+        this.alertIdx = 4;
       } else if (idx === 9) {
         /*역조서 삭제*/
-        this.errMsg = '역학조사서 이미지를\n삭제하시겠습니까?'
-        this.cncBtn = true
-        this.isAlert = true
-        this.alertIdx = 9
+        this.errMsg = '역학조사서 이미지를\n삭제하시겠습니까?';
+        this.cncBtn = true;
+        this.isAlert = true;
+        this.alertIdx = 9;
       } else if (idx === 10) {
-        this.errMsg = '역학조사서가\n삭제되었습니다.'
-        this.isAlert = true
-        this.alertIdx = 10
+        this.errMsg = '역학조사서가\n삭제되었습니다.';
+        this.isAlert = true;
+        this.alertIdx = 10;
       }
     },
     cfrmAl(res) {
       if (res === 3) {
-        this.alertClose()
+        this.alertClose();
       } else if (res === 4) {
-        this.newPt = this.rptInfo
-        this.alertClose()
+        this.newPt = this.rptInfo;
+        this.alertClose();
       } else if (res === 9) {
-        this.removeRpt()
-        this.newPt = this.initNewPt
-        this.dsInfo = this.initDsInfo
-        this.alertClose()
-        this.alertOpen(10)
+        this.removeRpt();
+        this.newPt = this.initNewPt;
+        this.dsInfo = this.initDsInfo;
+        this.alertClose();
+        this.alertOpen(10);
       } else if (res === 10) {
-        this.alertClose()
+        this.alertClose();
       }
     },
     closePopup(idx) {
       if (idx === 0) {
-        this.popup = 100
-        this.content = ''
-        this.characterCount = 0
+        this.popup = 100;
+        this.content = '';
+        this.characterCount = 0;
       }
     },
     closeModal(idx) {
@@ -3393,108 +3378,79 @@ export default {
       }
     },
     alertClose() {
-      this.errMsg = ''
-      this.cncBtn = false
-      this.isAlert = false
-      this.alertIdx = 100
+      this.errMsg = '';
+      this.cncBtn = false;
+      this.isAlert = false;
+      this.alertIdx = 100;
     },
     async uploadRpt(event) {
-      const fileInput = event.target
-      const file = fileInput.files[0]
+      const fileInput = event.target;
+      const file = fileInput.files[0];
 
-      console.log(file)
-      const formData = new FormData()
-      formData.append('param1', 'edidemreport')
-      formData.append('param2', file)
+      console.log(file);
+      const formData = new FormData();
+      formData.append('param1', 'edidemreport');
+      formData.append('param2', file);
       // console.log(formData)
-      await this.$store.dispatch('patnt/uploadRpt', formData)
+      await this.$store.dispatch('patnt/uploadRpt', formData);
       if (this.rptInfo !== null) {
         // console.log('실행')
-        this.alertOpen(4)
+        this.alertOpen(4);
       }
       //역조서 이미지 미리보기 만들기
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onload = (e) => {
-        this.preRpt = e.target.result
+        this.preRpt = e.target.result;
       }
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(file);
     },
     removeRpt() {
       /*역조서 삭제*/
-      this.$store.dispatch('patnt/removeRpt', this.rptInfo.attcId)
-      this.preRpt = null
+      this.$store.dispatch('patnt/removeRpt', this.rptInfo.attcId);
+      this.preRpt = null;
     },
     cmpExist(idx) {
-      const isMatch = (a, b) => a === b
-      const res1 = ['일치', 'bg-primary']
-      const res2 = ['불일치', 'bg-gray-400']
+      const isMatch = (a, b) => a === b;
+      const res1 = ['일치', 'bg-primary'];
+      const res2 = ['불일치', 'bg-gray-400'];
 
       switch (idx) {
         case 0:
-          return isMatch(this.existPt.ptNm, this.newPt.ptNm) ? res1 : res2
+          return isMatch(this.existPt.ptNm, this.newPt.ptNm) ? res1 : res2;
         case 1:
           return isMatch(this.existPt.rrno1, this.newPt.rrno1) &&
-          isMatch(this.existPt.rrno2, this.newPt.rrno2)
-              ? res1
-              : res2
+          isMatch(this.existPt.rrno2, this.newPt.rrno2) ? res1 : res2;
         case 2:
-          return isMatch(this.existPt.bascAddr, this.newPt.bascAddr) ? res1 : res2
+          return isMatch(this.existPt.bascAddr, this.newPt.bascAddr) ? res1 : res2;
         default:
-          return isMatch(this.existPt.mpno, this.newPt.mpno) ? res1 : res2
+          return isMatch(this.existPt.mpno, this.newPt.mpno) ? res1 : res2;
       }
     },
     async selectPatient(patient) {
       if (patient['bdasSeq']) {
-        await this.$store.dispatch('bedasgn/getTimeline', patient)
-        await this.$store.dispatch('bedasgn/getDSInfo', patient)
+        await this.$store.dispatch('bedasgn/getTimeline', patient);
+        await this.$store.dispatch('bedasgn/getDSInfo', patient);
       } else {
-        this.$store.commit('bedasgn/setTimeline', null)
-        this.$store.commit('bedasgn/setDisesInfo', null)
+        this.$store.commit('bedasgn/setTimeline', null);
+        this.$store.commit('bedasgn/setDisesInfo', null);
       }
-      await this.$store.dispatch('patnt/getBasicInfo', patient)
-      await this.$store.dispatch('bedasgn/getBdasHisInfo', patient)
+      await this.$store.dispatch('patnt/getBasicInfo', patient);
+      await this.$store.dispatch('bedasgn/getBdasHisInfo', patient);
 
       if (this.ptDetail !== null) {
-        this.newPt = this.ptDetail
+        this.newPt = this.ptDetail;
       }
       if (this.ptDs !== null) {
-        this.dsInfo = this.ptDs
+        this.dsInfo = this.ptDs;
       }
-      await this.$store.dispatch('patnt/readEpidRpt', this.ptDetail)
-      this.preRpt = this.attcRpt
-
-      /*this.selectedPatient = patient
-      const basicInfoIndex = this.patientBasicInfo.findIndex(pt => pt['ptId'] === patient['ptId'])
-      const diseaseInfoIndex = this.patientDiseaseInfo.findIndex(pt => pt['ptId'] === patient['ptId'])
-      if (basicInfoIndex === -1) {
-        await this.$store.dispatch("user/loadPatientBasicInfo", patient['ptId']).then(
-            res => {
-              this.patientBasicInfo.push(res.data['result'])
-              this.selectedPatientBasicInfo = res.data['result']
-            }
-        )
-      } else {
-        this.selectedPatientBasicInfo = this.patientBasicInfo[basicInfoIndex]
-      }
-      if (diseaseInfoIndex === -1) {
-        await this.$store.dispatch("user/loadPatientDiseaseInfo", patient['ptId']).then(
-            res => {
-              this.patientDiseaseInfo.push(res.data['result'])
-              this.selectedPatientDiseaseInfo = res.data['result']
-            }
-        )
-      } else {
-        this.selectedPatientDiseaseInfo = this.patientBasicInfo[diseaseInfoIndex]
-      }
-      console.log(this.selectedPatientBasicInfo)
-      console.log(this.selectedPatientDiseaseInfo)
-      console.log(this.selectedPatient)*/
+      await this.$store.dispatch('patnt/readEpidRpt', this.ptDetail);
+      this.preRpt = this.attcRpt;
     },
     changePage(newPage) {
       this.$store.dispatch('patnt/getPatntList', {
         ...this.filterData,
         page: newPage
-      })
+      });
       this.page = newPage;
     },
     edit() {
@@ -3509,7 +3465,7 @@ export default {
       }
     },
     search() {
-      console.log(this.filterPatient['assignmentStatus'])
+      console.log(this.filterPatient['assignmentStatus']);
       this.$store.dispatch('patnt/getPatntList', this.filterData);
       this.page = 1;
     },
@@ -3526,15 +3482,11 @@ export default {
         dethYn: '',
         mpno: ''
       }
-      this.preRpt = null
+      this.preRpt = null;
     },
     timelineSection() {
-      this.model.mode = 'timeline'
-
+      this.model.mode = 'timeline';
     },
-    sevrSection() {
-      this.model.mode = 'svrt'
-    }
   }
 }
 </script>
