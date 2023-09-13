@@ -5,7 +5,7 @@
     <div class="col-12 d-flex align-items-center justify-content-center">
       <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
         <ul class="pagination">
-          <li class="paginate_button page-item previous" :class="{disabled: page < 2}"
+          <li class="paginate_button page-item previous" :class="{disabled: page < 2 || totalPageCount === 0}"
               id="kt_table_users_previous"><a
               @click="changePage(page - 1)" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0"
               class="page-link"><i
@@ -91,7 +91,12 @@ export default {
       }
     },
     hasNextPage() {
-      return this.page !== this.totalPageCount;
+      return this.page !== this.totalPageCount && this.page <= this.totalPageCount;
+    }
+  },
+  watch: {
+    totalPageCount() {
+      this.page = 1
     }
   },
   methods: {
