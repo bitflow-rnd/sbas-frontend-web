@@ -127,7 +127,7 @@
                         <div class="item-cell-box">
                           <div class="sbox w-175px">
                             <select v-model="filterPatient['address']['first']"
-                                    @change="getSecondAddress(filterPatient['address']['first']); search()">
+                                    @change="changeDstrCd1()">
                               <option value="" id="null">시/도 전체</option>
                               <option v-for="(item,idx) in cmSido" :key="idx"
                                       :value="item['cdId']">{{ item['cdNm'] }}
@@ -136,7 +136,7 @@
                           </div>
 
                           <div class="sbox w-175px ms-2">
-                            <select v-model="filterPatient['address']['second']" @change="search()">
+                            <select v-model="filterPatient['address']['second']" @change="changeDstrCd2()">
                               <option value="" id="null">군/구 전체</option>
                               <option v-for="(item,idx) in cmGugun" :key="idx"
                                       :value="item['cdId']">{{ item['cdNm'] }}
@@ -149,8 +149,12 @@
                       <td>
                         <div class="item-cell-box">
                           <div class="sbox w-175px">
-                            <select :disabled="enableHospitalPicker">
-                              <option>병원 전체</option>
+                            <select :disabled="enableHospitalPicker" v-model="filterPatient['hospitalName']"
+                                    @change="search()">
+                              <option :value="null" id="null">병원 전체</option>
+                              <option v-for="(item,idx) in hospList" :key="idx"
+                                      :value="item">{{ item }}
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -3241,6 +3245,7 @@ export default {
           first: '',
           second: ''
         },
+        hospitalName: null,
         assignmentStatus: [],
         searchText: ''
       }
@@ -3249,7 +3254,7 @@ export default {
   computed: {
     ...mapState('admin', ['cmSido', 'cmGugun']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHis']),
-    ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'rptInfo', 'attcRpt']),
+    ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'hospList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
     startIndex() {
       return (this.page - 1) * this.displayRowsCount;
@@ -3264,6 +3269,7 @@ export default {
         mpno: this.filterPatient['searchText'],
         dstr1Cd: this.filterPatient['address']['first'],
         dstr2Cd: this.filterPatient['address']['second'],
+        hospNm: this.filterPatient['hospitalName'],
         bedStatCd: this.filterPatient['assignmentStatus'].length ? this.filterPatient['assignmentStatus'].toString() : null
       }
     },
@@ -3297,6 +3303,21 @@ export default {
       if (address) {
         this.$store.dispatch('admin/getGuGun', address);
       }
+    },
+    changeDstrCd1() {
+      this.getSecondAddress(this.filterPatient['address']['first']);
+      this.filterPatient['address']['second'] = '';
+      this.filterPatient['hospitalName'] = null;
+      this.search();
+    },
+    changeDstrCd2() {
+      this.getHospList();
+      this.filterPatient['hospitalName'] = null;
+      this.search();
+    },
+    getHospList() {
+      this.$store.dispatch('patnt/getHospList', this.filterData);
+      console.log(this.hospList)
     },
     async updateExistPt() {
       const data = {ptId: this.existPt.ptId, newPt: this.newPt};

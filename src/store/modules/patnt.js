@@ -5,6 +5,7 @@ export default {
   namespaced: true,
   state: {
     ptList: null,
+    hospList: null,
     ptBI: null,
     existPt: null,
     ptDetail: null,
@@ -21,6 +22,9 @@ export default {
   mutations: {
     setPatntList(state, payload) {
       state.ptList = payload
+    },
+    setHospList(state, payload) {
+      state.hospList = payload['items'].filter(x => !!x)
     },
     regBasicInfo(state, payload) {
       state.ptBI = payload
@@ -72,6 +76,7 @@ export default {
     async getPatntList(comment, data) {
       //const token = localStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/search`
+      // const url = `http://localhost:8080/api/v1/private/patient/search`
 
       const params = data
 
@@ -80,6 +85,21 @@ export default {
         const response = await axios.get(url, { params })
         if (response.data?.code === '00') {
           await comment.commit('setPatntList', response.data?.result)
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async getHospList(comment, data) {
+      const url = `${API_PROD}/api/v1/private/patient/searchhosps`
+      // const url = `http://localhost:8080/api/v1/private/patient/searchhosps`
+
+      const params = data
+
+      try {
+        const response = await axios.get(url, { params })
+        if (response.data?.code === '00') {
+          await comment.commit('setHospList', response.data?.result)
         }
       } catch (e) {
         console.log(e)
