@@ -97,6 +97,7 @@
             <a
               @click="openModal(0)"
               class="btn btn-sm btn-flex btn-primary align-self-center px-3"
+              data-bs-target='#kt_modal_request'
             >
               <i class="fa-solid fa-plus"></i> 신규병상요청
             </a>
@@ -170,17 +171,24 @@
                             <div class="tbox full with-btn">
                               <input
                                 type="text"
+                                v-model='search.kwd'
                                 placeholder="환자 이름, 생년월일 6자리 또는 휴대폰번호 입력"
+                                @keyup.enter='searchBedAsgn'
                               />
 
-                              <a href="javascript:void(0)" class="input-btn">
+                              <a @click='searchBedAsgn' class="input-btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                               </a>
                             </div>
 
                             <div class="sbox w-150px ms-5">
-                              <select>
-                                <option>최근 1개월</option>
+                              <select v-model='search.period'>
+                                <option value=null>전체</option>
+                                <option value='7'>최근 1주</option>
+                                <option value='30'>최근 1개월</option>
+                                <option value='90'>최근 3개월</option>
+                                <option value='180'>최근 6개월</option>
+                                <option value='365'>최근 1년</option>
                               </select>
                             </div>
                           </div>
@@ -638,12 +646,11 @@
           <!--end::Modal title-->
           <!--begin::Close-->
           <div
-            @click="closeModal(0)"
             id="reqest_exit"
             class="btn btn-sm btn-icon btn-active-color-primary"
           >
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class="svg-icon svg-icon-1">
+            <span @click="closeModal(0)" class="svg-icon svg-icon-1" data-bs-dismiss="modal">
               <svg
                 width="24"
                 height="24"
@@ -1059,7 +1066,6 @@
               <article class="modal-menu-layout1 pt-10">
                 <div class="modal-menu-list">
                   <!--              todo: 역학조사서를사용하지 않았다면 팝업창 뜰 일 없음                      -->
-                  <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
                   <a @click="openPopup(0)" class="modal-menu-btn menu-primary">다음</a>
                 </div>
               </article>
@@ -1088,13 +1094,13 @@
                             <div class="item-row-box">
                               <div class="item-cell-box">
                                 <div class="sbox" style="width: 170px">
-                                  <select v-model="medinstInfo.dstrCd1" @change="getMedInst">
+                                  <select v-model="medinstInfo.dstrCd1" @change="getMedInst" :disabled='dsInfo.rcptPhc===1'>
                                       <option value=''>지역 선택</option>
                                     <option value="27">대구광역시</option>
                                   </select>
                                 </div>
                                 <div class="sbox ms-3" style="width: 170px">
-                                  <select v-model="dsInfo.rcptPhc">
+                                  <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstrCd1===''">
                                     <option value='0'>보건소 선택</option>
                                     <option v-for="(item,i) in medinstList.items" :key="i"
                                             :value='item.dutyName'>{{ item.dutyName }}</option>
@@ -4851,28 +4857,39 @@ import {
   openPopup
 } from '@/util/ui'
 import user from '@/store/modules/user'
+//import mitt from 'mitt'
+
 
 
 export default {
+
   components: {},
   name: 'ListBed',
   props: {},
+
   created() {
+
+
+
+    /*mitt().on('bdList',()=>{
+      this.getBdList()
+    })*/
+
     this.getBdList()
+    this.initNewPt = JSON.parse(JSON.stringify(this.newPt))
+    this.initDsInfo = JSON.parse(JSON.stringify(this.dsInfo))
+    this.initSvInfo = JSON.parse(JSON.stringify(this.svInfo))
+    this.initSpInfo = JSON.parse(JSON.stringify(this.spInfo))
+
   },
   mounted() {
-    this.initNewPt = this.newPt
-    this.initDsInfo = this.dsInfo
-    this.initSvInfo = this.svInfo
-    this.initSpInfo = this.spInfo
     this.initNaverMap()
   },
   setup() {
     const showTable = ref(false)
     const trsfArr = ref([false, false, false, false])
     const toggleTable = function () {
-      /*todo : 필터 작업 끝내고 수정 필요*/
-      showTable.value = false
+      showTable.value = !showTable.value
     }
     const isAlert = ref(false)
     const cncBtn = ref(false)
@@ -4909,7 +4926,11 @@ export default {
           { label: '완료', value: 'BAST0008' }
         ],
         selectedStates: [],
-        selectedRow: 0
+        selectedRow: 0,
+      },
+      search:{
+        kwd:'',
+        period:null,
       },
       preRpt: null,
       content: '',
@@ -4927,7 +4948,7 @@ export default {
         },
       newPt: {
         ptNm: '',
-        rrno1: '',
+        rrno1:'',
         rrno2: '',
         gndr: '',
         zip: '',
@@ -5014,7 +5035,7 @@ export default {
         dschRsnCd: ''
       },
       chrgUserId: [],
-        undrDsesCdArr:[],
+      undrDsesCdArr:[],
     }
   },
   computed: {
@@ -5051,7 +5072,6 @@ export default {
           )
         }, [])
       }
-
       if (this.filter.selectedStates.length === 0) {
         return list
       } else {
@@ -5066,6 +5086,7 @@ export default {
     },
     closeModal(idx) {
         if(idx === 0){
+          console.log(this.initNewPt,+'닫기')
             this.showModal = null
             this.setNull()
         } else if (idx === 2) {
@@ -5085,6 +5106,8 @@ export default {
         this.getBdList()
     },
     getBdList() {
+      this.search.kwd=''
+      this.search.period=null
       this.$store.dispatch('bedasgn/getBdList')
     },
     countBdList() {
@@ -5093,6 +5116,10 @@ export default {
       } else {
         return this.filter.selectedStates.reduce((i, state) => i + this.bdCnt[state], 0)
       }
+    },
+    searchBedAsgn(){
+      const data = {ptNm:this.search.kwd,rrno1:this.search.kwd,mpno:this.search.kwd,period:this.search.period}
+      this.$store.dispatch('bedasgn/getBdList',data)
     },
       getMedInst(){
         let data = this.medinstInfo
@@ -5124,7 +5151,7 @@ export default {
     },
     getStrType() {
         console.log(this.dsInfo.admsYn)
-      if (this.dsInfo.admsYn === '재택') {
+      if (this.dsInfo.admsYn === '재택' || this.dsInfo.admsYn==='자택') {
         return 'DPTP0001'
       } else if (this.dsInfo.admsYn === '기타') {
         return 'DPTP0003'
@@ -5162,21 +5189,21 @@ export default {
       },
     getTelno,
     setNull() {
-      console.log('실행')
+      console.log('실행' +this.initNewPt)
       this.tab = 0
       this.tabidx = 0
       this.popup = 100
       this.alertIdx = 100
       this.rptYn = false
-      this.newPt = this.initNewPt
-      this.dsInfo = this.initDsInfo
+      this.newPt = JSON.parse(JSON.stringify(this.initNewPt));
+      this.dsInfo = JSON.parse(JSON.stringify(this.initDsInfo));
       this.svInfo = this.initSvInfo
       this.spInfo =  this.initSpInfo
         this.$store.commit('patnt/setRpt',null)
       this.preRpt=null
         this.undrDsesCdArr=[]
     },
-    alertOpen(idx) {
+    async alertOpen(idx) {
       this.cncBtn = false
       if (idx === 0) {
         this.errMsg = '병상을 요청하시겠습니까?'
@@ -5204,12 +5231,28 @@ export default {
         this.errMsg = '환자 정보가\n등록되었습니다.'
         this.isAlert = true
         this.alertIdx = 3
+        if(this.popup===0){
+          this.popup=100
+        }
       } else if (idx === 4) {
         /*역조서 파싱 */
         this.errMsg =
           '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
         this.isAlert = true
         this.newPt = this.rptInfo
+        if(this.rptInfo!==null ){
+          /*역조서 입력 시*/
+          if(this.rptInfo.instAddr !==null){
+            await this.$store.dispatch('patnt/geoCoding',[1,this.rptInfo.instAddr])
+          }
+          this.dsInfo = this.rptInfo
+          console.log(this.dsInfo.rcptPhc)
+          if(this.rptInfo.rcptPhc!==null){
+            this.dsInfo.rcptPhc = 1
+            this.medinstInfo.rcptPhc = this.rptInfo.rcptPhc
+          }
+          console.log(this.dsInfo.ptId)
+        }
         this.alertIdx = 4
       } else if (idx === 5) {
         /* 승인배정반 불가 alert*/

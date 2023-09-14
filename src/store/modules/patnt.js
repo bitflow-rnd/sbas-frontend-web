@@ -214,7 +214,7 @@ export default {
             console.log('역학조사서 파싱 후 주소')
             comment.commit('setZip', response.data?.addresses[0]?.addressElements[8]?.longName)
           } else if (data[0] === 1) {
-            comment.commit('setInstZip', response.data?.addresses[0]?.addressElements[8]?.longName)
+            await comment.commit('setInstZip', response.data?.addresses[0]?.addressElements[8]?.longName)
           } else {
             console.log('환자정보 조회 후 우편번호')
             comment.commit('setStartLoc', {

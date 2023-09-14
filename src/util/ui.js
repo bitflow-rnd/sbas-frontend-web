@@ -1,6 +1,4 @@
 
-
-
 export let alertPopupClose = () => {
     console.log('실행')
     document.querySelector('.popup-alert').remove()
@@ -181,6 +179,11 @@ export function backBtn(idx){
     this.tab = idx
     this.popup = 100
 }
+export function getBdList() {
+    this.search.kwd=''
+    this.search.period=null
+    this.$store.dispatch('bedasgn/getBdList')
+}
 export async function goAsgn(idx){
     if(idx===2){
         // 감염병 정보 등록
@@ -202,8 +205,14 @@ export async function goAsgn(idx){
         /*기존정보 업데이트*/
         if(this.rptInfo!==null){
             /*역조서 입력 시*/
-            await this.$store.dispatch('patnt/geoCoding',[1,this.rptInfo.instAddr])
+            if(this.rptInfo.instAddr !== null){
+                await this.$store.dispatch('patnt/geoCoding',[1,this.rptInfo.instAddr])
+            }
             this.dsInfo = this.rptInfo
+            if(this.dsInfo.rcptPhc !== null ){
+                this.medinstInfo.rcptPhc = this.dsInfo.rcptPhc
+                this.dsInfo.rcptPhc = 1
+            }
             console.log(this.dsInfo.ptId)
         }
         this.dsInfo.ptId = this.existPt.ptId

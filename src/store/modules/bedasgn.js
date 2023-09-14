@@ -80,19 +80,18 @@ export default {
   },
   actions: {
     /*병상배정목록*/
-    async getBdList(comment) {
+    async getBdList(comment,data) {
       try {
         const token = localStorage.getItem('userToken')
         const url = `${API_PROD}/api/v1/private/bedasgn/list`
         console.log('병상배정목록')
 
-        const response = await axios({
-          method: 'get',
-          url: url,
+        const params = data
+
+        const response = await axios.get(url,{ params,
           headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
+            Authorization: `Bearer ${token}` // Add the token to the Authorization header
+          }})
 
         if (response.data?.code === '00') {
           console.log(response.data)
