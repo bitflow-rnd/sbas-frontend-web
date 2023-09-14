@@ -693,10 +693,14 @@ import { getTelno, getAuthCd, getPmgr, getPtType, ptType } from '@/util/ui'
 import store from '@/store/store'
 import MyInfoModal from '@/components/user/modal/MyInfoModal'
 import MyInfoModModal from '@/components/user/modal/MyInfoModModal'
+//import mitt from 'mitt'
+
 
 export default {
   name: 'AppHeader',
   components: { MyInfoModModal, MyInfoModal },
+  created() {
+  },
   data() {
     return {
       tabidx: 0,
@@ -729,7 +733,9 @@ export default {
     getUsersList() {
       this.$store.dispatch('user/getUsersList')
     },
-    getBdList() {
+    getBdList(){
+      console.log('리로드')
+      //mitt().emit('bdList')
       this.$store.dispatch('bedasgn/getBdList')
     },
     getPtList() {
