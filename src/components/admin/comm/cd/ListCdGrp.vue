@@ -357,7 +357,7 @@
 
 <script>
 
-import DataPagination from "@/components/layout/DataPagination";
+import DataPagination from "@/components/user/unit/DataPagination";
 
 export default {
   components: {

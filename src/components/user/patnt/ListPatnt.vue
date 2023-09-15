@@ -3115,7 +3115,7 @@
 </template>
 
 <script>
-import DataPagination from '@/components/layout/DataPagination'
+import DataPagination from '@/components/user/unit/DataPagination'
 import {mapState} from 'vuex'
 import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle'
 import {
@@ -3223,7 +3223,8 @@ export default {
         '병상배정': 'BAST0004',
         '이송·배차': 'BAST0005',
         '입·퇴원처리': 'BAST0006',
-        '완료': "BAST0001,BAST0002,BAST0007,BAST0008"
+        '완료': 'BAST0007,BAST0008',
+        '환자등록': 'BAST0001'
       },
       genders: ['남', '여'],
       dateRanges: ['1개월', '3개월', '6개월', '1년', '전체', '직접지정'],
