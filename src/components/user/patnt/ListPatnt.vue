@@ -136,7 +136,7 @@
                           </div>
 
                           <div class="sbox w-175px ms-2">
-                            <select v-model="filterPatient['address']['second']" @change="changeDstrCd2()">
+                            <select :disabled="enableSecondAddressPicker" v-model="filterPatient['address']['second']" @change="changeDstrCd2()">
                               <option value="" id="null">군/구 전체</option>
                               <option v-for="(item,idx) in cmGugun" :key="idx"
                                       :value="item['cdId']">{{ item['cdNm'] }}
@@ -179,6 +179,19 @@
                                   @change="search"
                               /><i></i>
                               <span class="txt">{{ status[0] }}</span>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="item-cell-box">
+                          <div class="cbox me-4">
+                            <label>
+                              <input
+                                  type="checkbox"
+                                  v-model="filterPatient['monitoring']"
+                                  :value="true"
+                                  @change="search"
+                              /><i></i>
+                              <span class="txt">관찰 환자</span>
                             </label>
                           </div>
                         </div>
@@ -3226,6 +3239,7 @@ export default {
         '완료': 'BAST0007,BAST0008',
         '환자등록': 'BAST0001'
       },
+      d: '관찰 환자',
       genders: ['남', '여'],
       dateRanges: ['1개월', '3개월', '6개월', '1년', '전체', '직접지정'],
       selectedPatient: null,
@@ -3247,6 +3261,7 @@ export default {
           second: ''
         },
         hospitalName: null,
+        monitoring: null,
         assignmentStatus: [],
         searchText: ''
       }
@@ -3264,18 +3279,23 @@ export default {
       return this.page * this.displayRowsCount;
     },
     filterData() {
-      return {
-        ptNm: this.filterPatient['searchText'],
-        rrno1: this.filterPatient['searchText'],
-        mpno: this.filterPatient['searchText'],
-        dstr1Cd: this.filterPatient['address']['first'],
-        dstr2Cd: this.filterPatient['address']['second'],
-        hospNm: this.filterPatient['hospitalName'],
-        bedStatCd: this.filterPatient['assignmentStatus'].length ? this.filterPatient['assignmentStatus'].toString() : null
-      }
+      let params = {};
+      if (this.filterPatient['searchText']) params = {...params, ptNm: this.filterPatient['searchText']};
+      if (this.filterPatient['searchText']) params = {...params, rrno1: this.filterPatient['searchText']};
+      if (this.filterPatient['searchText']) params = {...params, mpno: this.filterPatient['searchText']};
+      if (this.filterPatient['address']['first']) params = {...params, dstr1Cd: this.filterPatient['address']['first']};
+      if (this.filterPatient['address']['second']) params = {...params, dstr2Cd: this.filterPatient['address']['second']};
+      if (this.filterPatient['hospitalName']) params = {...params, hospNm: this.filterPatient['hospitalName']};
+      if (this.filterPatient['monitoring']) params = {...params, sever: this.filterPatient['monitoring']};
+      if (this.filterPatient['assignmentStatus']) params = {...params, bedStatCd: this.filterPatient['assignmentStatus'].length ? this.filterPatient['assignmentStatus'].toString() : null};
+
+      return params
     },
     enableHospitalPicker() {
       return this.filterPatient['address']['second'] === "";
+    },
+    enableSecondAddressPicker() {
+      return this.filterPatient['address']['first'] === "";
     },
   },
   //정예준
