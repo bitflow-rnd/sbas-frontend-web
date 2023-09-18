@@ -140,7 +140,17 @@ export const reqBedType = {
     BDTP0006: '일반',
     BDTP0007: '소아',
 }
-
+export function setSearchStr(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) {
+        return null
+    } else {
+        console.log(arr)
+        const strArr = arr.map((item) => String(item))
+        const resStr = strArr.join(';')
+        console.log(resStr)
+        return resStr
+    }
+}
 export async function openPopup(idx) {
     if (idx === 0 && !this.rptYn) {
         console.log(this.newPt)
