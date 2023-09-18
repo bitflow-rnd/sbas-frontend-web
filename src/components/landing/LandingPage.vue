@@ -11,7 +11,6 @@
 
         <div class='header-menu-box'>
           <router-link to='/login' class='header-menu-btn' v-if='!isMobile'>병상배정 시스템 로그인</router-link>
-          <!-- <a class="header-menu-btn" @click="checkMobile">병상배정 시스템 로그인</a> -->
         </div>
 
       </div>
@@ -30,13 +29,12 @@
 
               <div class='swiper swiper-section1'>
 
-                <swiper
-                  :slides-per-view='3'
-                  :space-between='50'
-                  @swiper='onSwiper'
-                  @slideChange='onSlideChange'
-                >
-                  <swiper-slide>
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+
+                  <!-- Slides -->
+                  <div class="swiper-slide">
+
                     <div class='item-box'>
 
                       <div class='order-box'>첫번째,</div>
@@ -55,9 +53,12 @@
                       </div>
 
                     </div>
-                  </swiper-slide>
 
-                  <swiper-slide>
+                  </div>
+
+
+                  <!-- Slides -->
+                  <div class="swiper-slide">
 
                     <div class='item-box'>
 
@@ -74,9 +75,12 @@
                       </div>
 
                     </div>
-                  </swiper-slide>
 
-                  <swiper-slide>
+                  </div>
+
+                  <!-- Slides -->
+                  <div class="swiper-slide">
+
                     <div class='item-box'>
 
                       <div class='order-box'>세번째,</div>
@@ -94,8 +98,10 @@
                       </div>
 
                     </div>
-                  </swiper-slide>
-                </swiper>
+
+                  </div>
+
+                </div>
 
               </div>
 
@@ -147,16 +153,16 @@
     </section>
     <!-- footer end -->
 
-    <private-info-policy v-if='modalNo===1' />
-    <usage-term v-if='modalNo===2' />
+    <private-info-policy v-if='modalNo===1' @hideModal='showModal(0)' />
+    <usage-term v-if='modalNo===2' @hideModal='showModal(0)' />
 
   </div>
 
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import 'swiper/swiper.scss'
+import Swiper from 'swiper/bundle'
+import 'swiper/css/bundle'
 import MobileDetect from 'mobile-detect'
 import UsageTerm from '@/components/common/UsageTerm.vue'
 import PrivateInfoPolicy from '@/components/common/PrivateInfoPolicy.vue'
@@ -165,8 +171,6 @@ export default {
   components: {
     PrivateInfoPolicy,
     UsageTerm,
-    Swiper,
-    SwiperSlide,
   },
   name: 'LandingPage',
   props: {
@@ -179,9 +183,7 @@ export default {
     } else {
       this.isMobile = false
     }
-    this.initSection1Swiper()
-  },
-  setup() {
+    this.initSection1Swiper();
   },
   data() {
     return {
@@ -211,27 +213,27 @@ export default {
       this.modalNo = num
     },
     initSection1Swiper() {
-      const self = this
+      const self = this;
       this.section1Swiper = new Swiper('.swiper-section1', {
         loop: true,
         autoplay: {
-          delay: 5000
+          delay: 5000,
         },
         navigation: {
           prevEl: '.section1 .navigation-prev-btn',
-          nextEl: '.section1 .navigation-next-btn'
+          nextEl: '.section1 .navigation-next-btn',
         },
         on: {
-          slideChange() {
-            const idx = this.realIndex + 1
-            self.$nextTick(() => {
-              self.$refs.curBox1.innerText = idx
+          slideChange(){
+            const idx = this.realIndex +1;
+            self.$nextTick(()=>{
+              self.$refs.curBox1.innerText = idx;
             })
-          }
-        }
+          },
+        },
 
-      })
-    }
+      });
+    },
   }
 }
 </script>
@@ -306,5 +308,15 @@ footer {
     z-index: 0;
   }
 }
-.terms > div { width: 250px; line-height: 32px; }
+.terms > div {
+  width: 250px; line-height: 32px;
+  border: 3px solid #aaa;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 6px;
+  background-color: rgba(255,255,255,0.5);
+  padding: 3px 5px;
+  text-align: center;
+  margin-left: 1.5rem; }
+.terms > div + div { margin-top: 1rem; }
 </style>

@@ -42,11 +42,6 @@ const routes = [
     component: () => import('@/components/layout/NoLayout.vue'),
     children: [
       {
-        path: 'prvinfo',
-        name: 'prvinfo',
-        component: () => import('@/components/common/PrivateInfoHandle.vue')
-      },
-      {
         path: 'usgterm',
         name: 'usgterm',
         component: () => import('@/components/common/UsageTerm.vue')

@@ -9,6 +9,45 @@
         <div class='modal-body px-10 py-5'>
           <div class='row first'>
             <h1>개인정보 취급방침</h1>
+            <!--begin::Close-->
+            <div
+              id="reqest_exit"
+              class="btn btn-sm btn-icon btn-active-color-primary"
+              @click='$emit("hideModal")'
+            >
+              <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+              <span class="svg-icon svg-icon-1">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  opacity="0.5"
+                  x="6"
+                  y="17.3137"
+                  width="16"
+                  height="2"
+                  rx="1"
+                  transform="rotate(-45 6 17.3137)"
+                  fill="currentColor"
+                ></rect>
+                <rect
+                  x="7.41422"
+                  y="6"
+                  width="16"
+                  height="2"
+                  rx="1"
+                  transform="rotate(45 7.41422 6)"
+                  fill="currentColor"
+                ></rect>
+              </svg>
+            </span>
+              <!--end::Svg Icon-->
+            </div>
+            <!--end::Close-->
           </div>
           <div class='row second'>
             <vue-markdown :source='model.src' />
@@ -22,7 +61,9 @@
 
 <script setup>
 import VueMarkdown from 'vue-markdown-render'
-import { reactive } from 'vue'
+import { defineEmits, reactive } from 'vue'
+
+defineEmits(['hideModal'])
 
 let model = reactive({
   src: '---\n' +
@@ -274,11 +315,11 @@ let model = reactive({
 </script>
 
 <style scoped>
-.modal {
-  display: block;
-}
+.modal { display: block; background-color: rgba(0,0,0,0.5); }
 .modal-dialog .modal-body { padding-top: 1.25rem !important; }
 .row.first { height: 32px; }
 .row.first > h1 { font-size: 1.8rem; }
-.row.second { height: calc(1000px - 32px); overflow-y: scroll; }
+.row.second { height: calc(100vh - 10rem); overflow-y: scroll; }
+.modal-dialog { height: 100%; max-height: calc(100% - 8rem); }
+#reqest_exit { position: absolute; right: 1rem; top: 1rem; }
 </style>
