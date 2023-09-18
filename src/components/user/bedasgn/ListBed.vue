@@ -176,7 +176,7 @@
                                 @keyup.enter='searchBedAsgn'
                               />
 
-                              <a @click='searchBedAsgn' class="input-btn">
+                              <a @click='searchBedAsgn' role='button' class="input-btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                               </a>
                             </div>
@@ -202,42 +202,49 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0003' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">투석</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0004' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">임산부</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0008' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">신생아</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0002' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">소아</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0006' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">인공호흡기</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0005' type="checkbox" name="type2" /><i></i>
+                                  <span class="txt">수술</span>
+                                </label>
+                              </div>
+
+                              <div class="cbox ms-4">
+                                <label>
+                                  <input v-model='search.ptTypeCd' value='PTTP0007' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">적극적 치료요청</span>
                                 </label>
                               </div>
@@ -251,35 +258,43 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
-                                  <span class="txt">중환자</span>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0006' type="checkbox" name="type3" /><i></i>
+                                  <span class="txt">위중증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0005' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">중증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0004' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">준증증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0003' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">중등증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0002' type="checkbox" name="type3" /><i></i>
+                                  <span class="txt">경증</span>
+                                </label>
+                              </div>
+
+
+                              <div class="cbox ms-4">
+                                <label>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0001' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">기타</span>
                                 </label>
                               </div>
@@ -295,42 +310,42 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0003'  type="checkbox" name="type2" /><i></i>
                                   <span class="txt">읍압격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0002' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">일반격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0006' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">일반</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0005' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">소아읍압격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0004' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">소아일반격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0007' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">소아</span>
                                 </label>
                               </div>
@@ -344,14 +359,14 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.gndr' value='여' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">여자</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.gndr' value='남' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">남자</span>
                                 </label>
                               </div>
@@ -364,11 +379,11 @@
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div class="tbox w-50px me-2">
-                                <input type="text" class="px-2 text-center" placeholder="숫자" />
+                                <input v-model='search.toAge' type="text" class="px-2 text-center" placeholder="숫자" />
                               </div>
                               <span class="text-gray-600">이상 ~</span>
                               <div class="tbox w-50px mx-2">
-                                <input type="text" class="px-2 text-center" placeholder="숫자" />
+                                <input v-model='search.fromAge'  type="text" class="px-2 text-center" placeholder="숫자" />
                               </div>
                               <span class="text-gray-600">이하</span>
                             </div>
@@ -376,7 +391,7 @@
                         </td>
                       </tr>
 
-                      <tr v-show="showTable">
+<!--                      <tr v-show="showTable">
                         <th>장비정보</th>
                         <td colspan="7">
                           <div class="item-row-box">
@@ -439,7 +454,7 @@
                             </div>
                           </div>
                         </td>
-                      </tr>
+                      </tr>-->
                     </tbody>
                   </table>
                 </div>
@@ -530,7 +545,7 @@
                         <td>{{ item.age }}세</td>
                         <td>{{ item.diagNm ? item.diagNm : '-' }}</td>
                         <td>{{ item.svrtTypeCdNm }}</td>
-                        <td>읍압격리</td>
+                        <td>{{reqBedType[item.reqBedTypeCd]}}</td>
                         <td>{{ getTag(item.ptTypeCdNmTagList) }}</td>
                         <td>{{ item.bascAddr }}</td>
                         <td v-html='getDtBlue(item.updtDttm)'></td>
@@ -4854,7 +4869,7 @@ import {
   maskingNm,
   openAddressFinder,
   regNewPt,
-  openPopup
+  openPopup, reqBedType
 } from '@/util/ui'
 import user from '@/store/modules/user'
 //import mitt from 'mitt'
@@ -4880,6 +4895,7 @@ export default {
     this.initDsInfo = JSON.parse(JSON.stringify(this.dsInfo))
     this.initSvInfo = JSON.parse(JSON.stringify(this.svInfo))
     this.initSpInfo = JSON.parse(JSON.stringify(this.spInfo))
+    this.initSearch = JSON.parse(JSON.stringify(this.search))
 
   },
   mounted() {
@@ -4913,6 +4929,7 @@ export default {
   },
   data() {
     return {
+      reqBedType,
       showModal: null,
       transCondition1:false,
       transCondition2:false,
@@ -4931,6 +4948,13 @@ export default {
       search:{
         kwd:'',
         period:null,
+        bedStatCd:[],
+        ptTypeCd:[],
+        svrtTypeCd:[],
+        fromAge:null,
+        toAge:null,
+        gndr:[],
+        page:1
       },
       preRpt: null,
       content: '',
@@ -5106,8 +5130,7 @@ export default {
         this.getBdList()
     },
     getBdList() {
-      this.search.kwd=''
-      this.search.period=null
+      //this.search = this.initSearch
       this.$store.dispatch('bedasgn/getBdList')
     },
     countBdList() {
@@ -5117,8 +5140,28 @@ export default {
         return this.filter.selectedStates.reduce((i, state) => i + this.bdCnt[state], 0)
       }
     },
+    parseIntAge(age){
+      if(age !== null){
+        return parseInt(age)
+      } else {
+        return null
+      }
+    },
     searchBedAsgn(){
-      const data = {ptNm:this.search.kwd,rrno1:this.search.kwd,mpno:this.search.kwd,period:this.search.period}
+      const data = {
+        ptNm:this.search.kwd,
+        rrno1:this.search.kwd,
+        mpno:this.search.kwd,
+        period:this.search.period,
+        fromAge:this.parseIntAge(this.search.fromAge),
+        toAge:this.parseIntAge(this.search.toAge),
+        gndr:this.getUndrDses(this.search.gndr),
+        bedStatCd: this.getUndrDses(this.search.bedStatCd),
+        ptTypeCd: this.getUndrDses(this.search.ptTypeCd),
+        svrtTypeCd: this.getUndrDses(this.search.svrtTypeCd),
+        page:this.search.page
+      }
+      console.log(data)
       this.$store.dispatch('bedasgn/getBdList',data)
     },
       getMedInst(){
@@ -5188,6 +5231,7 @@ export default {
         else return ''
       },
     getTelno,
+
     setNull() {
       console.log('실행' +this.initNewPt)
       this.tab = 0
@@ -5423,13 +5467,12 @@ export default {
       if (!Array.isArray(arr) || arr.length === 0) {
         return ''
       } else {
-          console.log(arr)
-          const strArr = arr.map((item) => String(item))
-          const resStr = strArr.join(';')
-          console.log(resStr)
-          return resStr
+        console.log(arr)
+        const strArr = arr.map((item) => String(item))
+        const resStr = strArr.join(';')
+        console.log(resStr)
+        return resStr
       }
-
     },
     goAsgn,
     maskingNm,

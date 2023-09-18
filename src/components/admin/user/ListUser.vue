@@ -107,22 +107,27 @@
                         <td>
                           <div class="item-cell-box">
                             <div class="sbox w-175px">
-                              <select>
-                                <option>대구광역시</option>
-                                <option>서울특별시</option>
+                              <select v-model="search.dstrCd1" @change="getGugun(search.dstrCd1)">
+                                <option value=null>시/도 전체</option>
+                                <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
+                                  {{ item.cdNm }}
+                                </option>
                               </select>
                             </div>
 
                             <div class="sbox w-175px ms-2">
-                              <select>
-                                <option>전체</option>
+                              <select v-model="search.dstrCd2">
+                                <option value=null>시/군/구 전체</option>
+                                <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
+                                  {{ item.cdNm }}
+                                </option>
                               </select>
                             </div>
 
                             <div class="tbox w-500px with-btn ms-2">
-                              <input type="text" placeholder="사용자 이름 또는 휴대전화번호 입력" />
+                              <input type="text" @keyup.enter='searchUsrList' placeholder="사용자 이름 또는 휴대전화번호 입력" />
 
-                              <a href="javascript:void(0)" class="input-btn">
+                              <a @click='searchUsrList' role='button' class="input-btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                               </a>
                             </div>
@@ -135,35 +140,35 @@
                           <div class="item-cell-box">
                             <div class="cbox">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.instTypeCd' value='ORGN0001' type="checkbox" name="state" /><i></i>
                                 <span class="txt">병상배정반</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.instTypeCd' value='ORGN0004' type="checkbox" name="state" /><i></i>
                                 <span class="txt">의료진</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.instTypeCd' value='ORGN0003' type="checkbox" name="state" /><i></i>
                                 <span class="txt">보건소</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.instTypeCd' value='ORGN0002' type="checkbox" name="state" /><i></i>
                                 <span class="txt">구급대</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.instTypeCd' value='ORGN0005' type="checkbox" name="state" /><i></i>
                                 <span class="txt">전산담당</span>
                               </label>
                             </div>
@@ -175,35 +180,35 @@
                           <div class="item-cell-box">
                             <div class="cbox">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.ptTypeCd' value='PTTP0003' type="checkbox" name="state" /><i></i>
                                 <span class="txt">투석</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.ptTypeCd' value='PTTP0004' type="checkbox" name="state" /><i></i>
                                 <span class="txt">임산부</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.ptTypeCd' value='PTTP0008' type="checkbox" name="state" /><i></i>
                                 <span class="txt">신생아</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.ptTypeCd' value='PTTP0002' type="checkbox" name="state" /><i></i>
                                 <span class="txt">소아</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.ptTypeCd' value='PTTP0003' type="checkbox" name="state" /><i></i>
                                 <span class="txt">응급실</span>
                               </label>
                             </div>
@@ -217,35 +222,35 @@
                           <div class="item-cell-box">
                             <div class="cbox">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.statClasNm' value='URST0001' type="checkbox" name="state" /><i></i>
                                 <span class="txt">승인대기</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.statClasNm' value='URST0003' type="checkbox" name="state" /><i></i>
                                 <span class="txt">반려</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.statClasNm' value='URST0002' type="checkbox" name="state" /><i></i>
                                 <span class="txt">활성</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.statClasNm' value='URST0004' type="checkbox" name="state" /><i></i>
                                 <span class="txt">휴면</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input v-model='search.statClasNm' value='URST0005' type="checkbox" name="state" /><i></i>
                                 <span class="txt">탈퇴</span>
                               </label>
                             </div>
@@ -2546,15 +2551,30 @@
 <script>
 import { mapState } from 'vuex'
 import { ref } from 'vue'
-import { getAuthCd } from '@/util/ui'
+import { getAuthCd, getGugun, getSido, setSearchStr } from '@/util/ui'
 export default {
   components: {},
   computed: {
-    ...mapState('admin', ['userList', 'usrDetail'])
+    ...mapState('admin', ['cmSido','cmGugun','userList', 'usrDetail'])
   },
-  mounted() {},
+  created() {
+    this.$store.dispatch('admin/getSido')
+    this.initSearch = JSON.parse(JSON.stringify(this.search))
+    this.search = this.initSearch
+  },
+  mounted() {
+    this.$store.dispatch('admin/getSido')
+  },
   data() {
     return {
+      search: {
+        dstrCd1: null,
+        dstrCd2: null,
+        kwd:'',
+        instTypeCd: [],
+        ptTypeCd: [],
+        statClasNm: []
+      },
       content: '',
       characterCount: 0,
       form: {
@@ -2636,11 +2656,34 @@ export default {
     }
   },
   methods: {
+    getGugun,
+    getSido,
     updateCharacterCount() {
       this.characterCount = this.content.length
     },
     checkInfo() {
       console.log(this.$store.state.userList)
+    },
+    setSearchStr,
+    parseIntData(data){
+      if(data !== null){
+        return parseInt(data)
+      } else {
+        return null
+      }
+    },
+    searchUsrList(){
+      const data = {
+        dstrCd1: this.parseIntData(this.search.dstrCd1),
+        dstrCd2: this.parseIntData(this.search.dstrCd2),
+        userNm: this.search.kwd,
+        telno: this.search.kwd,
+        instTypeCd: this.getUndrDses(this.search.instTypeCd),
+        ptTypeCd: this.getUndrDses(this.search.ptTypeCd),
+        statClasNm: this.getUndrDses(this.search.statClasNm)
+      }
+      console.log(data)
+      this.$store.dispatch('admin/getUserList',data)
     },
     getDutyDstrCd(code) {
       this.$store.dispatch('admin/getDutyDstr', code)
