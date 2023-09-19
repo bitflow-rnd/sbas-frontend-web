@@ -131,6 +131,26 @@ export const ptType = {
     PTTP0008: '신생아'
 }
 
+export const reqBedType = {
+    BDTP0001: '미분류',
+    BDTP0002: '일반격리',
+    BDTP0003: '음압격리',
+    BDTP0004: '소아일반격리',
+    BDTP0005: '소아음압격리',
+    BDTP0006: '일반',
+    BDTP0007: '소아',
+}
+export function setSearchStr(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) {
+        return null
+    } else {
+        console.log(arr)
+        const strArr = arr.map((item) => String(item))
+        const resStr = strArr.join(';')
+        console.log(resStr)
+        return resStr
+    }
+}
 export async function openPopup(idx) {
     if (idx === 0 && !this.rptYn) {
         console.log(this.newPt)

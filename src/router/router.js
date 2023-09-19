@@ -37,6 +37,23 @@ const routes = [
     component: () => import('@/components/common/DashbdView.vue')
   },
   {
+    path: '/comm',
+    name: 'comm',
+    component: () => import('@/components/layout/NoLayout.vue'),
+    children: [
+      {
+        path: 'usgterm',
+        name: 'usgterm',
+        component: () => import('@/components/common/UsageTerm.vue')
+      },
+      {
+        path: 'prvinfopolc',
+        name: 'prvinfopolc',
+        component: () => import('@/components/common/PrivateInfoPolicy.vue')
+      },
+    ],
+  },
+  {
     path: '/user',
     name: 'user',
     component: () => import('@/components/layout/LayoutUser.vue'),

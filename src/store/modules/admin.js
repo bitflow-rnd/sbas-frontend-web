@@ -107,27 +107,36 @@ export default {
                 console.log(e)
             });
         },
-        getUserList(comment){
-            const token = localStorage.getItem('userToken')
-            //console.log(token)
-            const url = `${API_PROD}/api/v1/admin/user/users`
-            axios({
-                method:"get",
-                url: url,
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-
-            }).then(response =>{
-                console.log(response,"사용자목록")
-                if(response.data?.code==='00') {
-                    comment.commit('setUserList', response.data?.result.items)
-                    //console.log(response.data?.result.items, "확인좀합시다...")
-                    comment.dispatch('getUserInfo',response.data?.result.items[0].userId)
-                    router.push('/admin/user/list')
-                }
-            }).catch(e =>{
-                console.log(e)
+        getUserList(comment,data){
+            return new Promise((resolve,reject) =>{
+                  const token = localStorage.getItem('userToken')
+                  //console.log(token)
+                  const url = `${API_PROD}/api/v1/admin/user/users`
+                  axios({
+                      method : "get",
+                      url    : url,
+                      headers: {
+                          Authorization: `Bearer ${token}`
+                      },
+                      params : data
+                  })
+                    .then(response =>{
+                      console.log(response,"사용자목록")
+                      if(response.data?.code==='00') {
+                          comment.commit('setUserList', response.data?.result.items)
+                          if(response.data?.result.items.length !== 0){
+                              comment.dispatch('getUserInfo', response.data?.result.items[0].userId)
+                          }
+                          router.push('/admin/user/list')
+                          resolve(response.data?.result.items)
+                      } else{
+                          reject('에러')
+                      }
+            })
+                .catch(e=>{
+                    console.log(e)
+                    reject(e)
+                })
             })
         },
         getDutyDstr(comment,data){
