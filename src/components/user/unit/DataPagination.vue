@@ -48,17 +48,17 @@ export default {
     },
     displayChangePageButtonsCount: {
       type: Number,
-      required: true,
+      required: false,
       default: 10
     },
     previousPageButtonsCount: {
       type: Number,
-      required: true,
+      required: false,
       default: 4
     },
     nextPageButtonsCount: {
       type: Number,
-      required: true,
+      required: false,
       default: 4
     },
   },
