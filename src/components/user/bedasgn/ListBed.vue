@@ -142,23 +142,23 @@
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div
-                                v-for="(item, idx) in bdList2"
-                                :key="idx"
-                                class="cbox"
-                                :class="{ 'ms-4': item.title !== '병상요청' }"
+                                  v-for="(item, idx) in bdList2"
+                                  :key="idx"
+                                  class="cbox"
+                                  :class="{ 'ms-4': item.title !== '병상요청' }"
                               >
                                 <label>
                                   <input
-                                    type="checkbox"
-                                    name="state"
-                                    v-model="filter.selectedStates"
-                                    :value="idx"
+                                      type="checkbox"
+                                      name="state"
+                                      v-model="filter.selectedStates"
+                                      :value="idx"
                                   /><i></i>
                                   <span class="txt"
-                                    >{{ item.title }}
+                                  >{{ item.title }}
                                     <span v-show="item.title !== '완료'" class="cnt ms-1">{{
-                                      item.count
-                                    }}</span></span
+                                        item.count
+                                      }}</span></span
                                   >
                                 </label>
                               </div>
@@ -182,8 +182,8 @@
                             </div>
 
                             <div class="sbox w-150px ms-5">
-                              <select v-model='search.period'>
-                                <option value=null>전체</option>
+                              <select v-model='search.period' @change="searchBedAsgn">
+                                <option value=''>전체</option>
                                 <option value='7'>최근 1주</option>
                                 <option value='30'>최근 1개월</option>
                                 <option value='90'>최근 3개월</option>
@@ -565,70 +565,11 @@
               </div>
             </article>
 
-            <div class="row mt-10">
-              <div
-                class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"
-              ></div>
-              <div class="col-12 d-flex align-items-center justify-content-center">
-                <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
-                  <ul class="pagination">
-                    <li
-                      class="paginate_button page-item previous disabled"
-                      id="kt_table_users_previous"
-                    >
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="0"
-                        tabindex="0"
-                        class="page-link"
-                        ><i class="previous"></i
-                      ></a>
-                    </li>
-                    <li class="paginate_button page-item active">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="1"
-                        tabindex="0"
-                        class="page-link"
-                        >1</a
-                      >
-                    </li>
-                    <li class="paginate_button page-item">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="2"
-                        tabindex="0"
-                        class="page-link"
-                        >2</a
-                      >
-                    </li>
-                    <li class="paginate_button page-item">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="3"
-                        tabindex="0"
-                        class="page-link"
-                        >3</a
-                      >
-                    </li>
-                    <li class="paginate_button page-item next" id="kt_table_users_next">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="4"
-                        tabindex="0"
-                        class="page-link"
-                        ><i class="next"></i
-                      ></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            <data-pagination
+                @change="changePage"
+                :display-rows-count="displayRowsCount"
+                :data-length="sortedBdList.length"
+            ></data-pagination>
 
             <!--end::Table-->
           </div>
@@ -4853,6 +4794,7 @@
 </template>
 
 <script>
+import DataPagination from '@/components/user/unit/DataPagination'
 import { mapState } from 'vuex'
 import { ref } from 'vue'
 import {
@@ -4878,7 +4820,7 @@ import user from '@/store/modules/user'
 
 export default {
 
-  components: {},
+  components: {DataPagination},
   name: 'ListBed',
   props: {},
 
@@ -4930,6 +4872,8 @@ export default {
   data() {
     return {
       reqBedType,
+      displayRowsCount: 15,
+      page: 1,
       showModal: null,
       transCondition1:false,
       transCondition2:false,
@@ -4947,7 +4891,7 @@ export default {
       },
       search:{
         kwd:'',
-        period:null,
+        period: '',
         bedStatCd:[],
         ptTypeCd:[],
         svrtTypeCd:[],
@@ -5084,6 +5028,29 @@ export default {
     ...mapState('user', ['userInfo', 'cmSido']),
     ...mapState('admin', ['firestatnList', 'firemenList','medinstList']),
 
+    startIndex() {
+      return (this.page - 1) * this.displayRowsCount;
+    },
+    endIndex() {
+      return this.page * this.displayRowsCount;
+    },
+    filterData() {
+      let params = {};
+      // if (this.filterPatient['searchText']) params = {...params, ptNm: this.filterPatient['searchText']};
+      if (this.search['kwd']) params = {...params, ptNm: this.search['kwd']};
+      if (this.search['kwd']) params = {...params, rrno1: this.search['kwd']};
+      if (this.search['kwd']) params = {...params, mpno: this.search['kwd']};
+      if (this.search['period']) params = {...params, period: this.search['period']};
+      if (this.search['fromAge']) params = {...params, fromAge: this.search['fromAge']};
+      if (this.search['toAge']) params = {...params, toAge: this.search['toAge']};
+
+
+      //     gndr:this.getUndrDses(this.search.gndr),
+      //     bedStatCd: this.getUndrDses(this.search.bedStatCd),
+      //     ptTypeCd: this.getUndrDses(this.search.ptTypeCd),
+      //     svrtTypeCd: this.getUndrDses(this.search.svrtTypeCd)
+      return params
+    },
     sortedBdList() {
       let list = []
       if (this.bdList2 !== null && this.bdList2 !== undefined) {
@@ -5104,6 +5071,13 @@ export default {
     }
   },
   methods: {
+    changePage(newPage) {
+      this.$store.dispatch('bedasgn/getBdList', {
+        ...this.filterData,
+        page: newPage
+      });
+      this.page = newPage;
+    },
     openModal(idx){
       this.showModal=null
       this.showModal = idx
@@ -5148,21 +5122,24 @@ export default {
       }
     },
     searchBedAsgn(){
-      const data = {
-        ptNm:this.search.kwd,
-        rrno1:this.search.kwd,
-        mpno:this.search.kwd,
-        period:this.search.period,
-        fromAge:this.parseIntAge(this.search.fromAge),
-        toAge:this.parseIntAge(this.search.toAge),
-        gndr:this.getUndrDses(this.search.gndr),
-        bedStatCd: this.getUndrDses(this.search.bedStatCd),
-        ptTypeCd: this.getUndrDses(this.search.ptTypeCd),
-        svrtTypeCd: this.getUndrDses(this.search.svrtTypeCd),
-        page:this.search.page
-      }
-      console.log(data)
-      this.$store.dispatch('bedasgn/getBdList',data)
+      this.$store.dispatch('bedasgn/getBdList', this.filterData);
+      this.page = 1;
+      //
+      // const data = {
+      //   ptNm:this.search.kwd,
+      //   rrno1:this.search.kwd,
+      //   mpno:this.search.kwd,
+      //   period:this.search.period,
+      //   fromAge:this.parseIntAge(this.search.fromAge),
+      //   toAge:this.parseIntAge(this.search.toAge),
+      //   gndr:this.getUndrDses(this.search.gndr),
+      //   bedStatCd: this.getUndrDses(this.search.bedStatCd),
+      //   ptTypeCd: this.getUndrDses(this.search.ptTypeCd),
+      //   svrtTypeCd: this.getUndrDses(this.search.svrtTypeCd),
+      //   page:this.search.page
+      // }
+      // console.log(data)
+      // this.$store.dispatch('bedasgn/getBdList',data)
     },
       getMedInst(){
         let data = this.medinstInfo
