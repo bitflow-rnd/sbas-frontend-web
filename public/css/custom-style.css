@@ -2196,6 +2196,9 @@ article.permission-selector-layout .selector-box input {
 article.permission-selector-layout .selector-box input:checked ~ .selector-wrap {
   box-shadow: 0 0 0 2px inset #74AFEB;
 }
+article.permission-selector-layout .selector-box input ~ .selector-wrap .img-box .on {
+  display: none;
+}
 article.permission-selector-layout .selector-box input:checked ~ .selector-wrap .img-box .off {
   display: none;
 }
