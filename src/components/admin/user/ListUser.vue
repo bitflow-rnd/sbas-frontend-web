@@ -510,7 +510,7 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" v-model="form.userId" />
+                            <input type="text" v-model="form.id" />
                           </div>
                         </div>
                       </td>
@@ -2525,7 +2525,7 @@ export default {
       content: '',
       characterCount: 0,
       form: {
-        userId: '',
+        id: '',
         pw: '',
         userNm: '',
         telno: '',
@@ -2783,7 +2783,7 @@ export default {
       /*vuex에 등록됐는지 확인하고 사용자 등록됐다는 알림창 띄우기*/
     },
     addUsrAdmin() {
-      this.$store.dispatch('admin/regUsr', this.form)
+      this.$store.dispatch('admin/regUsr', {...this.form, ptTypeCd: this.form['ptTypeCd'].join(';')})
     },
     test() {
       console.log('test')

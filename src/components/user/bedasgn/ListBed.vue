@@ -5036,7 +5036,6 @@ export default {
     },
     filterData() {
       let params = {};
-      // if (this.filterPatient['searchText']) params = {...params, ptNm: this.filterPatient['searchText']};
       if (this.search['kwd']) params = {...params, ptNm: this.search['kwd']};
       if (this.search['kwd']) params = {...params, rrno1: this.search['kwd']};
       if (this.search['kwd']) params = {...params, mpno: this.search['kwd']};
