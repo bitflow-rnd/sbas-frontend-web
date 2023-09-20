@@ -2216,7 +2216,7 @@ article.permission-selector-layout .selector-box .selector-wrap {
   flex-direction: column;
 }
 article.permission-selector-layout .selector-box .selector-wrap .img-box .on {
-  display: none;
+  display: block;
 }
 article.permission-selector-layout .selector-box .selector-wrap .info-box {
   padding-top: 8px;
