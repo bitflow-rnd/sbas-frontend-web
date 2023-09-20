@@ -1,6 +1,7 @@
 import axios from "axios";
 import {API_PROD} from "@/util/constantURL";
 import router from "@/router/router";
+import {encodingPassword} from "@/util/encodingPasswd";
 
 //import Vue from "core-js/internals/task";
 
@@ -162,8 +163,9 @@ export default {
         },
         regUsr(comment, data){
             const token= localStorage.getItem('userToken')
-            const request = data
+            const request = {...data, pw: encodingPassword(data['pw'])}
             const url = `${API_PROD}/api/v1/admin/user/reg`
+            // const url = `http://localhost:8080/api/v1/admin/user/reg`
             axios({
                 method:"post",
                 url:url,
