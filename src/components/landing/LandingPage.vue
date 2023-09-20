@@ -133,7 +133,7 @@
 
             <div class='footer-menu-list'>
               <router-link to='/login' class='footer-menu-btn type-primary' v-if='!isMobile'>병상배정 시스템 로그인</router-link>
-              <a href="javascript:alert('준비중입니다');" class='footer-menu-btn'>
+              <a href="/d" class='footer-menu-btn'>
                 <img src='/img/common/img_footer_google.svg' alt='이미지'>
               </a>
               <a href="javascript:alert('준비중입니다');" class='footer-menu-btn'>
@@ -141,7 +141,7 @@
               </a>
             </div>
 
-            <div class='terms'>
+            <div class='terms' v-if='!isMobile'>
               <div role='button' @click='showModal(1)'>개인정보 취급방침</div>
               <div role='button' @click='showModal(2)'>서비스 이용약관</div>
             </div>
