@@ -44,21 +44,21 @@ export default {
     displayRowsCount: {
       type: Number,
       required: false,
-      default: 10
+      default: 15
     },
     displayChangePageButtonsCount: {
       type: Number,
-      required: true,
+      required: false,
       default: 10
     },
     previousPageButtonsCount: {
       type: Number,
-      required: true,
+      required: false,
       default: 4
     },
     nextPageButtonsCount: {
       type: Number,
-      required: true,
+      required: false,
       default: 4
     },
   },

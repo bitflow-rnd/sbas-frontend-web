@@ -142,23 +142,23 @@
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div
-                                v-for="(item, idx) in bdList2"
-                                :key="idx"
-                                class="cbox"
-                                :class="{ 'ms-4': item.title !== '병상요청' }"
+                                  v-for="(item, idx) in bdList2"
+                                  :key="idx"
+                                  class="cbox"
+                                  :class="{ 'ms-4': item.title !== '병상요청' }"
                               >
                                 <label>
                                   <input
-                                    type="checkbox"
-                                    name="state"
-                                    v-model="filter.selectedStates"
-                                    :value="idx"
+                                      type="checkbox"
+                                      name="state"
+                                      v-model="filter.selectedStates"
+                                      :value="idx"
                                   /><i></i>
                                   <span class="txt"
-                                    >{{ item.title }}
+                                  >{{ item.title }}
                                     <span v-show="item.title !== '완료'" class="cnt ms-1">{{
-                                      item.count
-                                    }}</span></span
+                                        item.count
+                                      }}</span></span
                                   >
                                 </label>
                               </div>
@@ -176,14 +176,14 @@
                                 @keyup.enter='searchBedAsgn'
                               />
 
-                              <a @click='searchBedAsgn' class="input-btn">
+                              <a @click='searchBedAsgn' role='button' class="input-btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                               </a>
                             </div>
 
                             <div class="sbox w-150px ms-5">
-                              <select v-model='search.period'>
-                                <option value=null>전체</option>
+                              <select v-model='search.period' @change="searchBedAsgn">
+                                <option value=''>전체</option>
                                 <option value='7'>최근 1주</option>
                                 <option value='30'>최근 1개월</option>
                                 <option value='90'>최근 3개월</option>
@@ -202,42 +202,49 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0003' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">투석</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0004' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">임산부</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0008' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">신생아</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0002' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">소아</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0006' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">인공호흡기</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0005' type="checkbox" name="type2" /><i></i>
+                                  <span class="txt">수술</span>
+                                </label>
+                              </div>
+
+                              <div class="cbox ms-4">
+                                <label>
+                                  <input v-model='search.ptTypeCd' value='PTTP0007' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">적극적 치료요청</span>
                                 </label>
                               </div>
@@ -251,35 +258,43 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
-                                  <span class="txt">중환자</span>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0006' type="checkbox" name="type3" /><i></i>
+                                  <span class="txt">위중증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0005' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">중증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0004' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">준증증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0003' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">중등증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0002' type="checkbox" name="type3" /><i></i>
+                                  <span class="txt">경증</span>
+                                </label>
+                              </div>
+
+
+                              <div class="cbox ms-4">
+                                <label>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0001' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">기타</span>
                                 </label>
                               </div>
@@ -295,42 +310,42 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0003'  type="checkbox" name="type2" /><i></i>
                                   <span class="txt">읍압격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0002' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">일반격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0006' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">일반</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0005' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">소아읍압격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0004' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">소아일반격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.bedStatCd' value='BDTP0007' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">소아</span>
                                 </label>
                               </div>
@@ -344,14 +359,14 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.gndr' value='여' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">여자</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.gndr' value='남' type="checkbox" name="type3" /><i></i>
                                   <span class="txt">남자</span>
                                 </label>
                               </div>
@@ -364,11 +379,11 @@
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div class="tbox w-50px me-2">
-                                <input type="text" class="px-2 text-center" placeholder="숫자" />
+                                <input v-model='search.toAge' type="text" class="px-2 text-center" placeholder="숫자" />
                               </div>
                               <span class="text-gray-600">이상 ~</span>
                               <div class="tbox w-50px mx-2">
-                                <input type="text" class="px-2 text-center" placeholder="숫자" />
+                                <input v-model='search.fromAge'  type="text" class="px-2 text-center" placeholder="숫자" />
                               </div>
                               <span class="text-gray-600">이하</span>
                             </div>
@@ -376,7 +391,7 @@
                         </td>
                       </tr>
 
-                      <tr v-show="showTable">
+<!--                      <tr v-show="showTable">
                         <th>장비정보</th>
                         <td colspan="7">
                           <div class="item-row-box">
@@ -439,7 +454,7 @@
                             </div>
                           </div>
                         </td>
-                      </tr>
+                      </tr>-->
                     </tbody>
                   </table>
                 </div>
@@ -530,7 +545,7 @@
                         <td>{{ item.age }}세</td>
                         <td>{{ item.diagNm ? item.diagNm : '-' }}</td>
                         <td>{{ item.svrtTypeCdNm }}</td>
-                        <td>읍압격리</td>
+                        <td>{{reqBedType[item.reqBedTypeCd]}}</td>
                         <td>{{ getTag(item.ptTypeCdNmTagList) }}</td>
                         <td>{{ item.bascAddr }}</td>
                         <td v-html='getDtBlue(item.updtDttm)'></td>
@@ -550,70 +565,11 @@
               </div>
             </article>
 
-            <div class="row mt-10">
-              <div
-                class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"
-              ></div>
-              <div class="col-12 d-flex align-items-center justify-content-center">
-                <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
-                  <ul class="pagination">
-                    <li
-                      class="paginate_button page-item previous disabled"
-                      id="kt_table_users_previous"
-                    >
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="0"
-                        tabindex="0"
-                        class="page-link"
-                        ><i class="previous"></i
-                      ></a>
-                    </li>
-                    <li class="paginate_button page-item active">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="1"
-                        tabindex="0"
-                        class="page-link"
-                        >1</a
-                      >
-                    </li>
-                    <li class="paginate_button page-item">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="2"
-                        tabindex="0"
-                        class="page-link"
-                        >2</a
-                      >
-                    </li>
-                    <li class="paginate_button page-item">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="3"
-                        tabindex="0"
-                        class="page-link"
-                        >3</a
-                      >
-                    </li>
-                    <li class="paginate_button page-item next" id="kt_table_users_next">
-                      <a
-                        href="#"
-                        aria-controls="kt_table_users"
-                        data-dt-idx="4"
-                        tabindex="0"
-                        class="page-link"
-                        ><i class="next"></i
-                      ></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            <data-pagination
+                @change="changePage"
+                :display-rows-count="displayRowsCount"
+                :data-length="sortedBdList.length"
+            ></data-pagination>
 
             <!--end::Table-->
           </div>
@@ -4838,6 +4794,7 @@
 </template>
 
 <script>
+import DataPagination from '@/components/user/unit/DataPagination'
 import { mapState } from 'vuex'
 import { ref } from 'vue'
 import {
@@ -4854,7 +4811,7 @@ import {
   maskingNm,
   openAddressFinder,
   regNewPt,
-  openPopup
+  openPopup, reqBedType
 } from '@/util/ui'
 import user from '@/store/modules/user'
 //import mitt from 'mitt'
@@ -4863,7 +4820,7 @@ import user from '@/store/modules/user'
 
 export default {
 
-  components: {},
+  components: {DataPagination},
   name: 'ListBed',
   props: {},
 
@@ -4880,6 +4837,7 @@ export default {
     this.initDsInfo = JSON.parse(JSON.stringify(this.dsInfo))
     this.initSvInfo = JSON.parse(JSON.stringify(this.svInfo))
     this.initSpInfo = JSON.parse(JSON.stringify(this.spInfo))
+    this.initSearch = JSON.parse(JSON.stringify(this.search))
 
   },
   mounted() {
@@ -4913,6 +4871,9 @@ export default {
   },
   data() {
     return {
+      reqBedType,
+      displayRowsCount: 15,
+      page: 1,
       showModal: null,
       transCondition1:false,
       transCondition2:false,
@@ -4930,7 +4891,14 @@ export default {
       },
       search:{
         kwd:'',
-        period:null,
+        period: '',
+        bedStatCd:[],
+        ptTypeCd:[],
+        svrtTypeCd:[],
+        fromAge:null,
+        toAge:null,
+        gndr:[],
+        page:1
       },
       preRpt: null,
       content: '',
@@ -5060,6 +5028,28 @@ export default {
     ...mapState('user', ['userInfo', 'cmSido']),
     ...mapState('admin', ['firestatnList', 'firemenList','medinstList']),
 
+    startIndex() {
+      return (this.page - 1) * this.displayRowsCount;
+    },
+    endIndex() {
+      return this.page * this.displayRowsCount;
+    },
+    filterData() {
+      let params = {};
+      if (this.search['kwd']) params = {...params, ptNm: this.search['kwd']};
+      if (this.search['kwd']) params = {...params, rrno1: this.search['kwd']};
+      if (this.search['kwd']) params = {...params, mpno: this.search['kwd']};
+      if (this.search['period']) params = {...params, period: this.search['period']};
+      if (this.search['fromAge']) params = {...params, fromAge: this.search['fromAge']};
+      if (this.search['toAge']) params = {...params, toAge: this.search['toAge']};
+
+
+      //     gndr:this.getUndrDses(this.search.gndr),
+      //     bedStatCd: this.getUndrDses(this.search.bedStatCd),
+      //     ptTypeCd: this.getUndrDses(this.search.ptTypeCd),
+      //     svrtTypeCd: this.getUndrDses(this.search.svrtTypeCd)
+      return params
+    },
     sortedBdList() {
       let list = []
       if (this.bdList2 !== null && this.bdList2 !== undefined) {
@@ -5080,6 +5070,13 @@ export default {
     }
   },
   methods: {
+    changePage(newPage) {
+      this.$store.dispatch('bedasgn/getBdList', {
+        ...this.filterData,
+        page: newPage
+      });
+      this.page = newPage;
+    },
     openModal(idx){
       this.showModal=null
       this.showModal = idx
@@ -5106,8 +5103,7 @@ export default {
         this.getBdList()
     },
     getBdList() {
-      this.search.kwd=''
-      this.search.period=null
+      //this.search = this.initSearch
       this.$store.dispatch('bedasgn/getBdList')
     },
     countBdList() {
@@ -5117,9 +5113,32 @@ export default {
         return this.filter.selectedStates.reduce((i, state) => i + this.bdCnt[state], 0)
       }
     },
+    parseIntAge(age){
+      if(age !== null){
+        return parseInt(age)
+      } else {
+        return null
+      }
+    },
     searchBedAsgn(){
-      const data = {ptNm:this.search.kwd,rrno1:this.search.kwd,mpno:this.search.kwd,period:this.search.period}
-      this.$store.dispatch('bedasgn/getBdList',data)
+      this.$store.dispatch('bedasgn/getBdList', this.filterData);
+      this.page = 1;
+      //
+      // const data = {
+      //   ptNm:this.search.kwd,
+      //   rrno1:this.search.kwd,
+      //   mpno:this.search.kwd,
+      //   period:this.search.period,
+      //   fromAge:this.parseIntAge(this.search.fromAge),
+      //   toAge:this.parseIntAge(this.search.toAge),
+      //   gndr:this.getUndrDses(this.search.gndr),
+      //   bedStatCd: this.getUndrDses(this.search.bedStatCd),
+      //   ptTypeCd: this.getUndrDses(this.search.ptTypeCd),
+      //   svrtTypeCd: this.getUndrDses(this.search.svrtTypeCd),
+      //   page:this.search.page
+      // }
+      // console.log(data)
+      // this.$store.dispatch('bedasgn/getBdList',data)
     },
       getMedInst(){
         let data = this.medinstInfo
@@ -5188,6 +5207,7 @@ export default {
         else return ''
       },
     getTelno,
+
     setNull() {
       console.log('실행' +this.initNewPt)
       this.tab = 0
@@ -5423,13 +5443,12 @@ export default {
       if (!Array.isArray(arr) || arr.length === 0) {
         return ''
       } else {
-          console.log(arr)
-          const strArr = arr.map((item) => String(item))
-          const resStr = strArr.join(';')
-          console.log(resStr)
-          return resStr
+        console.log(arr)
+        const strArr = arr.map((item) => String(item))
+        const resStr = strArr.join(';')
+        console.log(resStr)
+        return resStr
       }
-
     },
     goAsgn,
     maskingNm,
