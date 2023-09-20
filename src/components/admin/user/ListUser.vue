@@ -346,10 +346,10 @@
                     </thead>
 
                     <tbody>
-                      <tr v-for="(item, i) in userList" :key="i">
-                        <td>
-                          <div class="cbox">
-                            <label> <input type="checkbox" class="all-chk" /><i></i> </label>
+                      <tr v-for="(item, i) in userList" :key="i" @click='openUsrDetail(item)'>
+                        <td @click='toggleCheckbox()'>
+                          <div @click='toggleCheckbox()' class="cbox">
+                            <label> <input @click='toggleCheckbox()' type='checkbox' class='all-chk' /><i></i> </label>
                           </div>
                         </td>
                         <td>{{ userList.length-i }}</td>
@@ -362,40 +362,15 @@
                         <td>{{ getrgDt(item.rgstDttm) }}</td>
                         <td>{{ getrgDt(item.rgstDttm) }}</td>
                         <td>{{ item.userStatCdNm }}</td>
-                        <td>
+                        <td @click='toggleCheckbox()'>
                           <!--todo userInfo 정보 비교해서 띄우기? -->
                           <a
-                            data-bs-toggle="modal"
-                            :data-bs-target="isDetail ? getBtn(item.userStatCd)[1] : ''"
                             @click="setUsrSts(item)"
                             class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center"
                             >{{ getBtn(item.userStatCd)[0] }}</a
                           >
                         </td>
                       </tr>
-                      <!--                                    <tr>
-                                                                                <td>7</td>
-                                                                                <td>
-                                                                                    <div class="cbox">
-                                                                                        <label>
-                                                                                            <input type="checkbox" class="all-chk"><i></i>
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>서울특별시</td>
-                                                                                <td>보건소</td>
-                                                                                <td>칠곡경북대병원</td>
-                                                                                <td>김*선</td>
-                                                                                <td>주임</td>
-                                                                                <td>일반</td>
-                                                                                <td>2022.12.31</td>
-                                                                                <td>2023.02.28</td>
-                                                                                <td>등록요청</td>
-                                                                                <td>
-                                                                                    <a href="javascript:userViewModal()"
-                                                                                       class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center">수정</a>
-                                                                                </td>
-                                                                            </tr>-->
                     </tbody>
                   </table>
                 </div>
@@ -432,12 +407,6 @@
                         >1</router-link
                       >
                     </li>
-                    <!--                                        <li class="paginate_button page-item "><a href="#" aria-controls="kt_table_users"
-                                                                                                                          data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                                                                                </li>
-                                                                                <li class="paginate_button page-item "><a href="#" aria-controls="kt_table_users"
-                                                                                                                          data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                                                                                </li>-->
                     <li class="paginate_button page-item next" id="kt_table_users_next">
                       <router-link
                         to=""
@@ -1689,15 +1658,16 @@
 
   <!-- 상세정보-승인/반려 모달    -->
   <div
-    v-if="usrDetail !== null"
+    v-show='isDetail'
     class="modal fade"
     id="kt_modal_view_user"
     tabindex="-1"
     aria-hidden="true"
     style=""
+    :class="{'show' : isDetail}"
   >
     <!--begin::Modal dialog-->
-    <div class="modal-dialog mw-1500px modal-dialog-centered">
+    <div v-if='usrDetail!==null' class="modal-dialog mw-1500px modal-dialog-centered">
       <!--begin::Modal content-->
       <div class="modal-content">
         <!--begin::Modal header-->
@@ -1706,7 +1676,7 @@
           <h2>사용자 상세 정보</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
-          <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+          <div class="btn btn-sm btn-icon btn-active-color-primary" @click='closeModal'>
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
             <span class="svg-icon svg-icon-1">
               <svg
@@ -1793,9 +1763,9 @@
                             <img src="" />
                           </td>
                           <th>사용자번호</th>
-                          <td>사용자번호</td>
+                          <td>수정필요</td>
                           <th>아이디</th>
-                          <td>{{ usrDetail.userId }}</td>
+                          <td>{{ usrDetail.id }}</td>
                         </tr>
                         <tr>
                           <th>이름</th>
@@ -1811,7 +1781,7 @@
                         </tr>
                         <tr>
                           <th>소셜로그인 사용</th>
-                          <td colspan="3">사용</td>
+                          <td colspan="3">사용 - 수정</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1848,8 +1818,7 @@
                             <div class="item-cell-box full">
                               <article class="permission-selector-layout">
                                 <div class="selector-box" style="cursor: default">
-                                  <div
-                                    v-show="getPmgr(usrDetail.jobCd) === 1"
+                                  <div v-if="getPmgr(usrDetail.jobCd) === 1"
                                     class="selector-wrap"
                                   >
                                     <div class="img-box">
@@ -1858,19 +1827,13 @@
                                         alt="이미지"
                                         class="on"
                                       />
-                                      <img
-                                        src="/img/common/img_permission_item1_off.svg"
-                                        alt="이미지"
-                                        class="off"
-                                      />
                                     </div>
                                     <div class="info-box">
                                       <div class="main-box">병상요청그룹</div>
                                       <div class="sub-box">보건소, 병상배정반, 의료진</div>
                                     </div>
                                   </div>
-                                  <div
-                                    v-show="getPmgr(usrDetail.jobCd) === 2"
+                                  <div  v-show="getPmgr(usrDetail.jobCd) === 2"
                                     class="selector-wrap"
                                   >
                                     <div class="img-box">
@@ -1879,19 +1842,13 @@
                                         alt="이미지"
                                         class="on"
                                       />
-                                      <img
-                                        src="/img/common/img_permission_item2_off.svg"
-                                        alt="이미지"
-                                        class="off"
-                                      />
                                     </div>
                                     <div class="info-box">
                                       <div class="main-box">병상승인그룹</div>
                                       <div class="sub-box">보건소, 병상배정반, 의료진</div>
                                     </div>
                                   </div>
-                                  <div
-                                    v-show="getPmgr(usrDetail.jobCd) === 3"
+                                  <div v-show="getPmgr(usrDetail.jobCd) === 3"
                                     class="selector-wrap"
                                   >
                                     <div class="img-box">
@@ -1900,19 +1857,13 @@
                                         alt="이미지"
                                         class="on"
                                       />
-                                      <img
-                                        src="/img/common/img_permission_item3_off.svg"
-                                        alt="이미지"
-                                        class="off"
-                                      />
                                     </div>
                                     <div class="info-box">
                                       <div class="main-box">병상배정그룹</div>
                                       <div class="sub-box">보건소, 병상배정반, 의료진</div>
                                     </div>
                                   </div>
-                                  <div
-                                    v-show="getPmgr(usrDetail.jobCd) === 4"
+                                  <div v-show="getPmgr(usrDetail.jobCd) === 4"
                                     class="selector-wrap"
                                   >
                                     <div class="img-box">
@@ -1920,11 +1871,6 @@
                                         src="/img/common/img_permission_item4.svg"
                                         alt="이미지"
                                         class="on"
-                                      />
-                                      <img
-                                        src="/img/common/img_permission_item4_off.svg"
-                                        alt="이미지"
-                                        class="off"
                                       />
                                     </div>
                                     <div class="info-box">
@@ -1937,7 +1883,7 @@
                             </div>
                           </td>
                           <th>세부권한</th>
-                          <td>일반</td>
+                          <td>{{usrDetail.authCd}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1963,15 +1909,15 @@
                       <tbody>
                         <tr>
                           <th>주 담당지역</th>
-                          <td>대구광역시 전체</td>
+                          <td>{{getDutyDstrCd(usrDetail.dutyDstr1Cd,usrDetail.dutyDstr2Cd)}}</td>
 
                           <th>소속기관</th>
-                          <td>칠곡경북대학교병원</td>
+                          <td>{{usrDetail.instNm}}</td>
                         </tr>
 
                         <tr>
                           <th>담당환자 유형</th>
-                          <td colspan="3">#투석, #임산부, #신생아</td>
+                          <td colspan="3">{{getPtType(usrDetail.ptTypeCd)}}</td>
                         </tr>
 
                         <tr>
@@ -2012,17 +1958,17 @@
                       <tbody>
                         <tr>
                           <th>사용자 상태</th>
-                          <td>활성</td>
+                          <td>{{ usrDetail.userStatCd }}</td>
 
                           <th>등록일 / 최근접속일</th>
-                          <td>2023-02-15 / 2023-03-11</td>
+                          <td>{{ getDt(usrDetail.rgstDttm) }} / 2023-03-11</td>
                         </tr>
 
                         <tr>
                           <th>승인(초대) 일자</th>
-                          <td>2023.02.15</td>
+                          <td>{{ usrDetail.aprvDttm === null ? '-':getDt(usrDetail.aprvDttm) }}</td>
 
-                          <th>승인(초대) 일자</th>
+                          <th>승인(초대)자</th>
                           <td>정현오/서울특별시/라임헬스케어/수석</td>
                         </tr>
                         <tr>
@@ -2551,7 +2497,7 @@
 <script>
 import { mapState } from 'vuex'
 import { ref } from 'vue'
-import { getAuthCd, getGugun, getSido, setSearchStr } from '@/util/ui'
+import { getAuthCd, getDt, getGugun, getPtType, getSido, setSearchStr, toggleCheckbox } from '@/util/ui'
 export default {
   components: {},
   computed: {
@@ -2567,6 +2513,7 @@ export default {
   },
   data() {
     return {
+      isDetail:false,
       search: {
         dstrCd1: null,
         dstrCd2: null,
@@ -2606,7 +2553,6 @@ export default {
     const isWithdraw = ref(false)
     const isAlertWd = ref(false)
     const isAdd = ref(false)
-    const isDetail = ref(true)
     const detail1 = ref(true)
     const detail2 = ref(false)
     const alertOpen = function (msg, idx) {
@@ -2620,10 +2566,8 @@ export default {
     const toggleModal = function (num) {
       if (num === 0) {
         console.log(num)
-      } else if (num === 1) {
-        isDetail.value = !isDetail.value
-      } else if (num === 2) {
-        isDetail.value = false
+      }  else if (num === 2) {
+        this.isDetail = false
         isWithdraw.value = !isWithdraw.value
       } else if (num === 3) {
         this.msgUsr = '탈퇴 후 동일한 ID를 이용한\n재가입은 불가능 합니다.\n정말 탈퇴하시겠습니까?'
@@ -2647,7 +2591,6 @@ export default {
       isWithdraw,
       isAlertWd,
       isAdd,
-      isDetail,
       detail1,
       detail2,
       alertOpen,
@@ -2656,10 +2599,25 @@ export default {
     }
   },
   methods: {
+    getDt,
+    getPtType,
+    toggleCheckbox,
     getGugun,
     getSido,
     updateCharacterCount() {
       this.characterCount = this.content.length
+    },
+    async openUsrDetail(data){
+      console.log('실행')
+      await this.$store.dispatch('admin/getUserInfo',data.userId)
+      this.isDetail = true
+      this.toggleModal(1)
+    },
+    closeModal() {
+      console.log('실행')
+      this.isDetail = false
+      this.detail1 = true
+      this.detail2 = false
     },
     checkInfo() {
       console.log(this.$store.state.userList)
@@ -2678,9 +2636,9 @@ export default {
         dstrCd2: this.parseIntData(this.search.dstrCd2),
         userNm: this.search.kwd,
         telno: this.search.kwd,
-        instTypeCd: this.getUndrDses(this.search.instTypeCd),
-        ptTypeCd: this.getUndrDses(this.search.ptTypeCd),
-        statClasNm: this.getUndrDses(this.search.statClasNm)
+        instTypeCd: this.setSearchStr(this.search.instTypeCd),
+        ptTypeCd: this.setSearchStr(this.search.ptTypeCd),
+        statClasNm: this.setSearchStr(this.search.statClasNm)
       }
       console.log(data)
       this.$store.dispatch('admin/getUserList',data)
@@ -2722,7 +2680,9 @@ export default {
       return `${num1}-${num2}-${num3}`
     },
     getGndr(str) {
-      if (str === 'M') {
+      if(str === null){
+        return '-'
+      }else if (str === 'M') {
         return '남'
       } else return '여'
     },
@@ -2834,7 +2794,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-.modal {
-  --bs-modal-width: 98%;
+.modal.show {
+    background-color: rgba(0, 0, 0, 0.4);
+    display: block;
+}
+.modal-backdrop .fade {
+    opacity: 0.4 !important;
+    display: block !important;
+}
+.modal-dialog {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.popup {
+    display: block;
 }
 </style>
