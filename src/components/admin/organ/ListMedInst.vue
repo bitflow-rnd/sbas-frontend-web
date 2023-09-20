@@ -555,112 +555,94 @@
                         {{ item.dutyTel1 }} <br>/ {{ item.dutyTel3 }}
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
-                        ></i>
+                        {{ item.npidIcu }}
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
-                        ></i>
+                        {{ item.emrgncyNrmlIsltnBed }}
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
-                        ></i>
+                        {{ item.emrgncyNrmlBed }}
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
-                        ></i>
+                        {{ item.ngtvIsltnChild }}
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
-                        ></i>
+                        {{ item.nrmlIsltnChild }}
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
-                        ></i>
+                        {{ item.gnbdIcu }}
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
-                        ></i>
+                        {{ item.gnbdSvrt }}
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
-                        ></i>
+                        {{ item.gnbdSmsv }}
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
-                        ></i>
+                        {{ item.gnbdModr }}
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
+                        <i v-if="item.ventilator === 'Y'"
+                           class='fa-regular fa-circle-check'
+                           style='color: #74afeb; font-size: 20px'
                         ></i>
+                        <i v-else-if="item.ventilator === 'N'">-</i>
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
+                        <i v-if="item.ventilatorPreemie === 'Y'"
+                           class='fa-regular fa-circle-check'
+                           style='color: #74afeb; font-size: 20px'
                         ></i>
+                        <i v-else-if="item.ventilatorPreemie === 'N'">-</i>
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
+                        <i v-if="item.incubator === 'Y'"
+                           class='fa-regular fa-circle-check'
+                           style='color: #74afeb; font-size: 20px'
                         ></i>
+                        <i v-else-if="item.incubator === 'N'">-</i>
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
+                        <i v-if="item.ecmo === 'Y'"
+                           class='fa-regular fa-circle-check'
+                           style='color: #74afeb; font-size: 20px'
                         ></i>
+                        <i v-else-if="item.ecmo === 'N'">-</i>
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
+                        <i v-if="item.highPressureOxygen === 'Y'"
+                           class='fa-regular fa-circle-check'
+                           style='color: #74afeb; font-size: 20px'
                         ></i>
+                        <i v-else-if="item.highPressureOxygen === 'N'">-</i>
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
+                        <i v-if="item.ct === 'Y'"
+                           class='fa-regular fa-circle-check'
+                           style='color: #74afeb; font-size: 20px'
                         ></i>
+                        <i v-else-if="item.ct === 'N'">-</i>
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
+                        <i v-if="item.mri === 'Y'"
+                           class='fa-regular fa-circle-check'
+                           style='color: #74afeb; font-size: 20px'
                         ></i>
+                        <i v-else-if="item.mri === 'N'">-</i>
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
+                        <i v-if="item.bloodVesselImaging === 'Y'"
+                           class='fa-regular fa-circle-check'
+                           style='color: #74afeb; font-size: 20px'
                         ></i>
+                        <i v-else-if="item.bloodVesselImaging === 'N'">-</i>
                       </td>
                       <td>
-                        <i
-                            class="fa-regular fa-circle-check"
-                            style="color: #74afeb; font-size: 20px"
+                        <i v-if="item.bodyTemperatureControl === 'Y'"
+                           class='fa-regular fa-circle-check'
+                           style='color: #74afeb; font-size: 20px'
                         ></i>
+                        <i v-else-if="item.bodyTemperatureControl === 'N'">-</i>
                       </td>
                       <td>12</td>
                       <td>
