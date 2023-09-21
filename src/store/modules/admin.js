@@ -55,6 +55,9 @@ export default {
         },
         setFMDetail(state,payload){
             state.fmDetail = payload;
+        },
+        setOrganMedi(state,payload){
+            state.organMedi = payload;
         }
     },
     actions: {
@@ -85,6 +88,46 @@ export default {
             }).catch((e=>{
                 console.log(e)
             }))
+        },
+       /* getOrganMedi(comment,data){
+            return new Promise((resolve,reject) =>{
+                //const token = localStorage.getItem('userToken')
+                //console.log(token)
+                const url = `${API_PROD}}/api/v1/public/organ/codes`
+                axios({
+                    method : "get",
+                    url    : url,
+                    params : data
+                })
+                  .then(response =>{
+                      //console.log(response,"보건소목록")
+                      if(response.data?.code==='00') {
+                          comment.commit('setOrganMedi',response.data?.result.items)
+                          //resolve(response.data?.result.items)
+                      } else{
+                          reject('에러')
+                      }
+                  })
+                  .catch(e=>{
+                      console.log(e)
+                      reject(e)
+                  })
+            })
+        },*/
+        getOrganMedi(comment,data){
+            //const token = localStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/public/organ/codes`
+            axios({
+                method:"get",
+                url:url,
+                params: data,
+            }).then(response=>{
+                  if(response.data?.code==='00') {
+                      comment.commit('setOrganMedi', response.data?.result.items)
+                  }
+            }).catch(e =>{
+                console.log(e)
+            })
         },
         /****************user*****************/
         getUserInfo(comment,data){

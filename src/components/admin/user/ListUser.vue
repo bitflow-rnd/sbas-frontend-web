@@ -1909,7 +1909,7 @@
                       <tbody>
                         <tr>
                           <th>주 담당지역</th>
-                          <td>{{getDutyDstrCd(usrDetail.dutyDstr1Cd,usrDetail.dutyDstr2Cd)}}</td>
+                          <td>{{'-'}}</td>
 
                           <th>소속기관</th>
                           <td>{{usrDetail.instNm}}</td>
@@ -2644,7 +2644,9 @@ export default {
       this.$store.dispatch('admin/getUserList',data)
     },
     getDutyDstrCd(code) {
-      this.$store.dispatch('admin/getDutyDstr', code)
+      if(code !== undefined){
+        this.$store.dispatch('admin/getDutyDstr', code)
+      }
     },
     getInstNm(code) {
       if (code === 'ORGN0001') {
