@@ -1059,14 +1059,14 @@
                                 <div class="sbox" style="width: 170px">
                                   <select v-model="medinstInfo.dstrCd1" @change="getMedInst" :disabled='dsInfo.rcptPhc===1'>
                                       <option value=''>지역 선택</option>
-                                    <option value="27">대구광역시</option>
+                                      <option v-for='(item,i) in cmSido' :key='i' :value='item.cdId'>{{item.cdNm}}</option>
                                   </select>
                                 </div>
                                 <div class="sbox ms-3" style="width: 170px">
                                   <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstrCd1===''">
                                     <option value='0'>보건소 선택</option>
-                                    <option v-for="(item,i) in medinstList.items" :key="i"
-                                            :value='item.dutyName'>{{ item.dutyName }}</option>
+                                    <option v-for="(item,i) in organMedi" :key="i"
+                                            :value='item.instNm'>{{ item.instNm }}</option>
                                     <option value='1'>직접입력</option>
                                   </select>
                                 </div>
@@ -3607,7 +3607,7 @@
 
                                 <tr v-if="transCondition2">
                                   <th>병실</th>
-                                  <td>7402호 수정</td>
+                                  <td>{{ transInfo.inhpAsgnYn ==='Y'?'병실번호수정':'-' }}</td>
                                   <th>원내 배정 여부</th>
                                   <td>{{ transInfo.inhpAsgnYn ==='Y'?'원내배정':'전원요청' }}</td>
                                 </tr>
@@ -3655,7 +3655,6 @@
   >
     <!--begin::Modal dialog-->
     <div
-      v-if="ptDetail.bedStatCd === 'BAST0005'"
       class="modal-dialog mw-1500px modal-dialog-centered"
     >
       <!--begin::Modal content-->
@@ -3776,14 +3775,12 @@
                       <th>#1</th>
                       <td colspan="3">
                         <div class="item-cell-box">
-                          <!--todo: @change 수정 v-for랑 같이 작동 안 됨-->
                           <div v-if="firemenList.items" class="sbox" style="width: 128px">
-                            <select v-model="trsfInfo.crew1Id">
+                            <select v-model="trsfInfo.crew1Id" @change="fillFiremen($event, 1)">
                               <option value="구급대원">구급대원 선택</option>
                               <option
                                 v-for="(item, i) in firemenList.items"
                                 :key="i"
-                                @change="fillFiremen(item, 1)"
                               >
                                 {{ item.crewNm }}
                               </option>
@@ -3799,7 +3796,7 @@
                             />
                             <input
                               v-else
-                              v-model="trsfInfo.crew1Pstn"
+                              :value="trsfInfo.crew1Pstn"
                               placeholder="직급 입력"
                               readonly
                             />
@@ -3812,7 +3809,7 @@
                             />
                             <input
                               v-else
-                              v-model="trsfInfo.crew1Nm"
+                              :value="trsfInfo.crew1Nm"
                               placeholder=" 이름 입력"
                               readonly
                             />
@@ -3825,7 +3822,7 @@
                             />
                             <input
                               v-else
-                              v-model="trsfInfo.crew1Telno"
+                              :value="trsfInfo.crew1Telno"
                               placeholder=" 전화번호 입력"
                               readonly
                             />
@@ -4039,7 +4036,6 @@
               </div>
             </div>
           </article>
-          <!--todo: items null값에서 읽어온다고 오류나는데 . .. 이유를 모르겠음 ㅜㅜ vuex 확인 필요-->
           <article class="modal-menu-layout1 pt-10">
             <div class="modal-menu-list">
               <a @click="alertOpen(11)" class="modal-menu-btn menu-primary">이송처리 완료</a>
@@ -4929,10 +4925,9 @@ export default {
       popup: 100 /* 팝업창 */,
       alertIdx: 100 /* alert창 확인버튼 */,
       rptYn: false /* 역조서 유무 */,
-        medinstInfo:{
-          dstrCd1: '',
-          dutyName:'',
-        },
+      medinstInfo:{
+        dstrCd1: '',
+      },
       newPt: {
         ptNm: '',
         rrno1:'',
@@ -5045,7 +5040,7 @@ export default {
     ]),
     ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip','startLoc','isSpinner']),
     ...mapState('user', ['userInfo', 'cmSido']),
-    ...mapState('admin', ['firestatnList', 'firemenList','medinstList']),
+    ...mapState('admin', ['firestatnList', 'firemenList','medinstList','organMedi']),
 
     startIndex() {
       return (this.page - 1) * this.displayRowsCount;
@@ -5160,9 +5155,9 @@ export default {
       // this.$store.dispatch('bedasgn/getBdList',data)
     },
       getMedInst(){
-        let data = this.medinstInfo
-          data['dutyDivNams'] = '보건소'
-          this.$store.dispatch('admin/getMedinst',data)
+          let data = this.medinstInfo
+          data['instTypeCd'] = 'ORGN0003'
+          this.$store.dispatch('admin/getOrganMedi',data)
       },
     initNaverMap() {
         // 네이버 지도 API 로드
@@ -5663,11 +5658,12 @@ export default {
       this.$store.dispatch('admin/getFiremen', data)
     },
     fillFiremen(data, idx) {
-      const crewInfo = this.trsfInfo[`crew${idx}`]
-      crewInfo.crewId = data.crewId
-      crewInfo.pstn = data.pstn
-      crewInfo.crewNm = data.crewNm
-      crewInfo.telno = data.telno
+      console.log('실행?' + data)
+      this.trsfInfo[`crew${idx}Id`] = data.crewId
+      this.trsfInfo[`crew${idx}Pstn`] = data.pstn
+      this.trsfInfo[`crew${idx}Nm`] = data.crewNm
+      this.trsfInfo[`crew${idx}Telno`] = data.telno
+      console.log(this.trsfInfo)
     },
     getChrgTL(data, idx) {
       if (data.length !== 0 ) {
