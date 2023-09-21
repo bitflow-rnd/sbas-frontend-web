@@ -108,7 +108,9 @@ section.cntc-message-board .board-head-box .head-mid-box .input-group-box .input
   color: rgba(105, 105, 113, 0.8);
 }
 section.cntc-message-board .board-body-box {
-  padding-bottom: 48px;
+  padding-bottom: 300px;
+  height: 100%;
+  overflow: auto;
 }
 .board-body-box .chat-list-wrap {
   border-top: 1px solid #DADBDC;

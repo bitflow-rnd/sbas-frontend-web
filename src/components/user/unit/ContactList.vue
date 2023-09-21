@@ -17,7 +17,7 @@
 
         <div class="list-body-box" v-if="model.usersList">
           <div
-            v-for="(user, idx) in model.usersList.items"
+            v-for="(user, idx) in model.usersList.items?.filter((item) => item['userStatCd'] === 'URST0001')"
             :key="idx"
             role="button"
             class="item-box"
@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <div class="list-group-box d-none">
+      <div class="list-group-box">
         <div class="list-head-box" :class="{ hide: listBoxesHide['request'] }">
           <a
             href="javascript:void(0)"
@@ -56,6 +56,34 @@
             <i class="fa-solid fa-angle-down" style="color: #9fa1ab"></i>
             <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
           </a>
+        </div>
+        <div class="list-body-box" v-if="model.usersList">
+          <div
+              v-for="(user, idx) in model.usersList.items?.filter((item) => item['userStatCd'] === 'URST0002')"
+              :key="idx"
+              role="button"
+              class="item-box"
+              @click="onSelectUser(user)"
+              :style="user === model.selectedUser ? { 'background-color': '#74AFEB22' } : {}"
+          >
+            <div class="item-info-box">
+              <div class="profile-box">
+                <img src="/img/common/img_profile_default.svg" alt="이미지" />
+              </div>
+
+              <div class="info-box">
+                <div class="subject-box">
+                  {{ user['userNm'] }}
+                  <div class="label-txt text-primary">{{ user['jobCd'] }}</div>
+                </div>
+                <div class="con-box">
+                  {{ `${user['ocpCd']} / ${user['dutyDstr1Cd']} / ${user['instNm']}` }}
+                </div>
+              </div>
+            </div>
+
+            <div class="item-option-box"></div>
+          </div>
         </div>
         <div class="list-head-box" :class="{ hide: listBoxesHide['favourite'] }">
           <a
@@ -100,12 +128,12 @@ import { defineEmits, onMounted, reactive } from 'vue'
 
 const store = useStore()
 const emit = defineEmits('onUserSelected')
-let listBoxesHide = {
+let listBoxesHide = reactive({
   request: false,
   favourite: false,
   organization: false,
   mayKnow: false
-}
+})
 let model = reactive({
   usersList: [],
   selectedUser: null
