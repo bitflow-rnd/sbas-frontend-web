@@ -202,8 +202,15 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input v-model='search.ptTypeCd' value='PTTP0003' type="checkbox" name="type2" /><i></i>
-                                  <span class="txt">투석</span>
+                                  <input v-model='search.ptTypeCd' value='PTTP0001' type="checkbox" name="type2" /><i></i>
+                                  <span class="txt">일반</span>
+                                </label>
+                              </div>
+
+                              <div class="cbox ms-4">
+                                <label>
+                                  <input v-model='search.ptTypeCd' value='PTTP0002' type="checkbox" name="type2" /><i></i>
+                                  <span class="txt">소아</span>
                                 </label>
                               </div>
 
@@ -216,15 +223,8 @@
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.ptTypeCd' value='PTTP0008' type="checkbox" name="type2" /><i></i>
-                                  <span class="txt">신생아</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox ms-4">
-                                <label>
-                                  <input v-model='search.ptTypeCd' value='PTTP0002' type="checkbox" name="type2" /><i></i>
-                                  <span class="txt">소아</span>
+                                  <input v-model='search.ptTypeCd' value='PTTP0003' type="checkbox" name="type2" /><i></i>
+                                  <span class="txt">투석</span>
                                 </label>
                               </div>
 
@@ -246,6 +246,13 @@
                                 <label>
                                   <input v-model='search.ptTypeCd' value='PTTP0007' type="checkbox" name="type2" /><i></i>
                                   <span class="txt">적극적 치료요청</span>
+                                </label>
+                              </div>
+
+                              <div class="cbox ms-4">
+                                <label>
+                                  <input v-model='search.ptTypeCd' value='PTTP0008' type="checkbox" name="type2" /><i></i>
+                                  <span class="txt">신생아</span>
                                 </label>
                               </div>
                             </div>
@@ -1425,6 +1432,18 @@
                                   <input
                                     type="checkbox"
                                     name="type2_1"
+                                    value="PTTP0001"
+                                    v-model="svInfo.ptTypeCd"
+                                  /><i></i>
+                                  <span class="txt">일반</span>
+                                </label>
+                              </div>
+
+                              <div class="cbox ms-4">
+                                <label>
+                                  <input
+                                    type="checkbox"
+                                    name="type2_2"
                                     value="PTTP0003"
                                     v-model="svInfo.ptTypeCd"
                                   /><i></i>
@@ -5246,6 +5265,7 @@ export default {
           this.undrDsesCdArr=[]
           this.setNull()
           /*신규병상요청 끝*/
+          this.getBdList()
       } else if (idx === 3) {
 
         this.errMsg = '환자 정보가\n등록되었습니다.'
