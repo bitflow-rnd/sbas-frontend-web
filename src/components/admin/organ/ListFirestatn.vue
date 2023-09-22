@@ -132,18 +132,19 @@
                           <th>검색조건</th>
                           <td>
                             <div class="item-cell-box">
-                              <div class="sbox w-175px" @click="getSido()">
-                                <select v-model="search.dstrCd1" @change="getGugun(search.dstrCd1)">
-                                  <option value="null">시/도 전체</option>
-                                  <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
+                              <div class="sbox w-175px">
+                                <select v-model='fsFilter.dstrCd1' @change='getGugun(fsFilter.dstrCd1)'>
+                                  <option value=''>시/도 전체</option>
+                                  <option v-for='(item, i) in cmSido' :key='i' :value='item.cdId'>
                                     {{ item.cdNm }}
                                   </option>
                                 </select>
                               </div>
                               <div class="sbox w-175px ms-2">
-                                <select v-model="search.dstrCd2">
-                                  <option value="null">시/군/구 전체</option>
-                                  <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
+                                <select v-model='fsFilter.dstrCd2' :disabled="fsFilter.dstrCd1===''">
+
+                                  <option value=''>시/군/구 전체</option>
+                                  <option v-for='(item, i) in cmGugun' :key='i' :value='item.cdId'>
                                     {{ item.cdNm }}
                                   </option>
                                 </select>
@@ -151,13 +152,13 @@
 
                               <div class="tbox full with-btn ms-2" style="max-width: 300px">
                                 <input
-                                  v-model="inputValue"
-                                  @input="handleChange"
+                                  v-model="fsFilter.kwd"
                                   type="text"
                                   placeholder="구급대명 또는 ID 입력"
+                                  @keyup.enter='filterFs'
                                 />
 
-                                <router-link to="" @click="getFireStatn" class="input-btn">
+                                <router-link to="" @click='filterFs' class="input-btn">
                                   <i class="fa-solid fa-magnifying-glass"></i>
                                 </router-link>
                               </div>
@@ -178,10 +179,10 @@
               <!--begin::Table-->
               <h5>
                 조회결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{
-                  firestatnList.length
+                  firestatnList.count
                 }}</span>
               </h5>
-              <article v-if="firestatnList.length === 0" class="table-list-layout1">
+              <article v-if="firestatnList.count === 0" class="table-list-layout1">
                 <div class="table-body-box">
                   <div class="table-nodata py-40">
                     <div class="img-box">
@@ -193,7 +194,7 @@
                 </div>
               </article>
               <article
-                v-if="firestatnList.length !== 0 && fsDetail !== null"
+                v-if="firestatnList.count !== 0 && fsDetail !== null"
                 class="table-list-layout1"
               >
                 <div class="table-body-box">
@@ -230,16 +231,15 @@
                         <tr
                           :class="{ selected: fsDetail.instId === item.instId }"
                           @click="getFS(item)"
-                          v-for="(item, i) in firestatnList"
+                          v-for="(item, i) in firestatnList.items"
                           :key="i"
-                          v-show="i < 15"
                         >
                           <td>
                             <div class="cbox d-flex justify-content-center">
                               <label> <input type="checkbox" /><i></i> </label>
                             </div>
                           </td>
-                          <td>{{ i + 1 }}</td>
+                          <td>{{ firestatnList.count - i - startIndex }}</td>
                           <td>{{ item.dstrCd1 }}</td>
                           <td>{{ item.dstrCd2 }}</td>
                           <td>{{ item.instNm }}</td>
@@ -265,7 +265,12 @@
                 </div>
               </article>
 
-              <div class="row mt-10">
+              <data-pagination
+                @change="changePage"
+                :display-rows-count="displayRowsCount"
+                :data-length="firestatnList.length"
+              ></data-pagination>
+<!--              <div class="row mt-10">
                 <div
                   class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"
                 ></div>
@@ -331,7 +336,7 @@
                     </ul>
                   </div>
                 </div>
-              </div>
+              </div>-->
 
               <!--end::Table-->
             </div>
@@ -1453,9 +1458,10 @@
 import { reactive, ref } from 'vue'
 import { mapState } from 'vuex'
 import { getGugun, getSido, getTelno } from '@/util/ui'
+import DataPagination from '@/components/user/unit/DataPagination.vue'
 
 export default {
-  components: {},
+  components: { DataPagination },
   name: 'ListFirestatn',
   props: {
     msg: String
@@ -1467,12 +1473,13 @@ export default {
     return {
       content: '',
       characterCount: 0,
-      search: {
-        instId: null,
-        instNm: null,
-        dstrCd1: null,
-        dstrCd2: null,
-        chrgTelno: null
+      displayRowsCount: 15,
+      page: 1,
+      fsFilter: {
+        kwd:'',
+        dstrCd1: '',
+        dstrCd2: '',
+        chrgTelno: ''
       },
       fsForm: {
         dstrCd1: null,
@@ -1496,7 +1503,13 @@ export default {
       'firemenList',
       'fsDetail',
       'fmDetail'
-    ])
+    ]),
+    startIndex() {
+      return (this.page - 1) * this.displayRowsCount;
+    },
+    endIndex() {
+      return this.page * this.displayRowsCount;
+    },
   },
   setup() {
     const openModal = reactive([false, false, false, false, false, false])
@@ -1564,9 +1577,9 @@ export default {
     },
     handleChange() {
       if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(this.inputValue)) {
-        this.search.instNm = this.inputValue
+        this.fsFilter.instNm = this.inputValue
       } else {
-        this.search.instId = this.inputValue
+        this.fsFilter.instId = this.inputValue
       }
     },
     getFS(data) {
@@ -1574,17 +1587,24 @@ export default {
       this.$store.dispatch('admin/getFSDetail', request)
       this.$store.dispatch('admin/getFiremen', request)
     },
+    changePage(newPage) {
+      this.$store.dispatch('admin/getFireStatn', {
+        ...this.filterData,
+        page: newPage
+      });
+      this.page = newPage;
+    },
     onSubmitFS() {
       this.$store.dispatch('admin/regFS', this.fsForm)
       this.alertOpen('저장하였습니다', 0)
-      this.$store.dispatch('admin/getFireStatn', this.search)
+      this.$store.dispatch('admin/getFireStatn', this.fsFilter)
       this.toggleModal(0)
     },
     onEditFS() {
       console.log(this.fsDetail)
       this.$store.dispatch('admin/editFS', this.fsDetail)
       this.alertOpen('저장하였습니다', 1)
-      this.$store.dispatch('admin/getFireStatn', this.search)
+      this.$store.dispatch('admin/getFireStatn', this.fsFilter)
       this.toggleModal(1)
     },
     onSubmitFM(id) {
@@ -1592,7 +1612,7 @@ export default {
       this.fmForm.instId = id
       this.$store.dispatch('admin/regFM', this.fmForm)
       this.alertOpen('저장하였습니다', 2)
-      this.$store.dispatch('admin/getFireStatn', this.search)
+      this.$store.dispatch('admin/getFireStatn', this.fsFilter)
       this.fmForm = { rmk: '' }
       this.toggleModal(2)
     },
@@ -1605,7 +1625,21 @@ export default {
     },
     getFireStatn() {
       console.log(this.search)
-      this.$store.dispatch('admin/getFireStatn', this.search)
+      this.$store.dispatch('admin/getFireStatn', this.fsFilter)
+    },
+    filterFs(){
+      let params = {}
+      if(this.fsFilter.kwd){
+        if(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(this.fsFilter.kwd)){
+          params = {...params, instNm: this.fsFilter.kwd}
+        } else {
+          params = {...params, instId: this.fsFilter.kwd}
+        }
+      }
+      if(this.fsFilter.dstrCd1) params = {...params, dstrCd1: this.fsFilter.dstrCd1}
+      if(this.fsFilter.dstrCd2) params = {...params, dstrCd2: this.fsFilter.dstrCd2}
+
+      return params
     },
     mskData(idx, data) {
       if (idx === 0) {
@@ -1629,7 +1663,7 @@ export default {
         this.$store.dispatch('admin/delFM', fm)
       })
       this.alertOpen('삭제하였습니다', 5)
-      this.$store.dispatch('admin/getFireStatn', this.search)
+      this.$store.dispatch('admin/getFireStatn', this.fsFilter)
     },
     handleModal(idx, data) {
       if (idx === 0) {
