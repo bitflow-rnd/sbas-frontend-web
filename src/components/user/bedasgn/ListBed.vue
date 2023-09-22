@@ -209,49 +209,49 @@
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.ptTypeCd' value='PTTP0002' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0002' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">소아</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.ptTypeCd' value='PTTP0004' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0004' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">임산부</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.ptTypeCd' value='PTTP0003' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0003' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">투석</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.ptTypeCd' value='PTTP0006' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0006' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">인공호흡기</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.ptTypeCd' value='PTTP0005' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0005' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">수술</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.ptTypeCd' value='PTTP0007' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0007' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">적극적 치료요청</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.ptTypeCd' value='PTTP0008' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.ptTypeCd' value='PTTP0008' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">신생아</span>
                                 </label>
                               </div>
@@ -265,35 +265,35 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input v-model='search.svrtTypeCd' value='SVTP0006' type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0006' type="checkbox" name="type3" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">위중증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.svrtTypeCd' value='SVTP0005' type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0005' type="checkbox" name="type3" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">중증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.svrtTypeCd' value='SVTP0004' type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0004' type="checkbox" name="type3" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">준증증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.svrtTypeCd' value='SVTP0003' type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0003' type="checkbox" name="type3" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">중등증</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.svrtTypeCd' value='SVTP0002' type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0002' type="checkbox" name="type3" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">경증</span>
                                 </label>
                               </div>
@@ -301,7 +301,7 @@
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.svrtTypeCd' value='SVTP0001' type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.svrtTypeCd' value='SVTP0001' type="checkbox" name="type3" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">기타</span>
                                 </label>
                               </div>
@@ -317,42 +317,42 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input v-model='search.bedStatCd' value='BDTP0003'  type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.reqBedTypeCd' value='BDTP0003'  type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">읍압격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.bedStatCd' value='BDTP0002' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.reqBedTypeCd' value='BDTP0002' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">일반격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.bedStatCd' value='BDTP0006' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.reqBedTypeCd' value='BDTP0006' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">일반</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.bedStatCd' value='BDTP0005' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.reqBedTypeCd' value='BDTP0005' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">소아읍압격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.bedStatCd' value='BDTP0004' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.reqBedTypeCd' value='BDTP0004' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">소아일반격리</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.bedStatCd' value='BDTP0007' type="checkbox" name="type2" /><i></i>
+                                  <input v-model='search.reqBedTypeCd' value='BDTP0007' type="checkbox" name="type2" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">소아</span>
                                 </label>
                               </div>
@@ -366,14 +366,14 @@
                             <div class="item-cell-box">
                               <div class="cbox">
                                 <label>
-                                  <input v-model='search.gndr' value='여' type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.gndr' value='여' type="checkbox" name="type3" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">여자</span>
                                 </label>
                               </div>
 
                               <div class="cbox ms-4">
                                 <label>
-                                  <input v-model='search.gndr' value='남' type="checkbox" name="type3" /><i></i>
+                                  <input v-model='search.gndr' value='남' type="checkbox" name="type3" @change="searchBedAsgn" /><i></i>
                                   <span class="txt">남자</span>
                                 </label>
                               </div>
@@ -386,11 +386,11 @@
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div class="tbox w-50px me-2">
-                                <input v-model='search.toAge' type="text" class="px-2 text-center" placeholder="숫자" />
+                                <input v-model='search.toAge' type="text" class="px-2 text-center" placeholder="숫자" @input="searchBedAsgn" />
                               </div>
                               <span class="text-gray-600">이상 ~</span>
                               <div class="tbox w-50px mx-2">
-                                <input v-model='search.fromAge'  type="text" class="px-2 text-center" placeholder="숫자" />
+                                <input v-model='search.fromAge'  type="text" class="px-2 text-center" placeholder="숫자" @input="searchBedAsgn" />
                               </div>
                               <span class="text-gray-600">이하</span>
                             </div>
@@ -4907,7 +4907,7 @@ export default {
       search:{
         kwd:'',
         period: '',
-        bedStatCd:[],
+        reqBedTypeCd:[],
         ptTypeCd:[],
         svrtTypeCd:[],
         fromAge:null,
@@ -5040,7 +5040,7 @@ export default {
     ]),
     ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip','startLoc','isSpinner']),
     ...mapState('user', ['userInfo', 'cmSido']),
-    ...mapState('admin', ['firestatnList', 'firemenList','medinstList','organMedi']),
+    ...mapState('admin', ['firestatnListfirestatnList', 'firemenList','medinstList','organMedi']),
 
     startIndex() {
       return (this.page - 1) * this.displayRowsCount;
@@ -5056,12 +5056,10 @@ export default {
       if (this.search['period']) params = {...params, period: this.search['period']};
       if (this.search['fromAge']) params = {...params, fromAge: this.search['fromAge']};
       if (this.search['toAge']) params = {...params, toAge: this.search['toAge']};
-
-
-      //     gndr:this.getUndrDses(this.search.gndr),
-      //     bedStatCd: this.getUndrDses(this.search.bedStatCd),
-      //     ptTypeCd: this.getUndrDses(this.search.ptTypeCd),
-      //     svrtTypeCd: this.getUndrDses(this.search.svrtTypeCd)
+      if (this.search['ptTypeCd'].length) params = {...params, ptTypeCd: this.search['ptTypeCd'].join(',')};
+      if (this.search['svrtTypeCd'].length) params = {...params, svrtTypeCd: this.search['svrtTypeCd'].join(',')};
+      if (this.search['reqBedTypeCd'].length) params = {...params, reqBedTypeCd: this.search['reqBedTypeCd'].join(',')};
+      if (this.search['gndr'].length) params = {...params, gndr: this.search['gndr'].join(',')};
       return params
     },
     sortedBdList() {
@@ -5137,22 +5135,6 @@ export default {
     searchBedAsgn(){
       this.$store.dispatch('bedasgn/getBdList', this.filterData);
       this.page = 1;
-      //
-      // const data = {
-      //   ptNm:this.search.kwd,
-      //   rrno1:this.search.kwd,
-      //   mpno:this.search.kwd,
-      //   period:this.search.period,
-      //   fromAge:this.parseIntAge(this.search.fromAge),
-      //   toAge:this.parseIntAge(this.search.toAge),
-      //   gndr:this.getUndrDses(this.search.gndr),
-      //   bedStatCd: this.getUndrDses(this.search.bedStatCd),
-      //   ptTypeCd: this.getUndrDses(this.search.ptTypeCd),
-      //   svrtTypeCd: this.getUndrDses(this.search.svrtTypeCd),
-      //   page:this.search.page
-      // }
-      // console.log(data)
-      // this.$store.dispatch('bedasgn/getBdList',data)
     },
       getMedInst(){
           let data = this.medinstInfo
