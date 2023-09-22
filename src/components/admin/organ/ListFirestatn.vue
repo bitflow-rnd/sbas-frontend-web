@@ -132,8 +132,8 @@
                           <th>검색조건</th>
                           <td>
                             <div class="item-cell-box">
-                              <div class="sbox w-175px">
-                                <select v-model='fsFilter.dstrCd1' @change='getGugun(fsFilter.dstrCd1)'>
+                              <div class="sbox w-175px" @click='getSido()'>
+                                <select v-model='filterFs.dstrCd1'  @change='getGugun(filterFs.dstrCd1)'>
                                   <option value=''>시/도 전체</option>
                                   <option v-for='(item, i) in cmSido' :key='i' :value='item.cdId'>
                                     {{ item.cdNm }}
@@ -141,7 +141,7 @@
                                 </select>
                               </div>
                               <div class="sbox w-175px ms-2">
-                                <select v-model='fsFilter.dstrCd2' :disabled="fsFilter.dstrCd1===''">
+                                <select v-model='filterFs.dstrCd2' @change='getFireStatn' :disabled="filterFs.dstrCd1===''">
 
                                   <option value=''>시/군/구 전체</option>
                                   <option v-for='(item, i) in cmGugun' :key='i' :value='item.cdId'>
@@ -152,13 +152,13 @@
 
                               <div class="tbox full with-btn ms-2" style="max-width: 300px">
                                 <input
-                                  v-model="fsFilter.kwd"
+                                  v-model="filterFs.kwd"
                                   type="text"
                                   placeholder="구급대명 또는 ID 입력"
-                                  @keyup.enter='filterFs'
+                                  @keyup.enter='getFireStatn'
                                 />
 
-                                <router-link to="" @click='filterFs' class="input-btn">
+                                <router-link to='' @click='getFireStatn' class="input-btn">
                                   <i class="fa-solid fa-magnifying-glass"></i>
                                 </router-link>
                               </div>
@@ -178,11 +178,10 @@
             <div v-if="firestatnList !== undefined && firestatnList !== null" class="card-body p-8">
               <!--begin::Table-->
               <h5>
-                조회결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{
-                  firestatnList.count
-                }}</span>
+                조회결과<span class="position-absolute translate-middle rounded-pill bg-primary">
+                {{firestatnList.length===0?'0':firestatnList.count}}</span>
               </h5>
-              <article v-if="firestatnList.count === 0" class="table-list-layout1">
+              <article v-if="firestatnList.length === 0" class="table-list-layout1">
                 <div class="table-body-box">
                   <div class="table-nodata py-40">
                     <div class="img-box">
@@ -230,11 +229,11 @@
                       <tbody>
                         <tr
                           :class="{ selected: fsDetail.instId === item.instId }"
-                          @click="getFS(item)"
+                          @click="getFs(item)"
                           v-for="(item, i) in firestatnList.items"
                           :key="i"
                         >
-                          <td>
+                          <td @click='toggleCheckbox()'>
                             <div class="cbox d-flex justify-content-center">
                               <label> <input type="checkbox" /><i></i> </label>
                             </div>
@@ -266,77 +265,10 @@
               </article>
 
               <data-pagination
-                @change="changePage"
-                :display-rows-count="displayRowsCount"
-                :data-length="firestatnList.length"
+                @change="changePageFs"
+                :display-rows-count="displayRowsCountFs"
+                :data-length="firestatnList.count"
               ></data-pagination>
-<!--              <div class="row mt-10">
-                <div
-                  class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"
-                ></div>
-                <div class="col-12 d-flex align-items-center justify-content-center">
-                  <div
-                    class="dataTables_paginate paging_simple_numbers"
-                    id="kt_table_users_paginate"
-                  >
-                    <ul class="pagination">
-                      <li
-                        class="paginate_button page-item previous disabled"
-                        id="kt_table_users_previous"
-                      >
-                        <a
-                          href="#"
-                          aria-controls="kt_table_users"
-                          data-dt-idx="0"
-                          tabindex="0"
-                          class="page-link"
-                          ><i class="previous"></i
-                        ></a>
-                      </li>
-                      <li class="paginate_button page-item active">
-                        <a
-                          href="#"
-                          aria-controls="kt_table_users"
-                          data-dt-idx="1"
-                          tabindex="0"
-                          class="page-link"
-                          >1</a
-                        >
-                      </li>
-                      <li class="paginate_button page-item">
-                        <a
-                          href="#"
-                          aria-controls="kt_table_users"
-                          data-dt-idx="2"
-                          tabindex="0"
-                          class="page-link"
-                          >2</a
-                        >
-                      </li>
-                      <li class="paginate_button page-item">
-                        <a
-                          href="#"
-                          aria-controls="kt_table_users"
-                          data-dt-idx="3"
-                          tabindex="0"
-                          class="page-link"
-                          >3</a
-                        >
-                      </li>
-                      <li class="paginate_button page-item next" id="kt_table_users_next">
-                        <a
-                          href="#"
-                          aria-controls="kt_table_users"
-                          data-dt-idx="4"
-                          tabindex="0"
-                          class="page-link"
-                          ><i class="next"></i
-                        ></a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>-->
 
               <!--end::Table-->
             </div>
@@ -347,7 +279,7 @@
             <div class="card-option p-8">
               <div class="d-flex align-items-center gap-2 gap-lg-3 justify-content-end">
                 <!--                                <a @click="delFM" href="#" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users"><i class="fa-regular fa-trash-can"></i> 삭제</a>-->
-                <a @click="delFM" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7"
+                <a @click="delFm" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7"
                   ><i class="fa-regular fa-trash-can"></i> 삭제</a
                 >
                 <a
@@ -364,8 +296,8 @@
               <div class="card-header border-0 p-0 pb-6 d-flex">
                 <h5 class="mt-2 flex-grow-1">구급대원 목록</h5>
                 <div class="tbox w-300px with-btn">
-                  <input type="text" placeholder="대원이름 또는 ID 입력" />
-                  <a href="javascript:void(0)" class="input-btn">
+                  <input v-model='filterFm.kwd' type="text" placeholder="대원이름 또는 ID 입력" @keyup.enter='getFiremen'  />
+                  <a @click='getFiremen' class="input-btn">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </a>
                 </div>
@@ -374,18 +306,18 @@
               <!--begin::Card body-->
               <div class="card-body p-0">
                 <!--begin::Table-->
-                <h5 v-if="firemenList">
+                <h5 v-if="firemenList.length!==0">
                   조회결과<span
                     class="position-absolute translate-middle rounded-pill bg-primary"
                     >{{ firemenList.count }}</span
                   >
                 </h5>
-                <h5 v-if="!firemenList">
+                <h5 v-if="firemenList.length===0">
                   조회결과<span class="position-absolute translate-middle rounded-pill bg-primary"
                     >0</span
                   >
                 </h5>
-                <article v-if="!firemenList" class="table-list-layout1">
+                <article v-if="firemenList.length===0" class="table-list-layout1">
                   <div class="table-body-box">
                     <div class="table-nodata py-40">
                       <div class="img-box">
@@ -396,7 +328,7 @@
                     </div>
                   </div>
                 </article>
-                <article v-if="firemenList" class="table-list-layout1">
+                <article v-if="firemenList.length!==0" class="table-list-layout1">
                   <div class="table-body-box">
                     <div class="table-box with-scroll small">
                       <table>
@@ -461,67 +393,11 @@
                   </div>
                 </article>
 
-                <div class="row mt-10">
-                  <div
-                    class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"
-                  ></div>
-                  <div class="col-12 d-flex align-items-center justify-content-center">
-                    <div class="dataTables_paginate paging_simple_numbers" id="">
-                      <ul class="pagination">
-                        <li class="paginate_button page-item previous disabled" id="">
-                          <a
-                            href="#"
-                            aria-controls="kt_table_users"
-                            data-dt-idx="0"
-                            tabindex="0"
-                            class="page-link"
-                            ><i class="previous"></i
-                          ></a>
-                        </li>
-                        <li class="paginate_button page-item active">
-                          <a
-                            href="#"
-                            aria-controls="kt_table_users"
-                            data-dt-idx="1"
-                            tabindex="0"
-                            class="page-link"
-                            >1</a
-                          >
-                        </li>
-                        <li class="paginate_button page-item">
-                          <a
-                            href="#"
-                            aria-controls="kt_table_users"
-                            data-dt-idx="2"
-                            tabindex="0"
-                            class="page-link"
-                            >2</a
-                          >
-                        </li>
-                        <li class="paginate_button page-item">
-                          <a
-                            href="#"
-                            aria-controls="kt_table_users"
-                            data-dt-idx="3"
-                            tabindex="0"
-                            class="page-link"
-                            >3</a
-                          >
-                        </li>
-                        <li class="paginate_button page-item next" id="">
-                          <a
-                            href="#"
-                            aria-controls="kt_table_users"
-                            data-dt-idx="4"
-                            tabindex="0"
-                            class="page-link"
-                            ><i class="next"></i
-                          ></a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                <data-pagination
+                  @change="changePageFm"
+                  :display-rows-count="displayRowsCountFm"
+                  :data-length="firemenList.count"
+                ></data-pagination>
 
                 <!--end::Table-->
               </div>
@@ -598,7 +474,7 @@
           <article class="table-form-layout1">
             <div class="form-head-box"></div>
 
-            <form @submit="onSubmitFS" class="form-body-box">
+            <form @submit="onSubmitFs" class="form-body-box">
               <div class="table-box">
                 <table>
                   <colgroup>
@@ -698,7 +574,7 @@
 
           <article class="modal-menu-layout1 pt-10">
             <div class="modal-menu-list">
-              <router-link to="" @click="onSubmitFS" class="modal-menu-btn menu-primary"
+              <router-link to="" @click="onSubmitFs" class="modal-menu-btn menu-primary"
                 >저장</router-link
               >
             </div>
@@ -771,7 +647,7 @@
           <article class="table-form-layout1">
             <div class="form-head-box"></div>
 
-            <form @submit="onEditFS" class="form-body-box">
+            <form @submit="onEditFs" class="form-body-box">
               <div class="table-box">
                 <table>
                   <colgroup>
@@ -872,7 +748,7 @@
 
           <article class="modal-menu-layout1 pt-10">
             <div class="modal-menu-list">
-              <router-link to="" @click="onEditFS" class="modal-menu-btn menu-primary"
+              <router-link to="" @click="onEditFs" class="modal-menu-btn menu-primary"
                 >저장</router-link
               >
             </div>
@@ -1078,7 +954,7 @@
           <article class="table-form-layout1">
             <div class="form-head-box"></div>
 
-            <form @submit="onSubmitFM" class="form-body-box">
+            <form @submit="onSubmitFm" class="form-body-box">
               <div class="table-box">
                 <table>
                   <colgroup>
@@ -1154,7 +1030,7 @@
             <div class="modal-menu-list">
               <router-link
                 to=""
-                @click="onSubmitFM(fsDetail.instId)"
+                @click="onSubmitFm(fsDetail.instId)"
                 class="modal-menu-btn menu-primary"
                 >저장
               </router-link>
@@ -1229,7 +1105,7 @@
           <article class="table-form-layout1">
             <div class="form-head-box"></div>
 
-            <form @submit="onEditFM" class="form-body-box">
+            <form @submit="onEditFm" class="form-body-box">
               <div class="table-box">
                 <table>
                   <colgroup>
@@ -1304,7 +1180,7 @@
 
           <article class="modal-menu-layout1 pt-10">
             <div class="modal-menu-list">
-              <router-link to="" @click="onEditFM" class="modal-menu-btn menu-primary"
+              <router-link to="" @click="onEditFm" class="modal-menu-btn menu-primary"
                 >저장</router-link
               >
             </div>
@@ -1457,7 +1333,7 @@
 <script>
 import { reactive, ref } from 'vue'
 import { mapState } from 'vuex'
-import { getGugun, getSido, getTelno } from '@/util/ui'
+import { getSido, getTelno, toggleCheckbox } from '@/util/ui'
 import DataPagination from '@/components/user/unit/DataPagination.vue'
 
 export default {
@@ -1473,13 +1349,19 @@ export default {
     return {
       content: '',
       characterCount: 0,
-      displayRowsCount: 15,
-      page: 1,
-      fsFilter: {
+      displayRowsCountFs: 15,
+      pageFs: 1,
+      displayRowsCountFm: 15,
+      pageFm: 1,
+      filterFs: {
         kwd:'',
         dstrCd1: '',
         dstrCd2: '',
         chrgTelno: ''
+      },
+      filterFm:{
+        instId:'',
+        kwf:'',
       },
       fsForm: {
         dstrCd1: null,
@@ -1491,7 +1373,7 @@ export default {
       },
       inputValue: null,
       statnDetail: null,
-      delFMInfo: [],
+      delFmInfo: [],
       allChked: false
     }
   },
@@ -1505,10 +1387,36 @@ export default {
       'fmDetail'
     ]),
     startIndex() {
-      return (this.page - 1) * this.displayRowsCount;
+      return (this.pageFs - 1) * this.displayRowsCountFs;
     },
     endIndex() {
       return this.page * this.displayRowsCount;
+    },
+    filterFsData(){
+      let params = {}
+      if(this.filterFs.kwd){
+        if(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(this.filterFs.kwd)){
+          params = {...params, instNm: this.filterFs.kwd}
+        } else {
+          params = {...params, instId: this.filterFs.kwd}
+        }
+      }
+      if(this.filterFs.dstrCd1) params = {...params, dstrCd1: this.filterFs.dstrCd1}
+      if(this.filterFs.dstrCd2) params = {...params, dstrCd2: this.filterFs.dstrCd2}
+
+      return params
+    },
+    filterFmData(){
+      let params = {}
+      if(this.filterFm.kwd){
+        if(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(this.filterFm.kwd)){
+          params = {...params, crewNm: this.filterFm.kwd}
+        } else {
+          params = {...params, crewId: this.filterFm.kwd}
+        }
+      }
+      params = {...params, instId:this.fsDetail.instId}
+      return params
     },
   },
   setup() {
@@ -1543,7 +1451,14 @@ export default {
   },
   methods: {
     getSido,
-    getGugun,
+    toggleCheckbox,
+    getGugun(){
+      if(this.filterFs.dstrCd1){
+        this.$store.dispatch('admin/getGuGun',this.filterFs.dstrCd1)
+      }
+      this.filterFs.dstrCd2=''
+      this.getFireStatn()
+    },
     getTelno,
     initNaverMap() {
       // 네이버 지도 API 로드
@@ -1577,46 +1492,56 @@ export default {
     },
     handleChange() {
       if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(this.inputValue)) {
-        this.fsFilter.instNm = this.inputValue
+        this.filterFs.instNm = this.inputValue
       } else {
-        this.fsFilter.instId = this.inputValue
+        this.filterFs.instId = this.inputValue
       }
     },
-    getFS(data) {
+    getFs(data) {
       const request = { id: data.instId }
       this.$store.dispatch('admin/getFSDetail', request)
       this.$store.dispatch('admin/getFiremen', request)
     },
-    changePage(newPage) {
+    changePageFs(newPage) {
       this.$store.dispatch('admin/getFireStatn', {
-        ...this.filterData,
-        page: newPage
+        ...this.filterFsData,
+        pageFs: newPage
       });
-      this.page = newPage;
+      this.pageFs = newPage;
     },
-    onSubmitFS() {
+    changePageFm(newPage) {
+      this.$store.dispatch('admin/getFiremen', {
+        ...this.filterFmData,
+        pageFs: newPage
+      });
+      this.pageFs = newPage;
+    },
+    getFiremen(){
+      this.$store.dispatch('admin/getFiremen',this.filterFmData)
+    },
+    onSubmitFs() {
       this.$store.dispatch('admin/regFS', this.fsForm)
       this.alertOpen('저장하였습니다', 0)
-      this.$store.dispatch('admin/getFireStatn', this.fsFilter)
+      this.$store.dispatch('admin/getFireStatn', this.filterFsData)
       this.toggleModal(0)
     },
-    onEditFS() {
+    onEditFs() {
       console.log(this.fsDetail)
       this.$store.dispatch('admin/editFS', this.fsDetail)
       this.alertOpen('저장하였습니다', 1)
-      this.$store.dispatch('admin/getFireStatn', this.fsFilter)
+      this.$store.dispatch('admin/getFireStatn', this.filterFsData)
       this.toggleModal(1)
     },
-    onSubmitFM(id) {
+    onSubmitFm(id) {
       console.log(id)
       this.fmForm.instId = id
       this.$store.dispatch('admin/regFM', this.fmForm)
       this.alertOpen('저장하였습니다', 2)
-      this.$store.dispatch('admin/getFireStatn', this.fsFilter)
+      this.$store.dispatch('admin/getFireStatn', this.filterFsData)
       this.fmForm = { rmk: '' }
       this.toggleModal(2)
     },
-    onEditFM() {
+    onEditFm() {
       console.log(this.fmDetail)
       this.$store.dispatch('admin/editFM', this.fmDetail)
       this.alertOpen('저장하였습니다', 3)
@@ -1625,21 +1550,7 @@ export default {
     },
     getFireStatn() {
       console.log(this.search)
-      this.$store.dispatch('admin/getFireStatn', this.fsFilter)
-    },
-    filterFs(){
-      let params = {}
-      if(this.fsFilter.kwd){
-        if(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(this.fsFilter.kwd)){
-          params = {...params, instNm: this.fsFilter.kwd}
-        } else {
-          params = {...params, instId: this.fsFilter.kwd}
-        }
-      }
-      if(this.fsFilter.dstrCd1) params = {...params, dstrCd1: this.fsFilter.dstrCd1}
-      if(this.fsFilter.dstrCd2) params = {...params, dstrCd2: this.fsFilter.dstrCd2}
-
-      return params
+      this.$store.dispatch('admin/getFireStatn', this.filterFsData)
     },
     mskData(idx, data) {
       if (idx === 0) {
@@ -1656,14 +1567,14 @@ export default {
     },
     setDelInfo(data) {
       const info = { instId: data.instId, crewId: data.crewId }
-      this.delFMInfo.push(info)
+      this.delFmInfo.push(info)
     },
-    delFM() {
-      this.delFMInfo.forEach((fm) => {
+    delFm() {
+      this.delFmInfo.forEach((fm) => {
         this.$store.dispatch('admin/delFM', fm)
       })
       this.alertOpen('삭제하였습니다', 5)
-      this.$store.dispatch('admin/getFireStatn', this.fsFilter)
+      this.$store.dispatch('admin/getFireStatn', this.filterFs)
     },
     handleModal(idx, data) {
       if (idx === 0) {

@@ -16,7 +16,7 @@ export default {
         isRegUsr: null,
         firestatnList: [],
         medinstList: [],
-        firemenList: {item:[],count:0},
+        firemenList: [],
         fsDetail:null,
         fmDetail:null,
     },
@@ -268,12 +268,11 @@ export default {
         getFiremen(comment,data){
             //const token = localStorage.getItem('userToken')
             console.log(data.instId)
-            const request = data
             const url =`${API_PROD}/api/v1/private/organ/firemen`
             return axios({
                 method:"get",
                 url:url,
-                params:request
+                params:data
             }).then(response =>{
                 if(response.data?.code==='00'){
                     if(response.data?.result.count!==0){
