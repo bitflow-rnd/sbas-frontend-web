@@ -16,7 +16,7 @@ export default {
         isRegUsr: null,
         firestatnList: [],
         medinstList: [],
-        firemenList: {item:[],count:0},
+        firemenList: [],
         fsDetail:null,
         fmDetail:null,
     },
@@ -268,12 +268,11 @@ export default {
         getFiremen(comment,data){
             //const token = localStorage.getItem('userToken')
             console.log(data.instId)
-            const request = data
             const url =`${API_PROD}/api/v1/private/organ/firemen`
             return axios({
                 method:"get",
                 url:url,
-                params:request
+                params:data
             }).then(response =>{
                 if(response.data?.code==='00'){
                     if(response.data?.result.count!==0){
@@ -293,14 +292,14 @@ export default {
         async getFireStatn(comment,request){
            // const token = localStorage.getItem('userToken')
            // console.log(data.cd1, data.cd2)
-            const url = `${API_PROD}/api/v1/public/organ/firestatns?dstrCd1=27`
+            const url = `${API_PROD}/api/v1/public/organ/firestatns`
             const params = request
             try {
                 const response = await axios.get(url, {params})
                 console.log('구급대목록')
                 if(response.data.code==='00'){
                     if(response.data?.result.count!==0){
-                        comment.commit('setFirestatn',response.data?.result.items)
+                        comment.commit('setFirestatn',response.data?.result)
                         comment.dispatch('getFSDetail',{ id:response.data?.result.items[0].instId,})
                         const data = {instId:response.data?.result.items[0].instId, crewId: null, crewNm:null, telno:null}
                         console.log(data)
