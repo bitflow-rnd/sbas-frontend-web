@@ -726,7 +726,7 @@
               <div class="img-box">
                 <img src="/img/common/ic_lnb_organ.svg" alt="이미지"/>
               </div>
-              <div class="txt-box">{{ medinstDetail.dutyName }}</div>
+              <div class="txt-box">{{ medinstDetail.hospBasicInfo.dutyName }}</div>
             </article>
           </div>
 
@@ -814,32 +814,32 @@
                                 </article>
                               </td>
                               <th>기관ID</th>
-                              <td>{{ medinstDetail.hpid }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hpid }}</td>
                             </tr>
 
                             <tr>
                               <th>기관명</th>
-                              <td>{{ medinstDetail.dutyName }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyName }}</td>
                             </tr>
 
                             <tr>
                               <th>병원분류</th>
-                              <td>{{ medinstDetail.dutyDiv }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyDiv }}</td>
                             </tr>
 
                             <tr>
                               <th>병원분류명</th>
-                              <td>{{ medinstDetail.dutyDivNam }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyDivNam }}</td>
                             </tr>
 
                             <tr>
                               <th>응급의료기관분류</th>
-                              <td>{{ medinstDetail.dutyEmcls }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyEmcls }}</td>
                             </tr>
 
                             <tr>
                               <th>응급의료기관분류명</th>
-                              <td>{{ medinstDetail.dutyEmclsName }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyEmclsName }}</td>
                             </tr>
 
                             <tr>
@@ -847,8 +847,8 @@
                               <td rowspan="6" class='map-wrapper'>
                                 <div id='map'></div>
                                 <p class="pt-4 ">
-                                  위도 : {{ medinstDetail.wgs84Lat }} , 경도 : {{
-                                    medinstDetail.wgs84Lon
+                                  위도 : {{ medinstDetail.hospBasicInfo.wgs84Lat }} , 경도 : {{
+                                    medinstDetail.hospBasicInfo.wgs84Lon
                                   }}
                                 </p>
                               </td>
@@ -856,39 +856,39 @@
 
                             <tr>
                               <th>대표전화</th>
-                              <td>{{ medinstDetail.dutyTel1 }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyTel1 }}</td>
                             </tr>
 
                             <tr>
                               <th>응급실전화</th>
-                              <td>{{ medinstDetail.dutyTel3 }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyTel3 }}</td>
                             </tr>
 
                             <tr>
                               <th>팩스번호</th>
-                              <td>{{ medinstDetail.dutyFax }}</td>
+                              <td>-</td>
                             </tr>
 
                             <tr>
                               <th>주소</th>
                               <td><!--todo: 우편번호 필요한지 확인-->
                                 <div class="eclipse-line2-box">
-                                  {{ medinstDetail.dutyAddr }}
+                                  {{ medinstDetail.hospBasicInfo.dutyAddr }}
                                 </div>
                               </td>
                             </tr>
 
                             <tr>
                               <th>기관설명</th>
-                              <td>{{ medinstDetail.dutyInf ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyInf ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>시작시간</th>
-                              <td>{{ medinstDetail.startTime ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyTime1s ?? '-' }}</td>
 
                               <th>종료시간</th>
-                              <td>{{ medinstDetail.endTime ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyTime1c ?? '-' }}</td>
                             </tr>
 
                             <tr>
@@ -896,7 +896,7 @@
                               <td colspan="3">
                                 <article class="item-list-layout1" style="max-width: 900px">
                                   <ul class="box-7">
-                                    <li v-for='items in medinstDetail.dgidIdNameList' v-bind:key='items'>
+                                    <li v-for='items in medinstDetail.hospBasicInfo.dgidIdNameList' v-bind:key='items'>
                                       <div class="item-box">{{ items }}</div>
                                     </li>
                                   </ul>
@@ -911,50 +911,50 @@
                                   <ul class="box-4">
                                     <li>
                                       <div class='item-box'>
-                                        월요일 <span v-if='medinstDetail.dutyTime1s === null' class="text-gray-400 ps-1">없음</span>
-                                        <span v-else>{{ medinstDetail.dutyTime1s }} ~ {{ (medinstDetail.dutyTime1c) }}</span>
+                                        월요일 <span v-if='medinstDetail.hospBasicInfo.dutyTime1s === null' class="text-gray-400 ps-1">없음</span>
+                                        <span v-else>{{ medinstDetail.hospBasicInfo.dutyTime1s }}~{{ (medinstDetail.hospBasicInfo.dutyTime1c) }}</span>
                                       </div>
                                     </li>
                                     <li>
                                       <div class='item-box'>
-                                        화요일 <span v-if='medinstDetail.dutyTime2s === null' class="text-gray-400 ps-1">없음</span>
-                                        <span v-else>{{ medinstDetail.dutyTime2s }} ~ {{ (medinstDetail.dutyTime2c) }}</span>
+                                        화요일 <span v-if='medinstDetail.hospBasicInfo.dutyTime2s === null' class="text-gray-400 ps-1">없음</span>
+                                        <span v-else>{{ medinstDetail.hospBasicInfo.dutyTime2s }}~{{ (medinstDetail.hospBasicInfo.dutyTime2c) }}</span>
                                       </div>
                                     </li>
                                     <li>
                                       <div class='item-box'>
-                                        수요일 <span v-if='medinstDetail.dutyTime3s === null' class="text-gray-400 ps-1">없음</span>
-                                        <span v-else>{{ medinstDetail.dutyTime3s }} ~ {{ (medinstDetail.dutyTime3c) }}</span>
+                                        수요일 <span v-if='medinstDetail.hospBasicInfo.dutyTime3s === null' class="text-gray-400 ps-1">없음</span>
+                                        <span v-else>{{ medinstDetail.hospBasicInfo.dutyTime3s }}~{{ (medinstDetail.hospBasicInfo.dutyTime3c) }}</span>
                                       </div>
                                     </li>
                                     <li>
                                       <div class='item-box'>
-                                        목요일 <span v-if='medinstDetail.dutyTime4s === null' class="text-gray-400 ps-1">없음</span>
-                                        <span v-else>{{ medinstDetail.dutyTime4s }} ~ {{ (medinstDetail.dutyTime4c) }}</span>
+                                        목요일 <span v-if='medinstDetail.hospBasicInfo.dutyTime4s === null' class="text-gray-400 ps-1">없음</span>
+                                        <span v-else>{{ medinstDetail.hospBasicInfo.dutyTime4s }}~{{ (medinstDetail.hospBasicInfo.dutyTime4c) }}</span>
                                       </div>
                                     </li>
                                     <li>
                                       <div class='item-box'>
-                                        금요일 <span v-if='medinstDetail.dutyTime5s === null' class="text-gray-400 ps-1">없음</span>
-                                        <span v-else>{{ medinstDetail.dutyTime5s }} ~ {{ (medinstDetail.dutyTime5c) }}</span>
+                                        금요일 <span v-if='medinstDetail.hospBasicInfo.dutyTime5s === null' class="text-gray-400 ps-1">없음</span>
+                                        <span v-else>{{ medinstDetail.hospBasicInfo.dutyTime5s }}~{{ (medinstDetail.hospBasicInfo.dutyTime5c) }}</span>
                                       </div>
                                     </li>
                                     <li>
                                       <div class="item-box">
-                                        토요일 <span v-if='medinstDetail.dutyTime6s === null' class="text-gray-400 ps-1">없음</span>
-                                        <span v-else>{{ medinstDetail.dutyTime6s }} ~ {{ (medinstDetail.dutyTime6c) }}</span>
+                                        토요일 <span v-if='medinstDetail.hospBasicInfo.dutyTime6s === null' class="text-gray-400 ps-1">없음</span>
+                                        <span v-else>{{ medinstDetail.hospBasicInfo.dutyTime6s }}~{{ (medinstDetail.hospBasicInfo.dutyTime6c) }}</span>
                                       </div>
                                     </li>
                                     <li>
                                       <div class="item-box">
-                                        일요일 <span v-if='medinstDetail.dutyTime7s === null' class="text-gray-400 ps-1">없음</span>
-                                        <span v-else>{{ medinstDetail.dutyTime7s }} ~ {{ (medinstDetail.dutyTime7c) }}</span>
+                                        일요일 <span v-if='medinstDetail.hospBasicInfo.dutyTime7s === null' class="text-gray-400 ps-1">없음</span>
+                                        <span v-else>{{ medinstDetail.hospBasicInfo.dutyTime7s }}~{{ (medinstDetail.hospBasicInfo.dutyTime7c) }}</span>
                                       </div>
                                     </li>
                                     <li>
                                       <div class="item-box">
-                                        공휴일 <span v-if='medinstDetail.dutyTime8s === null' class="text-gray-400 ps-1">없음</span>
-                                        <span v-else>{{ medinstDetail.dutyTime8s }} ~ {{ (medinstDetail.dutyTime8c) }}</span>
+                                        공휴일 <span v-if='medinstDetail.hospBasicInfo.dutyTime8s === null' class="text-gray-400 ps-1">없음</span>
+                                        <span v-else>{{ medinstDetail.hospBasicInfo.dutyTime8s }}~{{ (medinstDetail.hospBasicInfo.dutyTime8c) }}</span>
                                       </div>
                                     </li>
                                   </ul>
@@ -980,13 +980,13 @@
                             <tr>
                               <th>응급실운영여부</th>
                               <td>
-                                <i v-if="medinstDetail.dutyEryn === '1'">운영중</i>
+                                <i v-if="medinstDetail.hospBasicInfo.dutyEryn === '1'">운영중</i>
                                 <i v-else>-</i>
                               </td>
 
                               <th>입원실가용여부</th>
                               <td>
-                                <i v-if="medinstDetail.dutyHayn === '1'"
+                                <i v-if="medinstDetail.hospBasicInfo.dutyHayn === '1'"
                                     class="fa-regular fa-circle-check"
                                     style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -994,7 +994,7 @@
                               </td>
 
                               <th>병상수</th>
-                              <td>{{ medinstDetail.dutyHano }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyHano }}</td>
                             </tr>
                             </tbody>
                           </table>
@@ -1014,13 +1014,13 @@
                             <tbody>
                             <tr>
                               <th>가용_응급실</th>
-                              <td>{{ medinstDetail.hvec ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hvec ?? '-' }}</td>
 
                               <th>가용_입원실</th>
-                              <td>{{ medinstDetail.hvgc ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hvgc ?? '-' }}</td>
 
                               <th>가용_수술실</th>
-                              <td>{{ medinstDetail.hvoc ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hvoc ?? '-' }}</td>
                             </tr>
                             </tbody>
                           </table>
@@ -1040,32 +1040,32 @@
                             <tbody>
                             <tr>
                               <th>기준_병상수</th>
-                              <td>{{ medinstDetail.hpbdn ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hpbdn ?? '-' }}</td>
 
                               <th>기준_응급실</th>
-                              <td>{{ medinstDetail.hperyn ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hperyn ?? '-' }}</td>
 
                               <th>기준_입원실</th>
-                              <td>{{ medinstDetail.hpgryn ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hpgryn ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>기준_수술실</th>
-                              <td>{{ medinstDetail.hpopyn ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hpopyn ?? '-' }}</td>
 
                               <th>기준_신경중환자실</th>
-                              <td>{{ medinstDetail.hpcuyn ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hpcuyn ?? '-' }}</td>
 
                               <th>기준_신생아중환자실</th>
-                              <td>{{ medinstDetail.hpnicuyn ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hpnicuyn ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>기준_흉부중환자실</th>
-                              <td>{{ medinstDetail. hpccuyn?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hpccuyn?? '-' }}</td>
 
                               <th>기준_일반중환자실</th>
-                              <td colspan="3">{{ medinstDetail.hpicuyn?? '-' }}</td>
+                              <td colspan="3">{{ medinstDetail.hospBasicInfo.hpicuyn?? '-' }}</td>
                             </tr>
                             </tbody>
                           </table>
@@ -1086,7 +1086,7 @@
                             <tr>
                               <th>중증_응급실</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy25 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy25 === 'Y'"
                                     class="fa-regular fa-circle-check"
                                     style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1095,7 +1095,7 @@
 
                               <th>중증_뇌출혈수술</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy1 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy1 === 'Y'"
                                    class="fa-regular fa-circle-check"
                                    style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1104,7 +1104,7 @@
 
                               <th>중증_뇌경색의재관류</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy2 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy2 === 'Y'"
                                    class="fa-regular fa-circle-check"
                                    style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1115,7 +1115,7 @@
                             <tr>
                               <th>중증_심근경색의재관류</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy3 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy3 === 'Y'"
                                    class="fa-regular fa-circle-check"
                                    style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1124,7 +1124,7 @@
 
                               <th>중증_복부손상의수술</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy4 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy4 === 'Y'"
                                    class="fa-regular fa-circle-check"
                                    style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1133,7 +1133,7 @@
 
                               <th>중증_사지접합의수술</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy5 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy5 === 'Y'"
                                    class="fa-regular fa-circle-check"
                                    style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1144,7 +1144,7 @@
                             <tr>
                               <th>중증_응급내시경</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy6 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy6 === 'Y'"
                                    class="fa-regular fa-circle-check"
                                    style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1153,7 +1153,7 @@
 
                               <th>중증_응급투석</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy7 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy7 === 'Y'"
                                    class="fa-regular fa-circle-check"
                                    style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1162,7 +1162,7 @@
 
                               <th>중증_조산산모</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy8 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy8 === 'Y'"
                                    class="fa-regular fa-circle-check"
                                    style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1173,7 +1173,7 @@
                             <tr>
                               <th>중증_정신질환자</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy9 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy9 === 'Y'"
                                    class="fa-regular fa-circle-check"
                                    style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1182,7 +1182,7 @@
 
                               <th>중증_신생아</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy10 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy10 === 'Y'"
                                    class="fa-regular fa-circle-check"
                                    style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1191,7 +1191,7 @@
 
                               <th>중증_중증화상</th>
                               <td>
-                                <i v-if="medinstDetail.mkioskTy11 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy11 === 'Y'"
                                    class="fa-regular fa-circle-check"
                                    style="color: #74afeb; font-size: 20px"
                                 ></i>
@@ -1216,113 +1216,113 @@
                             <tbody>
                             <tr>
                               <th>가용_신경중환자</th>
-                              <td>{{ medinstDetail.hvcc ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hvcc ?? '-' }}</td>
 
                               <th>가용_신생중환자</th>
-                              <td>{{ medinstDetail.hvncc ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hvncc ?? '-' }}</td>
 
                               <th>가용_흉부중환자</th>
-                              <td>{{ medinstDetail.hvccc ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hvccc ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>가용_일반중환자</th>
-                              <td>{{ medinstDetail.hvicc ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.hvicc ?? '-' }}</td>
 
                               <th>가용_응급실 일반병상</th>
-                              <td>{{ medinstDetail.o001 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o001 ?? '-' }}</td>
 
                               <th>가용_응급실 소아 병상</th>
-                              <td>{{ medinstDetail.o002 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o002 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>가용_응급실 음압 격리 병상</th>
-                              <td>{{ medinstDetail.o003 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o003 ?? '-' }}</td>
 
                               <th>가용_응급실 일반 격리 병상</th>
-                              <td>{{ medinstDetail.o004 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o004 ?? '-' }}</td>
 
                               <th>가용_응급전용 중환자실</th>
-                              <td>{{ medinstDetail.o005 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o005 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>가용_내과중환자실</th>
-                              <td>{{ medinstDetail.o006 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o006 ?? '-' }}</td>
 
                               <th>가용_외과중환자실</th>
-                              <td>{{ medinstDetail.o007 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o007 ?? '-' }}</td>
 
                               <th>가용_신생아중환자실</th>
-                              <td>{{ medinstDetail.o008 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o008 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>가용_소아 중환자실</th>
-                              <td>{{ medinstDetail.o009 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o009 ?? '-' }}</td>
 
                               <th>가용_소아응급전용 중환자실 병상</th>
-                              <td>{{ medinstDetail.o010 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o010 ?? '-' }}</td>
 
                               <th>가용_신경과중환자실</th>
-                              <td>{{ medinstDetail.o011 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o011 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>가용_신경외과중환자실</th>
-                              <td>{{ medinstDetail.o012 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o012 ?? '-' }}</td>
 
                               <th>가용_화상중환자실</th>
-                              <td>{{ medinstDetail.o013 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o013 ?? '-' }}</td>
 
                               <th>가용_외상중환자실</th>
-                              <td>{{ medinstDetail.o014 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o014 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>가용_심장내과 중환자실</th>
-                              <td>{{ medinstDetail.o015 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o015 ?? '-' }}</td>
 
                               <th>가용_흉부외과 중환자실</th>
-                              <td>{{ medinstDetail.o016 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o016 ?? '-' }}</td>
 
                               <th>가용_일반 중환자실</th>
-                              <td>{{ medinstDetail.o017 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o017 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>가용_중환자실 내 음압 격리 병상</th>
-                              <td>{{ medinstDetail.o018 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o018 ?? '-' }}</td>
 
                               <th>가용_응급전용 입원실</th>
-                              <td>{{ medinstDetail.o019 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o019 ?? '-' }}</td>
 
                               <th>가용_소아응급전용 입원 병상</th>
-                              <td>{{ medinstDetail.o020 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o020 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>가용_외상전용 입원실</th>
-                              <td>{{ medinstDetail.o021 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o021 ?? '-' }}</td>
 
                               <th>가용_수술실</th>
-                              <td>{{ medinstDetail.o022 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o022 ?? '-' }}</td>
 
                               <th>가용_외상전용 수술실</th>
-                              <td>{{ medinstDetail.o023 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o023 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>가용_정신과 폐쇄 병상</th>
-                              <td>{{ medinstDetail.o024 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o024 ?? '-' }}</td>
 
                               <th>가용_음압 격리 병상</th>
-                              <td>{{ medinstDetail.o025 ?? '-' }}</td>
+                              <td>{{ medinstDetail.hospBasicInfo.o025 ?? '-' }}</td>
 
                               <th>가용_분만실</th>
                               <td>
-                                <i v-if="medinstDetail.o026 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o026 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1332,7 +1332,7 @@
                             <tr>
                               <th>가용_CT</th>
                               <td>
-                                <i v-if="medinstDetail.o027 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o027 === 'Y'"
                                      class='fa-regular fa-circle-check'
                                      style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1340,7 +1340,7 @@
 
                               <th>가용_MRI</th>
                               <td>
-                                <i v-if="medinstDetail.o028 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o028 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1348,7 +1348,7 @@
 
                               <th>가용_혈관촬영기</th>
                               <td>
-                                <i v-if="medinstDetail.o029 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o029 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1358,7 +1358,7 @@
                             <tr>
                               <th>가용_인공호흡기</th>
                               <td>
-                                <i v-if="medinstDetail.o030 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o030 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1366,7 +1366,7 @@
 
                               <th>가용_인공호흡기(소아)</th>
                               <td>
-                                <i v-if="medinstDetail.o031 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o031 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1374,7 +1374,7 @@
 
                               <th>가용_인큐베이터</th>
                               <td>
-                                <i v-if="medinstDetail.o032 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o032 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1384,7 +1384,7 @@
                             <tr>
                               <th>가용_CRRT</th>
                               <td>
-                                <i v-if="medinstDetail.o033 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o033 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1392,7 +1392,7 @@
 
                               <th>가용_ECMO</th>
                               <td>
-                                <i v-if="medinstDetail.o034 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o034 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1400,7 +1400,7 @@
 
                               <th>가용_치료적 저체온 요법</th>
                               <td>
-                                <i v-if="medinstDetail.o035 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o035 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1410,7 +1410,7 @@
                             <tr>
                               <th>가용_화상전용 처치실</th>
                               <td>
-                                <i v-if="medinstDetail.o036 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o036 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1418,7 +1418,7 @@
 
                               <th>가용_고압산소치료기</th>
                               <td>
-                                <i v-if="medinstDetail.o037 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o037 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1426,7 +1426,7 @@
 
                               <th>가용_일반입원실</th>
                               <td>
-                                <i v-if="medinstDetail.o038 === 'Y'"
+                                <i v-if="medinstDetail.hospBasicInfo.o038 === 'Y'"
                                    class='fa-regular fa-circle-check'
                                    style='color: #74afeb; font-size: 20px'></i>
                                 <i v-else>-</i>
@@ -1458,13 +1458,13 @@
                             <tbody>
                             <tr>
                               <th>응급실전화</th>
-                              <td>1533-8888</td>
+                              <td>{{ medinstDetail.hospDetailInfo.dutytel3 ?? '-' }}</td>
 
                               <th>당직의</th>
-                              <td>홍기용</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hvdnm ?? '-' }}</td>
 
                               <th>당직의 직통연락처</th>
-                              <td>010-2222-3333</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv1 ?? '-' }}</td>
                             </tr>
                             </tbody>
                           </table>
@@ -1486,68 +1486,98 @@
                             <tbody>
                             <tr>
                               <th>구급차</th>
-                              <td>-</td>
+                              <td>
+                                <i v-if="medinstDetail.hospDetailInfo.hvamyn === 'Y'"
+                                   class='fa-regular fa-circle-check'
+                                   style='color: #74afeb; font-size: 20px'
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
 
                               <th>CT</th>
                               <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
+                                <i v-if="medinstDetail.hospDetailInfo.hvctayn === 'Y'"
+                                   class='fa-regular fa-circle-check'
+                                   style='color: #74afeb; font-size: 20px'
                                 ></i>
+                                <i v-else>-</i>
                               </td>
 
                               <th>MRI</th>
-                              <td>-</td>
+                              <td>
+                                <i v-if="medinstDetail.hospDetailInfo.hvmriayn === 'Y'"
+                                   class='fa-regular fa-circle-check'
+                                   style='color: #74afeb; font-size: 20px'
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
 
                               <th>조영촬영기</th>
                               <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
+                                <i v-if="medinstDetail.hospDetailInfo.hvangioayn === 'Y'"
+                                   class='fa-regular fa-circle-check'
+                                   style='color: #74afeb; font-size: 20px'
                                 ></i>
+                                <i v-else>-</i>
                               </td>
                             </tr>
 
                             <tr>
                               <th>인공호흡기가용</th>
                               <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
+                                <i v-if="medinstDetail.hospDetailInfo.hvventiayn === 'Y'"
+                                   class='fa-regular fa-circle-check'
+                                   style='color: #74afeb; font-size: 20px'
                                 ></i>
+                                <i v-else>-</i>
                               </td>
 
                               <th>신경과입원실</th>
-                              <td>-</td>
+                              <td>
+                                <i v-if="medinstDetail.hospDetailInfo.hv5 === 'Y'"
+                                   class='fa-regular fa-circle-check'
+                                   style='color: #74afeb; font-size: 20px'
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
 
                               <th>약물중환자</th>
                               <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
+                                <i v-if="medinstDetail.hospDetailInfo.hv7 === 'Y'"
+                                   class='fa-regular fa-circle-check'
+                                   style='color: #74afeb; font-size: 20px'
                                 ></i>
+                                <i v-else>-</i>
                               </td>
 
                               <th>VENTI(소아)</th>
                               <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
+                                <i v-if="medinstDetail.hospDetailInfo.hv10 === 'Y'"
+                                   class='fa-regular fa-circle-check'
+                                   style='color: #74afeb; font-size: 20px'
                                 ></i>
+                                <i v-else>-</i>
                               </td>
                             </tr>
 
                             <tr>
                               <th>인큐베이터(보육기)</th>
                               <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
+                                <i v-if="medinstDetail.hospDetailInfo.hv11 === 'Y'"
+                                   class='fa-regular fa-circle-check'
+                                   style='color: #74afeb; font-size: 20px'
                                 ></i>
+                                <i v-else>-</i>
                               </td>
 
                               <th>분만실</th>
-                              <td colspan="5">-</td>
+                              <td colspan="5">
+                                <i v-if="medinstDetail.hospDetailInfo.hv42 === 'Y'"
+                                   class='fa-regular fa-circle-check'
+                                   style='color: #74afeb; font-size: 20px'
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
                             </tr>
                             </tbody>
                           </table>
@@ -1569,49 +1599,49 @@
                             <tbody>
                             <tr>
                               <th>응급실</th>
-                              <td>+</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hvec ?? '-' }}</td>
 
                               <th>수술실</th>
-                              <td>12</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hvoc ?? '-' }}</td>
 
                               <th>신경중환자</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hvcc ?? '-' }}</td>
 
                               <th>신생중환자</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hvncc ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>흉부중환자</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hvccc ?? '-' }}</td>
 
                               <th>일반중환자</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hvicc ?? '-' }}</td>
 
                               <th>입원실</th>
-                              <td>5</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hvgc ?? '-' }}</td>
 
                               <th>내과중환자실</th>
-                              <td>5</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv2 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>외과중환자실</th>
-                              <td>10</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv3 ?? '-' }}</td>
 
                               <th>외과입원실</th>
-                              <td>10</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv4 ?? '-' }}</td>
 
                               <th>신경외과중환자실</th>
-                              <td>10</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv6 ?? '-' }}</td>
 
                               <th>화상중환자</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv8 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>외상중환자</th>
-                              <td colspan="5">-</td>
+                              <td colspan="5">{{ medinstDetail.hospDetailInfo.hv9 ?? '-' }}</td>
                             </tr>
                             </tbody>
                           </table>
@@ -1632,183 +1662,116 @@
                             <tr>
                               <th>격리진료구역 음압격리 병상</th>
                               <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
+                                {{ medinstDetail.hospDetailInfo.hv13 ?? '-' }}
                               </td>
 
                               <th>격리진료구역 일반격리 병상</th>
                               <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
+                                {{ medinstDetail.hospDetailInfo.hv14 ?? '-' }}
                               </td>
 
                               <th>소아 음압격리병상</th>
                               <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
+                                {{ medinstDetail.hospDetailInfo.hv15 ?? '-' }}
                               </td>
                             </tr>
 
                             <tr>
                               <th>소아 일반격리병상</th>
                               <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
+                                {{ medinstDetail.hospDetailInfo.hv16 ?? '-' }}
                               </td>
 
                               <th>응급전용 중환자실 음압 격리병상</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv17 ?? '-' }}</td>
 
                               <th>응급전용 중환자실 일반 격리병상</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv18 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>응급전용 입원실 음압 격리병상</th>
-                              <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
-                              </td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv19 ?? '-' }}</td>
 
                               <th>응급전용 입원실 일반격리 병상</th>
-                              <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
-                              </td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv21 ?? '-' }}</td>
 
                               <th>감염병 전담병상 중환자실</th>
-                              <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
-                              </td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv22 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>감염병 전담병상 중환자실 내 음압격리병상</th>
-                              <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
-                              </td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv23 ?? '-' }}</td>
 
                               <th>감염병 전담병상 중증 일반병상</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv24 ?? '-' }}</td>
 
                               <th>감염병 전담병상 준-중증 일반병상</th>
-                              <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
-                              </td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv25 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>감염병 전담병상 중등증 일반병상</th>
-                              <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
-                              </td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv26 ?? '-' }}</td>
 
                               <th>코호트 격리구역 병상</th>
-                              <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
-                              </td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv27 ?? '-' }}</td>
 
                               <th>응급실 소아 병상</th>
-                              <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
-                              </td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv28 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>응급실 음압 격리 병상</th>
-                              <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
-                              </td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv29 ?? '-' }}</td>
 
                               <th>응급실 일반 격리 병상</th>
-                              <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
-                              </td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv30 ?? '-' }}</td>
 
                               <th>응급전용 중환자실</th>
-                              <td>
-                                <i
-                                    class="fa-regular fa-circle-check"
-                                    style="color: #74afeb; font-size: 20px"
-                                ></i>
-                              </td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv31 ?? '-' }}</td>
                             </tr>
 
                             <tr>
-                              <th>응급전용 중환자실</th>
-                              <td>-</td>
+                              <th>소아 중환자실</th>
+                              <td>{{ medinstDetail.hospDetailInfo.hv32 ?? '-' }}</td>
 
                               <th>소아응급전용 중환자실 병상</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv33 ?? '-' }}</td>
 
                               <th>심장내과 중환자실</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv34 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>중환자실 내 음압 격리 병상</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv35 ?? '-' }}</td>
 
                               <th>응급전용 입원실</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv36 ?? '-' }}</td>
 
                               <th>소아응급전용 입원 병상</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv37 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>외상전용 입원실</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv38 ?? '-' }}</td>
 
                               <th>외상전용 수술실</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv39 ?? '-' }}</td>
 
                               <th>정신과 폐쇄 병상</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv40 ?? '-' }}</td>
                             </tr>
 
                             <tr>
                               <th>음압 격리 병상</th>
-                              <td>-</td>
+                              <td>{{ medinstDetail.hospDetailInfo.hv41 ?? '-' }}</td>
 
                               <th>화상전용 처치실</th>
-                              <td colspan="3">-</td>
+                              <td colspan="3">{{ medinstDetail.hospDetailInfo.hv43 ?? '-' }}</td>
                             </tr>
                             </tbody>
                           </table>
@@ -2103,7 +2066,7 @@ export default {
     loadNaverMapAsync() {
       // 네이버 지도 생성 // 35.9561644!4d128.5653029
       const map = new window.naver.maps.Map('map', {
-        center: new window.naver.maps.LatLng(this.medinstDetail.wgs84Lat, this.medinstDetail.wgs84Lon),
+        center: new window.naver.maps.LatLng(this.medinstDetail.hospBasicInfo.wgs84Lat, this.medinstDetail.hospBasicInfo.wgs84Lon),
         zoom: 15,
         zoomControlOptions: {
           style: window.naver.maps.ZoomControlStyle.SMALL,
@@ -2111,7 +2074,7 @@ export default {
         }
       })
       new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(this.medinstDetail.wgs84Lat, this.medinstDetail.wgs84Lon),
+        position: new window.naver.maps.LatLng(this.medinstDetail.hospBasicInfo.wgs84Lat, this.medinstDetail.hospBasicInfo.wgs84Lon),
         map: map
       })
     },
