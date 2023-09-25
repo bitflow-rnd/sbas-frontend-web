@@ -511,7 +511,7 @@
                       <col style="width: 100px" />
                     </colgroup>
                     <thead>
-                      <tr class="small">
+                      <tr class="small" style='cursor:default !important'>
                         <th>
                           <div class="cbox">
                             <label> <input type="checkbox" class="all-chk" /><i></i> </label>
@@ -539,10 +539,10 @@
                     </tbody>
 
                     <tbody v-if="sortedBdList.length !== 0">
-                      <tr v-for="(item, i) in sortedBdList" :key="i">
-                        <td>
-                          <div class="cbox d-flex justify-content-center">
-                            <label> <input type="checkbox" /><i></i> </label>
+                      <tr v-for="(item, i) in sortedBdList" :key="i" @click='openBedMod(item)'>
+                        <td @click='toggleCheckbox'>
+                          <div @click='toggleCheckbox' class="cbox d-flex justify-content-center">
+                            <label> <input @click='toggleCheckbox' type="checkbox" /><i></i> </label>
                           </div>
                         </td>
                         <td>{{ sortedBdList.length - i }}</td>
@@ -4826,7 +4826,7 @@ import {
   maskingNm,
   openAddressFinder,
   regNewPt,
-  openPopup, reqBedType
+  openPopup, reqBedType, toggleCheckbox
 } from '@/util/ui'
 import user from '@/store/modules/user'
 //import mitt from 'mitt'
@@ -5082,6 +5082,7 @@ export default {
     }
   },
   methods: {
+    toggleCheckbox,
     changePage(newPage) {
       this.$store.dispatch('bedasgn/getBdList', {
         ...this.filterData,
