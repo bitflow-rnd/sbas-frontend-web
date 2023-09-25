@@ -3309,7 +3309,7 @@
                                     bdDetail.bedStatCd === 'BAST0005' &&
                                     userInfo.jobCd === 'PMGR0002'
                                   "
-                                  @click="loadTrnsfInfo(27)"
+                                  @click="loadTrnsfInfo(this.transInfo.reqDstr1Cd)"
                                   class="modal-menu-btn menu-primary radius-0 big"
                                 >
                                   이송·배차 처리
@@ -3724,8 +3724,8 @@
             <div class="form-head-box"></div>
 
             <div v-if="firestatnList !== null" class="form-body-box">
-              <div class="table-box">
-                <table>
+              <div v-if='firestatnList.items' class="table-box">
+                <table v-if='firestatnList.items.length!==0'>
                   <colgroup>
                     <col style="width: 168px" />
                     <col style="width: 46px" />
@@ -3740,29 +3740,28 @@
                         <div class="item-cell-box">
                           <div class="sbox w-175px">
                             <select>
-                              <option>대구광역시</option>
+                              <option>{{ firestatnList.items[0].dstrCd1 }}</option>
                             </select>
                           </div>
 
                           <div class="sbox w-175px ms-3">
                             <select v-model="selectedInst" @change="getFiremen(selectedInst)">
-                              <option value="구급대">구급대 선택</option>
-                              <option v-for="(item, i) in firestatnList" :key="i" :value="item">
+                              <option value='구급대'>구급대 선택</option>
+                              <option v-for="(item, i) in firestatnList.items" :key="i" :value="item">
                                 {{ item.instNm }}
                               </option>
-                              <option value="">직접입력</option>
+                              <option value='직접입력'>직접입력</option>
                             </select>
                           </div>
 
                           <div class="tbox w-175px ms-3">
                             <input
-                              v-if="selectedInst === ''"
+                              v-if="selectedInst === '직접입력'"
                               v-model="trsfInfo.ambsNm"
                               placeholder="구급대명 직접 입력"
                             />
                             <input
                               v-else
-                              v-model="trsfInfo.ambsNm"
                               placeholder="구급대명 직접 입력"
                               readonly
                             />
@@ -3776,53 +3775,50 @@
                       <td colspan="3">
                         <div class="item-cell-box">
                           <div v-if="firemenList.items" class="sbox" style="width: 128px">
-                            <select v-model="trsfInfo.crew1Id" @change="fillFiremen($event, 1)">
+                            <select v-model="selectedFm1" @change="fillFiremen(selectedFm1, 1)">
                               <option value="구급대원">구급대원 선택</option>
                               <option
                                 v-for="(item, i) in firemenList.items"
-                                :key="i"
+                                :key="i" :value='item'
                               >
                                 {{ item.crewNm }}
                               </option>
-                              <option value="">직접입력</option>
+                              <option value='직접입력'>직접입력</option>
                             </select>
                           </div>
 
                           <div class="tbox w-175px ms-3">
                             <input
-                              v-if="trsfInfo.crew1Id === ''"
+                              v-if="selectedFm1 === '직접입력'"
                               v-model="trsfInfo.crew1Pstn"
                               placeholder="직급 입력"
                             />
                             <input
                               v-else
-                              :value="trsfInfo.crew1Pstn"
                               placeholder="직급 입력"
                               readonly
                             />
                           </div>
                           <div class="tbox w-175px ms-3">
                             <input
-                              v-if="trsfInfo.crew1Id === ''"
+                              v-if="selectedFm1 === '직접입력'"
                               v-model="trsfInfo.crew1Nm"
                               placeholder=" 이름 입력"
                             />
                             <input
                               v-else
-                              :value="trsfInfo.crew1Nm"
                               placeholder=" 이름 입력"
                               readonly
                             />
                           </div>
                           <div class="tbox w-175px ms-3">
                             <input
-                              v-if="trsfInfo.crew1Id === ''"
+                              v-if="selectedFm1 === '직접입력'"
                               v-model="trsfInfo.crew1Telno"
                               placeholder=" 전화번호 입력"
                             />
                             <input
                               v-else
-                              :value="trsfInfo.crew1Telno"
                               placeholder=" 전화번호 입력"
                               readonly
                             />
@@ -3836,54 +3832,52 @@
                       <td colspan="3">
                         <div class="item-cell-box">
                           <div v-if="firemenList.items" class="sbox" style="width: 128px">
-                            <select v-model="trsfInfo.crew2Id">
+                            <select v-model="selectedFm2">
                               <option value="구급대원">구급대원 선택</option>
                               <option
                                 v-for="(item, i) in firemenList.items"
                                 :key="i"
                                 @change="fillFiremen(item, 2)"
+                                :value='item'
                               >
                                 {{ item.crewNm }}
                               </option>
-                              <option value="">직접입력</option>
+                              <option value='직접입력'>직접입력</option>
                             </select>
                           </div>
 
                           <div class="tbox w-175px ms-3">
                             <input
-                              v-if="trsfInfo.crew2Id === ''"
+                              v-if="selectedFm2 === '직접입력'"
                               v-model="trsfInfo.crew2Pstn"
                               placeholder="직급 입력"
                             />
                             <input
                               v-else
-                              v-model="trsfInfo.crew2Pstn"
                               placeholder="직급 입력"
                               readonly
                             />
                           </div>
                           <div class="tbox w-175px ms-3">
                             <input
-                              v-if="trsfInfo.crew2Id === ''"
+                              v-if="selectedFm2 === '직접입력'"
                               v-model="trsfInfo.crew2Nm"
                               placeholder=" 이름 입력"
                             />
                             <input
                               v-else
-                              v-model="trsfInfo.crew2Nm"
                               placeholder=" 이름 입력"
                               readonly
                             />
                           </div>
                           <div class="tbox w-175px ms-3">
                             <input
-                              v-if="trsfInfo.crew2Id === ''"
+                              v-if="selectedFm2 === '직접입력'"
                               v-model="trsfInfo.crew2Telno"
                               placeholder=" 전화번호 입력"
                             />
                             <input
                               v-else
-                              v-model="trsfInfo.crew2Telno"
                               placeholder=" 전화번호 입력"
                               readonly
                             />
@@ -3897,54 +3891,52 @@
                       <td colspan="3">
                         <div class="item-cell-box">
                           <div v-if="firemenList.items !== null && firemenList.items !== undefined" class="sbox" style="width: 128px">
-                            <select v-model="trsfInfo.crew3Id">
+                            <select v-model="selectedFm3">
                               <option value="구급대원">구급대원 선택</option>
                               <option
                                 v-for="(item, i) in firemenList.items"
                                 :key="i"
                                 @change="fillFiremen(item, 3)"
+                                :value='selectedFm3'
                               >
                                 {{ item.crewNm }}
                               </option>
-                              <option value="">직접입력</option>
+                              <option value='직접입력'>직접입력</option>
                             </select>
                           </div>
 
                           <div class="tbox w-175px ms-3">
                             <input
-                              v-if="trsfInfo.crew3Id === ''"
+                              v-if="selectedFm3 === '직접입력'"
                               v-model="trsfInfo.crew3Pstn"
                               placeholder="직급 입력"
                             />
                             <input
                               v-else
-                              v-model="trsfInfo.crew3Pstn"
                               placeholder="직급 입력"
                               readonly
                             />
                           </div>
                           <div class="tbox w-175px ms-3">
                             <input
-                              v-if="trsfInfo.crew3Id === ''"
+                              v-if="selectedFm3 === '직접입력'"
                               v-model="trsfInfo.crew3Nm"
                               placeholder=" 이름 입력"
                             />
                             <input
                               v-else
-                              v-model="trsfInfo.crew3Nm"
                               placeholder=" 이름 입력"
                               readonly
                             />
                           </div>
                           <div class="tbox w-175px ms-3">
                             <input
-                              v-if="trsfInfo.crew3Id === ''"
+                              v-if="selectedFm3 === '직접입력'"
                               v-model="trsfInfo.crew3Telno"
                               placeholder=" 전화번호 입력"
                             />
                             <input
                               v-else
-                              v-model="trsfInfo.crew3Telno"
                               placeholder=" 전화번호 입력"
                               readonly
                             />
@@ -4993,6 +4985,9 @@ export default {
         reqHospIdList: []
       },
       selectedInst: '구급대',
+      selectedFm1:'구급대원',
+      selectedFm2:'구급대원',
+      selectedFm3:'구급대원',
       trsfInfo: {
         instId: '',
         ptId: '',
@@ -5647,6 +5642,7 @@ export default {
     },
     getFiremen(data) {
       /*구급대원*/
+      console.log(data)
       this.trsfInfo.instId = data.instId
       this.trsfInfo.ambsNm = data.instNm
       this.$store.dispatch('admin/getFiremen', data)

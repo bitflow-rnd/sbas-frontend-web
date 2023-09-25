@@ -1499,8 +1499,9 @@ export default {
     },
     getFs(data) {
       const request = { id: data.instId }
+      const request2 = {instId: data.instId}
       this.$store.dispatch('admin/getFSDetail', request)
-      this.$store.dispatch('admin/getFiremen', request)
+      this.$store.dispatch('admin/getFiremen', request2)
     },
     changePageFs(newPage) {
       this.$store.dispatch('admin/getFireStatn', {
