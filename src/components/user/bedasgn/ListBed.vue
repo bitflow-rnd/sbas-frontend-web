@@ -514,7 +514,7 @@
                       <tr class="small" style='cursor:default !important'>
                         <th>
                           <div class="cbox">
-                            <label> <input type="checkbox" class="all-chk" /><i></i> </label>
+                            <label> <input type="checkbox" class="all-chk" v-model='allChked' @change='allChk' /><i></i> </label>
                           </div>
                         </th>
                         <th>순번</th>
@@ -542,7 +542,7 @@
                       <tr v-for="(item, i) in sortedBdList" :key="i" @click='openBedMod(item)'>
                         <td @click='toggleCheckbox'>
                           <div @click='toggleCheckbox' class="cbox d-flex justify-content-center">
-                            <label> <input @click='toggleCheckbox' type="checkbox" /><i></i> </label>
+                            <label> <input @click='toggleCheckbox' v-model='item.chked' @change='setDelBdList(item)' type="checkbox" /><i></i> </label>
                           </div>
                         </td>
                         <td>{{ sortedBdList.length - i }}</td>
@@ -4892,6 +4892,7 @@ export default {
       showModal: null,
       transCondition1:false,
       transCondition2:false,
+      allChked: false,
       filter: {
         states: [
           { label: '병상요청', value: 'BAST0003' },
@@ -5040,7 +5041,7 @@ export default {
     ]),
     ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip','startLoc','isSpinner']),
     ...mapState('user', ['userInfo', 'cmSido']),
-    ...mapState('admin', ['firestatnListfirestatnList', 'firemenList','medinstList','organMedi']),
+    ...mapState('admin', ['firestatnList', 'firemenList','medinstList','organMedi']),
 
     startIndex() {
       return (this.page - 1) * this.displayRowsCount;
@@ -5137,11 +5138,21 @@ export default {
       this.$store.dispatch('bedasgn/getBdList', this.filterData);
       this.page = 1;
     },
-      getMedInst(){
-          let data = this.medinstInfo
-          data['instTypeCd'] = 'ORGN0003'
-          this.$store.dispatch('admin/getOrganMedi',data)
-      },
+    getMedInst(){
+        let data = this.medinstInfo
+        data['instTypeCd'] = 'ORGN0003'
+        this.$store.dispatch('admin/getOrganMedi',data)
+    },
+    allChk() {
+      this.sortedBdList.forEach((bdList) => {
+        bdList.chked = this.allChked
+        /*삭제기능 있는지 확인*/
+        this.setDelBdList(bdList)
+      })
+    },
+    setDelBdList(data){
+      console.log(data)
+    },
     initNaverMap() {
         // 네이버 지도 API 로드
         const script = document.createElement('script')
