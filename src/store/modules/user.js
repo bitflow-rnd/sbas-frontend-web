@@ -14,7 +14,8 @@ export default {
     smsCrtfSuccess: null,
     attcId: null,
     usersList: null,
-    selectedTabIdx: 0
+    selectedTabIdx: 0,
+    chrgInfo: null,
   },
   getters: {
     getUserInfo: (state) => {
