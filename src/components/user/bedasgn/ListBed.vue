@@ -2468,11 +2468,11 @@
                           <div class="rbox">
                             <label>
                               <input type="radio" name="permission" /><i></i>
-                              <span class="txt">위치지정</span>
+                              <span style='width: 100px' class="txt">위치지정</span>
                             </label>
                             <div class="tbox full">
                               <input
-                                style="margin-left: 5px"
+                                style="margin-left: 1px"
                                 type="text"
                                 v-model="newPt.zip"
                                 readonly
