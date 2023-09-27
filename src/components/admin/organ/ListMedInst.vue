@@ -142,7 +142,7 @@
 
                           <div class="sbox w-175px ms-2">
                             <select :disabled="enableSecondAddressPicker" v-model="filterMedinst['dstrCd2']" @change="changeDstrCd2()">
-                              <option value="" id="null">군/구 전체</option>
+                              <option value="" id="null">시/군/구 전체</option>
                               <option v-for="(item,idx) in cmGugun" :key="idx"
                                       :value="item['cdId']">{{ item['cdNm'] }}
                               </option>
@@ -552,7 +552,7 @@
                         </div>
                       </td>
                       <td role='button'>
-                        {{ item.dutyTel1 }} <br>/ {{ item.dutyTel3 }}
+                        {{ item.dutyTel1 }} /<br> {{ item.dutyTel3 }}
                       </td>
                       <td>
                         {{ item.npidIcu }}
@@ -756,7 +756,7 @@
                     @click="tabsMove(2)"
                     :class="{ active: tabidx === 2 }"
                     class="tabs-nav-btn"
-                >병상배정시스템 등록 의료진 <span class="cnt">0</span></router-link
+                >병상배정시스템 등록 의료진 <span class="cnt">{{ medinstDetail.hospMedInfoCount }}</span></router-link
                 >
               </div>
 
@@ -1813,19 +1813,20 @@
                             </thead>
 
                             <tbody>
-                            <tr>
+                            <tr v-for='items in medinstDetail.hospMedInfo' v-bind:key='items'>
+                              <!--TODO 이미지-->
                               <td>
                                 <img src="/img/common/img_profile_default.svg" alt="이미지"/>
                               </td>
-                              <td>서울특별시</td>
-                              <td>주임</td>
-                              <td>김*선</td>
-                              <td>투석, 임산부</td>
-                              <td>병상요청, 병상배정</td>
-                              <td>게스트</td>
-                              <td>2022.12.31</td>
-                              <td>2022.12.31</td>
-                              <td>등록요청</td>
+                              <td>{{ items.dutyDstr1Cd }}</td>
+                              <td>{{ items.ocpCd }}</td>
+                              <td>{{ items.userNm }}</td>
+                              <td>{{ items.ptTypeCdNm }}</td>
+                              <td>{{ items.jobCd }}</td>
+                              <td>{{ items.authCd }}</td>
+                              <td>{{ getUpDt(items.rgstDttm) }}</td>
+                              <td>{{ getUpDt(items.updtDttm) }}</td>
+                              <td>{{ items.userStatCdNm }}</td>
                             </tr>
                             </tbody>
                           </table>
@@ -2113,12 +2114,13 @@ article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
 
 #map {
   position: absolute !important;
-  max-width: 709px;
-  width: -webkit-fill-available;
-  height: 100%;
-  left: 0;
-  top: 0;
+  width: 720px;
+  //width: -webkit-fill-available;
+  height: 400px;
+  margin: 0;
   padding: 0;
+  top: 0;
+  left: 0;
   border: 1px solid #555;
 }
 
