@@ -509,7 +509,7 @@
 
                           <div class="sbox w-175px ms-3">
                             <select v-model="fsForm.dstrCd2">
-                              <option value="null">시/군/구 선택</option>
+                              <option value="null">시/군/구</option>
                               <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
                               </option>
@@ -682,7 +682,7 @@
 
                           <div class="sbox w-175px ms-3">
                             <select v-model="fsDetail.dstrCd2">
-                              <option value="null">구/군</option>
+                              <option value="null">시/군/구</option>
                               <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
                               </option>
@@ -1452,7 +1452,7 @@ export default {
         this.$store.dispatch('admin/getGuGun',this.filterFs.dstrCd1)
       }
       this.filterFs.dstrCd2=''
-      // this.getFireStatn()
+      this.getFireStatn()
     },
     getTelno,
     initNaverMap() {
@@ -1496,8 +1496,10 @@ export default {
       }
     },
     getFs(data) {
-      const instId = {instId: data.instId}
-      this.$store.dispatch('admin/getFiremen', instId)
+      const request = { id: data.instId }
+      const request2 = {instId: data.instId}
+      this.$store.dispatch('admin/getFSDetail', request)
+      this.$store.dispatch('admin/getFiremen', request2)
     },
     changePageFs(newPage) {
       this.$store.dispatch('admin/getFireStatn', {
