@@ -263,7 +263,7 @@
   </div>
   <!--end::Header-->
 
-  <my-info-modal v-if="mode==='myinfo'" :userInfo='userInfo' @closeModal='closeModal' />
+  <my-info-modal v-if="mode==='myinfo'" :isChrgInfo='false' :userInfo='userInfo' @closeModal='closeModal' />
 
   <my-info-mod-modal v-if="mode==='myinfomod'" :userInfo='userInfo' @closeModal='closeModal' />
 

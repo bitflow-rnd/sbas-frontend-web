@@ -12,7 +12,9 @@
         <!--begin::Modal header-->
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
           <!--begin::Modal title-->
-          <h2>내 정보</h2>
+          <h2 v-show='!props.isChrgInfo'>내 정보</h2>
+          <h2 v-show='props.isChrgInfo'>담당자 정보</h2>
+
           <!--end::Modal title-->
           <!--begin::Close-->
           <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
@@ -133,7 +135,7 @@
                   </div>
                 </div>
                 <!--begin::Menu item-->
-                <div class="modal-menu-list text-end">
+                <div v-show='!props.isChrgInfo' class="modal-menu-list text-end">
                   <a href="/" class="modal-menu-btn menu-primary">로그아웃</a>
                 </div>
                 <!--end::Menu item-->
@@ -157,6 +159,10 @@ import { getTelno, getAuthCd, getPmgr, getPtType } from '@/util/ui'
 const props = defineProps({
   userInfo: {
     type: Object,
+    required: true
+  },
+  isChrgInfo:{
+    type: Boolean,
     required: true
   }
 })
