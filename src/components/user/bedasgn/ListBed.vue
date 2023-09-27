@@ -2468,11 +2468,11 @@
                           <div class="rbox">
                             <label>
                               <input type="radio" name="permission" /><i></i>
-                              <span class="txt">위치지정</span>
+                              <span style='width: 100px' class="txt">위치지정</span>
                             </label>
                             <div class="tbox full">
                               <input
-                                style="margin-left: 5px"
+                                style="margin-left: 1px"
                                 type="text"
                                 v-model="newPt.zip"
                                 readonly
@@ -3226,7 +3226,7 @@
                                     {{ getTLDt(item.updtDttm, 1) }}
                                   </div>
                                 </div>
-                                <div class="mid-item-box" v-if="item.by">{{ item.by }}</div>
+                                <div class="mid-item-box" v-if="item.by" @click='showChrgDetail(item.chrgUserId)' role='button'>{{ item.by }}</div>
                                 <div class="bottom-item-box">
                                   <div class="item-img-group mb-4">
                                     <div class="img-list">
@@ -4294,6 +4294,8 @@
     <!--end::Modal dialog-->
   </div>
 
+  <my-info-modal v-if="mode==='chrgInfo'" :isChrgInfo='true' :userInfo='chrgInfo' @closeModal='closeChrgDetail' />
+
   <!--end::Modals-->
   <!--  alert창  -->
   <article v-show="isAlert" class="popup popup-confirm" style="z-index: 1600">
@@ -4821,13 +4823,14 @@ import {
   openPopup, reqBedType, toggleCheckbox
 } from '@/util/ui'
 import user from '@/store/modules/user'
+import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 //import mitt from 'mitt'
 
 
 
 export default {
 
-  components: {DataPagination},
+  components: { MyInfoModal, DataPagination},
   name: 'ListBed',
   props: {},
 
@@ -4885,6 +4888,7 @@ export default {
       transCondition1:false,
       transCondition2:false,
       allChked: false,
+      mode:'',
       filter: {
         states: [
           { label: '병상요청', value: 'BAST0003' },
@@ -5035,7 +5039,7 @@ export default {
       'transInfo'
     ]),
     ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip','startLoc','isSpinner']),
-    ...mapState('user', ['userInfo', 'cmSido']),
+    ...mapState('user', ['userInfo', 'cmSido','chrgInfo']),
     ...mapState('admin', ['firestatnList', 'firemenList','medinstList','organMedi']),
 
     startIndex() {
@@ -5110,6 +5114,14 @@ export default {
             this.showModal = null
         }
         this.getBdList()
+    },
+    showChrgDetail(chrgId) {
+      this.$store.dispatch('user/getChrgUserInfo',chrgId)
+      this.mode = 'chrgInfo'
+      //console.log('showChrgDetail', JSON.stringify(this.chrgInfo))
+    },
+    closeChrgDetail(){
+      this.mode=''
     },
     getBdList() {
       //this.search = this.initSearch

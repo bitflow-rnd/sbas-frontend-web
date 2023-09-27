@@ -55,6 +55,9 @@ export default {
       state.userInfo = payload
       localStorage.setItem('userInfo', payload)
     },
+    setChrgUserInfo(state,payload){
+      state.chrgInfo = payload
+    },
     setUsersList(state, payload) {
       state.usersList = payload
     },
@@ -144,6 +147,30 @@ export default {
         .catch((e) => {
           console.log(e)
         })
+    },
+    getChrgUserInfo(comment, id) {
+      return new Promise((resolve, reject)=> {
+        const token = localStorage.getItem('userToken')
+        const url = `${API_PROD}/api/v1/private/user/user/${id}`
+        console.log('담당자정보')
+        axios({
+          method:'get',
+          url:url,
+          headers:{
+            Authorization: `Bearer ${token}`
+          }
+        }).then(response => {
+          if (response.data?.code === '00') {
+            console.log(response.data?.result)
+            comment.commit('setChrgUserInfo', response.data?.result)
+            resolve(response.data?.result)
+          } else {
+            reject('에러')
+          }
+        }).catch((e) => {
+          reject(e)
+        })
+      })
     },
     signup(comment, formData) {
       console.log(JSON.stringify(formData))

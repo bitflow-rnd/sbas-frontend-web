@@ -251,7 +251,7 @@
                       <col style="width: 100px"/>
                     </colgroup>
                     <thead>
-                    <tr class="small">
+                    <tr class="small" style='cursor:default !important'>
                       <th>
                         <div class="cbox">
                           <label>
