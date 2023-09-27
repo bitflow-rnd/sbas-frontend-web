@@ -243,7 +243,7 @@
                           <td>{{ item.dstrCd2 }}</td>
                           <td>{{ item.instNm }}</td>
                           <td>{{ item.chrgTelno }}</td>
-                          <td>{{ item.crewCount?item.crewCount:'0' }}</td>
+                          <td>{{ item.crewCount ?? '0' }}</td>
                           <td>
                             <a
                               @click="handleModal(5, item)"
@@ -509,7 +509,7 @@
 
                           <div class="sbox w-175px ms-3">
                             <select v-model="fsForm.dstrCd2">
-                              <option value="null">구급대 선택</option>
+                              <option value="null">시/군/구</option>
                               <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
                               </option>
@@ -682,7 +682,7 @@
 
                           <div class="sbox w-175px ms-3">
                             <select v-model="fsDetail.dstrCd2">
-                              <option value="null">구/군</option>
+                              <option value="null">시/군/구</option>
                               <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
                               </option>
@@ -846,31 +846,24 @@
                     <tr>
                       <th>주소</th>
                       <td colspan="3">
-                        {{
-                          fsDetail.dstrCd1 +
-                          ' ' +
-                          fsDetail.dstrCd2 +
-                          ' ' +
-                          (fsDetail.detlAddr ? fsDetail.detlAddr : '')
-                        }}
+                        {{ fsDetail.detlAddr ?? '-' }}
                       </td>
                     </tr>
                     <tr>
                       <th>담당자명</th>
-                      <td>{{ fsDetail.chrgNm?fsDetail.chrgNm:'윤성림' }}</td>
+                      <td>{{ fsDetail.chrgNm ?? '-' }}</td>
                       <th>연락처</th>
-                      <td>{{ fsDetail.chrgTelno }}</td>
+                      <td>{{ fsDetail.chrgTelno ?? '-' }}</td>
                     </tr>
                     <tr>
                       <th>위도,경도</th>
                       <td colspan="3">
-                        35.9561644, 128.5653029
-                        <!-- {{ fsDetail.lat ? fsDetail.lat + ', ' + fsDetail.lon : '' }} -->
+                         {{ fsDetail.lat ? fsDetail.lat + ', ' + fsDetail.lon : '-' }}
                       </td>
                     </tr>
                     <tr>
                       <th>차량번호</th>
-                      <td colspan="3">123가4567, 45노0532, 747하3366</td>
+                      <td colspan="3">{{ fsDetail.vecno ?? '-' }}</td>
                     </tr>
 
                     <tr>
@@ -967,7 +960,7 @@
                     <tr>
                       <th>구급대 주소</th>
                       <td>
-                        {{ fsDetail.dstrCd1 + ' ' + fsDetail.dstrCd2 + ' ' + fsDetail.detlAddr }}
+                        {{ fsDetail.detlAddr }}
                       </td>
                       <th>구급대명</th>
                       <td>{{ fsDetail.instNm }}</td>
@@ -1118,7 +1111,7 @@
                     <tr>
                       <th>구급대 주소</th>
                       <td>
-                        {{ fsDetail.dstrCd1 + ' ' + fsDetail.dstrCd2 + ' ' + fsDetail.detlAddr }}
+                        {{ fsDetail.detlAddr }}
                       </td>
                       <th>구급대명</th>
                       <td>{{ fsDetail.instNm }}</td>
@@ -1165,7 +1158,7 @@
                               style="height: 120px"
                             ></textarea>
                             <div class="limit-box">
-                              <span id="textarea5">{{ fmDetail.rmk.length }}</span
+                              <span id="textarea5">{{ fmDetail.rmk?.length ?? 0 }}</span
                               >/500자
                             </div>
                           </div>
@@ -1267,7 +1260,7 @@
                   <tbody>
                     <tr>
                       <th>구급대 주소</th>
-                      <td>{{ fsDetail.dstrCd1 + ' ' + fsDetail.dstrCd2 }}</td>
+                      <td>{{ fsDetail.detlAddr }}</td>
                       <th>구급대명</th>
                       <td>{{ fsDetail.instNm }}</td>
                     </tr>
@@ -1374,7 +1367,9 @@ export default {
       inputValue: null,
       statnDetail: null,
       delFmInfo: [],
-      allChked: false
+      allChked: false,
+      naverMap: null,
+      marker: null,
     }
   },
   computed: {
@@ -1468,20 +1463,23 @@ export default {
       script.defer = true
       document.head.appendChild(script)
     },
-    loadNaverMapAsync() {
-      // 네이버 지도 생성 // 35.9561644!4d128.5653029
-      const map = new window.naver.maps.Map('map', {
-        center: new window.naver.maps.LatLng(35.9561644, 128.5653029),
-        zoom: 15,
-        zoomControlOptions: {
-          style: window.naver.maps.ZoomControlStyle.SMALL,
-          position: window.naver.maps.Position.TOP_RIGHT
-        }
-      })
-      new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(35.9561644, 128.5653029),
-        map: map
-      })
+    loadNaverMapAsync(lat, lon) {
+      if (this.naverMap === null) {
+        this.naverMap = new window.naver.maps.Map('map', {
+          center: new window.naver.maps.LatLng(lat, lon),
+          zoom: 15,
+        });
+      } else {
+        this.naverMap.setCenter(new window.naver.maps.LatLng(lat, lon));
+      }
+      if (this.marker === null) {
+        this.marker = new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(lat, lon),
+          map: this.naverMap,
+        });
+      } else {
+        this.marker.setPosition(new window.naver.maps.LatLng(lat, lon));
+      }
     },
     updateCharacterCount() {
       if (this.fsDetail.rmk === null || this.fsForm.rmk === '') {
@@ -1584,9 +1582,8 @@ export default {
       } else if (idx === 1) {
         /*상세*/ const request = { id: data.instId }
         this.$store.dispatch('admin/getFSDetail', request)
-        this.$store.dispatch('admin/getFiremen', request)
         this.toggleModal(idx)
-        this.loadNaverMapAsync()
+        this.loadNaverMapAsync(data.lat, data.lon)
       } else if (idx === 2) {
         /*구급대원등록*/ console.log('대원등록')
         this.toggleModal(idx)
@@ -1626,7 +1623,7 @@ export default {
 #map {
   position: absolute !important;
   width: 530px;
-  height: 100%;
+  height: 430px;
   margin: 0;
   padding: 0;
   top: 0;

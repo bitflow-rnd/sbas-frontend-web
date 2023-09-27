@@ -326,7 +326,7 @@ export default {
                 method:"get",
                 url:url
             }).then(response =>{
-                console.log('구급대목록')
+                console.log('구급대 상세')
                 if(response.data.code==='00'){
                     comment.commit('setFSDetail',response.data?.result)
                 }
@@ -341,7 +341,7 @@ export default {
                 method:"get",
                 url:url
             }).then(response =>{
-                console.log('구급대목록')
+                console.log('구급대원 상세')
                 if(response.data.code==='00'){
                     comment.commit('setFMDetail',response.data?.result)
                 }
