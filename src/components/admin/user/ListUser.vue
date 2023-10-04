@@ -532,7 +532,7 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" v-model="form.telno" />
+                            <input type="text" v-model="form.telno" @input='removeHyphens'/>
                           </div>
                         </div>
                       </td>
@@ -599,38 +599,10 @@
                       <th>소속기관 유형 <span class="text-primary">*</span></th>
                       <td>
                         <div class="item-cell-box full">
-                          <div class="rbox">
+                          <div class='rbox' :class="{ 'ms-4': index > 0 }" v-for='(option, index) in instTypeOptions' :key='option.value'>
                             <label>
-                              <input type="radio" v-model="form.instTypeCd" value="ORGN0003" />
-                              <i></i><span class="txt">보건소</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" v-model="form.instTypeCd" value="ORGN0001" />
-                              <i></i><span class="txt">병상배정반</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" v-model="form.instTypeCd" value="ORGN0004" />
-                              <i></i><span class="txt">의료진</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" v-model="form.instTypeCd" value="ORGN0002" />
-                              <i></i><span class="txt">구급대</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" v-model="form.instTypeCd" value="ORGN0005" />
-                              <i></i><span class="txt">전산담당</span>
+                              <input type='radio' v-model='form.instTypeCd' :value='option.value' />
+                              <i></i><span class='txt'>{{ option.label }}</span>
                             </label>
                           </div>
                         </div>
@@ -802,15 +774,19 @@
                       <td colspan="3" class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
-                            <select v-model="form.dutyDstr1Cd">
-                              <option>대구광역시</option>
-                              <option>서울특별시</option>
+                            <select v-model="form.dutyDstr1Cd" @change="getGugun(form.dutyDstr1Cd)">
+                              <option value=null>시/도 전체</option>
+                              <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
+                                {{ item.cdNm }}
+                              </option>
                             </select>
                           </div>
-
                           <div class="sbox w-175px ms-2">
                             <select v-model="form.dutyDstr2Cd">
-                              <option>전체</option>
+                              <option value=null>시/군/구 전체</option>
+                              <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
+                                {{ item.cdNm }}
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -828,7 +804,7 @@
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
                             <select v-model="form.instId">
-                              <option>국립암센터</option>
+                              <option value='INST000000'>직접입력</option>
                             </select>
                           </div>
                           <div class="tbox full ms-2">
@@ -845,21 +821,18 @@
                           </div>
                         </div>
                       </td>
-                      <th>직급 <span class="text-primary">*</span></th>
+                      <th>직급</th>
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
                             <input type="text" v-model="form.ocpCd" />
                           </div>
                         </div>
-                        <div v-show="false" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 직급 입력 여부 확인 문구</div>
-                        </div>
                       </td>
                     </tr>
 
                     <tr>
-                      <th>담당환자 유형 <span class="text-primary">*</span></th>
+                      <th>담당환자 유형</th>
                       <td colspan="3">
                         <div class="item-cell-box">
                           <div class="cbox">
@@ -2504,7 +2477,7 @@ export default {
     ...mapState('admin', ['cmSido','cmGugun','userList', 'usrDetail'])
   },
   created() {
-    this.$store.dispatch('admin/getSido')
+    // this.$store.dispatch('admin/getSido')
     this.initSearch = JSON.parse(JSON.stringify(this.search))
     this.search = this.initSearch
   },
@@ -2525,22 +2498,29 @@ export default {
       content: '',
       characterCount: 0,
       form: {
-        id: '',
-        pw: '',
-        userNm: '',
+        id: null,
+        pw: null,
+        userNm: null,
         telno: '',
-        jobCd: '',
-        ocpCd: '',
+        jobCd: null,
+        ocpCd: null,
         ptTypeCd: [],
-        instTypeCd: '',
-        instId: '',
-        instNm: '',
-        dutyDstr1Cd: '',
-        dutyDstr2Cd: '',
-        attcId: '',
-        btDt: '',
-        authCd: ''
-      }
+        instTypeCd: null,
+        instId: null,
+        instNm: null,
+        dutyDstr1Cd: null,
+        dutyDstr2Cd: null,
+        attcId: null,
+        btDt: null,
+        authCd: null
+      },
+      instTypeOptions: [
+        { value: 'ORGN0001', label: '병상배정반' },
+        { value: 'ORGN0002', label: '구급대' },
+        { value: 'ORGN0003', label: '보건소' },
+        { value: 'ORGN0004', label: '의료진' },
+        { value: 'ORGN0005', label: '전산담당' },
+      ],
     }
   },
   setup() {
@@ -2785,10 +2765,62 @@ export default {
       /*vuex에 등록됐는지 확인하고 사용자 등록됐다는 알림창 띄우기*/
     },
     addUsrAdmin() {
-      this.$store.dispatch('admin/regUsr', {...this.form, ptTypeCd: this.form['ptTypeCd'].join(';')})
+      const ptTypeCdLength = this.form['ptTypeCd'].length
+      if (this.validateForm()) {
+        if (ptTypeCdLength > 0) {
+          this.$store.dispatch('admin/regUsr', { ...this.form, ptTypeCd: this.form['ptTypeCd'].join(';') })
+            .then(() => {
+              this.alertOpen('사용자를 등록하였습니다')
+            })
+        } else {
+          this.$store.dispatch('admin/regUsr', { ...this.form, ptTypeCd: null })
+            .then(() => {
+              this.alertOpen('사용자를 등록하였습니다')
+            })
+        }
+        // this.$store.dispatch('admin/regUsr', {...this.form, ptTypeCd: this.form['ptTypeCd'].join(';')})
+      }
     },
     test() {
       console.log('test')
+    },
+    validateForm() {
+      if (!this.form.id) {
+        this.alertOpen('아이디는 필수값입니다.')
+        return false
+      }
+      if (!this.form.telno) {
+        this.alertOpen('휴대폰번호는 필수값입니다.')
+        return false
+      }
+      if (this.form.userNm === null) {
+        this.alertOpen('이름은 필수값입니다.')
+        return false
+      }
+      if (this.form.instTypeCd === null) {
+        this.alertOpen('소속기관 유형은 필수값입니다.')
+        return false
+      }
+      if (this.form.jobCd === null) {
+        this.alertOpen('권한 그룹은 필수값입니다.')
+        return false
+      }
+      if (this.form.authCd === null) {
+        this.alertOpen('세부 권한은 필수값입니다.')
+        return false
+      }
+      if (this.form.dutyDstr1Cd === null) {
+        this.alertOpen('담당 근무지역은 필수값입니다.')
+        return false
+      }
+      if (this.form.instNm === null) {
+        this.alertOpen('소속기관명은 필수값입니다.')
+        return false
+      }
+      return true
+    },
+    removeHyphens() {
+      this.form.telno = this.form.telno.replace(/-/g, '');
     }
   }
 }
