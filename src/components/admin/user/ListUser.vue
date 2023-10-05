@@ -540,12 +540,12 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="password" />
+                            <input type="password" v-model='form.valPw'/>
                           </div>
                         </div>
-                        <div v-show="false" class="item-cell-box full">
+                        <div v-show="passwordsMatch" class="item-cell-box full">
                           <div class="text-danger pt-2 fs-12px">
-                            ※ 비밀번호와 비밀번호 확인 일치 확인 문구
+                            ※ 비밀번호가 일치하지 않습니다.
                           </div>
                         </div>
                       </td>
@@ -804,6 +804,7 @@
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
                             <select v-model="form.instId">
+                              <option value=null>소속기관 선택</option>
                               <option value='INST000000'>직접입력</option>
                             </select>
                           </div>
@@ -897,7 +898,7 @@
                                 v-model="form.ptTypeCd"
                                 value="PTTP0006"
                               /><i></i>
-                              <span class="txt">중환자</span>
+                              <span class="txt">인공호흡기 사용</span>
                             </label>
                           </div>
                         </div>
@@ -2474,7 +2475,10 @@ import { getAuthCd, getDt, getGugun, getPtType, getSido, setSearchStr, toggleChe
 export default {
   components: {},
   computed: {
-    ...mapState('admin', ['cmSido','cmGugun','userList', 'usrDetail'])
+    ...mapState('admin', ['cmSido','cmGugun','userList', 'usrDetail']),
+    passwordsMatch() {
+      return this.form.pw !== this.form.valPw;
+    },
   },
   created() {
     // this.$store.dispatch('admin/getSido')
@@ -2500,6 +2504,7 @@ export default {
       form: {
         id: null,
         pw: null,
+        valPw: null,
         userNm: null,
         telno: '',
         jobCd: null,
@@ -2791,6 +2796,10 @@ export default {
       }
       if (!this.form.telno) {
         this.alertOpen('휴대폰번호는 필수값입니다.')
+        return false
+      }
+      if (!this.form.pw) {
+        this.alertOpen('비밀번호는 필수값입니다.')
         return false
       }
       if (this.form.userNm === null) {
