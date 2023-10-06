@@ -133,6 +133,20 @@
             <!--end:Menu item-->
             <!--begin:Menu item-->
             <router-link
+              to="/user/medinst/list"
+              @click="handlefunc(getMediList, 7)"
+              class="menu-item me-0 me-lg-1"
+              :class="{ here: selectedTabIdx === 7 }"
+            >
+              <!--begin:Menu link-->
+              <span class="menu-link">
+                <span class="menu-title">의료기관 조회</span>
+              </span>
+              <!--end:Menu link-->
+            </router-link>
+            <!--end:Menu item-->
+            <!--begin:Menu item-->
+            <router-link
               to=""
               @click="handlefunc(getUserList, 5)"
               :class="{ here: selectedTabIdx === 5 }"
@@ -742,6 +756,10 @@ export default {
     getPtList() {
       this.$store.dispatch('patnt/getPatntList')
       this.$store.dispatch('admin/getSido')
+    },
+    getMediList() {
+      this.$store.dispatch('admin/getMedinst', { dstrCd1: null, dstrCd2: null })
+
     },
     showUserDetail() {
       this.mode = 'myinfo'

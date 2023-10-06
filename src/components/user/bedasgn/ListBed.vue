@@ -545,7 +545,7 @@
                             <label> <input @click='toggleCheckbox' v-model='item.chked' @change='setDelBdList(item)' type="checkbox" /><i></i> </label>
                           </div>
                         </td>
-                        <td>{{ sortedBdList.length - i }}</td>
+                        <td>{{ sortedBdList.length - i - startIndex }}</td>
                         <td>{{ item.bedStatCdNm }}</td>
                         <td>{{ maskingNm(item.ptNm) }}</td>
                         <td>{{ item.gndr }}자</td>
@@ -4881,6 +4881,7 @@ export default {
   },
   data() {
     return {
+      sortedList:[],
       reqBedType,
       displayRowsCount: 15,
       page: 1,
@@ -5069,14 +5070,17 @@ export default {
           return acc.concat(
             item.items.map((innerItem) => {
               innerItem.state = idx
+              this.sortedList = innerItem
               return innerItem
             })
           )
         }, [])
       }
       if (this.filter.selectedStates.length === 0) {
+        //this.sortedList = list
         return list
       } else {
+        //this.sortedList = list.filter((item) => this.filter.selectedStates.includes(item.state))
         return list.filter((item) => this.filter.selectedStates.includes(item.state))
       }
     }
