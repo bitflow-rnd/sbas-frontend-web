@@ -107,8 +107,8 @@
                         <td>
                           <div class="item-cell-box">
                             <div class="sbox w-175px">
-                              <select v-model="search.dstrCd1" @change="getGugun(search.dstrCd1)">
-                                <option value=null>시/도 전체</option>
+                              <select v-model="search.dstrCd1" @change="changeDstrCd1()">
+                                <option value="" id="null">시/도 전체</option>
                                 <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
                                   {{ item.cdNm }}
                                 </option>
@@ -116,8 +116,8 @@
                             </div>
 
                             <div class="sbox w-175px ms-2">
-                              <select v-model="search.dstrCd2">
-                                <option value=null>시/군/구 전체</option>
+                              <select v-model="search.dstrCd2" :disabled="enableSecondAddressPicker" @change="changeDstrCd2()">
+                                <option value="" id="null">시/군/구 전체</option>
                                 <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
                                   {{ item.cdNm }}
                                 </option>
@@ -2474,7 +2474,10 @@ import { getAuthCd, getDt, getGugun, getPtType, getSido, setSearchStr, toggleChe
 export default {
   components: {},
   computed: {
-    ...mapState('admin', ['cmSido','cmGugun','userList', 'usrDetail'])
+    ...mapState('admin', ['cmSido','cmGugun','userList', 'usrDetail']),
+    enableSecondAddressPicker() {
+      return this.search['dstrCd1'] === "";
+    }
   },
   created() {
     // this.$store.dispatch('admin/getSido')
@@ -2488,8 +2491,8 @@ export default {
     return {
       isDetail:false,
       search: {
-        dstrCd1: null,
-        dstrCd2: null,
+        dstrCd1: '',
+        dstrCd2: '',
         kwd:'',
         instTypeCd: [],
         ptTypeCd: [],
@@ -2584,6 +2587,19 @@ export default {
     toggleCheckbox,
     getGugun,
     getSido,
+    changeDstrCd1() {
+      this.getSecondAddress(this.search['dstrCd1']);
+      this.search['dstrCd2'] = '';
+      this.searchUsrList();
+    },
+    changeDstrCd2() {
+      this.searchUsrList();
+    },
+    getSecondAddress(address) {
+      if (address) {
+        this.$store.dispatch('admin/getGuGun', address);
+      }
+    },
     updateCharacterCount() {
       this.characterCount = this.content.length
     },
@@ -2612,13 +2628,13 @@ export default {
     },
     searchUsrList(){
       const data = {
-        dstrCd1: this.parseIntData(this.search.dstrCd1),
-        dstrCd2: this.parseIntData(this.search.dstrCd2),
+        dstr1Cd: this.search.dstrCd1 || null,
+        dstr2Cd: this.search.dstrCd2 || null,
         userNm: this.search.kwd,
         telno: this.search.kwd,
         instTypeCd: this.setSearchStr(this.search.instTypeCd),
         ptTypeCd: this.setSearchStr(this.search.ptTypeCd),
-        statClasNm: this.setSearchStr(this.search.statClasNm)
+        userStatCd: this.setSearchStr(this.search.statClasNm)
       }
       console.log(data)
       this.$store.dispatch('admin/getUserList',data)
