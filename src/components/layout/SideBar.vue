@@ -11,7 +11,7 @@
           <ul class="depth1">
             <li class="depth1-box">
               <router-link
-                to=""
+                to="/admin/user/list"
                 @click="handlefunc(getUserList, 0)"
                 :class="{ active: tabidx === 0 }"
                 class="depth1-btn"

@@ -1506,14 +1506,14 @@ export default {
         ...this.filterFsData,
         pageFs: newPage
       });
-      this.pageFs = newPage;
+      this.pageFs = newPage
     },
     changePageFm(newPage) {
       this.$store.dispatch('admin/getFiremen', {
         ...this.filterFmData,
         pageFs: newPage
       });
-      this.pageFs = newPage;
+      this.pageFs = newPage
     },
     getFiremen(){
       this.$store.dispatch('admin/getFiremen',this.filterFmData)
