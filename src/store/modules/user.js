@@ -111,7 +111,7 @@ export default {
       }
 
       const url = `${API_PROD}/api/v1/public/user/login`
-      axios({
+      return axios({
         method: 'post',
         url: url,
         data: request
@@ -125,6 +125,7 @@ export default {
         })
         .catch((e) => {
           console.log(e)
+          return e.response.data.message
         })
     },
     getUserInfo(comment, id) {
@@ -140,7 +141,6 @@ export default {
       })
         .then((response) => {
           if (response.data?.code === '00') {
-            console.log(response.data?.result)
             comment.commit('setUserInfo', response.data?.result)
             return router.push('/dashbd')
           }
@@ -176,19 +176,20 @@ export default {
     signup(comment, formData) {
       console.log(JSON.stringify(formData))
     },
-    reqUserReg(comment, data){
-      const request = {...data, pw: encodingPassword(data['pw'])}
+    reqUserReg(comment, data) {
+      const request = { ...data, pw: encodingPassword(data['pw']) }
       const url = `${API_PROD}/api/v1/public/user/requserreg`
 
-      axios({
-        method:"post",
-        url:url,
-        data: request,
-      }).then(response=>{
-        comment.commit('code', response.data.code)
-        console.log(response, "사용자 등록 요청")
-      }).catch(e =>{
-        console.log(e)
+      return axios({
+        method: 'post',
+        url: url,
+        data: request
+      }).then(response => {
+        console.log(response, '사용자 등록 요청')
+        return response.data.code
+      }).catch(e => {
+        console.log('error >>> ', e)
+        return e.response.data.code
       })
     },
     sendSms(comment, num) {

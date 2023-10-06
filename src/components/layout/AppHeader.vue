@@ -745,11 +745,11 @@ export default {
     },
     showUserDetail() {
       this.mode = 'myinfo'
-      console.log('showUserDetail', JSON.stringify(this.userInfo))
+      // console.log('showUserDetail', JSON.stringify(this.userInfo))
     },
     showUserInvite() {
       this.mode = 'invite'
-      console.log('showUserInvite', JSON.stringify(this.userInfo))
+      // console.log('showUserInvite', JSON.stringify(this.userInfo))
     },
     closeModal() {
       this.mode = ''
