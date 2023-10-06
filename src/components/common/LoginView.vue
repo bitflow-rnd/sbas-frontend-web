@@ -181,13 +181,16 @@
                       <th>휴대폰번호 <span class="text-primary">*</span></th>
                       <td class="vertical-top">
                         <div class="item-cell-box full">
-                          <router-link
-                            to=""
-                            @click="openCertify"
-                            class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"
-                          >
-                            본인인증</router-link
-                          >
+<!--                          <router-link-->
+<!--                            to=""-->
+<!--                            @click="openCertify"-->
+<!--                            class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"-->
+<!--                          >-->
+<!--                            본인인증</router-link-->
+<!--                          >-->
+                          <div class="tbox full">
+                            <input type="text" v-model="form.telno" @input='removeHyphens'/>
+                          </div>
                         </div>
                       </td>
                       <th>비밀번호 확인 <span class="text-primary">*</span></th>
@@ -796,6 +799,24 @@ export default {
         btDt: null,
         authCd: null
       },
+      initialForm: {
+        id: null,
+        pw: null,
+        valPw: null,
+        userNm: null,
+        telno: '',
+        jobCd: null,
+        ocpCd: null,
+        ptTypeCd: [],
+        instTypeCd: null,
+        instId: null,
+        instNm: null,
+        dutyDstr1Cd: null,
+        dutyDstr2Cd: null,
+        attcId: null,
+        btDt: null,
+        authCd: null
+      },
       instTypeOptions: [
         { value: 'ORGN0001', label: '병상배정반' },
         { value: 'ORGN0002', label: '구급대' },
@@ -899,6 +920,12 @@ export default {
           console.log('제출' + values)
           this.getSido()
           this.$store.dispatch('user/login', values)
+            .then(message => {
+              if (message) {
+                this.alertOpen(message);
+                console.log('응답 메시지:', message);
+              }
+            })
         }
       } else {
         console.log('reCAPTCHA 안함')
@@ -977,12 +1004,70 @@ export default {
       }
     },
     reqUserReg() {
-      const ptTypeCdLength = this.form['ptTypeCd'].length
-        if (ptTypeCdLength > 0) {
-          this.$store.dispatch('user/reqUserReg', { ...this.form, ptTypeCd: this.form['ptTypeCd'].join(';') });
-        } else {
-          this.$store.dispatch('user/reqUserReg', { ...this.form, ptTypeCd: null });
-        }
+      const ptTypeCd = this.form['ptTypeCd']
+      const requestData = {
+        ...this.form,
+        ptTypeCd: ptTypeCd.length > 0 ? ptTypeCd.join(';') : null
+      }
+
+      if (this.validateForm()) {
+        this.$store.dispatch('user/reqUserReg', requestData)
+          .then(code => {
+            if (code === '00') {
+              this.alertOpen('사용자 등록 요청')
+              this.toggleUserEditModal()
+              this.resetFormData()
+            } else {
+              this.alertOpen('사용자 등록 요청 실패')
+            }
+            console.log('응답 코드:', code)
+          })
+      }
+    },
+    validateForm() {
+      if (!this.form.id) {
+        this.alertOpen('아이디는 필수값입니다.')
+        return false
+      }
+      if (!this.form.telno) {
+        this.alertOpen('휴대폰번호는 필수값입니다.')
+        return false
+      }
+      if (!this.form.pw) {
+        this.alertOpen('비밀번호는 필수값입니다.')
+        return false
+      }
+      if (this.form.userNm === null) {
+        this.alertOpen('이름은 필수값입니다.')
+        return false
+      }
+      if (this.form.instTypeCd === null) {
+        this.alertOpen('소속기관 유형은 필수값입니다.')
+        return false
+      }
+      if (this.form.jobCd === null) {
+        this.alertOpen('권한 그룹은 필수값입니다.')
+        return false
+      }
+      if (this.form.authCd === null) {
+        this.alertOpen('세부 권한은 필수값입니다.')
+        return false
+      }
+      if (this.form.dutyDstr1Cd === null) {
+        this.alertOpen('담당 근무지역은 필수값입니다.')
+        return false
+      }
+      if (this.form.instNm === null) {
+        this.alertOpen('소속기관명은 필수값입니다.')
+        return false
+      }
+      return true
+    },
+    removeHyphens() {
+      this.form.telno = this.form.telno.replace(/-/g, '');
+    },
+    resetFormData() {
+      this.form = { ...this.initialForm };
     },
   },
   mounted() {

@@ -2519,6 +2519,24 @@ export default {
         btDt: null,
         authCd: null
       },
+      initialForm: {
+        id: null,
+        pw: null,
+        valPw: null,
+        userNm: null,
+        telno: '',
+        jobCd: null,
+        ocpCd: null,
+        ptTypeCd: [],
+        instTypeCd: null,
+        instId: null,
+        instNm: null,
+        dutyDstr1Cd: null,
+        dutyDstr2Cd: null,
+        attcId: null,
+        btDt: null,
+        authCd: null
+      },
       instTypeOptions: [
         { value: 'ORGN0001', label: '병상배정반' },
         { value: 'ORGN0002', label: '구급대' },
@@ -2770,19 +2788,23 @@ export default {
       /*vuex에 등록됐는지 확인하고 사용자 등록됐다는 알림창 띄우기*/
     },
     addUsrAdmin() {
-      const ptTypeCdLength = this.form['ptTypeCd'].length
+      const ptTypeCd = this.form['ptTypeCd']
+      const requestData = {
+        ...this.form,
+        ptTypeCd: ptTypeCd.length > 0 ? ptTypeCd.join(';') : null
+      }
+
       if (this.validateForm()) {
-        if (ptTypeCdLength > 0) {
-          this.$store.dispatch('admin/regUsr', { ...this.form, ptTypeCd: this.form['ptTypeCd'].join(';') })
-            .then(() => {
+        this.$store.dispatch('admin/regUsr', requestData)
+          .then(code => {
+            if (code === '00') {
               this.alertOpen('사용자를 등록하였습니다')
-            })
-        } else {
-          this.$store.dispatch('admin/regUsr', { ...this.form, ptTypeCd: null })
-            .then(() => {
-              this.alertOpen('사용자를 등록하였습니다')
-            })
-        }
+              this.toggleModal()
+              this.resetFormData()
+            } else {
+              this.alertOpen('사용자 등록 실패')
+            }
+          })
         // this.$store.dispatch('admin/regUsr', {...this.form, ptTypeCd: this.form['ptTypeCd'].join(';')})
       }
     },
@@ -2830,7 +2852,10 @@ export default {
     },
     removeHyphens() {
       this.form.telno = this.form.telno.replace(/-/g, '');
-    }
+    },
+    resetFormData() {
+      this.form = { ...this.initialForm };
+    },
   }
 }
 </script>
