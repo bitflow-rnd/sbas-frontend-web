@@ -176,7 +176,21 @@ export default {
     signup(comment, formData) {
       console.log(JSON.stringify(formData))
     },
+    reqUserReg(comment, data){
+      const request = {...data, pw: encodingPassword(data['pw'])}
+      const url = `${API_PROD}/api/v1/public/user/requserreg`
 
+      axios({
+        method:"post",
+        url:url,
+        data: request,
+      }).then(response=>{
+        comment.commit('code', response.data.code)
+        console.log(response, "사용자 등록 요청")
+      }).catch(e =>{
+        console.log(e)
+      })
+    },
     sendSms(comment, num) {
       const request = {
         to: num
