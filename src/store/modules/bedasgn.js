@@ -82,7 +82,7 @@ export default {
     /*병상배정목록*/
     async getBdList(comment,data) {
       try {
-        const token = localStorage.getItem('userToken')
+        const token = sessionStorage.getItem('userToken')
         const url = `${API_PROD}/api/v1/private/bedasgn/list`
         console.log('병상배정목록')
 
@@ -111,7 +111,7 @@ export default {
 
     /*감염병 정보 등록 */
     async regDsInfo(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/regdisesinfo`
       const request = data
       console.log('병상배정 - 감염병 정보 등록')
@@ -131,7 +131,7 @@ export default {
     },
     /*중증 정보 등록 */
     async regSvInfo(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/regsevrinfo`
       const request = data
       console.log('병상배정 - 중증 정보 등록')
@@ -151,7 +151,7 @@ export default {
     },
     /*도착지 정보 등록 */
     async regStrtPoint(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/regstrtpoint`
       const request = data
       console.log('병상배정 - 출발지 정보 등록')
@@ -171,7 +171,7 @@ export default {
     },
     /*도착지 정보 등록 */
     async regBedassign(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/bedassignreq`
       const request = data
       console.log('병상배정 - 출발지 정보 등록')
@@ -191,7 +191,7 @@ export default {
     },
     /*타임라인 조회*/
     async getTimeline(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/timeline/${data.ptId}/${data.bdasSeq}`
       console.log('병상배정 - 세부정보1 - 타임라인')
       try {
@@ -217,7 +217,7 @@ export default {
     },
     /*차수별 질병 정보 조회*/
     async getDSInfo(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/disease-info/${data.ptId}`
       // const url = `http://localhost:8080/api/v1/private/patient/disease-info/${data.ptId}`
       console.log('병상배정 - 세부정보 - 질병 정보')
@@ -253,7 +253,7 @@ export default {
     },
     /*출도착정보조회*/
     async getTransInfo(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/transinfo/${data.ptId}/${data.bdasSeq}`
       // const url = `http://localhost:8080/api/v1/private/patient/disease-info/${data.ptId}`
       console.log('병상배정 - 출도착정보조회')
@@ -274,7 +274,7 @@ export default {
 
     /* 병상 승인 - 병상배정반 */
     async aprvBedAsgn(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/bedasgn/reqconfirm`
       const request = data
       console.log('병상승인')
@@ -294,7 +294,7 @@ export default {
     },
     /* 병상 승인 - 의료진 */
     async cfmMedi(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/bedasgn/asgnconfirm`
       const request = data
       console.log('배정승인 - 의료진')
@@ -314,7 +314,7 @@ export default {
     },
     /* 병원 추천 - 병상배정반 */
     async rcmdHpList(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/bedasgn/hosp-list/${data.ptId}/${data.bdasSeq}`
       console.log('추천병원')
       try {
@@ -332,7 +332,7 @@ export default {
     },
     /* 이송처리 - 의료진 */
     async cfmTrsf(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/bedasgn/confirmtransf`
       const request = data
       console.log('이송처리')
@@ -352,7 +352,7 @@ export default {
     },
     /* 입퇴원처리 - 의료진 */
     async cfmHosp(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/bedasgn/confirmhosptlzdiscg`
       const request = data
       console.log('입퇴원처리')

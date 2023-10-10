@@ -143,7 +143,7 @@ export default {
     },
     /*환자 기본 정보 등록 - 1단계*/
     async regBasicInfo(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/regbasicinfo`
       // const url = `http://localhost:8080/api/v1/private/patient/regbasicinfo`
       const request = data
@@ -165,7 +165,7 @@ export default {
     /*역조서 업로드*/
     async uploadRpt(comment, data) {
       comment.commit('startSpinner',1)
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/upldepidreport`
       console.log(data)
       const request = data
@@ -220,7 +220,7 @@ export default {
     },
     /*네이버 주소 찾기*/
     async geoCoding(comment, data) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/test/geocoding-test`
       const request = { query: data[1] }
       try {
