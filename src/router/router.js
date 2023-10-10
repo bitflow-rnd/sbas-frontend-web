@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+const mediInst = () => import('@/components/admin/organ/ListMedInst.vue')
 
 const routes = [
   {
@@ -113,6 +114,11 @@ const routes = [
         path: 'svrt/dashbd',
         name: 'svrt',
         component: () => import('@/components/user/svrt/SvrtDashbd.vue')
+      },
+      {
+        path: 'medinst/list',
+        name: 'listmedinst',
+        component: mediInst
       }
     ]
   },
@@ -144,7 +150,7 @@ const routes = [
       {
         path: 'organ/medinst/list',
         name: 'ListMedInst',
-        component: () => import('@/components/admin/organ/ListMedInst.vue')
+        component: mediInst
       },
       {
         path: 'user/list',

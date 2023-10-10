@@ -209,7 +209,7 @@ export default {
             const request = {...data, pw: encodingPassword(data['pw'])}
             const url = `${API_PROD}/api/v1/admin/user/reg`
             // const url = `http://localhost:8080/api/v1/admin/user/reg`
-            axios({
+            return axios({
                 method:"post",
                 url:url,
                 data: request,
@@ -219,9 +219,11 @@ export default {
             }).then(response=>{
                 console.log(response, "사용자 등록(Admin)")
                 comment.commit('isRegUsr',true)
+                return response.data.code
             }).catch(e =>{
                 comment.commit('isRegUsr',false)
                 console.log(e)
+                return e.response.data.code
             })
         },
         delUsr(comment, data){

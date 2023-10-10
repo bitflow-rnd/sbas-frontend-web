@@ -157,7 +157,7 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" v-model="id" />
+                            <input type="text" v-model="form.id" />
                           </div>
                         </div>
                         <div v-if="validateInput(3)" class="item-cell-box full">
@@ -168,7 +168,7 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="password" v-model="pw" />
+                            <input type="password" v-model="form.pw" />
                           </div>
                         </div>
                         <div v-if="validateInput(4)" class="item-cell-box full">
@@ -181,20 +181,23 @@
                       <th>휴대폰번호 <span class="text-primary">*</span></th>
                       <td class="vertical-top">
                         <div class="item-cell-box full">
-                          <router-link
-                            to=""
-                            @click="openCertify"
-                            class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"
-                          >
-                            본인인증</router-link
-                          >
+<!--                          <router-link-->
+<!--                            to=""-->
+<!--                            @click="openCertify"-->
+<!--                            class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"-->
+<!--                          >-->
+<!--                            본인인증</router-link-->
+<!--                          >-->
+                          <div class="tbox full">
+                            <input type="text" v-model="form.telno" @input='removeHyphens'/>
+                          </div>
                         </div>
                       </td>
                       <th>비밀번호 확인 <span class="text-primary">*</span></th>
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="password" v-model="valPw" />
+                            <input type="password" v-model="form.valPw" />
                           </div>
                         </div>
                         <div v-if="validateInput(5)" class="item-cell-box full">
@@ -210,7 +213,7 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" v-model="userNm" />
+                            <input type="text" v-model="form.userNm" />
                           </div>
                         </div>
                         <div v-if="validateInput(6)" class="item-cell-box full">
@@ -221,7 +224,7 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" v-model="btDt" />
+                            <input type="text" v-model="form.btDt" />
                           </div>
                         </div>
                         <div v-if="validateInput(7)" class="item-cell-box full">
@@ -253,48 +256,14 @@
                       <th>소속기관 유형 <span class="text-primary">*</span></th>
                       <td>
                         <div class="item-cell-box full">
-                          <div class="rbox">
+                          <div class='rbox' :class="{ 'ms-4': index > 0 }" v-for='(option, index) in instTypeOptions' :key='option.value'>
                             <label>
-                              <input
-                                type="radio"
-                                name="public"
-                                value="3"
-                                v-model="instTypeCd"
-                                checked
-                              />
-                              <i></i><span class="txt">보건소</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" name="public" value="1" v-model="instTypeCd" />
-                              <i></i><span class="txt">병상배정반</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" name="public" value="4" v-model="instTypeCd" />
-                              <i></i><span class="txt">의료진</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" name="public" value="2" v-model="instTypeCd" />
-                              <i></i><span class="txt">구급대</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" name="public" value="5" v-model="instTypeCd" />
-                              <i></i><span class="txt">전산담당</span>
+                              <input type='radio' v-model='form.instTypeCd' :value='option.value' />
+                              <i></i><span class='txt'>{{ option.label }}</span>
                             </label>
                           </div>
                         </div>
-                        <div v-if="validateInput(8)" class="item-cell-box full">
+                        <div v-show="false" class="item-cell-box full">
                           <div class="text-danger pt-2 fs-12px">※ 소속기관 선택여부 확인 문구</div>
                         </div>
                       </td>
@@ -306,7 +275,7 @@
                         <div class="item-cell-box full">
                           <article class="permission-selector-layout">
                             <label class="selector-box">
-                              <input type="radio" name="t1" value="1" v-model="authCd" />
+                              <input type="radio" v-model="form.jobCd" value="PMGR0001" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -328,7 +297,7 @@
                             </label>
 
                             <label class="selector-box">
-                              <input type="radio" name="t1" value="2" v-model="authCd" />
+                              <input type="radio" v-model="form.jobCd" value="PMGR0002" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -350,7 +319,7 @@
                             </label>
 
                             <label class="selector-box">
-                              <input type="radio" name="t1" value="3" v-model="authCd" />
+                              <input type="radio" v-model="form.jobCd" value="PMGR0003" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -372,7 +341,7 @@
                             </label>
 
                             <label class="selector-box">
-                              <input type="radio" name="t1" value="4" v-model="authCd" />
+                              <input type="radio" v-model="form.jobCd" value="PMGR0004" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -406,27 +375,25 @@
                         <div class="item-cell-box full">
                           <div class="rbox">
                             <label>
-                              <input type="radio" name="permission" checked />
-                              <i></i
-                              ><span class="txt text-black"
-                                >일반
-                                <span class="fw-normal text-gray-600 ps-2"
-                                  >일반 업무처리 및 사용자 초대 권한</span
-                                ></span
-                              >
+                              <input type="radio" v-model="form.authCd" value="DTPM0001" />
+                              <i></i>
+                              <span class="txt text-black">
+                                일반
+                                <span class="fw-normal text-gray-600 ps-2">
+                                  일반 업무처리 및 사용자 초대 권한
+                                </span>
+                              </span>
                             </label>
                           </div>
 
                           <div class="rbox ms-4">
                             <label>
-                              <input type="radio" name="permission" />
-                              <i></i
-                              ><span class="txt text-black"
-                                >게스트
-                                <span class="fw-normal text-gray-600 ps-2"
-                                  >업무조회만 가능</span
-                                ></span
-                              >
+                              <input type="radio" v-model="form.authCd" value="DTPM0002" />
+                              <i></i>
+                              <span class="txt text-black">
+                                게스트
+                                <span class="fw-normal text-gray-600 ps-2">업무조회만 가능</span>
+                              </span>
                             </label>
                           </div>
                         </div>
@@ -462,15 +429,19 @@
                       <td colspan="3" class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
-                            <select>
-                              <option>대구광역시</option>
-                              <option>서울특별시</option>
+                            <select v-model="form.dutyDstr1Cd" @change="getGugun(form.dutyDstr1Cd)">
+                              <option value=null>시/도 전체</option>
+                              <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
+                                {{ item.cdNm }}
+                              </option>
                             </select>
                           </div>
-
                           <div class="sbox w-175px ms-2">
-                            <select>
-                              <option>전체</option>
+                            <select v-model="form.dutyDstr2Cd">
+                              <option value=null>시/군/구 전체</option>
+                              <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
+                                {{ item.cdNm }}
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -487,13 +458,17 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
-                            <select>
-                              <option>소속기관 선택</option>
-                              <option>국립암센터</option>
+                            <select v-model="form.instId">
+                              <option value=null>소속기관 선택</option>
+                              <option value='INST000000'>직접입력</option>
                             </select>
                           </div>
                           <div class="tbox full ms-2">
-                            <input type="text" value="소속기관명 직접 입력" readonly />
+                            <input
+                              type="text"
+                              v-model="form.instNm"
+                              placeholder="소속기관명 직접 입력"
+                            />
                           </div>
                         </div>
                         <div v-if="validateInput(12)" class="item-cell-box full">
@@ -502,62 +477,83 @@
                           </div>
                         </div>
                       </td>
-                      <th>직급 <span class="text-primary">*</span></th>
+                      <th>직급</th>
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" value="" placeholder="직급, 직무 또는 직위 입력" />
+                            <input type="text" v-model="form.ocpCd" placeholder="직급, 직무 또는 직위 입력" />
                           </div>
-                        </div>
-                        <div v-if="validateInput(13)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 직급 입력 여부 확인 문구</div>
                         </div>
                       </td>
                     </tr>
 
                     <tr>
-                      <th>담당환자 유형 <span class="text-primary">*</span></th>
+                      <th>담당환자 유형</th>
                       <td colspan="3">
                         <div class="item-cell-box">
                           <div class="cbox">
                             <label>
-                              <input type="checkbox" name="state" /><i></i>
-                              <span class="txt">해당없음</span>
+                              <input
+                                type="checkbox"
+                                v-model="form.ptTypeCd"
+                                value="PTTP0001"
+                              /><i></i>
+                              <span class="txt">일반</span>
                             </label>
                           </div>
 
                           <div class="cbox ms-4">
                             <label>
-                              <input type="checkbox" name="state" /><i></i>
-                              <span class="txt">투석</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="state" /><i></i>
-                              <span class="txt">임산부</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="state" /><i></i>
-                              <span class="txt">신생아</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="state" /><i></i>
+                              <input
+                                type="checkbox"
+                                v-model="form.ptTypeCd"
+                                value="PTTP0002"
+                              /><i></i>
                               <span class="txt">소아</span>
                             </label>
                           </div>
 
                           <div class="cbox ms-4">
                             <label>
-                              <input type="checkbox" name="state" /><i></i>
-                              <span class="txt">응급</span>
+                              <input
+                                type="checkbox"
+                                v-model="form.ptTypeCd"
+                                value="PTTP0003"
+                              /><i></i>
+                              <span class="txt">투석</span>
+                            </label>
+                          </div>
+
+                          <div class="cbox ms-4">
+                            <label>
+                              <input
+                                type="checkbox"
+                                v-model="form.ptTypeCd"
+                                value="PTTP0004"
+                              /><i></i>
+                              <span class="txt">산모</span>
+                            </label>
+                          </div>
+
+                          <div class="cbox ms-4">
+                            <label>
+                              <input
+                                type="checkbox"
+                                v-model="form.ptTypeCd"
+                                value="PTTP0005"
+                              /><i></i>
+                              <span class="txt">수술</span>
+                            </label>
+                          </div>
+
+                          <div class="cbox ms-4">
+                            <label>
+                              <input
+                                type="checkbox"
+                                v-model="form.ptTypeCd"
+                                value="PTTP0006"
+                              /><i></i>
+                              <span class="txt">인공호흡기 사용</span>
                             </label>
                           </div>
                         </div>
@@ -600,9 +596,9 @@
 
           <article class="modal-menu-layout1 pt-10">
             <div class="modal-menu-list">
-              <button to="" type="submit" class="modal-menu-btn menu-primary">
-                등록 요청 완료
-              </button>
+              <router-link to="" @click="reqUserReg" class="modal-menu-btn menu-primary"
+                >등록 요청 완료</router-link
+              >
             </div>
           </article>
         </form>
@@ -759,7 +755,7 @@ import { mapState } from 'vuex'
 //import {Form} from "vee-validate";
 import * as yup from 'yup'
 import { ref } from 'vue'
-import { getSido } from '@/util/ui'
+import { getGugun, getSido } from '@/util/ui'
 //import router from "@/router/router";
 
 //import {API_PROD} from "@/util/constantURL";
@@ -769,7 +765,7 @@ export default {
   name: 'LoginView',
   components: {},
   computed: {
-    ...mapState(['smsCrtfSuccess'])
+    ...mapState('admin', ['smsCrtfSuccess', 'cmSido', 'cmGugun'])
   },
   props: {},
   data() {
@@ -784,7 +780,50 @@ export default {
       crtfNo: '',
       /*todo 본인확인코드 선언하고 3step - 기존/발송버튼누른후/Y로 나누기*/
       selectedFile: true,
-      imgUrl: null
+      imgUrl: null,
+      form: {
+        id: null,
+        pw: null,
+        valPw: null,
+        userNm: null,
+        telno: '',
+        jobCd: null,
+        ocpCd: null,
+        ptTypeCd: [],
+        instTypeCd: null,
+        instId: null,
+        instNm: null,
+        dutyDstr1Cd: null,
+        dutyDstr2Cd: null,
+        attcId: null,
+        btDt: null,
+        authCd: null
+      },
+      initialForm: {
+        id: null,
+        pw: null,
+        valPw: null,
+        userNm: null,
+        telno: '',
+        jobCd: null,
+        ocpCd: null,
+        ptTypeCd: [],
+        instTypeCd: null,
+        instId: null,
+        instNm: null,
+        dutyDstr1Cd: null,
+        dutyDstr2Cd: null,
+        attcId: null,
+        btDt: null,
+        authCd: null
+      },
+      instTypeOptions: [
+        { value: 'ORGN0001', label: '병상배정반' },
+        { value: 'ORGN0002', label: '구급대' },
+        { value: 'ORGN0003', label: '보건소' },
+        { value: 'ORGN0004', label: '의료진' },
+        { value: 'ORGN0005', label: '전산담당' },
+      ],
     }
   },
   setup() {
@@ -853,6 +892,7 @@ export default {
     }
   },
   methods: {
+    getGugun,
     getSido,
     validateInput(idx) {
       if (idx === 0) {
@@ -880,6 +920,12 @@ export default {
           console.log('제출' + values)
           this.getSido()
           this.$store.dispatch('user/login', values)
+            .then(message => {
+              if (message) {
+                this.alertOpen(message);
+                console.log('응답 메시지:', message);
+              }
+            })
         }
       } else {
         console.log('reCAPTCHA 안함')
@@ -956,7 +1002,73 @@ export default {
           }
         })
       }
-    }
+    },
+    reqUserReg() {
+      const ptTypeCd = this.form['ptTypeCd']
+      const requestData = {
+        ...this.form,
+        ptTypeCd: ptTypeCd.length > 0 ? ptTypeCd.join(';') : null
+      }
+
+      if (this.validateForm()) {
+        this.$store.dispatch('user/reqUserReg', requestData)
+          .then(code => {
+            if (code === '00') {
+              this.alertOpen('사용자 등록 요청')
+              this.toggleUserEditModal()
+              this.resetFormData()
+            } else {
+              this.alertOpen('사용자 등록 요청 실패')
+            }
+            console.log('응답 코드:', code)
+          })
+      }
+    },
+    validateForm() {
+      if (!this.form.id) {
+        this.alertOpen('아이디는 필수값입니다.')
+        return false
+      }
+      if (!this.form.telno) {
+        this.alertOpen('휴대폰번호는 필수값입니다.')
+        return false
+      }
+      if (!this.form.pw) {
+        this.alertOpen('비밀번호는 필수값입니다.')
+        return false
+      }
+      if (this.form.userNm === null) {
+        this.alertOpen('이름은 필수값입니다.')
+        return false
+      }
+      if (this.form.instTypeCd === null) {
+        this.alertOpen('소속기관 유형은 필수값입니다.')
+        return false
+      }
+      if (this.form.jobCd === null) {
+        this.alertOpen('권한 그룹은 필수값입니다.')
+        return false
+      }
+      if (this.form.authCd === null) {
+        this.alertOpen('세부 권한은 필수값입니다.')
+        return false
+      }
+      if (this.form.dutyDstr1Cd === null) {
+        this.alertOpen('담당 근무지역은 필수값입니다.')
+        return false
+      }
+      if (this.form.instNm === null) {
+        this.alertOpen('소속기관명은 필수값입니다.')
+        return false
+      }
+      return true
+    },
+    removeHyphens() {
+      this.form.telno = this.form.telno.replace(/-/g, '');
+    },
+    resetFormData() {
+      this.form = { ...this.initialForm };
+    },
   },
   mounted() {
     this.emitter.on('toggleUserEditModal', this.toggleUserEditModal)
@@ -965,6 +1077,8 @@ export default {
     if (storedImg) {
       this.imgUrl = storedImg
     }
+
+    this.$store.dispatch('admin/getSido')
   }
 }
 </script>

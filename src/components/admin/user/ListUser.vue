@@ -540,12 +540,12 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="password" />
+                            <input type="password" v-model='form.valPw'/>
                           </div>
                         </div>
-                        <div v-show="false" class="item-cell-box full">
+                        <div v-show="passwordsMatch" class="item-cell-box full">
                           <div class="text-danger pt-2 fs-12px">
-                            ※ 비밀번호와 비밀번호 확인 일치 확인 문구
+                            ※ 비밀번호가 일치하지 않습니다.
                           </div>
                         </div>
                       </td>
@@ -804,6 +804,7 @@
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
                             <select v-model="form.instId">
+                              <option value=null>소속기관 선택</option>
                               <option value='INST000000'>직접입력</option>
                             </select>
                           </div>
@@ -897,7 +898,7 @@
                                 v-model="form.ptTypeCd"
                                 value="PTTP0006"
                               /><i></i>
-                              <span class="txt">중환자</span>
+                              <span class="txt">인공호흡기 사용</span>
                             </label>
                           </div>
                         </div>
@@ -2477,7 +2478,10 @@ export default {
     ...mapState('admin', ['cmSido','cmGugun','userList', 'usrDetail']),
     enableSecondAddressPicker() {
       return this.search['dstrCd1'] === "";
-    }
+    },
+    passwordsMatch() {
+      return this.form.pw !== this.form.valPw;
+    },
   },
   created() {
     // this.$store.dispatch('admin/getSido')
@@ -2503,6 +2507,25 @@ export default {
       form: {
         id: null,
         pw: null,
+        valPw: null,
+        userNm: null,
+        telno: '',
+        jobCd: null,
+        ocpCd: null,
+        ptTypeCd: [],
+        instTypeCd: null,
+        instId: null,
+        instNm: null,
+        dutyDstr1Cd: null,
+        dutyDstr2Cd: null,
+        attcId: null,
+        btDt: null,
+        authCd: null
+      },
+      initialForm: {
+        id: null,
+        pw: null,
+        valPw: null,
         userNm: null,
         telno: '',
         jobCd: null,
@@ -2781,19 +2804,23 @@ export default {
       /*vuex에 등록됐는지 확인하고 사용자 등록됐다는 알림창 띄우기*/
     },
     addUsrAdmin() {
-      const ptTypeCdLength = this.form['ptTypeCd'].length
+      const ptTypeCd = this.form['ptTypeCd']
+      const requestData = {
+        ...this.form,
+        ptTypeCd: ptTypeCd.length > 0 ? ptTypeCd.join(';') : null
+      }
+
       if (this.validateForm()) {
-        if (ptTypeCdLength > 0) {
-          this.$store.dispatch('admin/regUsr', { ...this.form, ptTypeCd: this.form['ptTypeCd'].join(';') })
-            .then(() => {
+        this.$store.dispatch('admin/regUsr', requestData)
+          .then(code => {
+            if (code === '00') {
               this.alertOpen('사용자를 등록하였습니다')
-            })
-        } else {
-          this.$store.dispatch('admin/regUsr', { ...this.form, ptTypeCd: null })
-            .then(() => {
-              this.alertOpen('사용자를 등록하였습니다')
-            })
-        }
+              this.toggleModal()
+              this.resetFormData()
+            } else {
+              this.alertOpen('사용자 등록 실패')
+            }
+          })
         // this.$store.dispatch('admin/regUsr', {...this.form, ptTypeCd: this.form['ptTypeCd'].join(';')})
       }
     },
@@ -2807,6 +2834,10 @@ export default {
       }
       if (!this.form.telno) {
         this.alertOpen('휴대폰번호는 필수값입니다.')
+        return false
+      }
+      if (!this.form.pw) {
+        this.alertOpen('비밀번호는 필수값입니다.')
         return false
       }
       if (this.form.userNm === null) {
@@ -2837,7 +2868,10 @@ export default {
     },
     removeHyphens() {
       this.form.telno = this.form.telno.replace(/-/g, '');
-    }
+    },
+    resetFormData() {
+      this.form = { ...this.initialForm };
+    },
   }
 }
 </script>
