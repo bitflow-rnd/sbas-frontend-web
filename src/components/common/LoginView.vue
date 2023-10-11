@@ -181,16 +181,16 @@
                       <th>휴대폰번호 <span class="text-primary">*</span></th>
                       <td class="vertical-top">
                         <div class="item-cell-box full">
-<!--                          <router-link-->
-<!--                            to=""-->
-<!--                            @click="openCertify"-->
-<!--                            class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"-->
-<!--                          >-->
-<!--                            본인인증</router-link-->
-<!--                          >-->
                           <div class="tbox full">
                             <input type="text" v-model="form.telno" @input='removeHyphens'/>
                           </div>
+                          <router-link
+                            to=""
+                            @click="openCertify"
+                            class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"
+                          >
+                            본인인증</router-link
+                          >
                         </div>
                       </td>
                       <th>비밀번호 확인 <span class="text-primary">*</span></th>
@@ -430,7 +430,7 @@
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
                             <select v-model="form.dutyDstr1Cd" @change="getGugun(form.dutyDstr1Cd)">
-                              <option value=null>시/도 전체</option>
+                              <option :value=null>시/도 전체</option>
                               <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
                               </option>
@@ -438,7 +438,7 @@
                           </div>
                           <div class="sbox w-175px ms-2">
                             <select v-model="form.dutyDstr2Cd">
-                              <option value=null>시/군/구 전체</option>
+                              <option :value=null>시/군/구 전체</option>
                               <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
                               </option>
@@ -458,9 +458,12 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
-                            <select v-model="form.instId">
+                            <select v-model="form.instId" @change='handleInstIdChange' @click='getMedInst'>
                               <option value=null>소속기관 선택</option>
                               <option value='INST000000'>직접입력</option>
+                              <option v-for='(item, i) in organMedi' :key='i' :value='item.instId'>
+                                {{ item.instNm }}
+                              </option>
                             </select>
                           </div>
                           <div class="tbox full ms-2">
@@ -468,6 +471,7 @@
                               type="text"
                               v-model="form.instNm"
                               placeholder="소속기관명 직접 입력"
+                              :disabled="form.instId !== 'INST000000'"
                             />
                           </div>
                         </div>
@@ -765,7 +769,7 @@ export default {
   name: 'LoginView',
   components: {},
   computed: {
-    ...mapState('admin', ['smsCrtfSuccess', 'cmSido', 'cmGugun'])
+    ...mapState('admin', ['smsCrtfSuccess', 'cmSido', 'cmGugun', 'organMedi'])
   },
   props: {},
   data() {
@@ -1068,6 +1072,22 @@ export default {
     },
     resetFormData() {
       this.form = { ...this.initialForm };
+    },
+    getMedInst() {
+      let data = {
+        dstrCd1: this.form.dutyDstr1Cd !== null ? this.form.dutyDstr1Cd : undefined,
+        dstrCd2: this.form.dutyDstr2Cd !== null ? this.form.dutyDstr2Cd : undefined,
+        instTypeCd: this.form.instTypeCd
+      };
+      this.$store.dispatch('admin/getOrganMedi',data)
+    },
+    handleInstIdChange() {
+      const selectedInst = this.organMedi?.find(inst => inst.instId === this.form.instId);
+      if (selectedInst) {
+        this.form.instNm = selectedInst.instNm;
+      } else {
+        this.form.instNm = null;
+      }
     },
   },
   mounted() {
