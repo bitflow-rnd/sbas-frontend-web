@@ -131,7 +131,7 @@ export default {
         },
         /****************user*****************/
         getUserInfo(comment,data){
-            const token = localStorage.getItem('userToken')
+            const token = sessionStorage.getItem('userToken')
             const url = `${API_PROD}/api/v1/private/user/user/${data}`
             //console.log(data.num,'숫자')
             return axios({
@@ -153,7 +153,7 @@ export default {
         },
         getUserList(comment,data){
             return new Promise((resolve,reject) =>{
-                  const token = localStorage.getItem('userToken')
+                  const token = sessionStorage.getItem('userToken')
                   //console.log(token)
                   const url = `${API_PROD}/api/v1/admin/user/users`
                   axios({
@@ -184,7 +184,7 @@ export default {
             })
         },
         getDutyDstr(comment,data){
-            const token = localStorage.getItem('userToken')
+            const token = sessionStorage.getItem('userToken')
             const request = {
                 code: data
             }
@@ -205,7 +205,7 @@ export default {
             })
         },
         regUsr(comment, data){
-            const token= localStorage.getItem('userToken')
+            const token= sessionStorage.getItem('userToken')
             const request = {...data, pw: encodingPassword(data['pw'])}
             const url = `${API_PROD}/api/v1/admin/user/reg`
             // const url = `http://localhost:8080/api/v1/admin/user/reg`
@@ -227,7 +227,7 @@ export default {
             })
         },
         delUsr(comment, data){
-            const token= localStorage.getItem('userToken')
+            const token= sessionStorage.getItem('userToken')
             const request = {
                 id: data
             }
@@ -247,7 +247,7 @@ export default {
             })
         },
         aprvUsr(comment,data){
-            const token= localStorage.getItem('userToken')
+            const token= sessionStorage.getItem('userToken')
             const request = {
                 id: data,
                 isApproved: true
@@ -353,7 +353,7 @@ export default {
         },
         /*구급대 등록*/
         regFS(comment, data) {
-            const token= localStorage.getItem('userToken')
+            const token= sessionStorage.getItem('userToken')
             const request = {
                 instNm:data.instNm,
                 dstrCd1:data.dstrCd1,
@@ -385,7 +385,7 @@ export default {
         },
         /*구급대 수정*/
         editFS(comment, data) {
-            const token= localStorage.getItem('userToken')
+            const token= sessionStorage.getItem('userToken')
             console.log(data," 수정")
             const request ={
                 instId:data.instId,
@@ -414,7 +414,7 @@ export default {
         },
         /*구급대원 등록*/
         regFM(comment, data) {
-            const token= localStorage.getItem('userToken')
+            const token= sessionStorage.getItem('userToken')
             const request = {
                 instId:data.instId,
                 crewNm:data.crewNm,
@@ -443,7 +443,7 @@ export default {
         },
         /*구급대원 수정*/
         editFM(comment, data) {
-            const token= localStorage.getItem('userToken')
+            const token= sessionStorage.getItem('userToken')
             console.log(data," 수정")
             const request ={
                 instId:data.instId,
@@ -472,7 +472,7 @@ export default {
         },
         /*구급대원 삭제*/
         delFM(comment, data) {
-            const token= localStorage.getItem('userToken')
+            const token= sessionStorage.getItem('userToken')
             console.log(data," 삭제")
             const request ={
                 instId:data.instId,
@@ -495,7 +495,6 @@ export default {
         },
 
         async getMedinst(comment,request){
-
             // const token = localStorage.getItem('userToken')
             // console.log(data.cd1, data.cd2)
             const url = `${API_PROD}/api/v1/public/organ/medinsts`
@@ -516,7 +515,6 @@ export default {
         },
         /*의료기관 상세*/
         async getMedinstDetail(comment,request){
-
             // const token = localStorage.getItem('userToken')
             // console.log(data.cd1, data.cd2)
             const url = `${API_PROD}/api/v1/public/organ/medinst/${request.hpId}`
@@ -527,18 +525,15 @@ export default {
                 if(response.data.code==='00'){
                     comment.commit('setMedinstDetail',response.data?.result)
                     console.log(response.data)
-
                 }
-
             } catch(e){
                 console.log(e)
             }
 
         },
         /*의료기관 이미지 삭제*/
-
         removeMedinstImg(comment, request) {
-            const token = localStorage.getItem('userToken')
+            const token = sessionStorage.getItem('userToken')
             // console.log(data.cd1, data.cd2)
             const url = `${API_PROD}/api/v1/public/organ/delete-medinstimg/${request.hpId}`;
 
@@ -558,10 +553,8 @@ export default {
                 });
         },
 
-
-
         loadCodeGroupsData() {
-            const token= localStorage.getItem('userToken')
+            const token= sessionStorage.getItem('userToken')
             try {
                 return axios
                     .get(`${API_PROD}/api/v1/admin/common/codegrps`, {
