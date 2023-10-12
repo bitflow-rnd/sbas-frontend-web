@@ -751,6 +751,7 @@ export default {
     getBdList(){
       console.log('리로드')
       //mitt().emit('bdList')
+      this.$store.dispatch('bedasgn/getBdListWeb')
       this.$store.dispatch('bedasgn/getBdList')
     },
     getPtList() {

@@ -363,7 +363,6 @@
                         <td>{{ getrgDt(item.rgstDttm) }}</td>
                         <td>{{ item.userStatCdNm }}</td>
                         <td @click='toggleCheckbox()'>
-                          <!--todo userInfo 정보 비교해서 띄우기? -->
                           <a
                             @click="setUsrSts(item)"
                             class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center"
@@ -2768,7 +2767,7 @@ export default {
       if (this.characterCount !== 0) {
         console.log(id)
         /*todo 탈퇴 확인하려면 주석해제*/
-        //this.$store.dispatch('admin/delUsr',id)
+        this.$store.dispatch('admin/delUsr',id)
         this.isAlertWd = false
         this.alertOpen('회원탈퇴 되었습니다.')
         this.isWithdraw = false
@@ -2780,7 +2779,7 @@ export default {
     aprvUsr(id) {
       console.log(id)
       /*todo 승인 확인하려면 주석해제*/
-      //this.$store.dispatch('admin/aprvUsr',id)
+      this.$store.dispatch('admin/aprvUsr',id)
       this.isAlertWd = false
       this.alertOpen('적용 되었습니다.')
       this.isWithdraw = false

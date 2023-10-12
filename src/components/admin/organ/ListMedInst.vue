@@ -871,7 +871,7 @@
 
                             <tr>
                               <th>주소</th>
-                              <td><!--todo: 우편번호 필요한지 확인-->
+                              <td>
                                 <div class="eclipse-line2-box">
                                   {{ medinstDetail.hospBasicInfo.dutyAddr }}
                                 </div>
