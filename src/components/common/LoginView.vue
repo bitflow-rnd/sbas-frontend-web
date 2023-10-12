@@ -161,7 +161,7 @@
                           </div>
                         </div>
                         <div v-if="validateInput(3)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 아이디 유효성 확인 문구</div>
+                          <div class="text-danger pt-2 fs-12px">※ 아이디를 입력해 주세요.</div>
                         </div>
                       </td>
                       <th>비밀번호 <span class="text-primary">*</span></th>
@@ -172,7 +172,7 @@
                           </div>
                         </div>
                         <div v-if="validateInput(4)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 비밀번호 유효성 확인 문구</div>
+                          <div class="text-danger pt-2 fs-12px">※ 비밀번호를 입력해 주세요.</div>
                         </div>
                       </td>
                     </tr>
@@ -181,28 +181,28 @@
                       <th>휴대폰번호 <span class="text-primary">*</span></th>
                       <td class="vertical-top">
                         <div class="item-cell-box full">
-<!--                          <router-link-->
-<!--                            to=""-->
-<!--                            @click="openCertify"-->
-<!--                            class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"-->
-<!--                          >-->
-<!--                            본인인증</router-link-->
-<!--                          >-->
-                          <div class="tbox full">
-                            <input type="text" v-model="form.telno" @input='removeHyphens'/>
-                          </div>
+<!--                          <div class="tbox full">-->
+<!--                            <input type="text" v-model="form.telno" @input='removeHyphens'/>-->
+<!--                          </div>-->
+                          <button
+                            @click="openCertify"
+                            class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"
+                            :disabled='isCertified'
+                          >
+                            본인인증</button
+                          >
                         </div>
                       </td>
                       <th>비밀번호 확인 <span class="text-primary">*</span></th>
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="password" v-model="form.valPw" />
+                            <input type="password" v-model="valPw" />
                           </div>
                         </div>
                         <div v-if="validateInput(5)" class="item-cell-box full">
                           <div class="text-danger pt-2 fs-12px">
-                            ※ 비밀번호와 비밀번호 확인 일치 확인 문구
+                            ※ 비밀번호가 일치하지 않습니다.
                           </div>
                         </div>
                       </td>
@@ -217,18 +217,18 @@
                           </div>
                         </div>
                         <div v-if="validateInput(6)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 이름 유효성 확인 문구</div>
+                          <div class="text-danger pt-2 fs-12px">※ 이름을 입력해 주세요.</div>
                         </div>
                       </td>
                       <th>생년월일 <span class="text-primary">*</span></th>
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" v-model="form.btDt" />
+                            <input type="text" v-model="form.btDt" placeholder='19000101'/>
                           </div>
                         </div>
                         <div v-if="validateInput(7)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 생년월일 유효성 확인 문구</div>
+                          <div class="text-danger pt-2 fs-12px">※ 생년월일을 입력해 주세요.</div>
                         </div>
                       </td>
                     </tr>
@@ -430,7 +430,7 @@
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
                             <select v-model="form.dutyDstr1Cd" @change="getGugun(form.dutyDstr1Cd)">
-                              <option value=null>시/도 전체</option>
+                              <option :value=null>시/도 전체</option>
                               <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
                               </option>
@@ -438,7 +438,7 @@
                           </div>
                           <div class="sbox w-175px ms-2">
                             <select v-model="form.dutyDstr2Cd">
-                              <option value=null>시/군/구 전체</option>
+                              <option :value=null>시/군/구 전체</option>
                               <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
                               </option>
@@ -458,9 +458,12 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
-                            <select v-model="form.instId">
+                            <select v-model="form.instId" @change='handleInstIdChange' @click='getMedInst'>
                               <option value=null>소속기관 선택</option>
                               <option value='INST000000'>직접입력</option>
+                              <option v-for='(item, i) in organMedi' :key='i' :value='item.instId'>
+                                {{ item.instNm }}
+                              </option>
                             </select>
                           </div>
                           <div class="tbox full ms-2">
@@ -468,6 +471,7 @@
                               type="text"
                               v-model="form.instNm"
                               placeholder="소속기관명 직접 입력"
+                              :disabled="form.instId !== 'INST000000'"
                             />
                           </div>
                         </div>
@@ -614,7 +618,7 @@
     <div class="popup-wrapper">
       <div class="popup-contents">
         <div class="popup-head-box py-5 px-10">
-          <div class="head-tit-box">환자정보 존재</div>
+          <div class="head-tit-box">본인인증</div>
 
           <div class="head-option-box">
             <router-link to="" @click="openCertify" class="popup-close-btn">
@@ -654,8 +658,8 @@
         <div class="popup-body-box py-5 px-10">
           <article class="modal-head-layout1">
             <div class="modal-head-box pb-12">
-              <div class="head-box">휴대폰번호 변경</div>
-              <div class="sub-box">변경하실 휴대폰번호로 인증을 진행해 주세요.</div>
+              <div class="head-box">본인인증</div>
+              <div class="sub-box">입력하신 휴대폰번호로 인증을 진행해 주세요.</div>
             </div>
           </article>
 
@@ -672,10 +676,13 @@
                   <tbody>
                     <tr>
                       <th>휴대폰번호 <span class="text-primary">*</span></th>
-                      <td>
+                      <td style="padding: 10px;">
                         <div class="item-row-box">
                           <div class="item-cell-box">
-                            010-****-1234
+                            <div class="tbox short">
+                              <input type="text" v-model="form.telno" @input='removeHyphens'/>
+                            </div>
+<!--                            {{ // form.telno }}-->
                             <router-link
                               to=""
                               @click="phoneCertify"
@@ -690,10 +697,10 @@
 
                     <tr class="certify-row" style="display: none">
                       <th>인증번호 <span class="text-primary">*</span></th>
-                      <td>
+                      <td style="padding: 10px;">
                         <div class="item-row-box">
                           <div class="item-cell-box">
-                            <div class="tbox full">
+                            <div class="tbox short">
                               <input
                                 type="text"
                                 v-model.trim="crtfNo"
@@ -765,7 +772,7 @@ export default {
   name: 'LoginView',
   components: {},
   computed: {
-    ...mapState('admin', ['smsCrtfSuccess', 'cmSido', 'cmGugun'])
+    ...mapState('admin', ['smsCrtfSuccess', 'cmSido', 'cmGugun', 'organMedi'])
   },
   props: {},
   data() {
@@ -779,12 +786,13 @@ export default {
       pw: '',
       crtfNo: '',
       /*todo 본인확인코드 선언하고 3step - 기존/발송버튼누른후/Y로 나누기*/
+      isCertified: false,
       selectedFile: true,
       imgUrl: null,
+      valPw: null,
       form: {
         id: null,
         pw: null,
-        valPw: null,
         userNm: null,
         telno: '',
         jobCd: null,
@@ -802,7 +810,6 @@ export default {
       initialForm: {
         id: null,
         pw: null,
-        valPw: null,
         userNm: null,
         telno: '',
         jobCd: null,
@@ -897,6 +904,20 @@ export default {
     validateInput(idx) {
       if (idx === 0) {
         this.id = this.id.replace(/[^A-Za-z0-9@.\-_]/g, '')
+      } else if (idx === 3) {
+        return this.form.id === null
+      } else if (idx === 4) {
+        return this.form.pw === null
+      } else if (idx === 5) {
+        return this.form.pw !== this.valPw
+      } else if (idx === 6) {
+        return this.form.userNm === null
+      } else if (idx === 7) {
+        return this.form.btDt === null
+      } else if (idx === 8) {
+        return false
+      } else if (idx === 9) {
+        return false
       }
       return false
     },
@@ -980,7 +1001,7 @@ export default {
       certifyBtns.forEach((btn) => {
         btn.textContent = '재발송'
       })
-      const num = '01082072505'
+      const num = this.form.telno
       this.$store.dispatch('user/sendSms', num)
       this.timerStart()
     },
@@ -991,12 +1012,14 @@ export default {
       } else if (num.length !== 6) {
         this.alertOpen('인증번호를 6자리로\n' + '입력해 주세요.')
       } else {
-        this.$store.dispatch('user/confirmSms', num).then((result) => {
+        this.$store.dispatch('user/confirmSms', { phoneNo: this.form.telno, certNo: num }).then((result) => {
           console.log(this.$store.state.smsCrtfSuccess)
           if (result) {
-            this.openCertify()
-            this.crtfNo = ''
+            this.alertOpen('인증이 완료되었습니다.')
             /* todo 본인확인Flag Y로저장 */
+            this.isCertified = true
+            this.crtfNo = ''
+            this.openCertify()
           } else {
             this.alertOpen('인증번호가 일치하지 않습니다.\n' + '다시 입력해 주세요.')
           }
@@ -1027,6 +1050,10 @@ export default {
     validateForm() {
       if (!this.form.id) {
         this.alertOpen('아이디는 필수값입니다.')
+        return false
+      }
+      if (!this.isCertified) {
+        this.alertOpen('본인인증을 진행해 주세요.')
         return false
       }
       if (!this.form.telno) {
@@ -1068,6 +1095,22 @@ export default {
     },
     resetFormData() {
       this.form = { ...this.initialForm };
+    },
+    getMedInst() {
+      let data = {
+        dstrCd1: this.form.dutyDstr1Cd !== null ? this.form.dutyDstr1Cd : undefined,
+        dstrCd2: this.form.dutyDstr2Cd !== null ? this.form.dutyDstr2Cd : undefined,
+        instTypeCd: this.form.instTypeCd
+      };
+      this.$store.dispatch('admin/getOrganMedi',data)
+    },
+    handleInstIdChange() {
+      const selectedInst = this.organMedi?.find(inst => inst.instId === this.form.instId);
+      if (selectedInst) {
+        this.form.instNm = selectedInst.instNm;
+      } else {
+        this.form.instNm = null;
+      }
     },
   },
   mounted() {
