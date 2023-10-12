@@ -45,13 +45,11 @@ jobs:
   deploy_server_dev:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: shared
-
       - name: Deploy to server 
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
@@ -59,21 +57,19 @@ jobs:
           port: 22
           username: ${{ secrets.FTP_USER_SBAS_WEB }}
           password: ${{ secrets.FTP_PW_SBAS_WEB }}
-          local_path: './dist'
+          local_path: './dist/*'
           remote_path: '/C:/www/dev.smartbas.org'
           sftp_only: true
           sftpArgs: '-o ConnectTimeout=5'
 
-  deploy_server2_test:
+  deploy_server_test:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: shared
-
       - name: Deploy to server 2
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
@@ -81,7 +77,7 @@ jobs:
           port: 22
           username: ${{ secrets.FTP_USER_SBAS_WEB }}
           password: ${{ secrets.FTP_PW_SBAS_WEB }}
-          local_path: './dist'
+          local_path: './dist/*'
           remote_path: '/C:/www/test.smartbas.org'
           sftp_only: true
           sftpArgs: '-o ConnectTimeout=5'
