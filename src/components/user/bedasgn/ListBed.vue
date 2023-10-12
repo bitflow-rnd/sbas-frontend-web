@@ -153,13 +153,10 @@
                                       name="state"
                                       v-model="filter.selectedStates"
                                       :value="idx"
-                                  /><i></i>
-                                  <span class="txt"
-                                  >{{ item.title }}
-                                    <span v-show="item.title !== '완료'" class="cnt ms-1">{{
-                                        item.count
-                                      }}</span></span
-                                  >
+                                      @change="searchBedAsgn" /><i></i>
+                                  <span class="txt">{{ item.title }}
+                                    <span v-show="item.title !== '완료'" class="cnt ms-1">{{item.count }}</span>
+                                  </span>
                                 </label>
                               </div>
                             </div>
@@ -474,13 +471,12 @@
           <!--begin::Card body-->
           <div class="card-body p-8">
             <!--begin::Table-->
-            <h5>
-              검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{
-                countBdList()
-              }}</span>
+            <h5 v-if='bdListWeb!==[]'>
+              검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">
+              {{bdListWeb.count }}</span>
             </h5>
 
-            <article v-if="bdList === []" class="table-list-layout1">
+            <article v-if="bdListWeb === []" class="table-list-layout1">
               <div class="table-body-box">
                 <div class="table-nodata py-40">
                   <div class="img-box">
@@ -491,7 +487,7 @@
                 </div>
               </div>
             </article>
-            <article v-if="bdList !== []" class="table-list-layout1">
+            <article v-if="bdListWeb !== []" class="table-list-layout1">
               <div class="table-body-box">
                 <div class="table-box with-scroll small">
                   <table class="list-table-hoverable">
@@ -532,20 +528,20 @@
                       </tr>
                     </thead>
 
-                    <tbody v-if="sortedBdList.length === 0">
+                    <tbody v-if="bdListWeb.count === 0">
                       <tr>
                         <td colspan="16">내역이 없습니다</td>
                       </tr>
                     </tbody>
 
-                    <tbody v-if="sortedBdList.length !== 0">
-                      <tr v-for="(item, i) in sortedBdList" :key="i" @click='openBedMod(item)'>
+                    <tbody v-if="bdListWeb.count !== 0">
+                      <tr v-for="(item, i) in bdListWeb.items" :key="i" @click='openBedMod(item)'>
                         <td @click='toggleCheckbox'>
                           <div @click='toggleCheckbox' class="cbox d-flex justify-content-center">
                             <label> <input @click='toggleCheckbox' v-model='item.chked' @change='setDelBdList(item)' type="checkbox" /><i></i> </label>
                           </div>
                         </td>
-                        <td>{{ sortedBdList.length - i - startIndex }}</td>
+                        <td>{{ bdListWeb.count - i - startIndex }}</td>
                         <td>{{ item.bedStatCdNm }}</td>
                         <td>{{ maskingNm(item.ptNm) }}</td>
                         <td>{{ item.gndr }}자</td>
@@ -575,7 +571,7 @@
             <data-pagination
                 @change="changePage"
                 :display-rows-count="displayRowsCount"
-                :data-length="sortedBdList.length"
+                :data-length="bdListWeb.count"
             ></data-pagination>
 
             <!--end::Table-->
@@ -5028,6 +5024,7 @@ export default {
     ...mapState('bedasgn', [
       'bdList',
       'bdList2',
+      'bdListWeb',
       'bdCnt',
       'bdDetail',
       'newPtInfo',
@@ -5088,7 +5085,7 @@ export default {
   methods: {
     toggleCheckbox,
     changePage(newPage) {
-      this.$store.dispatch('bedasgn/getBdList', {
+      this.$store.dispatch('bedasgn/getBdListWeb', {
         ...this.filterData,
         page: newPage
       });
@@ -5130,6 +5127,7 @@ export default {
     getBdList() {
       //this.search = this.initSearch
       this.$store.dispatch('bedasgn/getBdList')
+      this.$store.dispatch('bedasgn/getBdListWeb')
     },
     countBdList() {
       if (this.filter.selectedStates.length === 0) {
@@ -5146,7 +5144,7 @@ export default {
       }
     },
     searchBedAsgn(){
-      this.$store.dispatch('bedasgn/getBdList', this.filterData);
+      this.$store.dispatch('bedasgn/getBdListWeb', this.filterData);
       this.page = 1;
     },
     getMedInst(){
