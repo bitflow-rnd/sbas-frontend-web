@@ -11,7 +11,9 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         node-version: [18.17.0]
@@ -36,48 +38,26 @@ jobs:
     - name: Build page
       run: yarn build
 
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+    - name: deploy file to server_dev
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
       with:
-        name: shared
-        path: ./dist
-
-  deploy_server_dev:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: shared
-      - name: Deploy to server 
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
           server: '${{ secrets.FTP_HOST_SBAS_WEB }}'
           port: 22
-          username: ${{ secrets.FTP_USER_SBAS_WEB }}
-          password: ${{ secrets.FTP_PW_SBAS_WEB }}
+          username: ${{ secrets.FTP_USER_SBAS_WEB }}             
+          password: ${{ secrets.FTP_PW_SBAS_WEB }}                    
           local_path: './dist/*'
           remote_path: '/C:/www/dev.smartbas.org'
-          sftp_only: true
+          sftp_only: true          
           sftpArgs: '-o ConnectTimeout=5'
 
-  deploy_server_test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: shared
-      - name: Deploy to server 2
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
+    - name: deploy file to server_test
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      with:
           server: '${{ secrets.FTP_HOST_SBAS_WEB }}'
           port: 22
-          username: ${{ secrets.FTP_USER_SBAS_WEB }}
-          password: ${{ secrets.FTP_PW_SBAS_WEB }}
+          username: ${{ secrets.FTP_USER_SBAS_WEB }}             
+          password: ${{ secrets.FTP_PW_SBAS_WEB }}                    
           local_path: './dist/*'
           remote_path: '/C:/www/test.smartbas.org'
-          sftp_only: true
+          sftp_only: true          
           sftpArgs: '-o ConnectTimeout=5'
