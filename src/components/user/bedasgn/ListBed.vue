@@ -151,8 +151,8 @@
                                   <input
                                       type="checkbox"
                                       name="state"
-                                      v-model="filter.selectedStates"
-                                      :value="idx"
+                                      v-model="isStatesChecked[idx]"
+                                      :value="this.filter.selectedStates[idx]"
                                       @change="searchBedAsgn" /><i></i>
                                   <span class="txt">{{ item.title }}
                                     <span v-show="item.title !== '완료'" class="cnt ms-1">{{item.count }}</span>
@@ -1024,7 +1024,6 @@
 
               <article class="modal-menu-layout1 pt-10">
                 <div class="modal-menu-list">
-                  <!--              todo: 역학조사서를사용하지 않았다면 팝업창 뜰 일 없음                      -->
                   <a @click="openPopup(0)" class="modal-menu-btn menu-primary">다음</a>
                 </div>
               </article>
@@ -2852,20 +2851,19 @@
                           <div class="text-start text-black" style="">{{ item.hospNm }}</div>
                           <div
                             class="label-txt d-inline-flex text-primary px-1 py-1 border border-primary rounded-1 fs-xs ms-2"
-                            style="min-width: 37px"
-                          >
+                            style="min-width: 37px">
                             AI추천
                           </div>
                         </div>
 
                         <div class="text-gray-600 fs-12px pt-2">
-                          #임산부 #투석 #수술 #신생아 #유아
+                          {{ getTag(item.tagList) }}
                         </div>
                       </td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
+                      <td><span class="text-black">{{ item.gnbdIcu }}</span></td>
+                      <td><span class="text-black">{{ item.gnbdSvrt }}</span></td>
+                      <td><span class="text-black">{{ item.gnbdSmsv }}</span></td>
+                      <td><span class="text-black">{{ item.gnbdModr }}</span></td>
                       <td><span class="text-primary">13</span>/55</td>
                       <td><span class="text-primary">13</span>/55</td>
                       <td><span class="text-primary">13</span>/55</td>
@@ -4434,7 +4432,6 @@
     </div>
   </article>
   <!--  역학조사서 비교   -->
-  <!--  todo: 나오게 되는 조건 확인 필요   -->
   <article v-show="popup === 1" class="popup popup-update-check">
     <div class="popup-wrapper">
       <div class="popup-contents py-10 px-10" style="width: 300px">
@@ -4869,11 +4866,6 @@ export default {
     }
   },
   watch: {
-    selectedStates(newValue) {
-      if (newValue.length === 0) {
-        this.selectedStates = []
-      }
-    }
   },
   data() {
     return {
@@ -4895,9 +4887,10 @@ export default {
           { label: '완료', value: 'BAST0007' },
           { label: '완료', value: 'BAST0008' }
         ],
-        selectedStates: [],
+        selectedStates: ['BAST0003','BAST0004','BAST0005','BAST0006',"['BAST0003','BAST0003']"],
         selectedRow: 0,
       },
+      isStatesChecked:[],
       search:{
         kwd:'',
         period: '',
@@ -5060,7 +5053,7 @@ export default {
       if (this.search['gndr'].length) params = {...params, gndr: this.search['gndr'].join(',')};
       return params
     },
-    sortedBdList() {
+    /*sortedBdList() {
       let list = []
       if (this.bdList2 !== null && this.bdList2 !== undefined) {
         list = this.bdList2.reduce((acc, item, idx) => {
@@ -5080,7 +5073,7 @@ export default {
         //this.sortedList = list.filter((item) => this.filter.selectedStates.includes(item.state))
         return list.filter((item) => this.filter.selectedStates.includes(item.state))
       }
-    }
+    }*/
   },
   methods: {
     toggleCheckbox,
@@ -5129,13 +5122,13 @@ export default {
       this.$store.dispatch('bedasgn/getBdList')
       this.$store.dispatch('bedasgn/getBdListWeb')
     },
-    countBdList() {
+    /*countBdList() {
       if (this.filter.selectedStates.length === 0) {
         return this.bdCnt.reduce((i, count) => i + count, 0)
       } else {
         return this.filter.selectedStates.reduce((i, state) => i + this.bdCnt[state], 0)
       }
-    },
+    },*/
     parseIntAge(age){
       if(age !== null){
         return parseInt(age)
