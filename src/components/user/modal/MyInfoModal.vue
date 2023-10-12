@@ -136,7 +136,7 @@
                 </div>
                 <!--begin::Menu item-->
                 <div v-show='!props.isChrgInfo' class="modal-menu-list text-end">
-                  <a href="/" class="modal-menu-btn menu-primary">로그아웃</a>
+                  <a href="/" class="modal-menu-btn menu-primary" id="logoutLink">로그아웃</a>
                 </div>
                 <!--end::Menu item-->
               </article>
@@ -153,7 +153,7 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, onMounted, ref } from 'vue'
 import { getTelno, getAuthCd, getPmgr, getPtType } from '@/util/ui'
 
 const props = defineProps({
@@ -166,6 +166,19 @@ const props = defineProps({
     required: true
   }
 })
+
+const logoutLink = ref(null);
+
+onMounted(() => {
+  logoutLink.value = document.getElementById('logoutLink');
+  if (logoutLink.value) {
+    logoutLink.value.addEventListener('click', handleLogout);
+  }
+});
+
+const handleLogout = () => {
+  sessionStorage.removeItem('userToken');
+};
 
 </script>
 

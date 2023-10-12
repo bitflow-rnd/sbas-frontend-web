@@ -120,7 +120,7 @@ export default {
           console.log(response, '로그인 응답값')
 
           comment.commit('loginSuccess', response.data)
-          localStorage.setItem('userToken', response.data?.result)
+          sessionStorage.setItem('userToken', response.data?.result)
           comment.dispatch('getUserInfo', id)
         })
         .catch((e) => {
@@ -129,7 +129,7 @@ export default {
         })
     },
     getUserInfo(comment, id) {
-      const token = localStorage.getItem('userToken')
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/user/user/${id}`
       console.log('사용자정보')
       return axios({
@@ -151,7 +151,7 @@ export default {
     },
     getChrgUserInfo(comment, id) {
       return new Promise((resolve, reject)=> {
-        const token = localStorage.getItem('userToken')
+        const token = sessionStorage.getItem('userToken')
         const url = `${API_PROD}/api/v1/private/user/user/${id}`
         console.log('담당자정보')
         axios({
