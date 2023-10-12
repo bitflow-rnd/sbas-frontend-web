@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-const mediInst = () => import('@/components/admin/organ/ListMedInst.vue')
-
 const routes = [
   {
     path: '/login',
@@ -118,7 +116,7 @@ const routes = [
       {
         path: 'medinst/list',
         name: 'listmedinst',
-        component: mediInst
+        component: () => import('@/components/admin/organ/ListMedInst.vue')
       }
     ]
   },
@@ -150,7 +148,7 @@ const routes = [
       {
         path: 'organ/medinst/list',
         name: 'ListMedInst',
-        component: mediInst
+        component: () => import('@/components/admin/organ/ListMedInst.vue')
       },
       {
         path: 'user/list',
