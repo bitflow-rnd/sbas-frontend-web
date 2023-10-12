@@ -803,9 +803,12 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
-                            <select v-model="form.instId">
+                            <select v-model="form.instId" @change='handleInstIdChange' @click='getMedInst'>
                               <option value=null>소속기관 선택</option>
                               <option value='INST000000'>직접입력</option>
+                              <option v-for='(item, i) in organMedi' :key='i' :value='item.instId'>
+                                {{ item.instNm }}
+                              </option>
                             </select>
                           </div>
                           <div class="tbox full ms-2">
@@ -813,6 +816,7 @@
                               type="text"
                               v-model="form.instNm"
                               placeholder="소속기관명 직접 입력"
+                              :disabled="form.instId !== 'INST000000'"
                             />
                           </div>
                         </div>
@@ -2475,7 +2479,7 @@ import { getAuthCd, getDt, getGugun, getPtType, getSido, setSearchStr, toggleChe
 export default {
   components: {},
   computed: {
-    ...mapState('admin', ['cmSido','cmGugun','userList', 'usrDetail']),
+    ...mapState('admin', ['cmSido','cmGugun','userList', 'usrDetail', 'organMedi']),
     passwordsMatch() {
       return this.form.pw !== this.form.valPw;
     },
@@ -2855,6 +2859,18 @@ export default {
     },
     resetFormData() {
       this.form = { ...this.initialForm };
+    },
+    getMedInst() {
+      let data = { dstrCd1: this.form.dutyDstr1Cd, dstrCd2: this.form.dutyDstr2Cd, instTypeCd: this.form.instTypeCd }
+      this.$store.dispatch('admin/getOrganMedi',data)
+    },
+    handleInstIdChange() {
+      const selectedInst = this.organMedi?.find(inst => inst.instId === this.form.instId);
+      if (selectedInst) {
+        this.form.instNm = selectedInst.instNm;
+      } else {
+        this.form.instNm = null;
+      }
     },
   }
 }
