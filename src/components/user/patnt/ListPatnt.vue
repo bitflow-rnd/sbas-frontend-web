@@ -696,35 +696,35 @@
                             <div class="cbox-row">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0001"/><i></i>
                                   <span class="txt">고혈압</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0002"/><i></i>
                                   <span class="txt">당뇨</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0003"/><i></i>
                                   <span class="txt">고지혈증</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0004"/><i></i>
                                   <span class="txt">심혈관</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0005"/><i></i>
                                   <span class="txt">뇌혈관</span>
                                 </label>
                               </div>
@@ -733,35 +733,35 @@
                             <div class="cbox-row">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0006"/><i></i>
                                   <span class="txt">암</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0007"/><i></i>
                                   <span class="txt">만성폐질환</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0009"/><i></i>
                                   <span class="txt">신장질환</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0010"/><i></i>
                                   <span class="txt">정신질환</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0011"/><i></i>
                                   <span class="txt">결핵</span>
                                 </label>
                               </div>
@@ -770,15 +770,22 @@
                             <div class="cbox-row">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0012"/><i></i>
                                   <span class="txt">천식 등 알레르기</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0013"/><i></i>
                                   <span class="txt">면역력저하자</span>
+                                </label>
+                              </div>
+
+                              <div class="cbox">
+                                <label>
+                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0008"/><i></i>
+                                  <span class="txt">폐렴</span>
                                 </label>
                               </div>
                             </div>
@@ -787,13 +794,14 @@
                               <div class="d-inline-flex">
                                 <div class="cbox w-auto">
                                   <label>
-                                    <input type="checkbox" name="disease"/><i></i>
+                                    <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0014"/><i></i>
                                     <span class="txt">기타</span>
                                   </label>
                                 </div>
 
                                 <div class="tbox d-inline-flex ms-4 w-300px">
-                                  <input type="text" placeholder="직접 입력"/>
+                                  <input type="text" placeholder="직접 입력" v-model="newPt.undrDsesEtc"
+                                         :disabled="!this.newPt.undrDsesCd?.includes('UDDS0014')" />
                                 </div>
                               </div>
                             </div>
@@ -3194,7 +3202,9 @@ export default {
         natiNm: '대한민국',
         attcId: null,
         dethYn: '',
-        mpno: ''
+        mpno: '',
+        undrDsesCd: [],
+        undrDsesEtc: ''
       },
       dsInfo: {
         ptId: '',
@@ -3297,6 +3307,13 @@ export default {
     enableSecondAddressPicker() {
       return this.filterPatient['address']['first'] === "";
     },
+    disableOther() {
+      if (this.newPt.undrDsesCd) {
+        return this.newPt.undrDsesCd.includes('UDDS0014');
+      } else {
+        return false;
+      }
+    }
   },
   //정예준
   watch: {
@@ -3370,7 +3387,7 @@ export default {
         this.errMsg =
             '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.';
         this.isAlert = true;
-        this.newPt = this.rptInfo;
+        this.newPt = {...this.rptInfo, undrDsesCd: [], undrDsesEtc: ''};
         this.alertIdx = 4;
       } else if (idx === 9) {
         /*역조서 삭제*/
@@ -3388,11 +3405,11 @@ export default {
       if (res === 3) {
         this.alertClose();
       } else if (res === 4) {
-        this.newPt = this.rptInfo;
+        this.newPt = {...this.rptInfo, undrDsesCd: [], undrDsesEtc: ''};
         this.alertClose();
       } else if (res === 9) {
         this.removeRpt();
-        this.newPt = this.initNewPt;
+        this.newPt = {...this.initNewPt, undrDsesCd: [], undrDsesEtc: ''};
         this.dsInfo = this.initDsInfo;
         this.alertClose();
         this.alertOpen(10);
@@ -3522,7 +3539,9 @@ export default {
         natiNm: '대한민국',
         attcId: null,
         dethYn: '',
-        mpno: ''
+        mpno: '',
+        undrDsesCd: [],
+        undrDsesEtc: ''
       }
       this.preRpt = null;
     },
