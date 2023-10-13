@@ -64,7 +64,7 @@
               <div class="profile-info-box">
                 <div class="row">
                   <div class="subject-box">아이디</div>
-                  <div class="con-box">{{ props.userInfo.updtUserId }}</div>
+                  <div class="con-box">{{ props.userInfo.id }}</div>
 
                   <a href="#none" class="profile-btn">
                     <img src="/img/common/img_profile_default.svg" alt="이미지" />

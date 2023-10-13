@@ -10,7 +10,6 @@ export default {
     cmGugun: [],
     userInfo: null,
     smsCrtf: null,
-    phoneNo: '01082072505',
     smsCrtfSuccess: null,
     attcId: null,
     usersList: null,
@@ -210,18 +209,13 @@ export default {
           console.log(e)
         })
     },
-    confirmSms(comment, certNo) {
+    confirmSms(comment, data) {
       return new Promise((resolve) => {
-        const request = {
-          phoneNo: comment.state.phoneNo,
-          certNo: certNo
-        }
-        console.log(request)
         const url = `${API_PROD}/api/v1/public/user/confirmsms`
         axios({
           method: 'post',
           url: url,
-          data: request
+          data: data
         })
           .then((response) => {
             console.log(response, '인증번호 비교')
@@ -322,6 +316,9 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    getNoticeList() {
+
     }
   }
 }
