@@ -19,6 +19,7 @@ export default {
         firemenList: [],
         fsDetail:null,
         fmDetail:null,
+        organMedi: [],
     },
     mutations: {
         setSido(state,payload){

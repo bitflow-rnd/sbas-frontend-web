@@ -6,6 +6,7 @@ export default {
   namespaced: true,
   state: {
     bdList: [],
+    bdListWeb : [],
     bdCnt: [],
     bdDetail: null,
     newPtInfo: null,
@@ -76,6 +77,9 @@ export default {
     },
     isCfrmHosp(state, payload) {
       state.isCfrmHosp = payload
+    },
+    setBdListWeb(state,payload){
+      state.bdListWeb = payload
     }
   },
   actions: {
@@ -106,6 +110,30 @@ export default {
       } catch (e) {
         console.error(e)
         return router.push('/user/bedasgn/list')
+      }
+    },
+    async getBdListWeb(comment,data) {
+      try {
+        const token = sessionStorage.getItem('userToken')
+        const url = `${API_PROD}/api/v1/private/bedasgn/list-web`
+        console.log('병상배정목록 - web')
+
+        const params = data
+
+        const response = await axios.get(url,{ params,
+          headers: {
+            Authorization: `Bearer ${token}` // Add the token to the Authorization header
+          }})
+
+        if (response.data?.code === '00') {
+          console.log(response.data)
+
+          comment.commit('setBdListWeb', response.data?.result)
+         // return router.push('/user/bedasgn/list')
+        }
+      } catch (e) {
+        console.error(e)
+        //return router.push('/user/bedasgn/list')
       }
     },
 
