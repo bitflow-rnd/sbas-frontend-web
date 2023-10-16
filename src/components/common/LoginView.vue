@@ -157,7 +157,7 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" v-model="form.id" />
+                            <input type="text" v-model="form.id" :maxlength='15' />
                           </div>
                         </div>
                         <div v-if="validateInput(3)" class="item-cell-box full">
@@ -224,11 +224,11 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" v-model="form.btDt" placeholder='19000101'/>
+                            <input type="text" v-model="form.btDt" placeholder='19000101' :maxlength='8'/>
                           </div>
                         </div>
                         <div v-if="validateInput(7)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 생년월일을 입력해 주세요.</div>
+                          <div class="text-danger pt-2 fs-12px">※ 생년월일을 정확히 입력해 주세요.</div>
                         </div>
                       </td>
                     </tr>
@@ -263,8 +263,8 @@
                             </label>
                           </div>
                         </div>
-                        <div v-show="false" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 소속기관 선택여부 확인 문구</div>
+                        <div v-if="validateInput(8)" class="item-cell-box full">
+                          <div class="text-danger pt-2 fs-12px">※ 소속기관 유형을 선택해 주세요.</div>
                         </div>
                       </td>
                     </tr>
@@ -364,7 +364,7 @@
                           </article>
                         </div>
                         <div v-if="validateInput(9)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 권한그룹 선택여부 확인 문구</div>
+                          <div class="text-danger pt-2 fs-12px">※ 권한그룹을 선택해 주세요.</div>
                         </div>
                       </td>
                     </tr>
@@ -398,7 +398,7 @@
                           </div>
                         </div>
                         <div v-if="validateInput(10)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 세부권한 선택여부 확인 문구</div>
+                          <div class="text-danger pt-2 fs-12px">※ 세부권한을 선택해 주세요.</div>
                         </div>
                       </td>
                     </tr>
@@ -913,11 +913,16 @@ export default {
       } else if (idx === 6) {
         return this.form.userNm === null
       } else if (idx === 7) {
-        return this.form.btDt === null
+        return this.form.btDt === null || this.form.btDt.length !== 8 ||
+          !/^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/.test(this.form.btDt);
       } else if (idx === 8) {
-        return false
+        return this.form.instTypeCd === null
       } else if (idx === 9) {
-        return false
+        return this.form.jobCd === null
+      } else if (idx === 10) {
+        return this.form.authCd === null
+      } else if (idx === 11) {
+        return this.form.dutyDstr1Cd === null
       }
       return false
     },
