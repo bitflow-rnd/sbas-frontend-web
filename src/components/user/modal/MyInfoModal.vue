@@ -102,7 +102,7 @@
 
                       <tr>
                         <th>주 담당지역</th>
-                        <td>대구광역시 전체 </td> <!-- {{ props.userInfo.dutyDstr1Cd }} {{ props.userInfo.dutyDstr2Cd }} -->
+                        <td>{{ props.userInfo.dutyDstr1CdNm }} {{ props.userInfo.dutyDstr2CdNm ?? '전체' }}</td> <!-- {{ props.userInfo.dutyDstr1Cd }} {{ props.userInfo.dutyDstr2Cd }} -->
                       </tr>
 
                       <!--
@@ -114,12 +114,12 @@
 
                       <tr>
                         <th>권한그룹</th>
-                        <td>{{ getPmgr(props.userInfo.jobCd) }}</td>
+                        <td>{{ getPmgr(props.userInfo.jobCdNm) }}</td>
                       </tr>
 
                       <tr>
                         <th>세부권한</th>
-                        <td>{{ getAuthCd(props.userInfo.authCd) }}</td>
+                        <td>{{ getAuthCd(props.userInfo.authCdNm) }}</td>
                       </tr>
 
                       <tr>
