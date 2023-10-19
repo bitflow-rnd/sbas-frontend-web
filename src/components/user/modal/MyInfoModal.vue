@@ -59,7 +59,10 @@
           <article class="modal-profile-layout1">
             <div class="profile-card-box">
               <div class="profile-view-box">
-                <img :src='model.myImage' alt="이미지" />
+                <img
+                  v-if="props.userInfo.attcId === null || props.userInfo.attcId === '' "
+                  src='@/assets/img/img-no-img.webp' />
+                <img v-else :src='model.myImage' />
               </div>
               <div class="profile-info-box">
                 <div class="row">
