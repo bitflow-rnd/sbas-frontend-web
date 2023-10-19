@@ -59,7 +59,10 @@
           <article class="modal-profile-layout1">
             <div class="profile-card-box">
               <div class="profile-view-box">
-                <img src="@/assets/img/img-hosp-def.jpg" alt="이미지" />
+                <img
+                  v-if="props.userInfo.attcId === null || props.userInfo.attcId === '' "
+                  src='@/assets/img/img-no-img.webp' />
+                <img v-else :src='model.myImage' />
               </div>
               <div class="profile-info-box">
                 <div class="row">
@@ -102,24 +105,22 @@
 
                       <tr>
                         <th>주 담당지역</th>
-                        <td>대구광역시 전체 </td> <!-- {{ props.userInfo.dutyDstr1Cd }} {{ props.userInfo.dutyDstr2Cd }} -->
+                        <td>{{ props.userInfo.dutyDstr1CdNm }} {{ props.userInfo.dutyDstr2CdNm ?? '전체' }}</td> <!-- {{ props.userInfo.dutyDstr1Cd }} {{ props.userInfo.dutyDstr2Cd }} -->
                       </tr>
 
-                      <!--
                       <tr>
                         <th>소속기관 유형</th>
-                        <td>{{ props.userInfo.jobCd }}</td>
+                        <td>{{ props.userInfo.instTypeCdNm }}</td>
                       </tr>
-                      -->
 
                       <tr>
                         <th>권한그룹</th>
-                        <td>{{ getPmgr(props.userInfo.jobCd) }}</td>
+                        <td>{{ getPmgr(props.userInfo.jobCdNm) }}</td>
                       </tr>
 
                       <tr>
                         <th>세부권한</th>
-                        <td>{{ getAuthCd(props.userInfo.authCd) }}</td>
+                        <td>{{ getAuthCd(props.userInfo.authCdNm) }}</td>
                       </tr>
 
                       <tr>
@@ -153,9 +154,11 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref } from 'vue'
-import { getTelno, getAuthCd, getPmgr, getPtType } from '@/util/ui'
+import { defineProps, onMounted, reactive, ref } from 'vue'
+import { getAuthCd, getPmgr, getPtType, getTelno } from '@/util/ui'
+import { useStore } from 'vuex'
 
+const store = useStore()
 const props = defineProps({
   userInfo: {
     type: Object,
@@ -167,14 +170,22 @@ const props = defineProps({
   }
 })
 
+let model = reactive({
+  myImage: '',
+})
+
 const logoutLink = ref(null);
 
 onMounted(() => {
-  logoutLink.value = document.getElementById('logoutLink');
+  logoutLink.value = document.getElementById('logoutLink')
   if (logoutLink.value) {
-    logoutLink.value.addEventListener('click', handleLogout);
+    logoutLink.value.addEventListener('click', handleLogout)
   }
-});
+  store.dispatch('user/readPrivateImage', props.userInfo.attcId).then((result) => {
+    const blob = new Blob([result], { type: 'image/jpeg' })
+    model.myImage = URL.createObjectURL(blob)
+  })
+})
 
 const handleLogout = () => {
   sessionStorage.removeItem('userToken');

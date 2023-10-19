@@ -296,6 +296,21 @@ export default {
           })
       })
     },
+    readPrivateImage(comment, attcId) {
+      const url = `${API_PROD}/api/v1/private/common/image/${attcId}`
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'get',
+          url: url,
+          responseType: 'arraybuffer',
+        }).then(response => {
+          resolve(response.data)
+        }).catch((e) => {
+          console.log(e)
+          reject(e)
+        })
+      })
+    },
     loadPatientData() {
       try {
         return axios.get(`${API_PROD}/api/v1/private/patient/search`)
