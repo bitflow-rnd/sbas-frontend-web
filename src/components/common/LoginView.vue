@@ -1108,6 +1108,7 @@ export default {
     },
     resetFormData() {
       this.form = { ...this.initialForm };
+      this.isCertified = false
     },
     getMedInst() {
       let data = {
