@@ -2844,11 +2844,19 @@ export default {
         return false
       }
       if (this.form.dutyDstr1Cd === null) {
-        this.alertOpen('담당 근무지역은 필수값입니다.')
+        this.alertOpen('담당/근무지역(시/도)은 필수값입니다.')
+        return false
+      }
+      if (this.form.dutyDstr2Cd === null) {
+        this.alertOpen('담당/근무지역(시/군/구)은 필수값입니다.')
         return false
       }
       if (this.form.instNm === null) {
         this.alertOpen('소속기관명은 필수값입니다.')
+        return false
+      }
+      if (this.form.btDt === null) {
+        this.alertOpen('생년월일은 필수값입니다.')
         return false
       }
       return true
