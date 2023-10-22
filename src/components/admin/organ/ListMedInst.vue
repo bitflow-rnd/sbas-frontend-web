@@ -758,9 +758,13 @@
                     class="tabs-nav-btn"
                 >병상배정시스템 등록 의료진 <span class="cnt">{{ medinstDetail.hospMedInfoCount }}</span></router-link
                 >
-              </div>
 
-              <div class="tabs-contents-box">
+              </div>
+              <div class='addMediBtn' style='text-align: right;'>
+                <a @click='openEditMedi' class="btn btn-sm btn-flex btn-primary align-self-center px-3 ms-2 addMedi">
+                  <i class="fa-solid fa-plus"></i> 의료기관 정보 수정</a>
+              </div>
+              <div class="tabs-contents-box" style='padding-top:5px;'>
                 <div class="tabs-box-list">
                   <div class="tabs-box" v-show="tabidx === 0" style="">
                     <article class="table-form-layout1">
@@ -1844,6 +1848,390 @@
       </div>
       <!--end::Modal dialog-->
     </div>
+    <div
+      v-show="showEditMedi"
+      class="modal fade"
+      id="kt_modal_medinst_view"
+      tabindex="-1"
+      aria-hidden="false"
+      :class="{'show' : showEditMedi}"
+    >
+      <!--begin::Modal dialog-->
+      <div v-if="medinstDetail !== undefined" class="modal-dialog mw-1500px modal-dialog-centered">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+          <!--begin::Modal header-->
+          <div class="modal-header px-10 py-5 d-flex justify-content-between">
+            <!--begin::Modal title-->
+            <h2>의료기관 정보 수정</h2>
+            <!--end::Modal title-->
+            <!--begin::Close-->
+            <div class="btn btn-sm btn-icon btn-active-color-primary">
+              <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+              <span @click="closeModal" class="svg-icon svg-icon-1">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  opacity="0.5"
+                  x="6"
+                  y="17.3137"
+                  width="16"
+                  height="2"
+                  rx="1"
+                  transform="rotate(-45 6 17.3137)"
+                  fill="currentColor"
+                ></rect>
+                <rect
+                  x="7.41422"
+                  y="6"
+                  width="16"
+                  height="2"
+                  rx="1"
+                  transform="rotate(45 7.41422 6)"
+                  fill="currentColor"
+                ></rect>
+              </svg>
+            </span>
+              <!--end::Svg Icon-->
+            </div>
+            <!--end::Close-->
+
+            <article class="floating-organ-box">
+              <div class="img-box">
+                <img src="/img/common/ic_lnb_organ.svg" alt="이미지"/>
+              </div>
+              <div class="txt-box">{{ medinstDetail.hospBasicInfo.dutyName }}</div>
+            </article>
+          </div>
+
+          <!--begin::Modal header-->
+          <!--begin::Modal body-->
+          <div class="modal-body scroll-y py-10 px-10">
+              <article class="table-form-layout1">
+                <div class="form-head-box"></div>
+                <div class="tabs-box" style="">
+                    <article class="table-form-layout1">
+                      <div class="form-head-box"></div>
+
+                      <div class="form-body-box">
+
+<!--                        <div class="table-box">
+                          <table>
+                            <colgroup>
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                              <th>응급실운영여부</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.dutyEryn === '1'">운영중</i>
+                                <i v-else>-</i>
+                              </td>
+
+                              <th>입원실가용여부</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.dutyHayn === '1'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+
+                              <th>병상수</th>
+                              <td>{{ medinstDetail.hospBasicInfo.dutyHano }}</td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>-->
+
+<!--                        <div class="table-box">
+                          <table>
+                            <colgroup>
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                              <th>가용_응급실</th>
+                              <td>{{ medinstDetail.hospBasicInfo.hvec ?? '-' }}</td>
+
+                              <th>가용_입원실</th>
+                              <td>{{ medinstDetail.hospBasicInfo.hvgc ?? '-' }}</td>
+
+                              <th>가용_수술실</th>
+                              <td>{{ medinstDetail.hospBasicInfo.hvoc ?? '-' }}</td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>-->
+
+<!--                        <div class="table-box">
+                          <table>
+                            <colgroup>
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                              <th>기준_병상수</th>
+                              <td>{{ medinstDetail.hospBasicInfo.hpbdn ?? '-' }}</td>
+
+                              <th>기준_응급실</th>
+                              <td>{{ medinstDetail.hospBasicInfo.hperyn ?? '-' }}</td>
+
+                              <th>기준_입원실</th>
+                              <td>{{ medinstDetail.hospBasicInfo.hpgryn ?? '-' }}</td>
+                            </tr>
+
+                            <tr>
+                              <th>기준_수술실</th>
+                              <td>{{ medinstDetail.hospBasicInfo.hpopyn ?? '-' }}</td>
+
+                              <th>기준_신경중환자실</th>
+                              <td>{{ medinstDetail.hospBasicInfo.hpcuyn ?? '-' }}</td>
+
+                              <th>기준_신생아중환자실</th>
+                              <td>{{ medinstDetail.hospBasicInfo.hpnicuyn ?? '-' }}</td>
+                            </tr>
+
+                            <tr>
+                              <th>기준_흉부중환자실</th>
+                              <td>{{ medinstDetail.hospBasicInfo.hpccuyn?? '-' }}</td>
+
+                              <th>기준_일반중환자실</th>
+                              <td colspan="3">{{ medinstDetail.hospBasicInfo.hpicuyn?? '-' }}</td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>-->
+
+<!--                        <div class="table-box">
+                          <table>
+                            <colgroup>
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                              <th>중증_응급실</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy25 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+
+                              <th>중증_뇌출혈수술</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy1 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+
+                              <th>중증_뇌경색의재관류</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy2 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <th>중증_심근경색의재관류</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy3 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+
+                              <th>중증_복부손상의수술</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy4 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+
+                              <th>중증_사지접합의수술</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy5 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <th>중증_응급내시경</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy6 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+
+                              <th>중증_응급투석</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy7 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+
+                              <th>중증_조산산모</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy8 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <th>중증_정신질환자</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy9 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+
+                              <th>중증_신생아</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy10 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+
+                              <th>중증_중증화상</th>
+                              <td>
+                                <i v-if="medinstDetail.hospBasicInfo.mkioskTy11 === 'Y'"
+                                   class="fa-regular fa-circle-check"
+                                   style="color: #74afeb; font-size: 20px"
+                                ></i>
+                                <i v-else>-</i>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>-->
+
+                        <div class="table-box">
+                          <table>
+                            <colgroup>
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+
+                              <col style="width: 168px"/>
+                              <col style="width: auto"/>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                              <th>감염병 전용 분만 시설 보유 여부</th>
+                              <td><input type='text' :value="medinstDetail.hospBasicInfo.hvcc ?? '-'"></td>
+
+                              <th>감염병 전용 투석 시설 보유 여부</th>
+                              <td><input type='text' :value="medinstDetail.hospBasicInfo.hvncc ?? '-' "></td>
+
+                              <th>감염병 전용 소아 시설 보유 여부</th>
+                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.hvccc ?? '-'"></td>
+                            </tr>
+
+                            <tr>
+                              <th>감염병 전용 요양병원 시설 보유 여부</th>
+                              <td><input type='text' :value="medinstDetail.hospBasicInfo.hvicc ?? '-'"></td>
+
+                              <th>감염병 전용 정신질환자 시설 보유 여부</th>
+                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o001 ?? '-' "></td>
+
+                              <th>감염병 전용 분만 대응 의료진 수</th>
+                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o002 ?? '-'"></td>
+                            </tr>
+
+                            <tr>
+                              <th>감염병 전용 투석 대응 의료진 수</th>
+                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o003 ?? '-' "></td>
+
+                              <th>감염병 전용 소아 대응 의료진 수</th>
+                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o004 ?? '-' "></td>
+
+                              <th>감염병 전용 요양병원 대응 의료진 수</th>
+                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o005 ?? '-'"></td>
+                            </tr>
+
+                            <tr>
+                              <th>감염병 전용 정신질환자 대응 의료진 수</th>
+                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o006 ?? '-' "></td>
+
+                              <th>가용_외과중환자실</th>
+                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o007 ?? '-' "></td>
+
+                              <th>가용_신생아중환자실</th>
+                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o008 ?? '-'"></td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+            </article>
+            <article class="modal-menu-layout1 pt-10">
+              <div class="modal-menu-list">
+                <a @click="closeModal" class="modal-menu-btn menu-primary">취소</a>
+                <a  class="modal-menu-btn menu-primary">수정</a>
+              </div>
+            </article>
+          </div>
+          <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+      </div>
+      <!--end::Modal dialog-->
+    </div>
 
   </div>
   <div v-show="showModal" class="modal-backdrop fade"></div>
@@ -1950,6 +2338,7 @@ export default {
   data() {
     return {
       showModal: false,
+      showEditMedi: false,
       tabidx: 0,
       displayRowsCount: 15,
       page: 1,
@@ -1999,7 +2388,11 @@ export default {
     closeModal() {
       console.log('실행')
       this.showModal = false
+      this.showEditMedi = false
       this.tabidx = 0
+    },
+    openEditMedi(){
+      this.showEditMedi = true
     },
     alertOpen(idx) {
 
@@ -2113,8 +2506,8 @@ article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
 }
 
 #map {
-  position: absolute !important;
-  width: 720px;
+  position: relative !important;
+  width: 480px;
   //width: -webkit-fill-available;
   height: 400px;
   margin: 0;
@@ -2127,5 +2520,7 @@ article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
 .popup {
   display: block;
 }
-
+.addMedi {
+    margin-top: 5px;
+}
 </style>
