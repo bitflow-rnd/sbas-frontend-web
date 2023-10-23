@@ -138,31 +138,42 @@
                     <tbody>
                       <tr data-toggle="false">
                         <th>배정상태</th>
-                        <td colspan="4">
+                        <td colspan="3">
                           <div class="item-row-box">
                             <div class="item-cell-box">
+                              <div class="cbox">
+                                <label>
+                                  <input
+                                    type="checkbox"
+                                    name="state"
+                                    v-model='allSelected'
+                                    @change="searchBedAsgn" /><i></i>
+                                  <span class="txt">전체
+<!--                                    <span class="cnt ms-1">{{ bdList.length }}</span>-->
+                                  </span>
+                                </label>
+                              </div>
                               <div
                                   v-for="(item, idx) in bdList2"
                                   :key="idx"
-                                  class="cbox"
-                                  :class="{ 'ms-4': item.title !== '병상요청' }"
+                                  class="cbox ms-4"
                               >
                                 <label>
                                   <input
                                       type="checkbox"
                                       name="state"
-                                      v-model="isStatesChecked[idx]"
+                                      v-model="search.bedStatCd"
                                       :value="this.filter.selectedStates[idx]"
                                       @change="searchBedAsgn" /><i></i>
                                   <span class="txt">{{ item.title }}
-                                    <span v-show="item.title !== '완료'" class="cnt ms-1">{{item.count }}</span>
+                                    <span class="cnt ms-1">{{ item.count }}</span>
                                   </span>
                                 </label>
                               </div>
                             </div>
                           </div>
                         </td>
-
+                        <th>검색어</th>
                         <td colspan="3">
                           <div class="item-cell-box full">
                             <div class="tbox full with-btn">
@@ -2980,7 +2991,7 @@
         <!--begin::Modal header-->
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
           <!--begin::Modal title-->
-          <h2>병상배정 세부내용</h2>
+          <h2>병상배정 세부내용 (<span style='color: #74AFEB'>{{ bdDetail?.bedStatCdNm ?? '' }}</span>)</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
 
@@ -4887,10 +4898,9 @@ export default {
           { label: '완료', value: 'BAST0007' },
           { label: '완료', value: 'BAST0008' }
         ],
-        selectedStates: ['BAST0003','BAST0004','BAST0005','BAST0006',"['BAST0003','BAST0003']"],
+        selectedStates: ['BAST0003','BAST0004','BAST0005','BAST0006','BAST0007,BAST0008'],
         selectedRow: 0,
       },
-      isStatesChecked:[],
       search:{
         kwd:'',
         period: '',
@@ -4900,7 +4910,8 @@ export default {
         fromAge:null,
         toAge:null,
         gndr:[],
-        page:1
+        page:1,
+        bedStatCd: [],
       },
       preRpt: null,
       content: '',
@@ -5051,7 +5062,18 @@ export default {
       if (this.search['svrtTypeCd'].length) params = {...params, svrtTypeCd: this.search['svrtTypeCd'].join(',')};
       if (this.search['reqBedTypeCd'].length) params = {...params, reqBedTypeCd: this.search['reqBedTypeCd'].join(',')};
       if (this.search['gndr'].length) params = {...params, gndr: this.search['gndr'].join(',')};
+      if (this.search['bedStatCd'].length) params = {...params, bedStatCd: this.search['bedStatCd'].join(',')};
       return params
+    },
+    allSelected: {
+      //getter
+      get: function() {
+        return this.filter.selectedStates.length === this.search.bedStatCd.length;
+      },
+      //setter
+      set: function(e) {
+        this.search.bedStatCd = e ? this.filter.selectedStates : [];
+      },
     },
     /*sortedBdList() {
       let list = []
@@ -5688,7 +5710,7 @@ export default {
           this.hosptlzdiscg.admsStatCd = 'IOST0003'
           break
       }
-    }
+    },
   }
 }
 </script>
