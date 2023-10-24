@@ -236,7 +236,7 @@
                 <div class="table-box with-scroll small">
                   <table class="list-table-hoverable">
                     <colgroup>
-                      <col style="width: 35px"/>
+<!--                      <col style="width: 35px"/>-->
                       <col style="width: 70px"/>
                       <col style="width: 100px"/>
                       <col style="width: 100px"/>
@@ -252,19 +252,19 @@
                     </colgroup>
                     <thead>
                     <tr class="small" style='cursor:default !important'>
-                      <th>
-                        <div class="cbox">
-                          <label>
-                            <input
-                                @change="allCodesChangeState()"
-                                type="checkbox"
-                                class="all-chk"
-                                v-model="allPatientsSelected"
-                                :disabled="ptList.count === 0"
-                            /><i></i>
-                          </label>
-                        </div>
-                      </th>
+<!--                      <th>-->
+<!--                        <div class="cbox">-->
+<!--                          <label>-->
+<!--                            <input-->
+<!--                                @change="allCodesChangeState()"-->
+<!--                                type="checkbox"-->
+<!--                                class="all-chk"-->
+<!--                                v-model="allPatientsSelected"-->
+<!--                                :disabled="ptList.count === 0"-->
+<!--                            /><i></i>-->
+<!--                          </label>-->
+<!--                        </div>-->
+<!--                      </th>-->
                       <th>순번</th>
                       <th>배정상태</th>
                       <th>이름</th>
@@ -288,13 +288,13 @@
                         data-bs-target="#kt_modal_patnt_detail"
                         data-bs-toggle="modal"
                     >
-                      <td>
-                        <div class="cbox d-flex justify-content-center">
-                          <label>
-                            <input type="checkbox" :value="pt" v-model="checkedPatients"/><i></i>
-                          </label>
-                        </div>
-                      </td>
+<!--                      <td>-->
+<!--                        <div class="cbox d-flex justify-content-center">-->
+<!--                          <label>-->
+<!--                            <input type="checkbox" :value="pt" v-model="checkedPatients"/><i></i>-->
+<!--                          </label>-->
+<!--                        </div>-->
+<!--                      </td>-->
                       <td>{{ ptList['count'] - idx - startIndex }}</td>
                       <td>{{ pt['bedStatCdNm'] ? pt['bedStatCdNm'] : '환자정보등록' }}</td>
                       <td>

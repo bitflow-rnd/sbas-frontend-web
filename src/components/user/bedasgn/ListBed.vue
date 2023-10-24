@@ -503,7 +503,7 @@
                 <div class="table-box with-scroll small">
                   <table class="list-table-hoverable">
                     <colgroup>
-                      <col style="width: 35px" />
+<!--                      <col style="width: 35px" />-->
                       <col style="width: 70px" />
                       <col style="width: 100px" />
                       <col style="width: 100px" />
@@ -519,11 +519,11 @@
                     </colgroup>
                     <thead>
                       <tr class="small" style='cursor:default !important'>
-                        <th>
-                          <div class="cbox">
-                            <label> <input type="checkbox" class="all-chk" v-model='allChked' @change='allChk' /><i></i> </label>
-                          </div>
-                        </th>
+<!--                        <th>-->
+<!--                          <div class="cbox">-->
+<!--                            <label> <input type="checkbox" class="all-chk" v-model='allChked' @change='allChk' /><i></i> </label>-->
+<!--                          </div>-->
+<!--                        </th>-->
                         <th>순번</th>
                         <th>배정상태</th>
                         <th>환자이름</th>
@@ -547,11 +547,11 @@
 
                     <tbody v-if="bdListWeb.count !== 0">
                       <tr v-for="(item, i) in bdListWeb.items" :key="i" @click='openBedMod(item)'>
-                        <td @click='toggleCheckbox'>
-                          <div @click='toggleCheckbox' class="cbox d-flex justify-content-center">
-                            <label> <input @click='toggleCheckbox' v-model='item.chked' @change='setDelBdList(item)' type="checkbox" /><i></i> </label>
-                          </div>
-                        </td>
+<!--                        <td @click='toggleCheckbox'>-->
+<!--                          <div @click='toggleCheckbox' class="cbox d-flex justify-content-center">-->
+<!--                            <label> <input @click='toggleCheckbox' v-model='item.chked' @change='setDelBdList(item)' type="checkbox" /><i></i> </label>-->
+<!--                          </div>-->
+<!--                        </td>-->
                         <td>{{ bdListWeb.count - i - startIndex }}</td>
                         <td>{{ item.bedStatCdNm }}</td>
                         <td>{{ maskingNm(item.ptNm) }}</td>
