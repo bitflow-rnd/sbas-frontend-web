@@ -3118,7 +3118,7 @@
           <article class="modal-menu-layout1">
             <div class="modal-menu-list">
               <a @click="updateExistPt" class="modal-menu-btn menu-primary">기존정보 업데이트</a>
-              <a @click="regNewPt" class="modal-menu-btn menu-primary-outline">신규등록</a>
+              <a @click="regNewPt" v-show='existPt === null' class="modal-menu-btn menu-primary-outline">신규등록</a>
             </div>
           </article>
         </div>
@@ -3194,7 +3194,9 @@ export default {
         natiNm: '대한민국',
         attcId: null,
         dethYn: '',
-        mpno: ''
+        mpno: '',
+        dstr1Cd: '',
+        dstr2Cd: '',
       },
       dsInfo: {
         ptId: '',
@@ -3304,6 +3306,13 @@ export default {
       this.allPatientsSelected = this.checkedPatients.length === this.patientData.length;
       if (!this.patientData.length) {
         this.allPatientsSelected = false;
+      }
+    },
+    'newPt.natiCd': function (newNatiCd) {
+      if (newNatiCd === 'NATI0001') {
+        this.newPt.natiNm = '대한민국';
+      } else {
+        this.newPt.natiNm = null;
       }
     }
   },
@@ -3463,7 +3472,8 @@ export default {
           return isMatch(this.existPt.rrno1, this.newPt.rrno1) &&
           isMatch(this.existPt.rrno2, this.newPt.rrno2) ? res1 : res2;
         case 2:
-          return isMatch(this.existPt.bascAddr, this.newPt.bascAddr) ? res1 : res2;
+          return isMatch(this.existPt.dstr1Cd, this.newPt.dstr1Cd) &&
+            isMatch(this.existPt.dstr2Cd, this.newPt.dstr2Cd)? res1 : res2;
         default:
           return isMatch(this.existPt.mpno, this.newPt.mpno) ? res1 : res2;
       }
