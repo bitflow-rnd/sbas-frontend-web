@@ -89,7 +89,7 @@
             ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
             >
             <a
-                @click="showValue()"
+                @click="clearNewPt()"
                 class="btn btn-sm btn-flex btn-primary align-self-center px-3"
                 data-bs-toggle="modal"
                 data-bs-target="#kt_modal_patnt"
@@ -137,7 +137,7 @@
 
                           <div class="sbox w-175px ms-2">
                             <select :disabled="enableSecondAddressPicker" v-model="filterPatient['address']['second']" @change="changeDstrCd2()">
-                              <option value="" id="null">군/구 전체</option>
+                              <option value="" id="null">시/군/구 전체</option>
                               <option v-for="(item,idx) in cmGugun" :key="idx"
                                       :value="item['cdId']">{{ item['cdNm'] }}
                               </option>
@@ -316,13 +316,12 @@
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
                       <td>{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                       <td>{{ getDate(pt['updtDttm']) }}</td>
-                      <td>
-                        <a
-                            class="btn btn-flex btn-xs btn-outline btn-outline-primary"
-                            data-bs-target="#kt_modal_patnt"
-                            data-bs-toggle="modal"
-                        >수정</a
-                        >
+                      <td data-bs-target='#kt_modal_patnt'
+                          data-bs-toggle='modal'
+                          @click.stop='showPatntModal(pt)'
+                        ><a
+                          class='btn btn-flex btn-xs btn-outline btn-outline-primary'
+                          >수정</a>
                       </td>
                     </tr>
                     </tbody>
@@ -428,16 +427,10 @@
                             >
                               <div class="profile-view-box" style="width: 100%; height: 264px">
                                 <img
-                                    v-if="preRpt === null || preRpt === undefined"
-                                    src="@/assets/img/img-no-img.webp"
-                                    alt="이미지"
-                                />
-                                <img
-                                    v-if="preRpt !== null && preRpt !== undefined"
-                                    :src="preRpt"
-                                    alt="이미지"
-                                />
-                                <a v-if="preRpt !== null" @click="alertOpen(9)" class="remove-btn"
+                                  v-if='newPt.attcId === null || newPt.attcId === undefined'
+                                  src='@/assets/img/img-no-img.webp' />
+                                <img v-else :src='this.epidReportImage' />
+                                <a v-if="newPt.attcId !== null" @click="alertOpen(9)" class="remove-btn"
                                 ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
                                 /></a>
                               </div>
@@ -486,7 +479,7 @@
                           </div>
                         </td>
                         <th>성별</th>
-                        <td v-if="newPt.rrno2 !== undefined">{{ getGndr(newPt.rrno2) }}자</td>
+                        <td v-if="newPt.rrno2 !== null && newPt.rrno2 !== ''">{{ getGndr(newPt.rrno2) }}자</td>
                       </tr>
 
                       <tr>
@@ -498,12 +491,12 @@
                                 <input type="text" v-model="newPt.rrno1"/>
                               </div>
                               <div class="unit-box mx-2 text-gray-600">-</div>
-                              <div class="tbox w-30px" style="min-width: 30px">
+                              <div>
                                 <input
-                                    type="password"
-                                    v-model="newPt.rrno2"
-                                    class="p-0 text-center fs-3x"
-                                    maxlength="1"
+                                  type="text"
+                                  class="tbox w-30px" style="min-width: 30px; padding-left: 10px"
+                                  v-model="newPt.rrno2"
+                                  maxlength="1"
                                 />
                               </div>
                               <div class="unit-box ms-2" style="line-height: 30px">●●●●●●</div>
@@ -514,7 +507,7 @@
                           </div>
                         </td>
                         <th>나이 (만)</th>
-                        <td v-if="newPt.rrno1 !== undefined && newPt.rrno2 !== undefined">
+                        <td v-if="newPt.rrno1 !== null && newPt.rrno1 !== '' && newPt.rrno2 !== null && newPt.rrno2 !== ''">
                           {{ getAge(newPt.rrno1, newPt.rrno2) }}세
                         </td>
                       </tr>
@@ -1409,7 +1402,7 @@
                               </div>
                             </td>
                             <th>성별</th>
-                            <td v-if="newPt.rrno2 !== undefined">{{ getGndr(newPt.rrno2) }}자</td>
+                            <td v-if="newPt.rrno2 !== null || newPt.rrno2 !== ''">{{ getGndr(newPt.rrno2) }}자</td>
                           </tr>
 
                           <tr>
@@ -3095,7 +3088,7 @@
               >
                 {{ cmpExist(2)[0] }}
               </div>
-              <div class="d-inline-flex w-auto ms-3">주소 : {{ existPt.bascAddr }}</div>
+              <div class="d-inline-flex w-auto ms-3">주소 : {{ existPt.dstr1CdNm }} {{ existPt.dstr2CdNm }}</div>
             </div>
 
             <div class="exist-box d-flex align-items-center mt-3">
@@ -3185,19 +3178,13 @@ export default {
       preRpt: null /*역조서 이미지 링크*/,
       reportFile: null,
       newPt: {
-        gndr: '',
-        zip: '',
-        bascAddr: '',
-        detlAddr: '',
-        natiCd: '',
-        picaVer: null,
-        natiNm: '대한민국',
-        attcId: null,
-        dethYn: '',
-        mpno: '',
-        dstr1Cd: '',
-        dstr2Cd: '',
+        ptNm: '', gndr: null, rrno1: null, rrno2: null,
+        dethYn: '', natiCd: '', natiNm: '대한민국',
+        dstr1Cd: '', dstr2Cd: '', telno: '', picaVer: null,
+        nokNm: '', mpno: '', job: '', attcId: null,
+        bascAddr: '', detlAddr: '', zip: ''
       },
+      epidReportImage: '',
       dsInfo: {
         ptId: '',
         occrDt: '',
@@ -3354,6 +3341,7 @@ export default {
       await this.$store.dispatch('patnt/modiPtInfo', data);
       this.closePopup(0);
       this.tab = 1;
+      this.clearNewPt()
     },
     getDate(data) {
       const dData = new Date(data);
@@ -3371,7 +3359,7 @@ export default {
     },
     alertOpen(idx) {
       if (idx === 3) {
-        this.errMsg = '환자 정보가\n등록되었습니다.';
+        this.errMsg = '환자 정보가\n등록되었습니다.newPt';
         this.isAlert = true;
         this.alertIdx = 3;
       } else if (idx === 4) {
@@ -3379,7 +3367,8 @@ export default {
         this.errMsg =
             '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.';
         this.isAlert = true;
-        this.newPt = this.rptInfo;
+        this.newPt = {...this.rptInfo, bascAddr: this.rptInfo.baseAddr}
+        console.log(this.newPt)
         this.alertIdx = 4;
       } else if (idx === 9) {
         /*역조서 삭제*/
@@ -3397,7 +3386,6 @@ export default {
       if (res === 3) {
         this.alertClose();
       } else if (res === 4) {
-        this.newPt = this.rptInfo;
         this.alertClose();
       } else if (res === 9) {
         this.removeRpt();
@@ -3449,11 +3437,10 @@ export default {
         this.alertOpen(4);
       }
       //역조서 이미지 미리보기 만들기
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.preRpt = e.target.result;
-      }
-      reader.readAsDataURL(file);
+      await this.$store.dispatch('user/readPrivateImage',this.rptInfo.attcId).then((result) => {
+        const blob = new Blob([result], { type: 'image/jpeg' })
+        this.epidReportImage = URL.createObjectURL(blob)
+      })
     },
     removeRpt() {
       /*역조서 삭제*/
@@ -3521,18 +3508,24 @@ export default {
       this.$store.dispatch('patnt/getPatntList', this.filterData);
       this.page = 1;
     },
-    showValue() {
+    async showPatntModal(patient) {
+      await this.$store.dispatch('patnt/getBasicInfo', patient);
+      if (this.ptDetail !== null) {
+        this.newPt = this.ptDetail;
+      }
+
+      await this.$store.dispatch('user/readPrivateImage',this.newPt.attcId).then((result) => {
+        const blob = new Blob([result], { type: 'image/jpeg' })
+        this.epidReportImage = URL.createObjectURL(blob)
+      })
+    },
+    clearNewPt() {
       this.newPt = {
-        gndr: '',
-        zip: '',
-        bascAddr: '',
-        detlAddr: '',
-        natiCd: '',
-        picaVer: null,
-        natiNm: '대한민국',
-        attcId: null,
-        dethYn: '',
-        mpno: ''
+        ptNm: '', gndr: null, rrno1: null, rrno2: null,
+          dethYn: '', natiCd: '', natiNm: '대한민국',
+          dstr1Cd: '', dstr2Cd: '', telno: '', picaVer: null,
+          nokNm: '', mpno: '', job: '', attcId: null,
+          bascAddr: '', detlAddr: '', zip: ''
       }
       this.preRpt = null;
     },
