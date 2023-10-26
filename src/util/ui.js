@@ -63,7 +63,7 @@ export function getTag(data){
     return str
 }
 export function getGndr(no2){
-    if(no2 !== ''){
+    if(no2 !== '' && no2 !== null){
         if (no2 === '1' || no2 === '3') {
             this.newPt.gndr = '남'
             return this.newPt.gndr
@@ -73,20 +73,34 @@ export function getGndr(no2){
         }
     }
 }
-export function getAge (no1, no2){
+
+export function getAge(rrno1, rrno2) {
+    if (rrno1 === null || rrno1 === '' || rrno2 === null || rrno2 === '') {
+        return null;
+    }
     const curData = new Date()
     const curYear = curData.getFullYear()
-    let year
-    if(no2 !== '') {
-        if (no2 === '1' || no2 === '2' || no2 === '5' || no2 === '6') {
-            year = '19' + no1.slice(0, 2)
-            return curYear - parseInt(year)
-        } else {
-            year = '20' + no1.slice(0, 2)
-            return curYear - parseInt(year)
-        }
+    const curMonth = curData.getMonth() + 1
+    const curDay = curData.getDate()
+
+    let year = parseInt(rrno1.substring(0, 2))
+    const month = parseInt(rrno1.substring(2, 4))
+    const day = parseInt(rrno1.substring(4, 6))
+
+    if (rrno2 === '1' || rrno2 === '2' || rrno2 === '5' || rrno2 === '6') {
+        year += 1900
+    } else {
+        year += 2000
+    }
+
+    const americanAge = curYear - year
+    if (month > curMonth || (month === curMonth && day > curDay)) {
+        return americanAge - 1
+    } else {
+        return americanAge
     }
 }
+
 export function getAuthCd(code){
     if(code==='일반'){
         return code
