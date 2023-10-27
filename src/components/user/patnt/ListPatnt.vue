@@ -89,7 +89,7 @@
             ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
             >
             <a
-                @click="showValue()"
+                @click="clearNewPt()"
                 class="btn btn-sm btn-flex btn-primary align-self-center px-3"
                 data-bs-toggle="modal"
                 data-bs-target="#kt_modal_patnt"
@@ -137,7 +137,7 @@
 
                           <div class="sbox w-175px ms-2">
                             <select :disabled="enableSecondAddressPicker" v-model="filterPatient['address']['second']" @change="changeDstrCd2()">
-                              <option value="" id="null">군/구 전체</option>
+                              <option value="" id="null">시/군/구 전체</option>
                               <option v-for="(item,idx) in cmGugun" :key="idx"
                                       :value="item['cdId']">{{ item['cdNm'] }}
                               </option>
@@ -236,7 +236,7 @@
                 <div class="table-box with-scroll small">
                   <table class="list-table-hoverable">
                     <colgroup>
-                      <col style="width: 35px"/>
+<!--                      <col style="width: 35px"/>-->
                       <col style="width: 70px"/>
                       <col style="width: 100px"/>
                       <col style="width: 100px"/>
@@ -252,19 +252,19 @@
                     </colgroup>
                     <thead>
                     <tr class="small" style='cursor:default !important'>
-                      <th>
-                        <div class="cbox">
-                          <label>
-                            <input
-                                @change="allCodesChangeState()"
-                                type="checkbox"
-                                class="all-chk"
-                                v-model="allPatientsSelected"
-                                :disabled="ptList.count === 0"
-                            /><i></i>
-                          </label>
-                        </div>
-                      </th>
+<!--                      <th>-->
+<!--                        <div class="cbox">-->
+<!--                          <label>-->
+<!--                            <input-->
+<!--                                @change="allCodesChangeState()"-->
+<!--                                type="checkbox"-->
+<!--                                class="all-chk"-->
+<!--                                v-model="allPatientsSelected"-->
+<!--                                :disabled="ptList.count === 0"-->
+<!--                            /><i></i>-->
+<!--                          </label>-->
+<!--                        </div>-->
+<!--                      </th>-->
                       <th>순번</th>
                       <th>배정상태</th>
                       <th>이름</th>
@@ -288,13 +288,13 @@
                         data-bs-target="#kt_modal_patnt_detail"
                         data-bs-toggle="modal"
                     >
-                      <td>
-                        <div class="cbox d-flex justify-content-center">
-                          <label>
-                            <input type="checkbox" :value="pt" v-model="checkedPatients"/><i></i>
-                          </label>
-                        </div>
-                      </td>
+<!--                      <td>-->
+<!--                        <div class="cbox d-flex justify-content-center">-->
+<!--                          <label>-->
+<!--                            <input type="checkbox" :value="pt" v-model="checkedPatients"/><i></i>-->
+<!--                          </label>-->
+<!--                        </div>-->
+<!--                      </td>-->
                       <td>{{ ptList['count'] - idx - startIndex }}</td>
                       <td>{{ pt['bedStatCdNm'] ? pt['bedStatCdNm'] : '환자정보등록' }}</td>
                       <td>
@@ -316,13 +316,12 @@
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
                       <td>{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                       <td>{{ getDate(pt['updtDttm']) }}</td>
-                      <td>
-                        <a
-                            class="btn btn-flex btn-xs btn-outline btn-outline-primary"
-                            data-bs-target="#kt_modal_patnt"
-                            data-bs-toggle="modal"
-                        >수정</a
-                        >
+                      <td data-bs-target='#kt_modal_patnt'
+                          data-bs-toggle='modal'
+                          @click.stop='showPatntModal(pt)'
+                        ><a
+                          class='btn btn-flex btn-xs btn-outline btn-outline-primary'
+                          >수정</a>
                       </td>
                     </tr>
                     </tbody>
@@ -428,16 +427,10 @@
                             >
                               <div class="profile-view-box" style="width: 100%; height: 264px">
                                 <img
-                                    v-if="preRpt === null || preRpt === undefined"
-                                    src="@/assets/img/img-no-img.webp"
-                                    alt="이미지"
-                                />
-                                <img
-                                    v-if="preRpt !== null && preRpt !== undefined"
-                                    :src="preRpt"
-                                    alt="이미지"
-                                />
-                                <a v-if="preRpt !== null" @click="alertOpen(9)" class="remove-btn"
+                                  v-if='newPt.attcId === null || newPt.attcId === undefined'
+                                  src='@/assets/img/img-no-img.webp' />
+                                <img v-else :src='this.epidReportImage' />
+                                <a v-if="newPt.attcId !== null" @click="alertOpen(9)" class="remove-btn"
                                 ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
                                 /></a>
                               </div>
@@ -486,7 +479,7 @@
                           </div>
                         </td>
                         <th>성별</th>
-                        <td v-if="newPt.rrno2 !== undefined">{{ getGndr(newPt.rrno2) }}자</td>
+                        <td v-if="newPt.rrno2 !== null && newPt.rrno2 !== ''">{{ getGndr(newPt.rrno2) }}자</td>
                       </tr>
 
                       <tr>
@@ -498,12 +491,12 @@
                                 <input type="text" v-model="newPt.rrno1"/>
                               </div>
                               <div class="unit-box mx-2 text-gray-600">-</div>
-                              <div class="tbox w-30px" style="min-width: 30px">
+                              <div>
                                 <input
-                                    type="password"
-                                    v-model="newPt.rrno2"
-                                    class="p-0 text-center fs-3x"
-                                    maxlength="1"
+                                  type="text"
+                                  class="tbox w-30px" style="min-width: 30px; padding-left: 10px"
+                                  v-model="newPt.rrno2"
+                                  maxlength="1"
                                 />
                               </div>
                               <div class="unit-box ms-2" style="line-height: 30px">●●●●●●</div>
@@ -514,7 +507,7 @@
                           </div>
                         </td>
                         <th>나이 (만)</th>
-                        <td v-if="newPt.rrno1 !== undefined && newPt.rrno2 !== undefined">
+                        <td v-if="newPt.rrno1 !== null && newPt.rrno1 !== '' && newPt.rrno2 !== null && newPt.rrno2 !== ''">
                           {{ getAge(newPt.rrno1, newPt.rrno2) }}세
                         </td>
                       </tr>
@@ -696,35 +689,35 @@
                             <div class="cbox-row">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0001"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">고혈압</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0002"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">당뇨</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0003"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">고지혈증</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0004"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">심혈관</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0005"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">뇌혈관</span>
                                 </label>
                               </div>
@@ -733,35 +726,35 @@
                             <div class="cbox-row">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0006"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">암</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0007"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">만성폐질환</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0009"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">신장질환</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0010"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">정신질환</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0011"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">결핵</span>
                                 </label>
                               </div>
@@ -770,22 +763,15 @@
                             <div class="cbox-row">
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0012"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">천식 등 알레르기</span>
                                 </label>
                               </div>
 
                               <div class="cbox">
                                 <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0013"/><i></i>
+                                  <input type="checkbox" name="disease"/><i></i>
                                   <span class="txt">면역력저하자</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0008"/><i></i>
-                                  <span class="txt">폐렴</span>
                                 </label>
                               </div>
                             </div>
@@ -794,14 +780,13 @@
                               <div class="d-inline-flex">
                                 <div class="cbox w-auto">
                                   <label>
-                                    <input type="checkbox" v-model="newPt.undrDsesCd" value="UDDS0014"/><i></i>
+                                    <input type="checkbox" name="disease"/><i></i>
                                     <span class="txt">기타</span>
                                   </label>
                                 </div>
 
                                 <div class="tbox d-inline-flex ms-4 w-300px">
-                                  <input type="text" placeholder="직접 입력" v-model="newPt.undrDsesEtc"
-                                         :disabled="!this.newPt.undrDsesCd?.includes('UDDS0014')" />
+                                  <input type="text" placeholder="직접 입력"/>
                                 </div>
                               </div>
                             </div>
@@ -1417,7 +1402,7 @@
                               </div>
                             </td>
                             <th>성별</th>
-                            <td v-if="newPt.rrno2 !== undefined">{{ getGndr(newPt.rrno2) }}자</td>
+                            <td v-if="newPt.rrno2 !== null || newPt.rrno2 !== ''">{{ getGndr(newPt.rrno2) }}자</td>
                           </tr>
 
                           <tr>
@@ -3103,7 +3088,7 @@
               >
                 {{ cmpExist(2)[0] }}
               </div>
-              <div class="d-inline-flex w-auto ms-3">주소 : {{ existPt.bascAddr }}</div>
+              <div class="d-inline-flex w-auto ms-3">주소 : {{ existPt.dstr1CdNm }} {{ existPt.dstr2CdNm }}</div>
             </div>
 
             <div class="exist-box d-flex align-items-center mt-3">
@@ -3126,7 +3111,7 @@
           <article class="modal-menu-layout1">
             <div class="modal-menu-list">
               <a @click="updateExistPt" class="modal-menu-btn menu-primary">기존정보 업데이트</a>
-              <a @click="regNewPt" class="modal-menu-btn menu-primary-outline">신규등록</a>
+              <a @click="regNewPt" v-show='existPt === null' class="modal-menu-btn menu-primary-outline">신규등록</a>
             </div>
           </article>
         </div>
@@ -3193,19 +3178,13 @@ export default {
       preRpt: null /*역조서 이미지 링크*/,
       reportFile: null,
       newPt: {
-        gndr: '',
-        zip: '',
-        bascAddr: '',
-        detlAddr: '',
-        natiCd: '',
-        picaVer: null,
-        natiNm: '대한민국',
-        attcId: null,
-        dethYn: '',
-        mpno: '',
-        undrDsesCd: [],
-        undrDsesEtc: ''
+        ptNm: '', gndr: null, rrno1: null, rrno2: null,
+        dethYn: '', natiCd: '', natiNm: '대한민국',
+        dstr1Cd: '', dstr2Cd: '', telno: '', picaVer: null,
+        nokNm: '', mpno: '', job: '', attcId: null,
+        bascAddr: '', detlAddr: '', zip: ''
       },
+      epidReportImage: '',
       dsInfo: {
         ptId: '',
         occrDt: '',
@@ -3307,13 +3286,6 @@ export default {
     enableSecondAddressPicker() {
       return this.filterPatient['address']['first'] === "";
     },
-    disableOther() {
-      if (this.newPt.undrDsesCd) {
-        return this.newPt.undrDsesCd.includes('UDDS0014');
-      } else {
-        return false;
-      }
-    }
   },
   //정예준
   watch: {
@@ -3321,6 +3293,13 @@ export default {
       this.allPatientsSelected = this.checkedPatients.length === this.patientData.length;
       if (!this.patientData.length) {
         this.allPatientsSelected = false;
+      }
+    },
+    'newPt.natiCd': function (newNatiCd) {
+      if (newNatiCd === 'NATI0001') {
+        this.newPt.natiNm = '대한민국';
+      } else {
+        this.newPt.natiNm = null;
       }
     }
   },
@@ -3362,6 +3341,7 @@ export default {
       await this.$store.dispatch('patnt/modiPtInfo', data);
       this.closePopup(0);
       this.tab = 1;
+      this.clearNewPt()
     },
     getDate(data) {
       const dData = new Date(data);
@@ -3379,7 +3359,7 @@ export default {
     },
     alertOpen(idx) {
       if (idx === 3) {
-        this.errMsg = '환자 정보가\n등록되었습니다.';
+        this.errMsg = '환자 정보가\n등록되었습니다.newPt';
         this.isAlert = true;
         this.alertIdx = 3;
       } else if (idx === 4) {
@@ -3387,7 +3367,8 @@ export default {
         this.errMsg =
             '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.';
         this.isAlert = true;
-        this.newPt = {...this.rptInfo, undrDsesCd: [], undrDsesEtc: ''};
+        this.newPt = {...this.rptInfo, bascAddr: this.rptInfo.baseAddr}
+        console.log(this.newPt)
         this.alertIdx = 4;
       } else if (idx === 9) {
         /*역조서 삭제*/
@@ -3405,11 +3386,10 @@ export default {
       if (res === 3) {
         this.alertClose();
       } else if (res === 4) {
-        this.newPt = {...this.rptInfo, undrDsesCd: [], undrDsesEtc: ''};
         this.alertClose();
       } else if (res === 9) {
         this.removeRpt();
-        this.newPt = {...this.initNewPt, undrDsesCd: [], undrDsesEtc: ''};
+        this.newPt = this.initNewPt;
         this.dsInfo = this.initDsInfo;
         this.alertClose();
         this.alertOpen(10);
@@ -3457,11 +3437,10 @@ export default {
         this.alertOpen(4);
       }
       //역조서 이미지 미리보기 만들기
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.preRpt = e.target.result;
-      }
-      reader.readAsDataURL(file);
+      await this.$store.dispatch('user/readPrivateImage',this.rptInfo.attcId).then((result) => {
+        const blob = new Blob([result], { type: 'image/jpeg' })
+        this.epidReportImage = URL.createObjectURL(blob)
+      })
     },
     removeRpt() {
       /*역조서 삭제*/
@@ -3480,7 +3459,8 @@ export default {
           return isMatch(this.existPt.rrno1, this.newPt.rrno1) &&
           isMatch(this.existPt.rrno2, this.newPt.rrno2) ? res1 : res2;
         case 2:
-          return isMatch(this.existPt.bascAddr, this.newPt.bascAddr) ? res1 : res2;
+          return isMatch(this.existPt.dstr1Cd, this.newPt.dstr1Cd) &&
+            isMatch(this.existPt.dstr2Cd, this.newPt.dstr2Cd)? res1 : res2;
         default:
           return isMatch(this.existPt.mpno, this.newPt.mpno) ? res1 : res2;
       }
@@ -3528,20 +3508,24 @@ export default {
       this.$store.dispatch('patnt/getPatntList', this.filterData);
       this.page = 1;
     },
-    showValue() {
+    async showPatntModal(patient) {
+      await this.$store.dispatch('patnt/getBasicInfo', patient);
+      if (this.ptDetail !== null) {
+        this.newPt = this.ptDetail;
+      }
+
+      await this.$store.dispatch('user/readPrivateImage',this.newPt.attcId).then((result) => {
+        const blob = new Blob([result], { type: 'image/jpeg' })
+        this.epidReportImage = URL.createObjectURL(blob)
+      })
+    },
+    clearNewPt() {
       this.newPt = {
-        gndr: '',
-        zip: '',
-        bascAddr: '',
-        detlAddr: '',
-        natiCd: '',
-        picaVer: null,
-        natiNm: '대한민국',
-        attcId: null,
-        dethYn: '',
-        mpno: '',
-        undrDsesCd: [],
-        undrDsesEtc: ''
+        ptNm: '', gndr: null, rrno1: null, rrno2: null,
+          dethYn: '', natiCd: '', natiNm: '대한민국',
+          dstr1Cd: '', dstr2Cd: '', telno: '', picaVer: null,
+          nokNm: '', mpno: '', job: '', attcId: null,
+          bascAddr: '', detlAddr: '', zip: ''
       }
       this.preRpt = null;
     },
