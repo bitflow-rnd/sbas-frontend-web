@@ -168,7 +168,7 @@ export default {
                     .then(response =>{
                       console.log(response,"사용자목록")
                       if(response.data?.code==='00') {
-                          comment.commit('setUserList', response.data?.result.items)
+                          comment.commit('setUserList', response.data?.result)
                           if(response.data?.result.items.length !== 0){
                               comment.dispatch('getUserInfo', response.data?.result.items[0].userId)
                           }

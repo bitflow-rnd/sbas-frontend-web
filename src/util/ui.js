@@ -160,7 +160,7 @@ export function setSearchStr(arr) {
     } else {
         console.log(arr)
         const strArr = arr.map((item) => String(item))
-        const resStr = strArr.join(';')
+        const resStr = strArr.join(',')
         console.log(resStr)
         return resStr
     }
