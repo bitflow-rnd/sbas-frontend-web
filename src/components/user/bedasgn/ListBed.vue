@@ -5292,7 +5292,7 @@ export default {
         this.errMsg =
           '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
         this.isAlert = true
-        this.newPt = this.rptInfo
+        this.newPt = {...this.rptInfo, bascAddr: this.rptInfo.baseAddr}
         if(this.rptInfo!==null ){
           /*역조서 입력 시*/
           if(this.rptInfo.instAddr !==null){
@@ -5376,7 +5376,7 @@ export default {
         this.alertClose()
         this.tab = 1
       } else if (res === 4) {
-        this.newPt = this.rptInfo
+        console.log('역학조사서 확인')
         this.alertClose()
       } else if (res === 5) {
         this.aprv.aprvYn = 'N'
