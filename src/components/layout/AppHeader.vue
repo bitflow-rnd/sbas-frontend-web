@@ -167,6 +167,11 @@
         <!--begin::Navbar-->
         <div class="app-navbar flex-shrink-0">
           <div class="app-navbar-item" id="kt_app_header_middle_wrapper">
+            <a href="https://bitflow.notion.site/1-c386cb59de4440208ec146d6968bf877?pvs=4" target='_blank' class="btn btn-flex btn-sm btn-primary my-auto fs-1"
+            ><i class="fa-solid fa-triangle-exclamation fs-1"></i> 매뉴얼 페이지</a
+            >
+          </div>
+          <div class="app-navbar-item" id="kt_app_header_middle_wrapper">
             <a href="#" class="btn btn-flex btn-sm btn-danger my-auto fs-5"
               ><i class="fa-solid fa-triangle-exclamation fs-4"></i> 병상요청</a
             >
