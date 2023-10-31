@@ -3395,7 +3395,7 @@ export default {
     },
     alertOpen(idx) {
       if (idx === 3) {
-        this.errMsg = '환자 정보가\n등록되었습니다.newPt';
+        this.errMsg = '환자 정보가\n등록되었습니다.';
         this.isAlert = true;
         this.alertIdx = 3;
       } else if (idx === 4) {
