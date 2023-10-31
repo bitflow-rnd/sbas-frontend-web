@@ -569,6 +569,7 @@
                               openBedMod(item)
                             "
                             class="btn btn-flex btn-xs btn-outline btn-outline-primary justify-content-center"
+                            :style="{color: getBtnColor(item.bedStatCd)}"
                             >{{ getBtn(item.bedStatCd)[0] }}</a
                           >
                         </td>
@@ -5620,6 +5621,23 @@ export default {
         return ['완료', '#kt_modal_recommend']
       } else {
         return ['완료', '#kt_modal_detail']
+      }
+    },
+    getBtnColor(sts) {
+      if (sts === 'BAST0001') {
+        return ''
+      } else if (sts === 'BAST0002') {
+        return '#67CCAAFF'
+      } else if (sts === 'BAST0003') {
+        return '#67CCAAFF'
+      } else if (sts === 'BAST0004') {
+        return '#4CAFF1FF'
+      } else if (sts === 'BAST0005') {
+        return '#4CAFF1FF'
+      } else if (sts === 'BAST0006') {
+        return '#4CAFF1FF'
+      } else if (sts === 'BAST0007' || sts === 'BAST0008') {
+        return '#FF666EFF'
       }
     },
     async openBedMod(data) {
