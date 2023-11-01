@@ -2887,14 +2887,15 @@
                       <td><span class="text-primary">13</span>/55</td>
                       <td><span class="text-primary">13</span>/55</td>
                       <td><span class="text-danger">0</span>/1</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
+
+                      <td><span :class="{'text-danger': item.ventilator === 'N'}" class="text-primary">{{ item.ventilator }}</span></td>
+                      <td><span :class="{'text-danger': item.ventilatorPreemie === 'N'}" class="text-primary">{{ item.ventilatorPreemie }}</span></td>
+                      <td><span :class="{'text-danger': item.incubator === 'N'}" class="text-primary">{{ item.incubator }}</span></td>
+                      <td><span :class="{'text-danger': item.ecmo === 'N'}" class="text-primary">{{ item.ecmo }}</span></td>
+                      <td><span :class="{'text-danger': item.bodyTemperatureControl === 'N'}" class="text-primary">{{ item.bodyTemperatureControl }}</span></td>
+                      <td><span :class="{'text-danger': item.highPressureOxygen === 'N'}" class="text-primary">{{ item.highPressureOxygen }}</span></td>
+                      <td><span :class="{'text-danger': item.ct === 'N'}" class="text-primary">{{ item.ct }}</span></td>
+                      <td><span :class="{'text-danger': item.mri === 'N'}" class="text-primary">{{ item.mri }}</span></td>
                       <td>{{ item.distance }} / 3분</td>
                     </tr>
                   </tbody>
