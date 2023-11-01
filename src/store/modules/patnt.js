@@ -11,7 +11,6 @@ export default {
     ptDetail: null,
     rptInfo: null,
     attcRpt: null,
-    startLoc: null,
     isSpinner:0
   },
   getters: {
@@ -38,9 +37,6 @@ export default {
       } else {
         state.ptDetail = { ...state.ptDetail, zip: payload[1] }
       }
-    },
-    setStartLoc(state, payload) {
-      state.startLoc = payload
     },
     setInstZip(state, payload) {
       state.rptInfo = { ...state.rptInfo, instZip: payload, instBascAddr: state.rptInfo.instAddr }
@@ -223,12 +219,6 @@ export default {
           if (data[0] === 1) {
             console.log('역학조사서 기관')
             await comment.commit('setInstZip', response.data?.addresses[0]?.addressElements[8]?.longName)
-          } else {
-            console.log('환자정보 조회 후 우편번호')
-            comment.commit('setStartLoc', {
-              x: response.data?.addresses[0]?.x,
-              y: response.data?.addresses[0]?.y
-            })
           }
         }
       } catch (e) {
