@@ -2529,6 +2529,13 @@
                           <div class="cbox ms-4">
                             <label>
                               <input type="checkbox" name="permission" /><i></i>
+                              <span class="txt">소아일반격리</span>
+                            </label>
+                          </div>
+
+                          <div class="cbox ms-4">
+                            <label>
+                              <input type="checkbox" name="permission" /><i></i>
                               <span class="txt">소아</span>
                             </label>
                           </div>
@@ -2651,7 +2658,7 @@
                     </tr>
 
                     <tr>
-                      <th>환자유형</th>
+                      <th>장비정보</th>
                       <td colspan="3">
                         <div class="item-cell-box">
                           <div class="cbox">
@@ -3483,7 +3490,7 @@
                   </div>
 
                   <div class="tabs-box flex-root"  v-show="this.tabidx === 2" style="">
-                    <div v-if="transInfo!==undefined && startLoc !== null" class="scroll-wrap px-5 mx-5 mb-5">
+                    <div v-if="transInfo !== undefined && transInfo !== null" class="scroll-wrap px-5 mx-5 mb-5">
                       <article class="table-form-layout1">
                         <div v-if="bdDetail.bedStatCd==='BAST0006'" class="form-head-box fs-3 fw-bold pb-4">
                           이송중 <span class="text-primary">거리 2.3km, 예상 소요시간 25분</span>
@@ -3521,7 +3528,7 @@
                                 </tr>
                                 <tr>
                                   <th>위도, 경도</th>
-                                  <td>{{ startLoc.x }}, {{ startLoc.y }}</td>
+                                  <td>{{ transInfo.dprtDstrLat }}, {{ transInfo.dprtDstrLon }}</td>
                                 </tr>
                                 <tr>
                                   <th>보호자 1 연락처</th>
@@ -5041,7 +5048,7 @@ export default {
       'rcmdHp',
       'transInfo'
     ]),
-    ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip','startLoc','isSpinner']),
+    ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip', 'isSpinner']),
     ...mapState('user', ['userInfo', 'cmSido','chrgInfo']),
     ...mapState('admin', ['firestatnList', 'firemenList','medinstList','organMedi']),
 
@@ -5189,7 +5196,7 @@ export default {
     loadNaverMapAsync() {
       // 네이버 지도 생성 // 35.9561644!4d128.5653029
       const map = new window.naver.maps.Map('map', {
-          center: new window.naver.maps.LatLng(this.startLoc.y, this.startLoc.x),
+          center: new window.naver.maps.LatLng(this.transInfo.dprtDstrLat, this.transInfo.dprtDstrLon),
           zoom: 15,
           zoomControlOptions: {
               style: window.naver.maps.ZoomControlStyle.SMALL,
@@ -5197,7 +5204,7 @@ export default {
           }
       })
       new window.naver.maps.Marker({
-          position: new window.naver.maps.LatLng(this.startLoc.y, this.startLoc.x),
+          position: new window.naver.maps.LatLng(this.transInfo.dprtDstrLat, this.transInfo.dprtDstrLon),
           map: map
       })
     },
