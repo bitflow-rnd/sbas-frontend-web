@@ -564,10 +564,8 @@
                         <td>{{ item.bascAddr }}</td>
                         <td v-html='getDtBlue(item.updtDttm)'></td>
                         <td>
+<!--                            @click="openBedMod(item)"-->
                           <a
-                            @click="
-                              openBedMod(item)
-                            "
                             class="btn btn-flex btn-xs btn-outline btn-outline-primary justify-content-center"
                             :style="{color: getBtnColor(item.bedStatCd)}"
                             >{{ getBtn(item.bedStatCd)[0] }}</a
@@ -3510,22 +3508,24 @@
                                   <td class="p-0" rowspan="9">
                                     <div id="map"></div>
                                   </td>
-                                  <th class="bg-accent" colspan="2">담당보건소</th>
+                                  <th class="bg-accent" colspan="2">출발지 정보</th>
                                 </tr>
                                 <tr></tr>
 
                                 <tr>
                                   <th>배정 요청 지역</th>
-                                  <td>{{transInfo.reqDstr1CdNm?transInfo.reqDstr1CdNm:'-'}}</td>
+                                  <td>{{ transInfo.reqDstr1CdNm ? transInfo.reqDstr1CdNm : '-' }}</td>
                                 </tr>
 
                                 <tr>
                                   <th>환자 출발지</th>
-                                  <td>{{ transInfo.dprtDstrTypeCdNm?transInfo.dprtDstrTypeCdNm:'-' }}</td>
+                                  <td>{{ transInfo.dprtDstrTypeCdNm ? transInfo.dprtDstrTypeCdNm : '-' }}</td>
                                 </tr>
                                 <tr>
                                   <th>주소</th>
-                                  <td>{{transInfo.dprtDstrBascAddr?transInfo.dprtDstrBascAddr:'-'}}&nbsp;{{transInfo.dprtDstrDetlAddr?transInfo.dprtDstrDetlAddr:''}}</td>
+                                  <td>
+                                    {{ transInfo.dprtDstrBascAddr ? transInfo.dprtDstrBascAddr : '-' }}&nbsp;{{ transInfo.dprtDstrDetlAddr ? transInfo.dprtDstrDetlAddr : '' }}
+                                  </td>
                                 </tr>
                                 <tr>
                                   <th>위도, 경도</th>
@@ -3533,15 +3533,15 @@
                                 </tr>
                                 <tr>
                                   <th>보호자 1 연락처</th>
-                                  <td>{{transInfo.nok1Telno?transInfo.nok1Telno:'-'}}</td>
+                                  <td>{{ transInfo.nok1Telno ? transInfo.nok1Telno : '-' }}</td>
                                 </tr>
                                 <tr>
                                   <th>보호자 2 연락처</th>
-                                  <td>{{transInfo.nok2Telno?transInfo.nok2Telno:'-'}}</td>
+                                  <td>{{ transInfo.nok2Telno ? transInfo.nok2Telno : '-' }}</td>
                                 </tr>
                                 <tr>
                                   <th>요청 메시지</th>
-                                  <td>{{transInfo.msg?transInfo.msg:'-'}}</td>
+                                  <td>{{ transInfo.msg ? transInfo.msg : '-' }}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -3577,14 +3577,14 @@
                                 </tr>
                                 <tr v-else>
                                   <th>구급대명</th>
-                                  <td>대구 북구 대명 수정</td>
+                                  <td>{{ transInfo.ambsNm ?? '-' }}</td>
                                   <th>차량번호</th>
-                                  <td>382차3838 수정</td>
+                                  <td>{{ transInfo.vecno ?? '-' }}</td>
                                 </tr>
                                 <tr v-if="transCondition1">
                                   <th>대원 / 연락처</th>
                                   <td colspan="3">
-                                    사. 김찬기, 교. 이주원, 위. 박장혁 수정 / 010-2565-7080 수정
+                                    {{ trsfInfo.crewNm ?? '-' }} / {{ transInfo.chfTelno ?? '-' }}
                                   </td>
                                 </tr>
 
@@ -3607,36 +3607,36 @@
                                 </tr>
                                 <tr v-if="transCondition2">
                                   <th>의료기관</th>
-                                  <td>대구서울대병원 수정</td>
+                                  <td>{{ transInfo.destinationInfo.hospNm ?? '-' }}</td>
                                   <th>전화번호</th>
-                                  <td>{{ transInfo.chrgTelno ? transInfo.chrgTelno : '-' }}</td>
+                                  <td>{{ transInfo.destinationInfo.chrgTelno ?? '-' }}</td>
                                 </tr>
 
                                 <tr v-if="transCondition2">
                                   <th>주소</th>
-                                  <td>대구광역시 중구 호암로 51 대구서울대병원 7103호</td>
+                                  <td>{{ transInfo.destinationInfo.hospAddr ?? '-' }}</td>
                                   <th>위도, 경도</th>
-                                  <td>132.12121044, 38.121212121</td>
+                                  <td>{{ transInfo.destinationInfo.destinationLat }}, {{ transInfo.destinationInfo.destinationLon }}</td>
                                 </tr>
 
                                 <tr v-if="transCondition2">
                                   <th>병실</th>
-                                  <td>{{ transInfo.inhpAsgnYn ==='Y'?'병실번호수정':'-' }}</td>
+                                  <td>{{ transInfo.destinationInfo.roomNm ?? '-' }}</td>
                                   <th>원내 배정 여부</th>
-                                  <td>{{ transInfo.inhpAsgnYn ==='Y'?'원내배정':'전원요청' }}</td>
+                                  <td>{{ transInfo.inhpAsgnYn === 'Y' ? '원내배정' : '전원요청' }}</td>
                                 </tr>
 
                                 <tr v-if="transCondition2">
                                   <th>진료과</th>
-                                  <td>{{ transInfo.deptNm ? transInfo.deptNm :'-' }}</td>
+                                  <td>{{ transInfo.destinationInfo.deptNm ?? '-' }}</td>
                                 </tr>
                                 <tr v-if="transCondition2">
                                   <th>담당의</th>
-                                  <td>{{ transInfo.spclNm ? transInfo.spclNm :'-' }}</td>
+                                  <td>{{ transInfo.destinationInfo.spclNm ?? '-' }}</td>
                                 </tr>
                                 <tr v-if="transCondition2">
                                   <th>승인 메시지</th>
-                                  <td>응급실 앞에서 대기하고 있겠습니다. 수정</td>
+                                  <td>{{ transInfo.destinationInfo.msg ?? '-' }}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -5196,8 +5196,10 @@ export default {
     },
     loadNaverMapAsync() {
       // 네이버 지도 생성 // 35.9561644!4d128.5653029
+      let lat = this.transInfo.dprtDstrLat ?? '-'
+      let lon = this.transInfo.dprtDstrLon ?? '-'
       const map = new window.naver.maps.Map('map', {
-          center: new window.naver.maps.LatLng(this.transInfo.dprtDstrLat, this.transInfo.dprtDstrLon),
+          center: new window.naver.maps.LatLng(lat, lon),
           zoom: 15,
           zoomControlOptions: {
               style: window.naver.maps.ZoomControlStyle.SMALL,
@@ -5205,7 +5207,7 @@ export default {
           }
       })
       new window.naver.maps.Marker({
-          position: new window.naver.maps.LatLng(this.transInfo.dprtDstrLat, this.transInfo.dprtDstrLon),
+          position: new window.naver.maps.LatLng(lat, lon),
           map: map
       })
     },
@@ -5468,7 +5470,9 @@ export default {
     },
     setActive(idx) {
       this.tabidx = idx
-      this.loadNaverMapAsync()
+      if (idx === 2) {
+        this.loadNaverMapAsync()
+      }
     },
     openPopup,
     getTLDt,
