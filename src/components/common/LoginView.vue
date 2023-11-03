@@ -573,8 +573,9 @@
                               <label>
                                 <input type="file" @change="onFileChange" />
                                 <span class="upload-btn-box">
-                                  <img src="@/assets/img/img-no-img.webp" alt="이미지" />
-                                  <span @click="uploadImg" class="txt">클릭하여 업로드</span>
+                                  <img v-if='this.form.attcId === null || this.form.attcId === undefined'
+                                    src="@/assets/img/img-no-img.webp" alt="이미지" />
+                                  <img v-else :src='this.imgUrl'>
                                 </span>
                               </label>
                             </div>
@@ -958,26 +959,12 @@ export default {
       }
     },
     onFileChange(event) {
-      console.log('이벤트')
+      console.log('업로드 이벤트')
       this.selectedFile = event.target.files[0]
-
       if (this.selectedFile) {
-        this.uploadImg()
-      }
-      console.log(localStorage.getItem('imgData'))
-    },
-    uploadImg() {
-      console.log('이미지')
-      if (this.selectedFile) {
-        const reader = new FileReader()
-        const blob = new Blob([this.selectedFile])
-        reader.onload = (event) => {
-          this.$store.commit('setAttcId', event.target.result)
-          this.imgUrl = event.target.result
-        }
-        reader.readAsDataURL(blob)
-
-        //console.log(localStorage.getItem('imgData'))
+        // 이미지 미리보기
+        const blob = new Blob([this.selectedFile], { type: 'image/jpeg' })
+        this.imgUrl = URL.createObjectURL(blob)
       }
     },
     imgRemove() {
@@ -1037,8 +1024,8 @@ export default {
         ...this.form,
         ptTypeCd: ptTypeCd.length > 0 ? ptTypeCd.join(';') : null
       }
-
       if (this.validateForm()) {
+        this.saveImage()
         this.$store.dispatch('user/reqUserReg', requestData)
           .then(code => {
             if (code === '00') {
@@ -1051,6 +1038,16 @@ export default {
             console.log('응답 코드:', code)
           })
       }
+    },
+    saveImage() {
+      const formData = new FormData()
+      formData.append('param1', 'user image')
+      formData.append('param2', this.selectedFile)
+      this.$store.dispatch('user/uploadPrivateImage', formData).then((result) => {
+        this.form.attcId = result.attcId[0]
+      }).catch((error) => {
+        console.error('이미지 업로드 에러', error)
+      })
     },
     validateForm() {
       if (!this.form.id) {
