@@ -453,9 +453,9 @@
                   <div class="txt-box pt-10">조회 결과가 없습니다.</div>
                 </div>
                 <div v-if="medinstList.items.length !== 0" class="table-box with-scroll small">
-                  <table>
+                  <table class="list-table-hoverable">
                     <colgroup>
-                      <col style="width: 40px"/>
+<!--                      <col style="width: 40px"/>-->
                       <col style="width: 60px"/>
                       <col style="width: 40px" class='d-none'/>
                       <col style="width: 190px"/>
@@ -483,11 +483,11 @@
                     </colgroup>
                     <thead>
                     <tr class="small">
-                      <th rowspan="2">
-                        <div class="cbox">
-                          <label> <input type="checkbox" class="all-chk"/><i></i> </label>
-                        </div>
-                      </th>
+<!--                      <th rowspan="2">-->
+<!--                        <div class="cbox">-->
+<!--                          <label> <input type="checkbox" class="all-chk"/><i></i> </label>-->
+<!--                        </div>-->
+<!--                      </th>-->
                       <th rowspan="2">순번</th>
                       <th rowspan="2" class='d-none'>이미지</th>
                       <th rowspan="2">의료기관명</th>
@@ -533,11 +533,11 @@
                     </thead>
                     <tbody>
                     <tr v-for="(item, i) in medinstList.items" :key="i" @click="openMedInstDetail(item)">
-                      <td @click="toggleCheckbox">
-                        <div @click="toggleCheckbox" class="cbox d-flex justify-content-center">
-                          <label> <input type="checkbox" @click="toggleCheckbox"/><i></i> </label>
-                        </div>
-                      </td>
+<!--                      <td @click="toggleCheckbox">-->
+<!--                        <div @click="toggleCheckbox" class="cbox d-flex justify-content-center">-->
+<!--                          <label> <input type="checkbox" @click="toggleCheckbox"/><i></i> </label>-->
+<!--                        </div>-->
+<!--                      </td>-->
                       <td>{{ medinstList['count'] - i - startIndex }}</td>
                       <td class='d-none'>
                         <i

@@ -11,7 +11,6 @@ export default {
     ptDetail: null,
     rptInfo: null,
     attcRpt: null,
-    startLoc: null,
     isSpinner:0
   },
   getters: {
@@ -37,17 +36,6 @@ export default {
         state.ptDetail = payload[1]
       } else {
         state.ptDetail = { ...state.ptDetail, zip: payload[1] }
-      }
-    },
-    setStartLoc(state, payload) {
-      state.startLoc = payload
-    },
-    setZip(state, payload) {
-      state.rptInfo = {
-        ...state.rptInfo,
-        zip: payload,
-        bascAddr: state.rptInfo.baseAddr,
-        detlAddr: state.rptInfo.dtlAddr
       }
     },
     setInstZip(state, payload) {
@@ -167,7 +155,6 @@ export default {
       comment.commit('startSpinner',1)
       const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/upldepidreport`
-      console.log(data)
       const request = data
       console.log('역학조사서 업로드')
       try {
@@ -180,7 +167,6 @@ export default {
           //console.log(response.data?.result)
           await comment.commit('uploadRpt', response.data?.result)
           comment.commit('startSpinner',0)
-          comment.dispatch('geoCoding', [0, response.data?.result.baseAddr])
         }
       } catch (e) {
         console.log(e)
@@ -230,21 +216,9 @@ export default {
           }
         })
         if (response.data?.status === 'OK') {
-          if (data[0] === 0) {
-            console.log('역학조사서 파싱 후 주소')
-            comment.commit('setZip', response.data?.addresses[0]?.addressElements[8]?.longName)
-          } else if (data[0] === 1) {
+          if (data[0] === 1) {
+            console.log('역학조사서 기관')
             await comment.commit('setInstZip', response.data?.addresses[0]?.addressElements[8]?.longName)
-          } else {
-            console.log('환자정보 조회 후 우편번호')
-            comment.commit('setStartLoc', {
-              x: response.data?.addresses[0]?.x,
-              y: response.data?.addresses[0]?.y
-            })
-            comment.commit('setBasicInfo', [
-              1,
-              response.data?.addresses[0]?.addressElements[8]?.longName
-            ])
           }
         }
       } catch (e) {
@@ -261,7 +235,6 @@ export default {
         const response = await axios.get(url)
         if (response.data?.code === '00') {
           await comment.commit('setBasicInfo', [0, response.data?.result])
-          await comment.dispatch('geoCoding', [2, response.data?.result.bascAddr])
         }
       } catch (e) {
         console.log(e)

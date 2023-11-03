@@ -138,31 +138,42 @@
                     <tbody>
                       <tr data-toggle="false">
                         <th>배정상태</th>
-                        <td colspan="4">
+                        <td colspan="3">
                           <div class="item-row-box">
                             <div class="item-cell-box">
+                              <div class="cbox">
+                                <label>
+                                  <input
+                                    type="checkbox"
+                                    name="state"
+                                    v-model='allSelected'
+                                    @change="searchBedAsgn" /><i></i>
+                                  <span class="txt">전체
+<!--                                    <span class="cnt ms-1">{{ bdList.length }}</span>-->
+                                  </span>
+                                </label>
+                              </div>
                               <div
                                   v-for="(item, idx) in bdList2"
                                   :key="idx"
-                                  class="cbox"
-                                  :class="{ 'ms-4': item.title !== '병상요청' }"
+                                  class="cbox ms-4"
                               >
                                 <label>
                                   <input
                                       type="checkbox"
                                       name="state"
-                                      v-model="isStatesChecked[idx]"
+                                      v-model="search.bedStatCd"
                                       :value="this.filter.selectedStates[idx]"
                                       @change="searchBedAsgn" /><i></i>
                                   <span class="txt">{{ item.title }}
-                                    <span v-show="item.title !== '완료'" class="cnt ms-1">{{item.count }}</span>
+                                    <span class="cnt ms-1">{{ item.count }}</span>
                                   </span>
                                 </label>
                               </div>
                             </div>
                           </div>
                         </td>
-
+                        <th>검색어</th>
                         <td colspan="3">
                           <div class="item-cell-box full">
                             <div class="tbox full with-btn">
@@ -492,7 +503,7 @@
                 <div class="table-box with-scroll small">
                   <table class="list-table-hoverable">
                     <colgroup>
-                      <col style="width: 35px" />
+<!--                      <col style="width: 35px" />-->
                       <col style="width: 70px" />
                       <col style="width: 100px" />
                       <col style="width: 100px" />
@@ -508,11 +519,11 @@
                     </colgroup>
                     <thead>
                       <tr class="small" style='cursor:default !important'>
-                        <th>
-                          <div class="cbox">
-                            <label> <input type="checkbox" class="all-chk" v-model='allChked' @change='allChk' /><i></i> </label>
-                          </div>
-                        </th>
+<!--                        <th>-->
+<!--                          <div class="cbox">-->
+<!--                            <label> <input type="checkbox" class="all-chk" v-model='allChked' @change='allChk' /><i></i> </label>-->
+<!--                          </div>-->
+<!--                        </th>-->
                         <th>순번</th>
                         <th>배정상태</th>
                         <th>환자이름</th>
@@ -536,11 +547,11 @@
 
                     <tbody v-if="bdListWeb.count !== 0">
                       <tr v-for="(item, i) in bdListWeb.items" :key="i" @click='openBedMod(item)'>
-                        <td @click='toggleCheckbox'>
-                          <div @click='toggleCheckbox' class="cbox d-flex justify-content-center">
-                            <label> <input @click='toggleCheckbox' v-model='item.chked' @change='setDelBdList(item)' type="checkbox" /><i></i> </label>
-                          </div>
-                        </td>
+<!--                        <td @click='toggleCheckbox'>-->
+<!--                          <div @click='toggleCheckbox' class="cbox d-flex justify-content-center">-->
+<!--                            <label> <input @click='toggleCheckbox' v-model='item.chked' @change='setDelBdList(item)' type="checkbox" /><i></i> </label>-->
+<!--                          </div>-->
+<!--                        </td>-->
                         <td>{{ bdListWeb.count - i - startIndex }}</td>
                         <td>{{ item.bedStatCdNm }}</td>
                         <td>{{ maskingNm(item.ptNm) }}</td>
@@ -553,11 +564,10 @@
                         <td>{{ item.bascAddr }}</td>
                         <td v-html='getDtBlue(item.updtDttm)'></td>
                         <td>
+<!--                            @click="openBedMod(item)"-->
                           <a
-                            @click="
-                              openBedMod(item)
-                            "
                             class="btn btn-flex btn-xs btn-outline btn-outline-primary justify-content-center"
+                            :style="{color: getBtnColor(item.bedStatCd)}"
                             >{{ getBtn(item.bedStatCd)[0] }}</a
                           >
                         </td>
@@ -2517,6 +2527,13 @@
                           <div class="cbox ms-4">
                             <label>
                               <input type="checkbox" name="permission" /><i></i>
+                              <span class="txt">소아일반격리</span>
+                            </label>
+                          </div>
+
+                          <div class="cbox ms-4">
+                            <label>
+                              <input type="checkbox" name="permission" /><i></i>
                               <span class="txt">소아</span>
                             </label>
                           </div>
@@ -2639,7 +2656,7 @@
                     </tr>
 
                     <tr>
-                      <th>환자유형</th>
+                      <th>장비정보</th>
                       <td colspan="3">
                         <div class="item-cell-box">
                           <div class="cbox">
@@ -2868,14 +2885,15 @@
                       <td><span class="text-primary">13</span>/55</td>
                       <td><span class="text-primary">13</span>/55</td>
                       <td><span class="text-danger">0</span>/1</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
-                      <td><span class="text-primary">13</span>/55</td>
+
+                      <td><span :class="{'text-danger': item.ventilator === 'N'}" class="text-primary">{{ item.ventilator }}</span></td>
+                      <td><span :class="{'text-danger': item.ventilatorPreemie === 'N'}" class="text-primary">{{ item.ventilatorPreemie }}</span></td>
+                      <td><span :class="{'text-danger': item.incubator === 'N'}" class="text-primary">{{ item.incubator }}</span></td>
+                      <td><span :class="{'text-danger': item.ecmo === 'N'}" class="text-primary">{{ item.ecmo }}</span></td>
+                      <td><span :class="{'text-danger': item.bodyTemperatureControl === 'N'}" class="text-primary">{{ item.bodyTemperatureControl }}</span></td>
+                      <td><span :class="{'text-danger': item.highPressureOxygen === 'N'}" class="text-primary">{{ item.highPressureOxygen }}</span></td>
+                      <td><span :class="{'text-danger': item.ct === 'N'}" class="text-primary">{{ item.ct }}</span></td>
+                      <td><span :class="{'text-danger': item.mri === 'N'}" class="text-primary">{{ item.mri }}</span></td>
                       <td>{{ item.distance }} / 3분</td>
                     </tr>
                   </tbody>
@@ -2980,7 +2998,7 @@
         <!--begin::Modal header-->
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
           <!--begin::Modal title-->
-          <h2>병상배정 세부내용</h2>
+          <h2>병상배정 세부내용 (<span style='color: #74AFEB'>{{ bdDetail?.bedStatCdNm ?? '' }}</span>)</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
 
@@ -3471,7 +3489,7 @@
                   </div>
 
                   <div class="tabs-box flex-root"  v-show="this.tabidx === 2" style="">
-                    <div v-if="transInfo!==undefined && startLoc !== null" class="scroll-wrap px-5 mx-5 mb-5">
+                    <div v-if="transInfo !== undefined && transInfo !== null" class="scroll-wrap px-5 mx-5 mb-5">
                       <article class="table-form-layout1">
                         <div v-if="bdDetail.bedStatCd==='BAST0006'" class="form-head-box fs-3 fw-bold pb-4">
                           이송중 <span class="text-primary">거리 2.3km, 예상 소요시간 25분</span>
@@ -3490,38 +3508,40 @@
                                   <td class="p-0" rowspan="9">
                                     <div id="map"></div>
                                   </td>
-                                  <th class="bg-accent" colspan="2">담당보건소</th>
+                                  <th class="bg-accent" colspan="2">출발지 정보</th>
                                 </tr>
                                 <tr></tr>
 
                                 <tr>
                                   <th>배정 요청 지역</th>
-                                  <td>{{transInfo.reqDstr1CdNm?transInfo.reqDstr1CdNm:'-'}}</td>
+                                  <td>{{ transInfo.reqDstr1CdNm ? transInfo.reqDstr1CdNm : '-' }}</td>
                                 </tr>
 
                                 <tr>
                                   <th>환자 출발지</th>
-                                  <td>{{ transInfo.dprtDstrTypeCdNm?transInfo.dprtDstrTypeCdNm:'-' }}</td>
+                                  <td>{{ transInfo.dprtDstrTypeCdNm ? transInfo.dprtDstrTypeCdNm : '-' }}</td>
                                 </tr>
                                 <tr>
                                   <th>주소</th>
-                                  <td>{{transInfo.dprtDstrBascAddr?transInfo.dprtDstrBascAddr:'-'}}&nbsp;{{transInfo.dprtDstrDetlAddr?transInfo.dprtDstrDetlAddr:''}}</td>
+                                  <td>
+                                    {{ transInfo.dprtDstrBascAddr ? transInfo.dprtDstrBascAddr : '-' }}&nbsp;{{ transInfo.dprtDstrDetlAddr ? transInfo.dprtDstrDetlAddr : '' }}
+                                  </td>
                                 </tr>
                                 <tr>
                                   <th>위도, 경도</th>
-                                  <td>{{ startLoc.x }}, {{ startLoc.y }}</td>
+                                  <td>{{ transInfo.dprtDstrLat }}, {{ transInfo.dprtDstrLon }}</td>
                                 </tr>
                                 <tr>
                                   <th>보호자 1 연락처</th>
-                                  <td>{{transInfo.nok1Telno?transInfo.nok1Telno:'-'}}</td>
+                                  <td>{{ transInfo.nok1Telno ? transInfo.nok1Telno : '-' }}</td>
                                 </tr>
                                 <tr>
                                   <th>보호자 2 연락처</th>
-                                  <td>{{transInfo.nok2Telno?transInfo.nok2Telno:'-'}}</td>
+                                  <td>{{ transInfo.nok2Telno ? transInfo.nok2Telno : '-' }}</td>
                                 </tr>
                                 <tr>
                                   <th>요청 메시지</th>
-                                  <td>{{transInfo.msg?transInfo.msg:'-'}}</td>
+                                  <td>{{ transInfo.msg ? transInfo.msg : '-' }}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -3557,14 +3577,14 @@
                                 </tr>
                                 <tr v-else>
                                   <th>구급대명</th>
-                                  <td>대구 북구 대명 수정</td>
+                                  <td>{{ transInfo.ambsNm ?? '-' }}</td>
                                   <th>차량번호</th>
-                                  <td>382차3838 수정</td>
+                                  <td>{{ transInfo.vecno ?? '-' }}</td>
                                 </tr>
                                 <tr v-if="transCondition1">
                                   <th>대원 / 연락처</th>
                                   <td colspan="3">
-                                    사. 김찬기, 교. 이주원, 위. 박장혁 수정 / 010-2565-7080 수정
+                                    {{ trsfInfo.crewNm ?? '-' }} / {{ transInfo.chfTelno ?? '-' }}
                                   </td>
                                 </tr>
 
@@ -3587,36 +3607,36 @@
                                 </tr>
                                 <tr v-if="transCondition2">
                                   <th>의료기관</th>
-                                  <td>대구서울대병원 수정</td>
+                                  <td>{{ transInfo.destinationInfo.hospNm ?? '-' }}</td>
                                   <th>전화번호</th>
-                                  <td>{{ transInfo.chrgTelno ? transInfo.chrgTelno : '-' }}</td>
+                                  <td>{{ transInfo.destinationInfo.chrgTelno ?? '-' }}</td>
                                 </tr>
 
                                 <tr v-if="transCondition2">
                                   <th>주소</th>
-                                  <td>대구광역시 중구 호암로 51 대구서울대병원 7103호</td>
+                                  <td>{{ transInfo.destinationInfo.hospAddr ?? '-' }}</td>
                                   <th>위도, 경도</th>
-                                  <td>132.12121044, 38.121212121</td>
+                                  <td>{{ transInfo.destinationInfo.destinationLat }}, {{ transInfo.destinationInfo.destinationLon }}</td>
                                 </tr>
 
                                 <tr v-if="transCondition2">
                                   <th>병실</th>
-                                  <td>{{ transInfo.inhpAsgnYn ==='Y'?'병실번호수정':'-' }}</td>
+                                  <td>{{ transInfo.destinationInfo.roomNm ?? '-' }}</td>
                                   <th>원내 배정 여부</th>
-                                  <td>{{ transInfo.inhpAsgnYn ==='Y'?'원내배정':'전원요청' }}</td>
+                                  <td>{{ transInfo.inhpAsgnYn === 'Y' ? '원내배정' : '전원요청' }}</td>
                                 </tr>
 
                                 <tr v-if="transCondition2">
                                   <th>진료과</th>
-                                  <td>{{ transInfo.deptNm ? transInfo.deptNm :'-' }}</td>
+                                  <td>{{ transInfo.destinationInfo.deptNm ?? '-' }}</td>
                                 </tr>
                                 <tr v-if="transCondition2">
                                   <th>담당의</th>
-                                  <td>{{ transInfo.spclNm ? transInfo.spclNm :'-' }}</td>
+                                  <td>{{ transInfo.destinationInfo.spclNm ?? '-' }}</td>
                                 </tr>
                                 <tr v-if="transCondition2">
                                   <th>승인 메시지</th>
-                                  <td>응급실 앞에서 대기하고 있겠습니다. 수정</td>
+                                  <td>{{ transInfo.destinationInfo.msg ?? '-' }}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -4887,10 +4907,9 @@ export default {
           { label: '완료', value: 'BAST0007' },
           { label: '완료', value: 'BAST0008' }
         ],
-        selectedStates: ['BAST0003','BAST0004','BAST0005','BAST0006',"['BAST0003','BAST0003']"],
+        selectedStates: ['BAST0003','BAST0004','BAST0005','BAST0006','BAST0007,BAST0008'],
         selectedRow: 0,
       },
-      isStatesChecked:[],
       search:{
         kwd:'',
         period: '',
@@ -4900,7 +4919,8 @@ export default {
         fromAge:null,
         toAge:null,
         gndr:[],
-        page:1
+        page:1,
+        bedStatCd: [],
       },
       preRpt: null,
       content: '',
@@ -5029,7 +5049,7 @@ export default {
       'rcmdHp',
       'transInfo'
     ]),
-    ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip','startLoc','isSpinner']),
+    ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip', 'isSpinner']),
     ...mapState('user', ['userInfo', 'cmSido','chrgInfo']),
     ...mapState('admin', ['firestatnList', 'firemenList','medinstList','organMedi']),
 
@@ -5051,7 +5071,18 @@ export default {
       if (this.search['svrtTypeCd'].length) params = {...params, svrtTypeCd: this.search['svrtTypeCd'].join(',')};
       if (this.search['reqBedTypeCd'].length) params = {...params, reqBedTypeCd: this.search['reqBedTypeCd'].join(',')};
       if (this.search['gndr'].length) params = {...params, gndr: this.search['gndr'].join(',')};
+      if (this.search['bedStatCd'].length) params = {...params, bedStatCd: this.search['bedStatCd'].join(',')};
       return params
+    },
+    allSelected: {
+      //getter
+      get: function() {
+        return this.filter.selectedStates.length === this.search.bedStatCd.length;
+      },
+      //setter
+      set: function(e) {
+        this.search.bedStatCd = e ? this.filter.selectedStates : [];
+      },
     },
     /*sortedBdList() {
       let list = []
@@ -5165,8 +5196,10 @@ export default {
     },
     loadNaverMapAsync() {
       // 네이버 지도 생성 // 35.9561644!4d128.5653029
+      let lat = this.transInfo.dprtDstrLat ?? '-'
+      let lon = this.transInfo.dprtDstrLon ?? '-'
       const map = new window.naver.maps.Map('map', {
-          center: new window.naver.maps.LatLng(this.startLoc.y, this.startLoc.x),
+          center: new window.naver.maps.LatLng(lat, lon),
           zoom: 15,
           zoomControlOptions: {
               style: window.naver.maps.ZoomControlStyle.SMALL,
@@ -5174,7 +5207,7 @@ export default {
           }
       })
       new window.naver.maps.Marker({
-          position: new window.naver.maps.LatLng(this.startLoc.y, this.startLoc.x),
+          position: new window.naver.maps.LatLng(lat, lon),
           map: map
       })
     },
@@ -5270,7 +5303,7 @@ export default {
         this.errMsg =
           '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
         this.isAlert = true
-        this.newPt = this.rptInfo
+        this.newPt = {...this.rptInfo, bascAddr: this.rptInfo.baseAddr}
         if(this.rptInfo!==null ){
           /*역조서 입력 시*/
           if(this.rptInfo.instAddr !==null){
@@ -5354,7 +5387,7 @@ export default {
         this.alertClose()
         this.tab = 1
       } else if (res === 4) {
-        this.newPt = this.rptInfo
+        console.log('역학조사서 확인')
         this.alertClose()
       } else if (res === 5) {
         this.aprv.aprvYn = 'N'
@@ -5437,7 +5470,9 @@ export default {
     },
     setActive(idx) {
       this.tabidx = idx
-      this.loadNaverMapAsync()
+      if (idx === 2) {
+        this.loadNaverMapAsync()
+      }
     },
     openPopup,
     getTLDt,
@@ -5600,6 +5635,23 @@ export default {
         return ['완료', '#kt_modal_detail']
       }
     },
+    getBtnColor(sts) {
+      if (sts === 'BAST0001') {
+        return ''
+      } else if (sts === 'BAST0002') {
+        return '#67CCAAFF'
+      } else if (sts === 'BAST0003') {
+        return '#67CCAAFF'
+      } else if (sts === 'BAST0004') {
+        return '#4CAFF1FF'
+      } else if (sts === 'BAST0005') {
+        return '#4CAFF1FF'
+      } else if (sts === 'BAST0006') {
+        return '#4CAFF1FF'
+      } else if (sts === 'BAST0007' || sts === 'BAST0008') {
+        return '#FF666EFF'
+      }
+    },
     async openBedMod(data) {
       this.$store.commit('bedasgn/setbdDetail', data)
       this.$store.dispatch('patnt/getBasicInfo', data)
@@ -5688,7 +5740,7 @@ export default {
           this.hosptlzdiscg.admsStatCd = 'IOST0003'
           break
       }
-    }
+    },
   }
 }
 </script>
