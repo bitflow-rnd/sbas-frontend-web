@@ -41778,8 +41778,8 @@ code:not([class*=language-]) {
   color: var(--bs-text-gray-900);
 }
 .svg-icon.svg-icon-1 svg {
-  height: 1.75rem !important;
-  width: 1.75rem !important;
+  height: 4rem !important;
+  width: 4rem !important;
 }
 .svg-icon.svg-icon-2 svg {
   height: 1.5rem !important;

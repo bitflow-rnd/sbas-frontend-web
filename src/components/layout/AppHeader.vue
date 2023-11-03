@@ -147,6 +147,7 @@
             <!--end:Menu item-->
             <!--begin:Menu item-->
             <router-link
+              v-show="userInfo.jobCd === 'PMGR0004'"
               to=""
               @click="handlefunc(getUserList, 5)"
               :class="{ here: selectedTabIdx === 5 }"
