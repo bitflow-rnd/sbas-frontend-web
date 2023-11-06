@@ -296,17 +296,21 @@ export default {
           })
       })
     },
-    uploadPrivateImage(comment, data) {
-      const token = sessionStorage.getItem('userToken')
+    uploadPrivateImage(comment, data, hasToken) {
       const url = `${API_PROD}/api/v1/private/common/upload`
+      const headers = {}
+
+      if (hasToken) {
+        const token = sessionStorage.getItem('userToken')
+        headers.Authorization = `Bearer ${token}`
+      }
+
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
           url: url,
           data: data,
-          headers:{
-            Authorization: `Bearer ${token}`
-          }
+          headers: headers,
         }).then((response) => {
           console.log(response.data)
           resolve(response.data?.result)
