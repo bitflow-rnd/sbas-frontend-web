@@ -296,6 +296,30 @@ export default {
           })
       })
     },
+    uploadPrivateImage(comment, data, hasToken) {
+      const url = `${API_PROD}/api/v1/private/common/upload`
+      const headers = {}
+
+      if (hasToken) {
+        const token = sessionStorage.getItem('userToken')
+        headers.Authorization = `Bearer ${token}`
+      }
+
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'post',
+          url: url,
+          data: data,
+          headers: headers,
+        }).then((response) => {
+          console.log(response.data)
+          resolve(response.data?.result)
+        }).catch((e) => {
+          console.log(e)
+          reject(e)
+        })
+      })
+    },
     readPrivateImage(comment, attcId) {
       const url = `${API_PROD}/api/v1/private/common/image/${attcId}`
       return new Promise((resolve, reject) => {

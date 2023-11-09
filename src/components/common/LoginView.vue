@@ -573,8 +573,9 @@
                               <label>
                                 <input type="file" @change="onFileChange" />
                                 <span class="upload-btn-box">
-                                  <img src="@/assets/img/img-no-img.webp" alt="이미지" />
-                                  <span @click="uploadImg" class="txt">클릭하여 업로드</span>
+                                  <img v-if='this.selectedFile === null || this.selectedFile === undefined'
+                                    src="@/assets/img/img-no-img.webp" alt="이미지" />
+                                  <img v-else :src='this.imgUrl'>
                                 </span>
                               </label>
                             </div>
@@ -787,7 +788,7 @@ export default {
       crtfNo: '',
       /*todo 본인확인코드 선언하고 3step - 기존/발송버튼누른후/Y로 나누기*/
       isCertified: false,
-      selectedFile: true,
+      selectedFile: null,
       imgUrl: null,
       valPw: null,
       form: {
@@ -958,26 +959,12 @@ export default {
       }
     },
     onFileChange(event) {
-      console.log('이벤트')
+      console.log('업로드 이벤트')
       this.selectedFile = event.target.files[0]
-
       if (this.selectedFile) {
-        this.uploadImg()
-      }
-      console.log(localStorage.getItem('imgData'))
-    },
-    uploadImg() {
-      console.log('이미지')
-      if (this.selectedFile) {
-        const reader = new FileReader()
-        const blob = new Blob([this.selectedFile])
-        reader.onload = (event) => {
-          this.$store.commit('setAttcId', event.target.result)
-          this.imgUrl = event.target.result
-        }
-        reader.readAsDataURL(blob)
-
-        //console.log(localStorage.getItem('imgData'))
+        // 이미지 미리보기
+        const blob = new Blob([this.selectedFile], { type: 'image/jpeg' })
+        this.imgUrl = URL.createObjectURL(blob)
       }
     },
     imgRemove() {
@@ -1032,75 +1019,71 @@ export default {
       }
     },
     reqUserReg() {
-      const ptTypeCd = this.form['ptTypeCd']
-      const requestData = {
-        ...this.form,
-        ptTypeCd: ptTypeCd.length > 0 ? ptTypeCd.join(';') : null
-      }
-
       if (this.validateForm()) {
-        this.$store.dispatch('user/reqUserReg', requestData)
-          .then(code => {
-            if (code === '00') {
-              this.alertOpen('사용자 등록 요청')
-              this.toggleUserEditModal()
-              this.resetFormData()
-            } else {
-              this.alertOpen('사용자 등록 요청 실패')
-            }
-            console.log('응답 코드:', code)
-          })
+        this.saveImage().then((result) => {
+          const ptTypeCd = this.form['ptTypeCd']
+          const requestData = {
+            ...this.form,
+            ptTypeCd: ptTypeCd.length > 0 ? ptTypeCd.join(';') : null,
+            attcId: result
+          }
+          this.$store.dispatch('user/reqUserReg', requestData)
+            .then(code => {
+              if (code === '00') {
+                this.alertOpen('사용자 등록 요청')
+                this.toggleUserEditModal()
+                this.resetFormData()
+              } else {
+                this.alertOpen('사용자 등록 요청 실패')
+              }
+              console.log('응답 코드:', code)
+            })
+        })
       }
     },
+    saveImage() {
+      const formData = new FormData()
+      formData.append('param1', 'user image')
+      formData.append('param2', this.selectedFile)
+
+      return this.$store.dispatch('user/uploadPrivateImage', formData, false)
+        .then((result) => {
+          return result.attcId[0]
+        })
+        .catch((error) => {
+          console.error('이미지 업로드 에러', error)
+          throw error
+        })
+    },
     validateForm() {
-      if (!this.form.id) {
-        this.alertOpen('아이디는 필수값입니다.')
-        return false
+      const form = this.form
+
+      const requiredFields = {
+        id: '아이디',
+        telno: '휴대폰번호',
+        pw: '비밀번호',
+        userNm: '이름',
+        instTypeCd: '소속기관 유형',
+        jobCd: '권한 그룹',
+        authCd: '세부 권한',
+        dutyDstr1Cd: '담당/근무지역(시/도)',
+        dutyDstr2Cd: '담당/근무지역(시/군/구)',
+        instNm: '소속기관명',
+        btDt: '생년월일'
+      };
+
+      for (const field in requiredFields) {
+        if (!form[field]) {
+          this.alertOpen(`${requiredFields[field]}은(는) 필수값입니다.`);
+          return false;
+        }
       }
+
       if (!this.isCertified) {
         this.alertOpen('본인인증을 진행해 주세요.')
         return false
       }
-      if (!this.form.telno) {
-        this.alertOpen('휴대폰번호는 필수값입니다.')
-        return false
-      }
-      if (!this.form.pw) {
-        this.alertOpen('비밀번호는 필수값입니다.')
-        return false
-      }
-      if (this.form.userNm === null) {
-        this.alertOpen('이름은 필수값입니다.')
-        return false
-      }
-      if (this.form.instTypeCd === null) {
-        this.alertOpen('소속기관 유형은 필수값입니다.')
-        return false
-      }
-      if (this.form.jobCd === null) {
-        this.alertOpen('권한 그룹은 필수값입니다.')
-        return false
-      }
-      if (this.form.authCd === null) {
-        this.alertOpen('세부 권한은 필수값입니다.')
-        return false
-      }
-      if (this.form.dutyDstr1Cd === null) {
-        this.alertOpen('담당/근무지역(시/도)은 필수값입니다.')
-        return false
-      }
-      if (this.form.dutyDstr2Cd === null) {
-        this.alertOpen('담당/근무지역(시/군/구)은 필수값입니다.')
-        return false
-      }
-      if (this.form.instNm === null) {
-        this.alertOpen('소속기관명은 필수값입니다.')
-        return false
-      }
-      if (this.form.btDt === null) {
-        this.alertOpen('생년월일은 필수값입니다.')
-        return false
-      }
+
       return true
     },
     removeHyphens() {
