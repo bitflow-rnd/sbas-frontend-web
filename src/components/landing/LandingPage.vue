@@ -140,7 +140,7 @@
               <a href="/d" class='footer-menu-btn'>
                 <img src='/img/common/img_footer_google.svg' alt='이미지'>
               </a>
-              <a href="javascript:alert('준비중입니다');" class='footer-menu-btn'>
+              <a href="https://bitflow.notion.site/3-2-Form-93210bffd2174e1a9835aeeadc94d777" target='_blank' class='footer-menu-btn'>
                 <img src='/img/common/img_footer_apple.svg' alt='이미지'>
               </a>
             </div>
