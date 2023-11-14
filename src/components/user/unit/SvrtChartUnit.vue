@@ -42,7 +42,6 @@ onMounted(() => {
       updateChart(result)
     })
     store.dispatch('patnt/getBasicInfo2', { ptId: props.ptId }).then((result) => {
-      console.log('ptDetail', result)
       model.ptDetail = result
     })
   }
@@ -58,7 +57,6 @@ function updateChart(result) {
   if (typeof result === 'undefined' || result.length < 1) {
     return
   }
-
   let chartData = [
     { name: 'mean + std', data: [] },
     { name: 'mean', data: [] },

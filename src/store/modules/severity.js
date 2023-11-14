@@ -26,8 +26,6 @@ export default {
       state.severityData.first = []
       state.severityData.second = []
       state.severityData.third = []
-      let prevDt = ''
-      let probs = []
       if (payload) {
         state.severityData.ptId = payload[0].ptId
         state.severityData.hospId = payload[0].hospId
@@ -37,52 +35,23 @@ export default {
             return a.prdtDt.localeCompare(b.prdtDt)
           })
           .forEach((prdtRow) => {
-            if (prdtRow.prdtDt !== prevDt) {
-              if (probs.length) {
-                const mean = probs.reduce((a, b) => a + b) / probs.length
-                const std = Math.sqrt(
-                  probs.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / probs.length
-                )
-                const date = new Date(
-                  `${prevDt.substring(0, 4)}-${prevDt.substring(4, 6)}-${prevDt.substring(6)}`
-                ).getTime()
-                state.severityData.first.push({
-                  prdtDt: date,
-                  svrtProb: mean + std > 1.0 ? 1.0 : mean + std
-                })
-                state.severityData.second.push({
-                  prdtDt: date,
-                  svrtProb: mean
-                })
-                state.severityData.third.push({
-                  prdtDt: date,
-                  svrtProb: mean - std < 0.0 ? 0.0 : mean - std
-                })
-              }
-              probs = [parseFloat(prdtRow.svrtProb?.replace(',', '.'))]
-              prevDt = prdtRow.prdtDt
-            } else {
-              probs.push(parseFloat(prdtRow.svrtProb?.replace(',', '.')))
-            }
-          })
-        const mean = probs.reduce((a, b) => a + b) / probs.length
-        const std = Math.sqrt(
-          probs.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / probs.length
-        )
-        const date = new Date(
-          `${prevDt.substring(0, 4)}-${prevDt.substring(4, 6)}-${prevDt.substring(6)}`
-        ).getTime()
-        state.severityData.first.push({
-          prdtDt: date,
-          svrtProb: mean + std
-        })
-        state.severityData.second.push({
-          prdtDt: date,
-          svrtProb: mean
-        })
-        state.severityData.third.push({
-          prdtDt: date,
-          svrtProb: mean - std
+            const mean = parseFloat(prdtRow.svrtProbMean?.replace(',', '.'))
+            const std = (prdtRow.svrtProbStd !== 'nul') ? parseFloat(prdtRow.svrtProbStd.replace(',', '.')) : 0
+            const date = new Date(
+              `${prdtRow.prdtDt.substring(0, 4)}-${prdtRow.prdtDt.substring(4, 6)}-${prdtRow.prdtDt.substring(6)}`
+            ).getTime()
+            state.severityData.first.push({
+              prdtDt: date,
+              svrtProb: mean + std > 1.0 ? 1.0 : mean + std
+            })
+            state.severityData.second.push({
+              prdtDt: date,
+              svrtProb: mean
+            })
+            state.severityData.third.push({
+              prdtDt: date,
+              svrtProb: mean - std < 0.0 ? 0.0 : mean - std
+            })
         })
       }
     }
