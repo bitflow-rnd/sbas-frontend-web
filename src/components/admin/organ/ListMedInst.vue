@@ -2160,56 +2160,56 @@
                         <div class="table-box">
                           <table>
                             <colgroup>
-                              <col style="width: 168px"/>
+                              <col style="width: 175px"/>
                               <col style="width: auto"/>
-                              <col style="width: 168px"/>
+                              <col style="width: 175px"/>
                               <col style="width: auto"/>
 
-                              <col style="width: 168px"/>
+                              <col style="width: 175px"/>
                               <col style="width: auto"/>
                             </colgroup>
                             <tbody>
                             <tr>
-                              <th>감염병 전용 분만 시설 보유 여부</th>
+                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'> 감염병 전용 분만 시설 보유 여부</th>
                               <td><input type='text' :value="medinstDetail.hospBasicInfo.hvcc ?? '-'"></td>
 
-                              <th>감염병 전용 투석 시설 보유 여부</th>
+                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 투석 시설 보유 여부</th>
                               <td><input type='text' :value="medinstDetail.hospBasicInfo.hvncc ?? '-' "></td>
 
-                              <th>감염병 전용 소아 시설 보유 여부</th>
+                              <th><input style='margin-right:20px;padding-left: 3px' type='checkbox'>감염병 전용 소아 시설 보유 여부</th>
                               <td><input type='text' :value=" medinstDetail.hospBasicInfo.hvccc ?? '-'"></td>
                             </tr>
 
                             <tr>
-                              <th>감염병 전용 요양병원 시설 보유 여부</th>
+                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 요양병원 시설 보유 여부</th>
                               <td><input type='text' :value="medinstDetail.hospBasicInfo.hvicc ?? '-'"></td>
 
-                              <th>감염병 전용 정신질환자 시설 보유 여부</th>
+                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 정신질환자 시설 보유 여부</th>
                               <td><input type='text' :value="medinstDetail.hospBasicInfo.o001 ?? '-' "></td>
 
-                              <th>감염병 전용 분만 대응 의료진 수</th>
+                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 분만 대응 의료진 수</th>
                               <td><input type='text' :value=" medinstDetail.hospBasicInfo.o002 ?? '-'"></td>
                             </tr>
 
                             <tr>
-                              <th>감염병 전용 투석 대응 의료진 수</th>
+                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 투석 대응 의료진 수</th>
                               <td><input type='text' :value="medinstDetail.hospBasicInfo.o003 ?? '-' "></td>
 
-                              <th>감염병 전용 소아 대응 의료진 수</th>
+                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 소아 대응 의료진 수</th>
                               <td><input type='text' :value=" medinstDetail.hospBasicInfo.o004 ?? '-' "></td>
 
-                              <th>감염병 전용 요양병원 대응 의료진 수</th>
+                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 요양병원 대응 의료진 수</th>
                               <td><input type='text' :value="medinstDetail.hospBasicInfo.o005 ?? '-'"></td>
                             </tr>
 
                             <tr>
-                              <th>감염병 전용 정신질환자 대응 의료진 수</th>
+                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 정신질환자 대응 의료진 수</th>
                               <td><input type='text' :value="medinstDetail.hospBasicInfo.o006 ?? '-' "></td>
 
-                              <th>가용_외과중환자실</th>
+                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>가용_외과중환자실</th>
                               <td><input type='text' :value=" medinstDetail.hospBasicInfo.o007 ?? '-' "></td>
 
-                              <th>가용_신생아중환자실</th>
+                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>가용_신생아중환자실</th>
                               <td><input type='text' :value=" medinstDetail.hospBasicInfo.o008 ?? '-'"></td>
                             </tr>
                             </tbody>
@@ -2284,7 +2284,7 @@ export default {
     msg: String
   },
   computed: {
-    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList', 'medinstDetail']),
+    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList', 'medinstDetail','hpId']),
 
     startIndex() {
       return (this.page - 1) * this.displayRowsCount;
@@ -2393,6 +2393,7 @@ export default {
     },
     openEditMedi(){
       this.showEditMedi = true
+      this.getMediInstEtc()
     },
     alertOpen(idx) {
 
@@ -2468,9 +2469,14 @@ export default {
         }
       })
       new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(this.medinstDetail.hospBasicInfo.wgs84Lat, this.medinstDetail.hospBasicInfo.wgs84Lon),
+        position: new window.naver.maps.LatLng(this.mdinstDetail.hospBasicInfo.wgs84Lat, this.medinstDetail.hospBasicInfo.wgs84Lon),
         map: map
       })
+    },
+    getMediInstEtc(){
+      if(this.hpId !== ''){
+        this.$store.dispatch('admin/getMedInstEtc',this.hpId)
+      }
     },
 
   }

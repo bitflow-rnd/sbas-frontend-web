@@ -20,6 +20,8 @@ export default {
         fsDetail:null,
         fmDetail:null,
         organMedi: [],
+        hpId:'',
+        medInstEtc: null,
     },
     mutations: {
         setSido(state,payload){
@@ -59,6 +61,12 @@ export default {
         },
         setOrganMedi(state,payload){
             state.organMedi = payload;
+        },
+        setHpId(state,payload){
+            state.hpId = payload
+        },
+        setMedInstEtc(state,payload){
+            state.medInstEtc = payload
         }
     },
     actions: {
@@ -520,6 +528,7 @@ export default {
             // console.log(data.cd1, data.cd2)
             const url = `${API_PROD}/api/v1/public/organ/medinst/${request.hpId}`
 
+            comment.commit('setHpId',request.hospId)
             try {
                 const response = await axios.get(url)
                 console.log('의료기관 상세')
@@ -552,6 +561,28 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+        },
+
+        /*의료기관 정보 조회 (e-gen 데이터 제외)*/
+        getMedInstEtc(comment, request){
+            return new Promise((resolve)=>{
+                const url = `${API_PROD}/api/v1/public/organ/medinstinfo/${request}`
+                axios({
+                    method:'get',
+                    url: url
+                }). then ((response) => {
+                    console.log(response, '의료기관 정보 조회 egen 제외')
+                    if (response.data?.code === '00') {
+                        comment.commit('setMedInstEtc', '00')
+                        resolve(true)
+                    } else {
+                        resolve(false)
+                    }
+                }).catch((e) => {
+                    console.log(e)
+                    resolve(false)
+                })
+            })
         },
 
         loadCodeGroupsData() {
