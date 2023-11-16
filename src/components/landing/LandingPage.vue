@@ -10,6 +10,10 @@
         </h1>
 
         <div class='header-menu-box'>
+          <a href="https://bitflow.notion.site/1-c386cb59de4440208ec146d6968bf877?pvs=4" target='_blank' class="btn btn-flex btn-sm btn-primary my-auto fs-1"
+             style='margin-right: 70px'
+          ><i class="fa-solid fa-triangle-exclamation fs-1"></i> 매뉴얼 페이지</a
+          >
           <router-link to='/login' class='header-menu-btn' v-if='!isMobile'>병상배정 시스템 로그인</router-link>
         </div>
 
@@ -136,7 +140,7 @@
               <a href="/d" class='footer-menu-btn'>
                 <img src='/img/common/img_footer_google.svg' alt='이미지'>
               </a>
-              <a href="javascript:alert('준비중입니다');" class='footer-menu-btn'>
+              <a href="https://bitflow.notion.site/3-2-Form-93210bffd2174e1a9835aeeadc94d777" target='_blank' class='footer-menu-btn'>
                 <img src='/img/common/img_footer_apple.svg' alt='이미지'>
               </a>
             </div>
