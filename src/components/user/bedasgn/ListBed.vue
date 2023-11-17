@@ -3607,36 +3607,36 @@
                                 </tr>
                                 <tr v-if="transCondition2">
                                   <th>의료기관</th>
-                                  <td>{{ transInfo.destinationInfo.hospNm ?? '-' }}</td>
+                                  <td>{{ transInfo.destinationInfo?.hospNm ?? '-' }}</td>
                                   <th>전화번호</th>
-                                  <td>{{ transInfo.destinationInfo.chrgTelno ?? '-' }}</td>
+                                  <td>{{ transInfo.destinationInfo?.chrgTelno ?? '-' }}</td>
                                 </tr>
 
                                 <tr v-if="transCondition2">
                                   <th>주소</th>
-                                  <td>{{ transInfo.destinationInfo.hospAddr ?? '-' }}</td>
+                                  <td>{{ transInfo.destinationInfo?.hospAddr ?? '-' }}</td>
                                   <th>위도, 경도</th>
-                                  <td>{{ transInfo.destinationInfo.destinationLat }}, {{ transInfo.destinationInfo.destinationLon }}</td>
+                                  <td>{{ transInfo.destinationInfo?.destinationLat }}, {{ transInfo.destinationInfo?.destinationLon }}</td>
                                 </tr>
 
                                 <tr v-if="transCondition2">
                                   <th>병실</th>
-                                  <td>{{ transInfo.destinationInfo.roomNm ?? '-' }}</td>
+                                  <td>{{ transInfo.destinationInfo?.roomNm ?? '-' }}</td>
                                   <th>원내 배정 여부</th>
                                   <td>{{ transInfo.inhpAsgnYn === 'Y' ? '원내배정' : '전원요청' }}</td>
                                 </tr>
 
                                 <tr v-if="transCondition2">
                                   <th>진료과</th>
-                                  <td>{{ transInfo.destinationInfo.deptNm ?? '-' }}</td>
+                                  <td>{{ transInfo.destinationInfo?.deptNm ?? '-' }}</td>
                                 </tr>
                                 <tr v-if="transCondition2">
                                   <th>담당의</th>
-                                  <td>{{ transInfo.destinationInfo.spclNm ?? '-' }}</td>
+                                  <td>{{ transInfo.destinationInfo?.spclNm ?? '-' }}</td>
                                 </tr>
                                 <tr v-if="transCondition2">
                                   <th>승인 메시지</th>
-                                  <td>{{ transInfo.destinationInfo.msg ?? '-' }}</td>
+                                  <td>{{ transInfo.destinationInfo?.msg ?? '-' }}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -4848,9 +4848,6 @@ export default {
   props: {},
 
   created() {
-
-
-
     /*mitt().on('bdList',()=>{
       this.getBdList()
     })*/
@@ -4861,7 +4858,6 @@ export default {
     this.initSvInfo = JSON.parse(JSON.stringify(this.svInfo))
     this.initSpInfo = JSON.parse(JSON.stringify(this.spInfo))
     this.initSearch = JSON.parse(JSON.stringify(this.search))
-
   },
   mounted() {
     this.initNaverMap()
@@ -4986,9 +4982,9 @@ export default {
         chrgTelno: '',
         spclNm: '',
         dprtHospId: '',
-          inhpAsgnYn:'N',
-          reqDstr1Cd:'27',
-          reqDstr2Cd:null
+        inhpAsgnYn: 'N',
+        reqDstr1Cd: '27',
+        reqDstr2Cd: null
       },
       aprv: {
         ptId: '',
@@ -5130,7 +5126,7 @@ export default {
             this.tabidx = 0
             this.$store.commit('bedasgn/setDisesInfo', null)
             this.$store.commit('bedasgn/setTimeline', null)
-            this.$store.commit('patnt/setBasicInfo', [0, null])
+            this.$store.commit('patnt/setBasicInfo', null)
             this.$store.commit('patnt/setRpt', null)
             this.newPt = this.initNewPt
             this.dsInfo = this.initDsInfo
@@ -5221,34 +5217,33 @@ export default {
         return 'DPTP0002'
       }
     },
-      showUdrDses(arr){
-        if(this.undrDsesCdArr.length !== 0){
-            const data = {
-                'UDDS0001': '고혈압',
-                'UDDS0002': '당뇨',
-                'UDDS0003': '고지혈증',
-                'UDDS0004': '심혈관',
-                'UDDS0005': '뇌혈관',
-                'UDDS0006': '암',
-                'UDDS0007': '만성폐질환',
-                'UDDS0008': '폐럼',
-                'UDDS0009': '신장질환',
-                'UDDS0010': '정신질환',
-                'UDDS0011': '결핵',
-                'UDDS0012': '천식 등 알레르기',
-                'UDDS0013': '면역력저하자',
-                'UDDS0014': '기타'
-            }
-            const res = []
-            arr.forEach((key)=>{
-                if(Object.prototype.hasOwnProperty.call(data, key)){
-                    res.push(data[key])
-                }
-            })
-            return res
+    showUdrDses(arr) {
+      if (this.undrDsesCdArr.length !== 0) {
+        const data = {
+          'UDDS0001': '고혈압',
+          'UDDS0002': '당뇨',
+          'UDDS0003': '고지혈증',
+          'UDDS0004': '심혈관',
+          'UDDS0005': '뇌혈관',
+          'UDDS0006': '암',
+          'UDDS0007': '만성폐질환',
+          'UDDS0008': '폐럼',
+          'UDDS0009': '신장질환',
+          'UDDS0010': '정신질환',
+          'UDDS0011': '결핵',
+          'UDDS0012': '천식 등 알레르기',
+          'UDDS0013': '면역력저하자',
+          'UDDS0014': '기타'
         }
-        else return ''
-      },
+        const res = []
+        arr.forEach((key) => {
+          if (Object.prototype.hasOwnProperty.call(data, key)) {
+            res.push(data[key])
+          }
+        })
+        return res
+      } else return ''
+    },
     getTelno,
 
     setNull() {
@@ -5274,9 +5269,9 @@ export default {
         this.isAlert = true
         this.alertIdx = 0
       } else if (idx === 1) {
-          this.svInfo.undrDsesCd = this.getUndrDses(this.undrDsesCdArr)
+        this.svInfo.undrDsesCd = this.getUndrDses(this.undrDsesCdArr)
         const data = { svrInfo: this.svInfo, dprtInfo: this.spInfo }
-          console.log(data)
+        console.log(data)
         this.$store.dispatch('bedasgn/regBedassign', data)
         this.isAlert = false
         this.errMsg = '요청되었습니다.'

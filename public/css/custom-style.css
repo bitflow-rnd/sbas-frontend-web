@@ -424,7 +424,8 @@ article.timeline-layout1 .timeline-wrap ul li.off .item-box {
   box-shadow: none;
 }
 article.timeline-layout1 .timeline-wrap ul li.off .item-box .top-item-box .state-box {
-  color: #838693;
+  color: #74AFEB;
+  font-size: 21px;
 }
 article.timeline-layout1 .timeline-wrap ul li .ic-box {
   z-index: 10;
@@ -462,6 +463,7 @@ article.timeline-layout1 .timeline-wrap ul li .item-box .top-item-box .date-box 
 article.timeline-layout1 .timeline-wrap ul li .item-box .mid-item-box {
   padding-top: 7px;
   color: #838693;
+  font-size: 15px;
   letter-spacing: -0.05em;
 }
 article.timeline-layout1 .timeline-wrap ul li .item-box .bottom-item-box {
@@ -486,7 +488,7 @@ article.timeline-layout1 .timeline-wrap ul li .item-box .bottom-item-box .msg-bo
   border-radius: 8px;
   padding: 8px 12px;
   color: #838693;
-  font-size: 12px;
+  font-size: 17px;
   line-height: 22px;
   letter-spacing: -0.05em;
   background-color: #ecedef;
