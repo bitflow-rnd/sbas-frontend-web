@@ -1,8 +1,21 @@
 <template>
   <article class="table-list-layout1">
-    <h4>
-      <i class="fa-solid fa-bed-pulse"></i> 중증환자 발생/예측 현황
-    </h4>
+    <template>
+      <h4>
+        <i class="fa-solid fa-bed-pulse"></i> 중증환자 발생/예측 현황
+      </h4>
+      <router-link
+          to="/user/patnt/list"
+          @click="handler"
+          class="menu-item me-0 me-lg-1"
+      >
+        <a
+            href="#none"
+            class="btn btn-flex bg-primary text-white rounded-pill"
+        >전체</a>
+      </router-link>
+
+    </template>
     <div class="table-body-box">
       <div class="table-box with-scroll small">
         <table class="list-table-hoverable">
@@ -48,15 +61,16 @@
 <script setup>
 import { onMounted, reactive, defineEmits } from 'vue'
 import { useStore } from 'vuex'
+import store from '@/store/store'
 
 const emit = defineEmits(['onPatientSelected'])
-const store = useStore()
+const uStore = useStore()
 let model = reactive({
   list: []
 })
 
 onMounted(() => {
-  store.dispatch('patnt/getSevrPatntListWidget').then((result) => {
+  uStore.dispatch('patnt/getSevrPatntListWidget').then((result) => {
     let list = []
     for (let i = 0; i < result.items.length; i++) {
       if (result.items[i].bedStatCdNm) {
@@ -70,15 +84,20 @@ onMounted(() => {
 
 async function selectPatient(patient) {
   if (patient['bdasSeq']) {
-    await store.dispatch('bedasgn/getTimeline', patient)
-    await store.dispatch('bedasgn/getDSInfo', patient)
+    await uStore.dispatch('bedasgn/getTimeline', patient)
+    await uStore.dispatch('bedasgn/getDSInfo', patient)
   } else {
-    store.commit('bedasgn/setTimeline', null)
-    store.commit('bedasgn/setDisesInfo', null)
+    uStore.commit('bedasgn/setTimeline', null)
+    uStore.commit('bedasgn/setDisesInfo', null)
   }
-  await store.dispatch('patnt/getBasicInfo', patient)
-  let ptDetail = store.getters['patnt/getPtDetail']
+  await uStore.dispatch('patnt/getBasicInfo', patient)
+  let ptDetail = uStore.getters['patnt/getPtDetail']
   emit('onPatientSelected', ptDetail)
+}
+function handler() {
+  store.commit('user/setSelectedTabIdx', 2)
+  store.dispatch('patnt/getPatntList', {sever: true})
+  store.dispatch('admin/getSido')
 }
 /*
 function getDate(data) {
@@ -100,6 +119,16 @@ function getDate(data) {
 <style scoped>
 .red {
   color: red;
+}
+
+article > template {
+  display: flex;
+}
+
+article > template > a {
+  margin-left: auto;
+  margin-right: 0;
+  margin-bottom: 5px;
 }
 
 h4 { margin-left: 12px; }

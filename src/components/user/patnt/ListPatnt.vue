@@ -3295,7 +3295,7 @@ export default {
   computed: {
     ...mapState('admin', ['cmSido', 'cmGugun']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHis']),
-    ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'hospList', 'rptInfo', 'attcRpt']),
+    ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
     startIndex() {
       return (this.page - 1) * this.displayRowsCount;
@@ -3330,6 +3330,9 @@ export default {
       if (!this.patientData.length) {
         this.allPatientsSelected = false;
       }
+    },
+    severPtList(newValue) {
+        this.filterPatient.monitoring = newValue;
     },
     'newPt.natiCd': function (newNatiCd) {
       if (newNatiCd === 'NATI0001') {
