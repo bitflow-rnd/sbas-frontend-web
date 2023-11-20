@@ -5,6 +5,8 @@ export default {
   namespaced: true,
   state: {
     ptList: null,
+    severPts: null,
+    severPtList: null,
     hospList: null,
     ptBI: null,
     existPt: null,
@@ -21,6 +23,12 @@ export default {
   mutations: {
     setPatntList(state, payload) {
       state.ptList = payload
+    },
+    setSeverPatnts(state, payload) {
+      state.severPts = payload
+    },
+    setSeverPatntList(state, payload) {
+      state.severPtList = payload
     },
     setHospList(state, payload) {
       state.hospList = payload['items'].filter(x => !!x)
@@ -75,6 +83,11 @@ export default {
         const response = await axios.get(url, { params })
         if (response.data?.code === '00') {
           await comment.commit('setPatntList', response.data?.result)
+          if (params && Object.keys(params).length === 1 && params.sever) {
+            await comment.commit('setSeverPatnts', false)
+            await comment.commit('setSeverPatnts', true)
+            comment.commit('setSeverPatntList', response.data?.result)
+          }
         }
       } catch (e) {
         console.log(e)
