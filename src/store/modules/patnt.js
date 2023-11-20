@@ -36,10 +36,12 @@ export default {
       state.existPt = payload
     },
     setBasicInfo(state, payload) {
-      if (payload[0] === 0) {
-        state.ptDetail = payload[1]
+      if (payload !== null) {
+        const undrDsesCd = payload.undrDsesCd ?? []
+        const undrDsesCdNm = payload.undrDsesCdNm ?? []
+        state.ptDetail = { ...payload, undrDsesCd: undrDsesCd, undrDsesCdNm: undrDsesCdNm }
       } else {
-        state.ptDetail = { ...state.ptDetail, zip: payload[1] }
+        state.ptDetail = payload
       }
     },
     setInstZip(state, payload) {
@@ -242,7 +244,7 @@ export default {
       try {
         const response = await axios.get(url)
         if (response.data?.code === '00') {
-          await comment.commit('setBasicInfo', [0, response.data?.result])
+          await comment.commit('setBasicInfo', response.data?.result)
         }
       } catch (e) {
         console.log(e)
