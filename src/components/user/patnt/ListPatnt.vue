@@ -303,7 +303,7 @@
                               pt['ptNm'].length > 1 ? (pt['ptNm'].substring(0, 1) + '*' + pt['ptNm'].substring(2, pt['ptNm'].length)) : pt['ptNm']
                             }}
                           </div>
-                          <div class="btn-primary-outline" v-if="pt.ptId==='PT00000305' || pt.ptId==='PT00000086'">※
+                          <div class="btn-primary-outline" v-if="pt.monitoring">※
                             관찰환자
                           </div>
                         </div>
@@ -1017,7 +1017,7 @@
                     </div>
 
                     <svrt-chart-unit-no-title :pt-id="ptDetail.ptId" class='mt-5'
-                                              v-if="ptDetail.ptId==='PT00000086' || ptDetail.ptId==='PT00000305'"/>
+                                              v-if="monitorPatntsList?.includes(ptDetail.ptId)"/>
 
                   </article>
                 </div>
@@ -3295,7 +3295,7 @@ export default {
   computed: {
     ...mapState('admin', ['cmSido', 'cmGugun']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHis']),
-    ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
+    ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPts', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
     startIndex() {
       return (this.page - 1) * this.displayRowsCount;
@@ -3322,6 +3322,9 @@ export default {
     enableSecondAddressPicker() {
       return this.filterPatient['address']['first'] === "";
     },
+    monitorPatntsList() {
+      return this.ptList.items.filter( x => x.monitoring).map( x => x.ptId);
+    },
   },
   //정예준
   watch: {
@@ -3331,7 +3334,7 @@ export default {
         this.allPatientsSelected = false;
       }
     },
-    severPtList(newValue) {
+    severPts(newValue) {
         this.filterPatient.monitoring = newValue;
     },
     'newPt.natiCd': function (newNatiCd) {

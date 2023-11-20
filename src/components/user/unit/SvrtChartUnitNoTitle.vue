@@ -14,7 +14,7 @@
 <script setup>
 import VueApexCharts from 'vue3-apexcharts'
 import { simpleSeverityLineChartOpt } from '@/util/chart_util'
-import { defineProps, onMounted, reactive } from 'vue'
+import {defineProps, onMounted, reactive, watch} from 'vue'
 import { useStore } from 'vuex'
 
 const props = defineProps({
@@ -30,15 +30,22 @@ let model = reactive({
 })
 
 onMounted(() => {
+  getPtData();
+})
+
+function getPtData() {
   if (props.ptId) {
     store.dispatch('severity/getSeverityData2', props.ptId).then((result) => {
       updateChart(result)
     })
     store.dispatch('patnt/getBasicInfo2', { ptId: props.ptId }).then((result) => {
-      console.log('ptDetail', result)
       model.ptDetail = result
     })
   }
+}
+
+watch(() => props.ptId, () => {
+  getPtData()
 })
 
 function updateChart(result) {

@@ -5,6 +5,7 @@ export default {
   namespaced: true,
   state: {
     ptList: null,
+    severPts: null,
     severPtList: null,
     hospList: null,
     ptBI: null,
@@ -22,6 +23,9 @@ export default {
   mutations: {
     setPatntList(state, payload) {
       state.ptList = payload
+    },
+    setSeverPatnts(state, payload) {
+      state.severPts = payload
     },
     setSeverPatntList(state, payload) {
       state.severPtList = payload
@@ -69,8 +73,8 @@ export default {
     /*환자 목록 조회*/
     async getPatntList(comment, data) {
       //const token = localStorage.getItem('userToken')
-      // const url = `${API_PROD}/api/v1/private/patient/search`
-      const url = `http://localhost:8080/api/v1/private/patient/search`
+      const url = `${API_PROD}/api/v1/private/patient/search`
+      // const url = `http://localhost:8080/api/v1/private/patient/search`
 
       const params = data
 
@@ -79,9 +83,10 @@ export default {
         const response = await axios.get(url, { params })
         if (response.data?.code === '00') {
           await comment.commit('setPatntList', response.data?.result)
-          if (Object.keys(params).length === 1 && params.sever) {
-            await comment.commit('setSeverPatntList', false)
-            await comment.commit('setSeverPatntList', true)
+          if (params && Object.keys(params).length === 1 && params.sever) {
+            await comment.commit('setSeverPatnts', false)
+            await comment.commit('setSeverPatnts', true)
+            comment.commit('setSeverPatntList', response.data?.result)
           }
         }
       } catch (e) {
