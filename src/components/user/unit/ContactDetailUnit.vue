@@ -17,10 +17,10 @@
                 <div class="subject-txt">
                   <b>{{ user['userNm'] }}</b>
                 </div>
-                <div class="label-txt text-primary">{{ user['jobCd'] }}</div>
+                <div class="label-txt text-primary">{{ user['jobCdNm'] }}</div>
               </div>
               <div class="con-box">
-                {{ `${user['ocpCd']} / ${user['dutyDstr1Cd']} / ${user['instNm']}` }}
+                {{ getUserBelong() }}
               </div>
             </div>
           </div>
@@ -45,7 +45,7 @@
               <div class="inner-item-list">
                 <div class="inner-item-box">
                   <div class="subject-box">주 담당지역</div>
-                  <div class="con-box">대구광역시</div>
+                  <div class="con-box">{{ user['dutyDstr1CdNm'] }}</div>
                 </div>
 
                 <div class="inner-item-box">
@@ -61,7 +61,7 @@
 
                 <div class="inner-item-box">
                   <div class="subject-box">담당 환자유형</div>
-                  <div class="con-box">#신생아 #임산부</div>
+                  <div class="con-box">{{ getTag(user['ptTypeCdNm']) }}</div>
                 </div>
 
                 <div class="inner-item-box">
@@ -78,7 +78,8 @@
 </template>
 
 <script>
-import { getTelno, getTLDt } from '@/util/ui'
+import { getTag, getTelno, getTLDt } from '@/util/ui'
+
 export default {
   name: 'ContactDetailUnit',
   props: {
@@ -88,8 +89,16 @@ export default {
     }
   },
   methods: {
+    getTag,
     getTelno,
-    getTLDt
+    getTLDt,
+    getUserBelong() {
+      if (this.user.ocpCd) {
+        return `${this.user.ocpCd} / ${this.user.dutyDstr1CdNm} / ${this.user.instNm}`;
+      } else {
+        return `${this.user.dutyDstr1CdNm} / ${this.user.instNm}`;
+      }
+    },
   }
 }
 </script>
