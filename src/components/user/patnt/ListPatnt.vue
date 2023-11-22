@@ -428,11 +428,17 @@
                               <div class="profile-view-box" style="width: 100%; height: 264px">
                                 <img
                                   v-if='newPt.attcId === null || newPt.attcId === undefined'
-                                  src='@/assets/img/img-no-img.webp' />
-                                <img v-else :src='this.epidReportImage' />
+                                  src='@/assets/img/img-no-img.webp' @click='showImageLightBox'/>
+                                <img v-else :src='this.epidReportImage' @click='showImageLightBox' />
                                 <a v-if="newPt.attcId !== null" @click="alertOpen(9)" class="remove-btn"
                                 ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
                                 /></a>
+                                <vue-easy-lightbox
+                                  :visible="visibleRef"
+                                  :imgs="imgsRef"
+                                  :index="indexRef"
+                                  @hide="onHide"
+                                ></vue-easy-lightbox>
                               </div>
 
                               <div class="profile-upload-box">
@@ -1111,6 +1117,7 @@
                           data-bs-target="#kt_modal_request"
                           data-bs-toggle="modal"
                           class="modal-menu-btn menu-primary"
+                          @click='showPatntModal(ptDetail)'
                       >병상요청
                       </router-link>
                     </div>
@@ -1376,15 +1383,10 @@
                                       style="width: 100%; height: 264px"
                                   >
                                     <img
-                                        v-if="preRpt === null"
-                                        src="@/assets/img/img-no-img.webp"
-                                        alt="이미지"
-                                    />
-                                    <img v-if="preRpt !== null" :src="preRpt" alt="이미지"/>
-                                    <a
-                                        v-if="preRpt !== null"
-                                        @click="alertOpen(9)"
-                                        class="remove-btn"
+                                      v-if='newPt.attcId === null || newPt.attcId === undefined'
+                                      src='@/assets/img/img-no-img.webp' />
+                                    <img v-else :src='this.epidReportImage' />
+                                    <a v-if="newPt.attcId !== null" @click="alertOpen(9)" class="remove-btn"
                                     ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
                                     /></a>
                                   </div>
@@ -1392,13 +1394,9 @@
                                   <div class="profile-upload-box">
                                     <div class="upload-box">
                                       <label
-                                          class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary"
+                                        class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary"
                                       >
-                                        <input
-                                            type="file"
-                                            @change="uploadRpt"
-                                            :value="reportFile"
-                                        />
+                                        <input type="file" @change="uploadRpt" :value="reportFile"/>
                                         수정
                                       </label>
                                     </div>
@@ -3289,7 +3287,11 @@ export default {
         monitoring: null,
         assignmentStatus: [],
         searchText: ''
-      }
+      },
+      image: 'assets/logo.png',
+      visibleRef: false,
+      imgsRef: '',
+      indexRef: 0,
     }
   },
   computed: {
@@ -3472,17 +3474,21 @@ export default {
       const formData = new FormData();
       formData.append('param1', 'edidemreport');
       formData.append('param2', file);
-      // console.log(formData)
+
       await this.$store.dispatch('patnt/uploadRpt', formData);
       if (this.rptInfo !== null) {
         // console.log('실행')
         this.alertOpen(4);
       }
       //역조서 이미지 미리보기 만들기
-      await this.$store.dispatch('user/readPrivateImage',this.rptInfo.attcId).then((result) => {
-        const blob = new Blob([result], { type: 'image/jpeg' })
-        this.epidReportImage = URL.createObjectURL(blob)
-      })
+      await this.showImage(this.rptInfo.attcId)
+    },
+    showImageLightBox() {
+      this.imgsRef = this.epidReportImage
+      this.visibleRef = true
+    },
+    onHide() {
+      this.visibleRef = false
     },
     removeRpt() {
       /*역조서 삭제*/
@@ -3556,7 +3562,10 @@ export default {
         this.newPt = this.ptDetail;
       }
 
-      await this.$store.dispatch('user/readPrivateImage',this.newPt.attcId).then((result) => {
+      await this.showImage(this.newPt.attcId)
+    },
+    async showImage(attcId) {
+      await this.$store.dispatch('user/readPrivateImage', attcId).then((result) => {
         const blob = new Blob([result], { type: 'image/jpeg' })
         this.epidReportImage = URL.createObjectURL(blob)
       })

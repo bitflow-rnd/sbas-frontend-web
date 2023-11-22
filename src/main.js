@@ -5,10 +5,11 @@ import VWave from 'v-wave'
 import router from './router/router.js'
 import store from './store/store.js'
 import App from './App.vue'
+import VueEasyLightbox from 'vue-easy-lightbox'
 // import socket from 'vue3-websocket'
 
 const app = createApp(App)
-app.use(router).use(VWave).use(store).mount('#kt_app_root')
+app.use(router).use(VWave).use(store).use(VueEasyLightbox).mount('#kt_app_root')
   //.use(socket, 'ws://dev.smartbas.org/chat-rooms')
 
 app.config.globalProperties.emitter = mitt()
