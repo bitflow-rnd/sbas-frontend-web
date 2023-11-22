@@ -644,7 +644,7 @@
                         ></i>
                         <i v-else-if="item.bodyTemperatureControl === 'N'">-</i>
                       </td>
-                      <td>12</td>
+                      <td>{{ item.medicalStaffCount ?? '0' }}</td>
                       <td>
                         {{ getUpDt(item.updtDttm) }}
                       </td>
@@ -789,15 +789,16 @@
                                         class="profile-view-box"
                                         style="width: 220px; height: 220px"
                                     >
-                                      <img
-                                          v-if="medinstDetail.attcId===null ||medinstDetail.attcId ==='' "
-                                          src="@/assets/img/img-no-img.webp" alt="이미지"/>
-                                      <router-link to=""
-                                                   v-if="medinstDetail.attcId!==null && medinstDetail.attcId !==''"
-                                                   @click="alertOpen(0)"
-                                                   class="remove-btn"
-                                      ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
-                                      /></router-link>
+<!--                                      <img-->
+<!--                                        v-if="medinstDetail.hospBasicInfo.attcId === null ||medinstDetail.hospBasicInfo.attcId === '' "-->
+<!--                                        src='@/assets/img/img-no-img.webp' alt='이미지' />-->
+<!--                                      <router-link to=''-->
+<!--                                                   v-if="medinstDetail.hospBasicInfo.attcId !== null && medinstDetail.hospBasicInfo.attcId !== ''"-->
+<!--                                                   @click='alertOpen(0)'-->
+<!--                                                   class='remove-btn'>-->
+<!--                                        <img src='/img/common/ic_profile_remove.svg' alt='이미지' />-->
+<!--                                      </router-link>-->
+                                      <img :src="imagePreview" alt="미리 보기 이미지" />
                                     </div>
 
                                     <div class="profile-upload-box d-flex align-items-center pt-4">
@@ -805,7 +806,7 @@
                                         <label
                                             class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 btn-outline btn-outline-primary"
                                         >
-                                          <input type="file"/>
+                                          <input type="file" accept='image/jpeg, image/png' @change='uploadImage'/>
                                           수정
                                         </label>
                                       </div>
@@ -850,11 +851,6 @@
                               <th rowspan="6">간이약도</th>
                               <td rowspan="6" class='map-wrapper'>
                                 <div id='map'></div>
-                                <p class="pt-4 ">
-                                  위도 : {{ medinstDetail.hospBasicInfo.wgs84Lat }} , 경도 : {{
-                                    medinstDetail.hospBasicInfo.wgs84Lon
-                                  }}
-                                </p>
                               </td>
                             </tr>
 
@@ -2350,7 +2346,8 @@ export default {
         dstrCd2: '',
         text: '',
       },
-      inputValue: null
+      inputValue: null,
+      imagePreview: '',
     }
   },
   methods: {
@@ -2478,7 +2475,20 @@ export default {
         this.$store.dispatch('admin/getMedInstEtc',this.hpId)
       }
     },
+    uploadImage(event) {
+      const input = event.target;
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
 
+        reader.onload = (e) => {
+          this.imagePreview = e.target.result;
+        };
+        console.log(input.files[0]);
+        reader.readAsDataURL(input.files[0]);
+      } else {
+        this.imagePreview = '';
+      }
+    }
   }
 }
 </script>
