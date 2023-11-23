@@ -160,7 +160,7 @@
                                       :value='this.filter.selectedStates[idx]'
                                       @change='searchBedAsgn' /><i></i>
                                     <span class='txt'>{{ item.title }}
-                                      <span class='cnt ms-1' style='color: rgb(255, 102, 110)'>&nbsp;&nbsp;&nbsp;<b>{{ item.count }}</b></span>
+                                      <span class='cnt ms-1' style='color: rgb(255, 102, 110)'>&nbsp;&nbsp;&nbsp;{{ item.count }}</span>
                                     </span>
                                   </label>
                                 </div>
@@ -168,8 +168,8 @@
                             </article>
                           </div>
                         </td>
-                        <th>검색어</th>
-                        <td colspan="3">
+<!--                        <th>검색어</th>-->
+                        <td colspan="3" style='padding-left: 0px'>
                           <div class="item-cell-box full">
                             <div class="tbox full with-btn">
                               <input
@@ -742,10 +742,16 @@
                                         src="@/assets/img/img-no-img.webp"
                                         alt="이미지"
                                       />
-                                      <img v-if="preRpt !== null" :src="preRpt" alt="이미지" />
+                                      <img v-if="preRpt !== null" :src="preRpt" alt="이미지" @click='showImageLightBox' />
                                       <a @click="alertOpen(9)" class="remove-btn"
                                         ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
                                       /></a>
+                                      <vue-easy-lightbox
+                                        :visible="visibleRef"
+                                        :imgs="imgsRef"
+                                        :index="indexRef"
+                                        @hide="onHide"
+                                      ></vue-easy-lightbox>
                                     </div>
 
                                     <div class="profile-upload-box">
@@ -5019,6 +5025,9 @@ export default {
       },
       chrgUserId: [],
       undrDsesCdArr:[],
+      visibleRef: false,
+      imgsRef: '',
+      indexRef: 0,
     }
   },
   computed: {
@@ -5720,6 +5729,13 @@ export default {
           this.hosptlzdiscg.admsStatCd = 'IOST0003'
           break
       }
+    },
+    showImageLightBox() {
+      this.imgsRef = this.preRpt
+      this.visibleRef = true
+    },
+    onHide() {
+      this.visibleRef = false
     },
   }
 }

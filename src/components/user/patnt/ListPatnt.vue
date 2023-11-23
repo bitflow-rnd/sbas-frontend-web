@@ -427,12 +427,12 @@
                             >
                               <div class="profile-view-box" style="width: 100%; height: 264px">
                                 <img
-                                  v-if='newPt.attcId === null || newPt.attcId === undefined'
-                                  src='@/assets/img/img-no-img.webp' @click='showImageLightBox'/>
+                                  v-if="newPt.attcId === null || newPt.attcId === ''"
+                                  src='@/assets/img/img-no-img.webp'/>
                                 <img v-else :src='this.epidReportImage' @click='showImageLightBox' />
-                                <a v-if="newPt.attcId !== null" @click="alertOpen(9)" class="remove-btn"
-                                ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
-                                /></a>
+                                <a v-if="newPt.attcId !== null || newPt.attcId === ''" @click="alertOpen(9)" class="remove-btn">
+                                  <img src="/img/common/ic_profile_remove.svg" alt="이미지" />
+                                </a>
                                 <vue-easy-lightbox
                                   :visible="visibleRef"
                                   :imgs="imgsRef"
@@ -1383,12 +1383,18 @@
                                       style="width: 100%; height: 264px"
                                   >
                                     <img
-                                      v-if='newPt.attcId === null || newPt.attcId === undefined'
+                                      v-if="newPt.attcId === null || newPt.attcId === ''"
                                       src='@/assets/img/img-no-img.webp' />
-                                    <img v-else :src='this.epidReportImage' />
-                                    <a v-if="newPt.attcId !== null" @click="alertOpen(9)" class="remove-btn"
+                                    <img v-else :src='this.epidReportImage' @click='showImageLightBox' />
+                                    <a v-if="newPt.attcId !== null || newPt.attcId === ''" @click="alertOpen(9)" class="remove-btn"
                                     ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
                                     /></a>
+                                    <vue-easy-lightbox
+                                      :visible="visibleRef"
+                                      :imgs="imgsRef"
+                                      :index="indexRef"
+                                      @hide="onHide"
+                                    ></vue-easy-lightbox>
                                   </div>
 
                                   <div class="profile-upload-box">
@@ -3483,13 +3489,6 @@ export default {
       //역조서 이미지 미리보기 만들기
       await this.showImage(this.rptInfo.attcId)
     },
-    showImageLightBox() {
-      this.imgsRef = this.epidReportImage
-      this.visibleRef = true
-    },
-    onHide() {
-      this.visibleRef = false
-    },
     removeRpt() {
       /*역조서 삭제*/
       this.$store.dispatch('patnt/removeRpt', this.rptInfo.attcId);
@@ -3565,10 +3564,14 @@ export default {
       await this.showImage(this.newPt.attcId)
     },
     async showImage(attcId) {
-      await this.$store.dispatch('user/readPrivateImage', attcId).then((result) => {
-        const blob = new Blob([result], { type: 'image/jpeg' })
-        this.epidReportImage = URL.createObjectURL(blob)
-      })
+      if (attcId === null || attcId === '') {
+        this.epidReportImage = '';
+      } else {
+        await this.$store.dispatch('user/readPrivateImage', attcId).then((result) => {
+          const blob = new Blob([result], { type: 'image/jpeg' })
+          this.epidReportImage = URL.createObjectURL(blob)
+        })
+      }
     },
     clearNewPt() {
       this.newPt = {
@@ -3580,9 +3583,17 @@ export default {
         undrDsesCd: [], undrDsesEtc: null,
       }
       this.preRpt = null;
+      this.epidReportImage = '';
     },
     timelineSection() {
       this.model.mode = 'timeline';
+    },
+    showImageLightBox() {
+      this.imgsRef = this.epidReportImage
+      this.visibleRef = true
+    },
+    onHide() {
+      this.visibleRef = false
     },
   }
 }
