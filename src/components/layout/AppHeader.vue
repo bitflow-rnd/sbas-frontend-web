@@ -172,11 +172,11 @@
             ><i class="fa-solid fa-triangle-exclamation fs-1"></i> 매뉴얼 페이지</a
             >
           </div>
-          <div class="app-navbar-item" id="kt_app_header_middle_wrapper">
-            <a href="#" class="btn btn-flex btn-sm btn-danger my-auto fs-5"
-              ><i class="fa-solid fa-triangle-exclamation fs-4"></i> 병상요청</a
-            >
-          </div>
+<!--          <div class="app-navbar-item" id="kt_app_header_middle_wrapper">-->
+<!--            <a href="#" class="btn btn-flex btn-sm btn-danger my-auto fs-5"-->
+<!--              ><i class="fa-solid fa-triangle-exclamation fs-4"></i> 병상요청</a-->
+<!--            >-->
+<!--          </div>-->
 
 
           <!--begin::Activities-->
