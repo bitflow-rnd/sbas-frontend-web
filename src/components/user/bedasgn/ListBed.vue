@@ -140,37 +140,32 @@
                         <th>배정상태</th>
                         <td colspan="3">
                           <div class="item-row-box">
-                            <div class="item-cell-box">
-                              <div class="cbox">
-                                <label>
-                                  <input
-                                    type="checkbox"
-                                    name="state"
-                                    v-model='allSelected'
-                                    @change="searchBedAsgn" /><i></i>
-                                  <span class="txt">전체
-<!--                                    <span class="cnt ms-1">{{ bdList.length }}</span>-->
-                                  </span>
-                                </label>
+                            <article class="toggle-list-layout1">
+                              <div class="toggle-list">
+                                <div class="toggle-list">
+                                  <label>
+                                    <input type='radio' name='state' v-model='search.bedStatCd'
+                                           :value='null'
+                                           @change='searchBedAsgn' checked />
+                                    <span class='txt'>전체</span>
+                                  </label>
+                                </div>
+                                <div v-for='(item, idx) in bdList2'
+                                     :key='idx' class="toggle-list">
+                                  <label>
+                                    <input
+                                      type='radio'
+                                      name='state'
+                                      v-model='search.bedStatCd'
+                                      :value='this.filter.selectedStates[idx]'
+                                      @change='searchBedAsgn' /><i></i>
+                                    <span class='txt'>{{ item.title }}
+                                      <span class='cnt ms-1' style='color: rgb(255, 102, 110)'>&nbsp;&nbsp;&nbsp;<b>{{ item.count }}</b></span>
+                                    </span>
+                                  </label>
+                                </div>
                               </div>
-                              <div
-                                  v-for="(item, idx) in bdList2"
-                                  :key="idx"
-                                  class="cbox ms-4"
-                              >
-                                <label>
-                                  <input
-                                      type="checkbox"
-                                      name="state"
-                                      v-model="search.bedStatCd"
-                                      :value="this.filter.selectedStates[idx]"
-                                      @change="searchBedAsgn" /><i></i>
-                                  <span class="txt">{{ item.title }}
-                                    <span class="cnt ms-1">{{ item.count }}</span>
-                                  </span>
-                                </label>
-                              </div>
-                            </div>
+                            </article>
                           </div>
                         </td>
                         <th>검색어</th>
@@ -4916,7 +4911,7 @@ export default {
         toAge:null,
         gndr:[],
         page:1,
-        bedStatCd: [],
+        bedStatCd: null,
       },
       preRpt: null,
       content: '',
@@ -5067,18 +5062,8 @@ export default {
       if (this.search['svrtTypeCd'].length) params = {...params, svrtTypeCd: this.search['svrtTypeCd'].join(',')};
       if (this.search['reqBedTypeCd'].length) params = {...params, reqBedTypeCd: this.search['reqBedTypeCd'].join(',')};
       if (this.search['gndr'].length) params = {...params, gndr: this.search['gndr'].join(',')};
-      if (this.search['bedStatCd'].length) params = {...params, bedStatCd: this.search['bedStatCd'].join(',')};
+      params = {...params, bedStatCd: this.search['bedStatCd']};
       return params
-    },
-    allSelected: {
-      //getter
-      get: function() {
-        return this.filter.selectedStates.length === this.search.bedStatCd.length;
-      },
-      //setter
-      set: function(e) {
-        this.search.bedStatCd = e ? this.filter.selectedStates : [];
-      },
     },
     /*sortedBdList() {
       let list = []
@@ -5788,4 +5773,13 @@ li.custom-style::before {
     left: calc(50% - 32px);
     top: calc(50% - 32px);
 }
+
+article.toggle-list-layout1 .toggle-list label input:checked ~ .txt {
+  padding: 0 13px;
+}
+
+article.toggle-list-layout1 .toggle-list label .txt {
+  padding: 0 13px;
+}
+
 </style>
