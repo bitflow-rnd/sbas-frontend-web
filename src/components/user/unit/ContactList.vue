@@ -32,10 +32,10 @@
               <div class="info-box">
                 <div class="subject-box">
                   {{ user['userNm'] }}
-                  <div class="label-txt text-primary">{{ user['jobCd'] }}</div>
+                  <div class="label-txt text-primary">{{ user['jobCdNm'] }}</div>
                 </div>
                 <div class="con-box">
-                  {{ `${user['ocpCd']} / ${user['dutyDstr1Cd']} / ${user['instNm']}` }}
+                  {{ getUserBelong(user) }}
                 </div>
               </div>
             </div>
@@ -74,10 +74,10 @@
               <div class="info-box">
                 <div class="subject-box">
                   {{ user['userNm'] }}
-                  <div class="label-txt text-primary">{{ user['jobCd'] }}</div>
+                  <div class="label-txt text-primary">{{ user['jobCdNm'] }}</div>
                 </div>
                 <div class="con-box">
-                  {{ `${user['ocpCd']} / ${user['dutyDstr1Cd']} / ${user['instNm']}` }}
+                  {{ getUserBelong(user) }}
                 </div>
               </div>
             </div>
@@ -149,6 +149,15 @@ function onSelectUser(user) {
   model.selectedUser = user
   emit('onUserSelected', user)
 }
+
+function getUserBelong(user) {
+  if (user['ocpCd']) {
+    return `${user['ocpCd']} / ${user['dutyDstr1CdNm']} / ${user['instNm']}`;
+  } else {
+    return `${user['dutyDstr1CdNm']} / ${user['instNm']}`;
+  }
+}
+
 </script>
 
 <style scoped>

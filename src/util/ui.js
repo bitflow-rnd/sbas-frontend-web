@@ -28,31 +28,29 @@ idx === 0: YYYY년 MM월 DD일
 idx === 1: (오후/오전) hh시 mm분
 idx === 2: YYYY년 MM월 DD일,(오후/오전) hh시 mm분
 */
-export function getTLDt(date,idx){
+export function getTLDt(date, idx) {
     /*표준시라서  +9 해줘야 함 */
     let dd = new Date(date)
-    if(idx===0){
-        return dd.getFullYear()+'년 '+(dd.getMonth()+1)+'월 '+dd.getDate()+'일'
-    }else if(idx===1){
-
-        if(dd.getHours()>12){
-            return '오후 '+ (dd.getHours()-12)+'시 '+dd.getMinutes()+'분'
-    }else if(idx===1 && date !== null && date !== undefined){
-            return '오전 '+dd.getHours()+'시 '+dd.getMinutes()+'분'
-            } else {
-                return '오전 '+dd.getHours()+'시 '+dd.getMinutes()+'분'
-            }
-        } else if (idx === 2) {
-            if (dd.getHours() > 12) {
-                return dd.getFullYear()+'년 '+(dd.getMonth()+1)+'월 '+dd.getDate()+'일,' +
-                  '오후 '+ (dd.getHours()-12)+'시 '+dd.getMinutes()+'분'
-            } else {
-                return dd.getFullYear()+'년 '+(dd.getMonth()+1)+'월 '+dd.getDate()+'일,' +
-                  '오전 '+dd.getHours()+'시 '+dd.getMinutes()+'분'
-            }
+    if (idx === 0) {
+        return dd.getFullYear() + '년 ' + (dd.getMonth() + 1) + '월 ' + dd.getDate() + '일'
+    } else if (idx === 1) {
+        if (dd.getHours() > 12) {
+            return '오후 ' + (dd.getHours() - 12) + '시 ' + dd.getMinutes() + '분'
+        } else if (idx === 1 && date !== null && date !== undefined) {
+            return '오전 ' + dd.getHours() + '시 ' + dd.getMinutes() + '분'
+        } else {
+            return '오전 ' + dd.getHours() + '시 ' + dd.getMinutes() + '분'
         }
-    else {
-        return '';
+    } else if (idx === 2) {
+        if (dd.getHours() > 12) {
+            return dd.getFullYear() + '년 ' + (dd.getMonth() + 1) + '월 ' + dd.getDate() + '일, ' +
+              '오후 ' + (dd.getHours() - 12) + '시 ' + dd.getMinutes() + '분'
+        } else {
+            return dd.getFullYear() + '년 ' + (dd.getMonth() + 1) + '월 ' + dd.getDate() + '일, ' +
+              '오전 ' + dd.getHours() + '시 ' + dd.getMinutes() + '분'
+        }
+    } else {
+        return ''
     }
 }
 export function getTag(data){
