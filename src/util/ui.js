@@ -54,6 +54,7 @@ export function getTLDt(date, idx) {
     }
 }
 export function getTag(data){
+    if (data === '' || data === null) return '-'
     let str =''
     data.forEach((item) => {
         str += '#'+item+' '
