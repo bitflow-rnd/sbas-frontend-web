@@ -234,12 +234,8 @@
                                 <span class="txt">보건의료원</span>
                               </label>
                             </div>
-                          </div>
-                        </div>
 
-                        <div class="item-row-box">
-                          <div class="item-cell-box">
-                            <div class="cbox">
+                            <div class="cbox ms-4">
                               <label>
                                 <input type="checkbox" name="state"/><i></i>
                                 <span class="txt">치과병원</span>
