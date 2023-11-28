@@ -926,7 +926,7 @@ export default {
       } else if (idx === 11) {
         return this.form.dutyDstr1Cd === null && this.showErrorMessage
       } else if (idx === 12) {
-        return this.form.instId === null && this.showErrorMessage
+        return this.form.instNm === null && this.showErrorMessage
       }
       return false
     },
