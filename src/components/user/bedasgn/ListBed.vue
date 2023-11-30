@@ -551,7 +551,7 @@
                         <td>{{ item.bedStatCdNm }}</td>
                         <td>{{ maskingNm(item.ptNm) }}</td>
                         <td>{{ item.gndr }}자</td>
-                        <td>{{ item.age }}세</td>
+                        <td>{{ item.rrno1 ? item.rrno1.slice(0,2)+'.'+item.rrno1.slice(2,4)+'.'+item.rrno1.slice(4) :'-'}}</td>
                         <td>{{ item.diagNm ? item.diagNm : '-' }}</td>
                         <td>{{ item.svrtTypeCdNm }}</td>
                         <td>{{reqBedType[item.reqBedTypeCd]}}</td>
