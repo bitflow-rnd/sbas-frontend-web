@@ -564,25 +564,23 @@ export default {
         },
 
         /*의료기관 정보 조회 (e-gen 데이터 제외)*/
-        getMedInstEtc(comment, request){
-            return new Promise((resolve)=>{
-                const url = `${API_PROD}/api/v1/public/organ/medinstinfo/${request}`
-                axios({
+        getMedInstEtc(comment,request){
+               // const token = sessionStorage.getItem('userToken')
+                const url = `${API_PROD}/api/v1/private/organ/medinstinfo/${request}`
+                return axios({
                     method:'get',
-                    url: url
+                    url: url,
+                    /*headers: {
+                        Authorization: `Bearer ${token}`
+                    }*/
                 }). then ((response) => {
                     console.log(response, '의료기관 정보 조회 egen 제외')
                     if (response.data?.code === '00') {
-                        comment.commit('setMedInstEtc', '00')
-                        resolve(true)
-                    } else {
-                        resolve(false)
+                        comment.commit('setMedInstEtc', response.data?.result)
                     }
                 }).catch((e) => {
                     console.log(e)
-                    resolve(false)
                 })
-            })
         },
 
         loadCodeGroupsData() {

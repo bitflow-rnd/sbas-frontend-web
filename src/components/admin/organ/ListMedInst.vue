@@ -2162,47 +2162,25 @@
                             </colgroup>
                             <tbody>
                             <tr>
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'> 감염병 전용 분만 시설 보유 여부</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.hvcc ?? '-'"></td>
+                              <th><input class='editMedi' type='checkbox' :value='modMedinst.childBirthYn'> 감염병 전용 분만 시설 보유 여부</th>
+                              <td><input type='text' :value="medinstDetail.childBirthMed ?? '-'"></td>
 
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 투석 시설 보유 여부</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.hvncc ?? '-' "></td>
+                              <th><input class='editMedi' type='checkbox' :value='modMedinst.dialysisYn'>감염병 전용 투석 시설 보유 여부</th>
+                              <td><input type='text' :value="modMedinst.dialysisMed ?? '-' "></td>
 
-                              <th><input style='margin-right:20px;padding-left: 3px' type='checkbox'>감염병 전용 소아 시설 보유 여부</th>
-                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.hvccc ?? '-'"></td>
+                              <th><input class='editMedi' type='checkbox' :value='modMedinst.childYn'>감염병 전용 소아 시설 보유 여부</th>
+                              <td><input type='text' :value=" modMedinst.childMed ?? '-'"></td>
                             </tr>
 
                             <tr>
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 요양병원 시설 보유 여부</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.hvicc ?? '-'"></td>
+                              <th><input class='editMedi' type='checkbox' :value='modMedinst.nursingHospitalYn'>감염병 전용 요양병원 시설 보유 여부</th>
+                              <td><input type='text' :value="modMedinst.nursingHospitalMed ?? '-'"></td>
 
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 정신질환자 시설 보유 여부</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o001 ?? '-' "></td>
+                              <th><input class='editMedi' type='checkbox' :value='modMedinst.mentalPatientYn'>감염병 전용 정신질환자 시설 보유 여부</th>
+                              <td><input type='text' :value="modMedinst.mentalPatientMed ?? '-' "></td>
 
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 분만 대응 의료진 수</th>
-                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o002 ?? '-'"></td>
-                            </tr>
-
-                            <tr>
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 투석 대응 의료진 수</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o003 ?? '-' "></td>
-
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 소아 대응 의료진 수</th>
-                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o004 ?? '-' "></td>
-
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 요양병원 대응 의료진 수</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o005 ?? '-'"></td>
-                            </tr>
-
-                            <tr>
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 정신질환자 대응 의료진 수</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o006 ?? '-' "></td>
-
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>가용_외과중환자실</th>
-                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o007 ?? '-' "></td>
-
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>가용_신생아중환자실</th>
-                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o008 ?? '-'"></td>
+                              <th><input class='editMedi' type='checkbox' :value='modMedinst.childBirthYn'>감염병 전용 분만 대응 의료진 수</th>
+                              <td><input type='text' :value=" modMedinst.childBirthMed ?? '-'"></td>
                             </tr>
                             </tbody>
                           </table>
@@ -2343,6 +2321,15 @@ export default {
         text: '',
       },
       inputValue: null,
+      modMedinst:{
+        hospId: '',
+        childBirthYn: false,
+        dialysisYn: false,
+        childYn:false,
+        nursingHospitalYn: false,
+        mentalPatientYn: false,
+        negativePressureRoomYn: false,
+      },
       imagePreview: '',
     }
   },
@@ -2534,5 +2521,9 @@ article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
 }
 .addMedi {
     margin-top: 5px;
+}
+.editMedi {
+    margin-right: 7px;
+    padding-left: 3px;
 }
 </style>
