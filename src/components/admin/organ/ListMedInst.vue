@@ -2152,57 +2152,47 @@
                         <div class="table-box">
                           <table>
                             <colgroup>
-                              <col style="width: 175px"/>
+                              <col style="width: 100px"/>
                               <col style="width: auto"/>
-                              <col style="width: 175px"/>
-                              <col style="width: auto"/>
-
-                              <col style="width: 175px"/>
                               <col style="width: auto"/>
                             </colgroup>
+                            <thead>
+                            <tr>
+                              <th>보유 여부</th>
+                              <th>시설</th>
+                              <th>의료진 수</th>
+                            </tr>
+                            </thead>
                             <tbody>
                             <tr>
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'> 감염병 전용 분만 시설 보유 여부</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.hvcc ?? '-'"></td>
-
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 투석 시설 보유 여부</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.hvncc ?? '-' "></td>
-
-                              <th><input style='margin-right:20px;padding-left: 3px' type='checkbox'>감염병 전용 소아 시설 보유 여부</th>
-                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.hvccc ?? '-'"></td>
+                              <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.childBirthYn' v-model='this.modMedinst.childBirthYn'></td>
+                              <td> 감염병 전용 분만 시설</td>
+                              <td><input type='text' v-show='this.modMedinst.childBirthYn' v-model="this.modMedinst.childBirthMed"></td>
                             </tr>
-
                             <tr>
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 요양병원 시설 보유 여부</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.hvicc ?? '-'"></td>
-
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 정신질환자 시설 보유 여부</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o001 ?? '-' "></td>
-
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 분만 대응 의료진 수</th>
-                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o002 ?? '-'"></td>
+                              <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.dialysisYn' v-model='this.modMedinst.dialysisYn'></td>
+                              <td>감염병 전용 투석 시설</td>
+                              <td><input type='text' v-show='this.modMedinst.dialysisYn' v-model='this.modMedinst.dialysisMed'  ></td>
                             </tr>
-
                             <tr>
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 투석 대응 의료진 수</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o003 ?? '-' "></td>
-
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 소아 대응 의료진 수</th>
-                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o004 ?? '-' "></td>
-
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 요양병원 대응 의료진 수</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o005 ?? '-'"></td>
+                              <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.childYn' v-model='this.modMedinst.childYn'></td>
+                              <td>감염병 전용 소아 시설</td>
+                              <td><input type='text' v-show='this.modMedinst.childYn' v-model=" this.modMedinst.childMed"></td>
                             </tr>
-
                             <tr>
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>감염병 전용 정신질환자 대응 의료진 수</th>
-                              <td><input type='text' :value="medinstDetail.hospBasicInfo.o006 ?? '-' "></td>
-
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>가용_외과중환자실</th>
-                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o007 ?? '-' "></td>
-
-                              <th><input style='margin-right: 20px;padding-left: 3px' type='checkbox'>가용_신생아중환자실</th>
-                              <td><input type='text' :value=" medinstDetail.hospBasicInfo.o008 ?? '-'"></td>
+                              <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.nursingHospitalYn' v-model='this.modMedinst.nursingHospitalYn'></td>
+                              <td>감염병 전용 요양병원 시설</td>
+                              <td><input type='text' v-show='this.modMedinst.nursingHospitalYn' v-model="this.modMedinst.nursingHospitalMed"></td>
+                            </tr>
+                            <tr>
+                              <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.mentalPatientYn' v-model='this.modMedinst.mentalPatientYn'></td>
+                              <td>감염병 전용 정신질환자 시설</td>
+                              <td><input type='text' v-show='this.modMedinst.mentalPatientYn' v-model="this.modMedinst.mentalPatientMed"></td>
+                            </tr>
+                            <tr>
+                              <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.negativePressureRoomYn' v-model='this.modMedinst.negativePressureRoomYn'></td>
+                              <td>감염병 전용 음압격리 시설</td>
+                              <td></td>
                             </tr>
                             </tbody>
                           </table>
@@ -2214,7 +2204,7 @@
             <article class="modal-menu-layout1 pt-10">
               <div class="modal-menu-list">
                 <a @click="closeModal" class="modal-menu-btn menu-primary">취소</a>
-                <a  class="modal-menu-btn menu-primary">수정</a>
+                <a @click='editMedInstEtc' class="modal-menu-btn menu-primary">수정</a>
               </div>
             </article>
           </div>
@@ -2276,7 +2266,7 @@ export default {
     msg: String
   },
   computed: {
-    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList', 'medinstDetail','hpId']),
+    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList', 'medinstDetail','hpId','medInstEtc']),
 
     startIndex() {
       return (this.page - 1) * this.displayRowsCount;
@@ -2343,6 +2333,15 @@ export default {
         text: '',
       },
       inputValue: null,
+      modMedinst:{
+        hospId: '',
+        childBirthYn: false,
+        dialysisYn: false,
+        childYn:false,
+        nursingHospitalYn: false,
+        mentalPatientYn: false,
+        negativePressureRoomYn: false,
+      },
       imagePreview: '',
     }
   },
@@ -2466,10 +2465,14 @@ export default {
         map: map
       })
     },
-    getMediInstEtc(){
+    async getMediInstEtc(){
       if(this.hpId !== ''){
-        this.$store.dispatch('admin/getMedInstEtc',this.hpId)
+        await this.$store.dispatch('admin/getMedInstEtc',this.hpId)
       }
+      if(this.medInstEtc !== null){
+        this.modMedinst = this.medInstEtc
+      }
+      console.log(this.modMedinst)
     },
     uploadImage(event) {
       const input = event.target;
@@ -2484,6 +2487,18 @@ export default {
       } else {
         this.imagePreview = '';
       }
+    },
+    chkYn(data){
+      if(data !== null){
+        data = !data
+        console.log(data)
+      }
+    },
+    editMedInstEtc(){
+      this.modMedinst.hospId = this.hpId
+      console.log(this.modMedinst)
+      this.$store.dispatch('admin/editMedInstEtc',this.modMedinst)
+      this.getMediInstEtc()
     }
   }
 }
@@ -2534,5 +2549,9 @@ article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
 }
 .addMedi {
     margin-top: 5px;
+}
+.editMedi {
+    margin-right: 7px;
+    padding-left: 3px;
 }
 </style>
