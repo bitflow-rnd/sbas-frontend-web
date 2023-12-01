@@ -12,7 +12,7 @@
         <div class='header-menu-box'>
           <a href="https://bitflow.notion.site/1-c386cb59de4440208ec146d6968bf877?pvs=4" target='_blank' class="btn btn-flex btn-sm btn-primary my-auto fs-1"
              style='margin-right: 70px'
-          ><i class="fa-solid fa-triangle-exclamation fs-1"></i> 매뉴얼 페이지</a
+          ><i class="fa-solid fa-triangle-exclamation fs-1"></i> 사용자매뉴얼</a
           >
           <router-link to='/login' class='header-menu-btn' v-if='!isMobile'>병상배정 시스템 로그인</router-link>
         </div>

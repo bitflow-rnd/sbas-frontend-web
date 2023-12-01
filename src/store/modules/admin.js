@@ -21,7 +21,7 @@ export default {
         fmDetail:null,
         organMedi: [],
         hpId:'',
-        medInstEtc: null,
+        medInstEtc:null,
     },
     mutations: {
         setSido(state,payload){
@@ -564,26 +564,65 @@ export default {
         },
 
         /*의료기관 정보 조회 (e-gen 데이터 제외)*/
-        getMedInstEtc(comment, request){
-            return new Promise((resolve)=>{
-                const url = `${API_PROD}/api/v1/public/organ/medinstinfo/${request}`
-                axios({
+        getMedInstEtc(comment,request){
+               // const token = sessionStorage.getItem('userToken')
+                const url = `${API_PROD}/api/v1/private/organ/medinstinfo/${request}`
+                return axios({
                     method:'get',
-                    url: url
+                    url: url,
+                    /*headers: {
+                        Authorization: `Bearer ${token}`
+                    }*/
                 }). then ((response) => {
                     console.log(response, '의료기관 정보 조회 egen 제외')
                     if (response.data?.code === '00') {
-                        comment.commit('setMedInstEtc', '00')
-                        resolve(true)
-                    } else {
-                        resolve(false)
+                        comment.commit('setMedInstEtc', response.data?.result)
+                    } else if (response.data?.code ==='01'){
+                        const data = {
+                            childBirthYn: false,
+                            childBirthMed: 0,
+                            dialysisYn: false,
+                            dialysisMed: 0,
+                            nursingHospitalYn: false,
+                            nursingHospitalMed: 0,
+                            mentalPatientYn: false,
+                            mentalPatientMed: 0,
+                            childYn:false,
+                            childMed:0,
+                            hospId: request
+                        }
+                        comment.commit('setMedInstEtc', data)
+                        console.log('정보없음')
                     }
                 }).catch((e) => {
                     console.log(e)
-                    resolve(false)
                 })
+        },
+
+        /*의료기관 정보 조회 (e-gen 데이터 제외)*/
+        editMedInstEtc(comment,request){
+            // const token = sessionStorage.getItem('userToken')
+            const url = `${API_PROD}/api/v1/private/organ/mod-medinstinfo`
+            return axios({
+                method:'post',
+                url: url,
+                /*headers: {
+                    Authorization: `Bearer ${token}`
+                }*/
+                data: request,
+            }). then ((response) => {
+                console.log(response, '의료기관 정보 수정 egen 제외')
+                if (response.data?.code === '00') {
+                    comment.commit('setMedInstEtc', response.data?.result)
+                } else if (response.data?.code ==='01'){
+                    console.log('정보없음')
+                }
+            }).catch((e) => {
+                console.log(e)
             })
         },
+
+
 
         loadCodeGroupsData() {
             const token= sessionStorage.getItem('userToken')
