@@ -335,6 +335,25 @@ export default {
         })
       })
     },
+    existId(comment, userId) {
+      const url = `${API_PROD}/api/v1/public/user/existid`
+      const requestData = {
+        'userId': userId
+      };
+
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'post',
+          url: url,
+          data: requestData,
+        }).then(response => {
+          resolve(response.data?.result)
+        }).catch((e) => {
+          console.log(e)
+          reject(e)
+        })
+      })
+    },
     loadPatientData() {
       try {
         return axios.get(`${API_PROD}/api/v1/private/patient/search`)
