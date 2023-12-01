@@ -1818,7 +1818,7 @@
                       <tbody>
                         <tr>
                           <th>주 담당지역</th>
-                          <td>{{'-'}}</td>
+                          <td>{{ usrDetail.dutyDstr1CdNm ?? '-' }}</td>
 
                           <th>소속기관</th>
                           <td>{{usrDetail.instNm}}</td>
@@ -2749,7 +2749,7 @@ export default {
     aprvUsr(id) {
       console.log(id)
       /*todo 승인 확인하려면 주석해제*/
-      this.$store.dispatch('admin/aprvUsr',id)
+      this.$store.dispatch('admin/aprvUsr',this.usrDetail.id)
       this.isAlertWd = false
       this.alertOpen('적용 되었습니다.')
       this.isWithdraw = false
