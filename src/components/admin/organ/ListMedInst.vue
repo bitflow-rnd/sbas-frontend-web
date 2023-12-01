@@ -165,8 +165,6 @@
                         </div>
                       </td>
                     </tr>
-
-                    <!--           todo 검색필터                             -->
                     <tr>
                       <th>기관분류</th>
                       <td colspan="3">
@@ -2266,7 +2264,8 @@ export default {
     msg: String
   },
   computed: {
-    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList', 'medinstDetail','hpId','medInstEtc']),
+    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList', 'medinstDetail','hpId','medInstEtc']
+                , 'user', ['userInfo']),
 
     startIndex() {
       return (this.page - 1) * this.displayRowsCount;
@@ -2328,8 +2327,8 @@ export default {
       doctorCount: 0, // 의료진 수
       filterMedinst: {
         dutyDivNam: [],
-        dstrCd1: '',
-        dstrCd2: '',
+        dstrCd1: this.userInfo.dutyDstr1Cd,
+        dstrCd2: this.userInfo.dutyDstr2Cd,
         text: '',
       },
       inputValue: null,

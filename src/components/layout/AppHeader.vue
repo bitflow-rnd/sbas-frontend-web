@@ -731,9 +731,9 @@ export default {
   },
   computed: {
     ...mapState('user', ['userInfo']),
-    selectedTabIdx: function () {
+    selectedTabIdx: function() {
       return store.getters['user/getSelectedTabIdx']
-    }
+    },
   },
   methods: {
     getAuthCd,
@@ -765,7 +765,7 @@ export default {
       this.$store.dispatch('admin/getSido')
     },
     getMediList() {
-      this.$store.dispatch('admin/getMedinst', { dstrCd1: null, dstrCd2: null })
+      this.$store.dispatch('admin/getMedinst', { dstrCd1: this.userInfo.dutyDstr1Cd, dstrCd2: this.userInfo.dutyDstr2Cd })
 
     },
     showUserDetail() {

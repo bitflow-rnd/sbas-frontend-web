@@ -68,11 +68,16 @@
                 >
                   병상배정 현황
                 </h1>
+
               </li>
               <li class="breadcrumb-item ml-2">
                 <span>내 기관에 할당된 병상배정 업무 목록을 표시합니다</span>
               </li>
-
+              <div @click='getBdList' style='cursor: pointer; margin-left: 30px;'>
+                <a class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7">
+                  <img src="/img/common/ic_dot_on.svg" alt="이미지"/>  새로고침
+                </a>
+              </div>
               <!--end::Item-->
             </ul>
             <!--end::Breadcrumb-->
