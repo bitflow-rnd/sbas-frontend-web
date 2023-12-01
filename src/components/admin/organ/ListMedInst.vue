@@ -2327,8 +2327,8 @@ export default {
       doctorCount: 0, // 의료진 수
       filterMedinst: {
         dutyDivNam: [],
-        dstrCd1: this.userInfo.dutyDstr1Cd,
-        dstrCd2: this.userInfo.dutyDstr2Cd,
+        dstrCd1: '',
+        dstrCd2: '',
         text: '',
       },
       inputValue: null,
