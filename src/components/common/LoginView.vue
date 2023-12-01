@@ -157,11 +157,14 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" v-model="form.id" :maxlength='15' />
+                            <input type="text" v-model="form.id" :maxlength='15' @focusout='checkDuplicateUserId()'/>
                           </div>
                         </div>
                         <div v-if="validateInput(3)" class="item-cell-box full">
                           <div class="text-danger pt-2 fs-12px">※ 아이디를 입력해 주세요.</div>
+                        </div>
+                        <div v-if="isExistId" class="item-cell-box full">
+                          <div class="text-danger pt-2 fs-12px">※ 사용중인 아이디입니다.</div>
                         </div>
                       </td>
                       <th>비밀번호 <span class="text-primary">*</span></th>
@@ -447,7 +450,7 @@
                         </div>
                         <div v-if="validateInput(11)" class="item-cell-box full">
                           <div class="text-danger pt-2 fs-12px">
-                            ※ 주 담당지역 선택여부 확인 문구
+                            ※ 담당/근무지역(시/도)를 선택해 주세요.
                           </div>
                         </div>
                       </td>
@@ -477,7 +480,7 @@
                         </div>
                         <div v-if="validateInput(12)" class="item-cell-box full">
                           <div class="text-danger pt-2 fs-12px">
-                            ※ 비밀번호와 비밀번호 확인 일치 확인 문구
+                            ※ 소속기관을 입력해 주세요.
                           </div>
                         </div>
                       </td>
@@ -742,7 +745,7 @@
           <div class="alert-view-box pb-6">
             <img src="/img/common/ic_alert.svg" alt="이미지" />
           </div>
-          <div class="alert-msg-box">{{ this.errMsg }}</div>
+          <div class="alert-msg-box" v-html='formatErrMsg()'></div>
         </article>
         <article class="modal-menu-layout1">
           <div class="modal-menu-list">
@@ -832,6 +835,8 @@ export default {
         { value: 'ORGN0004', label: '의료진' },
         { value: 'ORGN0005', label: '전산담당' },
       ],
+      showErrorMessage: false,
+      isExistId: false,
     }
   },
   setup() {
@@ -906,29 +911,28 @@ export default {
       if (idx === 0) {
         this.id = this.id.replace(/[^A-Za-z0-9@.\-_]/g, '')
       } else if (idx === 3) {
-        return this.form.id === null
+        return this.form.id === null && this.showErrorMessage
       } else if (idx === 4) {
-        return this.form.pw === null
+        return this.form.pw === null && this.showErrorMessage
       } else if (idx === 5) {
-        return this.form.pw !== this.valPw
+        return this.form.pw !== this.valPw && this.showErrorMessage
       } else if (idx === 6) {
-        return this.form.userNm === null
+        return this.form.userNm === null && this.showErrorMessage
       } else if (idx === 7) {
-        return this.form.btDt === null || this.form.btDt.length !== 8 ||
-          !/^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/.test(this.form.btDt);
+        return (this.form.btDt === null || this.form.btDt.length !== 8 ||
+          !/^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/.test(this.form.btDt)) && this.showErrorMessage;
       } else if (idx === 8) {
-        return this.form.instTypeCd === null
+        return this.form.instTypeCd === null && this.showErrorMessage
       } else if (idx === 9) {
-        return this.form.jobCd === null
+        return this.form.jobCd === null && this.showErrorMessage
       } else if (idx === 10) {
-        return this.form.authCd === null
+        return this.form.authCd === null && this.showErrorMessage
       } else if (idx === 11) {
-        return this.form.dutyDstr1Cd === null
+        return this.form.dutyDstr1Cd === null && this.showErrorMessage
+      } else if (idx === 12) {
+        return this.form.instNm === null && this.showErrorMessage
       }
       return false
-    },
-    onRecaptchaVerified(response) {
-      console.log('reCAPTCHA verified:', response)
     },
     onSubmit() {
       //let newData ={}
@@ -1030,11 +1034,11 @@ export default {
           this.$store.dispatch('user/reqUserReg', requestData)
             .then(code => {
               if (code === '00') {
-                this.alertOpen('사용자 등록 요청')
+                this.alertOpen('사용자 등록 요청이 완료되었습니다.\n 관리자 승인후 로그인이 가능합니다.')
                 this.toggleUserEditModal()
                 this.resetFormData()
               } else {
-                this.alertOpen('사용자 등록 요청 실패')
+                this.alertOpen('사용자 등록 요청시 오류가 발생했습니다.\n' + '관리자에게 문의해주세요.')
               }
               console.log('응답 코드:', code)
             })
@@ -1042,6 +1046,9 @@ export default {
       }
     },
     saveImage() {
+      if (this.selectedFile === null) {
+        return Promise.resolve(null)
+      }
       const formData = new FormData()
       formData.append('param1', 'user image')
       formData.append('param2', this.selectedFile)
@@ -1056,34 +1063,36 @@ export default {
         })
     },
     validateForm() {
-      const form = this.form
-
-      const requiredFields = {
-        id: '아이디',
-        telno: '휴대폰번호',
-        pw: '비밀번호',
-        userNm: '이름',
-        instTypeCd: '소속기관 유형',
-        jobCd: '권한 그룹',
-        authCd: '세부 권한',
-        dutyDstr1Cd: '담당/근무지역(시/도)',
-        dutyDstr2Cd: '담당/근무지역(시/군/구)',
-        instNm: '소속기관명',
-        btDt: '생년월일'
-      };
-
-      for (const field in requiredFields) {
-        if (!form[field]) {
-          this.alertOpen(`${requiredFields[field]}은(는) 필수값입니다.`);
-          return false;
-        }
+      if (this.isExistId) {
+        this.alertOpen('이미 등록된 아이디입니다.')
+        return false
       }
-
       if (!this.isCertified) {
         this.alertOpen('본인인증을 진행해 주세요.')
         return false
       }
 
+      const form = this.form
+      const requiredFields = {
+        id: { idx: 3 },
+        pw: { idx: 4 },
+        userNm: { idx: 6 },
+        btDt: { idx: 7 },
+        instTypeCd: { idx: 8 },
+        jobCd: { idx: 9 },
+        authCd: { idx: 10 },
+        dutyDstr1Cd: { idx: 11 },
+        instId: { idx: 12 }
+      };
+
+      for (const field in requiredFields) {
+        let showErrorMessage = false
+        if (!form[field]) {
+          showErrorMessage = true
+          this.showErrorMessage = showErrorMessage
+          return false;
+        }
+      }
       return true
     },
     removeHyphens() {
@@ -1108,6 +1117,18 @@ export default {
       } else {
         this.form.instNm = null;
       }
+    },
+    checkDuplicateUserId() {
+      this.$store.dispatch('user/existId', this.form.id).then((result) => {
+        if (result) {
+          this.isExistId = true;
+        } else {
+          this.isExistId = false;
+        }
+      })
+    },
+    formatErrMsg() {
+      return this.errMsg.replace(/\n/g, '<br>');
     },
   },
   mounted() {
