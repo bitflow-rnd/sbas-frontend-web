@@ -157,11 +157,14 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" v-model="form.id" :maxlength='15' />
+                            <input type="text" v-model="form.id" :maxlength='15' @focusout='checkDuplicateUserId()'/>
                           </div>
                         </div>
                         <div v-if="validateInput(3)" class="item-cell-box full">
                           <div class="text-danger pt-2 fs-12px">※ 아이디를 입력해 주세요.</div>
+                        </div>
+                        <div v-if="isExistId" class="item-cell-box full">
+                          <div class="text-danger pt-2 fs-12px">※ 사용중인 아이디입니다.</div>
                         </div>
                       </td>
                       <th>비밀번호 <span class="text-primary">*</span></th>
@@ -742,7 +745,7 @@
           <div class="alert-view-box pb-6">
             <img src="/img/common/ic_alert.svg" alt="이미지" />
           </div>
-          <div class="alert-msg-box">{{ this.errMsg }}</div>
+          <div class="alert-msg-box" v-html='formatErrMsg()'></div>
         </article>
         <article class="modal-menu-layout1">
           <div class="modal-menu-list">
@@ -833,6 +836,7 @@ export default {
         { value: 'ORGN0005', label: '전산담당' },
       ],
       showErrorMessage: false,
+      isExistId: false,
     }
   },
   setup() {
@@ -1019,7 +1023,7 @@ export default {
       }
     },
     reqUserReg() {
-      if (this.validateForm()) {
+      if (this.validateForm() && this.isExistId) {
         this.saveImage().then((result) => {
           const ptTypeCd = this.form['ptTypeCd']
           const requestData = {
@@ -1034,7 +1038,7 @@ export default {
                 this.toggleUserEditModal()
                 this.resetFormData()
               } else {
-                this.alertOpen('사용자 등록 요청 실패')
+                this.alertOpen('사용자 등록 요청시 오류가 발생했습니다.\n' + '관리자에게 문의해주세요.')
               }
               console.log('응답 코드:', code)
             })
@@ -1059,10 +1063,10 @@ export default {
         })
     },
     validateForm() {
-      if (!this.isCertified) {
-        this.alertOpen('본인인증을 진행해 주세요.')
-        return false
-      }
+      // if (!this.isCertified) {
+      //   this.alertOpen('본인인증을 진행해 주세요.')
+      //   return false
+      // }
 
       const form = this.form
       const requiredFields = {
@@ -1109,6 +1113,18 @@ export default {
       } else {
         this.form.instNm = null;
       }
+    },
+    checkDuplicateUserId() {
+      this.$store.dispatch('user/existId', this.form.id).then((result) => {
+        if (result) {
+          this.isExistId = true;
+        } else {
+          this.isExistId = false;
+        }
+      })
+    },
+    formatErrMsg() {
+      return this.errMsg.replace(/\n/g, '<br>');
     },
   },
   mounted() {
