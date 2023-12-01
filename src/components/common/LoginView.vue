@@ -1023,7 +1023,7 @@ export default {
       }
     },
     reqUserReg() {
-      if (this.validateForm() && this.isExistId) {
+      if (this.validateForm()) {
         this.saveImage().then((result) => {
           const ptTypeCd = this.form['ptTypeCd']
           const requestData = {
@@ -1034,7 +1034,7 @@ export default {
           this.$store.dispatch('user/reqUserReg', requestData)
             .then(code => {
               if (code === '00') {
-                this.alertOpen('사용자 등록 요청')
+                this.alertOpen('사용자 등록을 요청이 완료되었습니다.')
                 this.toggleUserEditModal()
                 this.resetFormData()
               } else {
@@ -1063,10 +1063,14 @@ export default {
         })
     },
     validateForm() {
-      // if (!this.isCertified) {
-      //   this.alertOpen('본인인증을 진행해 주세요.')
-      //   return false
-      // }
+      if (this.isExistId) {
+        this.alertOpen('이미 등록된 아이디입니다.')
+        return false
+      }
+      if (!this.isCertified) {
+        this.alertOpen('본인인증을 진행해 주세요.')
+        return false
+      }
 
       const form = this.form
       const requiredFields = {
