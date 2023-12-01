@@ -1034,7 +1034,7 @@ export default {
           this.$store.dispatch('user/reqUserReg', requestData)
             .then(code => {
               if (code === '00') {
-                this.alertOpen('사용자 등록을 요청이 완료되었습니다.')
+                this.alertOpen('사용자 등록 요청이 완료되었습니다.')
                 this.toggleUserEditModal()
                 this.resetFormData()
               } else {
