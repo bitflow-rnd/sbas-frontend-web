@@ -3192,6 +3192,7 @@ export default {
   mounted() {
     this.initNewPt = this.newPt
     this.initDsInfo = this.dsInfo
+    this.filterPatient.address.first = this.userInfo.dutyDstr1Cd
   },
   setup() {
     const isAlert = ref(false)
