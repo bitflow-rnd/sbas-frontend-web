@@ -2494,7 +2494,7 @@ export default {
       }
     },
     editMedInstEtc(){
-      this.modMedinst.hospId = this.hpId
+      this.modMedinst.hospId = this.hospId
       console.log(this.modMedinst)
       this.$store.dispatch('admin/editMedInstEtc',this.modMedinst)
       this.getMediInstEtc()

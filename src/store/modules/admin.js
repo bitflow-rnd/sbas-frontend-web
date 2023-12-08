@@ -575,9 +575,9 @@ export default {
                     }*/
                 }). then ((response) => {
                     console.log(response, '의료기관 정보 조회 egen 제외')
-                    if (response.data?.code === '00') {
+                    if (response.data?.code === '00' && response.data?.result !== null) {
                         comment.commit('setMedInstEtc', response.data?.result)
-                    } else if (response.data?.code ==='01'){
+                    } else{
                         const data = {
                             childBirthYn: false,
                             childBirthMed: 0,

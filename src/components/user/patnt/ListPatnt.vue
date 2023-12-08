@@ -3192,6 +3192,7 @@ export default {
   mounted() {
     this.initNewPt = this.newPt
     this.initDsInfo = this.dsInfo
+    this.filterPatient.address.first = this.userInfo.dutyDstr1Cd
   },
   setup() {
     const isAlert = ref(false)
@@ -3301,6 +3302,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('user',['userInfo']),
     ...mapState('admin', ['cmSido', 'cmGugun']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHis']),
     ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPts', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
