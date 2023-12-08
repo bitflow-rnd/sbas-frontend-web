@@ -268,7 +268,7 @@
                       <th>순번</th>
                       <th>배정상태</th>
                       <th>이름</th>
-                      <th>나이</th>
+                      <th>생년월일</th>
                       <th>성별</th>
                       <th>질병명</th>
                       <th>연락처</th>
@@ -308,7 +308,7 @@
                           </div>
                         </div>
                       </td>
-                      <td>{{ pt['age'] }}세</td>
+                      <td>{{ pt['rrno1'] ? pt['rrno1'].slice(0,2) + '.' + pt['rrno1'].slice(2,4) + '.' + pt['rrno1'].slice(4) : '-'}}</td>
                       <td>{{ pt['gndr'] }}자</td>
                       <td>{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
                       <td>{{ pt['mpno'] ? pt['mpno'] : '-' }}</td>
@@ -3192,6 +3192,7 @@ export default {
   mounted() {
     this.initNewPt = this.newPt
     this.initDsInfo = this.dsInfo
+    this.filterPatient.address.first = this.userInfo.dutyDstr1Cd
   },
   setup() {
     const isAlert = ref(false)
@@ -3301,6 +3302,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('user',['userInfo']),
     ...mapState('admin', ['cmSido', 'cmGugun']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHis']),
     ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPts', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
