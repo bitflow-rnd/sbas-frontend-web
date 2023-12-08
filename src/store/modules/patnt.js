@@ -83,6 +83,7 @@ export default {
         const response = await axios.get(url, { params })
         if (response.data?.code === '00') {
           await comment.commit('setPatntList', response.data?.result)
+          console.log(response.data?.result)
           if (params && Object.keys(params).length === 1 && params.sever) {
             await comment.commit('setSeverPatnts', false)
             await comment.commit('setSeverPatnts', true)

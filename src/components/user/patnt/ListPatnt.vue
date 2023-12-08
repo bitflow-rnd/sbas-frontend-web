@@ -3301,6 +3301,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('user',['userInfo']),
     ...mapState('admin', ['cmSido', 'cmGugun']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHis']),
     ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPts', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),

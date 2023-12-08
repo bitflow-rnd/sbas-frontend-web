@@ -761,7 +761,8 @@ export default {
       this.$store.dispatch('bedasgn/getBdList')
     },
     getPtList() {
-      this.$store.dispatch('patnt/getPatntList')
+      const data = {dstr1Cd: this.userInfo.dutyDstr1Cd}
+      this.$store.dispatch('patnt/getPatntList',data)
       this.$store.dispatch('admin/getSido')
     },
     getMediList() {
