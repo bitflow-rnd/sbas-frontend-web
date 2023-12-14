@@ -285,8 +285,6 @@
                         v-for="(pt, idx) in ptList['items']"
                         :key="idx"
                         @click="selectPatient(pt)"
-                        data-bs-target="#kt_modal_patnt_detail"
-                        data-bs-toggle="modal"
                     >
 <!--                      <td>-->
 <!--                        <div class="cbox d-flex justify-content-center">-->
@@ -316,10 +314,9 @@
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
                       <td>{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                       <td>{{ getDate(pt['updtDttm']) }}</td>
-                      <td data-bs-target='#kt_modal_patnt'
-                          data-bs-toggle='modal'
-                          @click.stop='showPatntModal(pt)'
-                        ><a
+                      <td
+                          @click='toggleCheckbox()'
+                        ><a @click.stop='showPatntModal(pt)'
                           class='btn btn-flex btn-xs btn-outline btn-outline-primary'
                           >수정</a>
                       </td>
@@ -351,7 +348,7 @@
   <!--end:::Main-->
 
   <!--환자등록/수정 -->
-  <div class="modal fade" id="kt_modal_patnt" tabindex="-1" aria-hidden="true" style="">
+  <div v-show='showModal === 2' class="modal fade" :class='{"show" : showModal === 2 }' id="kt_modal_patnt" tabindex="-1" aria-hidden="true" style="">
     <!--begin::Modal dialog-->
     <div class="modal-dialog col-lg-3 modal-dialog-centered">
       <!--begin::Modal content-->
@@ -859,7 +856,7 @@
     <!--end::Modal dialog-->
   </div>
   <!--  환자 상세 정보  -->
-  <div class="modal fade" id="kt_modal_patnt_detail" tabindex="-1" aria-hidden="true" style="">
+  <div v-show='showModal === 1' class="modal fade" :class="{'show' : showModal === 1}" id="kt_modal_patnt_detail" tabindex="-1" aria-hidden="true" style="">
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-1500px modal-dialog-centered">
       <!--begin::Modal content-->
@@ -877,7 +874,11 @@
               <i class="fa-solid fa-share-nodes text-black" style="font-size:18px;"></i>
             </div>
             -->
-            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+            <div
+              class="btn btn-sm btn-icon btn-active-color-primary"
+              @click="closeModal(0)"
+              data-bs-dismiss="modal"
+            >
               <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
               <span class="svg-icon svg-icon-1">
                 <svg
@@ -3178,7 +3179,7 @@ import {
   goAsgn,
   openAddressFinder,
   regNewPt,
-  openPopup, getUndrDses
+  openPopup, getUndrDses, toggleCheckbox
 } from '@/util/ui'
 import {ref, reactive} from 'vue'
 
@@ -3215,6 +3216,7 @@ export default {
   },
   data() {
     return {
+      showModal: 0,
       tab: 0 /* 병상요청 */,
       alertIdx: 100 /* alert창 확인버튼 */,
       popup: 100 /* 팝업창 */,
@@ -3366,6 +3368,7 @@ export default {
     }
   },
   methods: {
+    toggleCheckbox,
     getDt,
     backBtn,
     goAsgn,
@@ -3446,6 +3449,8 @@ export default {
       await this.$store.dispatch('patnt/modiPtInfo', data);
       this.closePopup(0);
       this.tab = 1;
+      this.showModal=0
+      this.closeModal(0)
       //this.clearNewPt()
     },
     getDate(data) {
@@ -3481,7 +3486,7 @@ export default {
         this.alertIdx = 1
       } else if (idx === 2) {
         this.alertClose()
-        this.closeModal()
+        this.closeModal(0)
         this.preRpt=null
         //this.undrDsesCdArr=[]
         this.setNull()
@@ -3556,6 +3561,7 @@ export default {
     closeModal(idx) {
       if (idx === 0) {
         /*세부내용 모달*/
+        this.showModal = 0
         {
           this.$store.commit('bedasgn/setDisesInfo', null)
           this.$store.commit('bedasgn/setTimeline', null)
@@ -3630,6 +3636,8 @@ export default {
       }
       await this.$store.dispatch('patnt/readEpidRpt', this.ptDetail);
       this.preRpt = this.attcRpt;
+
+      this.showModal = 1;
     },
     changePage(newPage) {
       this.$store.dispatch('patnt/getPatntList', {
@@ -3660,8 +3668,8 @@ export default {
         this.newPt = this.ptDetail;
         console.log(this.newPt)
       }
-
       await this.showImage(this.newPt.attcId)
+      this.showModal = 2
     },
     async showImage(attcId) {
       if (attcId === null || attcId === '') {
@@ -3704,7 +3712,10 @@ export default {
 .modal {
   --bs-modal-width: 98%;
 }
-
+.modal.show {
+    background-color: rgba(0,0,0,0.4);
+    display: block;
+}
 .item-box.suspend {
   border: 3px solid #74afeb !important;
   background-color: #74afeb33;
