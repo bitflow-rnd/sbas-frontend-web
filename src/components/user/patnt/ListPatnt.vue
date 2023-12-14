@@ -1304,9 +1304,9 @@
                 {{ newPt.bascAddr }} / {{ getTelno(newPt.mpno) }})</span
               >
             </div>
-            <div v-show="tab !== 1 && svInfo.undrDsesCd !== []" class="txt-box">
+<!--            <div v-show="tab !== 1 && svInfo.undrDsesCd !== []" class="txt-box">
               <span class="text-primary">{{ getTag(svInfo.undrDsesCd) }}</span>
-            </div>
+            </div>-->
           </article>
         </div>
 
@@ -1658,7 +1658,6 @@
 
               <article class="modal-menu-layout1 pt-10">
                 <div class="modal-menu-list">
-                  <!--              todo: 역학조사서를사용하지 않았다면 팝업창 뜰 일 없음                      -->
                   <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
                   <a @click="openPopup(0)" class="modal-menu-btn menu-primary">다음</a>
                 </div>
@@ -1672,29 +1671,33 @@
                 <div class="form-head-box"></div>
 
                 <div class="form-body-box">
-                  <form @submit="regDsInfo" class="table-box">
+                  <div class="table-box">
                     <table>
                       <colgroup>
-                        <col style="width: 168px"/>
-                        <col style="width: auto"/>
-                        <col style="width: 168px"/>
-                        <col style="width: auto"/>
+                        <col style="width: 168px" />
+                        <col style="width: auto" />
+                        <col style="width: 168px" />
+                        <col style="width: auto" />
                       </colgroup>
                       <tbody>
                       <tr>
-                        <!--  todo: 담당보건소 select 불러오기 어떤식으로 조회되는지 조사                                               -->
+                        <!-- 의료기관 목록 getMedinst dutyDivNams== 보건소로 둠                                              -->
                         <th>담당보건소</th>
                         <td>
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div class="sbox" style="width: 170px">
-                                <select>
-                                  <option>대구광역시</option>
+                                <select v-model="medinstInfo.dstrCd1" @change="getMedInst" :disabled='dsInfo.rcptPhc===1'>
+                                  <option value=''>지역 선택</option>
+                                  <option v-for='(item,i) in cmSido' :key='i' :value='item.cdId'>{{item.cdNm}}</option>
                                 </select>
                               </div>
                               <div class="sbox ms-3" style="width: 170px">
-                                <select>
-                                  <option>보건소 선택</option>
+                                <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstrCd1===''">
+                                  <option value='0'>보건소 선택</option>
+                                  <option v-for="(item,i) in organMedi" :key="i"
+                                          :value='item.instNm'>{{ item.instNm }}</option>
+                                  <option value='1'>직접입력</option>
                                 </select>
                               </div>
                             </div>
@@ -1702,10 +1705,9 @@
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div class="tbox w-350px">
-                                <!---  todo: 직접선택 option -> readonly 해제 -->
-                                <input
-                                    placeholder="보건소명 직접 입력(수정필요)"
-                                    v-model="dsInfo.rcptPhc"
+                                <input type="text"
+                                       placeholder="보건소명 직접 입력"
+                                       v-model="medinstInfo.rcptPhc" :readonly="dsInfo.rcptPhc!=='1'"
                                 />
                               </div>
                             </div>
@@ -2041,7 +2043,7 @@
                       </tr>
                       </tbody>
                     </table>
-                  </form>
+                  </div>
                 </div>
               </article>
               <article class="modal-menu-layout1 pt-10">
@@ -3174,7 +3176,7 @@ import {
   goAsgn,
   openAddressFinder,
   regNewPt,
-  openPopup
+  openPopup, getUndrDses
 } from '@/util/ui'
 import {ref, reactive} from 'vue'
 
@@ -3238,7 +3240,8 @@ export default {
         rptType: null,
         diagAttcId: null,
         diagDrNm: '',
-        instId: ''
+        instId: '',
+        rcptPhc:0,
       },
       svInfo: {
         ptId: '',
@@ -3259,7 +3262,9 @@ export default {
         chrgTelno: '',
         spclNm: '',
         dprtHospId: '',
-        inhpAsgnYn: ''
+        inhpAsgnYn: 'N',
+        reqDstr1Cd: '27',
+        reqDstr2Cd: null
       },
       assignmentStatuses: {
         '병상요청': 'BAST0003',
@@ -3299,11 +3304,14 @@ export default {
       visibleRef: false,
       imgsRef: '',
       indexRef: 0,
+      medinstInfo:{
+        dstrCd1: '',
+      },
     }
   },
   computed: {
     ...mapState('user',['userInfo']),
-    ...mapState('admin', ['cmSido', 'cmGugun']),
+    ...mapState('admin', ['cmSido', 'cmGugun','organMedi']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHis']),
     ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPts', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
@@ -3373,6 +3381,36 @@ export default {
         this.$store.dispatch('admin/getGuGun', address);
       }
     },
+    regStrtPoint(){
+      console.log(this.spInfo)
+    },
+    getMedInst(){
+      let data = this.medinstInfo
+      data['instTypeCd'] = 'ORGN0003'
+      this.$store.dispatch('admin/getOrganMedi',data)
+    },
+    setSpAddr(idx) {
+      console.log(this.spInfo )
+      console.log(this.dsInfo)
+      console.log(this.newPt)
+      if (idx === 0) {
+        /* 자택 주소*/
+
+        this.spInfo.dprtDstrZip = this.newPt.zip
+        this.spInfo.dprtDstrBascAddr = this.newPt.bascAddr
+        this.spInfo.dprtDstrDetlAddr = this.newPt.detlAddr
+      } else if (idx === 1) {
+        /*병원 주소 */
+        this.spInfo.dprtDstrZip = this.dsInfo.instZip
+        this.spInfo.dprtDstrBascAddr = this.dsInfo.instBascAddr
+        this.spInfo.dprtDstrDetlAddr = this.dsInfo.instDetlAddr
+      } else {
+        /*기타*/
+        this.spInfo.dprtDstrZip = ''
+        this.spInfo.dprtDstrBascAddr = ''
+        this.spInfo.dprtDstrDetlAddr = ''
+      }
+    },
     changeDstrCd1() {
       this.getSecondAddress(this.filterPatient['address']['first']);
       this.filterPatient['address']['second'] = '';
@@ -3393,7 +3431,7 @@ export default {
       await this.$store.dispatch('patnt/modiPtInfo', data);
       this.closePopup(0);
       this.tab = 1;
-      this.clearNewPt()
+      //this.clearNewPt()
     },
     getDate(data) {
       const dData = new Date(data);
@@ -3409,8 +3447,32 @@ export default {
       }
       return dYear + '.' + dMonth + '.' + dDate;
     },
+    getUndrDses,
     alertOpen(idx) {
-      if (idx === 3) {
+      this.cncBtn = false
+      if (idx === 0) {
+        this.errMsg = '병상을 요청하시겠습니까?'
+        this.cncBtn = true
+        this.isAlert = true
+        this.alertIdx = 0
+      } else if (idx === 1) {
+        this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
+        const data = { svrInfo: this.svInfo, dprtInfo: this.spInfo }
+        console.log(data)
+        this.$store.dispatch('bedasgn/regBedassign', data)
+        this.isAlert = false
+        this.errMsg = '요청되었습니다.'
+        this.isAlert = true
+        this.alertIdx = 1
+      } else if (idx === 2) {
+        this.alertClose()
+        this.closeModal()
+        this.preRpt=null
+        //this.undrDsesCdArr=[]
+        this.setNull()
+        /*신규병상요청 끝*/
+        //this.getBdList()
+      } else if (idx === 3) {
         this.errMsg = '환자 정보가\n등록되었습니다.';
         this.isAlert = true;
         this.alertIdx = 3;
@@ -3434,8 +3496,28 @@ export default {
         this.alertIdx = 10;
       }
     },
-    cfrmAl(res) {
-      if (res === 3) {
+    setNull() {
+      console.log('실행' +this.initNewPt)
+      this.tab = 0
+      this.tabidx = 0
+      this.popup = 100
+      this.alertIdx = 100
+      this.rptYn = false
+      this.newPt = JSON.parse(JSON.stringify(this.initNewPt));
+      this.dsInfo = JSON.parse(JSON.stringify(this.initDsInfo));
+      //this.svInfo = this.initSvInfo
+      //this.spInfo =  this.initSpInfo
+      this.$store.commit('patnt/setRpt',null)
+      this.preRpt=null
+      this.undrDsesCdArr=[]
+    },
+    cfrmAl(res) { if (res === 0) {
+      console.log(0)
+      this.alertOpen(1)
+    } else if (res === 1) {
+      console.log('1')
+      this.alertOpen(2)
+    } else if (res === 3) {
         this.alertClose();
       } else if (res === 4) {
         this.alertClose();
@@ -3561,6 +3643,7 @@ export default {
       await this.$store.dispatch('patnt/getBasicInfo', patient);
       if (this.ptDetail !== null) {
         this.newPt = this.ptDetail;
+        console.log(this.newPt)
       }
 
       await this.showImage(this.newPt.attcId)

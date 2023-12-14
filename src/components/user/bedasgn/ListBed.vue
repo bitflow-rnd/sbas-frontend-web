@@ -2366,12 +2366,10 @@
               <article class="modal-menu-layout1 pt-10">
                 <div class="modal-menu-list">
                   <router-link to="" @click="backBtn(2)" class="modal-menu-btn menu-cancel"
-                    >이전</router-link
-                  >
+                    >이전</router-link>
 
                   <router-link to="" @click="goAsgn(5)" class="modal-menu-btn menu-primary"
-                    >병상요청완료</router-link
-                  >
+                    >병상요청완료</router-link>
                 </div>
               </article>
             </div>
@@ -4839,7 +4837,7 @@ import {
   maskingNm,
   openAddressFinder,
   regNewPt,
-  openPopup, reqBedType, toggleCheckbox
+  openPopup, reqBedType, toggleCheckbox, getUndrDses
 } from '@/util/ui'
 import user from '@/store/modules/user'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
@@ -5479,17 +5477,7 @@ export default {
       }
     },
     backBtn,
-    getUndrDses(arr) {
-      if (!Array.isArray(arr) || arr.length === 0) {
-        return ''
-      } else {
-        console.log(arr)
-        const strArr = arr.map((item) => String(item))
-        const resStr = strArr.join(';')
-        console.log(resStr)
-        return resStr
-      }
-    },
+    getUndrDses,
     goAsgn,
     maskingNm,
     getDt,

@@ -217,6 +217,19 @@ export function getBdList() {
     this.search.period=null
     this.$store.dispatch('bedasgn/getBdList')
 }
+
+export function getUndrDses(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) {
+        return ''
+    } else {
+        console.log(arr)
+        const strArr = arr.map((item) => String(item))
+        const resStr = strArr.join(';')
+        console.log(resStr)
+        return resStr
+    }
+}
+
 export async function goAsgn(idx){
     if(idx===2){
         // 감염병 정보 등록
@@ -258,7 +271,8 @@ export async function goAsgn(idx){
         if(this.svInfo.ptTypeCd === []){
             this.svInfo.ptTypeCd = 'PTTP0001'
         } else {
-            this.svInfo.ptTypeCd = this.getUndrDses(this.svInfo.ptTypeCd)
+            console.log(this.svInfo.ptTypeCd)
+            this.svInfo.ptTypeCd = getUndrDses(this.svInfo.ptTypeCd)
         }
         //this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
         //this.$store.dispatch('bedasgn/regSvInfo',this.svInfo)
@@ -266,6 +280,8 @@ export async function goAsgn(idx){
         this.tab = 3
     } else if(idx ===5){
         /*출발지 정보 등록*/
+        console.log(this.spInfo)
+        console.log(this.svInfo)
         this.spInfo.ptId = this.svInfo.ptId
         if(this.spInfo.inhpAsgnYn === 'Y' && this.spInfo.dprtDstrTypeCd === 'DPTP0002'){
             this.spInfo.dprtHospId = this.dsInfo.instId
