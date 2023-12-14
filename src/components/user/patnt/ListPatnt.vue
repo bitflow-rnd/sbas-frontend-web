@@ -497,15 +497,17 @@
                                 <input type="text" v-model="newPt.rrno1"/>
                               </div>
                               <div class="unit-box mx-2 text-gray-600">-</div>
-                              <div>
+                              <div class="tbox" style="min-width: 20px">
                                 <input
                                   type="text"
-                                  class="tbox w-30px" style="min-width: 30px; padding-left: 10px"
+                                  @input="validateInput(2)"
                                   v-model="newPt.rrno2"
-                                  maxlength="1"
+                                  maxlength=7
                                 />
                               </div>
-                              <div class="unit-box ms-2" style="line-height: 30px">●●●●●●</div>
+                              <!--                                  <div v-if='this.rptInfo !== null' class="unit-box ms-2" style="line-height: 30px">
+                                                                  ●●●●●●
+                                                                </div>-->
                             </div>
                           </div>
                           <div class="item-row-box">
@@ -1453,17 +1455,17 @@
                                     <input type="text" v-model="newPt.rrno1"/>
                                   </div>
                                   <div class="unit-box mx-2 text-gray-600">-</div>
-                                  <div class="tbox w-30px" style="min-width: 30px">
+                                  <div class="tbox" style="min-width: 20px">
                                     <input
-                                        type="password"
-                                        v-model="newPt.rrno2"
-                                        class="p-0 text-center fs-3x"
-                                        maxlength="1"
+                                      type="text"
+                                      @input="validateInput(2)"
+                                      v-model="newPt.rrno2"
+                                      maxlength=7
                                     />
                                   </div>
-                                  <div class="unit-box ms-2" style="line-height: 30px">
+<!--                                  <div v-if='this.rptInfo !== null' class="unit-box ms-2" style="line-height: 30px">
                                     ●●●●●●
-                                  </div>
+                                  </div>-->
                                 </div>
                               </div>
                               <div class="item-row-box">
@@ -3376,6 +3378,19 @@ export default {
     getTLIcon,
     openAddressFinder,
     regNewPt,
+    validateInput(idx) {
+      if (idx === 0) {
+        this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[^0-9]/g, '')
+        this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[^0-9]/g, '')
+        this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[^0-9]/g, '')
+      } else if (idx === 1) {
+        this.newPt.mpno = this.newPt.mpno.replace(/[^0-9]/g, '')
+        this.newPt.telno = this.newPt.telno.replace(/[^0-9]/g, '')
+      } else if (idx === 2){
+        this.newPt.rrno1 = this.newPt.rrno1.replace(/[^0-9]/g, '')
+        this.newPt.rrno2 = this.newPt.rrno2.replace(/[^0-9]/g, '')
+      }
+    },
     getSecondAddress(address) {
       if (address) {
         this.$store.dispatch('admin/getGuGun', address);

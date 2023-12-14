@@ -63,6 +63,9 @@ export function getTag(data){
 }
 export function getGndr(no2){
     if(no2 !== '' && no2 !== null){
+        if(no2.length>1){
+            no2 = no2.slice(0,1)
+        }
         if (no2 === '1' || no2 === '3') {
             this.newPt.gndr = '남'
             return this.newPt.gndr
@@ -86,6 +89,9 @@ export function getAge(rrno1, rrno2) {
     const month = parseInt(rrno1.substring(2, 4))
     const day = parseInt(rrno1.substring(4, 6))
 
+    if(rrno2.length >1){
+        rrno2 = rrno2.slice(0,1)
+    }
     if (rrno2 === '1' || rrno2 === '2' || rrno2 === '5' || rrno2 === '6') {
         year += 1900
     } else {

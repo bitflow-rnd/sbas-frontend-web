@@ -820,18 +820,17 @@
                                       <input @input="validateInput(2)" type="text" v-model="newPt.rrno1" maxlength="6" />
                                     </div>
                                     <div class="unit-box mx-2 text-gray-600">-</div>
-                                    <div class="tbox w-30px" style="min-width: 30px">
+                                    <div class="tbox" style="min-width: 20px">
                                       <input
-                                        type="password"
+                                        type="text"
                                         @input="validateInput(2)"
                                         v-model="newPt.rrno2"
-                                        class="p-0 text-center fs-3x"
-                                        maxlength="1"
+                                        maxlength=7
                                       />
                                     </div>
-                                    <div class="unit-box ms-2" style="line-height: 30px">
-                                      ●●●●●●
-                                    </div>
+                                    <!--                                  <div v-if='this.rptInfo !== null' class="unit-box ms-2" style="line-height: 30px">
+                                                                        ●●●●●●
+                                                                      </div>-->
                                   </div>
                                 </div>
                                 <div v-if="false" class="item-row-box">
