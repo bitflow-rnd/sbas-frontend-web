@@ -372,7 +372,7 @@
                       </td>
                     </tr>
 
-                    <tr>
+<!--                    <tr>
                       <th>세부 권한 선택 <span class="text-primary">*</span></th>
                       <td>
                         <div class="item-cell-box full">
@@ -400,11 +400,8 @@
                             </label>
                           </div>
                         </div>
-                        <div v-if="validateInput(10)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 세부권한을 선택해 주세요.</div>
-                        </div>
                       </td>
-                    </tr>
+                    </tr>-->
                   </tbody>
                 </table>
               </div>
@@ -809,7 +806,7 @@ export default {
         dutyDstr2Cd: null,
         attcId: null,
         btDt: null,
-        authCd: null
+        authCd: 'DTPM0001'
       },
       initialForm: {
         id: null,
