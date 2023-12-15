@@ -1808,7 +1808,6 @@
 
                             <tbody>
                             <tr v-for='items in medinstDetail.hospMedInfo' v-bind:key='items'>
-                              <!--TODO 이미지-->
                               <td>
                                 <img src="/img/common/img_profile_default.svg" alt="이미지"/>
                               </td>

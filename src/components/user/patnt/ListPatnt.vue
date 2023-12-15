@@ -285,8 +285,6 @@
                         v-for="(pt, idx) in ptList['items']"
                         :key="idx"
                         @click="selectPatient(pt)"
-                        data-bs-target="#kt_modal_patnt_detail"
-                        data-bs-toggle="modal"
                     >
 <!--                      <td>-->
 <!--                        <div class="cbox d-flex justify-content-center">-->
@@ -316,10 +314,9 @@
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
                       <td>{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                       <td>{{ getDate(pt['updtDttm']) }}</td>
-                      <td data-bs-target='#kt_modal_patnt'
-                          data-bs-toggle='modal'
-                          @click.stop='showPatntModal(pt)'
-                        ><a
+                      <td
+                          @click='toggleCheckbox()'
+                        ><a @click.stop='showPatntModal(pt)'
                           class='btn btn-flex btn-xs btn-outline btn-outline-primary'
                           >수정</a>
                       </td>
@@ -351,7 +348,7 @@
   <!--end:::Main-->
 
   <!--환자등록/수정 -->
-  <div class="modal fade" id="kt_modal_patnt" tabindex="-1" aria-hidden="true" style="">
+  <div v-show='showModal === 2' class="modal fade" :class='{"show" : showModal === 2 }' id="kt_modal_patnt" tabindex="-1" aria-hidden="true" style="">
     <!--begin::Modal dialog-->
     <div class="modal-dialog col-lg-3 modal-dialog-centered">
       <!--begin::Modal content-->
@@ -497,15 +494,17 @@
                                 <input type="text" v-model="newPt.rrno1"/>
                               </div>
                               <div class="unit-box mx-2 text-gray-600">-</div>
-                              <div>
+                              <div class="tbox" style="min-width: 20px">
                                 <input
                                   type="text"
-                                  class="tbox w-30px" style="min-width: 30px; padding-left: 10px"
+                                  @input="validateInput(2)"
                                   v-model="newPt.rrno2"
-                                  maxlength="1"
+                                  maxlength=7
                                 />
                               </div>
-                              <div class="unit-box ms-2" style="line-height: 30px">●●●●●●</div>
+                              <!--                                  <div v-if='this.rptInfo !== null' class="unit-box ms-2" style="line-height: 30px">
+                                                                  ●●●●●●
+                                                                </div>-->
                             </div>
                           </div>
                           <div class="item-row-box">
@@ -857,7 +856,7 @@
     <!--end::Modal dialog-->
   </div>
   <!--  환자 상세 정보  -->
-  <div class="modal fade" id="kt_modal_patnt_detail" tabindex="-1" aria-hidden="true" style="">
+  <div v-show='showModal === 1' class="modal fade" :class="{'show' : showModal === 1}" id="kt_modal_patnt_detail" tabindex="-1" aria-hidden="true" style="">
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-1500px modal-dialog-centered">
       <!--begin::Modal content-->
@@ -875,7 +874,11 @@
               <i class="fa-solid fa-share-nodes text-black" style="font-size:18px;"></i>
             </div>
             -->
-            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+            <div
+              class="btn btn-sm btn-icon btn-active-color-primary"
+              @click="closeModal(0)"
+              data-bs-dismiss="modal"
+            >
               <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
               <span class="svg-icon svg-icon-1">
                 <svg
@@ -1304,9 +1307,9 @@
                 {{ newPt.bascAddr }} / {{ getTelno(newPt.mpno) }})</span
               >
             </div>
-            <div v-show="tab !== 1 && svInfo.undrDsesCd !== []" class="txt-box">
+<!--            <div v-show="tab !== 1 && svInfo.undrDsesCd !== []" class="txt-box">
               <span class="text-primary">{{ getTag(svInfo.undrDsesCd) }}</span>
-            </div>
+            </div>-->
           </article>
         </div>
 
@@ -1453,17 +1456,17 @@
                                     <input type="text" v-model="newPt.rrno1"/>
                                   </div>
                                   <div class="unit-box mx-2 text-gray-600">-</div>
-                                  <div class="tbox w-30px" style="min-width: 30px">
+                                  <div class="tbox" style="min-width: 20px">
                                     <input
-                                        type="password"
-                                        v-model="newPt.rrno2"
-                                        class="p-0 text-center fs-3x"
-                                        maxlength="1"
+                                      type="text"
+                                      @input="validateInput(2)"
+                                      v-model="newPt.rrno2"
+                                      maxlength=7
                                     />
                                   </div>
-                                  <div class="unit-box ms-2" style="line-height: 30px">
+<!--                                  <div v-if='this.rptInfo !== null' class="unit-box ms-2" style="line-height: 30px">
                                     ●●●●●●
-                                  </div>
+                                  </div>-->
                                 </div>
                               </div>
                               <div class="item-row-box">
@@ -1658,7 +1661,6 @@
 
               <article class="modal-menu-layout1 pt-10">
                 <div class="modal-menu-list">
-                  <!--              todo: 역학조사서를사용하지 않았다면 팝업창 뜰 일 없음                      -->
                   <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
                   <a @click="openPopup(0)" class="modal-menu-btn menu-primary">다음</a>
                 </div>
@@ -1672,29 +1674,33 @@
                 <div class="form-head-box"></div>
 
                 <div class="form-body-box">
-                  <form @submit="regDsInfo" class="table-box">
+                  <div class="table-box">
                     <table>
                       <colgroup>
-                        <col style="width: 168px"/>
-                        <col style="width: auto"/>
-                        <col style="width: 168px"/>
-                        <col style="width: auto"/>
+                        <col style="width: 168px" />
+                        <col style="width: auto" />
+                        <col style="width: 168px" />
+                        <col style="width: auto" />
                       </colgroup>
                       <tbody>
                       <tr>
-                        <!--  todo: 담당보건소 select 불러오기 어떤식으로 조회되는지 조사                                               -->
+                        <!-- 의료기관 목록 getMedinst dutyDivNams== 보건소로 둠                                              -->
                         <th>담당보건소</th>
                         <td>
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div class="sbox" style="width: 170px">
-                                <select>
-                                  <option>대구광역시</option>
+                                <select v-model="medinstInfo.dstrCd1" @change="getMedInst" :disabled='dsInfo.rcptPhc===1'>
+                                  <option value=''>지역 선택</option>
+                                  <option v-for='(item,i) in cmSido' :key='i' :value='item.cdId'>{{item.cdNm}}</option>
                                 </select>
                               </div>
                               <div class="sbox ms-3" style="width: 170px">
-                                <select>
-                                  <option>보건소 선택</option>
+                                <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstrCd1===''">
+                                  <option value='0'>보건소 선택</option>
+                                  <option v-for="(item,i) in organMedi" :key="i"
+                                          :value='item.instNm'>{{ item.instNm }}</option>
+                                  <option value='1'>직접입력</option>
                                 </select>
                               </div>
                             </div>
@@ -1702,10 +1708,9 @@
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div class="tbox w-350px">
-                                <!---  todo: 직접선택 option -> readonly 해제 -->
-                                <input
-                                    placeholder="보건소명 직접 입력(수정필요)"
-                                    v-model="dsInfo.rcptPhc"
+                                <input type="text"
+                                       placeholder="보건소명 직접 입력"
+                                       v-model="medinstInfo.rcptPhc" :readonly="dsInfo.rcptPhc!=='1'"
                                 />
                               </div>
                             </div>
@@ -2041,7 +2046,7 @@
                       </tr>
                       </tbody>
                     </table>
-                  </form>
+                  </div>
                 </div>
               </article>
               <article class="modal-menu-layout1 pt-10">
@@ -3174,7 +3179,7 @@ import {
   goAsgn,
   openAddressFinder,
   regNewPt,
-  openPopup
+  openPopup, getUndrDses, toggleCheckbox
 } from '@/util/ui'
 import {ref, reactive} from 'vue'
 
@@ -3211,6 +3216,7 @@ export default {
   },
   data() {
     return {
+      showModal: 0,
       tab: 0 /* 병상요청 */,
       alertIdx: 100 /* alert창 확인버튼 */,
       popup: 100 /* 팝업창 */,
@@ -3238,7 +3244,8 @@ export default {
         rptType: null,
         diagAttcId: null,
         diagDrNm: '',
-        instId: ''
+        instId: '',
+        rcptPhc:0,
       },
       svInfo: {
         ptId: '',
@@ -3259,7 +3266,9 @@ export default {
         chrgTelno: '',
         spclNm: '',
         dprtHospId: '',
-        inhpAsgnYn: ''
+        inhpAsgnYn: 'N',
+        reqDstr1Cd: '27',
+        reqDstr2Cd: null
       },
       assignmentStatuses: {
         '병상요청': 'BAST0003',
@@ -3299,11 +3308,14 @@ export default {
       visibleRef: false,
       imgsRef: '',
       indexRef: 0,
+      medinstInfo:{
+        dstrCd1: '',
+      },
     }
   },
   computed: {
     ...mapState('user',['userInfo']),
-    ...mapState('admin', ['cmSido', 'cmGugun']),
+    ...mapState('admin', ['cmSido', 'cmGugun','organMedi']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHis']),
     ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPts', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
@@ -3356,6 +3368,7 @@ export default {
     }
   },
   methods: {
+    toggleCheckbox,
     getDt,
     backBtn,
     goAsgn,
@@ -3368,9 +3381,52 @@ export default {
     getTLIcon,
     openAddressFinder,
     regNewPt,
+    validateInput(idx) {
+      if (idx === 0) {
+        this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[^0-9]/g, '')
+        this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[^0-9]/g, '')
+        this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[^0-9]/g, '')
+      } else if (idx === 1) {
+        this.newPt.mpno = this.newPt.mpno.replace(/[^0-9]/g, '')
+        this.newPt.telno = this.newPt.telno.replace(/[^0-9]/g, '')
+      } else if (idx === 2){
+        this.newPt.rrno1 = this.newPt.rrno1.replace(/[^0-9]/g, '')
+        this.newPt.rrno2 = this.newPt.rrno2.replace(/[^0-9]/g, '')
+      }
+    },
     getSecondAddress(address) {
       if (address) {
         this.$store.dispatch('admin/getGuGun', address);
+      }
+    },
+    regStrtPoint(){
+      console.log(this.spInfo)
+    },
+    getMedInst(){
+      let data = this.medinstInfo
+      data['instTypeCd'] = 'ORGN0003'
+      this.$store.dispatch('admin/getOrganMedi',data)
+    },
+    setSpAddr(idx) {
+      console.log(this.spInfo )
+      console.log(this.dsInfo)
+      console.log(this.newPt)
+      if (idx === 0) {
+        /* 자택 주소*/
+
+        this.spInfo.dprtDstrZip = this.newPt.zip
+        this.spInfo.dprtDstrBascAddr = this.newPt.bascAddr
+        this.spInfo.dprtDstrDetlAddr = this.newPt.detlAddr
+      } else if (idx === 1) {
+        /*병원 주소 */
+        this.spInfo.dprtDstrZip = this.dsInfo.instZip
+        this.spInfo.dprtDstrBascAddr = this.dsInfo.instBascAddr
+        this.spInfo.dprtDstrDetlAddr = this.dsInfo.instDetlAddr
+      } else {
+        /*기타*/
+        this.spInfo.dprtDstrZip = ''
+        this.spInfo.dprtDstrBascAddr = ''
+        this.spInfo.dprtDstrDetlAddr = ''
       }
     },
     changeDstrCd1() {
@@ -3393,7 +3449,9 @@ export default {
       await this.$store.dispatch('patnt/modiPtInfo', data);
       this.closePopup(0);
       this.tab = 1;
-      this.clearNewPt()
+      this.showModal=0
+      this.closeModal(0)
+      //this.clearNewPt()
     },
     getDate(data) {
       const dData = new Date(data);
@@ -3409,8 +3467,32 @@ export default {
       }
       return dYear + '.' + dMonth + '.' + dDate;
     },
+    getUndrDses,
     alertOpen(idx) {
-      if (idx === 3) {
+      this.cncBtn = false
+      if (idx === 0) {
+        this.errMsg = '병상을 요청하시겠습니까?'
+        this.cncBtn = true
+        this.isAlert = true
+        this.alertIdx = 0
+      } else if (idx === 1) {
+        this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
+        const data = { svrInfo: this.svInfo, dprtInfo: this.spInfo }
+        console.log(data)
+        this.$store.dispatch('bedasgn/regBedassign', data)
+        this.isAlert = false
+        this.errMsg = '요청되었습니다.'
+        this.isAlert = true
+        this.alertIdx = 1
+      } else if (idx === 2) {
+        this.alertClose()
+        this.closeModal(0)
+        this.preRpt=null
+        //this.undrDsesCdArr=[]
+        this.setNull()
+        /*신규병상요청 끝*/
+        //this.getBdList()
+      } else if (idx === 3) {
         this.errMsg = '환자 정보가\n등록되었습니다.';
         this.isAlert = true;
         this.alertIdx = 3;
@@ -3434,8 +3516,28 @@ export default {
         this.alertIdx = 10;
       }
     },
-    cfrmAl(res) {
-      if (res === 3) {
+    setNull() {
+      console.log('실행' +this.initNewPt)
+      this.tab = 0
+      this.tabidx = 0
+      this.popup = 100
+      this.alertIdx = 100
+      this.rptYn = false
+      this.newPt = JSON.parse(JSON.stringify(this.initNewPt));
+      this.dsInfo = JSON.parse(JSON.stringify(this.initDsInfo));
+      //this.svInfo = this.initSvInfo
+      //this.spInfo =  this.initSpInfo
+      this.$store.commit('patnt/setRpt',null)
+      this.preRpt=null
+      this.undrDsesCdArr=[]
+    },
+    cfrmAl(res) { if (res === 0) {
+      console.log(0)
+      this.alertOpen(1)
+    } else if (res === 1) {
+      console.log('1')
+      this.alertOpen(2)
+    } else if (res === 3) {
         this.alertClose();
       } else if (res === 4) {
         this.alertClose();
@@ -3459,6 +3561,7 @@ export default {
     closeModal(idx) {
       if (idx === 0) {
         /*세부내용 모달*/
+        this.showModal = 0
         {
           this.$store.commit('bedasgn/setDisesInfo', null)
           this.$store.commit('bedasgn/setTimeline', null)
@@ -3533,6 +3636,8 @@ export default {
       }
       await this.$store.dispatch('patnt/readEpidRpt', this.ptDetail);
       this.preRpt = this.attcRpt;
+
+      this.showModal = 1;
     },
     changePage(newPage) {
       this.$store.dispatch('patnt/getPatntList', {
@@ -3561,9 +3666,10 @@ export default {
       await this.$store.dispatch('patnt/getBasicInfo', patient);
       if (this.ptDetail !== null) {
         this.newPt = this.ptDetail;
+        console.log(this.newPt)
       }
-
       await this.showImage(this.newPt.attcId)
+      this.showModal = 2
     },
     async showImage(attcId) {
       if (attcId === null || attcId === '') {
@@ -3606,7 +3712,10 @@ export default {
 .modal {
   --bs-modal-width: 98%;
 }
-
+.modal.show {
+    background-color: rgba(0,0,0,0.4);
+    display: block;
+}
 .item-box.suspend {
   border: 3px solid #74afeb !important;
   background-color: #74afeb33;
