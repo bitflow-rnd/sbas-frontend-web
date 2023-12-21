@@ -2,6 +2,17 @@
   <div class="board-body-box">
     <div class="list-wrap">
       <div class="list-group-box">
+        <div class="list-head-box" :class="{ hide: listBoxesHide['favourite'] }">
+          <a
+            href="javascript:void(0)"
+            class="head-box d-flex flex-center justify-content-between"
+            @click="listBoxesHide['favourite'] = !listBoxesHide['favourite']"
+          >
+            <div class="head-tit-box">즐겨찾기</div>
+            <i class="fa-solid fa-angle-down" style="color: #9fa1ab"></i>
+            <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
+          </a>
+        </div>
         <div class="list-head-box" :class="{ hide: listBoxesHide['organization'] }">
           <a
             href="javascript:void(0)"
@@ -85,17 +96,6 @@
             <div class="item-option-box"></div>
           </div>
         </div>
-        <div class="list-head-box" :class="{ hide: listBoxesHide['favourite'] }">
-          <a
-            href="javascript:void(0)"
-            class="head-box d-flex flex-center justify-content-between"
-            @click="listBoxesHide['favourite'] = !listBoxesHide['favourite']"
-          >
-            <div class="head-tit-box">즐겨찾기</div>
-            <i class="fa-solid fa-angle-down" style="color: #9fa1ab"></i>
-            <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
-          </a>
-        </div>
         <div class="list-head-box" :class="{ hide: listBoxesHide['mayKnow'] }">
           <a
             href="javascript:void(0)"
@@ -136,6 +136,7 @@ let listBoxesHide = reactive({
 })
 let model = reactive({
   usersList: [],
+  favoriteUsers :[],
   selectedUser: null
 })
 
