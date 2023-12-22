@@ -255,7 +255,7 @@
                     <col style="width: auto" />
                   </colgroup>
                   <tbody>
-                    <tr>
+<!--                    <tr>
                       <th>소속기관 유형 <span class="text-primary">*</span></th>
                       <td>
                         <div class="item-cell-box full">
@@ -270,10 +270,10 @@
                           <div class="text-danger pt-2 fs-12px">※ 소속기관 유형을 선택해 주세요.</div>
                         </div>
                       </td>
-                    </tr>
+                    </tr>-->
 
                     <tr>
-                      <th>권한 그룹 선택 <span class="text-primary">*</span></th>
+                      <th>소속 기관 유형 <span class="text-primary">*</span></th>
                       <td>
                         <div class="item-cell-box full">
                           <article class="permission-selector-layout">
@@ -293,8 +293,8 @@
                                   />
                                 </div>
                                 <div class="info-box">
-                                  <div class="main-box">병상요청그룹</div>
-                                  <div class="sub-box">보건소, 병상배정반, 의료진</div>
+                                  <div class="main-box">병상요청</div>
+                                  <div class="sub-box">보건소</div>
                                 </div>
                               </div>
                             </label>
@@ -315,8 +315,8 @@
                                   />
                                 </div>
                                 <div class="info-box">
-                                  <div class="main-box">병상승인그룹</div>
-                                  <div class="sub-box">병상배정반</div>
+                                  <div class="main-box">병상배정반</div>
+                                  <div class="sub-box">병상요청, 병상승인, 이송처리</div>
                                 </div>
                               </div>
                             </label>
@@ -337,8 +337,8 @@
                                   />
                                 </div>
                                 <div class="info-box">
-                                  <div class="main-box">병상배정그룹</div>
-                                  <div class="sub-box">의료진</div>
+                                  <div class="main-box">의료진</div>
+                                  <div class="sub-box">병상요청, 병상배정</div>
                                 </div>
                               </div>
                             </label>
@@ -360,7 +360,7 @@
                                 </div>
                                 <div class="info-box">
                                   <div class="main-box">시스템 관리자</div>
-                                  <div class="sub-box">전산운영</div>
+                                  <div class="sub-box">모니터링, 테스트</div>
                                 </div>
                               </div>
                             </label>
@@ -372,7 +372,7 @@
                       </td>
                     </tr>
 
-                    <tr>
+<!--                    <tr>
                       <th>세부 권한 선택 <span class="text-primary">*</span></th>
                       <td>
                         <div class="item-cell-box full">
@@ -400,11 +400,8 @@
                             </label>
                           </div>
                         </div>
-                        <div v-if="validateInput(10)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 세부권한을 선택해 주세요.</div>
-                        </div>
                       </td>
-                    </tr>
+                    </tr>-->
                   </tbody>
                 </table>
               </div>
@@ -809,7 +806,7 @@ export default {
         dutyDstr2Cd: null,
         attcId: null,
         btDt: null,
-        authCd: null
+        authCd: 'DTPM0001'
       },
       initialForm: {
         id: null,
@@ -924,6 +921,15 @@ export default {
       } else if (idx === 8) {
         return this.form.instTypeCd === null && this.showErrorMessage
       } else if (idx === 9) {
+        if(this.form.jobCd==='PMGR0001'){
+          this.form.instTypeCd = 'ORGN0003'
+        } else if(this.form.jobCd==='PMGR0002'){
+          this.form.instTypeCd = 'ORGN0001'
+        } else if(this.form.jobCd==='PMGR0003'){
+          this.form.instTypeCd = 'ORGN0004'
+        } else {
+          this.form.instTypeCd = 'ORGN0005'
+        }
         return this.form.jobCd === null && this.showErrorMessage
       } else if (idx === 10) {
         return this.form.authCd === null && this.showErrorMessage

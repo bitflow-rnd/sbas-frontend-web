@@ -13,6 +13,7 @@ export default {
     smsCrtfSuccess: null,
     attcId: null,
     usersList: null,
+    favUsersList: null,
     selectedTabIdx: 0,
     chrgInfo: null,
   },
@@ -60,6 +61,9 @@ export default {
     },
     setUsersList(state, payload) {
       state.usersList = payload
+    },
+    setFavUsersList(state, payload) {
+      state.favUsersList = payload
     },
     setSelectedTabIdx: (state, payload) => {
       console.log('setSelectedTabIdx', payload)
@@ -243,6 +247,20 @@ export default {
       })
         .then((response) => {
           comment.commit('setUsersList', response.data?.result)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    },
+    getFavUsersList(comment) {
+      const url = `${API_PROD}/api/v1/private/user/contact-users`
+
+      axios({
+        method: 'get',
+        url: url
+      })
+        .then((response) => {
+          comment.commit('setFavUsersList', response.data?.result)
         })
         .catch((e) => {
           console.log(e)

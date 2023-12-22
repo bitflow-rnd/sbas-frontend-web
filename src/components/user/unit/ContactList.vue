@@ -2,6 +2,45 @@
   <div class="board-body-box">
     <div class="list-wrap">
       <div class="list-group-box">
+        <div class="list-head-box" :class="{ hide: listBoxesHide['favourite'] }">
+          <a
+            href="javascript:void(0)"
+            class="head-box d-flex flex-center justify-content-between"
+            @click="listBoxesHide['favourite'] = !listBoxesHide['favourite']"
+          >
+            <div class="head-tit-box">즐겨찾기</div>
+            <i class="fa-solid fa-angle-down" style="color: #9fa1ab"></i>
+            <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
+          </a>
+        </div>
+        <div class="list-body-box" v-if="model.favUsersList">
+          <div
+            v-for="(user, idx) in model.favUsersList.items"
+            :key="idx"
+            role="button"
+            class="item-box"
+            @click="onSelectUser(user)"
+            :style="user === model.selectedUser ? { 'background-color': '#74AFEB22' } : {}"
+          >
+            <div class="item-info-box">
+              <div class="profile-box">
+                <img src="/img/common/img_profile_default.svg" alt="이미지" />
+              </div>
+
+              <div class="info-box">
+                <div class="subject-box">
+                  {{ user['userNm'] }}
+                  <div class="label-txt text-primary">{{ user['jobCdNm'] }}</div>
+                </div>
+                <div class="con-box">
+                  {{ getUserBelong(user) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="item-option-box"></div>
+          </div>
+        </div>
         <div class="list-head-box" :class="{ hide: listBoxesHide['organization'] }">
           <a
             href="javascript:void(0)"
@@ -85,17 +124,6 @@
             <div class="item-option-box"></div>
           </div>
         </div>
-        <div class="list-head-box" :class="{ hide: listBoxesHide['favourite'] }">
-          <a
-            href="javascript:void(0)"
-            class="head-box d-flex flex-center justify-content-between"
-            @click="listBoxesHide['favourite'] = !listBoxesHide['favourite']"
-          >
-            <div class="head-tit-box">즐겨찾기</div>
-            <i class="fa-solid fa-angle-down" style="color: #9fa1ab"></i>
-            <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
-          </a>
-        </div>
         <div class="list-head-box" :class="{ hide: listBoxesHide['mayKnow'] }">
           <a
             href="javascript:void(0)"
@@ -136,6 +164,7 @@ let listBoxesHide = reactive({
 })
 let model = reactive({
   usersList: [],
+  favUsersList :[],
   selectedUser: null
 })
 
@@ -143,6 +172,9 @@ onMounted(() => {
   store.dispatch('user/getUsersListSync').then((result) => {
     model.usersList = result
   })
+  /*store.dispatch('user/getFavUsersList').then((result) => {
+    model.favUsersList = result
+  })*/
 })
 
 function onSelectUser(user) {
