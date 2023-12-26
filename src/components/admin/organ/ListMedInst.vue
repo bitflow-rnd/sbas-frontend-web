@@ -472,6 +472,7 @@
                       <col style="width: 60px"/>
                       <col style="width: 60px"/>
                       <col style="width: 60px"/>
+                      <col style="width: 60px"/>
                       <col style="width: 65px"/>
                       <col style="width: 70px"/>
                     </colgroup>
@@ -489,8 +490,8 @@
                         대표전화/<br/>
                         응급실
                       </th>
-                      <th colspan="5">감염병 격리병상</th>
-                      <th colspan="4">중환자 병상</th>
+                      <th colspan="5">응급실 격리병상</th>
+                      <th colspan="5">감염병 입원병상</th>
                       <th colspan="4">보유장비</th>
                       <th colspan="5">보유장비</th>
                       <th rowspan="2">
@@ -502,12 +503,13 @@
                       </th>
                     </tr>
                     <tr>
+                      <th class="px-0">코호트<br/>격리</th>
                       <th class="px-0">음압<br/>격리</th>
                       <th class="px-0">일반<br/>격리</th>
-                      <th class="px-0">일반</th>
-                      <th class="px-0">소아<br/>음압</th>
-                      <th class="px-0">소아<br/>일반</th>
-                      <th class="px-0">중환자</th>
+                      <th class="px-0">소아<br/>음압격리</th>
+                      <th class="px-0">소아<br/>일반격리</th>
+                      <th class="px-0">중환자실</th>
+                      <th class="px-0">중환자실내<br>음압격리</th>
                       <th class="px-0">중증</th>
                       <th class="px-0">준중증</th>
                       <th class="px-0">중등증</th>
@@ -549,13 +551,13 @@
                         {{ item.dutyTel1 }} /<br> {{ item.dutyTel3 }}
                       </td>
                       <td>
-                        {{ item.npidIcu }}
+                        {{ item.cohtBed }}
                       </td>
                       <td>
-                        {{ item.emrgncyNrmlIsltnBed }}
+                        {{ item.emrgncyNgtvIsltnBed + item.isltnMedAreaNgtvIsltnBed }}
                       </td>
                       <td>
-                        {{ item.emrgncyNrmlBed }}
+                        {{ item.emrgncyNrmlIsltnBed + item.isltnMedAreaNrmlIsltnBed }}
                       </td>
                       <td>
                         {{ item.ngtvIsltnChild }}
@@ -565,6 +567,9 @@
                       </td>
                       <td>
                         {{ item.gnbdIcu }}
+                      </td>
+                      <td>
+                        {{ item.npidIcu }}
                       </td>
                       <td>
                         {{ item.gnbdSvrt }}
