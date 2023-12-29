@@ -27,7 +27,7 @@
 
           <div class="item-option-box">
             <article class="like-btn">
-              <a href="javascript:void(0)" class="like-btn" onclick="likeToggle(this)">
+              <a href="javascript:void(0)" class="like-btn" @click="toggleLike(user['id'])">
                 <i class="fa-regular fa-star"></i>
                 <i class="fa-solid fa-star"></i>
               </a>
@@ -79,6 +79,7 @@
 
 <script>
 import { getTag, getTelno, getTLDt } from '@/util/ui'
+import { mapState } from 'vuex'
 
 export default {
   name: 'ContactDetailUnit',
@@ -87,6 +88,9 @@ export default {
       type: Object,
       required: true
     }
+  },
+  computed: {
+    ...mapState( 'user', ['userInfo'])
   },
   methods: {
     getTag,
@@ -98,6 +102,13 @@ export default {
       } else {
         return `${this.user.dutyDstr1CdNm} / ${this.user.instNm}`;
       }
+    },
+    toggleLike(reqId){
+      //console.log(this.userInfo.id)
+      console.log(reqId)
+      const request = {id:this.userInfo.id,mbrId:reqId}
+      console.log(request)
+      this.$store.dispatch('user/regFavUser',request)
     },
   }
 }

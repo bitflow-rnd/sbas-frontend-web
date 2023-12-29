@@ -172,9 +172,9 @@ onMounted(() => {
   store.dispatch('user/getUsersListSync').then((result) => {
     model.usersList = result
   })
-  /*store.dispatch('user/getFavUsersList').then((result) => {
-    model.favUsersList = result
-  })*/
+  store.dispatch('user/getFavUsersList').then((result2) => {
+    model.favUsersList = result2
+  })
 })
 
 function onSelectUser(user) {
