@@ -182,8 +182,8 @@
             <!-- contact detail -->
 
             <!-- contact detail right -->
-            <no-contact-detail-right-unit v-if="model.mode === 'contact' && !model.selectedUser" />
-            <contact-detail-right-unit v-if="model.mode === 'contact' && model.selectedUser" />
+            <no-contact-detail-right-unit v-if="(model.mode === 'contact' && !model.selectedUser) || model.historyList === null" />
+            <contact-detail-right-unit v-if="model.mode === 'contact' && model.selectedUser && model.historyList !== null" :history-list='model.historyList' />
             <!-- contact detail right -->
 
             <no-message-room-detail v-if="model.mode === 'message' && !model.roomInfo" />
@@ -205,12 +205,13 @@
 import ContactDetailUnit from '@/components/user/unit/ContactDetailUnit'
 import NoContactDetailUnit from '@/components/user/unit/NoContactDetailUnit'
 import NoContactDetailRightUnit from '@/components/user/unit/NoContactDetailRightUnit'
-import ContactDetailRightUnit from '@/components/user/unit/ContactDetailRightUnit'
-import ContactList from '@/components/user/unit/ContactList'
+import ContactDetailRightUnit from '@/components/user/unit/ContactDetailRightUnit.vue'
+import ContactList from '@/components/user/unit/ContactList.vue'
 import MessageRoomList from '@/components/user/unit/MessageRoomList'
 import { reactive, ref } from 'vue'
 import MessageRoomDetail from '@/components/user/unit/MessageRoomDetail'
 import NoMessageRoomDetail from '@/components/user/unit/NoMessageRoomDetail'
+import store from '@/store/store'
 
 const tab1 = ref()
 const tab2 = ref()
@@ -218,11 +219,13 @@ const tab2 = ref()
 let model = reactive({
   mode: 'contact',
   selectedUser: null,
-  roomInfo: null
+  roomInfo: null,
+  historyList: null,
 })
 
 function onUserSelected(user) {
   model.selectedUser = user
+  getActivityHistory(user.id)
 }
 function onRoomSelected(room) {
   console.log('room', JSON.stringify(room))
@@ -239,6 +242,17 @@ function onTabSelected(idx) {
     tab2.value.classList.add('active')
   }
 }
+
+function getActivityHistory(userId) {
+  store.dispatch('user/getActivityHistory', userId).then((result) => {
+    if (result.count === 0) {
+      model.historyList = null
+    } else {
+      model.historyList = result.items
+    }
+  })
+}
+
 </script>
 
 <style scoped>

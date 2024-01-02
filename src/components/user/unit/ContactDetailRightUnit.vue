@@ -53,37 +53,35 @@
                   <a href="javascript:void(0)" class="item-box state-ing" role="button">
                     <div class="info-box">
                       <div class="state-box">
-                        <div class="state-txt type-ing">배정완료</div>
+                        <div class="state-txt type-ing">{{ props.historyList[0]['activityDetail'] }}</div>
                       </div>
 
                       <div class="user-box">
-                        <div class="subject-box"><b>송*웅</b>&nbsp;&nbsp;(남/63세/경북 포항시)</div>
-                        <div class="con-box">#투석 #중증 #고혈압</div>
+                        <div class="subject-box"><b>{{ props.historyList[0]['ptNm'] }}</b>
+                          &nbsp;&nbsp;({{ props.historyList[0]['gndr'] }}/{{ props.historyList[0]['age'] }}세/{{ props.historyList[0]['dstr1CdNm'] }} {{ props.historyList[0]['dstr2CdNm'] }})</div>
+<!--                        <div class="con-box">#투석 #중증 #고혈압</div>-->
                       </div>
                     </div>
 
-                    <div class="date-box">13시 43분</div>
+                    <div class="date-box">{{ getTLDt(props.historyList[0]['rgstDttm'], 2) }}</div>
                   </a>
                 </li>
+<!--                <li>-->
+<!--                  <a href="javascript:void(0)" class="item-box state-finish">-->
+<!--                    <div class="info-box">-->
+<!--                      <div class="state-box">-->
+<!--                        <div class="state-txt type-finish">승인대기</div>-->
+<!--                      </div>-->
 
+<!--                      <div class="user-box">-->
+<!--                        <div class="subject-box"><b>임*선</b>&nbsp;&nbsp;(여/23세/서울특별시 송파구)</div>-->
+<!--                        <div class="con-box">#준중증 #임산부</div>-->
+<!--                      </div>-->
+<!--                    </div>-->
 
-                <li>
-                  <a href="javascript:void(0)" class="item-box state-finish">
-                    <div class="info-box">
-                      <div class="state-box">
-                        <div class="state-txt type-finish">승인대기</div>
-                      </div>
-
-                      <div class="user-box">
-                        <div class="subject-box"><b>임*선</b>&nbsp;&nbsp;(여/23세/서울특별시 송파구)</div>
-                        <div class="con-box">#준중증 #임산부</div>
-                      </div>
-                    </div>
-
-                    <div class="date-box">2023년 3월 1일 13시 43분</div>
-                  </a>
-                </li>
-
+<!--                    <div class="date-box">2023년 3월 1일 13시 43분</div>-->
+<!--                  </a>-->
+<!--                </li>-->
               </ul>
             </div>
           </article>
@@ -415,10 +413,17 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: 'ContactDetailRightUnit'
-}
+<script setup>
+import { defineProps } from 'vue'
+import { getTLDt } from '@/util/ui'
+
+const props = defineProps({
+  historyList: {
+    type: Array,
+    required: true,
+  },
+})
+
 </script>
 
 <style scoped>

@@ -155,7 +155,7 @@ import { useStore } from 'vuex'
 import { defineEmits, onMounted, reactive } from 'vue'
 
 const store = useStore()
-const emit = defineEmits('onUserSelected')
+const emit = defineEmits(['onUserSelected'])
 let listBoxesHide = reactive({
   request: false,
   favourite: false,
