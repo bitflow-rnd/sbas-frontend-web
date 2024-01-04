@@ -423,6 +423,27 @@ export default {
     },
     getNoticeList() {
 
-    }
+    },
+    getActivityHistory(comment, userId) {
+      const url = `${API_PROD}/api/v1/private/user/activity-history/${userId}`
+      const headers = {}
+
+      const token = sessionStorage.getItem('userToken')
+      headers.Authorization = `Bearer ${token}`
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'get',
+          url: url,
+          headers: headers,
+        })
+          .then((response) => {
+            resolve(response.data?.result)
+          })
+          .catch((e) => {
+            console.log(e)
+            reject(e)
+          })
+      })
+    },
   }
 }
