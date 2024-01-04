@@ -255,23 +255,26 @@ export default {
           console.log(e)
         })
     },
-    getFavUsersList(comment) {
+    getFavUsersList() {
       const url = `${API_PROD}/api/v1/private/user/contact-users`
       const token = sessionStorage.getItem('userToken')
 
-      axios({
-        method: 'get',
-        url: url,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+      return new Promise((resolve,reject)=>{
+          axios({
+            method: 'get',
+            url: url,
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+            .then((response) => {
+              resolve(response.data?.result)
+            })
+            .catch((e) => {
+              console.log(e)
+              reject(e)
+            })
       })
-        .then((response) => {
-          comment.commit('setFavUsersList', response.data?.result)
-        })
-        .catch((e) => {
-          console.log(e)
-        })
     },
     regFavUser(comment, request) {
 

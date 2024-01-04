@@ -17,7 +17,7 @@
                 <div class="subject-txt">
                   <b>{{ user['userNm'] }}</b>
                 </div>
-                <div class="label-txt text-primary">{{ user['jobCdNm'] }}</div>
+                <div class="label-txt text-primary">{{ getPmgr(user['jobCd']) }}</div>
               </div>
               <div class="con-box">
                 {{ getUserBelong() }}
@@ -61,7 +61,7 @@
 
                 <div class="inner-item-box">
                   <div class="subject-box">담당 환자유형</div>
-                  <div class="con-box">{{ getTag(user['ptTypeCdNm']) }}</div>
+                  <div class="con-box">{{ getPtType(user['ptTypeCd']) }}</div>
                 </div>
 
                 <div class="inner-item-box">
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { getTag, getTelno, getTLDt } from '@/util/ui'
+import { getPmgr, getPtType, getTag, getTelno, getTLDt } from '@/util/ui'
 import { mapState } from 'vuex'
 
 export default {
@@ -93,6 +93,8 @@ export default {
     ...mapState( 'user', ['userInfo'])
   },
   methods: {
+    getPmgr,
+    getPtType,
     getTag,
     getTelno,
     getTLDt,

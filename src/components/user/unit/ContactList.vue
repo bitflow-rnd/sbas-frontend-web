@@ -30,7 +30,7 @@
               <div class="info-box">
                 <div class="subject-box">
                   {{ user['userNm'] }}
-                  <div class="label-txt text-primary">{{ user['jobCdNm'] }}</div>
+                  <div class="label-txt text-primary">{{ getPmgr(user['jobCd']) }}</div>
                 </div>
                 <div class="con-box">
                   {{ getUserBelong(user) }}
@@ -153,6 +153,7 @@
 <script setup>
 import { useStore } from 'vuex'
 import { defineEmits, onMounted, reactive } from 'vue'
+import { getPmgr } from '@/util/ui'
 
 const store = useStore()
 const emit = defineEmits(['onUserSelected'])
