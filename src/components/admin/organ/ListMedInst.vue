@@ -131,7 +131,7 @@
                       <td>
                         <div class="item-cell-box">
                           <div class="sbox w-175px" @click="getSido">
-                            <select v-model="filterMedinst['dstrCd1']"
+                            <select v-model="filterMedinst['dstr1Cd']"
                                     @change="changeDstrCd1()">
                               <option value="" id="null">시/도 전체</option>
                               <option v-for="(item,idx) in cmSido" :key="idx"
@@ -141,7 +141,7 @@
                           </div>
 
                           <div class="sbox w-175px ms-2">
-                            <select :disabled="enableSecondAddressPicker" v-model="filterMedinst['dstrCd2']" @change="changeDstrCd2()">
+                            <select :disabled="enableSecondAddressPicker" v-model="filterMedinst['dstr2Cd']" @change="changeDstrCd2()">
                               <option value="" id="null">시/군/구 전체</option>
                               <option v-for="(item,idx) in cmGugun" :key="idx"
                                       :value="item['cdId']">{{ item['cdNm'] }}
@@ -2286,13 +2286,13 @@ export default {
           params = {...params, hospId: this.filterMedinst['text']};
         }
       }
-      if (this.filterMedinst['dstrCd1']) params = {...params, dstrCd1: this.filterMedinst['dstrCd1']};
-      if (this.filterMedinst['dstrCd2']) params = {...params, dstrCd2: this.filterMedinst['dstrCd2']};
+      if (this.filterMedinst['dstr1Cd']) params = {...params, dstr1Cd: this.filterMedinst['dstr1Cd']};
+      if (this.filterMedinst['dstr2Cd']) params = {...params, dstr2Cd: this.filterMedinst['dstr2Cd']};
 
       return params
     },
     enableSecondAddressPicker() {
-      return this.filterMedinst['dstrCd1'] === "";
+      return this.filterMedinst['dstr1Cd'] === "";
     }
   },
   mounted() {
@@ -2331,8 +2331,8 @@ export default {
       doctorCount: 0, // 의료진 수
       filterMedinst: {
         dutyDivNam: [],
-        dstrCd1: '',
-        dstrCd2: '',
+        dstr1Cd: '',
+        dstr2Cd: '',
         text: '',
       },
       inputValue: null,
@@ -2355,8 +2355,8 @@ export default {
       }
     },
     changeDstrCd1() {
-      this.getSecondAddress(this.filterMedinst['dstrCd1']);
-      this.filterMedinst['dstrCd2'] = '';
+      this.getSecondAddress(this.filterMedinst['dstr1Cd']);
+      this.filterMedinst['dstr2Cd'] = '';
       this.search();
     },
     changeDstrCd2() {

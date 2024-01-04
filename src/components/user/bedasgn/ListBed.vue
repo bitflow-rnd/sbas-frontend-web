@@ -1067,13 +1067,13 @@
                             <div class="item-row-box">
                               <div class="item-cell-box">
                                 <div class="sbox" style="width: 170px">
-                                  <select v-model="medinstInfo.dstrCd1" @change="getMedInst" :disabled='dsInfo.rcptPhc===1'>
+                                  <select v-model="medinstInfo.dstr1Cd" @change="getMedInst" :disabled='dsInfo.rcptPhc===1'>
                                       <option value=''>지역 선택</option>
                                       <option v-for='(item,i) in cmSido' :key='i' :value='item.cdId'>{{item.cdNm}}</option>
                                   </select>
                                 </div>
                                 <div class="sbox ms-3" style="width: 170px">
-                                  <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstrCd1===''">
+                                  <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstr1Cd===''">
                                     <option value='0'>보건소 선택</option>
                                     <option v-for="(item,i) in organMedi" :key="i"
                                             :value='item.instNm'>{{ item.instNm }}</option>
@@ -3757,7 +3757,7 @@
                         <div class="item-cell-box">
                           <div class="sbox w-175px">
                             <select>
-                              <option>{{ firestatnList.items[0].dstrCd1 }}</option>
+                              <option>{{ firestatnList.items[0].dstr1Cd }}</option>
                             </select>
                           </div>
 
@@ -4932,7 +4932,7 @@ export default {
       alertIdx: 100 /* alert창 확인버튼 */,
       rptYn: false /* 역조서 유무 */,
       medinstInfo:{
-        dstrCd1: '',
+        dstr1Cd: '',
       },
       newPt: {
         ptNm: '',
@@ -5640,7 +5640,7 @@ export default {
       this.$store.dispatch('bedasgn/getDSInfo', data)
       //this.$store.dispatch('bedasgn/getBdasHisInfo', data)
       this.$store.dispatch('bedasgn/getTransInfo',data)
-      // this.$store.dispatch('admin/getFireStatn',{dstrCd1: 27})
+      // this.$store.dispatch('admin/getFireStatn',{dstr1Cd: 27})
       //console.log(data.bedStatCd)
       this.transCondition1 = this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
       this.transCondition2 = this.bdDetail.bedStatCd==='BAST0005' || this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
@@ -5676,7 +5676,7 @@ export default {
     },
     loadTrnsfInfo(num) {
       /*요청자 지역코드 받아와야 됨*/
-      const data = { dstrCd1: num }
+      const data = { dstr1Cd: num }
       this.$store.dispatch('admin/getFireStatn', data)
       this.openModal(3)
     },

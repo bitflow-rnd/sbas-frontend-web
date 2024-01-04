@@ -766,7 +766,7 @@ export default {
       this.$store.dispatch('admin/getSido')
     },
     getMediList() {
-      this.$store.dispatch('admin/getMedinst', { dstrCd1: this.userInfo.dutyDstr1Cd, dstrCd2: this.userInfo.dutyDstr2Cd })
+      this.$store.dispatch('admin/getMedinst', { dstr1Cd: this.userInfo.dutyDstr1Cd, dstr2Cd: this.userInfo.dutyDstr2Cd })
 
     },
     showUserDetail() {

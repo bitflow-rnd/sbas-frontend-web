@@ -1690,13 +1690,13 @@
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div class="sbox" style="width: 170px">
-                                <select v-model="medinstInfo.dstrCd1" @change="getMedInst" :disabled='dsInfo.rcptPhc===1'>
+                                <select v-model="medinstInfo.dstr1Cd" @change="getMedInst" :disabled='dsInfo.rcptPhc===1'>
                                   <option value=''>지역 선택</option>
                                   <option v-for='(item,i) in cmSido' :key='i' :value='item.cdId'>{{item.cdNm}}</option>
                                 </select>
                               </div>
                               <div class="sbox ms-3" style="width: 170px">
-                                <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstrCd1===''">
+                                <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstr1Cd===''">
                                   <option value='0'>보건소 선택</option>
                                   <option v-for="(item,i) in organMedi" :key="i"
                                           :value='item.instNm'>{{ item.instNm }}</option>
@@ -3309,7 +3309,7 @@ export default {
       imgsRef: '',
       indexRef: 0,
       medinstInfo:{
-        dstrCd1: '',
+        dstr1Cd: '',
       },
     }
   },
