@@ -136,7 +136,7 @@ export function getPtType(code) {
         const arr = code.split(';')
         const res = arr.map((item) => ptType[item])
         return res.join(', ')
-    } else return ''
+    } else return '-'
 }
 
 export const ptType = {
@@ -209,6 +209,10 @@ export async function openPopup(idx) {
         this.popup=2
         console.log(this.aprv)
         //this.alertOpen(3)
+    } else if(idx === 4){
+        /*환자 목록 - 병상요청*/
+        console.log('환자등록병상요청')
+        this.tab = 1
     }
 }
 export function toggleCheckbox() {
@@ -299,7 +303,6 @@ export async function goAsgn(idx){
 export function regNewPt(){
     console.log(this.newPt)
     this.$store.dispatch('patnt/regBasicInfo',this.newPt)
-    /*todo: validation 필요 ~ */
     this.alertOpen(3)
 }
 export function openAddressFinder(idx) {

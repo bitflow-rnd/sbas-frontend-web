@@ -65,6 +65,9 @@ export default {
     setFavUsersList(state, payload) {
       state.favUsersList = payload
     },
+    regFavUser(state,payload){
+      state.resultRegFAv = payload
+    },
     setSelectedTabIdx: (state, payload) => {
       console.log('setSelectedTabIdx', payload)
       state.selectedTabIdx = payload
@@ -252,15 +255,43 @@ export default {
           console.log(e)
         })
     },
-    getFavUsersList(comment) {
+    getFavUsersList() {
       const url = `${API_PROD}/api/v1/private/user/contact-users`
+      const token = sessionStorage.getItem('userToken')
+
+      return new Promise((resolve,reject)=>{
+          axios({
+            method: 'get',
+            url: url,
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+            .then((response) => {
+              resolve(response.data?.result)
+            })
+            .catch((e) => {
+              console.log(e)
+              reject(e)
+            })
+      })
+    },
+    regFavUser(comment, request) {
+
+      const url = `${API_PROD}/api/v1/private/user/reg-favorite`
+      const token = sessionStorage.getItem('userToken')
 
       axios({
-        method: 'get',
-        url: url
+        method: 'post',
+        url: url,
+        data: request,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
         .then((response) => {
-          comment.commit('setFavUsersList', response.data?.result)
+          console.log(response, '즐겨찾기 등록')
+          comment.commit('regFavUser', response.data?.result)
         })
         .catch((e) => {
           console.log(e)

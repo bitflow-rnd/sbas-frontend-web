@@ -316,7 +316,7 @@
                       <td>{{ getDate(pt['updtDttm']) }}</td>
                       <td
                           @click='toggleCheckbox()'
-                        ><a @click.stop='showPatntModal(pt)'
+                        ><a @click.stop='showPatntModal(pt,2)'
                           class='btn btn-flex btn-xs btn-outline btn-outline-primary'
                           >수정</a>
                       </td>
@@ -1117,10 +1117,8 @@
                     <div class="modal-menu-list">
                       <router-link
                           to=""
-                          data-bs-target="#kt_modal_request"
-                          data-bs-toggle="modal"
                           class="modal-menu-btn menu-primary"
-                          @click='showPatntModal(ptDetail)'
+                          @click='showPatntModal(ptDetail,1)'
                       >병상요청
                       </router-link>
                     </div>
@@ -1246,7 +1244,7 @@
 
   <!-- Todo: replace this model with BedRequestModal.vue -->
   <!--  신규병상요청   -->
-  <div class="modal fade" id="kt_modal_request" tabindex="-1" aria-hidden="true">
+  <div class="modal" id="kt_modal_request" v-show='this.showPatnt' tabindex="-1" aria-hidden="true">
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-1500px modal-dialog-centered">
       <!--begin::Modal content-->
@@ -1263,7 +1261,7 @@
               data-bs-dismiss="modal"
           >
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class="svg-icon svg-icon-1">
+            <span class="svg-icon svg-icon-1" @click = 'closePatntRequest'>
               <svg
                   width="24"
                   height="24"
@@ -1662,7 +1660,7 @@
               <article class="modal-menu-layout1 pt-10">
                 <div class="modal-menu-list">
                   <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
-                  <a @click="openPopup(0)" class="modal-menu-btn menu-primary">다음</a>
+                  <a @click="openPopup(4)" class="modal-menu-btn menu-primary">다음</a>
                 </div>
               </article>
             </div>
@@ -2051,14 +2049,10 @@
               </article>
               <article class="modal-menu-layout1 pt-10">
                 <div class="modal-menu-list">
-                  <router-link to="" @click="backBtn(0)" class="modal-menu-btn menu-cancel"
-                  >이전
-                  </router-link
-                  >
-                  <router-link to="" @click="goAsgn(2)" class="modal-menu-btn menu-primary"
-                  >다음
-                  </router-link
-                  >
+                  <router-link to="" @click="backBtn(0)" class="modal-menu-btn menu-cancel">이전
+                  </router-link>
+                  <router-link to="" @click="goAsgn(2)" class="modal-menu-btn menu-primary">다음
+                  </router-link>
                 </div>
               </article>
             </div>
@@ -3311,6 +3305,7 @@ export default {
       medinstInfo:{
         dstr1Cd: '',
       },
+      showPatnt: false,
     }
   },
   computed: {
@@ -3486,6 +3481,7 @@ export default {
         this.alertIdx = 1
       } else if (idx === 2) {
         this.alertClose()
+        this.showPatnt = false
         this.closeModal(0)
         this.preRpt=null
         //this.undrDsesCdArr=[]
@@ -3662,14 +3658,18 @@ export default {
       this.$store.dispatch('patnt/getPatntList', this.filterData);
       this.page = 1;
     },
-    async showPatntModal(patient) {
+    async showPatntModal(patient,idx) {
       await this.$store.dispatch('patnt/getBasicInfo', patient);
       if (this.ptDetail !== null) {
         this.newPt = this.ptDetail;
         console.log(this.newPt)
       }
       await this.showImage(this.newPt.attcId)
-      this.showModal = 2
+      if(idx === 2){
+        this.showModal = idx
+      } else {
+        this.showPatnt = true
+      }
     },
     async showImage(attcId) {
       if (attcId === null || attcId === '') {
@@ -3680,6 +3680,9 @@ export default {
           this.epidReportImage = URL.createObjectURL(blob)
         })
       }
+    },
+    closePatntRequest(){
+      this.showPatnt = false
     },
     clearNewPt() {
       this.newPt = {
@@ -3711,6 +3714,7 @@ export default {
 <style scoped>
 .modal {
   --bs-modal-width: 98%;
+    display: block;
 }
 .modal.show {
     background-color: rgba(0,0,0,0.4);

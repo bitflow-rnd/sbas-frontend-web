@@ -17,7 +17,7 @@
                 <div class="subject-txt">
                   <b>{{ user['userNm'] }}</b>
                 </div>
-                <div class="label-txt text-primary">{{ user['jobCdNm'] }}</div>
+                <div class="label-txt text-primary">{{ getPmgr(user['jobCd']) }}</div>
               </div>
               <div class="con-box">
                 {{ getUserBelong() }}
@@ -27,9 +27,9 @@
 
           <div class="item-option-box">
             <article class="like-btn">
-              <a href="javascript:void(0)" class="like-btn" onclick="likeToggle(this)">
-                <i class="fa-regular fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+              <a href="javascript:void(0)" class="like-btn" @click="toggleLike(user['id'])">
+                <i class="fa-regular fa-star" :style = "user['isFavorite'] ? {'color' : '#74AFEB'}:{}"></i>
+                <i class="fa-solid fa-star" :style = "user['isFavorite'] ? {'color' : '#74AFEB'}:{}"></i>
               </a>
             </article>
           </div>
@@ -61,7 +61,7 @@
 
                 <div class="inner-item-box">
                   <div class="subject-box">담당 환자유형</div>
-                  <div class="con-box">{{ getTag(user['ptTypeCdNm']) }}</div>
+                  <div class="con-box">{{ getPtType(user['ptTypeCd']) }}</div>
                 </div>
 
                 <div class="inner-item-box">
@@ -78,7 +78,8 @@
 </template>
 
 <script>
-import { getTag, getTelno, getTLDt } from '@/util/ui'
+import { getPmgr, getPtType, getTag, getTelno, getTLDt } from '@/util/ui'
+import { mapState } from 'vuex'
 
 export default {
   name: 'ContactDetailUnit',
@@ -88,7 +89,12 @@ export default {
       required: true
     }
   },
+  computed: {
+    ...mapState( 'user', ['userInfo'])
+  },
   methods: {
+    getPmgr,
+    getPtType,
     getTag,
     getTelno,
     getTLDt,
@@ -98,6 +104,13 @@ export default {
       } else {
         return `${this.user.dutyDstr1CdNm} / ${this.user.instNm}`;
       }
+    },
+    toggleLike(reqId){
+      //console.log(this.userInfo.id)
+      console.log(reqId)
+      const request = {id:this.userInfo.id,mbrId:reqId}
+      console.log(request)
+      this.$store.dispatch('user/regFavUser',request)
     },
   }
 }
