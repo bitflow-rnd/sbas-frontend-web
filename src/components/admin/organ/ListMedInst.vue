@@ -131,7 +131,7 @@
                       <td>
                         <div class="item-cell-box">
                           <div class="sbox w-175px" @click="getSido">
-                            <select v-model="filterMedinst['dstrCd1']"
+                            <select v-model="filterMedinst['dstr1Cd']"
                                     @change="changeDstrCd1()">
                               <option value="" id="null">시/도 전체</option>
                               <option v-for="(item,idx) in cmSido" :key="idx"
@@ -141,7 +141,7 @@
                           </div>
 
                           <div class="sbox w-175px ms-2">
-                            <select :disabled="enableSecondAddressPicker" v-model="filterMedinst['dstrCd2']" @change="changeDstrCd2()">
+                            <select :disabled="enableSecondAddressPicker" v-model="filterMedinst['dstr2Cd']" @change="changeDstrCd2()">
                               <option value="" id="null">시/군/구 전체</option>
                               <option v-for="(item,idx) in cmGugun" :key="idx"
                                       :value="item['cdId']">{{ item['cdNm'] }}
@@ -472,6 +472,7 @@
                       <col style="width: 60px"/>
                       <col style="width: 60px"/>
                       <col style="width: 60px"/>
+                      <col style="width: 60px"/>
                       <col style="width: 65px"/>
                       <col style="width: 70px"/>
                     </colgroup>
@@ -489,8 +490,8 @@
                         대표전화/<br/>
                         응급실
                       </th>
-                      <th colspan="5">감염병 격리병상</th>
-                      <th colspan="4">중환자 병상</th>
+                      <th colspan="5">응급실 격리병상</th>
+                      <th colspan="5">감염병 입원병상</th>
                       <th colspan="4">보유장비</th>
                       <th colspan="5">보유장비</th>
                       <th rowspan="2">
@@ -502,12 +503,13 @@
                       </th>
                     </tr>
                     <tr>
+                      <th class="px-0">코호트<br/>격리</th>
                       <th class="px-0">음압<br/>격리</th>
                       <th class="px-0">일반<br/>격리</th>
-                      <th class="px-0">일반</th>
-                      <th class="px-0">소아<br/>음압</th>
-                      <th class="px-0">소아<br/>일반</th>
-                      <th class="px-0">중환자</th>
+                      <th class="px-0">소아<br/>음압격리</th>
+                      <th class="px-0">소아<br/>일반격리</th>
+                      <th class="px-0">중환자실</th>
+                      <th class="px-0">중환자실내<br>음압격리</th>
                       <th class="px-0">중증</th>
                       <th class="px-0">준중증</th>
                       <th class="px-0">중등증</th>
@@ -549,13 +551,13 @@
                         {{ item.dutyTel1 }} /<br> {{ item.dutyTel3 }}
                       </td>
                       <td>
-                        {{ item.npidIcu }}
+                        {{ item.cohtBed }}
                       </td>
                       <td>
-                        {{ item.emrgncyNrmlIsltnBed }}
+                        {{ item.emrgncyNgtvIsltnBed + item.isltnMedAreaNgtvIsltnBed }}
                       </td>
                       <td>
-                        {{ item.emrgncyNrmlBed }}
+                        {{ item.emrgncyNrmlIsltnBed + item.isltnMedAreaNrmlIsltnBed }}
                       </td>
                       <td>
                         {{ item.ngtvIsltnChild }}
@@ -565,6 +567,9 @@
                       </td>
                       <td>
                         {{ item.gnbdIcu }}
+                      </td>
+                      <td>
+                        {{ item.npidIcu }}
                       </td>
                       <td>
                         {{ item.gnbdSvrt }}
@@ -2281,13 +2286,13 @@ export default {
           params = {...params, hospId: this.filterMedinst['text']};
         }
       }
-      if (this.filterMedinst['dstrCd1']) params = {...params, dstrCd1: this.filterMedinst['dstrCd1']};
-      if (this.filterMedinst['dstrCd2']) params = {...params, dstrCd2: this.filterMedinst['dstrCd2']};
+      if (this.filterMedinst['dstr1Cd']) params = {...params, dstr1Cd: this.filterMedinst['dstr1Cd']};
+      if (this.filterMedinst['dstr2Cd']) params = {...params, dstr2Cd: this.filterMedinst['dstr2Cd']};
 
       return params
     },
     enableSecondAddressPicker() {
-      return this.filterMedinst['dstrCd1'] === "";
+      return this.filterMedinst['dstr1Cd'] === "";
     }
   },
   mounted() {
@@ -2326,8 +2331,8 @@ export default {
       doctorCount: 0, // 의료진 수
       filterMedinst: {
         dutyDivNam: [],
-        dstrCd1: '',
-        dstrCd2: '',
+        dstr1Cd: '',
+        dstr2Cd: '',
         text: '',
       },
       inputValue: null,
@@ -2350,8 +2355,8 @@ export default {
       }
     },
     changeDstrCd1() {
-      this.getSecondAddress(this.filterMedinst['dstrCd1']);
-      this.filterMedinst['dstrCd2'] = '';
+      this.getSecondAddress(this.filterMedinst['dstr1Cd']);
+      this.filterMedinst['dstr2Cd'] = '';
       this.search();
     },
     changeDstrCd2() {

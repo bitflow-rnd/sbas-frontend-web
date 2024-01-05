@@ -47,7 +47,7 @@ import { useStore } from 'vuex'
 import { defineEmits, onMounted, reactive } from 'vue'
 
 const store = useStore()
-const emit = defineEmits('onRoomSelected')
+const emit = defineEmits(['onRoomSelected'])
 
 let model = reactive({
   messageList: [],

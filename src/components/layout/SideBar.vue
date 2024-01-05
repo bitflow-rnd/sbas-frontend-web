@@ -132,7 +132,7 @@ export default {
       this.$store.dispatch('admin/getFireStatn')
     },
     getMediList() {
-      this.$store.dispatch('admin/getMedinst', { dstrCd1: null, dstrCd2: null })
+      this.$store.dispatch('admin/getMedinst', { dstr1Cd: null, dstr2Cd: null })
     }
   }
 }

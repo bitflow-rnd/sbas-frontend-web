@@ -1110,8 +1110,8 @@ export default {
     },
     getMedInst() {
       let data = {
-        dstrCd1: this.form.dutyDstr1Cd !== null ? this.form.dutyDstr1Cd : undefined,
-        dstrCd2: this.form.dutyDstr2Cd !== null ? this.form.dutyDstr2Cd : undefined,
+        dstr1Cd: this.form.dutyDstr1Cd !== null ? this.form.dutyDstr1Cd : undefined,
+        dstr2Cd: this.form.dutyDstr2Cd !== null ? this.form.dutyDstr2Cd : undefined,
         instTypeCd: this.form.instTypeCd
       };
       this.$store.dispatch('admin/getOrganMedi',data)
