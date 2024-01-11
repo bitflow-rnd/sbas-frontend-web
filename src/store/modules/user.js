@@ -257,7 +257,7 @@ export default {
     },
     getFavUsersList() {
       const url = `${API_PROD}/api/v1/private/user/contact-users`
-      const token = sessionStorage.getItem('userToken')
+      const token= sessionStorage.getItem('userToken')
 
       return new Promise((resolve,reject)=>{
           axios({
@@ -303,6 +303,27 @@ export default {
         axios({
           method: 'get',
           url: url
+        })
+          .then((response) => {
+            resolve(response.data?.result)
+          })
+          .catch((e) => {
+            console.log(e)
+            reject(e)
+          })
+      })
+    },
+    getSearchUser(params) {
+      const url = `${API_PROD}/api/v1/private/user/users/${params}`
+      const token = sessionStorage.getItem('userToken')
+
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'get',
+          url: url,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         })
           .then((response) => {
             resolve(response.data?.result)

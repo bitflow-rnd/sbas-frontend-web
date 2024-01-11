@@ -152,11 +152,13 @@
 
 <script setup>
 import { useStore } from 'vuex'
-import { defineEmits, onMounted, reactive } from 'vue'
+import { defineProps, defineEmits, onMounted, reactive, watch, ref } from 'vue'
 import { getPmgr } from '@/util/ui'
 
 const store = useStore()
 const emit = defineEmits(['onUserSelected'])
+const props = defineProps(['searchCntc'])
+
 let listBoxesHide = reactive({
   request: false,
   favourite: false,
@@ -169,13 +171,37 @@ let model = reactive({
   selectedUser: null
 })
 
-onMounted(() => {
-  store.dispatch('user/getUsersListSync').then((result) => {
-    model.usersList = result
+const searchCntcRef = ref(props.searchCntc)
+
+onMounted( () => {
+
+  executeSearch()
+  console.log('onMounted')
+  watch(searchCntcRef, (newSearchCntc) => {
+    console.log('바뀜REF')
+    executeSearch(newSearchCntc)
   })
+})
+
+const executeSearch = (searchParams = searchCntcRef.value) => {
+  console.log(searchParams)
+  if(searchParams.search || searchParams.instTypeCd){
+    store.dispatch('user/getSearchUser',searchParams).then((result)=>{
+      model.usersList = result
+    })
+  } else {
+    store.dispatch('user/getUsersListSync').then((result) => {
+      model.usersList = result
+    })
+  }
   store.dispatch('user/getFavUsersList').then((result2) => {
     model.favUsersList = result2
   })
+}
+
+watch(()=>props.searchCntc,(newSearchCntc)=>{
+  console.log('바뀜props')
+  searchCntcRef.value = newSearchCntc
 })
 
 function onSelectUser(user) {

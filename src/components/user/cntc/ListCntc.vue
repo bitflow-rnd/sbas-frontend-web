@@ -123,8 +123,8 @@
                       </article>
                     </div>
                     <div class="input-box">
-                      <input type="text" placeholder="이름, 휴대폰번호 또는 소속기관명" />
-                      <a href="javascript:void(0)" class="input-btn">
+                      <input type="text" v-model='model.search' @keyup.enter='searchCntc' placeholder="이름, 휴대폰번호 또는 소속기관명" />
+                      <a @click='searchCntc' role='button' class="input-btn">
                         <i class="fa-solid fa-magnifying-glass"></i>
                       </a>
                     </div>
@@ -136,31 +136,31 @@
                     <div class="list-box">
                       <div class="item-box d-inline-flex flex-center justify-content-center">
                         <label>
-                          <input type="checkbox" />
-                          <span class="txt">보건소</span>
-                        </label>
-                      </div>
-                      <div class="item-box">
-                        <label>
-                          <input type="checkbox" />
+                          <input v-model='model.instTypeCd' value='ORGN0001' type="checkbox" @change='searchCntc' />
                           <span class="txt">병상배정반</span>
                         </label>
                       </div>
                       <div class="item-box">
                         <label>
-                          <input type="checkbox" />
-                          <span class="txt">의료진</span>
-                        </label>
-                      </div>
-                      <div class="item-box">
-                        <label>
-                          <input type="checkbox" />
+                          <input v-model='model.instTypeCd' value='ORGN0002' type="checkbox" @change='searchCntc' />
                           <span class="txt">구급대</span>
                         </label>
                       </div>
                       <div class="item-box">
                         <label>
-                          <input type="checkbox" />
+                          <input v-model='model.instTypeCd' value='ORGN0003' type="checkbox" @change='searchCntc' />
+                          <span class="txt">보건소</span>
+                        </label>
+                      </div>
+                      <div class="item-box">
+                        <label>
+                          <input v-model='model.instTypeCd' value='ORGN0004' type="checkbox" @change='searchCntc' />
+                          <span class="txt">의료진</span>
+                        </label>
+                      </div>
+                      <div class="item-box">
+                        <label>
+                          <input v-model='model.instTypeCd' value='ORGN0005' type="checkbox" @change='searchCntc' />
                           <span class="txt">전산</span>
                         </label>
                       </div>
@@ -169,7 +169,7 @@
                 </div>
               </div>
 
-              <contact-list v-if="model.mode === 'contact'" @onUserSelected="onUserSelected" />
+              <contact-list v-if="model.mode === 'contact'" @onUserSelected="onUserSelected" :searchCntc='searchCntc' />
               <message-room-list v-if="model.mode === 'message'" @onRoomSelected="onRoomSelected" />
             </section>
 
@@ -221,12 +221,15 @@ let model = reactive({
   selectedUser: null,
   roomInfo: null,
   historyList: null,
+  search: null,
+  instTypeCd:[],
 })
 
 function onUserSelected(user) {
   model.selectedUser = user
   getActivityHistory(user.id)
 }
+
 function onRoomSelected(room) {
   console.log('room', JSON.stringify(room))
   model.roomInfo = room
@@ -241,6 +244,15 @@ function onTabSelected(idx) {
     tab1.value.classList.remove('active')
     tab2.value.classList.add('active')
   }
+}
+
+function searchCntc(){
+  let params  = {}
+  if(model.search) params = {...params, search: model.search}
+  if(model.instTypeCd && model.instTypeCd.length !== 0) params = {...params, instTypeCd: model.instTypeCd.join(',')}
+
+  console.log('실행' + JSON.stringify(params))
+  return params
 }
 
 function getActivityHistory(userId) {
