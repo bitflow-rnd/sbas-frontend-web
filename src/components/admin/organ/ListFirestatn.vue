@@ -133,7 +133,7 @@
                           <td>
                             <div class="item-cell-box">
                               <div class="sbox w-175px" @click='getSido()'>
-                                <select v-model='filterFs.dstrCd1'  @change='getGugun(filterFs.dstrCd1)'>
+                                <select v-model='filterFs.dstr1Cd'  @change='getGugun(filterFs.dstr1Cd)'>
                                   <option value=''>시/도 전체</option>
                                   <option v-for='(item, i) in cmSido' :key='i' :value='item.cdId'>
                                     {{ item.cdNm }}
@@ -141,7 +141,7 @@
                                 </select>
                               </div>
                               <div class="sbox w-175px ms-2">
-                                <select v-model='filterFs.dstrCd2' @change='getFireStatn' :disabled="filterFs.dstrCd1===''">
+                                <select v-model='filterFs.dstr2Cd' @change='getFireStatn' :disabled="filterFs.dstr1Cd===''">
 
                                   <option value=''>시/군/구 전체</option>
                                   <option v-for='(item, i) in cmGugun' :key='i' :value='item.cdId'>
@@ -239,8 +239,8 @@
                             </div>
                           </td>
                           <td>{{ firestatnList.count - i - startIndex }}</td>
-                          <td>{{ item.dstrCd1 }}</td>
-                          <td>{{ item.dstrCd2 }}</td>
+                          <td>{{ item.dstr1Cd }}</td>
+                          <td>{{ item.dstr2Cd }}</td>
                           <td>{{ item.instNm }}</td>
                           <td>{{ item.chrgTelno }}</td>
                           <td>{{ item.crewCount ?? '0' }}</td>
@@ -499,7 +499,7 @@
                       <td colspan="3">
                         <div class="item-cell-box">
                           <div class="sbox w-175px">
-                            <select v-model="fsForm.dstrCd1" @change="getGugun(fsForm.dstrCd1)">
+                            <select v-model="fsForm.dstr1Cd" @change="getGugun(fsForm.dstr1Cd)">
                               <option value="null">시/도</option>
                               <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
@@ -508,7 +508,7 @@
                           </div>
 
                           <div class="sbox w-175px ms-3">
-                            <select v-model="fsForm.dstrCd2">
+                            <select v-model="fsForm.dstr2Cd">
                               <option value="null">시/군/구</option>
                               <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
@@ -672,7 +672,7 @@
                       <td colspan="3">
                         <div class="item-cell-box">
                           <div class="sbox w-175px">
-                            <select v-model="fsDetail.dstrCd1" @change="getGugun(fsDetail.dstrCd1)">
+                            <select v-model="fsDetail.dstr1Cd" @change="getGugun(fsDetail.dstr1Cd)">
                               <option value="">시/도</option>
                               <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
@@ -681,7 +681,7 @@
                           </div>
 
                           <div class="sbox w-175px ms-3">
-                            <select v-model="fsDetail.dstrCd2">
+                            <select v-model="fsDetail.dstr2Cd">
                               <option value="null">시/군/구</option>
                               <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
                                 {{ item.cdNm }}
@@ -1348,8 +1348,8 @@ export default {
       pageFm: 1,
       filterFs: {
         kwd:'',
-        dstrCd1: '',
-        dstrCd2: '',
+        dstr1Cd: '',
+        dstr2Cd: '',
         chrgTelno: ''
       },
       filterFm:{
@@ -1357,8 +1357,8 @@ export default {
         kwf:'',
       },
       fsForm: {
-        dstrCd1: null,
-        dstrCd2: null,
+        dstr1Cd: null,
+        dstr2Cd: null,
         rmk: ''
       },
       fmForm: {
@@ -1396,8 +1396,8 @@ export default {
           params = {...params, instId: this.filterFs.kwd}
         }
       }
-      if(this.filterFs.dstrCd1) params = {...params, dstrCd1: this.filterFs.dstrCd1}
-      if(this.filterFs.dstrCd2) params = {...params, dstrCd2: this.filterFs.dstrCd2}
+      if(this.filterFs.dstr1Cd) params = {...params, dstr1Cd: this.filterFs.dstr1Cd}
+      if(this.filterFs.dstr2Cd) params = {...params, dstr2Cd: this.filterFs.dstr2Cd}
 
       return params
     },
@@ -1448,10 +1448,10 @@ export default {
     getSido,
     toggleCheckbox,
     getGugun(){
-      if(this.filterFs.dstrCd1){
-        this.$store.dispatch('admin/getGuGun',this.filterFs.dstrCd1)
+      if(this.filterFs.dstr1Cd){
+        this.$store.dispatch('admin/getGuGun',this.filterFs.dstr1Cd)
       }
-      this.filterFs.dstrCd2=''
+      this.filterFs.dstr2Cd=''
       this.getFireStatn()
     },
     getTelno,

@@ -107,7 +107,7 @@
                         <td>
                           <div class="item-cell-box">
                             <div class="sbox w-175px">
-                              <select v-model="search.dstrCd1" @change="changeDstrCd1()">
+                              <select v-model="search.dstr1Cd" @change="changeDstrCd1()">
                                 <option value="" id="null">시/도 전체</option>
                                 <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
                                   {{ item.cdNm }}
@@ -116,7 +116,7 @@
                             </div>
 
                             <div class="sbox w-175px ms-2">
-                              <select v-model="search.dstrCd2" :disabled="enableSecondAddressPicker" @change="changeDstrCd2()">
+                              <select v-model="search.dstr2Cd" :disabled="enableSecondAddressPicker" @change="changeDstrCd2()">
                                 <option value="" id="null">시/군/구 전체</option>
                                 <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
                                   {{ item.cdNm }}
@@ -2421,15 +2421,15 @@ export default {
       return this.page * this.displayRowsCount;
     },
     enableSecondAddressPicker() {
-      return this.search['dstrCd1'] === "";
+      return this.search['dstr1Cd'] === "";
     },
     passwordsMatch() {
       return this.form.pw !== this.form.valPw;
     },
     filterData() {
       let params = {};
-      if (this.search['dstrCd1']) params = {...params, dstr1Cd: this.search['dstrCd1']};
-      if (this.search['dstrCd2']) params = {...params, dstr2Cd: this.search['dstrCd2']};
+      if (this.search['dstr1Cd']) params = {...params, dstr1Cd: this.search['dstr1Cd']};
+      if (this.search['dstr2Cd']) params = {...params, dstr2Cd: this.search['dstr2Cd']};
       if (this.search['kwd']) params = {...params, userNm: this.search['kwd']};
       if (this.search['kwd']) params = {...params, telno: this.search['kwd']};
       if (this.search.instTypeCd && this.search.instTypeCd.length !== 0) params = {...params, instTypeCd: this.search.instTypeCd.join(',')};
@@ -2453,8 +2453,8 @@ export default {
       page: 1,
       displayRowsCount: 15,
       search: {
-        dstrCd1: '',
-        dstrCd2: '',
+        dstr1Cd: '',
+        dstr2Cd: '',
         kwd:'',
         instTypeCd: [],
         ptTypeCd: [],
@@ -2591,8 +2591,8 @@ export default {
       this.page = newPage;
     },
     changeDstrCd1() {
-      this.getSecondAddress(this.search['dstrCd1']);
-      this.search['dstrCd2'] = '';
+      this.getSecondAddress(this.search['dstr1Cd']);
+      this.search['dstr2Cd'] = '';
       this.searchUserList();
     },
     changeDstrCd2() {
@@ -2838,7 +2838,7 @@ export default {
       this.form = { ...this.initialForm };
     },
     getMedInst() {
-      let data = { dstrCd1: this.form.dutyDstr1Cd, dstrCd2: this.form.dutyDstr2Cd, instTypeCd: this.form.instTypeCd }
+      let data = { dstr1Cd: this.form.dutyDstr1Cd, dstr2Cd: this.form.dutyDstr2Cd, instTypeCd: this.form.instTypeCd }
       this.$store.dispatch('admin/getOrganMedi',data)
     },
     handleInstIdChange() {

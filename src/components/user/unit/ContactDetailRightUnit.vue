@@ -49,21 +49,21 @@
 
             <div class="list-body-box">
               <ul>
-                <li>
-                  <a href="javascript:void(0)" class="item-box state-ing" role="button">
+                <li v-for='(item, idx) in props.historyList' :key='idx'>
+                  <a href="javascript:void(0)" class="item-box state-finish" role="button">
                     <div class="info-box">
                       <div class="state-box">
-                        <div class="state-txt type-ing">{{ props.historyList[0]['activityDetail'] }}</div>
+                        <div class="state-txt type-finish">{{ item['activityDetail'] }}</div>
                       </div>
 
                       <div class="user-box">
-                        <div class="subject-box"><b>{{ props.historyList[0]['ptNm'] }}</b>
-                          &nbsp;&nbsp;({{ props.historyList[0]['gndr'] }}/{{ props.historyList[0]['age'] }}세/{{ props.historyList[0]['dstr1CdNm'] }} {{ props.historyList[0]['dstr2CdNm'] }})</div>
+                        <div class="subject-box"><b>{{ item['ptNm'] }}</b>
+                          &nbsp;&nbsp;({{ item['gndr'] }}/{{ item['age'] }}세/{{ item['dstr1CdNm'] }} {{ item['dstr2CdNm'] }})</div>
 <!--                        <div class="con-box">#투석 #중증 #고혈압</div>-->
                       </div>
                     </div>
 
-                    <div class="date-box">{{ getTLDt(props.historyList[0]['rgstDttm'], 2) }}</div>
+                    <div class="date-box">{{ getTLDt(item['rgstDttm'], 2) }}</div>
                   </a>
                 </li>
 <!--                <li>-->

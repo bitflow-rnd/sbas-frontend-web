@@ -1694,7 +1694,7 @@
                                 </select>
                               </div>
                               <div class="sbox ms-3" style="width: 170px">
-                                <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstrCd1===''">
+                                <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstr1Cd===''">
                                   <option value='0'>보건소 선택</option>
                                   <option v-for="(item,i) in organMedi" :key="i"
                                           :value='item.instNm'>{{ item.instNm }}</option>

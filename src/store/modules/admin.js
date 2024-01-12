@@ -54,7 +54,7 @@ export default {
         },
         setFSDetail(state,payload){
           state.fsDetail = payload;
-          //this.dispatch('admin/getGuGun',state.fsDetail.dstrCd1);
+          //this.dispatch('admin/getGuGun',state.fsDetail.dstr1Cd);
         },
         setFMDetail(state,payload){
             state.fmDetail = payload;
@@ -365,8 +365,8 @@ export default {
             const token= sessionStorage.getItem('userToken')
             const request = {
                 instNm:data.instNm,
-                dstrCd1:data.dstrCd1,
-                dstrCd2:data.dstrCd2,
+                dstr1Cd:data.dstr1Cd,
+                dstr2Cd:data.dstr2Cd,
                 chrgId:data.chrgId,
                 chrgNm:data.chrgNm,
                 chrgTelno:data.chrgTelno,
@@ -399,8 +399,8 @@ export default {
             const request ={
                 instId:data.instId,
                 instNm:data.instNm,
-                dstrCd1:data.dstrCd1,
-                dstrCd2:data.dstrCd2,
+                dstr1Cd:data.dstr1Cd,
+                dstr2Cd:data.dstr2Cd,
                 chrgId:data.chrgId,
                 chrgNm:data.chrgNm,
                 chrgTelno:data.chrgTelno,
