@@ -170,7 +170,8 @@ let model = reactive({
   reqList:[],
   organList:[],
   favUsersList :[],
-  selectedUser: null
+  selectedUser: null,
+  userCnt : 0
 })
 
 const searchCntcRef = reactive(props.searchCntc)
@@ -191,6 +192,7 @@ const executeSearch = (searchParams = searchCntcRef) => {
     store.dispatch('user/getUsersListSync').then((result) => {
       model.reqList = result?.items?.filter((item) => item['userStatCd']==='URST0001')
       model.organList = result?.items?.filter((item) => item['userStatCd']==='URST0002')
+      console.log(model.userCnt)
     })
   }
   store.dispatch('user/getFavUsersList').then((result2) => {
@@ -204,6 +206,7 @@ watch(searchCntcRef,(newSearchCntc)=>{
 
 function onSelectUser(user) {
   model.selectedUser = user
+  console.log(model.userCnt)
   emit('onUserSelected', user)
 }
 

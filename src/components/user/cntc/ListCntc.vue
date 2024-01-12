@@ -96,7 +96,7 @@
                     <div class="tabs-list">
                       <a @click="onTabSelected(0)" class="tabs-btn active" role="button" ref="tab1">
                         <span class="txt">연락처</span>
-                        <span class="cnt bg-primary">17</span>
+                        <span class="cnt bg-primary">{{model.userCnt}}</span>
                       </a>
                       <a @click="onTabSelected(1)" class="tabs-btn" role="button" ref="tab2">
                         <span class="txt">메시지</span>
@@ -208,7 +208,7 @@ import NoContactDetailRightUnit from '@/components/user/unit/NoContactDetailRigh
 import ContactDetailRightUnit from '@/components/user/unit/ContactDetailRightUnit.vue'
 import ContactList from '@/components/user/unit/ContactList.vue'
 import MessageRoomList from '@/components/user/unit/MessageRoomList'
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import MessageRoomDetail from '@/components/user/unit/MessageRoomDetail'
 import NoMessageRoomDetail from '@/components/user/unit/NoMessageRoomDetail'
 import store from '@/store/store'
@@ -225,8 +225,15 @@ let model = reactive({
   historyList: null,
   search: null,
   instTypeCd:[],
+  userCnt: 0
 })
 
+onMounted(()=>{
+  store.dispatch('user/getUsersListSync').then((result) => {
+    model.userCnt = result?.totalCnt
+    console.log(model.userCnt)
+  })
+})
 function onUserSelected(user) {
   model.selectedUser = user
   getActivityHistory(user.id)
