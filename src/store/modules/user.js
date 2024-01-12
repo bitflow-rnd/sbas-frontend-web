@@ -313,14 +313,21 @@ export default {
           })
       })
     },
-    getSearchUser(params) {
-      const url = `${API_PROD}/api/v1/private/user/users/${params}`
+    getSearchUser(comment,data) {
+      const url = `${API_PROD}/api/v1/private/user/users`
       const token = sessionStorage.getItem('userToken')
+
+      //const decodedParams = decodeURIComponent(data);
+      //const parsedParams = JSON.parse(decodedParams);
+
+      console.log('axios 요청 URL:', url);
+      console.log('전달된 params:', data);
 
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',
           url: url,
+          params: data,
           headers: {
             Authorization: `Bearer ${token}`
           }

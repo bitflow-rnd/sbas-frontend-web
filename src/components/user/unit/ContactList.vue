@@ -152,7 +152,7 @@
 
 <script setup>
 import { useStore } from 'vuex'
-import { defineProps, defineEmits, onMounted, reactive, watch, ref } from 'vue'
+import { defineProps, defineEmits, onMounted, reactive, watch } from 'vue'
 import { getPmgr } from '@/util/ui'
 
 const store = useStore()
@@ -171,23 +171,22 @@ let model = reactive({
   selectedUser: null
 })
 
-const searchCntcRef = ref(props.searchCntc)
+const searchCntcRef = reactive(props.searchCntc)
 
 onMounted( () => {
 
   executeSearch()
   console.log('onMounted')
-  watch(searchCntcRef, (newSearchCntc) => {
-    console.log('바뀜REF')
-    executeSearch(newSearchCntc)
-  })
 })
 
-const executeSearch = (searchParams = searchCntcRef.value) => {
-  console.log(searchParams)
-  if(searchParams.search || searchParams.instTypeCd){
-    store.dispatch('user/getSearchUser',searchParams).then((result)=>{
+const executeSearch = (searchParams = searchCntcRef) => {
+  const params = searchParams.valueOf()
+  console.log(params+'키워드')
+  if(searchParams?.search || searchParams?.instTypeCd){
+    store.dispatch('user/getSearchUser',params).then((result)=>{
+      console.log(result)
       model.usersList = result
+      console.log(model.usersList)
     })
   } else {
     store.dispatch('user/getUsersListSync').then((result) => {
@@ -199,10 +198,10 @@ const executeSearch = (searchParams = searchCntcRef.value) => {
   })
 }
 
-watch(()=>props.searchCntc,(newSearchCntc)=>{
+watch(searchCntcRef,(newSearchCntc)=>{
   console.log('바뀜props')
-  searchCntcRef.value = newSearchCntc
-})
+  executeSearch(newSearchCntc)
+}, { deep: true })
 
 function onSelectUser(user) {
   model.selectedUser = user
