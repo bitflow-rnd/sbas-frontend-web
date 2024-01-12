@@ -257,7 +257,7 @@ export default {
     },
     getFavUsersList() {
       const url = `${API_PROD}/api/v1/private/user/contact-users`
-      const token = sessionStorage.getItem('userToken')
+      const token= sessionStorage.getItem('userToken')
 
       return new Promise((resolve,reject)=>{
           axios({
@@ -303,6 +303,34 @@ export default {
         axios({
           method: 'get',
           url: url
+        })
+          .then((response) => {
+            resolve(response.data?.result)
+          })
+          .catch((e) => {
+            console.log(e)
+            reject(e)
+          })
+      })
+    },
+    getSearchUser(comment,data) {
+      const url = `${API_PROD}/api/v1/private/user/users`
+      const token = sessionStorage.getItem('userToken')
+
+      //const decodedParams = decodeURIComponent(data);
+      //const parsedParams = JSON.parse(decodedParams);
+
+      console.log('axios 요청 URL:', url);
+      console.log('전달된 params:', data);
+
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'get',
+          url: url,
+          params: data,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         })
           .then((response) => {
             resolve(response.data?.result)
