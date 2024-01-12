@@ -255,8 +255,6 @@ function searchCntc(){
   if(model.search) params = {...params, search: model.search}
   if(model.instTypeCd && model.instTypeCd.length !== 0) params = {...params, instTypeCd: model.instTypeCd.join(',')}
 
-  console.log('실행' + JSON.stringify(params))
-  console.log(params)
   return params
 }
 

@@ -54,9 +54,9 @@
           </a>
         </div>
 
-        <div class="list-body-box" v-if="model.usersList">
+        <div class="list-body-box" v-if="model.organList">
           <div
-            v-for="(user, idx) in model.usersList.items?.filter((item) => item['userStatCd'] === 'URST0001')"
+            v-for="(user, idx) in model.organList"
             :key="idx"
             role="button"
             class="item-box"
@@ -71,7 +71,7 @@
               <div class="info-box">
                 <div class="subject-box">
                   {{ user['userNm'] }}
-                  <div class="label-txt text-primary">{{ user['jobCdNm'] }}</div>
+                  <div class="label-txt text-primary">{{ user['jobCdNm'] ? user['jobCdNm'] : getPmgr(user['jobCd'])  }}</div>
                 </div>
                 <div class="con-box">
                   {{ getUserBelong(user) }}
@@ -96,9 +96,9 @@
             <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
           </a>
         </div>
-        <div class="list-body-box" v-if="model.usersList">
+        <div class="list-body-box" v-if="model.reqList">
           <div
-              v-for="(user, idx) in model.usersList.items?.filter((item) => item['userStatCd'] === 'URST0002')"
+              v-for="(user, idx) in model.reqList"
               :key="idx"
               role="button"
               class="item-box"
@@ -113,7 +113,7 @@
               <div class="info-box">
                 <div class="subject-box">
                   {{ user['userNm'] }}
-                  <div class="label-txt text-primary">{{ user['jobCdNm'] }}</div>
+                  <div class="label-txt text-primary">{{ user['jobCdNm'] ? user['jobCdNm'] : getPmgr(user['jobCd']) }}</div>
                 </div>
                 <div class="con-box">
                   {{ getUserBelong(user) }}
@@ -167,6 +167,8 @@ let listBoxesHide = reactive({
 })
 let model = reactive({
   usersList: [],
+  reqList:[],
+  organList:[],
   favUsersList :[],
   selectedUser: null
 })
@@ -176,21 +178,19 @@ const searchCntcRef = reactive(props.searchCntc)
 onMounted( () => {
 
   executeSearch()
-  console.log('onMounted')
 })
 
 const executeSearch = (searchParams = searchCntcRef) => {
   const params = searchParams.valueOf()
-  console.log(params+'키워드')
   if(searchParams?.search || searchParams?.instTypeCd){
     store.dispatch('user/getSearchUser',params).then((result)=>{
-      console.log(result)
-      model.usersList = result
-      console.log(model.usersList)
+      model.reqList = result?.items?.filter((item) => item['userStatCd']==='URST0001')
+      model.organList = result?.items?.filter((item) => item['userStatCd']==='URST0002')
     })
   } else {
     store.dispatch('user/getUsersListSync').then((result) => {
-      model.usersList = result
+      model.reqList = result?.items?.filter((item) => item['userStatCd']==='URST0001')
+      model.organList = result?.items?.filter((item) => item['userStatCd']==='URST0002')
     })
   }
   store.dispatch('user/getFavUsersList').then((result2) => {
@@ -199,7 +199,6 @@ const executeSearch = (searchParams = searchCntcRef) => {
 }
 
 watch(searchCntcRef,(newSearchCntc)=>{
-  console.log('바뀜props')
   executeSearch(newSearchCntc)
 }, { deep: true })
 
