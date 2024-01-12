@@ -123,9 +123,9 @@
                       </article>
                     </div>
                     <div class="input-box">
-                      <input type="text" v-model='model.search' @keyup.enter='searchCntc' placeholder="이름, 휴대폰번호 또는 소속기관명" />
-                      <a @click='searchCntc' role='button' class="input-btn">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                      <input type="text" v-model='kwd' @keyup.enter='searchCntc' placeholder="이름, 휴대폰번호 또는 소속기관명" />
+                      <a class="input-btn">
+                        <i @click='searchCntc' role='button' class="fa-solid fa-magnifying-glass"></i>
                       </a>
                     </div>
                   </div>
@@ -216,6 +216,8 @@ import store from '@/store/store'
 const tab1 = ref()
 const tab2 = ref()
 
+let kwd = ''
+
 let model = reactive({
   mode: 'contact',
   selectedUser: null,
@@ -246,12 +248,15 @@ function onTabSelected(idx) {
   }
 }
 
+
 function searchCntc(){
+  if(kwd!=='') model.search = kwd
   let params  = {}
   if(model.search) params = {...params, search: model.search}
   if(model.instTypeCd && model.instTypeCd.length !== 0) params = {...params, instTypeCd: model.instTypeCd.join(',')}
 
   console.log('실행' + JSON.stringify(params))
+  console.log(params)
   return params
 }
 
