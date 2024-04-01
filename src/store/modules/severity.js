@@ -24,8 +24,6 @@ export default {
       state.severityData.hospId = null
       state.severityData.anlyDt = null
       state.severityData.first = []
-      state.severityData.second = []
-      state.severityData.third = []
       if (payload) {
         state.severityData.ptId = payload[0].ptId
         state.severityData.hospId = payload[0].hospId
@@ -35,22 +33,12 @@ export default {
             return a.prdtDt.localeCompare(b.prdtDt)
           })
           .forEach((prdtRow) => {
-            const mean = parseFloat(prdtRow.svrtProbMean?.replace(',', '.'))
-            const std = (prdtRow.svrtProbStd !== 'nul') ? parseFloat(prdtRow.svrtProbStd.replace(',', '.')) : 0
             const date = new Date(
               `${prdtRow.prdtDt.substring(0, 4)}-${prdtRow.prdtDt.substring(4, 6)}-${prdtRow.prdtDt.substring(6)}`
             ).getTime()
             state.severityData.first.push({
               prdtDt: date,
-              svrtProb: mean + std > 1.0 ? 1.0 : mean + std
-            })
-            state.severityData.second.push({
-              prdtDt: date,
-              svrtProb: mean
-            })
-            state.severityData.third.push({
-              prdtDt: date,
-              svrtProb: mean - std < 0.0 ? 0.0 : mean - std
+              CovSF: parseFloat(prdtRow.CovSF?.replace(',', '.'))
             })
         })
       }
