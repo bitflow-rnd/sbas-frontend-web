@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "test" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "test" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -46,6 +46,6 @@ jobs:
           username: ${{ secrets.FTP_USER_SBAS_WEB }}             
           password: ${{ secrets.FTP_PW_SBAS_WEB }}                    
           local_path: './dist/*'
-          remote_path: '/C:/www/test.smartbas.org'
+          remote_path: '/C:/www/dev.smartbas.org'
           sftp_only: true          
           sftpArgs: '-o ConnectTimeout=5'
