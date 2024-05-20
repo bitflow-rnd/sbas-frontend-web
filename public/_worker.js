@@ -12,7 +12,7 @@ export default {
 
 	async fetch(req, env, ctx) {
 
-		const url         = new URL(req.url)
+    const url         = new URL(req.url)
 		const search     = url.search?url.search:''
 		const path       = url.pathname + search
 		const host       = url.protocol + "//" + url.host
