@@ -2445,7 +2445,7 @@
                                   <input
                                       type="radio"
                                       name="toggle4-1"
-                                      value="Y"
+                                      value="DNRA0001"
                                       v-model="svInfo.dnrAgreYn"
                                   />
                                   <span class="txt">동의</span>
@@ -2455,7 +2455,7 @@
                                   <input
                                       type="radio"
                                       name="toggle4-1"
-                                      value="N"
+                                      value="DNRA0002"
                                       v-model="svInfo.dnrAgreYn"
                                   />
                                   <span class="txt">비동의</span>
@@ -2465,7 +2465,7 @@
                                   <input
                                       type="radio"
                                       name="toggle4-1"
-                                      value="X"
+                                      value="DNRA0003"
                                       v-model="svInfo.dnrAgreYn"
                                   />
                                   <span class="txt">해당없음</span>
@@ -3159,9 +3159,9 @@
 </template>
 
 <script>
-import DataPagination from '@/components/user/unit/DataPagination'
+import DataPagination from '@/components/user/unit/DataPagination.vue'
 import {mapState} from 'vuex'
-import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle'
+import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
 import {
   backBtn,
   getAge, getDt,

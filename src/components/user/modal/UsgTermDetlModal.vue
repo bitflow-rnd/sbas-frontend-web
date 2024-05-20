@@ -200,7 +200,3 @@
     <!--end::Modal dialog-->
   </div>
 </template>
-
-<script setup></script>
-
-<style scoped></style>

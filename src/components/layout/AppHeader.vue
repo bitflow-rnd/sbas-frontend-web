@@ -711,8 +711,8 @@
 import { mapState } from 'vuex'
 import { getTelno, getAuthCd, getPmgr, getPtType, ptType } from '@/util/ui'
 import store from '@/store/store'
-import MyInfoModal from '@/components/user/modal/MyInfoModal'
-import MyInfoModModal from '@/components/user/modal/MyInfoModModal'
+import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
+import MyInfoModModal from '@/components/user/modal/MyInfoModModal.vue'
 //import mitt from 'mitt'
 
 

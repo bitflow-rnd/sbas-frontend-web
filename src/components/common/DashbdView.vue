@@ -150,7 +150,7 @@
                                             <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">칠곡경북대병원</span></div>
                                             <div class="rate-box">
                                                 <span class="text-gray-600">전 주 대비</span>
-                                                <span class="text-danger">7.4% ▲</span>
+                                                <span class="text-danger">7.4% ▼</span>
                                             </div>
 
                                         </div>
@@ -208,6 +208,318 @@
                                         </div>
 
                                     </div>
+
+                                    <div class="card-box">
+
+                                      <div class="top-box">
+                                        <div class="subject-box">
+                                          <div class="label-txt bg-primary">월간</div>
+                                          <div class="subject-txt">병상배정 현황</div>
+                                        </div>
+                                        <div class="remove-box">
+                                          <a href="javascript:void(0)">
+                                            <i class="fa-solid fa-circle-minus minus"></i>
+                                          </a>
+                                        </div>
+                                      </div>
+
+                                      <div class="bottom-box text-end pt-4">
+
+                                        <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">812</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                        <div class="rate-box">
+                                          <span class="text-gray-600">전 주 대비</span>
+                                          <span class="text-danger">2.4% ▼</span>
+                                        </div>
+
+                                      </div>
+
+                                    </div>
+
+                                  <div class="card-box">
+
+                                    <div class="top-box">
+                                      <div class="subject-box">
+                                        <div class="label-txt bg-primary">월간</div>
+                                        <div class="subject-txt">이송/배차 현황</div>
+                                      </div>
+                                      <div class="remove-box">
+                                        <a href="javascript:void(0)">
+                                          <i class="fa-solid fa-circle-minus minus"></i>
+                                        </a>
+                                      </div>
+                                    </div>
+
+                                    <div class="bottom-box text-end pt-4">
+
+                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">155</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="rate-box">
+                                        <span class="text-gray-600">전 주 대비</span>
+                                        <span class="text-danger">5.4% ▼</span>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-box">
+
+                                    <div class="top-box">
+                                      <div class="subject-box">
+                                        <div class="label-txt bg-primary">월간</div>
+                                        <div class="subject-txt">입/퇴원처리 현황</div>
+                                      </div>
+                                      <div class="remove-box">
+                                        <a href="javascript:void(0)">
+                                          <i class="fa-solid fa-circle-minus minus"></i>
+                                        </a>
+                                      </div>
+                                    </div>
+
+                                    <div class="bottom-box text-end pt-4">
+
+                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">255</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="rate-box">
+                                        <span class="text-gray-600">전 주 대비</span>
+                                        <span class="text-danger">5.4% ▼</span>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-box">
+
+                                    <div class="top-box">
+                                      <div class="subject-box">
+                                        <div class="label-txt bg-primary">월간</div>
+                                        <div class="subject-txt">완료 처리 현황</div>
+                                      </div>
+                                      <div class="remove-box">
+                                        <a href="javascript:void(0)">
+                                          <i class="fa-solid fa-circle-minus minus"></i>
+                                        </a>
+                                      </div>
+                                    </div>
+
+                                    <div class="bottom-box text-end pt-4">
+
+                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">301</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="rate-box">
+                                        <span class="text-gray-600">전 주 대비</span>
+                                        <span class="text-primary">5.4% ▲</span>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-box">
+
+                                    <div class="top-box">
+                                      <div class="subject-box">
+                                        <div class="label-txt bg-primary">월간</div>
+                                        <div class="subject-txt">배정승인 Staff</div>
+                                      </div>
+                                      <div class="remove-box">
+                                        <a href="javascript:void(0)">
+                                          <i class="fa-solid fa-circle-minus minus"></i>
+                                        </a>
+                                      </div>
+                                    </div>
+
+                                    <div class="bottom-box text-end pt-4">
+
+                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">홍*혜</span> <span class="text-black fw-bold" style="font-size: 20px;">395명</span></div>
+                                      <div class="rate-box">
+                                        <span class="text-gray-600">전 주 대비</span>
+                                        <span class="text-danger">5.4% ▼</span>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-box">
+
+                                    <div class="top-box">
+                                      <div class="subject-box">
+                                        <div class="label-txt bg-primary">월간</div>
+                                        <div class="subject-txt">중증도 직접선택 현황</div>
+                                      </div>
+                                      <div class="remove-box">
+                                        <a href="javascript:void(0)">
+                                          <i class="fa-solid fa-circle-minus minus"></i>
+                                        </a>
+                                      </div>
+                                    </div>
+
+                                    <div class="bottom-box text-end pt-4">
+
+                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">123</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="rate-box">
+                                        <span class="text-gray-600">전 주 대비</span>
+                                        <span class="text-danger">5.4% ▼</span>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-box">
+
+                                    <div class="top-box">
+                                      <div class="subject-box">
+                                        <div class="label-txt bg-primary">월간</div>
+                                        <div class="subject-txt">중증도 중증 현황</div>
+                                      </div>
+                                      <div class="remove-box">
+                                        <a href="javascript:void(0)">
+                                          <i class="fa-solid fa-circle-minus minus"></i>
+                                        </a>
+                                      </div>
+                                    </div>
+
+                                    <div class="bottom-box text-end pt-4">
+
+                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">241</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="rate-box">
+                                        <span class="text-gray-600">전 주 대비</span>
+                                        <span class="text-danger">12.4% ▼</span>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-box">
+
+                                    <div class="top-box">
+                                      <div class="subject-box">
+                                        <div class="label-txt bg-primary">월간</div>
+                                        <div class="subject-txt">중증도 준중증 현황</div>
+                                      </div>
+                                      <div class="remove-box">
+                                        <a href="javascript:void(0)">
+                                          <i class="fa-solid fa-circle-minus minus"></i>
+                                        </a>
+                                      </div>
+                                    </div>
+
+                                    <div class="bottom-box text-end pt-4">
+
+                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">32</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="rate-box">
+                                        <span class="text-gray-600">전 주 대비</span>
+                                        <span class="text-danger">9.7% ▼</span>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-box">
+
+                                    <div class="top-box">
+                                      <div class="subject-box">
+                                        <div class="label-txt bg-primary">월간</div>
+                                        <div class="subject-txt">중증도 중등증 현황</div>
+                                      </div>
+                                      <div class="remove-box">
+                                        <a href="javascript:void(0)">
+                                          <i class="fa-solid fa-circle-minus minus"></i>
+                                        </a>
+                                      </div>
+                                    </div>
+
+                                    <div class="bottom-box text-end pt-4">
+
+                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">452</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="rate-box">
+                                        <span class="text-gray-600">전 주 대비</span>
+                                        <span class="text-primary">8.7% ▲</span>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-box">
+
+                                    <div class="top-box">
+                                      <div class="subject-box">
+                                        <div class="label-txt bg-primary">월간</div>
+                                        <div class="subject-txt">중증도 일반 현황</div>
+                                      </div>
+                                      <div class="remove-box">
+                                        <a href="javascript:void(0)">
+                                          <i class="fa-solid fa-circle-minus minus"></i>
+                                        </a>
+                                      </div>
+                                    </div>
+
+                                    <div class="bottom-box text-end pt-4">
+
+                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">1,212</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="rate-box">
+                                        <span class="text-gray-600">전 주 대비</span>
+                                        <span class="text-danger">5.4% ▼</span>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-box">
+
+                                    <div class="top-box">
+                                      <div class="subject-box">
+                                        <div class="label-txt bg-primary">월간</div>
+                                        <div class="subject-txt">일반격리 가용 병상 현황</div>
+                                      </div>
+                                      <div class="remove-box">
+                                        <a href="javascript:void(0)">
+                                          <i class="fa-solid fa-circle-minus minus"></i>
+                                        </a>
+                                      </div>
+                                    </div>
+
+                                    <div class="bottom-box text-end pt-4">
+
+                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">213</span> <span class="text-black fw-bold" style="font-size: 20px;">개</span></div>
+                                      <div class="rate-box">
+                                        <span class="text-gray-600">전 주 대비</span>
+                                        <span class="text-danger">5.4% ▼</span>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-box">
+
+                                    <div class="top-box">
+                                      <div class="subject-box">
+                                        <div class="label-txt bg-primary">월간</div>
+                                        <div class="subject-txt">음압격리 가용 병상 현황</div>
+                                      </div>
+                                      <div class="remove-box">
+                                        <a href="javascript:void(0)">
+                                          <i class="fa-solid fa-circle-minus minus"></i>
+                                        </a>
+                                      </div>
+                                    </div>
+
+                                    <div class="bottom-box text-end pt-4">
+
+                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">113</span> <span class="text-black fw-bold" style="font-size: 20px;">개</span></div>
+                                      <div class="rate-box">
+                                        <span class="text-gray-600">전 주 대비</span>
+                                        <span class="text-danger">4.5% ▼</span>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
 
                                     <a href="javascript:void(0);" class="card-box">
 
@@ -360,20 +672,17 @@
 
                     </div>
 
-
-
-
                 </div>
-
 
             </div>
 
         </div>
+
     </article>
+
 </template>
 
 <script setup>
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

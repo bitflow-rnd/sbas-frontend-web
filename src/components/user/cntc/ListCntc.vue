@@ -96,7 +96,7 @@
                     <div class="tabs-list">
                       <a @click="onTabSelected(0)" class="tabs-btn active" role="button" ref="tab1">
                         <span class="txt">연락처</span>
-                        <span class="cnt bg-primary">17</span>
+                        <span class="cnt bg-primary">{{model.userCnt}}</span>
                       </a>
                       <a @click="onTabSelected(1)" class="tabs-btn" role="button" ref="tab2">
                         <span class="txt">메시지</span>
@@ -123,9 +123,9 @@
                       </article>
                     </div>
                     <div class="input-box">
-                      <input type="text" placeholder="이름, 휴대폰번호 또는 소속기관명" />
-                      <a href="javascript:void(0)" class="input-btn">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                      <input type="text" v-model='kwd' @keyup.enter='searchCntc' placeholder="이름, 휴대폰번호 또는 소속기관명" />
+                      <a class="input-btn">
+                        <i @click='searchCntc' role='button' class="fa-solid fa-magnifying-glass"></i>
                       </a>
                     </div>
                   </div>
@@ -136,31 +136,31 @@
                     <div class="list-box">
                       <div class="item-box d-inline-flex flex-center justify-content-center">
                         <label>
-                          <input type="checkbox" />
-                          <span class="txt">보건소</span>
-                        </label>
-                      </div>
-                      <div class="item-box">
-                        <label>
-                          <input type="checkbox" />
+                          <input v-model='model.instTypeCd' value='ORGN0001' type="checkbox" @change='searchCntc' />
                           <span class="txt">병상배정반</span>
                         </label>
                       </div>
                       <div class="item-box">
                         <label>
-                          <input type="checkbox" />
-                          <span class="txt">의료진</span>
-                        </label>
-                      </div>
-                      <div class="item-box">
-                        <label>
-                          <input type="checkbox" />
+                          <input v-model='model.instTypeCd' value='ORGN0002' type="checkbox" @change='searchCntc' />
                           <span class="txt">구급대</span>
                         </label>
                       </div>
                       <div class="item-box">
                         <label>
-                          <input type="checkbox" />
+                          <input v-model='model.instTypeCd' value='ORGN0003' type="checkbox" @change='searchCntc' />
+                          <span class="txt">보건소</span>
+                        </label>
+                      </div>
+                      <div class="item-box">
+                        <label>
+                          <input v-model='model.instTypeCd' value='ORGN0004' type="checkbox" @change='searchCntc' />
+                          <span class="txt">의료진</span>
+                        </label>
+                      </div>
+                      <div class="item-box">
+                        <label>
+                          <input v-model='model.instTypeCd' value='ORGN0005' type="checkbox" @change='searchCntc' />
                           <span class="txt">전산</span>
                         </label>
                       </div>
@@ -169,7 +169,7 @@
                 </div>
               </div>
 
-              <contact-list v-if="model.mode === 'contact'" @onUserSelected="onUserSelected" />
+              <contact-list v-if="model.mode === 'contact'" @onUserSelected="onUserSelected" :searchCntc='searchCntc' />
               <message-room-list v-if="model.mode === 'message'" @onRoomSelected="onRoomSelected" />
             </section>
 
@@ -202,31 +202,43 @@
 </template>
 
 <script setup>
-import ContactDetailUnit from '@/components/user/unit/ContactDetailUnit'
-import NoContactDetailUnit from '@/components/user/unit/NoContactDetailUnit'
-import NoContactDetailRightUnit from '@/components/user/unit/NoContactDetailRightUnit'
+import ContactDetailUnit from '@/components/user/unit/ContactDetailUnit.vue'
+import NoContactDetailUnit from '@/components/user/unit/NoContactDetailUnit.vue'
+import NoContactDetailRightUnit from '@/components/user/unit/NoContactDetailRightUnit.vue'
 import ContactDetailRightUnit from '@/components/user/unit/ContactDetailRightUnit.vue'
 import ContactList from '@/components/user/unit/ContactList.vue'
-import MessageRoomList from '@/components/user/unit/MessageRoomList'
-import { reactive, ref } from 'vue'
-import MessageRoomDetail from '@/components/user/unit/MessageRoomDetail'
-import NoMessageRoomDetail from '@/components/user/unit/NoMessageRoomDetail'
+import MessageRoomList from '@/components/user/unit/MessageRoomList.vue'
+import { onMounted, reactive, ref } from 'vue'
+import MessageRoomDetail from '@/components/user/unit/MessageRoomDetail.vue'
+import NoMessageRoomDetail from '@/components/user/unit/NoMessageRoomDetail.vue'
 import store from '@/store/store'
 
 const tab1 = ref()
 const tab2 = ref()
+
+let kwd = ''
 
 let model = reactive({
   mode: 'contact',
   selectedUser: null,
   roomInfo: null,
   historyList: null,
+  search: null,
+  instTypeCd:[],
+  userCnt: 0
 })
 
+onMounted(()=>{
+  store.dispatch('user/getUsersListSync').then((result) => {
+    model.userCnt = result?.totalCnt
+    console.log(model.userCnt)
+  })
+})
 function onUserSelected(user) {
   model.selectedUser = user
   getActivityHistory(user.id)
 }
+
 function onRoomSelected(room) {
   console.log('room', JSON.stringify(room))
   model.roomInfo = room
@@ -241,6 +253,16 @@ function onTabSelected(idx) {
     tab1.value.classList.remove('active')
     tab2.value.classList.add('active')
   }
+}
+
+
+function searchCntc(){
+  if(kwd!=='') model.search = kwd
+  let params  = {}
+  if(model.search) params = {...params, search: model.search}
+  if(model.instTypeCd && model.instTypeCd.length !== 0) params = {...params, instTypeCd: model.instTypeCd.join(',')}
+
+  return params
 }
 
 function getActivityHistory(userId) {

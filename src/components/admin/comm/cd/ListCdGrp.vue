@@ -356,8 +356,7 @@
 </template>
 
 <script>
-
-import DataPagination from "@/components/user/unit/DataPagination";
+import DataPagination from "@/components/user/unit/DataPagination.vue"
 
 export default {
   components: {

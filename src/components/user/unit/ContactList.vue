@@ -54,9 +54,9 @@
           </a>
         </div>
 
-        <div class="list-body-box" v-if="model.usersList">
+        <div class="list-body-box" v-if="model.organList">
           <div
-            v-for="(user, idx) in model.usersList.items?.filter((item) => item['userStatCd'] === 'URST0001')"
+            v-for="(user, idx) in model.organList"
             :key="idx"
             role="button"
             class="item-box"
@@ -71,7 +71,7 @@
               <div class="info-box">
                 <div class="subject-box">
                   {{ user['userNm'] }}
-                  <div class="label-txt text-primary">{{ user['jobCdNm'] }}</div>
+                  <div class="label-txt text-primary">{{ user['jobCdNm'] ? user['jobCdNm'] : getPmgr(user['jobCd'])  }}</div>
                 </div>
                 <div class="con-box">
                   {{ getUserBelong(user) }}
@@ -96,9 +96,9 @@
             <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
           </a>
         </div>
-        <div class="list-body-box" v-if="model.usersList">
+        <div class="list-body-box" v-if="model.reqList">
           <div
-              v-for="(user, idx) in model.usersList.items?.filter((item) => item['userStatCd'] === 'URST0002')"
+              v-for="(user, idx) in model.reqList"
               :key="idx"
               role="button"
               class="item-box"
@@ -113,7 +113,7 @@
               <div class="info-box">
                 <div class="subject-box">
                   {{ user['userNm'] }}
-                  <div class="label-txt text-primary">{{ user['jobCdNm'] }}</div>
+                  <div class="label-txt text-primary">{{ user['jobCdNm'] ? user['jobCdNm'] : getPmgr(user['jobCd']) }}</div>
                 </div>
                 <div class="con-box">
                   {{ getUserBelong(user) }}
@@ -152,11 +152,13 @@
 
 <script setup>
 import { useStore } from 'vuex'
-import { defineEmits, onMounted, reactive } from 'vue'
+import { defineProps, defineEmits, onMounted, reactive, watch } from 'vue'
 import { getPmgr } from '@/util/ui'
 
 const store = useStore()
 const emit = defineEmits(['onUserSelected'])
+const props = defineProps(['searchCntc'])
+
 let listBoxesHide = reactive({
   request: false,
   favourite: false,
@@ -165,21 +167,46 @@ let listBoxesHide = reactive({
 })
 let model = reactive({
   usersList: [],
+  reqList:[],
+  organList:[],
   favUsersList :[],
-  selectedUser: null
+  selectedUser: null,
+  userCnt : 0
 })
 
-onMounted(() => {
-  store.dispatch('user/getUsersListSync').then((result) => {
-    model.usersList = result
-  })
+const searchCntcRef = reactive(props.searchCntc)
+
+onMounted( () => {
+
+  executeSearch()
+})
+
+const executeSearch = (searchParams = searchCntcRef) => {
+  const params = searchParams.valueOf()
+  if(searchParams?.search || searchParams?.instTypeCd){
+    store.dispatch('user/getSearchUser',params).then((result)=>{
+      model.reqList = result?.items?.filter((item) => item['userStatCd']==='URST0001')
+      model.organList = result?.items?.filter((item) => item['userStatCd']==='URST0002')
+    })
+  } else {
+    store.dispatch('user/getUsersListSync').then((result) => {
+      model.reqList = result?.items?.filter((item) => item['userStatCd']==='URST0001')
+      model.organList = result?.items?.filter((item) => item['userStatCd']==='URST0002')
+      console.log(model.userCnt)
+    })
+  }
   store.dispatch('user/getFavUsersList').then((result2) => {
     model.favUsersList = result2
   })
-})
+}
+
+watch(searchCntcRef,(newSearchCntc)=>{
+  executeSearch(newSearchCntc)
+}, { deep: true })
 
 function onSelectUser(user) {
   model.selectedUser = user
+  console.log(model.userCnt)
   emit('onUserSelected', user)
 }
 

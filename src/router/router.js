@@ -68,11 +68,6 @@ const routes = [
         component: () => import('@/components/common/FindId.vue')
       }, */
       {
-        path: 'momain',
-        name: 'momain',
-        component: () => import('@/components/MobileMain.vue')
-      },
-      {
         path: 'patnt/list',
         name: 'listpatnt',
         component: () => import('@/components/user/patnt/ListPatnt.vue')
@@ -98,6 +93,7 @@ const routes = [
         name: 'DetlCntc',
         component: () => import('@/components/user/cntc/DetlCntc1.vue')
       },
+      /*
       {
         path: 'chnl/list',
         name: 'listchnl',
@@ -108,6 +104,7 @@ const routes = [
         name: 'listchnlbak',
         component: () => import('@/components/user/chnl/ListChnlBak.vue')
       },
+      */
       {
         path: 'svrt/dashbd',
         name: 'svrt',

@@ -253,10 +253,8 @@
 </template>
 
 <script>
-
 export default {
     components: {
-
     },
     name: 'DetlAncmt',
     props: {
@@ -272,7 +270,3 @@ export default {
     }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-</style>

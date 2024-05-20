@@ -434,8 +434,8 @@
 </template>
 
 <script setup>
-import AncmtRegModal from '@/components/user/modal/AncmtRegModal'
-import AncmtDetlModal from '@/components/user/modal/AncmtDetlModal'
+import AncmtRegModal from '@/components/user/modal/AncmtRegModal.vue'
+import AncmtDetlModal from '@/components/user/modal/AncmtDetlModal.vue'
 import { reactive } from 'vue'
 
 let model = reactive({

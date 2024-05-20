@@ -1797,11 +1797,10 @@
                                 </div>
                               </article>
                             </div>
-                            <div
-                              class="item-cell-box pt-2"
-                              style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
-                            >
-                              * 요청 병상 유형을 선택해주세요
+                            <div v-if='validateInput(3)' class="item-cell-box full">
+                              <div class='text-danger pt-2 fs-12px'>
+                                * 요청 병상 유형을 선택해주세요
+                              </div>
                             </div>
                           </td>
                         </tr>
@@ -1816,7 +1815,7 @@
                                     <input
                                       type="radio"
                                       name="toggle4-1"
-                                      value="Y"
+                                      value="DNRA0001"
                                       v-model="svInfo.dnrAgreYn"
                                     />
                                     <span class="txt">동의</span>
@@ -1826,7 +1825,7 @@
                                     <input
                                       type="radio"
                                       name="toggle4-1"
-                                      value="N"
+                                      value="DNRA0002"
                                       v-model="svInfo.dnrAgreYn"
                                     />
                                     <span class="txt">비동의</span>
@@ -1836,7 +1835,7 @@
                                     <input
                                       type="radio"
                                       name="toggle4-1"
-                                      value="X"
+                                      value="DNRA0003"
                                       v-model="svInfo.dnrAgreYn"
                                     />
                                     <span class="txt">해당없음</span>
@@ -1844,11 +1843,10 @@
                                 </div>
                               </article>
                             </div>
-                            <div
-                              class="item-cell-box pt-2"
-                              style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
-                            >
-                              * DNR 동의여부를 선택해주세요
+                            <div v-if='validateInput(4)' class="item-cell-box full">
+                              <div class='text-danger pt-2 fs-12px'>
+                                * DNR 동의여부를 선택해주세요
+                              </div>
                             </div>
                           </td>
                         </tr>
@@ -1921,11 +1919,10 @@
                                 </div>
                               </article>
                             </div>
-                            <div
-                              class="item-cell-box pt-2"
-                              style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
-                            >
-                              * 중증 정보를 선택해주세요
+                            <div v-if='validateInput(5)' class="item-cell-box full">
+                              <div class='text-danger pt-2 fs-12px'>
+                                * 중증 정보를 선택해주세요
+                              </div>
                             </div>
                           </td>
                         </tr>
@@ -2839,7 +2836,8 @@
                       <th>고압 산소</th>
                       <th>CT</th>
                       <th>MRI</th>
-                      <th>거리 / 예상이동시간</th>
+                      <th>거리</th>
+<!--                      <th>거리 / 예상이동시간</th>-->
                     </tr>
                   </thead>
 
@@ -2869,11 +2867,11 @@
                       <td class="text-start">
                         <div class="d-flex align-items-center">
                           <div class="text-start text-black" style="">{{ item.hospNm }}</div>
-                          <div
-                            class="label-txt d-inline-flex text-primary px-1 py-1 border border-primary rounded-1 fs-xs ms-2"
-                            style="min-width: 37px">
-                            AI추천
-                          </div>
+<!--                          <div-->
+<!--                            class="label-txt d-inline-flex text-primary px-1 py-1 border border-primary rounded-1 fs-xs ms-2"-->
+<!--                            style="min-width: 37px">-->
+<!--                            AI추천-->
+<!--                          </div>-->
                         </div>
 
                         <div class="text-gray-600 fs-12px pt-2">
@@ -2897,7 +2895,7 @@
                       <td><span :class="{'text-danger': item.highPressureOxygen === 'N'}" class="text-primary">{{ item.highPressureOxygen }}</span></td>
                       <td><span :class="{'text-danger': item.ct === 'N'}" class="text-primary">{{ item.ct }}</span></td>
                       <td><span :class="{'text-danger': item.mri === 'N'}" class="text-primary">{{ item.mri }}</span></td>
-                      <td>{{ item.distance }} / 3분</td>
+                      <td>{{ item.distance }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -4819,7 +4817,7 @@
 </template>
 
 <script>
-import DataPagination from '@/components/user/unit/DataPagination'
+import DataPagination from '@/components/user/unit/DataPagination.vue'
 import { mapState } from 'vuex'
 import { ref } from 'vue'
 import {
@@ -4840,8 +4838,6 @@ import {
 } from '@/util/ui'
 import user from '@/store/modules/user'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
-//import mitt from 'mitt'
-
 
 
 export default {
@@ -4970,8 +4966,10 @@ export default {
         ptId: '',
         ptTypeCd: [],
         svrtIptTypeCd: 'SVIP0001',
-        svrtTypeCd: '',
-        undrsesCd: []
+        svrtTypeCd: null,
+        undrsesCd: [],
+        dnrAgreYn: null,
+        reqBedTypeCd: null,
       },
       bioAnlys: {},
       spInfo: {
@@ -5589,9 +5587,15 @@ export default {
       } else if (idx === 1) {
         this.newPt.mpno = this.newPt.mpno.replace(/[^0-9]/g, '')
         this.newPt.telno = this.newPt.telno.replace(/[^0-9]/g, '')
-      } else if (idx === 2){
+      } else if (idx === 2) {
         this.newPt.rrno1 = this.newPt.rrno1.replace(/[^0-9]/g, '')
         this.newPt.rrno2 = this.newPt.rrno2.replace(/[^0-9]/g, '')
+      } else if (idx === 3) {
+        return this.svInfo.reqBedTypeCd === null && this.showErrorMessage
+      } else if (idx === 4) {
+        return this.svInfo.dnrAgreYn === null && this.showErrorMessage
+      } else if (idx === 5) {
+        return this.svInfo.svrtTypeCd === null && this.showErrorMessage
       }
     },
     getBtn(sts) {

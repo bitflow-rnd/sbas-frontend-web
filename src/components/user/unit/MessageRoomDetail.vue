@@ -61,10 +61,9 @@
 <script setup>
 import { defineProps, onBeforeUnmount, onMounted, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
-import MyMsg from '@/components/user/unit/MyMsg'
-import OtherMsg from '@/components/user/unit/OtherMsg'
+import MyMsg from '@/components/user/unit/MyMsg.vue'
+import OtherMsg from '@/components/user/unit/OtherMsg.vue'
 import { ref } from 'vue'
-// import { onMessage, onOpen, onClose, onError } from 'vue3-websocket'
 
 const store = useStore()
 const chatRoomScroll = ref()

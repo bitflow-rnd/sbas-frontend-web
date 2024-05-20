@@ -40,10 +40,7 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: 'NoContactDetailRightUnit'
-}
+<script setup>
 </script>
 
 <style scoped>
