@@ -1,0 +1,36 @@
+{
+	"extends": "@vue/tsconfig/tsconfig.dom.json",
+	"exclude": [
+		"node_modules",
+		"dist",
+		"test"
+	],
+	"include": [
+		"env.d.ts",
+		"public/**/*",
+		"src/**/*",
+		"index.d.ts",
+		"functions/routes.json"
+	],
+	"compilerOptions": {
+		"outDir": "dist",
+		"module": "esnext",
+		"target": "esnext",
+		"lib": [
+			"esnext",
+			"dom"
+		],
+		"allowJs": true,
+		"composite": true,
+		"types": [
+			"@cloudflare/workers-types",
+			"@types/jest"
+		],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"./src/*"
+			]
+		}
+	}
+}

@@ -36,6 +36,7 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230801.0",
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@babel/plugin-transform-private-methods": "^7.22.5",
@@ -43,10 +44,13 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "@tsconfig/node18": "^2.0.1",
+    "@types/node": "^18.16.8",
+    "build-worker": "^0.2.2",
+    "typescript": "~5.0.4",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "sass": "^1.64.2",
-    "sass-loader": "^13.3.2",
     "@vitejs/plugin-vue": "^4.2.3",
     "vite": "^5.1.0-beta.7",
     "webpack": "^5.88.2",
