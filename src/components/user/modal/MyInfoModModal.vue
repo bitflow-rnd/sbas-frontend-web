@@ -306,10 +306,3 @@
   </div>
   <!--end::Modal - 내정보 수정 -->
 </template>
-
-<script setup>
-</script>
-
-<style scoped>
-
-</style>

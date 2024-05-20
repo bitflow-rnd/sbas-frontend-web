@@ -80,12 +80,12 @@
 </template>
 
 <script setup>
-import SvrtChartUnit from '@/components/user/unit/SvrtChartUnit'
-import PieChart from '@/components/user/unit/PieChart'
-import PieChartLocation from '@/components/user/unit/PieChartLocation'
-import SevrPatntListUnit from '@/components/user/unit/SevrPatntListUnit'
-import PatntDetlModal from '@/components/user/modal/PatntDetlModal'
-import SvrtTrendChartUnit from '@/components/user/unit/SvrtTrendChartUnit'
+import SvrtChartUnit from '@/components/user/unit/SvrtChartUnit.vue'
+import PieChart from '@/components/user/unit/PieChart.vue'
+import PieChartLocation from '@/components/user/unit/PieChartLocation.vue'
+import SevrPatntListUnit from '@/components/user/unit/SevrPatntListUnit.vue'
+import PatntDetlModal from '@/components/user/modal/PatntDetlModal.vue'
+import SvrtTrendChartUnit from '@/components/user/unit/SvrtTrendChartUnit.vue'
 import { reactive } from 'vue'
 
 let model = reactive({

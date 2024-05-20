@@ -3159,9 +3159,9 @@
 </template>
 
 <script>
-import DataPagination from '@/components/user/unit/DataPagination'
+import DataPagination from '@/components/user/unit/DataPagination.vue'
 import {mapState} from 'vuex'
-import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle'
+import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
 import {
   backBtn,
   getAge, getDt,

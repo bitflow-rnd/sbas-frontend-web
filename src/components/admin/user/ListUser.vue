@@ -2407,8 +2407,7 @@
 import { mapState } from 'vuex'
 import { ref } from 'vue'
 import { getAuthCd, getDt, getGugun, getPtType, getSido, toggleCheckbox } from '@/util/ui'
-import DataPagination from "@/components/user/unit/DataPagination";
-
+import DataPagination from "@/components/user/unit/DataPagination.vue"
 
 export default {
   components: {DataPagination},

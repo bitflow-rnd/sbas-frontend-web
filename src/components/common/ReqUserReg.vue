@@ -7,7 +7,3 @@ export default {
   name: "LoginView"
 }
 </script>
-
-<style scoped>
-
-</style>

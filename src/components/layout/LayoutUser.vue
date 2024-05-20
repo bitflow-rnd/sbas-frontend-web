@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import AppHeader from "@/components/layout/AppHeader";
-import SideBar from "@/components/layout/SideBar";
+import AppHeader from "@/components/layout/AppHeader.vue";
+import SideBar from "@/components/layout/SideBar.vue";
 import { useRoute } from 'vue-router';
 import { watch } from "vue";
 

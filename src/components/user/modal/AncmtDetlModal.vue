@@ -106,8 +106,6 @@
   </div>
 </template>
 
-<script setup></script>
-
 <style scoped>
 .view-contents { position: relative; min-height: 500px; }
 .label-box { margin-top: 5px; }

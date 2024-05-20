@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<base href=""/>
-<title>감염병 병상배정 시스템</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset='UTF-8' />
+  <meta content='IE=edge' http-equiv='X-UA-Compatible' />
+  <meta content='strict-origin' name='referrer' />
+  <meta content='width=device-width,initial-scale=1.0,shrink-to-fit=no' name='viewport' />
+  <title>감염병 병상배정 시스템</title>
 
-<link rel="shortcut icon" href="/img/logos/favicon.ico" />
-<link rel="icon" type="image/png" sizes="32x32" href="/img/logos/favicon-96x96.png">
-<link href="/fa6/css/fontawesome.css" rel="stylesheet">
-<link href="/fa6/css/brands.css" rel="stylesheet">
-<link href="/fa6/css/solid.css" rel="stylesheet">
+<link href="/img/logos/favicon.ico" rel="shortcut icon" />
+<link href="/img/logos/favicon-96x96.png" rel="icon" type="image/png" sizes="32x32" />
+<link href="/fa6/css/fontawesome.css" rel="stylesheet" />
+<link href="/fa6/css/brands.css" rel="stylesheet" />
+<link href="/fa6/css/solid.css" rel="stylesheet" />
 <link href="/css/plugins.css" rel="stylesheet" type="text/css" />
 <link href="/css/style.bundle.css" rel="stylesheet" type="text/css" />
 <link href="/css/custom-ui.css" rel="stylesheet" type="text/css" />
 <link href="/css/custom-style.css" rel="stylesheet" type="text/css" />
+
+<script src="/js/plugins.bundle.js"></script>
+<script src="/js/scripts.bundle.js"></script>
 
 <style>
 body { max-width: 100%; overflow-x: hidden; }
@@ -63,7 +67,7 @@ td .symbol img{
         opacity: 0;
     }
 }
-#kt_app_root { height: 100%; }
+#app { height: 100%; }
 #kt_app_header_middle_wrapper { padding-right: 9px; }
 
 @media (max-width: 1920px) {
@@ -118,21 +122,10 @@ td .symbol img{
 
 <body>
 
-<div id="kt_app_root" class="d-flex flex-column app-root"></div>
+<div id="app" class="d-flex flex-column app-root"></div>
 
-<script>const hostUrl = "assets/";</script>
-<script src="/js/plugins.bundle.js"></script>
-<script src="/js/scripts.bundle.js"></script>
+<script src='/src/main.js' type='module'></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-<!-- Start of LiveChat (www.livechat.com) code -->
-<script>
-  window.__lc = window.__lc || {};
-  window.__lc.license = 16582911;
-  ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
-</script>
-<noscript><a href="https://www.livechat.com/chat-with/16582911/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
-<!-- End of LiveChat code -->
 
 </body>
 </html>

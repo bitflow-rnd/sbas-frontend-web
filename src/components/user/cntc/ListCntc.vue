@@ -202,15 +202,15 @@
 </template>
 
 <script setup>
-import ContactDetailUnit from '@/components/user/unit/ContactDetailUnit'
-import NoContactDetailUnit from '@/components/user/unit/NoContactDetailUnit'
-import NoContactDetailRightUnit from '@/components/user/unit/NoContactDetailRightUnit'
+import ContactDetailUnit from '@/components/user/unit/ContactDetailUnit.vue'
+import NoContactDetailUnit from '@/components/user/unit/NoContactDetailUnit.vue'
+import NoContactDetailRightUnit from '@/components/user/unit/NoContactDetailRightUnit.vue'
 import ContactDetailRightUnit from '@/components/user/unit/ContactDetailRightUnit.vue'
 import ContactList from '@/components/user/unit/ContactList.vue'
-import MessageRoomList from '@/components/user/unit/MessageRoomList'
+import MessageRoomList from '@/components/user/unit/MessageRoomList.vue'
 import { onMounted, reactive, ref } from 'vue'
-import MessageRoomDetail from '@/components/user/unit/MessageRoomDetail'
-import NoMessageRoomDetail from '@/components/user/unit/NoMessageRoomDetail'
+import MessageRoomDetail from '@/components/user/unit/MessageRoomDetail.vue'
+import NoMessageRoomDetail from '@/components/user/unit/NoMessageRoomDetail.vue'
 import store from '@/store/store'
 
 const tab1 = ref()

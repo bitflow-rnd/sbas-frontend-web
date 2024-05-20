@@ -1,27 +1,30 @@
 {
   "name": "sbas-frontend-web",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port 80",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "run-dev": "vite --port 80",
+    "build-dev": "vite build --mode development",
+    "build": "vite build",
+    "deploy": "wrangler pages deploy dist --project-name=sbas-frontend-web.pages.dev"
   },
   "dependencies": {
     "@vavt/md-editor-extension": "^3.0.0",
     "apexcharts": "^3.41.0",
-    "axios": "^0.27.2",
+    "axios": "^1.6.0",
     "babel-runtime": "^6.26.0",
     "core-js": "^3.8.3",
-    "crypto-js": "^4.1.1",
-    "fullpage.js": "^2.9.7",
+    "crypto-js": "^4.2.0",
+    "fullpage.js": "^4.0.22",
+    "vite-plugin-mkcert": "1.17.3",
     "jquery": "^3.7.0",
     "md-editor-v3": "^4.6.0",
     "mitt": "^3.0.0",
     "mobile-detect": "^1.4.5",
     "swiper": "^10.2.0",
     "v-wave": "^1.5.0",
-    "vue": "^3.2.13",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.0",
     "vue-easy-lightbox": "^1.16.0",
     "vue3-apexcharts": "^1.4.4",
     "vue3-markdown-it": "^1.0.10",
@@ -40,30 +43,12 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "node-sass": "^9.0.0",
     "sass": "^1.64.2",
     "sass-loader": "^13.3.2",
-    "vue-router": "^4.0.15"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true,
-      "vue/setup-compiler-macros": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead",
-    "not ie 11"
-  ]
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^5.1.0-beta.7",
+    "webpack": "^5.88.2",
+    "wrangler": "^3.25.0",
+    "ws": "^8.8.0"
+  }
 }

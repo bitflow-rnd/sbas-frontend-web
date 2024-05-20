@@ -4817,7 +4817,7 @@
 </template>
 
 <script>
-import DataPagination from '@/components/user/unit/DataPagination'
+import DataPagination from '@/components/user/unit/DataPagination.vue'
 import { mapState } from 'vuex'
 import { ref } from 'vue'
 import {
@@ -4838,8 +4838,6 @@ import {
 } from '@/util/ui'
 import user from '@/store/modules/user'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
-//import mitt from 'mitt'
-
 
 
 export default {

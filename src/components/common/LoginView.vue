@@ -760,14 +760,9 @@
 
 <script>
 import { mapState } from 'vuex'
-//import {Form} from "vee-validate";
 import * as yup from 'yup'
 import { ref } from 'vue'
 import { getGugun, getSido } from '@/util/ui'
-//import router from "@/router/router";
-
-//import {API_PROD} from "@/util/constantURL";
-//import axios from "axios";
 
 export default {
   name: 'LoginView',

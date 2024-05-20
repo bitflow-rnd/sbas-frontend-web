@@ -384,8 +384,8 @@
 </template>
 
 <script setup>
-import UsgTermRegModal from '@/components/user/modal/UsgTermRegModal'
-import UsgTermDetlModal from '@/components/user/modal/UsgTermDetlModal'
+import UsgTermRegModal from '@/components/user/modal/UsgTermRegModal.vue'
+import UsgTermDetlModal from '@/components/user/modal/UsgTermDetlModal.vue'
 import { reactive } from 'vue'
 
 let model = reactive({
