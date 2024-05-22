@@ -1012,7 +1012,6 @@
                                       </div>
                                     </article>
 
-                                    <div class="item-note-box">* 국적 선택</div>
                                   </div>
                                 </div>
 
@@ -4971,6 +4970,7 @@ export default {
         dnrAgreYn: null,
         reqBedTypeCd: null,
       },
+      showErrorMessage: null,
       bioAnlys: {},
       spInfo: {
         ptId: '',

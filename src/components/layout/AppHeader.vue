@@ -761,13 +761,22 @@ export default {
       this.$store.dispatch('bedasgn/getBdList')
     },
     getPtList() {
-      const data = {dstr1Cd: this.userInfo.dutyDstr1Cd}
-      this.$store.dispatch('patnt/getPatntList',data)
+      const { dutyDstr1Cd } = this.userInfo;
+      if (dutyDstr1Cd) {
+        const data = {dstr1Cd: dutyDstr1Cd}
+        this.$store.dispatch('patnt/getPatntList',data)
+      } else {
+        this.$store.dispatch('patnt/getPatntList')
+      }
       this.$store.dispatch('admin/getSido')
     },
     getMediList() {
-      this.$store.dispatch('admin/getMedinst', { dstr1Cd: this.userInfo.dutyDstr1Cd, dstr2Cd: this.userInfo.dutyDstr2Cd })
-
+      const { dutyDstr1Cd } = this.userInfo;
+      if (dutyDstr1Cd) {
+        this.$store.dispatch('admin/getMedinst', { dstr1Cd: dutyDstr1Cd })
+      } else {
+        this.$store.dispatch('admin/getMedinst')
+      }
     },
     showUserDetail() {
       this.mode = 'myinfo'

@@ -670,7 +670,6 @@
                                 </div>
                               </article>
 
-                              <div class="item-note-box">* 국적 선택</div>
                             </div>
                           </div>
 
@@ -1044,6 +1043,7 @@
                           data-bs-target="#kt_modal_patnt"
                           data-bs-toggle="modal"
                           class="modal-menu-btn menu-primary"
+                          @click='showPatntModal(ptDetail,2)'
                       >수정
                       </router-link>
                     </div>
@@ -1079,11 +1079,6 @@
                                     :class="{'bg-gray-500' : item.bedStatCdNm === '완료'}"
                                 >
                                   {{ item.bedStatCdNm }}
-                                </div>
-                                <div
-                                    class="d-inline-flex align-items-center justify-content-center w-auto bg-gray-500 h-25px w-65px text-white rounded-2 px-0 w-auto d-none"
-                                >
-                                  뭐야?
                                 </div>
 
                                 <div class="eclipse-box mx-3">{{ item.hospNm ? item.hospNm : '-' }}</div>
@@ -3191,7 +3186,7 @@ export default {
   mounted() {
     this.initNewPt = this.newPt
     this.initDsInfo = this.dsInfo
-    this.filterPatient.address.first = this.userInfo.dutyDstr1Cd
+    this.setDefaultDstr1Cd()
   },
   setup() {
     const isAlert = ref(false)
@@ -3630,7 +3625,6 @@ export default {
       if (this.ptDs !== null) {
         this.dsInfo = this.ptDs;
       }
-      await this.$store.dispatch('patnt/readEpidRpt', this.ptDetail);
       this.preRpt = this.attcRpt;
 
       this.showModal = 1;
@@ -3705,6 +3699,12 @@ export default {
     },
     onHide() {
       this.visibleRef = false
+    },
+    setDefaultDstr1Cd() {
+      this.filterPatient.address.first = this.userInfo.dutyDstr1Cd
+      if (this.userInfo.dutyDstr1Cd) {
+        this.getSecondAddress(this.userInfo.dutyDstr1Cd);
+      }
     },
   }
 }
