@@ -3669,10 +3669,14 @@ export default {
       if (attcId === null || attcId === '') {
         this.epidReportImage = '';
       } else {
-        await this.$store.dispatch('user/readPrivateImage', attcId).then((result) => {
-          const blob = new Blob([result], { type: 'image/jpeg' })
-          this.epidReportImage = URL.createObjectURL(blob)
-        })
+        await this.$store.dispatch('user/readPrivateImage', attcId)
+          .then((result) => {
+            const blob = new Blob([result], { type: 'image/jpeg' })
+            this.epidReportImage = URL.createObjectURL(blob)
+          })
+          .catch((error) => {
+            console.error("An error occurred while fetching the image:", error);
+          })
       }
     },
     closePatntRequest(){
