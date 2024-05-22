@@ -2260,6 +2260,7 @@ import DataPagination from '@/components/user/unit/DataPagination.vue'
 import {ref} from 'vue'
 import {mapState} from 'vuex'
 import {getGugun, getSido, toggleCheckbox} from '@/util/ui'
+import store from '@/store/store'
 
 export default {
   components: {DataPagination},
@@ -2297,6 +2298,7 @@ export default {
   },
   mounted() {
     this.initNaverMap()
+    this.setDefaultDstr1Cd()
   },
 
   setup() {
@@ -2502,7 +2504,14 @@ export default {
       console.log(this.modMedinst)
       this.$store.dispatch('admin/editMedInstEtc',this.modMedinst)
       this.getMediInstEtc()
-    }
+    },
+    setDefaultDstr1Cd() {
+      const userInfo = store.getters['user/getUserInfo']
+      if (userInfo.dutyDstr1Cd) {
+        this.filterMedinst['dstr1Cd'] = userInfo.dutyDstr1Cd;
+        this.getSecondAddress(userInfo.dutyDstr1Cd);
+      }
+    },
   }
 }
 </script>
