@@ -121,7 +121,8 @@ onMounted(() => {
 })
 
 function connectWebsocket() {
-  socket = new WebSocket('ws://dev.smartbas.org/chat-rooms/room/'
+  let webSocket = import.meta.env.VITE_APP_CHAT_URL
+  socket = new WebSocket(`${webSocket}/chat-rooms/room/`
     + props.roomInfo.tkrmId);
   socket.onopen = function () {
     socket.send("hello|" + model.userInfo.id)
