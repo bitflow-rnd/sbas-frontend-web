@@ -229,10 +229,12 @@ export default {
         },
         on: {
           slideChange(){
-            const idx = this.realIndex +1;
-            self.$nextTick(()=>{
-              self.$refs.curBox1.innerText = idx;
-            })
+            if(window.location.pathname === '/') {
+              const idx = this.realIndex + 1;
+              self.$nextTick(() => {
+                self.$refs.curBox1.innerText = idx;
+              })
+            }
           },
         },
 
