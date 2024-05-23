@@ -398,6 +398,7 @@ export default {
       })
     },
     readPrivateImage(comment, attcId) {
+      if(attcId == null) return
       const url = `${API_PROD}/api/v1/private/common/image/${attcId}`
       return new Promise((resolve, reject) => {
         axios({
