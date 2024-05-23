@@ -137,7 +137,7 @@
 
             <div class='footer-menu-list'>
               <router-link to='/login' class='footer-menu-btn type-primary' v-if='!isMobile'>병상배정 시스템 로그인</router-link>
-              <a href="/d" class='footer-menu-btn'>
+              <a :href="setApkLink()" class='footer-menu-btn'>
                 <img src='/img/common/img_footer_google.svg' alt='이미지'>
               </a>
               <a href="https://bitflow.notion.site/3-2-Form-93210bffd2174e1a9835aeeadc94d777" target='_blank' class='footer-menu-btn'>
@@ -238,6 +238,10 @@ export default {
 
       });
     },
+    setApkLink() {
+      const url = import.meta.env.VITE_APP_API_URL;
+      return `${url}/d/apk.html`;
+    }
   }
 }
 </script>
