@@ -44,7 +44,7 @@
         </div>
         <!--end::Mobile toggle-->
         <!--begin::Logo image-->
-        <router-link to="/dashbd">
+        <router-link to="/dashbd" @click="setActive(0)">
           <img alt="Logo" src="/img/logos/title-bar.webp" class="theme-light-show" />
           <img alt="Logo" src="/img/logos/demo44-dark.svg" class="h-25px theme-dark-show" />
         </router-link>
@@ -168,21 +168,21 @@
         <!--begin::Navbar-->
         <div class="app-navbar flex-shrink-0">
           <div class="app-navbar-item" id="kt_app_header_middle_wrapper">
-            <a href="https://bitflow.notion.site/1-c386cb59de4440208ec146d6968bf877?pvs=4" target='_blank' class="btn btn-flex btn-sm btn-primary my-auto fs-1"
-            ><i class="fa-solid fa-triangle-exclamation fs-1"></i> 사용자매뉴얼</a
-            >
+            <a href="https://bitflow.notion.site/1-c386cb59de4440208ec146d6968bf877?pvs=4" target='_blank'
+               class="btn btn-flex btn-sm btn-primary my-auto fs-1">
+              <i class="fa-solid fa-triangle-exclamation fs-1" /> 사용자매뉴얼
+            </a>
           </div>
-<!--          <div class="app-navbar-item" id="kt_app_header_middle_wrapper">-->
-<!--            <a href="#" class="btn btn-flex btn-sm btn-danger my-auto fs-5"-->
-<!--              ><i class="fa-solid fa-triangle-exclamation fs-4"></i> 병상요청</a-->
-<!--            >-->
-<!--          </div>-->
+          <!--          <div class="app-navbar-item" id="kt_app_header_middle_wrapper">-->
+          <!--            <a href="#" class="btn btn-flex btn-sm btn-danger my-auto fs-5"-->
+          <!--              ><i class="fa-solid fa-triangle-exclamation fs-4"></i> 병상요청</a-->
+          <!--            >-->
+          <!--          </div>-->
 
 
           <!--begin::Activities-->
           <div class="app-navbar-item ms-2 me-2 d-none d-xxl-flex">
             <!--begin::Drawer toggle-->
-
             <div
               class="bell-wrapper btn btn-icon btn-custom w-35px h-35px w-md-40px h-md-40px position-relative"
               data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
@@ -192,7 +192,8 @@
               <img src='@/assets/img/ic-bell.webp' />
               <div
                 class="badge-bell position-absolute top-0 start-100 translate-middle badge badge-sm rounded-pill mt-3 bg-primary"
-              >1</div
+              >1
+              </div
               >
             </div>
             <!--end::Drawer toggle-->
@@ -369,7 +370,7 @@
                             href="javascript:phoneCertify();"
                             class="btn btn-sm btn-primary h-30px ms-3 certify-btn"
                             style="min-width: 103px"
-                            >인증번호 발송</a
+                          >인증번호 발송</a
                           >
                         </div>
                       </div>
@@ -406,7 +407,7 @@
                   <a
                     href="javascript:alertPopupOpen('메시지 입력')"
                     class="modal-menu-btn menu-primary"
-                    >변경완료</a
+                  >변경완료</a
                   >
                 </div>
               </article>
@@ -592,7 +593,7 @@
 
   <!--begin::Modal - 사용자 승인 처리 -->
   <div class="modal fade" id="kt_modal_user_approval" tabindex="-1" aria-hidden="true"
-      v-if='mode==="approval"'>
+       v-if='mode==="approval"'>
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-550px modal-dialog-centered">
       <!--begin::Modal content-->
@@ -689,7 +690,7 @@
                   <a
                     href="javascript:confirmPopupOpen('$회원번호(회원명)$님을<br/>사용자로<br/>승인 하시겠습니까?')"
                     class="modal-menu-btn menu-primary"
-                    >저장</a
+                  >저장</a
                   >
                 </div>
               </article>
@@ -733,7 +734,7 @@ export default {
     ...mapState('user', ['userInfo']),
     selectedTabIdx: function() {
       return store.getters['user/getSelectedTabIdx']
-    },
+    }
   },
   methods: {
     getAuthCd,
@@ -754,24 +755,24 @@ export default {
     getUsersList() {
       this.$store.dispatch('user/getUsersList')
     },
-    getBdList(){
+    getBdList() {
       console.log('리로드')
       //mitt().emit('bdList')
       this.$store.dispatch('bedasgn/getBdListWeb')
       this.$store.dispatch('bedasgn/getBdList')
     },
     getPtList() {
-      const { dutyDstr1Cd } = this.userInfo;
+      const { dutyDstr1Cd } = this.userInfo
       if (dutyDstr1Cd) {
-        const data = {dstr1Cd: dutyDstr1Cd}
-        this.$store.dispatch('patnt/getPatntList',data)
+        const data = { dstr1Cd: dutyDstr1Cd }
+        this.$store.dispatch('patnt/getPatntList', data)
       } else {
         this.$store.dispatch('patnt/getPatntList')
       }
       this.$store.dispatch('admin/getSido')
     },
     getMediList() {
-      const { dutyDstr1Cd } = this.userInfo;
+      const { dutyDstr1Cd } = this.userInfo
       if (dutyDstr1Cd) {
         this.$store.dispatch('admin/getMedinst', { dstr1Cd: dutyDstr1Cd })
       } else {
@@ -797,13 +798,24 @@ export default {
 .fs-5 {
   font-size: 0.85rem !important;
 }
+
 .user-id {
   margin-top: 12px;
 }
+
 .profile-view-box > img {
   opacity: 0.7;
 }
-.bell-wrapper { position: relative; }
-.badge-bell { padding: 2px 0 3px 4px; }
-.modal { display: block; }
+
+.bell-wrapper {
+  position: relative;
+}
+
+.badge-bell {
+  padding: 2px 0 3px 4px;
+}
+
+.modal {
+  display: block;
+}
 </style>
