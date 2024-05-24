@@ -44,7 +44,6 @@
           </div>
         </div>
 
-        <!--begin::Modal header-->
         <!--begin::Modal body-->
         <div class="modal-body scroll-y py-10 px-10">
           <article v-if="model.ptDetail" class="detail-layout1">
@@ -379,6 +378,7 @@ function closeModal() {
   store.commit('bedasgn/setDisesInfo', null)
   emit('closeModal')
 }
+
 </script>
 
 <style scoped>
