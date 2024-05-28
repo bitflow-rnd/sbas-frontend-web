@@ -89,10 +89,8 @@
             ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
             >
             <a
-                @click="clearNewPt()"
+                @click="openRgstModal()"
                 class="btn btn-sm btn-flex btn-primary align-self-center px-3"
-                data-bs-toggle="modal"
-                data-bs-target="#kt_modal_patnt"
             >
               <i class="fa-solid fa-plus"></i> 환자등록
             </a>
@@ -347,513 +345,6 @@
   </div>
   <!--end:::Main-->
 
-  <!--환자등록/수정 -->
-  <div v-show='showModal === 2' class="modal fade" :class='{"show" : showModal === 2 }' id="kt_modal_patnt" tabindex="-1" aria-hidden="true" style="">
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog col-lg-3 modal-dialog-centered">
-      <!--begin::Modal content-->
-      <div class="modal-content">
-        <!--begin::Modal header-->
-        <div class="modal-header px-10 py-5 d-flex justify-content-between">
-          <!--begin::Modal title-->
-          <h2>환자 등록/수정</h2>
-          <div
-              class="btn btn-sm btn-icon btn-active-color-primary"
-              @click="closeModal(0)"
-              data-bs-dismiss="modal"
-          >
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class="svg-icon svg-icon-1">
-              <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                    opacity="0.5"
-                    x="6"
-                    y="17.3137"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(-45 6 17.3137)"
-                    fill="currentColor"
-                ></rect>
-                <rect
-                    x="7.41422"
-                    y="6"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(45 7.41422 6)"
-                    fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-            <!--end::Svg Icon-->
-          </div>
-          <!--end::Close-->
-        </div>
-
-        <!--begin::Modal header-->
-        <!--begin::Modal body-->
-        <div class="modal-body scroll-y py-10 px-10">
-          <div class="d-flex">
-            <div class="table-view-box" style="width: 363px">
-              <article class="table-form-layout1 h-100">
-                <div class="form-head-box"></div>
-
-                <div class="form-body-box h-100">
-                  <div class="table-box h-100">
-                    <table class="h-100">
-                      <colgroup>
-                        <col style="width: 363px"/>
-                      </colgroup>
-                      <tbody>
-                      <tr>
-                        <th>역학조사서 업로드</th>
-                      </tr>
-                      <tr>
-                        <td>
-                          <article class="modal-profile-layout1">
-                            <div
-                                class="profile-card-box flex-column mx-auto"
-                                style="width: 264px"
-                            >
-                              <div class="profile-view-box" style="width: 100%; height: 264px">
-                                <img
-                                  v-if="newPt.attcId === null || newPt.attcId === ''"
-                                  src='@/assets/img/img-no-img.webp'/>
-                                <img v-else :src='this.epidReportImage' @click='showImageLightBox' />
-                                <a v-if="newPt.attcId !== null || newPt.attcId === ''" @click="alertOpen(9)" class="remove-btn">
-                                  <img src="/img/common/ic_profile_remove.svg" alt="이미지" />
-                                </a>
-                                <vue-easy-lightbox
-                                  :visible="visibleRef"
-                                  :imgs="imgsRef"
-                                  :index="indexRef"
-                                  @hide="onHide"
-                                ></vue-easy-lightbox>
-                              </div>
-
-                              <div class="profile-upload-box">
-                                <div class="upload-box">
-                                  <label
-                                      class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary"
-                                  >
-                                    <input type="file" @change="uploadRpt" :value="reportFile"/>
-                                    수정
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-                          </article>
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="table-info-box">
-              <article class="table-form-layout1">
-                <div class="form-head-box"></div>
-
-                <div class="form-body-box">
-                  <form @submit="regNewPt" class="table-box">
-                    <table>
-                      <colgroup>
-                        <col style="width: 168px"/>
-                        <col style="width: auto"/>
-                        <col style="width: 168px"/>
-                        <col style="width: auto"/>
-                      </colgroup>
-                      <tbody>
-                      <tr>
-                        <th>환자이름 <span class="text-primary">*</span></th>
-                        <td>
-                          <div class="item-cell-box">
-                            <div class="tbox">
-                              <input type="text" v-model="newPt.ptNm"/>
-                            </div>
-                          </div>
-                        </td>
-                        <th>성별</th>
-                        <td v-if="newPt.rrno2 !== null && newPt.rrno2 !== ''">{{ getGndr(newPt.rrno2) }}자</td>
-                      </tr>
-
-                      <tr>
-                        <th>주민등록번호 <span class="text-primary">*</span></th>
-                        <td>
-                          <div class="item-row-box">
-                            <div class="item-cell-box">
-                              <div class="tbox">
-                                <input type="text" v-model="newPt.rrno1"/>
-                              </div>
-                              <div class="unit-box mx-2 text-gray-600">-</div>
-                              <div class="tbox" style="min-width: 20px">
-                                <input
-                                  type="text"
-                                  @input="validateInput(2)"
-                                  v-model="newPt.rrno2"
-                                  maxlength=7
-                                />
-                              </div>
-                              <!--                                  <div v-if='this.rptInfo !== null' class="unit-box ms-2" style="line-height: 30px">
-                                                                  ●●●●●●
-                                                                </div>-->
-                            </div>
-                          </div>
-                          <div class="item-row-box">
-                            <div class="item-note-box">* 주민등록번호 입력</div>
-                          </div>
-                        </td>
-                        <th>나이 (만)</th>
-                        <td v-if="newPt.rrno1 !== null && newPt.rrno1 !== '' && newPt.rrno2 !== null && newPt.rrno2 !== ''">
-                          {{ getAge(newPt.rrno1, newPt.rrno2) }}세
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <th rowspan="3">주소 <span class="text-primary">*</span></th>
-                        <td rowspan="3">
-                          <div class="item-row-box">
-                            <div class="item-cell-box full">
-                              <div class="tbox full">
-                                <input type="text" v-model="newPt.zip" readonly/>
-                              </div>
-                              <a
-                                  @click="openAddressFinder(0)"
-                                  class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
-                                  style="min-width: 80px"
-                              >주소검색</a
-                              >
-                            </div>
-                          </div>
-
-                          <div class="item-row-box">
-                            <div class="item-cell-box full">
-                              <div class="tbox full">
-                                <input type="text" v-model="newPt.bascAddr"/>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="item-row-box">
-                            <div class="item-cell-box full">
-                              <div class="tbox full">
-                                <input type="text" v-model="newPt.detlAddr"/>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="item-row-box">
-                            <div class="item-cell-box">
-                              <div class="item-note-box">* 상세주소 입력</div>
-                            </div>
-                          </div>
-                        </td>
-
-                        <th>휴대전화번호</th>
-                        <td>
-                          <div class="item-cell-box full">
-                            <div class="tbox full">
-                              <input type="text" v-model="newPt.mpno"/>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <th>보호자 이름</th>
-                        <td>
-                          <div class="item-cell-box full">
-                            <div class="tbox full">
-                              <input type="text" v-model="newPt.nokNm"/>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <th>전화번호</th>
-                        <td>
-                          <div class="item-cell-box full">
-                            <div class="tbox full">
-                              <input type="text" v-model="newPt.telno"/>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <th>사망여부 <span class="text-primary">*</span></th>
-                        <td>
-                          <div class="item-cell-box full justify-content-between">
-                            <article class="toggle-list-layout2">
-                              <div class="toggle-list">
-                                <label>
-                                  <input
-                                      type="radio"
-                                      name="toggle1"
-                                      value="N"
-                                      v-model="newPt.dethYn"
-                                  />
-                                  <span class="txt">생존</span>
-                                </label>
-
-                                <label>
-                                  <input
-                                      type="radio"
-                                      name="toggle1"
-                                      value="Y"
-                                      v-model="newPt.dethYn"
-                                  />
-                                  <span class="txt">사망</span>
-                                </label>
-                              </div>
-                            </article>
-
-                            <div class="item-note-box">* 사망여부 선택</div>
-                          </div>
-                        </td>
-
-                        <th>직업</th>
-                        <td>
-                          <div class="item-cell-box full">
-                            <div class="tbox full">
-                              <input type="text" v-model="newPt.job"/>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <th>국적 <span class="text-primary">*</span></th>
-                        <td>
-                          <div class="item-row-box">
-                            <div class="item-cell-box full justify-content-between">
-                              <article class="toggle-list-layout2">
-                                <div class="toggle-list">
-                                  <label>
-                                    <input
-                                        type="radio"
-                                        name="nation"
-                                        value="NATI0001"
-                                        v-model="newPt.natiCd"
-                                    />
-                                    <span class="txt">대한민국</span>
-                                  </label>
-
-                                  <label>
-                                    <input
-                                        type="radio"
-                                        name="nation"
-                                        value="NATI0003"
-                                        v-model="newPt.natiCd"
-                                    />
-                                    <span class="txt">알수없음</span>
-                                  </label>
-
-                                  <label>
-                                    <input
-                                        type="radio"
-                                        name="nation"
-                                        value="NATI0002"
-                                        v-model="newPt.natiCd"
-                                    />
-                                    <span class="txt">직접입력</span>
-                                  </label>
-                                </div>
-                              </article>
-
-                            </div>
-                          </div>
-
-                          <div class="item-row-box">
-                            <div class="tbox" style="width: 211px">
-                              <input
-                                  type="text"
-                                  placeholder="국가명 입력"
-                                  v-model="newPt.natiNm"
-                                  :readonly="newPt.natiCd !== 'NATI0002'"
-                                  class="nation-input"
-                              />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th>기저질환 (다중선택)</th>
-                        <td colspan="3">
-                          <article class="cbox-list-layout">
-                            <div class="cbox-row">
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0001'
-                                         v-model='newPt.undrDsesCd'/><i></i>
-                                  <span class="txt">고혈압</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0002'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">당뇨</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0003'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">고지혈증</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0004'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">심혈관</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0005'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">뇌혈관</span>
-                                </label>
-                              </div>
-                            </div>
-
-                            <div class="cbox-row">
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0006'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">암</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0007'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">만성폐질환</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0008'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">폐렴</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0009'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">신장질환</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0010'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">정신질환</span>
-                                </label>
-                              </div>
-                            </div>
-
-                            <div class="cbox-row">
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0011'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">결핵</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0012'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">천식 등 알레르기</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"
-                                         value='UDDS0013'
-                                         v-model='newPt.undrDsesCd' /><i></i>
-                                  <span class="txt">면역력저하자</span>
-                                </label>
-                              </div>
-                            </div>
-
-                            <div class="cbox-row">
-                              <div class="d-inline-flex">
-                                <div class="cbox w-auto">
-                                  <label>
-                                    <input type="checkbox" name="disease"
-                                           value='UDDS0014'
-                                           v-model='newPt.undrDsesCd' /><i></i>
-                                    <span class="txt">기타</span>
-                                  </label>
-                                </div>
-
-                                <div class="tbox d-inline-flex ms-4 w-300px">
-                                  <input type="text" v-model='newPt.undrDsesEtc' placeholder="직접 입력"/>
-                                </div>
-                              </div>
-                            </div>
-                          </article>
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </form>
-                </div>
-              </article>
-            </div>
-          </div>
-
-          <article class="modal-menu-layout1 pt-40">
-            <div class="modal-menu-list pt-5">
-              <!--              <a href="javascript:alertPopupOpen('메시지 입력')" class="modal-menu-btn menu-cancel">이전</a>-->
-
-              <a @click="openPopup(0)" class="modal-menu-btn menu-primary">다음</a>
-            </div>
-          </article>
-        </div>
-        <!--end::Modal body-->
-      </div>
-      <!--end::Modal content-->
-    </div>
-    <!--end::Modal dialog-->
-  </div>
   <!--  환자 상세 정보  -->
   <div v-show='showModal === 1' class="modal fade" :class="{'show' : showModal === 1}" id="kt_modal_patnt_detail" tabindex="-1" aria-hidden="true" style="">
     <!--begin::Modal dialog-->
@@ -1044,7 +535,7 @@
                           data-bs-toggle="modal"
                           class="modal-menu-btn menu-primary"
                           @click='showPatntModal(ptDetail,2)'
-                      >수정
+                      >환자 정보 수정
                       </router-link>
                     </div>
                   </article>
@@ -1399,7 +890,7 @@
                                         class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary"
                                       >
                                         <input type="file" @change="uploadRpt" :value="reportFile"/>
-                                        수정
+                                        업로드
                                       </label>
                                     </div>
                                   </div>
@@ -2934,8 +2425,7 @@
                                   @click="openAddressFinder(3)"
                                   class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
                                   style="min-width: 80px"
-                              >주소검색</a
-                              >
+                              >주소검색</a>
                             </div>
                           </div>
 
@@ -3044,136 +2534,36 @@
       </div>
     </div>
   </article>
-  <!--환자정보 존재 -->
-  <article v-if="existPt !== null" v-show="popup === 0" class="popup popup-exist" style="">
-    <div class="popup-wrapper">
-      <div class="popup-contents">
-        <div class="popup-head-box py-5 px-10">
-          <div class="head-tit-box">환자정보 존재</div>
 
-          <div class="head-option-box">
-            <div @click="closePopup(0)" class="popup-close-btn">
-              <span class="svg-icon svg-icon-1">
-                <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                      opacity="0.5"
-                      x="6"
-                      y="17.3137"
-                      width="16"
-                      height="2"
-                      rx="1"
-                      transform="rotate(-45 6 17.3137)"
-                      fill="currentColor"
-                  ></rect>
-                  <rect
-                      x="7.41422"
-                      y="6"
-                      width="16"
-                      height="2"
-                      rx="1"
-                      transform="rotate(45 7.41422 6)"
-                      fill="currentColor"
-                  ></rect>
-                </svg>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="popup-body-box py-5 px-10">
-          <div class="patient-exist-box">
-            <div class="exist-box d-flex align-items-center">
-              <div
-                  class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0"
-                  :class="cmpExist(0)[1]"
-              >
-                {{ cmpExist(0)[0] }}
-              </div>
-              <div class="d-inline-flex w-auto ms-3">
-                이름 : {{ existPt.ptNm }} ({{ existPt.gndr }}/{{
-                  getAge(existPt.rrno1, existPt.rrno2)
-                }}세)
-              </div>
-            </div>
-
-            <div class="exist-box d-flex align-items-center mt-3">
-              <div
-                  class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0"
-                  :class="cmpExist(1)[1]"
-              >
-                {{ cmpExist(1)[0] }}
-              </div>
-              <div class="d-inline-flex w-auto ms-3">
-                주민등록번호 : {{ existPt.rrno1 }}-{{ existPt.rrno2 }}******
-              </div>
-            </div>
-
-            <div class="exist-box d-flex align-items-center mt-3">
-              <div
-                  class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0"
-                  :class="cmpExist(2)[1]"
-              >
-                {{ cmpExist(2)[0] }}
-              </div>
-              <div class="d-inline-flex w-auto ms-3">주소 : {{ existPt.dstr1CdNm }} {{ existPt.dstr2CdNm }}</div>
-            </div>
-
-            <div class="exist-box d-flex align-items-center mt-3">
-              <div
-                  class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0"
-                  :class="cmpExist(3)[1]"
-              >
-                {{ cmpExist(3)[0] }}
-              </div>
-              <div class="d-inline-flex w-auto ms-3">연락처 : {{ getTelno(existPt.mpno) }}</div>
-            </div>
-
-            <div class="exist-box d-flex align-items-center mt-6">
-              <div class="text-gray-800">※ 동명이인 여부를 확인해주세요.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="popup-foot-box py-5 px-10">
-          <article class="modal-menu-layout1">
-            <div class="modal-menu-list">
-              <a @click="updateExistPt" class="modal-menu-btn menu-primary">기존정보 업데이트</a>
-              <a @click="regNewPt" v-show='existPt === null' class="modal-menu-btn menu-primary-outline">신규등록</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </article>
+  <patnt-reg-modal v-if='this.showModal === 2' :exist-pt='this.ptDetail' @closeModal='closeModal(0)' />
 </template>
 
 <script>
 import DataPagination from '@/components/user/unit/DataPagination.vue'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
 import {
   backBtn,
-  getAge, getDt,
+  getAge,
+  getDt,
   getGndr,
   getTag,
   getTelno,
   getTLDt,
   getTLIcon,
+  getUndrDses,
   goAsgn,
   openAddressFinder,
+  openPopup,
   regNewPt,
-  openPopup, getUndrDses, toggleCheckbox
+  toggleCheckbox
 } from '@/util/ui'
-import {ref, reactive} from 'vue'
+import { reactive, ref } from 'vue'
+import PatntRegModal from '@/components/user/patnt/PatntRegModal.vue'
 
 export default {
   components: {
+    PatntRegModal,
     DataPagination,
     SvrtChartUnitNoTitle
   },
@@ -3590,24 +2980,6 @@ export default {
       this.$store.dispatch('patnt/removeRpt', this.rptInfo.attcId);
       this.preRpt = null;
     },
-    cmpExist(idx) {
-      const isMatch = (a, b) => a === b;
-      const res1 = ['일치', 'bg-primary'];
-      const res2 = ['불일치', 'bg-gray-400'];
-
-      switch (idx) {
-        case 0:
-          return isMatch(this.existPt.ptNm, this.newPt.ptNm) ? res1 : res2;
-        case 1:
-          return isMatch(this.existPt.rrno1, this.newPt.rrno1) &&
-          isMatch(this.existPt.rrno2, this.newPt.rrno2) ? res1 : res2;
-        case 2:
-          return isMatch(this.existPt.dstr1Cd, this.newPt.dstr1Cd) &&
-            isMatch(this.existPt.dstr2Cd, this.newPt.dstr2Cd)? res1 : res2;
-        default:
-          return isMatch(this.existPt.mpno, this.newPt.mpno) ? res1 : res2;
-      }
-    },
     async selectPatient(patient) {
       if (patient['bdasSeq']) {
         await this.$store.dispatch('bedasgn/getTimeline', patient);
@@ -3682,7 +3054,7 @@ export default {
     closePatntRequest(){
       this.showPatnt = false
     },
-    clearNewPt() {
+    openRgstModal() {
       this.newPt = {
         ptNm: '', gndr: null, rrno1: null, rrno2: null,
         dethYn: '', natiCd: '', natiNm: '대한민국',
@@ -3693,6 +3065,7 @@ export default {
       }
       this.preRpt = null;
       this.epidReportImage = '';
+      this.showModal = 2
     },
     timelineSection() {
       this.model.mode = 'timeline';
@@ -3727,10 +3100,6 @@ export default {
 .item-box.suspend {
   border: 3px solid #74afeb !important;
   background-color: #74afeb33;
-}
-
-.popup {
-  display: block;
 }
 
 .chart-container {

@@ -75,7 +75,7 @@
               >
                 {{ cmpExist(2)[0] }}
               </div>
-              <div class="d-inline-flex w-auto ms-3">주소 : {{ props.existPt.dstr1Cd }} {{ props.existPt.dstr2Cd }}</div>
+              <div class="d-inline-flex w-auto ms-3">주소 : {{ props.existPt.dstr1CdNm }} {{ props.existPt.dstr2CdNm }}</div>
             </div>
 
             <div class="exist-box d-flex align-items-center mt-3">
@@ -98,7 +98,7 @@
           <article class="modal-menu-layout1">
             <div class="modal-menu-list">
               <a @click="updateExistPt" class="modal-menu-btn menu-primary">기존정보 업데이트</a>
-              <a @click="closePopup" class="modal-menu-btn menu-primary-outline">신규등록</a>
+              <a @click="registerNewPt" v-show='props.existPt === null' class="modal-menu-btn menu-primary-outline">신규등록</a>
             </div>
           </article>
         </div>
@@ -141,10 +141,16 @@ function cmpExist(idx) {
 
 function updateExistPt() {
   const data = {ptId: props.existPt.ptId, newPt: props.newPt}
-  // store.dispatch('patnt/modiPtInfo', data)
+  store.dispatch('patnt/modiPtInfo', data)
   emits('closePopup')
   emits('closeExistPt')
-  // router.go(0)
+}
+
+function registerNewPt() {
+  console.log(this.newPt)
+  store.dispatch('patnt/regBasicInfo',this.newPt)
+  emits('closePopup')
+  emits('closeExistPt')
 }
 
 </script>
