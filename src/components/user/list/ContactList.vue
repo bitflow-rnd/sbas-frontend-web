@@ -158,27 +158,22 @@ import { getPmgr } from '@/util/ui'
 const store = useStore()
 const emit = defineEmits(['onUserSelected'])
 const props = defineProps(['searchCntc'])
+const searchCntcRef = reactive(props.searchCntc)
 
-let listBoxesHide = reactive({
+const listBoxesHide = reactive({
   request: false,
   favourite: false,
   organization: false,
   mayKnow: false
 })
-let model = reactive({
+
+const model = reactive({
   usersList: [],
   reqList:[],
   organList:[],
   favUsersList :[],
   selectedUser: null,
   userCnt : 0
-})
-
-const searchCntcRef = reactive(props.searchCntc)
-
-onMounted( () => {
-
-  executeSearch()
 })
 
 const executeSearch = (searchParams = searchCntcRef) => {
@@ -204,6 +199,10 @@ watch(searchCntcRef,(newSearchCntc)=>{
   executeSearch(newSearchCntc)
 }, { deep: true })
 
+onMounted( () => {
+  executeSearch()
+})
+
 function onSelectUser(user) {
   model.selectedUser = user
   console.log(model.userCnt)
@@ -217,7 +216,6 @@ function getUserBelong(user) {
     return `${user['dutyDstr1CdNm']} / ${user['instNm']}`;
   }
 }
-
 </script>
 
 <style scoped>

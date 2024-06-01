@@ -2284,7 +2284,7 @@
 </template>
 
 <script>
-import DataPagination from '@/components/user/unit/DataPagination.vue'
+import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { ref } from 'vue'
 import { mapState } from 'vuex'
 import { getGugun, getSido, toggleCheckbox } from '@/util/ui'

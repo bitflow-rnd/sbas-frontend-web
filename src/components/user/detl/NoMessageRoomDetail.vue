@@ -26,8 +26,6 @@
   </div>
 </template>
 
-<script setup></script>
-
 <style scoped>
 h2 {
   font-size: 1.7rem;

@@ -406,70 +406,6 @@
                         </td>
                       </tr>
 
-<!--                      <tr v-show="showTable">
-                        <th>장비정보</th>
-                        <td colspan="7">
-                          <div class="item-row-box">
-                            <div class="item-cell-box">
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="type2" /><i></i>
-                                  <span class="txt">인공호흡기 일반</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox ms-4">
-                                <label>
-                                  <input type="checkbox" name="type2" /><i></i>
-                                  <span class="txt">인공호흡기 조산아</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox ms-4">
-                                <label>
-                                  <input type="checkbox" name="type2" /><i></i>
-                                  <span class="txt">인큐베이터</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox ms-4">
-                                <label>
-                                  <input type="checkbox" name="type2" /><i></i>
-                                  <span class="txt">ECMO</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox ms-4">
-                                <label>
-                                  <input type="checkbox" name="type2" /><i></i>
-                                  <span class="txt">중심체온조절유도기</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox ms-4">
-                                <label>
-                                  <input type="checkbox" name="type2" /><i></i>
-                                  <span class="txt">CT</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox ms-4">
-                                <label>
-                                  <input type="checkbox" name="type2" /><i></i>
-                                  <span class="txt">MRI</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox ms-4">
-                                <label>
-                                  <input type="checkbox" name="type2" /><i></i>
-                                  <span class="txt">혈관촬영기</span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>-->
                     </tbody>
                   </table>
                 </div>
@@ -739,7 +675,7 @@
                                     >
                                       <img
                                         v-if="preRpt === null"
-                                        src="@/assets/img/img-no-img.webp"
+                                        src="../../../assets/img/img-no-img.webp"
                                         alt="이미지"
                                       />
                                       <img v-if="preRpt !== null" :src="preRpt" alt="이미지" @click='showImageLightBox' />
@@ -3280,7 +3216,7 @@
                                 <a
                                   v-show="
                                     (bdDetail.bedStatCd === 'BAST0003' &&
-                                      userInfo.jobCd === JobCode.Aprv) ||
+                                      ( userInfo.jobCd === JobCode.Aprv || userInfo.jobCd === JobCode.Sysa )) ||
                                     (bdDetail.bedStatCd === 'BAST0004' &&
                                       ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa )
                                       && this.chrgUserId.some(item=>item.chrgUserId===userInfo.id))
@@ -4816,7 +4752,7 @@
 </template>
 
 <script>
-import DataPagination from '@/components/user/unit/DataPagination.vue'
+import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { mapState } from 'vuex'
 import { ref } from 'vue'
 import {

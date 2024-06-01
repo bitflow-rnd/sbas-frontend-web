@@ -70,28 +70,28 @@ const routes = [
       {
         path: 'patnt/list',
         name: 'listpatnt',
-        component: () => import('@/components/user/patnt/ListPatnt.vue')
+        component: () => import('@/components/user/list/ListPatnt.vue')
       },
       {
         path: 'bedasgn/list',
         name: 'listbed',
-        component: () => import('@/components/user/bedasgn/ListBed.vue')
+        component: () => import('@/components/user/list/ListBed.vue')
       },
       {
         path: 'bedasgn/list/nodata',
         name: 'listbednodata',
-        component: () => import('@/components/user/bedasgn/ListBedNoData.vue')
+        component: () => import('@/components/user/list/ListBedNoData.vue')
       },
       /*연락처*/
       {
         path: 'cntc/list',
         name: 'ListCntc',
-        component: () => import('@/components/user/cntc/ListCntc.vue')
+        component: () => import('@/components/user/list/ListCntc.vue')
       },
       {
         path: 'cntc/detl1',
         name: 'DetlCntc',
-        component: () => import('@/components/user/cntc/DetlCntc1.vue')
+        component: () => import('@/components/user/detl/DetlCntc1.vue')
       },
       /*
       {
@@ -108,7 +108,7 @@ const routes = [
       {
         path: 'svrt/dashbd',
         name: 'svrt',
-        component: () => import('@/components/user/svrt/SvrtDashbd.vue')
+        component: () => import('@/components/user/dsbd/SvrtDashbd.vue')
       },
       {
         path: 'medinst/list',

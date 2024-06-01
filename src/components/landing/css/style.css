@@ -208,7 +208,6 @@ footer {
 }
 footer .footer-menu-box {
   position: relative;
-  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -258,7 +257,6 @@ footer .footer-menu-box .footer-menu-list .footer-menu-btn.type-primary {
 }
 @media (max-width: 1024px) {
   footer .footer-menu-box .footer-menu-list .footer-menu-btn.type-primary {
-    display: none;
   }
 }
 footer .footer-menu-box .footer-menu-list .footer-menu-btn + .footer-menu-btn {

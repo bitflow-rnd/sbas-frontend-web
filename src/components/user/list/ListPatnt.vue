@@ -846,7 +846,7 @@
                                   >
                                     <img
                                       v-if="newPt.attcId === null || newPt.attcId === ''"
-                                      src='@/assets/img/img-no-img.webp' />
+                                      src='../../../assets/img/img-no-img.webp' />
                                     <img v-else :src='this.epidReportImage' @click='showImageLightBox' />
                                     <a v-if="newPt.attcId !== null || newPt.attcId === ''" @click="alertOpen(9)"
                                        class="remove-btn"
@@ -2514,7 +2514,7 @@
 </template>
 
 <script>
-import DataPagination from '@/components/user/unit/DataPagination.vue'
+import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { mapState } from 'vuex'
 import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
 import {
@@ -2534,7 +2534,7 @@ import {
   toggleCheckbox
 } from '@/util/ui'
 import { reactive, ref } from 'vue'
-import PatntRegModal from '@/components/user/patnt/PatntRegModal.vue'
+import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
 
 export default {
   components: {
