@@ -120,7 +120,7 @@
                 <div class="table-box with-toggle">
                   <table>
                     <colgroup>
-                      <col style="width: 168px" />
+                      <col style="width: 90px" />
                       <col style="width: auto" />
                       <col style="width: 168px" />
                       <col style="width: auto" />
@@ -173,14 +173,14 @@
                           <div class="item-cell-box">
                             <div class="cbox">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input type="checkbox" name="state" checked /><i></i>
                                 <span class="txt">상급종합병원</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
+                                <input type="checkbox" name="state" checked /><i></i>
                                 <span class="txt">종합병원</span>
                               </label>
                             </div>
@@ -231,34 +231,6 @@
                               <label>
                                 <input type="checkbox" name="state" /><i></i>
                                 <span class="txt">보건의료원</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input type="checkbox" name="state" /><i></i>
-                                <span class="txt">치과병원</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input type="checkbox" name="state" /><i></i>
-                                <span class="txt">치과의원</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input type="checkbox" name="state" /><i></i>
-                                <span class="txt">한방병원</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input type="checkbox" name="state" /><i></i>
-                                <span class="txt">한의원</span>
                               </label>
                             </div>
                           </div>
@@ -430,12 +402,16 @@
           </div>
           <!--end::Card header-->
           <!--begin::Card body-->
-          <div v-if='medinstList.items !== undefined' class="card-body p-8">
+          <div v-if='medinstList.items !== undefined' class="card-body pt-5 pb-2 px-0">
             <!--begin::Table-->
-            <h5>
-              검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{
-                medinstList['count']
-              }}</span>
+            <h5 class="d-flex px-4">
+              <div class="flex-grow-1 d-flex">
+                <div>검색결과</div>
+                <div class="badge ms-2 rounded-pill bg-primary">
+                  {{ medinstList['count'] }}
+                </div>
+              </div>
+              <div v-if="medinstList && medinstList.items && medinstList.items.length > 0" class="small fw-lighter fs-6">업데이트 {{ getUpDt(medinstList.items[0].updtDttm) }}</div>
             </h5>
 
             <article class="table-list-layout1">
@@ -450,7 +426,6 @@
                 <div v-if="medinstList.items.length !== 0" class="table-box with-scroll small">
                   <table class="list-table-hoverable">
                     <colgroup>
-                      <!--                      <col style="width: 40px"/>-->
                       <col style="width: 60px" />
                       <col style="width: 40px" class='d-none' />
                       <col style="width: 190px" />
@@ -475,15 +450,9 @@
                       <col style="width: 60px" />
                       <col style="width: 60px" />
                       <col style="width: 65px" />
-                      <col style="width: 70px" />
                     </colgroup>
                     <thead>
                     <tr class="small">
-                      <!--                      <th rowspan="2">-->
-                      <!--                        <div class="cbox">-->
-                      <!--                          <label> <input type="checkbox" class="all-chk"/><i></i> </label>-->
-                      <!--                        </div>-->
-                      <!--                      </th>-->
                       <th rowspan="2">순번</th>
                       <th rowspan="2" class='d-none'>이미지</th>
                       <th rowspan="2">의료기관명</th>
@@ -498,9 +467,6 @@
                       <th rowspan="2">
                         등록<br />
                         의료진 수
-                      </th>
-                      <th rowspan="2">
-                        업데이트
                       </th>
                     </tr>
                     <tr>
@@ -523,18 +489,12 @@
                       <th class="px-0">MRI</th>
                       <th class="px-0">혈관<br />촬영기</th>
                       <th class="px-0">
-                        중심제온<br />
-                        조절유도
+                        중심제온조절유도
                       </th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="(item, i) in medinstList.items" :key="i" @click="openMedInstDetail(item)">
-                      <!--                      <td @click="toggleCheckbox">-->
-                      <!--                        <div @click="toggleCheckbox" class="cbox d-flex justify-content-center">-->
-                      <!--                          <label> <input type="checkbox" @click="toggleCheckbox"/><i></i> </label>-->
-                      <!--                        </div>-->
-                      <!--                      </td>-->
                       <td>{{ medinstList['count'] - i - startIndex }}</td>
                       <td class='d-none'>
                         <i
@@ -543,13 +503,10 @@
                         ></i>
                       </td>
                       <td class="text-start" role='button'>
-                        <div class="text-start text-black">{{ item.dutyName }}</div>
-                        <div class="text-gray-600 fs-12px">
-                          {{ item.dutyDivNam }}
-                        </div>
+                        <div class="text-start text-black">{{ item.dutyName }} <span class="text-secondary fs-12px">{{ item.dutyDivNam }}</span></div>
                       </td>
                       <td role='button'>
-                        {{ item.dutyTel1 }} /<br> {{ item.dutyTel3 }}
+                        {{ item.dutyTel1 }}<br/>{{ item.dutyTel3 }}
                       </td>
                       <td>
                         {{ item.cohtBed }}
@@ -645,9 +602,6 @@
                         <i v-else-if="item.bodyTemperatureControl === 'N'">-</i>
                       </td>
                       <td>{{ item.medicalStaffCount ?? '0' }}</td>
-                      <td>
-                        {{ getUpDt(item.updtDttm) }}
-                      </td>
                     </tr>
                     </tbody>
                   </table>
@@ -781,7 +735,18 @@
                             </colgroup>
                             <tbody>
                             <tr>
-                              <th rowspan="6">의료기관<br />이미지</th>
+                              <th rowspan="6">
+                                <div>의료기관 이미지</div>
+
+                                <div class="upload-box mt-4">
+                                  <label
+                                    class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 btn-outline btn-outline-primary"
+                                  >
+                                    <input type="file" accept='image/jpeg, image/png' @change='uploadImage' class="d-none" />
+                                    수정
+                                  </label>
+                                </div>
+                              </th>
                               <td rowspan="6" class="text-start">
                                 <article class="modal-profile-layout1">
                                   <div class="profile-card-box flex-column">
@@ -789,29 +754,12 @@
                                       class="profile-view-box"
                                       style="width: 220px; height: 220px"
                                     >
-                                      <!--                                      <img-->
-                                      <!--                                        v-if="medinstDetail.hospBasicInfo.attcId === null ||medinstDetail.hospBasicInfo.attcId === '' "-->
-                                      <!--                                        src='@/assets/img/img-no-img.webp' alt='이미지' />-->
-                                      <!--                                      <router-link to=''-->
-                                      <!--                                                   v-if="medinstDetail.hospBasicInfo.attcId !== null && medinstDetail.hospBasicInfo.attcId !== ''"-->
-                                      <!--                                                   @click='alertOpen(0)'-->
-                                      <!--                                                   class='remove-btn'>-->
-                                      <!--                                        <img src='/img/common/ic_profile_remove.svg' alt='이미지' />-->
-                                      <!--                                      </router-link>-->
-                                      <img :src="imagePreview" alt="미리 보기 이미지" />
+                                      <img :src="imagePreview" class="img-hspt" alt="의료기관 이미지" />
                                     </div>
 
                                     <div class="profile-upload-box d-flex align-items-center pt-4">
-                                      <div class="upload-box">
-                                        <label
-                                          class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 btn-outline btn-outline-primary"
-                                        >
-                                          <input type="file" accept='image/jpeg, image/png' @change='uploadImage' />
-                                          수정
-                                        </label>
-                                      </div>
 
-                                      <div class="ps-2">
+                                      <div class="ps-2 text-secondary fw-normal">
                                         (권장) 512x512 픽셀의 정사각형 이미지를 준비해주세요
                                       </div>
                                     </div>
@@ -2289,6 +2237,7 @@ import { ref } from 'vue'
 import { mapState } from 'vuex'
 import { getGugun, getSido, toggleCheckbox } from '@/util/ui'
 import store from '@/store/store'
+import DEFT_HOPT_IMG from '@/assets/img/img-hosp-def.jpg'
 
 export default {
   components: { DataPagination },
@@ -2331,7 +2280,7 @@ export default {
 
   setup() {
     const showTable = ref(false)
-
+    const defaultImage = '@/assets/img/img-hosp-def.jpg'
     const toggleTable = function() {
       showTable.value = !showTable.value
     }
@@ -2346,8 +2295,6 @@ export default {
       isAlert,
       errMsg,
       cncBtn /* alert 취소버튼 유무 */
-
-
     }
   },
   data() {
@@ -2375,7 +2322,7 @@ export default {
         mentalPatientYn: false,
         negativePressureRoomYn: false
       },
-      imagePreview: ''
+      imagePreview: DEFT_HOPT_IMG
     }
   },
   methods: {
@@ -2581,6 +2528,7 @@ article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
   top: 0;
   left: 0;
   border: 1px solid #555;
+  max-width: 100%;
 }
 
 .popup {
@@ -2594,5 +2542,13 @@ article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
 .editMedi {
   margin-right: 7px;
   padding-left: 3px;
+}
+
+.img-hspt {
+  filter: grayscale(1);
+}
+.tabs-nav-btn.active {
+  background-color: rgb(116, 175, 235);
+  color: white !important;
 }
 </style>

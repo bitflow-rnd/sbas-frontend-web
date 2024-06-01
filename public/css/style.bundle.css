@@ -5667,6 +5667,7 @@ textarea.form-control-lg {
   position: fixed;
   width: 100%;
   max-width: calc(100% - 6rem);
+  max-height: calc(100% - 100px);
   pointer-events: none;
   left: 50%;
   top: 50%;
@@ -28974,7 +28975,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 .menu,
 .menu-wrapper {
   display: flex;
-  padding: 23px 0 0 0;
+  padding: 22px 0 0 0;
   margin: 0;
   list-style: none;
 }
@@ -28995,7 +28996,6 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 
 .menu-item {
   display: block;
-  padding: 0.15rem 0;
 }
 .menu-item .menu-link {
   cursor: pointer;
@@ -46612,7 +46612,7 @@ body,
     --bs-app-header-height: 70px;
   }
 .app-container {
-    height: var(--bs-app-header-height);
+    height: 64px;
     align-items: stretch;
     transition: none;
     display: flex;
@@ -48203,7 +48203,6 @@ body,
   }
   .app-header .menu-top-rounded > .menu-item > .menu-link {
     text-align: center;
-    border: 1px solid #86898d;
     border-bottom: 0;
   }
   .app-header .menu-top-rounded > .menu-item > .menu-link .menu-title {

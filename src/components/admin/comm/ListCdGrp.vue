@@ -164,9 +164,8 @@
                         </tr>
 
                         <tr v-for="codeGroup in paginatedCodeGroupData" :key="codeGroup['cdGrpId']" class="cursor"
-                            :class="{'selected': (codeGroup['cdGrpId'] === selectedRow.cdGrpId)}"
+                            :class="{'selected': (codeGroup.id.cdGrpId === selectedRow.id.cdGrpId)}"
                             @click="selectRow(codeGroup)">
-                          <!--                                                <tr class="cursor">-->
                           <td>
                             <div class="cbox d-flex justify-content-center">
                               <label>
@@ -174,7 +173,7 @@
                               </label>
                             </div>
                           </td>
-                          <td>{{ codeGroup['cdGrpId'] }}
+                          <td>{{ codeGroup.id.cdGrpId }}
                           </td>
                           <td @input="updateCellValue($event)" @blur="updateData('codeGroup', codeGroup, 'cdGrpNm')"
                               @focus="updateCellValue($event)" contenteditable>{{ codeGroup['cdGrpNm'] }}
@@ -438,7 +437,7 @@ export default {
       if (!this.selectedRow) {
         this.codeData = []
       }
-      this.$store.dispatch("admin/loadCodesData", this.selectedRow.cdGrpId)
+      this.$store.dispatch("admin/loadCodesData", this.selectedRow.id.cdGrpId)
           .then(response => (this.codeData = response.data['result']))
       this.allCodesSelected = false
       this.checkedCodes = []

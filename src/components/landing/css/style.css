@@ -44,10 +44,6 @@ body.scrollHidden .container {
   /* 이외의 브라우저 */
   overscroll-behavior: none;
 }
-.inner {
-  max-width: 1200px;
-  margin-left: 100px;
-}
 @media (max-width: 1024px) {
   .inner {
     padding: 0 20px;
@@ -179,6 +175,8 @@ header .header-wrap .header-menu-box .header-menu-btn {
   letter-spacing: -0.05em;
   line-height: 26px;
   font-weight: 700;
+  height: 36px;
+  margin-left: 2rem !important;
 }
 @media (max-width: 1024px) {
   header .header-wrap .header-menu-box .header-menu-btn {
@@ -193,7 +191,6 @@ header .header-wrap .header-menu-box .header-menu-btn {
 }
 
 footer {
-  padding: 80px 0;
   background-color: #edf5fe;
 }
 @media (max-width: 1024px) {
@@ -436,7 +433,7 @@ section.main .swiper-group-box .visual-view-box {
   background-color: #fff;
   position: absolute;
   right: 0;
-  top: 43%;
+  top: 38%;
   transform: translateY(-50%);
 }
 @media (max-width: 1024px) {
@@ -450,6 +447,7 @@ section.main .swiper-group-box .visual-view-box {
 }
 section.main .swiper-group-box .visual-view-box img {
   max-width: 100%;
+  max-height: 640px;
 }
 section.main .swiper-group-box .item-box .order-box {
   padding-bottom: 28px;

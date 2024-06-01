@@ -261,17 +261,6 @@
                   </div>
 
                   <div class="list-group-box">
-                    <div class="list-head-box">
-                      <a
-                        href="javascript:void(0)"
-                        class="head-box d-flex flex-center justify-content-between"
-                        onclick="listToggle(this)"
-                      >
-                        <div class="head-tit-box">알 수도 있는 사람</div>
-                        <i class="fa-solid fa-angle-down" style="color: #9fa1ab"></i>
-                        <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
-                      </a>
-                    </div>
 
                     <div class="list-body-box">
                       <div class="item-box">

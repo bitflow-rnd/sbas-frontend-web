@@ -44,8 +44,7 @@
         </div>
         <!--end::Mobile toggle-->
         <!--begin::Logo image-->
-        <router-link to="/dashbd" @click="setActive(0)" class="logo-area">
-        </router-link>
+        <a href="/dashbd" class="logo-area" aria-current="page"></a>
         <!--end::Logo image-->
       </div>
       <!--end::Header logo-->
@@ -62,8 +61,6 @@
             <!--begin:Menu item-->
             <router-link
               to="/dashbd"
-              @click="setActive(0)"
-              :class="{ here: selectedTabIdx === 0 }"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -75,9 +72,8 @@
             <!--end:Menu item-->
             <!--begin:Menu item-->
             <router-link
-              to=""
+              to="/user/bedasgn/list"
               @click="handlefunc(getBdList, 1)"
-              :class="{ here: selectedTabIdx === 1 }"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -91,7 +87,6 @@
             <router-link
               to="/user/patnt/list"
               @click="handlefunc(getPtList, 2)"
-              :class="{ here: selectedTabIdx === 2 }"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -105,7 +100,6 @@
             <router-link
               to="/user/cntc/list"
               @click="handlefunc(getUsersList, 3)"
-              :class="{ here: selectedTabIdx === 3 }"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -118,9 +112,7 @@
             <!--begin:Menu item-->
             <router-link
               to="/user/svrt/dashbd"
-              @click="setActive(4)"
               class="menu-item me-0 me-lg-1"
-              :class="{ here: selectedTabIdx === 4 }"
             >
               <!--begin:Menu link-->
               <span class="menu-link">
@@ -134,7 +126,6 @@
               to="/user/medinst/list"
               @click="handlefunc(getMediList, 7)"
               class="menu-item me-0 me-lg-1"
-              :class="{ here: selectedTabIdx === 7 }"
             >
               <!--begin:Menu link-->
               <span class="menu-link">
@@ -146,9 +137,8 @@
             <!--begin:Menu item-->
             <router-link
               v-show="userInfo.jobCd === JobCode.Sysa"
-              to=""
+              to="/admin/user/list"
               @click="handlefunc(getUserList, 5)"
-              :class="{ here: selectedTabIdx === 5 }"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -703,7 +693,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { ptType } from '@/util/ui'
+import { getTelno, getAuthCd, getPmgr, getPtType, ptType } from '@/util/ui'
 import store from '@/store/store'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import MyInfoModModal from '@/components/user/modal/MyInfoModModal.vue'
@@ -725,16 +715,13 @@ export default {
   },
   computed: {
     ...mapState('user', ['userInfo']),
-    selectedTabIdx: function() {
-      return store.getters['user/getSelectedTabIdx']
-    }
   },
   methods: {
-    setActive(idx) {
-      this.$store.commit('user/setSelectedTabIdx', idx)
-    },
+    getAuthCd,
+    getTelno,
+    getPmgr,
+    getPtType,
     handlefunc(fun, idx) {
-      this.setActive(idx)
       fun()
     },
     getUserList() {
@@ -782,7 +769,7 @@ export default {
 
 <style scoped>
 .logo-area {
-  background-image: url('@/assets/img//title-bar.webp');
+  background-image: url('@/assets/img/title-bar.webp');
   width: 120px;
   height: 100%;
   background-size: 150px;
@@ -791,6 +778,13 @@ export default {
 }
 .fs-5 {
   font-size: 0.85rem !important;
+}
+
+.router-link-active {
+  background-color: rgb(116, 175, 235);
+}
+.router-link-active .menu-title {
+  color: white !important;
 }
 
 .user-id {

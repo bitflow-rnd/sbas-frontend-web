@@ -10,7 +10,7 @@
         </h1>
 
         <div class='header-menu-box d-flex'>
-          <a href="https://bitflow.notion.site/1-c386cb59de4440208ec146d6968bf877?pvs=4" target='_blank' class="btn btn-flex btn-sm btn-primary my-auto fs-4 py-1"
+          <a href="https://bitflow.notion.site/1-c386cb59de4440208ec146d6968bf877?pvs=4" target='_blank' class="btn btn-flex btn-sm btn-primary my-auto fs-4 btn-mnal py-1"
           ><i class="fa-solid fa-triangle-exclamation"></i> 사용자매뉴얼</a
           >
           <router-link to='/login' class='ms-4 mt-2 header-menu-btn d-none d-md-block'>병상배정 시스템 로그인</router-link>
@@ -131,13 +131,15 @@
     <!-- footer start -->
     <section class='section footer fp-auto-height'>
       <footer>
-        <div class='inner wrap'>
+        <div class='wrap'>
 
           <div class='footer-menu-box'>
 
             <div class='footer-menu-list row'>
 
-              <router-link to='/login' class='d-none d-md-block col col-4 footer-menu-btn type-primary py-1' v-if='!isMobile'>병상배정 시스템 로그인</router-link>
+              <router-link to='/login' class='d-none d-md-block text-center position-relative col col-4 footer-menu-btn type-primary py-1' v-if='!isMobile'>
+                <div class="btn-txt-center">병상배정 시스템 로그인</div>
+              </router-link>
 
               <a href="/d/apk.html" class='col col-6 col-md-4 footer-menu-btn'>
                 <img src='/img/common/img_footer_google.svg' alt='이미지'>
@@ -268,7 +270,15 @@ body, .app-root {
   width: 80%;
 }
 header.main {
-  height: 50px;
+  height: 70px;
+}
+.btn-txt-center {
+  position: absolute;
+  left: 50%;
+  width: fit-content;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: fit-content;
 }
 
 .con-box {
@@ -289,18 +299,18 @@ header.main {
 section.main .swiper-group-box .navigation-box {
   margin-left: 200px;
 }
-.section.footer {
-  width: 80% !important;
-  left: 18% !important;
-}
 section.main {
   position: relative;
   height: 100%;
 }
-
+.btn-mnal {
+  line-height: 36px;
+}
 .inner {
-  max-width: 1440px;
-  margin-left: calc(50% - 720px);
+  max-width: 1200px;
+  left: 50%;
+  transform: translateX(-50%);
+
 }
 
 .section.section1, .section.section2, .section.section3 {
@@ -329,14 +339,16 @@ section.main {
 
 footer {
   background-color: inherit;
+  padding: 40px 0;
 }
 
 .section.footer {
   position: fixed;
   bottom: 0;
   z-index: 11;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  width: calc(100% - 6rem);
+  transform: translateX(-50%);
 }
 
 .floating-img-box .up {
@@ -366,6 +378,9 @@ footer .footer-menu-box .footer-menu-list {
 }
 
 @media (max-width: 768.98px) {
+  header.main {
+    height: 50px;
+  }
   .visual-view-box {
     width: calc(100% - 3rem) !important;
     top: 15% !important;

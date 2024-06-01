@@ -57,9 +57,9 @@
 
             <div class="login-note-box">
               <div class="note-wrap">
-                <div class="row">감염병 스마트 병상배정 시스템입니다.</div>
                 <div class="row">불법 사용시 법적 제재를 받을 수 있습니다.</div>
-                <div class="row">접속문의 : master@lemonhealth.com / 1577-1577</div>
+                <div class="row">시스템 관련 문의 : 칠곡경북대학교병원 감염내과 연구소</div>
+                <div class="row">053-200-3767, 010-6517-3638</div>
               </div>
             </div>
 
@@ -137,11 +137,6 @@
         <!--begin::Modal body-->
         <form @submit.prevent="onEnter" class="modal-body scroll-y py-10 px-10">
           <article class="table-form-layout1">
-            <div class="form-head-box">
-              <div class="head-box">
-                <div class="head-txt-box fs-16px fw-bold pb-5">사용자 기본 정보</div>
-              </div>
-            </div>
             <div class="form-body-box">
               <div class="table-box">
                 <table>
@@ -293,8 +288,8 @@
                                   />
                                 </div>
                                 <div class="info-box">
-                                  <div class="main-box">병상요청</div>
-                                  <div class="sub-box">보건소</div>
+                                  <div class="main-box">보건소</div>
+                                  <div class="sub-box">병상요청</div>
                                 </div>
                               </div>
                             </label>
@@ -338,7 +333,7 @@
                                 </div>
                                 <div class="info-box">
                                   <div class="main-box">의료진</div>
-                                  <div class="sub-box">병상요청, 병상배정</div>
+                                  <div class="sub-box">병상요청, 병상배정, 입원처리</div>
                                 </div>
                               </div>
                             </label>
@@ -388,15 +383,15 @@
               <div class="table-box">
                 <table>
                   <colgroup>
-                    <col style="width: 168px" />
+                    <col style="width: 140px" />
                     <col style="width: auto" />
-                    <col style="width: 168px" />
+                    <col style="width: 140px" />
                     <col style="width: auto" />
                   </colgroup>
                   <tbody>
                     <tr>
                       <th>담당/근무지역 <span class="text-primary">*</span></th>
-                      <td colspan="3" class="vertical-top">
+                      <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="sbox w-175px">
                             <select v-model="form.dutyDstr1Cd" @change="getGugun(form.dutyDstr1Cd)">
@@ -421,9 +416,7 @@
                           </div>
                         </div>
                       </td>
-                    </tr>
 
-                    <tr>
                       <th>소속기관 <span class="text-primary">*</span></th>
                       <td class="vertical-top">
                         <div class="item-cell-box full">
@@ -451,19 +444,13 @@
                           </div>
                         </div>
                       </td>
-                      <th>직급</th>
-                      <td class="vertical-top">
-                        <div class="item-cell-box full">
-                          <div class="tbox full">
-                            <input type="text" v-model="form.ocpCd" placeholder="직급, 직무 또는 직위 입력" />
-                          </div>
-                        </div>
-                      </td>
+
                     </tr>
 
                     <tr>
+
                       <th>담당환자 유형</th>
-                      <td colspan="3">
+                      <td>
                         <div class="item-cell-box">
                           <div class="cbox">
                             <label>
@@ -532,6 +519,16 @@
                           </div>
                         </div>
                       </td>
+
+                      <th>직급</th>
+                      <td class="vertical-top">
+                        <div class="item-cell-box full">
+                          <div class="tbox full">
+                            <input type="text" v-model="form.ocpCd" placeholder="직급, 직무 또는 직위 입력" />
+                          </div>
+                        </div>
+                      </td>
+
                     </tr>
 
                     <tr>
@@ -569,7 +566,7 @@
             </div>
           </article>
 
-          <article class="modal-menu-layout1 pt-10">
+          <article class="modal-menu-layout1 pt-9">
             <div class="modal-menu-list">
               <router-link to="" @click="reqUserReg" class="modal-menu-btn menu-primary"
                 >등록 요청 완료</router-link
@@ -1138,20 +1135,19 @@ export default {
 
 .login-bg {
   position: absolute;
-  background-image: url('@/assets/img/bg-login.png');
-  background-size: cover;
-  background-position-x: left;
+  background-image: url(/src/assets/img/bg-login.png);
+  background-size: contain;
+  background-position-x: center;
   background-position-y: center;
   background-repeat: no-repeat;
-  left: 35%;
-  width: 60%;
+  left: 0;
+  width: 100%;
   height: 100%;
-  transform: translateX(-50%);
 }
 
 .login-contents {
   position: absolute !important;
-  right: 0 !important;
+  right: 5% !important;
   top: 0;
   left: initial;
   width: 600px !important;
@@ -1170,9 +1166,9 @@ export default {
   display: inline-block;
   --bs-modal-width: 1000px;
 }
+
 .modal-dialog {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  height: calc(100% - 150px);
 }
 
 @media (max-width: 767.98px) {

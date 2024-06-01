@@ -62,11 +62,6 @@ const routes = [
         name: 'dashbd',
         component: () => import('@/components/common/DashbdView.vue')
       },
-      /* {
-        path: 'pcmain',
-        name: 'pcmain',
-        component: () => import('@/components/common/FindId.vue')
-      }, */
       {
         path: 'patnt/list',
         name: 'listpatnt',
@@ -98,11 +93,6 @@ const routes = [
         path: 'chnl/list',
         name: 'listchnl',
         component: () => import('@/components/user/chnl/ListChnl.vue')
-      },
-      {
-        path: 'chnl/listbak',
-        name: 'listchnlbak',
-        component: () => import('@/components/user/chnl/ListChnlBak.vue')
       },
       */
       {
@@ -155,7 +145,7 @@ const routes = [
       {
         path: 'comm/cd/cdgrp/list',
         name: 'ListCdGrp',
-        component: () => import('@/components/admin/comm/cd/ListCdGrp.vue')
+        component: () => import('@/components/admin/comm/ListCdGrp.vue')
       }
     ]
   },
