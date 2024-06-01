@@ -463,38 +463,6 @@
     </div>
   </div>
 
-<!--  <article v-show="model.isAlert" class="popup popup-confirm" style="z-index: 1600">-->
-<!--    <div class="popup-wrapper">-->
-<!--      <div class="popup-contents py-10 px-10" style="width: 300px">-->
-<!--        <article class="modal-alert-layout pb-10">-->
-<!--          <div class="alert-view-box pb-6">-->
-<!--            <img src="/img/common/ic_alert.svg" alt="이미지"/>-->
-<!--          </div>-->
-<!--          <div class="alert-msg-box">{{ model.errMsg }}</div>-->
-<!--        </article>-->
-<!--        <article class="modal-menu-layout1">-->
-<!--          <div class="modal-menu-list">-->
-<!--            <router-link-->
-<!--              to=""-->
-<!--              @click="confirmAlert"-->
-<!--              class="modal-menu-btn menu-primary"-->
-<!--              data-type="success"-->
-<!--            >확인-->
-<!--            </router-link>-->
-<!--            <router-link-->
-<!--              v-show="model.cncBtn"-->
-<!--              to=""-->
-<!--              class="modal-menu-btn menu-cancel"-->
-<!--              data-type="cancel"-->
-<!--            >-->
-<!--              취소-->
-<!--            </router-link>-->
-<!--          </div>-->
-<!--        </article>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </article>-->
-
   <SbasAlert :is-alert='model.isAlert' :err-msg='model.errMsg' :cnc-btn='model.cncBtn'
              @confirm-alert='confirmAlert(model.alertIdx)' />
 

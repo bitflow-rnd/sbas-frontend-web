@@ -3325,7 +3325,7 @@
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0006' && this.chrgUserId.some(item=>item===userInfo.id) &&
-                                    (userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Aprv
+                                    ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Aprv
                                     || userInfo.jobCd === JobCode.Sysa )
                                   "
                                   @click="openModal(4)"

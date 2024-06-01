@@ -23,15 +23,15 @@
                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
                 <span class="svg-icon svg-icon-4 mx-n1">
                   <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                        d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
-                        fill="currentColor"
+                      d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
+                      fill="currentColor"
                     />
                   </svg>
                 </span>
@@ -46,15 +46,15 @@
                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
                 <span class="svg-icon svg-icon-4 mx-n1">
                   <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                        d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
-                        fill="currentColor"
+                      d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
+                      fill="currentColor"
                     />
                   </svg>
                 </span>
@@ -64,7 +64,7 @@
               <!--begin::Item-->
               <li class="breadcrumb-item text-gray-500 mx-n1">
                 <h1
-                    class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0"
+                  class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0"
                 >
                   환자 정보 관리
                 </h1>
@@ -82,15 +82,15 @@
           <!--begin::Actions-->
           <div class="d-flex align-items-center gap-2 gap-lg-3">
             <a
-                href="#"
-                class="btn btn-flex btn-sm btn-secondary fs-7"
-                data-bs-toggle="modal"
-                data-bs-target="#kt_modal_view_users"
+              href="#"
+              class="btn btn-flex btn-sm btn-secondary fs-7"
+              data-bs-toggle="modal"
+              data-bs-target="#kt_modal_view_users"
             ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
             >
             <a
-                @click="openRgstModal()"
-                class="btn btn-sm btn-flex btn-primary align-self-center px-3"
+              @click="openRgstModal()"
+              class="btn btn-sm btn-flex btn-primary align-self-center px-3"
             >
               <i class="fa-solid fa-plus"></i> 환자등록
             </a>
@@ -113,10 +113,10 @@
                 <div class="table-box">
                   <table>
                     <colgroup>
-                      <col style="width: 168px"/>
-                      <col style="width: auto"/>
-                      <col style="width: 168px"/>
-                      <col style="width: auto"/>
+                      <col style="width: 168px" />
+                      <col style="width: auto" />
+                      <col style="width: 168px" />
+                      <col style="width: auto" />
                     </colgroup>
                     <tbody>
                     <tr>
@@ -134,7 +134,8 @@
                           </div>
 
                           <div class="sbox w-175px ms-2">
-                            <select :disabled="enableSecondAddressPicker" v-model="filterPatient['address']['second']" @change="changeDstrCd2()">
+                            <select :disabled="enableSecondAddressPicker" v-model="filterPatient['address']['second']"
+                                    @change="changeDstrCd2()">
                               <option value="" id="null">시/군/구 전체</option>
                               <option v-for="(item,idx) in cmGugun" :key="idx"
                                       :value="item['cdId']">{{ item['cdNm'] }}
@@ -163,18 +164,18 @@
                       <th>배정상태</th>
                       <td>
                         <div
-                            class="item-cell-box"
-                            v-for="(status, idx) in Object.entries(assignmentStatuses)"
-                            :key="idx"
+                          class="item-cell-box"
+                          v-for="(status, idx) in Object.entries(assignmentStatuses)"
+                          :key="idx"
                         >
                           <div class="cbox me-4">
                             <label>
                               <input
-                                  type="checkbox"
-                                  v-model="filterPatient['assignmentStatus']"
-                                  name="state"
-                                  :value="status[1]"
-                                  @change="search"
+                                type="checkbox"
+                                v-model="filterPatient['assignmentStatus']"
+                                name="state"
+                                :value="status[1]"
+                                @change="search"
                               /><i></i>
                               <span class="txt">{{ status[0] }}</span>
                             </label>
@@ -184,10 +185,10 @@
                           <div class="cbox me-4">
                             <label>
                               <input
-                                  type="checkbox"
-                                  v-model="filterPatient['monitoring']"
-                                  :value="true"
-                                  @change="search"
+                                type="checkbox"
+                                v-model="filterPatient['monitoring']"
+                                :value="true"
+                                @change="search"
                               /><i></i>
                               <span class="txt">관찰 환자</span>
                             </label>
@@ -199,10 +200,10 @@
                         <div class="item-cell-box">
                           <div class="tbox w-400px with-btn">
                             <input
-                                type="text"
-                                v-model="filterPatient['searchText']"
-                                placeholder="환자 이름, 생년월일 6자리 또는 휴대폰번호 입력"
-                                @keyup.enter="search"
+                              type="text"
+                              v-model="filterPatient['searchText']"
+                              placeholder="환자 이름, 생년월일 6자리 또는 휴대폰번호 입력"
+                              @keyup.enter="search"
                             />
 
                             <a @click="search" class="input-btn" role="button">
@@ -234,35 +235,21 @@
                 <div class="table-box with-scroll small">
                   <table class="list-table-hoverable">
                     <colgroup>
-<!--                      <col style="width: 35px"/>-->
-                      <col style="width: 70px"/>
-                      <col style="width: 100px"/>
-                      <col style="width: 100px"/>
-                      <col style="width: 100px"/>
-                      <col style="width: 100px"/>
-                      <col style="width: 100px"/>
-                      <col style="width: 100px"/>
-                      <col style="width: 100px"/>
-                      <col style="width: 100px"/>
-                      <col style="width: 100px"/>
-                      <col style="width: 100px"/>
-                      <col style="width: 100px"/>
+                      <col style="width: 70px" />
+                      <col style="width: 100px" />
+                      <col style="width: 100px" />
+                      <col style="width: 100px" />
+                      <col style="width: 100px" />
+                      <col style="width: 100px" />
+                      <col style="width: 100px" />
+                      <col style="width: 100px" />
+                      <col style="width: 100px" />
+                      <col style="width: 100px" />
+                      <col style="width: 100px" />
+                      <col style="width: 100px" />
                     </colgroup>
                     <thead>
                     <tr class="small" style='cursor:default !important'>
-<!--                      <th>-->
-<!--                        <div class="cbox">-->
-<!--                          <label>-->
-<!--                            <input-->
-<!--                                @change="allCodesChangeState()"-->
-<!--                                type="checkbox"-->
-<!--                                class="all-chk"-->
-<!--                                v-model="allPatientsSelected"-->
-<!--                                :disabled="ptList.count === 0"-->
-<!--                            /><i></i>-->
-<!--                          </label>-->
-<!--                        </div>-->
-<!--                      </th>-->
                       <th>순번</th>
                       <th>배정상태</th>
                       <th>이름</th>
@@ -280,17 +267,10 @@
 
                     <tbody>
                     <tr
-                        v-for="(pt, idx) in ptList['items']"
-                        :key="idx"
-                        @click="selectPatient(pt)"
+                      v-for="(pt, idx) in ptList['items']"
+                      :key="idx"
+                      @click="selectPatient(pt)"
                     >
-<!--                      <td>-->
-<!--                        <div class="cbox d-flex justify-content-center">-->
-<!--                          <label>-->
-<!--                            <input type="checkbox" :value="pt" v-model="checkedPatients"/><i></i>-->
-<!--                          </label>-->
-<!--                        </div>-->
-<!--                      </td>-->
                       <td>{{ ptList['count'] - idx - startIndex }}</td>
                       <td>{{ pt['bedStatCdNm'] ? pt['bedStatCdNm'] : '환자정보등록' }}</td>
                       <td>
@@ -304,7 +284,9 @@
                           </div>
                         </div>
                       </td>
-                      <td>{{ pt['rrno1'] ? pt['rrno1'].slice(0,2) + '.' + pt['rrno1'].slice(2,4) + '.' + pt['rrno1'].slice(4) : '-'}}</td>
+                      <td>
+                        {{ pt['rrno1'] ? pt['rrno1'].slice(0, 2) + '.' + pt['rrno1'].slice(2, 4) + '.' + pt['rrno1'].slice(4) : '-' }}
+                      </td>
                       <td>{{ pt['gndr'] }}자</td>
                       <td>{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
                       <td>{{ pt['mpno'] ? pt['mpno'] : '-' }}</td>
@@ -313,10 +295,10 @@
                       <td>{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                       <td>{{ getDate(pt['updtDttm']) }}</td>
                       <td
-                          @click='toggleCheckbox()'
-                        ><a @click.stop='showPatntModal(pt,2)'
+                        @click='toggleCheckbox()'
+                      ><a @click.stop='showPatntModal(pt,2)'
                           class='btn btn-flex btn-xs btn-outline btn-outline-primary'
-                          >수정</a>
+                      >수정</a>
                       </td>
                     </tr>
                     </tbody>
@@ -326,12 +308,12 @@
             </article>
 
             <data-pagination
-                @change="changePage"
-                :next-page-buttons-count="nextPageButtonsCount"
-                :previous-page-buttons-count="previousPageButtonsCount"
-                :display-change-page-buttons-count="displayChangePageButtonsCount"
-                :display-rows-count="displayRowsCount"
-                :data-length="ptList['count']"
+              @change="changePage"
+              :next-page-buttons-count="nextPageButtonsCount"
+              :previous-page-buttons-count="previousPageButtonsCount"
+              :display-change-page-buttons-count="displayChangePageButtonsCount"
+              :display-rows-count="displayRowsCount"
+              :data-length="ptList['count']"
             ></data-pagination>
 
             <!--end::Table-->
@@ -346,7 +328,8 @@
   <!--end:::Main-->
 
   <!--  환자 상세 정보  -->
-  <div v-show='showModal === 1' class="modal fade" :class="{'show' : showModal === 1}" id="kt_modal_patnt_detail" tabindex="-1" aria-hidden="true" style="">
+  <div v-show='showModal === 1' class="modal fade" :class="{'show' : showModal === 1}" id="kt_modal_patnt_detail"
+       tabindex="-1" aria-hidden="true" style="">
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-1500px modal-dialog-centered">
       <!--begin::Modal content-->
@@ -359,11 +342,6 @@
           <!--begin::Close-->
 
           <div class="btn-list">
-            <!--
-            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-              <i class="fa-solid fa-share-nodes text-black" style="font-size:18px;"></i>
-            </div>
-            -->
             <div
               class="btn btn-sm btn-icon btn-active-color-primary"
               @click="closeModal(0)"
@@ -372,30 +350,30 @@
               <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
               <span class="svg-icon svg-icon-1">
                 <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <rect
-                      opacity="0.5"
-                      x="6"
-                      y="17.3137"
-                      width="16"
-                      height="2"
-                      rx="1"
-                      transform="rotate(-45 6 17.3137)"
-                      fill="currentColor"
+                    opacity="0.5"
+                    x="6"
+                    y="17.3137"
+                    width="16"
+                    height="2"
+                    rx="1"
+                    transform="rotate(-45 6 17.3137)"
+                    fill="currentColor"
                   ></rect>
                   <rect
-                      x="7.41422"
-                      y="6"
-                      width="16"
-                      height="2"
-                      rx="1"
-                      transform="rotate(45 7.41422 6)"
-                      fill="currentColor"
+                    x="7.41422"
+                    y="6"
+                    width="16"
+                    height="2"
+                    rx="1"
+                    transform="rotate(45 7.41422 6)"
+                    fill="currentColor"
                   ></rect>
                 </svg>
               </span>
@@ -432,8 +410,8 @@
                       <div class="table-box pe-5">
                         <table>
                           <colgroup>
-                            <col style="width: 128px"/>
-                            <col style="width: auto"/>
+                            <col style="width: 128px" />
+                            <col style="width: auto" />
                           </colgroup>
                           <tbody>
                           <tr>
@@ -464,7 +442,7 @@
                           <tr>
                             <th>주소</th>
                             <td>
-                              [{{ ptDetail.zip }}]<br/>
+                              [{{ ptDetail.zip }}]<br />
                               {{ ptDetail.bascAddr }}&nbsp;{{ ptDetail.detlAddr }}
                             </td>
                           </tr>
@@ -516,7 +494,7 @@
                     </div>
 
                     <svrt-chart-unit-no-title :pt-id="ptDetail.ptId" class='mt-5'
-                                              v-if="monitorPatntsList?.includes(ptDetail.ptId)"/>
+                                              v-if="monitorPatntsList?.includes(ptDetail.ptId)" />
 
                   </article>
                 </div>
@@ -525,16 +503,16 @@
                   <article class="modal-menu-layout1 pb-5">
                     <div class="modal-menu-list">
                       <a
-                          href='javascript:void(0)'
-                          class="modal-menu-btn menu-primary-outline"
+                        href='javascript:void(0)'
+                        class="modal-menu-btn menu-primary-outline"
                       >관찰환자 등록
                       </a>
                       <router-link
-                          to=""
-                          data-bs-target="#kt_modal_patnt"
-                          data-bs-toggle="modal"
-                          class="modal-menu-btn menu-primary"
-                          @click='showPatntModal(ptDetail,2)'
+                        to=""
+                        data-bs-target="#kt_modal_patnt"
+                        data-bs-toggle="modal"
+                        class="modal-menu-btn menu-primary"
+                        @click='showPatntModal(ptDetail,2)'
                       >환자 정보 수정
                       </router-link>
                     </div>
@@ -558,16 +536,16 @@
 
                         <table v-if='bdasHis.items && bdasHis.items.length>0'>
                           <colgroup>
-                            <col style="width: 50px"/>
-                            <col style="width: auto"/>
+                            <col style="width: 50px" />
+                            <col style="width: auto" />
                           </colgroup>
                           <tr v-for="(item,i) in bdasHis.items" :key="i">
                             <td class="py-5 px-3 text-center text-gray-700 fw-medium fs-6">{{ item.order }}차</td>
                             <td class="py-5 px-3">
                               <div class="top-info-box d-flex align-items-center">
                                 <div
-                                    class="d-inline-flex align-items-center justify-content-center w-auto bg-primary h-25px w-65px text-white rounded-2 px-0 w-auto"
-                                    :class="{'bg-gray-500' : item.bedStatCdNm === '완료'}"
+                                  class="d-inline-flex align-items-center justify-content-center w-auto bg-primary h-25px w-65px text-white rounded-2 px-0 w-auto"
+                                  :class="{'bg-gray-500' : item.bedStatCdNm === '완료'}"
                                 >
                                   {{ item.bedStatCdNm }}
                                 </div>
@@ -602,9 +580,9 @@
                   <article class="modal-menu-layout1 pb-5">
                     <div class="modal-menu-list">
                       <router-link
-                          to=""
-                          class="modal-menu-btn menu-primary"
-                          @click='showPatntModal(ptDetail,1)'
+                        to=""
+                        class="modal-menu-btn menu-primary"
+                        @click='showPatntModal(ptDetail,1)'
                       >병상요청
                       </router-link>
                     </div>
@@ -621,12 +599,12 @@
 
                     <div v-if="timeline !== null && timeline !== undefined" class="head-sub-box mt-1">
                       <div
-                          class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2"
+                        class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2"
                       >
                         1차
                       </div>
                       <div
-                          class="d-inline-flex align-items-center justify-content-center w-auto text-gray-700 ms-2"
+                        class="d-inline-flex align-items-center justify-content-center w-auto text-gray-700 ms-2"
                       >
                         {{ getTLDt(timeline.items[0].updtDttm, 0) }}
                       </div>
@@ -643,15 +621,15 @@
                 <div class="detail-body-box pe-5 flex-root" style="min-height: 0">
                   <article class="timeline-layout1 pb-5" style="height: 100%">
                     <div
-                        v-if="timeline !== null"
-                        class="timeline-wrap overflow-y-auto ps-10 pe-5"
-                        style="height: 100%"
+                      v-if="timeline !== null"
+                      class="timeline-wrap overflow-y-auto ps-10 pe-5"
+                      style="height: 100%"
                     >
                       <ul>
                         <li
-                            v-for="(item, idx) in timeline.items"
-                            :key="idx"
-                            :class="{
+                          v-for="(item, idx) in timeline.items"
+                          :key="idx"
+                          :class="{
                               off: item.timeLineStatus === 'complete',
                               'custom-style':
                                 idx < timeline.items.length - 1 &&
@@ -659,13 +637,13 @@
                             }"
                         >
                           <div class="ic-box" v-if="item.timeLineStatus !== 'closed'">
-                            <img :src="getTLIcon(item, idx)" alt="이미지"/>
+                            <img :src="getTLIcon(item, idx)" alt="이미지" />
                           </div>
 
                           <div
-                              class="item-box"
-                              :class="{ suspend: item.timeLineStatus === 'suspend' }"
-                              v-if="item.timeLineStatus !== 'closed'"
+                            class="item-box"
+                            :class="{ suspend: item.timeLineStatus === 'suspend' }"
+                            v-if="item.timeLineStatus !== 'closed'"
                           >
                             <div class="top-item-box">
                               <div class="state-box">{{ item.title }}</div>
@@ -686,7 +664,7 @@
                     </div>
 
                     <div v-if="timeline === null" class="img-box" data-v-70fc8ce7=""><img
-                        src="/img/common/img_nodata.svg" alt="이미지" data-v-70fc8ce7="">
+                      src="/img/common/img_nodata.svg" alt="이미지" data-v-70fc8ce7="">
                       <h2 data-v-70fc8ce7="">최근 이력 없음</h2></div>
                     <div class="detail-foot-box">
                       <article class="msg-send-layout1">
@@ -697,16 +675,16 @@
                         <div class="msg-group-box">
                           <div class="img-upload-box">
                             <label>
-                              <input type="file"/>
-                              <img src="/img/common/ic_msg_img_upload.svg" alt="이미지"/>
+                              <input type="file" />
+                              <img src="/img/common/ic_msg_img_upload.svg" alt="이미지" />
                             </label>
                           </div>
                           <div class="msg-input-box">
-                            <input type="text" placeholder="메시지 입력"/>
+                            <input type="text" placeholder="메시지 입력" />
                           </div>
                           <div class="msg-send-box">
                             <a href="#none" class="send-btn">
-                              <img src="/img/common/ic_msg_send.svg" alt="이미지"/>
+                              <img src="/img/common/ic_msg_send.svg" alt="이미지" />
                             </a>
                           </div>
                         </div>
@@ -742,37 +720,37 @@
           <!--end::Modal title-->
           <!--begin::Close-->
           <div
-              id="reqest_exit"
-              class="btn btn-sm btn-icon btn-active-color-primary"
-              data-bs-dismiss="modal"
+            id="reqest_exit"
+            class="btn btn-sm btn-icon btn-active-color-primary"
+            data-bs-dismiss="modal"
           >
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class="svg-icon svg-icon-1" @click = 'closePatntRequest'>
+            <span class="svg-icon svg-icon-1" @click='closePatntRequest'>
               <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <rect
-                    opacity="0.5"
-                    x="6"
-                    y="17.3137"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(-45 6 17.3137)"
-                    fill="currentColor"
+                  opacity="0.5"
+                  x="6"
+                  y="17.3137"
+                  width="16"
+                  height="2"
+                  rx="1"
+                  transform="rotate(-45 6 17.3137)"
+                  fill="currentColor"
                 ></rect>
                 <rect
-                    x="7.41422"
-                    y="6"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(45 7.41422 6)"
-                    fill="currentColor"
+                  x="7.41422"
+                  y="6"
+                  width="16"
+                  height="2"
+                  rx="1"
+                  transform="rotate(45 7.41422 6)"
+                  fill="currentColor"
                 ></rect>
               </svg>
             </span>
@@ -782,7 +760,7 @@
 
           <article class="floating-request-box d-none">
             <div class="img-box">
-              <img src="/img/common/ic_request_patient.svg" alt="이미지"/>
+              <img src="/img/common/ic_request_patient.svg" alt="이미지" />
             </div>
             <div v-if="newPt.mpno" class="txt-box">
               {{ newPt.ptNm }}
@@ -791,9 +769,6 @@
                 {{ newPt.bascAddr }} / {{ getTelno(newPt.mpno) }})</span
               >
             </div>
-<!--            <div v-show="tab !== 1 && svInfo.undrDsesCd !== []" class="txt-box">
-              <span class="text-primary">{{ getTag(svInfo.undrDsesCd) }}</span>
-            </div>-->
           </article>
         </div>
 
@@ -807,7 +782,7 @@
                 <div class="info-box">
                   <div class="subject-box">1단계</div>
                   <div class="con-box">
-                    환자정보 입력,<br/>
+                    환자정보 입력,<br />
                     역학조사서 업로드
                   </div>
                 </div>
@@ -852,7 +827,7 @@
                       <div class="table-box h-100">
                         <table class="h-100">
                           <colgroup>
-                            <col style="width: 363px"/>
+                            <col style="width: 363px" />
                           </colgroup>
                           <tbody>
                           <tr>
@@ -862,18 +837,19 @@
                             <td>
                               <article class="modal-profile-layout1">
                                 <div
-                                    class="profile-card-box flex-column mx-auto"
-                                    style="width: 264px"
+                                  class="profile-card-box flex-column mx-auto"
+                                  style="width: 264px"
                                 >
                                   <div
-                                      class="profile-view-box"
-                                      style="width: 100%; height: 264px"
+                                    class="profile-view-box"
+                                    style="width: 100%; height: 264px"
                                   >
                                     <img
                                       v-if="newPt.attcId === null || newPt.attcId === ''"
                                       src='@/assets/img/img-no-img.webp' />
                                     <img v-else :src='this.epidReportImage' @click='showImageLightBox' />
-                                    <a v-if="newPt.attcId !== null || newPt.attcId === ''" @click="alertOpen(9)" class="remove-btn"
+                                    <a v-if="newPt.attcId !== null || newPt.attcId === ''" @click="alertOpen(9)"
+                                       class="remove-btn"
                                     ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
                                     /></a>
                                     <vue-easy-lightbox
@@ -889,7 +865,7 @@
                                       <label
                                         class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary"
                                       >
-                                        <input type="file" @change="uploadRpt" :value="reportFile"/>
+                                        <input type="file" @change="uploadRpt" :value="reportFile" />
                                         업로드
                                       </label>
                                     </div>
@@ -912,10 +888,10 @@
                       <form @submit="regNewPt" class="table-box">
                         <table>
                           <colgroup>
-                            <col style="width: 168px"/>
-                            <col style="width: auto"/>
-                            <col style="width: 168px"/>
-                            <col style="width: auto"/>
+                            <col style="width: 168px" />
+                            <col style="width: auto" />
+                            <col style="width: 168px" />
+                            <col style="width: auto" />
                           </colgroup>
                           <tbody>
                           <tr>
@@ -923,7 +899,7 @@
                             <td>
                               <div class="item-cell-box">
                                 <div class="tbox">
-                                  <input type="text" v-model="newPt.ptNm" placeholder='환자이름 입력'/>
+                                  <input type="text" v-model="newPt.ptNm" placeholder='환자이름 입력' />
                                 </div>
                               </div>
                             </td>
@@ -937,7 +913,7 @@
                               <div class="item-row-box">
                                 <div class="item-cell-box">
                                   <div class="tbox">
-                                    <input type="text" v-model="newPt.rrno1"/>
+                                    <input type="text" v-model="newPt.rrno1" />
                                   </div>
                                   <div class="unit-box mx-2 text-gray-600">-</div>
                                   <div class="tbox" style="min-width: 20px">
@@ -948,9 +924,6 @@
                                       maxlength=7
                                     />
                                   </div>
-<!--                                  <div v-if='this.rptInfo !== null' class="unit-box ms-2" style="line-height: 30px">
-                                    ●●●●●●
-                                  </div>-->
                                 </div>
                               </div>
                               <div class="item-row-box">
@@ -969,12 +942,12 @@
                               <div class="item-row-box">
                                 <div class="item-cell-box full">
                                   <div class="tbox full">
-                                    <input type="text" v-model="newPt.zip" readonly/>
+                                    <input type="text" v-model="newPt.zip" readonly />
                                   </div>
                                   <a
-                                      @click="openAddressFinder(0)"
-                                      class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
-                                      style="min-width: 80px"
+                                    @click="openAddressFinder(0)"
+                                    class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
+                                    style="min-width: 80px"
                                   >주소검색</a
                                   >
                                 </div>
@@ -983,7 +956,7 @@
                               <div class="item-row-box">
                                 <div class="item-cell-box full">
                                   <div class="tbox full">
-                                    <input type="text" v-model="newPt.bascAddr"/>
+                                    <input type="text" v-model="newPt.bascAddr" />
                                   </div>
                                   <div class="item-note-box flex-shrink-0 ms-2 text-black"></div>
                                 </div>
@@ -992,7 +965,7 @@
                               <div class="item-row-box">
                                 <div class="item-cell-box full">
                                   <div class="tbox full">
-                                    <input type="text" v-model="newPt.detlAddr"/>
+                                    <input type="text" v-model="newPt.detlAddr" />
                                   </div>
                                   <div class="item-note-box flex-shrink-0 ms-2 text-black"></div>
                                 </div>
@@ -1009,7 +982,7 @@
                             <td>
                               <div class="item-cell-box full">
                                 <div class="tbox full">
-                                  <input type="text" v-model="newPt.mpno"/>
+                                  <input type="text" v-model="newPt.mpno" />
                                 </div>
                               </div>
                             </td>
@@ -1020,7 +993,7 @@
                             <td>
                               <div class="item-cell-box full">
                                 <div class="tbox full">
-                                  <input type="text" v-model="newPt.nokNm"/>
+                                  <input type="text" v-model="newPt.nokNm" />
                                 </div>
                               </div>
                             </td>
@@ -1031,7 +1004,7 @@
                             <td>
                               <div class="item-cell-box full">
                                 <div class="tbox full">
-                                  <input type="text" v-model="newPt.telno"/>
+                                  <input type="text" v-model="newPt.telno" />
                                 </div>
                               </div>
                             </td>
@@ -1045,20 +1018,20 @@
                                   <div class="toggle-list">
                                     <label>
                                       <input
-                                          type="radio"
-                                          name="toggle1"
-                                          value="N"
-                                          v-model="newPt.dethYn"
+                                        type="radio"
+                                        name="toggle1"
+                                        value="N"
+                                        v-model="newPt.dethYn"
                                       />
                                       <span class="txt">생존</span>
                                     </label>
 
                                     <label>
                                       <input
-                                          type="radio"
-                                          name="toggle1"
-                                          value="Y"
-                                          v-model="newPt.dethYn"
+                                        type="radio"
+                                        name="toggle1"
+                                        value="Y"
+                                        v-model="newPt.dethYn"
                                       />
                                       <span class="txt">사망</span>
                                     </label>
@@ -1073,7 +1046,7 @@
                             <td>
                               <div class="item-cell-box full">
                                 <div class="tbox full">
-                                  <input type="text" v-model="newPt.job"/>
+                                  <input type="text" v-model="newPt.job" />
                                 </div>
                               </div>
                             </td>
@@ -1088,30 +1061,30 @@
                                     <div class="toggle-list">
                                       <label>
                                         <input
-                                            type="radio"
-                                            name="nation"
-                                            value="NATI0001"
-                                            v-model="newPt.natiCd"
+                                          type="radio"
+                                          name="nation"
+                                          value="NATI0001"
+                                          v-model="newPt.natiCd"
                                         />
                                         <span class="txt">대한민국</span>
                                       </label>
 
                                       <label>
                                         <input
-                                            type="radio"
-                                            name="nation"
-                                            value="NATI0003"
-                                            v-model="newPt.natiCd"
+                                          type="radio"
+                                          name="nation"
+                                          value="NATI0003"
+                                          v-model="newPt.natiCd"
                                         />
                                         <span class="txt">알수없음</span>
                                       </label>
 
                                       <label>
                                         <input
-                                            type="radio"
-                                            name="nation"
-                                            value="NATI0002"
-                                            v-model="newPt.natiCd"
+                                          type="radio"
+                                          name="nation"
+                                          value="NATI0002"
+                                          v-model="newPt.natiCd"
                                         />
                                         <span class="txt">직접입력</span>
                                       </label>
@@ -1125,11 +1098,11 @@
                               <div class="item-row-box">
                                 <div class="tbox" style="width: 211px">
                                   <input
-                                      type="text"
-                                      placeholder="국가명 입력"
-                                      v-model="newPt.natiNm"
-                                      :readonly="newPt.natiCd !== 'NATI0002'"
-                                      class="nation-input"
+                                    type="text"
+                                    placeholder="국가명 입력"
+                                    v-model="newPt.natiNm"
+                                    :readonly="newPt.natiCd !== 'NATI0002'"
+                                    class="nation-input"
                                   />
                                 </div>
                               </div>
@@ -1145,7 +1118,6 @@
 
               <article class="modal-menu-layout1 pt-10">
                 <div class="modal-menu-list">
-                  <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
                   <a @click="openPopup(4)" class="modal-menu-btn menu-primary">다음</a>
                 </div>
               </article>
@@ -1174,16 +1146,19 @@
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div class="sbox" style="width: 170px">
-                                <select v-model="medinstInfo.dstr1Cd" @change="getMedInst" :disabled='dsInfo.rcptPhc===1'>
+                                <select v-model="medinstInfo.dstr1Cd" @change="getMedInst"
+                                        :disabled='dsInfo.rcptPhc===1'>
                                   <option value=''>지역 선택</option>
-                                  <option v-for='(item,i) in cmSido' :key='i' :value='item.cdId'>{{item.cdNm}}</option>
+                                  <option v-for='(item,i) in cmSido' :key='i' :value='item.cdId'>{{ item.cdNm }}
+                                  </option>
                                 </select>
                               </div>
                               <div class="sbox ms-3" style="width: 170px">
                                 <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstr1Cd===''">
                                   <option value='0'>보건소 선택</option>
                                   <option v-for="(item,i) in organMedi" :key="i"
-                                          :value='item.instNm'>{{ item.instNm }}</option>
+                                          :value='item.instNm'>{{ item.instNm }}
+                                  </option>
                                   <option value='1'>직접입력</option>
                                 </select>
                               </div>
@@ -1204,9 +1179,9 @@
                         <td>
                           <div class="textbox">
                               <textarea
-                                  style="height: 66px"
-                                  class="py-2 px-4"
-                                  v-model="dsInfo.cv19Symp"
+                                style="height: 66px"
+                                class="py-2 px-4"
+                                v-model="dsInfo.cv19Symp"
                               ></textarea>
                           </div>
                         </td>
@@ -1218,9 +1193,9 @@
                           <div class="item-cell-box">
                             <div class="tbox w-350px">
                               <input
-                                  type="text"
-                                  v-model="dsInfo.diagNm"
-                                  placeholder="질병명 입력"
+                                type="text"
+                                v-model="dsInfo.diagNm"
+                                placeholder="질병명 입력"
                               />
                             </div>
                           </div>
@@ -1230,9 +1205,9 @@
                           <div class="item-cell-box full">
                             <div class="tbox full">
                               <input
-                                  type="text"
-                                  placeholder="검사결과 입력 예) 양성"
-                                  v-model="dsInfo.dfdgExamRslt"
+                                type="text"
+                                placeholder="검사결과 입력 예) 양성"
+                                v-model="dsInfo.dfdgExamRslt"
                               />
                             </div>
                           </div>
@@ -1245,9 +1220,9 @@
                           <div class="item-cell-box">
                             <div class="tbox w-350px">
                               <input
-                                  type="text"
-                                  placeholder="질병급 입력"
-                                  v-model="dsInfo.diagGrde"
+                                type="text"
+                                placeholder="질병급 입력"
+                                v-model="dsInfo.diagGrde"
                               />
                             </div>
                           </div>
@@ -1257,31 +1232,31 @@
                           <div class="item-cell-box">
                             <div class="tbox" style="width: 110px">
                               <input
-                                  type="text"
-                                  placeholder="YYYY-MM-DD"
-                                  v-model="dsInfo.occrDt"
+                                type="text"
+                                placeholder="YYYY-MM-DD"
+                                v-model="dsInfo.occrDt"
                               />
                             </div>
 
                             <a
-                                @click="dsDtSame"
-                                class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
-                                style="min-width: 80px; line-height: 1.2"
+                              @click="dsDtSame"
+                              class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
+                              style="min-width: 80px; line-height: 1.2"
                             >전체동일</a
                             >
 
                             <div class="tbox ms-3" style="width: 110px">
                               <input
-                                  type="text"
-                                  placeholder="YYYY-MM-DD"
-                                  v-model="dsInfo.diagDt"
+                                type="text"
+                                placeholder="YYYY-MM-DD"
+                                v-model="dsInfo.diagDt"
                               />
                             </div>
                             <div class="tbox ms-3" style="width: 110px">
                               <input
-                                  type="text"
-                                  placeholder="YYYY-MM-DD"
-                                  v-model="dsInfo.rptDt"
+                                type="text"
+                                placeholder="YYYY-MM-DD"
+                                v-model="dsInfo.rptDt"
                               />
                             </div>
                           </div>
@@ -1294,9 +1269,9 @@
                           <div class="item-cell-box">
                             <div class="tbox w-350px">
                               <input
-                                  type="text"
-                                  placeholder="환자등분류 입력"
-                                  v-model="dsInfo.ptCatg"
+                                type="text"
+                                placeholder="환자등분류 입력"
+                                v-model="dsInfo.ptCatg"
                               />
                             </div>
                           </div>
@@ -1306,9 +1281,9 @@
                           <div class="item-cell-box full">
                             <div class="tbox full">
                               <input
-                                  type="text"
-                                  placeholder="PCR 등 검사방법 외"
-                                  v-model="dsInfo.rmk"
+                                type="text"
+                                placeholder="PCR 등 검사방법 외"
+                                v-model="dsInfo.rmk"
                               />
                             </div>
                           </div>
@@ -1323,40 +1298,40 @@
                               <div class="toggle-list">
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle2-1"
-                                      value="입원"
-                                      v-model="dsInfo.admsYn"
+                                    type="radio"
+                                    name="toggle2-1"
+                                    value="입원"
+                                    v-model="dsInfo.admsYn"
                                   />
                                   <span class="txt">입원</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle2-1"
-                                      value="외래"
-                                      v-model="dsInfo.admsYn"
+                                    type="radio"
+                                    name="toggle2-1"
+                                    value="외래"
+                                    v-model="dsInfo.admsYn"
                                   />
                                   <span class="txt">외래</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle2-1"
-                                      value="재택"
-                                      v-model="dsInfo.admsYn"
+                                    type="radio"
+                                    name="toggle2-1"
+                                    value="재택"
+                                    v-model="dsInfo.admsYn"
                                   />
                                   <span class="txt">재택</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle2-1"
-                                      value="기타"
-                                      v-model="dsInfo.admsYn"
+                                    type="radio"
+                                    name="toggle2-1"
+                                    value="기타"
+                                    v-model="dsInfo.admsYn"
                                   />
                                   <span class="txt">기타</span>
                                 </label>
@@ -1371,17 +1346,17 @@
                           <div class="item-cell-box full">
                             <div class="tbox" style="min-width: 205px">
                               <input
-                                  type="text"
-                                  placeholder="요양기관기호 입력"
-                                  v-model="dsInfo.instId"
+                                type="text"
+                                placeholder="요양기관기호 입력"
+                                v-model="dsInfo.instId"
                               />
                             </div>
 
                             <div class="tbox full ms-3">
                               <input
-                                  type="text"
-                                  placeholder="요양기관명 입력"
-                                  v-model="dsInfo.instNm"
+                                type="text"
+                                placeholder="요양기관명 입력"
+                                v-model="dsInfo.instNm"
                               />
                             </div>
                           </div>
@@ -1395,16 +1370,16 @@
                             <div class="item-cell-box full">
                               <div class="tbox full">
                                 <input
-                                    type="text"
-                                    readonly
-                                    v-model="dsInfo.instZip"
-                                    placeholder="우편번호"
+                                  type="text"
+                                  readonly
+                                  v-model="dsInfo.instZip"
+                                  placeholder="우편번호"
                                 />
                               </div>
                               <a
-                                  @click="openAddressFinder(1)"
-                                  class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
-                                  style="min-width: 80px"
+                                @click="openAddressFinder(1)"
+                                class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
+                                style="min-width: 80px"
                               >주소검색</a
                               >
                             </div>
@@ -1414,9 +1389,9 @@
                             <div class="item-cell-box full">
                               <div class="tbox full">
                                 <input
-                                    type="text"
-                                    v-model="dsInfo.instBascAddr"
-                                    placeholder="기본주소 입력"
+                                  type="text"
+                                  v-model="dsInfo.instBascAddr"
+                                  placeholder="기본주소 입력"
                                 />
                               </div>
                             </div>
@@ -1426,9 +1401,9 @@
                             <div class="item-cell-box full">
                               <div class="tbox full">
                                 <input
-                                    type="text"
-                                    v-model="dsInfo.instDetlAddr"
-                                    placeholder="상세주소 입력 (선택)"
+                                  type="text"
+                                  v-model="dsInfo.instDetlAddr"
+                                  placeholder="상세주소 입력 (선택)"
                                 />
                               </div>
                             </div>
@@ -1446,9 +1421,9 @@
                           <div class="item-cell-box full">
                             <div class="tbox full">
                               <input
-                                  type="text"
-                                  v-model="dsInfo.instTelno"
-                                  placeholder="요양기관 전화번호 입력"
+                                type="text"
+                                v-model="dsInfo.instTelno"
+                                placeholder="요양기관 전화번호 입력"
                               />
                             </div>
                           </div>
@@ -1461,9 +1436,9 @@
                           <div class="item-cell-box full">
                             <div class="tbox full">
                               <input
-                                  type="text"
-                                  v-model="dsInfo.diagDrNm"
-                                  placeholder="진단의사 성명 입력"
+                                type="text"
+                                v-model="dsInfo.diagDrNm"
+                                placeholder="진단의사 성명 입력"
                               />
                             </div>
                           </div>
@@ -1476,9 +1451,9 @@
                           <div class="item-cell-box full">
                             <div class="tbox full">
                               <input
-                                  type="text"
-                                  v-model="dsInfo.rptChfNm"
-                                  placeholder="신고기관장 성명 입력"
+                                type="text"
+                                v-model="dsInfo.rptChfNm"
+                                placeholder="신고기관장 성명 입력"
                               />
                             </div>
                           </div>
@@ -1493,24 +1468,24 @@
                               <div class="img-upload-result">
                                 <div class="img-list">
                                   <div href="javascript:void(0)" class="img-box">
-                                    <img src="/img/common/img_dummy_item1.png" alt="이미지"/>
+                                    <img src="/img/common/img_dummy_item1.png" alt="이미지" />
                                     <a
-                                        href="javascript:void(0)"
-                                        class="remove-btn"
-                                        onclick="$(this).parents('.img-box').remove();"
+                                      href="javascript:void(0)"
+                                      class="remove-btn"
+                                      onclick="$(this).parents('.img-box').remove();"
                                     >
-                                      <img src="/img/common/ic_profile_remove.svg" alt="이미지"/>
+                                      <img src="/img/common/ic_profile_remove.svg" alt="이미지" />
                                     </a>
                                   </div>
 
                                   <div href="javascript:void(0)" class="img-box">
-                                    <img src="/img/common/img_dummy_item1.png" alt="이미지"/>
+                                    <img src="/img/common/img_dummy_item1.png" alt="이미지" />
                                     <a
-                                        href="javascript:void(0)"
-                                        class="remove-btn"
-                                        onclick="$(this).parents('.img-box').remove();"
+                                      href="javascript:void(0)"
+                                      class="remove-btn"
+                                      onclick="$(this).parents('.img-box').remove();"
                                     >
-                                      <img src="/img/common/ic_profile_remove.svg" alt="이미지"/>
+                                      <img src="/img/common/ic_profile_remove.svg" alt="이미지" />
                                     </a>
                                   </div>
                                 </div>
@@ -1520,7 +1495,7 @@
                             <div class="upload-form-wrap" style="height: 70px">
                               <div class="no-file-box">
                                 <div class="img-box">
-                                  <img src="/img/common/ic_img_upload.svg" alt="이미지"/>
+                                  <img src="/img/common/ic_img_upload.svg" alt="이미지" />
                                 </div>
                                 <div class="txt-box">첨부할 파일들을 여기로 끌어 놓으세요</div>
                               </div>
@@ -1553,11 +1528,11 @@
                   <form @submit="regSvInfo" class="table-box">
                     <table>
                       <colgroup>
-                        <col style="width: 168px"/>
-                        <col style="width: 168px"/>
-                        <col style="width: auto"/>
-                        <col style="width: 168px"/>
-                        <col style="width: auto"/>
+                        <col style="width: 168px" />
+                        <col style="width: 168px" />
+                        <col style="width: auto" />
+                        <col style="width: 168px" />
+                        <col style="width: auto" />
                       </colgroup>
                       <tbody>
                       <tr>
@@ -1567,10 +1542,10 @@
                             <div class="cbox">
                               <label>
                                 <input
-                                    type="checkbox"
-                                    name="type2_1"
-                                    value="PTTP0003"
-                                    v-model="svInfo.ptTypeCd"
+                                  type="checkbox"
+                                  name="type2_1"
+                                  value="PTTP0003"
+                                  v-model="svInfo.ptTypeCd"
                                 /><i></i>
                                 <span class="txt">투석</span>
                               </label>
@@ -1579,10 +1554,10 @@
                             <div class="cbox ms-4">
                               <label>
                                 <input
-                                    type="checkbox"
-                                    name="type2_2"
-                                    value="PTTP0004"
-                                    v-model="svInfo.ptTypeCd"
+                                  type="checkbox"
+                                  name="type2_2"
+                                  value="PTTP0004"
+                                  v-model="svInfo.ptTypeCd"
                                 /><i></i>
                                 <span class="txt">임산부</span>
                               </label>
@@ -1591,10 +1566,10 @@
                             <div class="cbox ms-4">
                               <label>
                                 <input
-                                    type="checkbox"
-                                    name="type2_3"
-                                    value="PTTP0005"
-                                    v-model="svInfo.ptTypeCd"
+                                  type="checkbox"
+                                  name="type2_3"
+                                  value="PTTP0005"
+                                  v-model="svInfo.ptTypeCd"
                                 /><i></i>
                                 <span class="txt">수술</span>
                               </label>
@@ -1603,10 +1578,10 @@
                             <div class="cbox ms-4">
                               <label>
                                 <input
-                                    type="checkbox"
-                                    name="type2_4"
-                                    value="PTTP0008"
-                                    v-model="svInfo.ptTypeCd"
+                                  type="checkbox"
+                                  name="type2_4"
+                                  value="PTTP0008"
+                                  v-model="svInfo.ptTypeCd"
                                 /><i></i>
                                 <span class="txt">신생아</span>
                               </label>
@@ -1615,10 +1590,10 @@
                             <div class="cbox ms-4">
                               <label>
                                 <input
-                                    type="checkbox"
-                                    name="type2_5"
-                                    value="PTTP0002"
-                                    v-model="svInfo.ptTypeCd"
+                                  type="checkbox"
+                                  name="type2_5"
+                                  value="PTTP0002"
+                                  v-model="svInfo.ptTypeCd"
                                 /><i></i>
                                 <span class="txt">소아</span>
                               </label>
@@ -1627,10 +1602,10 @@
                             <div class="cbox ms-4">
                               <label>
                                 <input
-                                    type="checkbox"
-                                    name="type2_6"
-                                    value="PTTP0006"
-                                    v-model="svInfo.ptTypeCd"
+                                  type="checkbox"
+                                  name="type2_6"
+                                  value="PTTP0006"
+                                  v-model="svInfo.ptTypeCd"
                                 /><i></i>
                                 <span class="txt">인공호흡기 사용</span>
                               </label>
@@ -1639,10 +1614,10 @@
                             <div class="cbox ms-4">
                               <label>
                                 <input
-                                    type="checkbox"
-                                    name="type2_7"
-                                    value="PTTP0007"
-                                    v-model="svInfo.ptTypeCd"
+                                  type="checkbox"
+                                  name="type2_7"
+                                  value="PTTP0007"
+                                  v-model="svInfo.ptTypeCd"
                                 /><i></i>
                                 <span class="txt">적극적 치료요청</span>
                               </label>
@@ -1659,10 +1634,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0001"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0001"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">고혈압</span>
                                 </label>
@@ -1671,10 +1646,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0002"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0002"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">당뇨</span>
                                 </label>
@@ -1683,10 +1658,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0003"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0003"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">고지혈증</span>
                                 </label>
@@ -1695,10 +1670,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0004"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0004"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">심혈관</span>
                                 </label>
@@ -1707,10 +1682,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0005"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0005"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">뇌혈관</span>
                                 </label>
@@ -1721,10 +1696,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0006"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0006"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">암</span>
                                 </label>
@@ -1733,10 +1708,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0007"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0007"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">만성폐질환</span>
                                 </label>
@@ -1745,10 +1720,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0008"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0008"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">폐렴</span>
                                 </label>
@@ -1757,10 +1732,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0009"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0009"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">신장질환</span>
                                 </label>
@@ -1769,10 +1744,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0010"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0010"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">정신질환</span>
                                 </label>
@@ -1781,10 +1756,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0011"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0011"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">결핵</span>
                                 </label>
@@ -1795,10 +1770,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0012"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0012"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">천식 등 알레르기</span>
                                 </label>
@@ -1807,10 +1782,10 @@
                               <div class="cbox">
                                 <label>
                                   <input
-                                      type="checkbox"
-                                      name="disease"
-                                      value="UDDS0013"
-                                      v-model="svInfo.undrDsesCd"
+                                    type="checkbox"
+                                    name="disease"
+                                    value="UDDS0013"
+                                    v-model="svInfo.undrDsesCd"
                                   /><i></i>
                                   <span class="txt">면역력저하자</span>
                                 </label>
@@ -1822,10 +1797,10 @@
                                 <div class="cbox w-auto">
                                   <label>
                                     <input
-                                        type="checkbox"
-                                        name="disease"
-                                        value="UDDS0014"
-                                        v-model="svInfo.undrDsesCd"
+                                      type="checkbox"
+                                      name="disease"
+                                      value="UDDS0014"
+                                      v-model="svInfo.undrDsesCd"
                                     /><i></i>
                                     <span class="txt">기타</span>
                                   </label>
@@ -1833,9 +1808,9 @@
 
                                 <div class="tbox d-inline-flex ms-4 w-300px">
                                   <input
-                                      type="text"
-                                      placeholder="직접 입력"
-                                      v-model="svInfo.undrDsesEtc"
+                                    type="text"
+                                    placeholder="직접 입력"
+                                    v-model="svInfo.undrDsesEtc"
                                   />
                                 </div>
                               </div>
@@ -1852,60 +1827,60 @@
                               <div class="toggle-list">
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle3-1"
-                                      value="BDTP0003"
-                                      v-model="svInfo.reqBedTypeCd"
+                                    type="radio"
+                                    name="toggle3-1"
+                                    value="BDTP0003"
+                                    v-model="svInfo.reqBedTypeCd"
                                   />
                                   <span class="txt">음압격리</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle3-1"
-                                      value="BDTP0002"
-                                      v-model="svInfo.reqBedTypeCd"
+                                    type="radio"
+                                    name="toggle3-1"
+                                    value="BDTP0002"
+                                    v-model="svInfo.reqBedTypeCd"
                                   />
                                   <span class="txt">일반격리</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle3-1"
-                                      value="BDTP0005"
-                                      v-model="svInfo.reqBedTypeCd"
+                                    type="radio"
+                                    name="toggle3-1"
+                                    value="BDTP0005"
+                                    v-model="svInfo.reqBedTypeCd"
                                   />
                                   <span class="txt">소아음압격리</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle3-1"
-                                      value="BDTP0004"
-                                      v-model="svInfo.reqBedTypeCd"
+                                    type="radio"
+                                    name="toggle3-1"
+                                    value="BDTP0004"
+                                    v-model="svInfo.reqBedTypeCd"
                                   />
                                   <span class="txt">소아일반격리</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle3-1"
-                                      value="BDTP0007"
-                                      v-model="svInfo.reqBedTypeCd"
+                                    type="radio"
+                                    name="toggle3-1"
+                                    value="BDTP0007"
+                                    v-model="svInfo.reqBedTypeCd"
                                   />
                                   <span class="txt">소아</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle3-1"
-                                      value="BDTP0006"
-                                      v-model="svInfo.reqBedTypeCd"
+                                    type="radio"
+                                    name="toggle3-1"
+                                    value="BDTP0006"
+                                    v-model="svInfo.reqBedTypeCd"
                                   />
                                   <span class="txt">일반</span>
                                 </label>
@@ -1913,8 +1888,8 @@
                             </article>
                           </div>
                           <div
-                              class="item-cell-box pt-2"
-                              style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
+                            class="item-cell-box pt-2"
+                            style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
                           >
                             * 요청 병상 유형을 선택해주세요
                           </div>
@@ -1929,30 +1904,30 @@
                               <div class="toggle-list">
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle4-1"
-                                      value="DNRA0001"
-                                      v-model="svInfo.dnrAgreYn"
+                                    type="radio"
+                                    name="toggle4-1"
+                                    value="DNRA0001"
+                                    v-model="svInfo.dnrAgreYn"
                                   />
                                   <span class="txt">동의</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle4-1"
-                                      value="DNRA0002"
-                                      v-model="svInfo.dnrAgreYn"
+                                    type="radio"
+                                    name="toggle4-1"
+                                    value="DNRA0002"
+                                    v-model="svInfo.dnrAgreYn"
                                   />
                                   <span class="txt">비동의</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle4-1"
-                                      value="DNRA0003"
-                                      v-model="svInfo.dnrAgreYn"
+                                    type="radio"
+                                    name="toggle4-1"
+                                    value="DNRA0003"
+                                    v-model="svInfo.dnrAgreYn"
                                   />
                                   <span class="txt">해당없음</span>
                                 </label>
@@ -1960,8 +1935,8 @@
                             </article>
                           </div>
                           <div
-                              class="item-cell-box pt-2"
-                              style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
+                            class="item-cell-box pt-2"
+                            style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
                           >
                             * DNR 동의여부를 선택해주세요
                           </div>
@@ -1976,60 +1951,60 @@
                               <div class="toggle-list">
                                 <label @click="svInfo.svrtIptTypeCd = 'SVIP0001'">
                                   <input
-                                      type="radio"
-                                      name="toggle5-1"
-                                      value="SVTP0006"
-                                      v-model="svInfo.svrtTypeCd"
+                                    type="radio"
+                                    name="toggle5-1"
+                                    value="SVTP0006"
+                                    v-model="svInfo.svrtTypeCd"
                                   />
                                   <span class="txt">중환자</span>
                                 </label>
 
                                 <label @click="svInfo.svrtIptTypeCd = 'SVIP0001'">
                                   <input
-                                      type="radio"
-                                      name="toggle5-1"
-                                      value="SVTP0005"
-                                      v-model="svInfo.svrtTypeCd"
+                                    type="radio"
+                                    name="toggle5-1"
+                                    value="SVTP0005"
+                                    v-model="svInfo.svrtTypeCd"
                                   />
                                   <span class="txt">중증</span>
                                 </label>
 
                                 <label @click="svInfo.svrtIptTypeCd = 'SVIP0001'">
                                   <input
-                                      type="radio"
-                                      name="toggle5-1"
-                                      value="SVTP0004"
-                                      v-model="svInfo.svrtTypeCd"
+                                    type="radio"
+                                    name="toggle5-1"
+                                    value="SVTP0004"
+                                    v-model="svInfo.svrtTypeCd"
                                   />
                                   <span class="txt">준증증</span>
                                 </label>
 
                                 <label @click="svInfo.svrtIptTypeCd = 'SVIP0001'">
                                   <input
-                                      type="radio"
-                                      name="toggle5-1"
-                                      value="SVTP0003"
-                                      v-model="svInfo.svrtTypeCd"
+                                    type="radio"
+                                    name="toggle5-1"
+                                    value="SVTP0003"
+                                    v-model="svInfo.svrtTypeCd"
                                   />
                                   <span class="txt">중등증</span>
                                 </label>
 
                                 <label @click="svInfo.svrtIptTypeCd = 'SVIP0001'">
                                   <input
-                                      type="radio"
-                                      name="toggle5-1"
-                                      value="SVTP0001"
-                                      v-model="svInfo.svrtTypeCd"
+                                    type="radio"
+                                    name="toggle5-1"
+                                    value="SVTP0001"
+                                    v-model="svInfo.svrtTypeCd"
                                   />
                                   <span class="txt">일반</span>
                                 </label>
 
                                 <label @click="svInfo.svrtTypeCd = ''">
                                   <input
-                                      type="radio"
-                                      name="toggle5-1"
-                                      value="SVIP0002"
-                                      v-model="svInfo.svrtIptTypeCd"
+                                    type="radio"
+                                    name="toggle5-1"
+                                    value="SVIP0002"
+                                    v-model="svInfo.svrtIptTypeCd"
                                   />
                                   <span class="txt">생체정보AI분석</span>
                                 </label>
@@ -2037,8 +2012,8 @@
                             </article>
                           </div>
                           <div
-                              class="item-cell-box pt-2"
-                              style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
+                            class="item-cell-box pt-2"
+                            style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
                           >
                             * 중증 정보를 선택해주세요
                           </div>
@@ -2053,20 +2028,20 @@
                               <div class="toggle-list">
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle3-6"
-                                      value="A"
-                                      v-model="bioAnlys.avpu"
+                                    type="radio"
+                                    name="toggle3-6"
+                                    value="A"
+                                    v-model="bioAnlys.avpu"
                                   />
                                   <span class="txt">명료</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle3-6"
-                                      value="V"
-                                      v-model="bioAnlys.avpu"
+                                    type="radio"
+                                    name="toggle3-6"
+                                    value="V"
+                                    v-model="bioAnlys.avpu"
                                   />
                                   <span class="txt">비명료</span>
                                 </label>
@@ -2081,20 +2056,20 @@
                               <div class="toggle-list">
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle3-7"
-                                      value="Y"
-                                      v-model="bioAnlys.o2Apply"
+                                    type="radio"
+                                    name="toggle3-7"
+                                    value="Y"
+                                    v-model="bioAnlys.o2Apply"
                                   />
                                   <span class="txt">투여</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle3-7"
-                                      value="N"
-                                      v-model="bioAnlys.o2Apply"
+                                    type="radio"
+                                    name="toggle3-7"
+                                    value="N"
+                                    v-model="bioAnlys.o2Apply"
                                   />
                                   <span class="txt">비투여</span>
                                 </label>
@@ -2109,7 +2084,7 @@
                         <td>
                           <div class="item-cell-box full">
                             <div class="tbox full">
-                              <input type="number" placeholder="" v-model="bioAnlys.bdTemp"/>
+                              <input type="number" placeholder="" v-model="bioAnlys.bdTemp" />
                             </div>
                           </div>
                         </td>
@@ -2117,7 +2092,7 @@
                         <td>
                           <div class="item-cell-box full">
                             <div class="tbox full">
-                              <input type="number" placeholder="" v-model="bioAnlys.pulse"/>
+                              <input type="number" placeholder="" v-model="bioAnlys.pulse" />
                             </div>
                           </div>
                         </td>
@@ -2128,7 +2103,7 @@
                         <td>
                           <div class="item-cell-box full">
                             <div class="tbox full">
-                              <input type="number" placeholder="" v-model="bioAnlys.breath"/>
+                              <input type="number" placeholder="" v-model="bioAnlys.breath" />
                             </div>
                           </div>
                         </td>
@@ -2136,7 +2111,7 @@
                         <td>
                           <div class="item-cell-box full">
                             <div class="tbox full">
-                              <input type="number" placeholder="" v-model="bioAnlys.spo2"/>
+                              <input type="number" placeholder="" v-model="bioAnlys.spo2" />
                             </div>
                           </div>
                         </td>
@@ -2147,7 +2122,7 @@
                         <td>
                           <div class="item-cell-box full">
                             <div class="tbox full">
-                              <input type="number" placeholder="" v-model="bioAnlys.sbp"/>
+                              <input type="number" placeholder="" v-model="bioAnlys.sbp" />
                             </div>
                           </div>
                         </td>
@@ -2178,8 +2153,8 @@
 
                             <div class="analysis-note-box">
                               <div
-                                  class="pt-2"
-                                  style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
+                                class="pt-2"
+                                style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
                               >
                                 * 중증도 분석 A.I 시스템의 분석 값 입니다
                               </div>
@@ -2217,10 +2192,10 @@
                   <form @submit="regStrtPoint" class="table-box">
                     <table>
                       <colgroup>
-                        <col style="width: 168px"/>
-                        <col style="width: auto"/>
-                        <col style="width: 168px"/>
-                        <col style="width: auto"/>
+                        <col style="width: 168px" />
+                        <col style="width: auto" />
+                        <col style="width: 168px" />
+                        <col style="width: auto" />
                       </colgroup>
                       <tbody>
                       <tr>
@@ -2236,8 +2211,8 @@
                             </div>
                           </div>
                           <div
-                              class="item-cell-box pt-2"
-                              style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
+                            class="item-cell-box pt-2"
+                            style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
                           >
                             * 병상배정 지자체를 선택해주세요
                           </div>
@@ -2250,10 +2225,10 @@
                           <div class="item-cell-box full">
                             <div class="tbox full">
                               <input
-                                  type="text"
-                                  placeholder="보호자1 연락처 입력"
-                                  @input="validateInput"
-                                  v-model="spInfo.nok1Telno"
+                                type="text"
+                                placeholder="보호자1 연락처 입력"
+                                @input="validateInput"
+                                v-model="spInfo.nok1Telno"
                               />
                             </div>
                           </div>
@@ -2268,20 +2243,20 @@
                               <div class="toggle-list">
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle4-1"
-                                      value="N"
-                                      v-model="spInfo.inhpAsgnYn"
+                                    type="radio"
+                                    name="toggle4-1"
+                                    value="N"
+                                    v-model="spInfo.inhpAsgnYn"
                                   />
                                   <span class="txt">전원요청</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type="radio"
-                                      name="toggle4-1"
-                                      value="Y"
-                                      v-model="spInfo.inhpAsgnYn"
+                                    type="radio"
+                                    name="toggle4-1"
+                                    value="Y"
+                                    v-model="spInfo.inhpAsgnYn"
                                   />
                                   <span class="txt">원내배정</span>
                                 </label>
@@ -2289,8 +2264,8 @@
                             </article>
                           </div>
                           <div
-                              class="item-cell-box pt-2"
-                              style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
+                            class="item-cell-box pt-2"
+                            style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
                           >
                             * 원내배정 여부 선택
                           </div>
@@ -2303,9 +2278,9 @@
                           <div class="item-cell-box full">
                             <div class="tbox full">
                               <input
-                                  type="text"
-                                  placeholder="진료과 입력"
-                                  v-model="spInfo.deptNm"
+                                type="text"
+                                placeholder="진료과 입력"
+                                v-model="spInfo.deptNm"
                               />
                             </div>
                           </div>
@@ -2313,45 +2288,45 @@
                       </tr>
                       <tr>
                         <th
-                            :rowspan="spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1"
-                            data-type="dynamic"
+                          :rowspan="spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1"
+                          data-type="dynamic"
                         >
                           환자 출발지<span class="text-primary">*</span>
                         </th>
                         <td
-                            :rowspan="spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1"
-                            data-type="dynamic"
-                            style="vertical-align: top"
+                          :rowspan="spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1"
+                          data-type="dynamic"
+                          style="vertical-align: top"
                         >
                           <div class="item-cell-box full justify-content-between">
                             <article class="toggle-list-layout2">
                               <div class="toggle-list">
                                 <label @click="setSpAddr(0)">
                                   <input
-                                      type="radio"
-                                      name="toggle4-2"
-                                      value="DPTP0001"
-                                      v-model="spInfo.dprtDstrTypeCd"
+                                    type="radio"
+                                    name="toggle4-2"
+                                    value="DPTP0001"
+                                    v-model="spInfo.dprtDstrTypeCd"
                                   />
                                   <span class="txt">자택</span>
                                 </label>
 
                                 <label @click="setSpAddr(1)">
                                   <input
-                                      type="radio"
-                                      name="toggle4-2"
-                                      value="DPTP0002"
-                                      v-model="spInfo.dprtDstrTypeCd"
+                                    type="radio"
+                                    name="toggle4-2"
+                                    value="DPTP0002"
+                                    v-model="spInfo.dprtDstrTypeCd"
                                   />
                                   <span class="txt">병원</span>
                                 </label>
 
                                 <label @click="setSpAddr(2)">
                                   <input
-                                      type="radio"
-                                      name="toggle4-2"
-                                      value="DPTP0003"
-                                      v-model="spInfo.dprtDstrTypeCd"
+                                    type="radio"
+                                    name="toggle4-2"
+                                    value="DPTP0003"
+                                    v-model="spInfo.dprtDstrTypeCd"
                                   />
                                   <span class="txt">기타지역</span>
                                 </label>
@@ -2359,8 +2334,8 @@
                             </article>
                           </div>
                           <div
-                              class="item-cell-box pt-2"
-                              style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
+                            class="item-cell-box pt-2"
+                            style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
                           >
                             * 유효성 검사 문구
                           </div>
@@ -2370,10 +2345,10 @@
                           <div class="item-cell-box full">
                             <div class="tbox full">
                               <input
-                                  type="text"
-                                  placeholder="보호자 2 연락처 입력"
-                                  @input="validateInput"
-                                  v-model="spInfo.nok2Telno"
+                                type="text"
+                                placeholder="보호자 2 연락처 입력"
+                                @input="validateInput"
+                                v-model="spInfo.nok2Telno"
                               />
                             </div>
                           </div>
@@ -2384,9 +2359,9 @@
                           <div class="item-cell-box full">
                             <div class="tbox full">
                               <input
-                                  type="text"
-                                  placeholder="담당의 이름 입력"
-                                  v-model="spInfo.spclNm"
+                                type="text"
+                                placeholder="담당의 이름 입력"
+                                v-model="spInfo.spclNm"
                               />
                             </div>
                           </div>
@@ -2399,10 +2374,10 @@
                           <div class="item-cell-box full">
                             <div class="tbox full">
                               <input
-                                  type="text"
-                                  placeholder="연락 전화번호 입력"
-                                  @input="validateInput"
-                                  v-model="spInfo.chrgTelno"
+                                type="text"
+                                placeholder="연락 전화번호 입력"
+                                @input="validateInput"
+                                v-model="spInfo.chrgTelno"
                               />
                             </div>
                           </div>
@@ -2415,16 +2390,16 @@
                             <div class="item-cell-box full">
                               <div class="tbox full">
                                 <input
-                                    type="text"
-                                    v-model="spInfo.dprtDstrZip"
-                                    readonly
-                                    placeholder="우편번호"
+                                  type="text"
+                                  v-model="spInfo.dprtDstrZip"
+                                  readonly
+                                  placeholder="우편번호"
                                 />
                               </div>
                               <a
-                                  @click="openAddressFinder(3)"
-                                  class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
-                                  style="min-width: 80px"
+                                @click="openAddressFinder(3)"
+                                class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
+                                style="min-width: 80px"
                               >주소검색</a>
                             </div>
                           </div>
@@ -2433,10 +2408,10 @@
                             <div class="item-cell-box full">
                               <div class="tbox full">
                                 <input
-                                    type="text"
-                                    placeholder="기본주소 입력"
-                                    v-model="spInfo.dprtDstrBascAddr"
-                                    readonly
+                                  type="text"
+                                  placeholder="기본주소 입력"
+                                  v-model="spInfo.dprtDstrBascAddr"
+                                  readonly
                                 />
                               </div>
                             </div>
@@ -2446,9 +2421,9 @@
                             <div class="item-cell-box full">
                               <div class="tbox full">
                                 <input
-                                    type="text"
-                                    placeholder="상세주소 입력 (선택)"
-                                    v-model="spInfo.dprtDstrDetlAddr"
+                                  type="text"
+                                  placeholder="상세주소 입력 (선택)"
+                                  v-model="spInfo.dprtDstrDetlAddr"
                                 />
                               </div>
                             </div>
@@ -2459,15 +2434,15 @@
                           <div class="item-cell-box full">
                             <div class="textbox full">
                                 <textarea
-                                    style="height: 85px"
-                                    class="py-2 px-4"
-                                    v-model="spInfo.msg"
+                                  style="height: 85px"
+                                  class="py-2 px-4"
+                                  v-model="spInfo.msg"
                                 ></textarea>
                             </div>
                           </div>
                           <div
-                              class="item-cell-box full pt-2 justify-content-end"
-                              style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
+                            class="item-cell-box full pt-2 justify-content-end"
+                            style="font-size: 12px; letter-spacing: -0.05em; color: #696971"
                           >
                             * 유효성 검사 문구
                           </div>
@@ -2507,25 +2482,25 @@
       <div class="popup-contents py-10 px-10" style="width: 300px">
         <article class="modal-alert-layout pb-10">
           <div class="alert-view-box pb-6">
-            <img src="/img/common/ic_alert.svg" alt="이미지"/>
+            <img src="/img/common/ic_alert.svg" alt="이미지" />
           </div>
           <div class="alert-msg-box">{{ errMsg }}</div>
         </article>
         <article class="modal-menu-layout1">
           <div class="modal-menu-list">
             <router-link
-                to=""
-                @click="cfrmAl(alertIdx)"
-                class="modal-menu-btn menu-primary"
-                data-type="success"
+              to=""
+              @click="cfrmAl(alertIdx)"
+              class="modal-menu-btn menu-primary"
+              data-type="success"
             >확인
             </router-link>
             <router-link
-                v-show="cncBtn"
-                to=""
-                @click="alertClose"
-                class="modal-menu-btn menu-cancel"
-                data-type="cancel"
+              v-show="cncBtn"
+              to=""
+              @click="alertClose"
+              class="modal-menu-btn menu-cancel"
+              data-type="cancel"
             >
               취소
             </router-link>
@@ -2608,7 +2583,7 @@ export default {
         dstr1Cd: '', dstr2Cd: '', telno: '', picaVer: null,
         nokNm: '', mpno: '', job: '', attcId: null,
         bascAddr: '', detlAddr: '', zip: '',
-        undrDsesCd: [], undrDsesEtc: null,
+        undrDsesCd: [], undrDsesEtc: null
       },
       epidReportImage: '',
       dsInfo: {
@@ -2624,7 +2599,7 @@ export default {
         diagAttcId: null,
         diagDrNm: '',
         instId: '',
-        rcptPhc:0,
+        rcptPhc: 0
       },
       svInfo: {
         ptId: '',
@@ -2687,63 +2662,72 @@ export default {
       visibleRef: false,
       imgsRef: '',
       indexRef: 0,
-      medinstInfo:{
-        dstr1Cd: '',
+      medinstInfo: {
+        dstr1Cd: ''
       },
-      showPatnt: false,
+      showPatnt: false
     }
   },
   computed: {
-    ...mapState('user',['userInfo']),
-    ...mapState('admin', ['cmSido', 'cmGugun','organMedi']),
+    ...mapState('user', ['userInfo']),
+    ...mapState('admin', ['cmSido', 'cmGugun', 'organMedi']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHis']),
     ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPts', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
     startIndex() {
-      return (this.page - 1) * this.displayRowsCount;
+      return (this.page - 1) * this.displayRowsCount
     },
     endIndex() {
-      return this.page * this.displayRowsCount;
+      return this.page * this.displayRowsCount
     },
     filterData() {
-      let params = {};
-      if (this.filterPatient['searchText']) params = {...params, ptNm: this.filterPatient['searchText']};
-      if (this.filterPatient['searchText']) params = {...params, rrno1: this.filterPatient['searchText']};
-      if (this.filterPatient['searchText']) params = {...params, mpno: this.filterPatient['searchText']};
-      if (this.filterPatient['address']['first']) params = {...params, dstr1Cd: this.filterPatient['address']['first']};
-      if (this.filterPatient['address']['second']) params = {...params, dstr2Cd: this.filterPatient['address']['second']};
-      if (this.filterPatient['hospitalName']) params = {...params, hospNm: this.filterPatient['hospitalName']};
-      if (this.filterPatient['monitoring']) params = {...params, sever: this.filterPatient['monitoring']};
-      if (this.filterPatient['assignmentStatus']) params = {...params, bedStatCd: this.filterPatient['assignmentStatus'].length ? this.filterPatient['assignmentStatus'].toString() : null};
+      let params = {}
+      if (this.filterPatient['searchText']) params = { ...params, ptNm: this.filterPatient['searchText'] }
+      if (this.filterPatient['searchText']) params = { ...params, rrno1: this.filterPatient['searchText'] }
+      if (this.filterPatient['searchText']) params = { ...params, mpno: this.filterPatient['searchText'] }
+      if (this.filterPatient['address']['first']) params = {
+        ...params,
+        dstr1Cd: this.filterPatient['address']['first']
+      }
+      if (this.filterPatient['address']['second']) params = {
+        ...params,
+        dstr2Cd: this.filterPatient['address']['second']
+      }
+      if (this.filterPatient['hospitalName']) params = { ...params, hospNm: this.filterPatient['hospitalName'] }
+      if (this.filterPatient['monitoring']) params = { ...params, sever: this.filterPatient['monitoring'] }
+      if (this.filterPatient['assignmentStatus']) params = {
+        ...params,
+        bedStatCd: this.filterPatient['assignmentStatus'].length ? this.filterPatient['assignmentStatus'].toString() : null
+      }
 
       return params
     },
     enableHospitalPicker() {
-      return this.filterPatient['address']['second'] === "";
+      return this.filterPatient['address']['second'] === ''
     },
     enableSecondAddressPicker() {
-      return this.filterPatient['address']['first'] === "";
+      return this.filterPatient['address']['first'] === ''
     },
     monitorPatntsList() {
-      return this.ptList.items.filter( x => x.monitoring).map( x => x.ptId);
-    },
+      return this.ptList.items.filter(x => x.monitoring).map(x => x.ptId)
+    }
   },
   //정예준
   watch: {
     checkedPatients() {
-      this.allPatientsSelected = this.checkedPatients.length === this.patientData.length;
+      this.allPatientsSelected = this.checkedPatients.length === this.patientData.length
       if (!this.patientData.length) {
-        this.allPatientsSelected = false;
+        this.allPatientsSelected = false
       }
     },
     severPts(newValue) {
-        this.filterPatient.monitoring = newValue;
+      this.filterPatient.monitoring = newValue
     },
-    'newPt.natiCd': function (newNatiCd) {
+    'newPt.natiCd': function(newNatiCd) {
       if (newNatiCd === 'NATI0001') {
-        this.newPt.natiNm = '대한민국';
+        this.newPt.natiNm = '대한민국'
       } else {
-        this.newPt.natiNm = null;
+        this.newPt.natiNm = null
       }
     }
   },
@@ -2769,26 +2753,26 @@ export default {
       } else if (idx === 1) {
         this.newPt.mpno = this.newPt.mpno.replace(/[^0-9]/g, '')
         this.newPt.telno = this.newPt.telno.replace(/[^0-9]/g, '')
-      } else if (idx === 2){
+      } else if (idx === 2) {
         this.newPt.rrno1 = this.newPt.rrno1.replace(/[^0-9]/g, '')
         this.newPt.rrno2 = this.newPt.rrno2.replace(/[^0-9]/g, '')
       }
     },
     getSecondAddress(address) {
       if (address) {
-        this.$store.dispatch('admin/getGuGun', address);
+        this.$store.dispatch('admin/getGuGun', address)
       }
     },
-    regStrtPoint(){
+    regStrtPoint() {
       console.log(this.spInfo)
     },
-    getMedInst(){
+    getMedInst() {
       let data = this.medinstInfo
       data['instTypeCd'] = 'ORGN0003'
-      this.$store.dispatch('admin/getOrganMedi',data)
+      this.$store.dispatch('admin/getOrganMedi', data)
     },
     setSpAddr(idx) {
-      console.log(this.spInfo )
+      console.log(this.spInfo)
       console.log(this.dsInfo)
       console.log(this.newPt)
       if (idx === 0) {
@@ -2810,42 +2794,42 @@ export default {
       }
     },
     changeDstrCd1() {
-      this.getSecondAddress(this.filterPatient['address']['first']);
-      this.filterPatient['address']['second'] = '';
-      this.filterPatient['hospitalName'] = null;
-      this.search();
+      this.getSecondAddress(this.filterPatient['address']['first'])
+      this.filterPatient['address']['second'] = ''
+      this.filterPatient['hospitalName'] = null
+      this.search()
     },
     changeDstrCd2() {
-      this.getHospList();
-      this.filterPatient['hospitalName'] = null;
-      this.search();
+      this.getHospList()
+      this.filterPatient['hospitalName'] = null
+      this.search()
     },
     getHospList() {
-      this.$store.dispatch('patnt/getHospList', this.filterData);
+      this.$store.dispatch('patnt/getHospList', this.filterData)
       console.log(this.hospList)
     },
     async updateExistPt() {
-      const data = {ptId: this.existPt.ptId, newPt: this.newPt};
-      await this.$store.dispatch('patnt/modiPtInfo', data);
-      this.closePopup(0);
-      this.tab = 1;
-      this.showModal=0
+      const data = { ptId: this.existPt.ptId, newPt: this.newPt }
+      await this.$store.dispatch('patnt/modiPtInfo', data)
+      this.closePopup(0)
+      this.tab = 1
+      this.showModal = 0
       this.closeModal(0)
       //this.clearNewPt()
     },
     getDate(data) {
-      const dData = new Date(data);
-      const dYear = dData.getFullYear();
-      let dMonth = dData.getMonth() + 1;
-      let dDate = dData.getDate();
+      const dData = new Date(data)
+      const dYear = dData.getFullYear()
+      let dMonth = dData.getMonth() + 1
+      let dDate = dData.getDate()
 
       if (dMonth < 10) {
-        dMonth = '0' + dMonth;
+        dMonth = '0' + dMonth
       }
       if (dDate < 10) {
-        dDate = '0' + dDate;
+        dDate = '0' + dDate
       }
-      return dYear + '.' + dMonth + '.' + dDate;
+      return dYear + '.' + dMonth + '.' + dDate
     },
     getUndrDses,
     alertOpen(idx) {
@@ -2868,75 +2852,76 @@ export default {
         this.alertClose()
         this.showPatnt = false
         this.closeModal(0)
-        this.preRpt=null
+        this.preRpt = null
         //this.undrDsesCdArr=[]
         this.setNull()
         /*신규병상요청 끝*/
         //this.getBdList()
       } else if (idx === 3) {
-        this.errMsg = '환자 정보가\n등록되었습니다.';
-        this.isAlert = true;
-        this.alertIdx = 3;
+        this.errMsg = '환자 정보가\n등록되었습니다.'
+        this.isAlert = true
+        this.alertIdx = 3
       } else if (idx === 4) {
         /*역조서 파싱 */
         this.errMsg =
-            '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.';
-        this.isAlert = true;
-        this.newPt = {...this.rptInfo, bascAddr: this.rptInfo.baseAddr, undrDsesCd: [], undrDsesEtc: null}
+          '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
+        this.isAlert = true
+        this.newPt = { ...this.rptInfo, bascAddr: this.rptInfo.baseAddr, undrDsesCd: [], undrDsesEtc: null }
         console.log(this.newPt)
-        this.alertIdx = 4;
+        this.alertIdx = 4
       } else if (idx === 9) {
         /*역조서 삭제*/
-        this.errMsg = '역학조사서 이미지를\n삭제하시겠습니까?';
-        this.cncBtn = true;
-        this.isAlert = true;
-        this.alertIdx = 9;
+        this.errMsg = '역학조사서 이미지를\n삭제하시겠습니까?'
+        this.cncBtn = true
+        this.isAlert = true
+        this.alertIdx = 9
       } else if (idx === 10) {
-        this.errMsg = '역학조사서가\n삭제되었습니다.';
-        this.isAlert = true;
-        this.alertIdx = 10;
+        this.errMsg = '역학조사서가\n삭제되었습니다.'
+        this.isAlert = true
+        this.alertIdx = 10
       }
     },
     setNull() {
-      console.log('실행' +this.initNewPt)
+      console.log('실행' + this.initNewPt)
       this.tab = 0
       this.tabidx = 0
       this.popup = 100
       this.alertIdx = 100
       this.rptYn = false
-      this.newPt = JSON.parse(JSON.stringify(this.initNewPt));
-      this.dsInfo = JSON.parse(JSON.stringify(this.initDsInfo));
+      this.newPt = JSON.parse(JSON.stringify(this.initNewPt))
+      this.dsInfo = JSON.parse(JSON.stringify(this.initDsInfo))
       //this.svInfo = this.initSvInfo
       //this.spInfo =  this.initSpInfo
-      this.$store.commit('patnt/setRpt',null)
-      this.preRpt=null
-      this.undrDsesCdArr=[]
+      this.$store.commit('patnt/setRpt', null)
+      this.preRpt = null
+      this.undrDsesCdArr = []
     },
-    cfrmAl(res) { if (res === 0) {
-      console.log(0)
-      this.alertOpen(1)
-    } else if (res === 1) {
-      console.log('1')
-      this.alertOpen(2)
-    } else if (res === 3) {
-        this.alertClose();
+    cfrmAl(res) {
+      if (res === 0) {
+        console.log(0)
+        this.alertOpen(1)
+      } else if (res === 1) {
+        console.log('1')
+        this.alertOpen(2)
+      } else if (res === 3) {
+        this.alertClose()
       } else if (res === 4) {
-        this.alertClose();
+        this.alertClose()
       } else if (res === 9) {
-        this.removeRpt();
-        this.newPt = this.initNewPt;
-        this.dsInfo = this.initDsInfo;
-        this.alertClose();
-        this.alertOpen(10);
+        this.removeRpt()
+        this.newPt = this.initNewPt
+        this.dsInfo = this.initDsInfo
+        this.alertClose()
+        this.alertOpen(10)
       } else if (res === 10) {
-        this.alertClose();
+        this.alertClose()
       }
     },
     closePopup(idx) {
       if (idx === 0) {
-        this.popup = 100;
-        this.content = '';
-        this.characterCount = 0;
+        this.popup = 100
+        this.content = ''
+        this.characterCount = 0
       }
     },
     closeModal(idx) {
@@ -2953,85 +2938,85 @@ export default {
       }
     },
     alertClose() {
-      this.errMsg = '';
-      this.cncBtn = false;
-      this.isAlert = false;
-      this.alertIdx = 100;
+      this.errMsg = ''
+      this.cncBtn = false
+      this.isAlert = false
+      this.alertIdx = 100
     },
     async uploadRpt(event) {
-      const fileInput = event.target;
-      const file = fileInput.files[0];
+      const fileInput = event.target
+      const file = fileInput.files[0]
 
-      console.log(file);
-      const formData = new FormData();
-      formData.append('param1', 'edidemreport');
-      formData.append('param2', file);
+      console.log(file)
+      const formData = new FormData()
+      formData.append('param1', 'edidemreport')
+      formData.append('param2', file)
 
-      await this.$store.dispatch('patnt/uploadRpt', formData);
+      await this.$store.dispatch('patnt/uploadRpt', formData)
       if (this.rptInfo !== null) {
         // console.log('실행')
-        this.alertOpen(4);
+        this.alertOpen(4)
       }
       //역조서 이미지 미리보기 만들기
       await this.showImage(this.rptInfo.attcId)
     },
     removeRpt() {
       /*역조서 삭제*/
-      this.$store.dispatch('patnt/removeRpt', this.rptInfo.attcId);
-      this.preRpt = null;
+      this.$store.dispatch('patnt/removeRpt', this.rptInfo.attcId)
+      this.preRpt = null
     },
     async selectPatient(patient) {
       if (patient['bdasSeq']) {
-        await this.$store.dispatch('bedasgn/getTimeline', patient);
-        await this.$store.dispatch('bedasgn/getDSInfo', patient);
+        await this.$store.dispatch('bedasgn/getTimeline', patient)
+        await this.$store.dispatch('bedasgn/getDSInfo', patient)
       } else {
-        this.$store.commit('bedasgn/setTimeline', null);
-        this.$store.commit('bedasgn/setDisesInfo', null);
+        this.$store.commit('bedasgn/setTimeline', null)
+        this.$store.commit('bedasgn/setDisesInfo', null)
       }
-      await this.$store.dispatch('patnt/getBasicInfo', patient);
-      await this.$store.dispatch('bedasgn/getBdasHisInfo', patient);
+      await this.$store.dispatch('patnt/getBasicInfo', patient)
+      await this.$store.dispatch('bedasgn/getBdasHisInfo', patient)
 
       if (this.ptDetail !== null) {
-        this.newPt = this.ptDetail;
+        this.newPt = this.ptDetail
       }
       if (this.ptDs !== null) {
-        this.dsInfo = this.ptDs;
+        this.dsInfo = this.ptDs
       }
-      this.preRpt = this.attcRpt;
+      this.preRpt = this.attcRpt
 
-      this.showModal = 1;
+      this.showModal = 1
     },
     changePage(newPage) {
       this.$store.dispatch('patnt/getPatntList', {
         ...this.filterData,
         page: newPage
-      });
-      this.page = newPage;
+      })
+      this.page = newPage
     },
     edit() {
-      console.log(this.patientData);
+      console.log(this.patientData)
     },
     allCodesChangeState() {
       if (this.allPatientsSelected) {
-        this.checkedPatients = [];
-        this.patientData.forEach((patient) => this.checkedPatients.push(patient));
+        this.checkedPatients = []
+        this.patientData.forEach((patient) => this.checkedPatients.push(patient))
       } else {
-        this.checkedPatients = [];
+        this.checkedPatients = []
       }
     },
     search() {
-      console.log(this.filterPatient['assignmentStatus']);
-      this.$store.dispatch('patnt/getPatntList', this.filterData);
-      this.page = 1;
+      console.log(this.filterPatient['assignmentStatus'])
+      this.$store.dispatch('patnt/getPatntList', this.filterData)
+      this.page = 1
     },
-    async showPatntModal(patient,idx) {
-      await this.$store.dispatch('patnt/getBasicInfo', patient);
+    async showPatntModal(patient, idx) {
+      await this.$store.dispatch('patnt/getBasicInfo', patient)
       if (this.ptDetail !== null) {
-        this.newPt = this.ptDetail;
+        this.newPt = this.ptDetail
         console.log(this.newPt)
       }
       await this.showImage(this.newPt.attcId)
-      if(idx === 2){
+      if (idx === 2) {
         this.showModal = idx
       } else {
         this.showPatnt = true
@@ -3039,7 +3024,7 @@ export default {
     },
     async showImage(attcId) {
       if (attcId === null || attcId === '') {
-        this.epidReportImage = '';
+        this.epidReportImage = ''
       } else {
         await this.$store.dispatch('user/readPrivateImage', attcId)
           .then((result) => {
@@ -3047,11 +3032,11 @@ export default {
             this.epidReportImage = URL.createObjectURL(blob)
           })
           .catch((error) => {
-            console.error("An error occurred while fetching the image:", error);
+            console.error('An error occurred while fetching the image:', error)
           })
       }
     },
-    closePatntRequest(){
+    closePatntRequest() {
       this.showPatnt = false
     },
     openRgstModal() {
@@ -3061,14 +3046,14 @@ export default {
         dstr1Cd: '', dstr2Cd: '', telno: '', picaVer: null,
         nokNm: '', mpno: '', job: '', attcId: null,
         bascAddr: '', detlAddr: '', zip: '',
-        undrDsesCd: [], undrDsesEtc: null,
+        undrDsesCd: [], undrDsesEtc: null
       }
-      this.preRpt = null;
-      this.epidReportImage = '';
+      this.preRpt = null
+      this.epidReportImage = ''
       this.showModal = 2
     },
     timelineSection() {
-      this.model.mode = 'timeline';
+      this.model.mode = 'timeline'
     },
     showImageLightBox() {
       this.imgsRef = this.epidReportImage
@@ -3080,9 +3065,9 @@ export default {
     setDefaultDstr1Cd() {
       this.filterPatient.address.first = this.userInfo.dutyDstr1Cd
       if (this.userInfo.dutyDstr1Cd) {
-        this.getSecondAddress(this.userInfo.dutyDstr1Cd);
+        this.getSecondAddress(this.userInfo.dutyDstr1Cd)
       }
-    },
+    }
   }
 }
 </script>
@@ -3091,12 +3076,14 @@ export default {
 <style scoped>
 .modal {
   --bs-modal-width: 98%;
-    display: block;
+  display: block;
 }
+
 .modal.show {
-    background-color: rgba(0,0,0,0.4);
-    display: block;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: block;
 }
+
 .item-box.suspend {
   border: 3px solid #74afeb !important;
   background-color: #74afeb33;
