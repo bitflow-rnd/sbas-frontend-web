@@ -1643,6 +1643,7 @@ article.detail-layout1 .detail-wrap .detail-info-box.full {
 }
 article.detail-layout1 .detail-wrap .detail-info-box + .detail-info-box {
   margin-left: 16px;
+  max-height: calc(100% - 67px);
 }
 article.detail-layout1 .detail-wrap .detail-head-box {
   height: 60px;
@@ -1660,6 +1661,7 @@ article.detail-layout1 .detail-wrap .detail-tabs-group .tabs-box {
   flex-direction: column;
   width: 100%;
   height: 100%;
+  max-height: calc(100% - 67px);
   display: flex;
 }
 article.detail-layout1 .detail-wrap .detail-tabs-group .tabs-box[data-tabs=tabs1] {
