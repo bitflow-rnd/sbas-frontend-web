@@ -131,13 +131,13 @@
                 <div class="table-box with-toggle">
                   <table>
                     <colgroup>
-                      <col style="width: 168px" />
-                      <col style="width: auto" />
-                      <col style="width: 168px" />
-                      <col style="width: auto" />
-                      <col style="width: 168px" />
-                      <col style="width: auto" />
-                      <col style="width: 168px" />
+                      <col style="width: 100px" />
+                      <col style="width: 190px" />
+                      <col style="width: 190px" />
+                      <col style="width: 190px" />
+                      <col style="width: 120px" />
+                      <col style="width: 170px" />
+                      <col style="width: 120px" />
                       <col style="width: auto" />
                     </colgroup>
                     <tbody>
@@ -173,14 +173,14 @@
                             </article>
                           </div>
                         </td>
-<!--                        <th>검색어</th>-->
-                        <td colspan="3" style='padding-left: 0px'>
+
+                        <td colspan="3" style='padding-left: 0'>
                           <div class="item-cell-box full">
                             <div class="tbox full with-btn">
                               <input
                                 type="text"
                                 v-model='search.kwd'
-                                placeholder="환자 이름, 생년월일 6자리 또는 휴대폰번호 입력"
+                                placeholder="환자이름, 생년월일6자리 또는 휴대폰번호"
                                 @keyup.enter='searchBedAsgn'
                               />
 
@@ -547,11 +547,6 @@
 
                     <tbody v-if="bdListWeb.count !== 0">
                       <tr v-for="(item, i) in bdListWeb.items" :key="i" @click='openBedMod(item)'>
-<!--                        <td @click='toggleCheckbox'>-->
-<!--                          <div @click='toggleCheckbox' class="cbox d-flex justify-content-center">-->
-<!--                            <label> <input @click='toggleCheckbox' v-model='item.chked' @change='setDelBdList(item)' type="checkbox" /><i></i> </label>-->
-<!--                          </div>-->
-<!--                        </td>-->
                         <td>{{ bdListWeb.count - i - startIndex }}</td>
                         <td>{{ item.bedStatCdNm }}</td>
                         <td>{{ maskingNm(item.ptNm) }}</td>
@@ -3278,16 +3273,17 @@
                             </div>
                           </div>
 
+                          <!-- 배정 관련 처리 버튼 그룹 -->
                           <div v-if="bdDetail !== null" class="menu-group-box">
                             <article class="modal-menu-layout1">
                               <div class="modal-menu-list">
                                 <a
                                   v-show="
                                     (bdDetail.bedStatCd === 'BAST0003' &&
-                                      userInfo.jobCd === 'PMGR0002') ||
+                                      userInfo.jobCd === JobCode.Aprv) ||
                                     (bdDetail.bedStatCd === 'BAST0004' &&
-                                      userInfo.jobCd === 'PMGR0003' &&
-                                      this.chrgUserId.some(item=>item.chrgUserId===userInfo.id))
+                                      ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa )
+                                      && this.chrgUserId.some(item=>item.chrgUserId===userInfo.id))
                                   "
                                   @click="openPopup(1)"
                                   class="modal-menu-btn menu-primary-outline radius-0 big"
@@ -3296,7 +3292,7 @@
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0003' &&
-                                    userInfo.jobCd === 'PMGR0002'
+                                    ( userInfo.jobCd === JobCode.Aprv || userInfo.jobCd === JobCode.Sysa )
                                   "
                                   @click="openPopup(2)"
                                   class="modal-menu-btn menu-primary radius-0 big"
@@ -3307,7 +3303,7 @@
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0004' &&
-                                    userInfo.jobCd === 'PMGR0003' &&
+                                    ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa ) &&
                                    this.chrgUserId.some(item=>item.chrgUserId===userInfo.id)
                                   "
                                   @click="openPopup(2)"
@@ -3319,7 +3315,7 @@
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0005' &&
-                                    userInfo.jobCd === 'PMGR0002'
+                                    ( userInfo.jobCd === JobCode.Aprv || userInfo.jobCd === JobCode.Sysa )
                                   "
                                   @click="loadTrnsfInfo(this.transInfo.reqDstr1Cd)"
                                   class="modal-menu-btn menu-primary radius-0 big"
@@ -3328,7 +3324,9 @@
                                 </div>
                                 <div
                                   v-show="
-                                    bdDetail.bedStatCd === 'BAST0006' && this.chrgUserId.some(item=>item===userInfo.id) && (userInfo.jobCd === 'PMGR0003' || userInfo.jobCd === 'PMGR0002')
+                                    bdDetail.bedStatCd === 'BAST0006' && this.chrgUserId.some(item=>item===userInfo.id) &&
+                                    ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Aprv
+                                    || userInfo.jobCd === JobCode.Sysa )
                                   "
                                   @click="openModal(4)"
                                   class="modal-menu-btn menu-primary radius-0 big"
@@ -3338,6 +3336,8 @@
                               </div>
                             </article>
                           </div>
+                          <!-- 배정 관련 처리 버튼 그룹 -->
+
                         </div>
                       </article>
                     </div>
@@ -4836,6 +4836,7 @@ import {
   openPopup, reqBedType, toggleCheckbox, getUndrDses
 } from '@/util/ui'
 import user from '@/store/modules/user'
+import { JobCode } from '@/util/sbas_cnst'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 
 
@@ -4846,10 +4847,6 @@ export default {
   props: {},
 
   created() {
-    /*mitt().on('bdList',()=>{
-      this.getBdList()
-    })*/
-
     this.getBdList()
     this.initNewPt = JSON.parse(JSON.stringify(this.newPt))
     this.initDsInfo = JSON.parse(JSON.stringify(this.dsInfo))
@@ -4883,6 +4880,7 @@ export default {
   },
   data() {
     return {
+      JobCode,
       sortedList:[],
       reqBedType,
       displayRowsCount: 15,
@@ -5106,7 +5104,7 @@ export default {
       this.page = newPage;
     },
     openModal(idx){
-      this.showModal=null
+      this.showModal = null
       this.showModal = idx
     },
     closeModal(idx) {
@@ -5312,9 +5310,9 @@ export default {
         this.errMsg = '배정불가 처리 하시겠습니까?'
         this.cncBtn = true
         this.isAlert = true
-          if(this.userInfo.jobCd==='PMGR0002'){
+          if(this.userInfo.jobCd===JobCode.Aprv){
               this.alertIdx = 5
-          } else if(this.userInfo.jobCd==='PMGR0003'){
+          } else if(this.userInfo.jobCd===JobCode.Meds){
               this.alertIdx = 14
           }
       } else if (idx === 6) {
@@ -5642,10 +5640,7 @@ export default {
       this.$store.dispatch('patnt/getBasicInfo', data)
       await this.$store.dispatch('bedasgn/getTimeline', data)
       this.$store.dispatch('bedasgn/getDSInfo', data)
-      //this.$store.dispatch('bedasgn/getBdasHisInfo', data)
       this.$store.dispatch('bedasgn/getTransInfo',data)
-      // this.$store.dispatch('admin/getFireStatn',{dstr1Cd: 27})
-      //console.log(data.bedStatCd)
       this.transCondition1 = this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
       this.transCondition2 = this.bdDetail.bedStatCd==='BAST0005' || this.bdDetail.bedStatCd==='BAST0006' || this.bdDetail.bedStatCd==='BAST0007'
       this.getChrgId()

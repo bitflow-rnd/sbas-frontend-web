@@ -618,18 +618,6 @@ section.login .login-wrap {
   position: relative;
   align-items: flex-end;
 }
-section.login .login-wrap .login-bg {
-  max-width: 723px;
-  position: relative;
-  margin-right: 60px;
-  z-index: 11;
-  padding-bottom: 70px;
-}
-@media (max-width: 1024px) {
-  section.login .login-wrap .login-bg {
-    display: none;
-  }
-}
 section.login .login-wrap .login-bg img {
   max-width: 100%;
 }

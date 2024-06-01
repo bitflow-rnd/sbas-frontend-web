@@ -96,7 +96,7 @@
                     <div class="tabs-list">
                       <a @click="onTabSelected(0)" class="tabs-btn active" role="button" ref="tab1">
                         <span class="txt">연락처</span>
-                        <span class="cnt bg-primary">{{model.userCnt}}</span>
+                        <span class="cnt bg-primary">{{ model.userCnt }}</span>
                       </a>
                       <a @click="onTabSelected(1)" class="tabs-btn" role="button" ref="tab2">
                         <span class="txt">메시지</span>
@@ -182,8 +182,11 @@
             <!-- contact detail -->
 
             <!-- contact detail right -->
-            <no-contact-detail-right-unit v-if="(model.mode === 'contact' && !model.selectedUser) || model.historyList === null" />
-            <contact-detail-right-unit v-if="model.mode === 'contact' && model.selectedUser && model.historyList !== null" :history-list='model.historyList' />
+            <no-contact-detail-right-unit
+              v-if="(model.mode === 'contact' && !model.selectedUser) || model.historyList === null" />
+            <contact-detail-right-unit
+              v-if="model.mode === 'contact' && model.selectedUser && model.historyList !== null"
+              :history-list='model.historyList' />
             <!-- contact detail right -->
 
             <no-message-room-detail v-if="model.mode === 'message' && !model.roomInfo" />
@@ -224,16 +227,17 @@ let model = reactive({
   roomInfo: null,
   historyList: null,
   search: null,
-  instTypeCd:[],
+  instTypeCd: [],
   userCnt: 0
 })
 
-onMounted(()=>{
+onMounted(() => {
   store.dispatch('user/getUsersListSync').then((result) => {
     model.userCnt = result?.totalCnt
     console.log(model.userCnt)
   })
 })
+
 function onUserSelected(user) {
   model.selectedUser = user
   getActivityHistory(user.id)
@@ -243,6 +247,7 @@ function onRoomSelected(room) {
   console.log('room', JSON.stringify(room))
   model.roomInfo = room
 }
+
 function onTabSelected(idx) {
   if (idx === 0) {
     model.mode = 'contact'
@@ -256,11 +261,11 @@ function onTabSelected(idx) {
 }
 
 
-function searchCntc(){
-  if(kwd!=='') model.search = kwd
-  let params  = {}
-  if(model.search) params = {...params, search: model.search}
-  if(model.instTypeCd && model.instTypeCd.length !== 0) params = {...params, instTypeCd: model.instTypeCd.join(',')}
+function searchCntc() {
+  if (kwd !== '') model.search = kwd
+  let params = {}
+  if (model.search) params = { ...params, search: model.search }
+  if (model.instTypeCd && model.instTypeCd.length !== 0) params = { ...params, instTypeCd: model.instTypeCd.join(',') }
 
   return params
 }
@@ -281,15 +286,19 @@ function getActivityHistory(userId) {
 .cntc-message-board .item-box:hover {
   background-color: #74afeb22;
 }
+
 .cntc-dashboard > section {
   width: 25%;
 }
+
 .cntc-message-board {
   border-right: 1px dashed #999;
 }
+
 .cntc-dashboard {
   height: 100%;
 }
+
 .view-img-box img {
   height: 450px;
 }

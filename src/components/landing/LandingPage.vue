@@ -229,10 +229,12 @@ export default {
         },
         on: {
           slideChange(){
-            const idx = this.realIndex +1;
-            self.$nextTick(()=>{
-              self.$refs.curBox1.innerText = idx;
-            })
+            if(window.location.pathname === '/') {
+              const idx = this.realIndex + 1;
+              self.$nextTick(() => {
+                self.$refs.curBox1.innerText = idx;
+              })
+            }
           },
         },
 
@@ -258,7 +260,19 @@ div.fullpage {
 body, .app-root {
   background-color: white;
 }
-
+.swiper-group-box {
+  width: 80%;
+}
+header.main {
+  height: 70px;
+}
+section.main .swiper-group-box .navigation-box {
+  margin-left: 200px;
+}
+.section.footer {
+  width: 80% !important;
+  left: 18% !important;
+}
 section.main {
   position: relative;
   height: 100%;
@@ -273,8 +287,24 @@ section.main {
   height: 820px;
 }
 
+#fullpage {
+  position: relative;
+  height: 100%;
+}
+
+.app-contents, .main {
+  height: 100%;
+}
 .fp-tableCell {
+  position: relative;
+  height: 100%;
+}
+.inner wrap {
   height: 800px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 footer {
