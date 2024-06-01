@@ -3,7 +3,6 @@
     <section class="login">
       <div class="login-wrap">
         <div class="login-bg">
-          <img src="/img/common/img_login_bg_item.png" alt="이미지" />
         </div>
 
         <div class="login-contents">
@@ -13,7 +12,7 @@
           </div>
 
           <div class="con-body-box">
-            <form @submit.prevent="onSubmit" class="input-form-box">
+            <form @submit.prevent="onSubmit" name="form" class="input-form-box">
               <div class="row-list">
                 <div class="row">
                   <div class="input-box">
@@ -35,6 +34,7 @@
                       type="password"
                       maxlength="32"
                       placeholder="비밀번호"
+                      @keydown.enter="onSubmit()"
                     />
                   </div>
                 </div>
@@ -278,7 +278,7 @@
                         <div class="item-cell-box full">
                           <article class="permission-selector-layout">
                             <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" value="PMGR0001" />
+                              <input type="radio" v-model="form.jobCd" :value="JobCode.Rqst" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -300,7 +300,7 @@
                             </label>
 
                             <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" value="PMGR0002" />
+                              <input type="radio" v-model="form.jobCd" :value="JobCode.Aprv" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -322,7 +322,7 @@
                             </label>
 
                             <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" value="PMGR0003" />
+                              <input type="radio" v-model="form.jobCd" :value="JobCode.Meds" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -344,7 +344,7 @@
                             </label>
 
                             <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" value="PMGR0004" />
+                              <input type="radio" v-model="form.jobCd" :value="JobCode.Sysa" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -372,36 +372,6 @@
                       </td>
                     </tr>
 
-<!--                    <tr>
-                      <th>세부 권한 선택 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="item-cell-box full">
-                          <div class="rbox">
-                            <label>
-                              <input type="radio" v-model="form.authCd" value="DTPM0001" />
-                              <i></i>
-                              <span class="txt text-black">
-                                일반
-                                <span class="fw-normal text-gray-600 ps-2">
-                                  일반 업무처리 및 사용자 초대 권한
-                                </span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" v-model="form.authCd" value="DTPM0002" />
-                              <i></i>
-                              <span class="txt text-black">
-                                게스트
-                                <span class="fw-normal text-gray-600 ps-2">업무조회만 가능</span>
-                              </span>
-                            </label>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>-->
                   </tbody>
                 </table>
               </div>
@@ -763,6 +733,7 @@ import { mapState } from 'vuex'
 import * as yup from 'yup'
 import { ref } from 'vue'
 import { getGugun, getSido } from '@/util/ui'
+import { JobCode } from '@/util/sbas_cnst'
 
 export default {
   name: 'LoginView',
@@ -774,7 +745,7 @@ export default {
   data() {
     const schema = yup.object({
       id: yup.string().required('유효성검사'),
-      pw: yup.string().required('유효성검사')
+      pw: yup.string().required('유효성검사'),
     })
     return {
       schema,
@@ -786,6 +757,7 @@ export default {
       selectedFile: null,
       imgUrl: null,
       valPw: null,
+      JobCode,
       form: {
         id: null,
         pw: null,
@@ -899,6 +871,9 @@ export default {
   methods: {
     getGugun,
     getSido,
+    doLogin() {
+      document.form.submit()
+    },
     validateInput(idx) {
       if (idx === 0) {
         this.id = this.id.replace(/[^A-Za-z0-9@.\-_]/g, '')
@@ -916,11 +891,11 @@ export default {
       } else if (idx === 8) {
         return this.form.instTypeCd === null && this.showErrorMessage
       } else if (idx === 9) {
-        if(this.form.jobCd==='PMGR0001'){
+        if(this.form.jobCd===JobCode.Rqst){
           this.form.instTypeCd = 'ORGN0003'
-        } else if(this.form.jobCd==='PMGR0002'){
+        } else if(this.form.jobCd===JobCode.Aprv){
           this.form.instTypeCd = 'ORGN0001'
-        } else if(this.form.jobCd==='PMGR0003'){
+        } else if(this.form.jobCd===JobCode.Meds){
           this.form.instTypeCd = 'ORGN0004'
         } else {
           this.form.instTypeCd = 'ORGN0005'
@@ -1146,15 +1121,47 @@ export default {
 </script>
 
 <style scoped>
-.login-wrapper {
-  background-image: url('/public/img/bg/bg-login.png');
-  background-size: contain;
-  background-position-y: bottom;
+.login-wrap {
+  position: absolute !important;
+  width: 100% !important;
+  height: 600px;
+  margin: 0 !important;
+  padding: 0 2rem !important;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  max-width: calc(100% - 4rem);
+}
+.login-bottom {
+  display: none;
+}
+
+.login-bg {
+  position: absolute;
+  background-image: url('@/assets/img/bg-login.png');
+  background-size: cover;
+  background-position-x: left;
+  background-position-y: center;
   background-repeat: no-repeat;
+  left: 0;
+  width: 50%;
   height: 100%;
+}
+
+.login-contents {
+  position: absolute !important;
+  right: 0 !important;
+  top: 0;
+  left: initial;
+  width: 600px !important;
+  max-width: calc(100% - 2rem) !important;
+  padding: 2rem 4rem !important;
 }
 .fade {
   opacity: 100;
+}
+.section.login .login-bottom {
+  background-color: transparent;
 }
 .modal,
 .popup {
@@ -1164,5 +1171,21 @@ export default {
 .modal-dialog {
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+@media (max-width: 767.98px) {
+  .login-wrap {
+    width: 100% !important;
+    max-width: 100%;
+  }
+  .login-contents {
+    margin: 0;
+    width: 100% !important;
+    top: 50%;
+    left: 50% !important;
+    right: initial !important;
+    transform: translate(-50%, -50%);
+    padding: 1rem !important;
+  }
 }
 </style>

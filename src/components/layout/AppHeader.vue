@@ -147,7 +147,7 @@
             <!--end:Menu item-->
             <!--begin:Menu item-->
             <router-link
-              v-show="userInfo.jobCd === 'PMGR0004'"
+              v-show="userInfo.jobCd === JobCode.Sysa"
               to=""
               @click="handlefunc(getUserList, 5)"
               :class="{ here: selectedTabIdx === 5 }"
@@ -173,12 +173,6 @@
               <i class="fa-solid fa-triangle-exclamation fs-1" /> 사용자매뉴얼
             </a>
           </div>
-          <!--          <div class="app-navbar-item" id="kt_app_header_middle_wrapper">-->
-          <!--            <a href="#" class="btn btn-flex btn-sm btn-danger my-auto fs-5"-->
-          <!--              ><i class="fa-solid fa-triangle-exclamation fs-4"></i> 병상요청</a-->
-          <!--            >-->
-          <!--          </div>-->
-
 
           <!--begin::Activities-->
           <div class="app-navbar-item ms-2 me-2 d-none d-xxl-flex">
@@ -284,7 +278,8 @@
   </div>
   <!--end::Header-->
 
-  <my-info-modal v-if="mode==='myinfo'" :isChrgInfo='false' :userInfo='userInfo' @closeModal='closeModal' />
+  <my-info-modal v-if="mode==='myinfo'" :isChrgInfo='false' :userInfo='userInfo'
+                 @closeModal='closeModal' />
 
   <my-info-mod-modal v-if="mode==='myinfomod'" :userInfo='userInfo' @closeModal='closeModal' />
 
@@ -710,12 +705,11 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getTelno, getAuthCd, getPmgr, getPtType, ptType } from '@/util/ui'
+import { ptType } from '@/util/ui'
 import store from '@/store/store'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import MyInfoModModal from '@/components/user/modal/MyInfoModModal.vue'
-//import mitt from 'mitt'
-
+import { JobCode } from '@/util/sbas_cnst'
 
 export default {
   name: 'AppHeader',
@@ -727,7 +721,8 @@ export default {
     return {
       tabidx: 0,
       mode: '',
-      ptType
+      ptType,
+      JobCode
     }
   },
   computed: {
@@ -737,10 +732,6 @@ export default {
     }
   },
   methods: {
-    getAuthCd,
-    getTelno,
-    getPmgr,
-    getPtType,
     setActive(idx) {
       this.$store.commit('user/setSelectedTabIdx', idx)
     },
@@ -757,7 +748,6 @@ export default {
     },
     getBdList() {
       console.log('리로드')
-      //mitt().emit('bdList')
       this.$store.dispatch('bedasgn/getBdListWeb')
       this.$store.dispatch('bedasgn/getBdList')
     },
@@ -781,11 +771,9 @@ export default {
     },
     showUserDetail() {
       this.mode = 'myinfo'
-      // console.log('showUserDetail', JSON.stringify(this.userInfo))
     },
     showUserInvite() {
       this.mode = 'invite'
-      // console.log('showUserInvite', JSON.stringify(this.userInfo))
     },
     closeModal() {
       this.mode = ''

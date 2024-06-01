@@ -2575,7 +2575,6 @@ article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
 #map {
   position: relative !important;
   width: 480px;
-  //width: -webkit-fill-available;
   height: 400px;
   margin: 0;
   padding: 0;

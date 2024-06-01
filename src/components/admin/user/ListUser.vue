@@ -549,7 +549,7 @@
                         <div class="item-cell-box full">
                           <article class="permission-selector-layout">
                             <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" value="PMGR0001" />
+                              <input type="radio" v-model="form.jobCd" :value="JobCode.Rqst" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -571,7 +571,7 @@
                             </label>
 
                             <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" value="PMGR0002" />
+                              <input type="radio" v-model="form.jobCd" :value="JobCode.Aprv" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -593,7 +593,7 @@
                             </label>
 
                             <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" value="PMGR0003" />
+                              <input type="radio" v-model="form.jobCd" :value="JobCode.Meds" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -615,7 +615,7 @@
                             </label>
 
                             <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" value="PMGR0004" />
+                              <input type="radio" v-model="form.jobCd" :value="JobCode.Sysa" />
                               <div class="selector-wrap">
                                 <div class="img-box">
                                   <img
@@ -1182,7 +1182,7 @@
                               <input
                                 type="radio"
                                 name="t1"
-                                value="PMGR0001"
+                                :value="JobCode.Rqst"
                                 :checked="getPmgr === '1'"
                               />
                               <div class="selector-wrap">
@@ -1209,7 +1209,7 @@
                               <input
                                 type="radio"
                                 name="t1"
-                                value="PMGR0002"
+                                :value="JobCode.Aprv"
                                 :checked="getPmgr === '2'"
                               />
                               <div class="selector-wrap">
@@ -1236,7 +1236,7 @@
                               <input
                                 type="radio"
                                 name="t1"
-                                value="PMGR0003"
+                                :value="JobCode.Meds"
                                 :checked="getPmgr === '3'"
                               />
                               <div class="selector-wrap">
@@ -1263,7 +1263,7 @@
                               <input
                                 type="radio"
                                 name="t1"
-                                value="PMGR0004"
+                                :value="JobCode.Sysa"
                                 :checked="getPmgr === '4'"
                               />
                               <div class="selector-wrap">
@@ -1293,49 +1293,6 @@
                       </td>
                     </tr>
 
-<!--                    <tr>
-                      <th>세부 권한 선택 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="item-cell-box full">
-                          <div class="rbox">
-                            <label>
-                              <input
-                                type="radio"
-                                name="permission"
-                                :checked="getAuthCd(usrDetail.authCd) === '일반'"
-                              />
-                              <i></i
-                              ><span class="txt text-black"
-                                >일반
-                                <span class="fw-normal text-gray-600 ps-2"
-                                  >일반 업무처리 및 사용자 초대 권한</span
-                                ></span
-                              >
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input
-                                type="radio"
-                                name="permission"
-                                :checked="getAuthCd(usrDetail.authCd) === '게스트'"
-                              />
-                              <i></i
-                              ><span class="txt text-black"
-                                >게스트
-                                <span class="fw-normal text-gray-600 ps-2"
-                                  >업무조회만 가능</span
-                                ></span
-                              >
-                            </label>
-                          </div>
-                        </div>
-                        <div class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px d-none">※ 세부권한 선택여부 확인 문구</div>
-                        </div>
-                      </td>
-                    </tr>-->
                   </tbody>
                 </table>
               </div>
@@ -2661,24 +2618,24 @@ export default {
       } else return '여'
     },
     getPmgr(code) {
-      if (code === 'PMGR0001') {
+      if (code === JobCode.Rqst) {
         return 1
-      } else if (code === 'PMGR0002') {
+      } else if (code === JobCode.Aprv) {
         return 2
-      } else if (code === 'PMGR0003') {
+      } else if (code === JobCode.Meds) {
         return 3
-      } else if (code === 'PMGR0004') {
+      } else if (code === JobCode.Sysa) {
         return 4
       }
     },
     getJobCd(code) {
-      if (code === 'PMGR0001') {
+      if (code === JobCode.Rqst) {
         return '병상요청그룹'
-      } else if (code === 'PMGR0002') {
+      } else if (code === JobCode.Aprv) {
         return '병상승인그룹'
-      } else if (code === 'PMGR0003') {
+      } else if (code === JobCode.Meds) {
         return '병상배정그룹'
-      } else if (code === 'PMGR0004') {
+      } else if (code === JobCode.Sysa) {
         return '시스템관리자'
       } else {
         return code

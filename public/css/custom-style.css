@@ -2878,13 +2878,6 @@ section.login .login-wrap {
   position: relative;
   align-items: flex-end;
 }
-section.login .login-wrap .login-bg {
-  max-width: 723px;
-  position: relative;
-  margin-right: 60px;
-  z-index: 11;
-  padding-bottom: 70px;
-}
 
 .markdown h1 { font-size: 2.5rem; line-height: 2; margin-top: 2.5rem; }
 .markdown h2 { font-size: 2.1rem; line-height: 4; }
@@ -2892,11 +2885,6 @@ section.login .login-wrap .login-bg {
 .markdown h4 { font-size: 1.5rem; line-height: 2; font-weight: 400; margin-left: 2rem; }
 .markdown h5 { font-size: 1.0rem; }
 .markdown h6 { font-size: 0.9rem; }
-@media (max-width: 1024px) {
-  section.login .login-wrap .login-bg {
-    display: none;
-  }
-}
 section.login .login-wrap .login-bg img {
   max-width: 100%;
 }

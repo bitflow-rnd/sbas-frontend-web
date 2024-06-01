@@ -3284,9 +3284,9 @@
                                 <a
                                   v-show="
                                     (bdDetail.bedStatCd === 'BAST0003' &&
-                                      userInfo.jobCd === 'PMGR0002') ||
+                                      userInfo.jobCd === JobCode.Aprv) ||
                                     (bdDetail.bedStatCd === 'BAST0004' &&
-                                      userInfo.jobCd === 'PMGR0003' &&
+                                      userInfo.jobCd === JobCode.Meds &&
                                       this.chrgUserId.some(item=>item.chrgUserId===userInfo.id))
                                   "
                                   @click="openPopup(1)"
@@ -3296,7 +3296,7 @@
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0003' &&
-                                    userInfo.jobCd === 'PMGR0002'
+                                    userInfo.jobCd === JobCode.Aprv
                                   "
                                   @click="openPopup(2)"
                                   class="modal-menu-btn menu-primary radius-0 big"
@@ -3307,7 +3307,7 @@
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0004' &&
-                                    userInfo.jobCd === 'PMGR0003' &&
+                                    userInfo.jobCd === JobCode.Meds &&
                                    this.chrgUserId.some(item=>item.chrgUserId===userInfo.id)
                                   "
                                   @click="openPopup(2)"
@@ -3319,7 +3319,7 @@
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0005' &&
-                                    userInfo.jobCd === 'PMGR0002'
+                                    userInfo.jobCd === JobCode.Aprv
                                   "
                                   @click="loadTrnsfInfo(this.transInfo.reqDstr1Cd)"
                                   class="modal-menu-btn menu-primary radius-0 big"
@@ -3328,7 +3328,7 @@
                                 </div>
                                 <div
                                   v-show="
-                                    bdDetail.bedStatCd === 'BAST0006' && this.chrgUserId.some(item=>item===userInfo.id) && (userInfo.jobCd === 'PMGR0003' || userInfo.jobCd === 'PMGR0002')
+                                    bdDetail.bedStatCd === 'BAST0006' && this.chrgUserId.some(item=>item===userInfo.id) && (userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Aprv)
                                   "
                                   @click="openModal(4)"
                                   class="modal-menu-btn menu-primary radius-0 big"
@@ -5312,9 +5312,9 @@ export default {
         this.errMsg = '배정불가 처리 하시겠습니까?'
         this.cncBtn = true
         this.isAlert = true
-          if(this.userInfo.jobCd==='PMGR0002'){
+          if(this.userInfo.jobCd===JobCode.Aprv){
               this.alertIdx = 5
-          } else if(this.userInfo.jobCd==='PMGR0003'){
+          } else if(this.userInfo.jobCd===JobCode.Meds){
               this.alertIdx = 14
           }
       } else if (idx === 6) {

@@ -119,11 +119,11 @@ export function getAuthCd(code){
 }
 
 export function getPmgr(code) {
-    if (code === 'PMGR0001') {
+    if (code === JobCode.Rqst) {
         return '병상요청'
-    } else if (code === 'PMGR0002') {
+    } else if (code === JobCode.Aprv) {
         return '병상승인'
-    } else if (code === 'PMGR0003') {
+    } else if (code === JobCode.Meds) {
         return '병상배정'
     } else {
         return '시스템관리'
@@ -189,7 +189,7 @@ export async function openPopup(idx) {
         document.getElementById('deniedAsgn').focus()
     } else if (idx === 2 && this.timeline !== null) {
         console.log('요청'+this.userInfo.jobCd)
-        if (this.userInfo.jobCd === 'PMGR0002' && this.bdDetail.bedStatCd !== 'BAST0004') {
+        if (this.userInfo.jobCd === JobCode.Aprv && this.bdDetail.bedStatCd !== 'BAST0004') {
             /*병상 요청 승인 - 배정반 */
             if (this.timeline.items[0].title.includes('원내')) {
                 console.log('원내배정 - 배정반')
@@ -199,7 +199,7 @@ export async function openPopup(idx) {
                 await this.$store.dispatch('bedasgn/rcmdHpList',this.bdDetail)
                 this.openModal(1)
             }
-        } else if (this.userInfo.jobCd === 'PMGR0003') {
+        } else if (this.userInfo.jobCd === JobCode.Meds) {
             console.log('의료진')
                 console.log('해당')
                 this.popup = 3
