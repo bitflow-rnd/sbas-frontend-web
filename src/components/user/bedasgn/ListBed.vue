@@ -131,13 +131,13 @@
                 <div class="table-box with-toggle">
                   <table>
                     <colgroup>
-                      <col style="width: 168px" />
-                      <col style="width: auto" />
-                      <col style="width: 168px" />
-                      <col style="width: auto" />
-                      <col style="width: 168px" />
-                      <col style="width: auto" />
-                      <col style="width: 168px" />
+                      <col style="width: 100px" />
+                      <col style="width: 190px" />
+                      <col style="width: 190px" />
+                      <col style="width: 190px" />
+                      <col style="width: 120px" />
+                      <col style="width: 170px" />
+                      <col style="width: 120px" />
                       <col style="width: auto" />
                     </colgroup>
                     <tbody>
@@ -173,14 +173,14 @@
                             </article>
                           </div>
                         </td>
-<!--                        <th>검색어</th>-->
-                        <td colspan="3" style='padding-left: 0px'>
+
+                        <td colspan="3" style='padding-left: 0'>
                           <div class="item-cell-box full">
                             <div class="tbox full with-btn">
                               <input
                                 type="text"
                                 v-model='search.kwd'
-                                placeholder="환자 이름, 생년월일 6자리 또는 휴대폰번호 입력"
+                                placeholder="환자이름, 생년월일6자리 또는 휴대폰번호"
                                 @keyup.enter='searchBedAsgn'
                               />
 

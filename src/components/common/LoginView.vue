@@ -1143,9 +1143,10 @@ export default {
   background-position-x: left;
   background-position-y: center;
   background-repeat: no-repeat;
-  left: 0;
-  width: 50%;
+  left: 35%;
+  width: 60%;
   height: 100%;
+  transform: translateX(-50%);
 }
 
 .login-contents {
@@ -1154,6 +1155,7 @@ export default {
   top: 0;
   left: initial;
   width: 600px !important;
+  height: 600px;
   max-width: calc(100% - 2rem) !important;
   padding: 2rem 4rem !important;
 }
