@@ -27,9 +27,9 @@
             <!--end::Toolbar-->
             <!--begin::Content-->
             <div id="kt_app_content" class="app-content flex-column-fluid">
-                <div class="card">
+                <div class="card pb-5">
                     <!--begin:: Cardheader-->
-                    <div class="card-header border-0 p-8">
+                    <div class="card-header border-0">
                         <!--begin::Card toolbar-->
 
                         <div class="dashboard-header">
@@ -95,7 +95,7 @@
 
                                         <div class="bottom-box text-end pt-4">
 
-                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">3,796</span> <span class="text-black fw-bold" style="font-size: 20px;">명</span></div>
+                                            <div class="cnt-box"><span class="text-black fw-bold">3,796</span> <span class="text-black fw-bold" style="font-size: 20px;">명</span></div>
                                             <div class="rate-box">
                                                 <span class="text-gray-600">전 주 대비</span>
                                                 <span class="text-primary">13.4% ▲</span>
@@ -121,7 +121,7 @@
 
                                         <div class="bottom-box text-end pt-4">
 
-                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">대구광역시</span></div>
+                                            <div class="cnt-box"><span class="text-black fw-bold">대구광역시</span></div>
                                             <div class="rate-box">
                                                 <span class="text-gray-600">전 주 대비</span>
                                                 <span class="text-primary">13.4% ▲</span>
@@ -147,7 +147,7 @@
 
                                         <div class="bottom-box text-end pt-4">
 
-                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">칠곡경북대병원</span></div>
+                                            <div class="cnt-box"><span class="text-black fw-bold">칠곡경북대병원</span></div>
                                             <div class="rate-box">
                                                 <span class="text-gray-600">전 주 대비</span>
                                                 <span class="text-danger">7.4% ▼</span>
@@ -173,7 +173,7 @@
 
                                         <div class="bottom-box text-end pt-4">
 
-                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">선*경</span> <span class="text-black fw-bold" style="font-size: 20px;">452명</span></div>
+                                            <div class="cnt-box"><span class="text-black fw-bold">선*경</span> <span class="text-black fw-bold" style="font-size: 20px;">452명</span></div>
                                             <div class="rate-box">
                                                 <span class="text-gray-600">전 주 대비</span>
                                                 <span class="text-primary">13.4% ▲</span>
@@ -199,7 +199,7 @@
 
                                         <div class="bottom-box text-end pt-4">
 
-                                            <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">함*호</span> <span class="text-black fw-bold" style="font-size: 20px;">395명</span></div>
+                                            <div class="cnt-box"><span class="text-black fw-bold">함*호</span> <span class="text-black fw-bold" style="font-size: 20px;">395명</span></div>
                                             <div class="rate-box">
                                                 <span class="text-gray-600">전 주 대비</span>
                                                 <span class="text-danger">5.4% ▼</span>
@@ -225,7 +225,7 @@
 
                                       <div class="bottom-box text-end pt-4">
 
-                                        <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">812</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                        <div class="cnt-box"><span class="text-black fw-bold">812</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
                                         <div class="rate-box">
                                           <span class="text-gray-600">전 주 대비</span>
                                           <span class="text-danger">2.4% ▼</span>
@@ -251,7 +251,7 @@
 
                                     <div class="bottom-box text-end pt-4">
 
-                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">155</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="cnt-box"><span class="text-black fw-bold">155</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-danger">5.4% ▼</span>
@@ -277,7 +277,7 @@
 
                                     <div class="bottom-box text-end pt-4">
 
-                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">255</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="cnt-box"><span class="text-black fw-bold">255</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-danger">5.4% ▼</span>
@@ -303,7 +303,7 @@
 
                                     <div class="bottom-box text-end pt-4">
 
-                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">301</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="cnt-box"><span class="text-black fw-bold">301</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-primary">5.4% ▲</span>
@@ -329,7 +329,7 @@
 
                                     <div class="bottom-box text-end pt-4">
 
-                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">홍*혜</span> <span class="text-black fw-bold" style="font-size: 20px;">395명</span></div>
+                                      <div class="cnt-box"><span class="text-black fw-bold">홍*혜</span> <span class="text-black fw-bold" style="font-size: 20px;">395명</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-danger">5.4% ▼</span>
@@ -355,7 +355,7 @@
 
                                     <div class="bottom-box text-end pt-4">
 
-                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">123</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="cnt-box"><span class="text-black fw-bold">123</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-danger">5.4% ▼</span>
@@ -381,7 +381,7 @@
 
                                     <div class="bottom-box text-end pt-4">
 
-                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">241</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="cnt-box"><span class="text-black fw-bold">241</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-danger">12.4% ▼</span>
@@ -407,7 +407,7 @@
 
                                     <div class="bottom-box text-end pt-4">
 
-                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">32</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="cnt-box"><span class="text-black fw-bold">32</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-danger">9.7% ▼</span>
@@ -433,7 +433,7 @@
 
                                     <div class="bottom-box text-end pt-4">
 
-                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">452</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="cnt-box"><span class="text-black fw-bold">452</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-primary">8.7% ▲</span>
@@ -459,7 +459,7 @@
 
                                     <div class="bottom-box text-end pt-4">
 
-                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">1,212</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
+                                      <div class="cnt-box"><span class="text-black fw-bold">1,212</span> <span class="text-black fw-bold" style="font-size: 20px;">건</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-danger">5.4% ▼</span>
@@ -485,7 +485,7 @@
 
                                     <div class="bottom-box text-end pt-4">
 
-                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">213</span> <span class="text-black fw-bold" style="font-size: 20px;">개</span></div>
+                                      <div class="cnt-box"><span class="text-black fw-bold">213</span> <span class="text-black fw-bold" style="font-size: 20px;">개</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-danger">5.4% ▼</span>
@@ -511,7 +511,7 @@
 
                                     <div class="bottom-box text-end pt-4">
 
-                                      <div class="cnt-box"><span class="text-black fw-bold" style="font-size: 34px;">113</span> <span class="text-black fw-bold" style="font-size: 20px;">개</span></div>
+                                      <div class="cnt-box"><span class="text-black fw-bold">113</span> <span class="text-black fw-bold" style="font-size: 20px;">개</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-danger">4.5% ▼</span>
@@ -535,18 +535,9 @@
                             </div>
 
                         </div>
-
                         <!--end::Card toolbar-->
                     </div>
                     <!--end::Card header-->
-                    <!--begin::Card body-->
-                    <div class="card-body p-8">
-                        <!--begin::Table-->
-
-
-                        <!--end::Table-->
-                    </div>
-                    <!--end::Card body-->
                 </div>
             </div>
             <!--end::Content-->
@@ -690,6 +681,15 @@
 .app-content > .card { background-image: url('@/assets/img/img-staff.webp');
   background-position: right 0 bottom 0;
   background-repeat: no-repeat;
+}
+.app-content > .card {
+  height: fit-content;
+}
+.card-box {
+  background-color: rgba(255,255,255,0.6);
+}
+.cnt-box {
+  font-size: 2rem;
 }
 .label-txt.bg-primary { margin-right: 9px;}
 .rate-box > span:first-child { margin-right: 7px; }

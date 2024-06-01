@@ -163,7 +163,7 @@
                 </div>
 
                 <div class="detail-foot-box">
-                  <article class="modal-menu-layout1 py-10">
+                  <article class="modal-menu-layout1 pt-5">
                     <div class="modal-menu-list">
                       <a
                         href='javascript:void(0)'

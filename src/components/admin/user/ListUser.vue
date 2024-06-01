@@ -96,9 +96,9 @@
                 <div class="table-box">
                   <table>
                     <colgroup>
-                      <col style="width: 168px" />
-                      <col style="width: auto" />
-                      <col style="width: 168px" />
+                      <col style="width: 120px" />
+                      <col style="width: 460px" />
+                      <col style="width: 110px" />
                       <col style="width: auto" />
                     </colgroup>
                     <tbody>
@@ -220,7 +220,7 @@
                         <th>담당환자 유형</th>
                         <td colspan="3">
                           <div class="item-cell-box">
-                            <div v-for="(code, name) in ptTypeCds" :key="name" class="cbox ms-4">
+                            <div v-for="(code, name) in ptTypeCds" :key="name" class="cbox me-4">
                               <label>
                                 <input v-model='search.ptTypeCd' :value="name" type="checkbox" name="state" @change="searchUserList"/><i></i>
                                 <span class="txt">{{ code }}</span>
@@ -284,8 +284,6 @@
                   <table v-if="userList.items !== []" class="table-layout-fixed">
                     <colgroup>
                       <col style="width: 35px" />
-                      <col style="width: 50px" />
-                      <col style="width: 100px" />
                       <col style="width: 100px" />
                       <col style="width: 100px" />
                       <col style="width: 100px" />
@@ -303,13 +301,11 @@
                             <label> <input type="checkbox" class="all-chk" /><i></i> </label>
                           </div>
                         </th>
-                        <th @click="checkInfo">순번</th>
                         <th>주 담당지역</th>
                         <th>기관유형</th>
                         <th>소속기관</th>
                         <th>이름</th>
-                        <th>직급</th>
-                        <th>세부권한</th>
+                        <th>업무</th>
                         <th>가입일</th>
                         <th>최근접속일</th>
                         <th>사용자상태</th>
@@ -324,13 +320,11 @@
                             <label> <input @click='toggleCheckbox()' type='checkbox' class='all-chk' /><i></i> </label>
                           </div>
                         </td>
-                        <td>{{ userList.count - i - startIndex }}</td>
                         <td>{{ item.dutyDstr1CdNm }}</td>
                         <td>{{ getInstNm(item.instTypeCd) }}</td>
                         <td>{{ item.instNm }}</td>
                         <td>{{ maskingNm(item.userNm) }}</td>
                         <td>{{ getJobCd(item.jobCd) }}</td>
-                        <td>{{ getAuthCd(item.authCd) }}</td>
                         <td>{{ getrgDt(item.rgstDttm) }}</td>
                         <td>{{ getrgDt(item.rgstDttm) }}</td>
                         <td>{{ item.userStatCdNm }}</td>
@@ -642,42 +636,6 @@
                         </div>
                       </td>
                     </tr>
-
-<!--                    <tr>
-                      <th>세부 권한 선택 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="item-cell-box full">
-                          <div class="rbox">
-                            <label>
-                              <input type="radio" v-model="form.authCd" value="DTPM0001" />
-                              <i></i
-                              ><span class="txt text-black"
-                                >일반
-                                <span class="fw-normal text-gray-600 ps-2"
-                                  >일반 업무처리 및 사용자 초대 권한</span
-                                ></span
-                              >
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input type="radio" v-model="form.authCd" value="DTPM0002" />
-                              <i></i
-                              ><span class="txt text-black"
-                                >게스트
-                                <span class="fw-normal text-gray-600 ps-2"
-                                  >업무조회만 가능</span
-                                ></span
-                              >
-                            </label>
-                          </div>
-                        </div>
-                        <div v-show="false" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 세부권한 선택여부 확인 문구</div>
-                        </div>
-                      </td>
-                    </tr>-->
                   </tbody>
                 </table>
               </div>
@@ -1103,75 +1061,6 @@
                     <col style="width: auto" />
                   </colgroup>
                   <tbody>
-<!--                    <tr>
-                      <th>소속기관 유형 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="item-cell-box full">
-                          <div class="rbox">
-                            <label>
-                              <input
-                                type="radio"
-                                name="public"
-                                value="ORGN0003"
-                                :checked="getInstNm(usrDetail.instTypeCd) === '보건소'"
-                              />
-                              <i></i><span class="txt">보건소</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input
-                                type="radio"
-                                name="public"
-                                value="ORGN0001"
-                                :checked="getInstNm(usrDetail.instTypeCd) === '지방자치단체'"
-                              />
-                              <i></i><span class="txt">병상배정반</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input
-                                type="radio"
-                                name="public"
-                                value="ORGN0004"
-                                :checked="getInstNm(usrDetail.instTypeCd) === '의료기관'"
-                              />
-                              <i></i><span class="txt">의료진</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input
-                                type="radio"
-                                name="public"
-                                value="ORGN0002"
-                                :checked="getInstNm(usrDetail.instTypeCd) === '구급대'"
-                              />
-                              <i></i><span class="txt">구급대</span>
-                            </label>
-                          </div>
-
-                          <div class="rbox ms-4">
-                            <label>
-                              <input
-                                type="radio"
-                                name="public"
-                                value="ORGN0005"
-                                :checked="getInstNm(usrDetail.instTypeCd) === '전산담당'"
-                              />
-                              <i></i><span class="txt">전산담당</span>
-                            </label>
-                          </div>
-                        </div>
-                        <div class="item-cell-box full d-none">
-                          <div class="text-danger pt-2 fs-12px">※ 소속기관 선택여부 확인 문구</div>
-                        </div>
-                      </td>
-                    </tr>-->
 
                     <tr>
                       <th>권한 그룹 선택 <span class="text-primary">*</span></th>
@@ -2365,6 +2254,7 @@ import { mapState } from 'vuex'
 import { ref } from 'vue'
 import { getAuthCd, getDt, getGugun, getPtType, getSido, toggleCheckbox } from '@/util/ui'
 import DataPagination from "@/components/user/cpnt/DataPagination.vue"
+import { JobCode } from '@/util/sbas_cnst'
 
 export default {
   components: {DataPagination},
@@ -2405,6 +2295,7 @@ export default {
   },
   data() {
     return {
+      JobCode,
       isDetail:false,
       page: 1,
       displayRowsCount: 15,

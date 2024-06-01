@@ -72,13 +72,8 @@
               <li class="breadcrumb-item ml-2">
                 <span>&nbsp;병상배정 이력이 있거나, 배정 예정 중인 환자 목록입니다.</span>
               </li>
-              <!--end::Item-->
             </ul>
-            <!--end::Breadcrumb-->
-            <!--begin::Title-->
-            <!--end::Title-->
           </div>
-          <!--end::Page title-->
           <!--begin::Actions-->
           <div class="d-flex align-items-center gap-2 gap-lg-3">
             <a
@@ -162,7 +157,7 @@
 
                     <tr>
                       <th>배정상태</th>
-                      <td>
+                      <td class="pb-0">
                         <div
                           class="item-cell-box"
                           v-for="(status, idx) in Object.entries(assignmentStatuses)"
@@ -235,32 +230,30 @@
                 <div class="table-box with-scroll small">
                   <table class="list-table-hoverable">
                     <colgroup>
+                      <col style="width: 100px" />
+                      <col style="width: 100px" />
                       <col style="width: 70px" />
+                      <col style="width: 50px" />
+                      <col style="width: auto" />
+                      <col style="width: 160px" />
+                      <col style="width: auto" />
+                      <col style="width: 120px" />
                       <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
+                      <col style="width: 50px" />
+                      <col style="width: 70px" />
                     </colgroup>
                     <thead>
                     <tr class="small" style='cursor:default !important'>
-                      <th>순번</th>
                       <th>배정상태</th>
                       <th>이름</th>
                       <th>생년월일</th>
                       <th>성별</th>
+                      <th>배정병원</th>
+                      <th>거주지</th>
                       <th>질병명</th>
                       <th>연락처</th>
                       <th>국적</th>
-                      <th>거주지</th>
-                      <th>배정병원</th>
-                      <th>최근 업데이트일</th>
+                      <th>업데이트<br/>일시</th>
                       <th>작업</th>
                     </tr>
                     </thead>
@@ -271,15 +264,14 @@
                       :key="idx"
                       @click="selectPatient(pt)"
                     >
-                      <td>{{ ptList['count'] - idx - startIndex }}</td>
                       <td>{{ pt['bedStatCdNm'] ? pt['bedStatCdNm'] : '환자정보등록' }}</td>
                       <td>
-                        <div class='d-inline-flex text-center'>
+                        <div class='text-center'>
                           <div class='pt-nm'>{{
                               pt['ptNm'].length > 1 ? (pt['ptNm'].substring(0, 1) + '*' + pt['ptNm'].substring(2, pt['ptNm'].length)) : pt['ptNm']
                             }}
                           </div>
-                          <div class="btn-primary-outline" v-if="pt.monitoring">※
+                          <div class="text-secondary" v-if="pt.monitoring">※
                             관찰환자
                           </div>
                         </div>
@@ -288,11 +280,11 @@
                         {{ pt['rrno1'] ? pt['rrno1'].slice(0, 2) + '.' + pt['rrno1'].slice(2, 4) + '.' + pt['rrno1'].slice(4) : '-' }}
                       </td>
                       <td>{{ pt['gndr'] }}자</td>
-                      <td>{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
+                      <td class="text-start">{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
+                      <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
+                      <td class="text-start">{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
                       <td>{{ pt['mpno'] ? pt['mpno'] : '-' }}</td>
                       <td>{{ pt['natiCdNm'] ? pt['natiCdNm'] : '-' }}</td>
-                      <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
-                      <td>{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                       <td>{{ getDate(pt['updtDttm']) }}</td>
                       <td
                         @click='toggleCheckbox()'
@@ -335,7 +327,7 @@
       <!--begin::Modal content-->
       <div class="modal-content">
         <!--begin::Modal header-->
-        <div class="modal-header px-10 py-5 d-flex justify-content-between">
+        <div class="modal-header px-10 pt-5 pb-0 d-flex justify-content-between">
           <!--begin::Modal title-->
           <h2>환자 상세 정보</h2>
           <!--end::Modal title-->
@@ -388,7 +380,7 @@
         <div class="modal-body scroll-y py-10 px-10">
           <article v-if="ptDetail !== null" class="detail-layout1">
             <div class="detail-wrap">
-              <div class="detail-info-box">
+              <div class="detail-info-box w-33">
                 <div class="detail-head-box px-10">
                   <div class="head-box d-flex">
                     <div class="head-txt-box">환자정보</div>
@@ -404,10 +396,10 @@
                   </div>
                 </div>
 
-                <div class="detail-body-box px-10">
+                <div class="detail-body-box ps-5">
                   <article class="table-form-layout1">
                     <div class="form-body-box overflow-y-auto">
-                      <div class="table-box pe-5">
+                      <div class="table-box">
                         <table>
                           <colgroup>
                             <col style="width: 128px" />
@@ -500,7 +492,7 @@
                 </div>
 
                 <div class="detail-foot-box">
-                  <article class="modal-menu-layout1 pb-5">
+                  <article class="modal-menu-layout1">
                     <div class="modal-menu-list">
                       <a
                         href='javascript:void(0)'
@@ -520,7 +512,7 @@
                 </div>
               </div>
 
-              <div v-if="bdasHis !== undefined" class="detail-info-box">
+              <div v-if="bdasHis !== undefined" class="detail-info-box w-23">
                 <div class="detail-head-box px-10">
                   <div class="head-box">
                     <div class="head-txt-box">병상배정 이력</div>
@@ -529,10 +521,10 @@
                   <div class="option-box"></div>
                 </div>
 
-                <div class="detail-body-box px-10">
+                <div class="detail-body-box px-0">
                   <article class="table-list-layout2">
                     <div class="table-body-box overflow-y-auto">
-                      <div class="table-box pe-5">
+                      <div class="table-box">
 
                         <table v-if='bdasHis.items && bdasHis.items.length>0'>
                           <colgroup>
@@ -540,7 +532,12 @@
                             <col style="width: auto" />
                           </colgroup>
                           <tr v-for="(item,i) in bdasHis.items" :key="i">
-                            <td class="py-5 px-3 text-center text-gray-700 fw-medium fs-6">{{ item.order }}차</td>
+                            <td class="py-5 px-1 text-center text-gray-700 fw-medium fs-6">
+                              <div
+                                class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2">
+                                {{ item.order }}차
+                              </div>
+                            </td>
                             <td class="py-5 px-3">
                               <div class="top-info-box d-flex align-items-center">
                                 <div
@@ -577,7 +574,7 @@
                 </div>
 
                 <div class="detail-foot-box">
-                  <article class="modal-menu-layout1 pb-5">
+                  <article class="modal-menu-layout1">
                     <div class="modal-menu-list">
                       <router-link
                         to=""
@@ -590,8 +587,8 @@
                 </div>
               </div>
 
-              <div class="detail-info-box full d-flex flex-column">
-                <div class="detail-head-box px-10 h-80px">
+              <div class="detail-info-box w-44 full d-flex flex-column">
+                <div class="detail-head-box px-10 h-60px">
 
                   <div class="head-box d-flex">
 
@@ -618,11 +615,11 @@
                   </div>
                 </div>
 
-                <div class="detail-body-box pe-5 flex-root" style="min-height: 0">
+                <div class="detail-body-box flex-root" style="min-height: 0">
                   <article class="timeline-layout1 pb-5" style="height: 100%">
                     <div
                       v-if="timeline !== null"
-                      class="timeline-wrap overflow-y-auto ps-10 pe-5"
+                      class="timeline-wrap overflow-y-auto ps-10"
                       style="height: 100%"
                     >
                       <ul>
@@ -714,7 +711,7 @@
       <!--begin::Modal content-->
       <div class="modal-content">
         <!--begin::Modal header-->
-        <div class="modal-header px-10 py-5 d-flex justify-content-between">
+        <div class="modal-header px-10 pt-5 pb-0 d-flex justify-content-between">
           <!--begin::Modal title-->
           <h2>병상요청</h2>
           <!--end::Modal title-->
@@ -3161,6 +3158,27 @@ td > .btn-primary-outline {
   left: 0;
   top: 100px;
   height: 350px;
+  background-color: white;
+}
+
+.btn.btn-xs {
+  padding: 8px 10px;
+}
+.detail-info-box.w-23 {
+  width: 23% !important;
+}
+.detail-info-box.w-44 {
+  width: 44% !important;
+}
+.item-cell-box {
+  margin-bottom: 0.5rem;
+}
+.detail-info-box + .detail-info-box {
+  border-left: 1px dashed #ccc;
+}
+
+.img-upload-box {
+  z-index: 400;
   background-color: white;
 }
 </style>

@@ -70,12 +70,12 @@
                 </h1>
 
               </li>
-              <li class="breadcrumb-item ml-2">
+              <li class="breadcrumb-item ml-2 ms-5">
                 <span>내 기관에 할당된 병상배정 업무 목록을 표시합니다</span>
               </li>
               <div @click='getBdList' style='cursor: pointer; margin-left: 30px;'>
                 <a class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7">
-                  <img src="/img/common/ic_dot_on.svg" alt="이미지"/>  새로고침
+                  <i class="fa-solid fa-arrows-rotate"></i>  새로고침
                 </a>
               </div>
               <!--end::Item-->
@@ -439,8 +439,6 @@
                 <div class="table-box with-scroll small">
                   <table class="list-table-hoverable">
                     <colgroup>
-<!--                      <col style="width: 35px" />-->
-                      <col style="width: 70px" />
                       <col style="width: 100px" />
                       <col style="width: 100px" />
                       <col style="width: 100px" />
@@ -455,12 +453,6 @@
                     </colgroup>
                     <thead>
                       <tr class="small" style='cursor:default !important'>
-<!--                        <th>-->
-<!--                          <div class="cbox">-->
-<!--                            <label> <input type="checkbox" class="all-chk" v-model='allChked' @change='allChk' /><i></i> </label>-->
-<!--                          </div>-->
-<!--                        </th>-->
-                        <th>순번</th>
                         <th>배정상태</th>
                         <th>환자이름</th>
                         <th>성별</th>
@@ -477,13 +469,12 @@
 
                     <tbody v-if="bdListWeb.count === 0">
                       <tr>
-                        <td colspan="16">내역이 없습니다</td>
+                        <td colspan="15">내역이 없습니다</td>
                       </tr>
                     </tbody>
 
                     <tbody v-if="bdListWeb.count !== 0">
                       <tr v-for="(item, i) in bdListWeb.items" :key="i" @click='openBedMod(item)'>
-                        <td>{{ bdListWeb.count - i - startIndex }}</td>
                         <td>{{ item.bedStatCdNm }}</td>
                         <td>{{ maskingNm(item.ptNm) }}</td>
                         <td>{{ item.gndr }}자</td>
@@ -495,7 +486,6 @@
                         <td>{{ item.bascAddr }}</td>
                         <td v-html='getDtBlue(item.updtDttm)'></td>
                         <td>
-<!--                            @click="openBedMod(item)"-->
                           <a
                             class="btn btn-flex btn-xs btn-outline btn-outline-primary justify-content-center"
                             :style="{color: getBtnColor(item.bedStatCd)}"

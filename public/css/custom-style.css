@@ -64,7 +64,7 @@ section.cntc-message-board .item-box:hover {
   background-color: #74afeb22;
 }
 section.cntc-message-board .board-head-box {
-  padding: 32px 32px;
+  padding: 32px 32px 24px 32px;
 }
 section.cntc-message-board .board-head-box .head-top-box {
   text-align: center;
@@ -218,7 +218,7 @@ section.cntc-message-board .board-body-box .list-wrap .list-group-box .list-head
 section.cntc-message-board .board-body-box .list-wrap .list-group-box .list-body-box .item-box {
   display: flex;
   justify-content: space-between;
-  padding: 23px 32px;
+  padding: 10px 32px;
 }
 section.cntc-message-board .board-body-box .list-wrap .list-group-box .list-body-box .item-box + .item-box {
   border-top: 1px solid #DADBDC;
@@ -440,7 +440,7 @@ article.timeline-layout1 .timeline-wrap ul li .ic-box img {
   max-height: 100%;
 }
 article.timeline-layout1 .timeline-wrap ul li .item-box {
-  padding: 20px;
+  padding: 14px 20px;
   box-shadow: 0 3px 12px rgba(100, 92, 92, 0.1);
   border-radius: 12px;
 }
@@ -467,7 +467,6 @@ article.timeline-layout1 .timeline-wrap ul li .item-box .mid-item-box {
   letter-spacing: -0.05em;
 }
 article.timeline-layout1 .timeline-wrap ul li .item-box .bottom-item-box {
-  margin-top: 12px;
 }
 article.timeline-layout1 .timeline-wrap ul li .item-box .bottom-item-box .img-list {
   display: flex;
@@ -762,14 +761,14 @@ article.table-form-layout1 .form-body-box .table-box table tr th {
   letter-spacing: -0.05em;
   color: #696971;
   line-height: 1.2;
-  height: 46px;
+  height: 40px;
 }
 article.table-form-layout1 .form-body-box .table-box table tr th.bg-accent {
   background-color: rgba(116, 175, 235, 0.3);
 }
 article.table-form-layout1 .form-body-box .table-box table tr td {
   box-sizing: border-box;
-  padding: 8px 32px;
+  padding: 8px 16px;
 }
 article.table-form-layout1 .form-body-box .table-box table tr td .item-cell-box {
   height: 100%;
@@ -1627,14 +1626,14 @@ article.cbox-list-layout .cbox-row + .cbox-row {
   margin-top: 8px;
 }
 article.cbox-list-layout .cbox-row .cbox {
-  width: 15%;
+  width: 20%;
 }
 article.detail-layout1 .detail-wrap {
   display: flex;
 }
 article.detail-layout1 .detail-wrap .detail-info-box {
   box-shadow: 0 3px 12px rgba(100, 92, 92, 0.1);
-  width: 467px;
+  width: 33.33%;
   border-radius: 12px;
 }
 article.detail-layout1 .detail-wrap .detail-info-box.full {
@@ -1642,8 +1641,7 @@ article.detail-layout1 .detail-wrap .detail-info-box.full {
   min-width: 0;
 }
 article.detail-layout1 .detail-wrap .detail-info-box + .detail-info-box {
-  margin-left: 16px;
-  max-height: calc(100% - 67px);
+/*  margin-left: 16px;*/
 }
 article.detail-layout1 .detail-wrap .detail-head-box {
   height: 60px;
@@ -1672,8 +1670,9 @@ article.detail-layout1 .detail-wrap .detail-tabs-group .scroll-wrap {
 }
 
 article.msg-send-layout1 {
-  padding: 13px 24px 20px 20px;
+  padding: 13px 24px 0 20px;
   border-top: 1px dashed #DADBDC;
+  background-color: white;
 }
 article.msg-send-layout1 .img-upload-result {
   margin-bottom: 10px;
@@ -2217,7 +2216,7 @@ article.permission-selector-layout .selector-box input:checked ~ .selector-wrap 
 article.permission-selector-layout .selector-box .selector-wrap {
   border: 1px solid #DADBDC;
   width: 150px;
-  height: 160px;
+  height: 140px;
   border-radius: 12px;
   display: inline-flex;
   align-items: center;
@@ -2663,7 +2662,7 @@ article.dashboard-tabs-list .dashboard-tabs-btn.active {
   border-radius: 12px;
   box-shadow: 0 3px 16px rgba(0, 0, 0, 0.08);
   min-height: 158px;
-  border: 2px solid transparent;
+  border: 2px solid #eee;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2972,7 +2971,7 @@ input[type=checkbox] + i, .form-body-box select, .form-body-box input[type=text]
 .option-box > a > i { color: #595959; font-size: 1rem; }
 
 #kt_app_content .card-header { padding-bottom: 0 !important; }
-#kt_app_content .card-body { overflow-y: scroll; }
+#kt_app_content .card-body { overflow-y: auto; }
 @media (max-width: 1024px) {
   section.login .login-wrap .login-contents .con-head-box .main-box {
     font-size: 28px;

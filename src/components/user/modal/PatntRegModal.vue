@@ -481,6 +481,7 @@ import { useStore } from 'vuex'
 import { API_PROD } from '@/util/constantURL'
 import axios from 'axios'
 import SbasAlert from '@/components/common/SbasAlert.vue'
+import { axios_cstm } from '@/util/axios_cstm'
 
 const props = defineProps({
   existPt: Object,
@@ -551,13 +552,10 @@ function setPatientInfo(result) {
 
 function registerNewPt() {
   const url = `${API_PROD}/api/v1/private/patient/regbasicinfo`
-  const token = sessionStorage.getItem('userToken')
   const request = model.newPt
   return new Promise(() => {
-    axios
-      .post(url, request, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+    axios_cstm()
+      .post(url, request)
       .then((response) => {
         const data = response.data
         if (data.code === '00') {
@@ -574,12 +572,9 @@ function registerNewPt() {
 
 function isExistPt() {
   const url = `${API_PROD}/api/v1/private/patient/exist`
-  const token = sessionStorage.getItem('userToken')
   const request = model.newPt
   return new Promise(() => {
-    axios.post(url, request, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    axios_cstm().post(url, request)
     .then((response) => {
       const data = response.data
       if (data.code === '00') {

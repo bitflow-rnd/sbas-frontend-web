@@ -88,8 +88,8 @@
       <!--begin::Content-->
       <div id="kt_app_content" class="app-content flex-column-fluid">
         <div class="card d-flex flex-row">
-          <div class="card-contents" style="flex: 1; min-width: 0">
-            <div class="card-option p-8 pb-0">
+          <div class="card-contents pb-5" style="flex: 1; min-width: 0">
+            <div class="card-option p-4">
               <div class="d-flex align-items-center gap-2 gap-lg-3 justify-content-end">
                 <a
                   href="#"
@@ -115,7 +115,7 @@
             </div>
 
             <!--begin::Card header-->
-            <div class="card-header border-0 p-8">
+            <div class="card-header border-0 pt-0">
               <!--begin::Card toolbar-->
               <article class="table-form-layout1">
                 <div class="form-head-box"></div>
@@ -124,7 +124,7 @@
                   <div class="table-box">
                     <table>
                       <colgroup>
-                        <col style="width: 168px" />
+                        <col style="width: 90px" />
                         <col style="width: auto" />
                       </colgroup>
                       <tbody>
@@ -132,7 +132,7 @@
                           <th>검색조건</th>
                           <td>
                             <div class="item-cell-box">
-                              <div class="sbox w-175px" @click='getSido()'>
+                              <div class="sbox" @click='getSido()'>
                                 <select v-model='filterFs.dstr1Cd'  @change='getGugun(filterFs.dstr1Cd)'>
                                   <option value=''>시/도 전체</option>
                                   <option v-for='(item, i) in cmSido' :key='i' :value='item.cdId'>
@@ -140,7 +140,7 @@
                                   </option>
                                 </select>
                               </div>
-                              <div class="sbox w-175px ms-2">
+                              <div class="sbox ms-2">
                                 <select v-model='filterFs.dstr2Cd' @change='getFireStatn' :disabled="filterFs.dstr1Cd===''">
 
                                   <option value=''>시/군/구 전체</option>
@@ -150,7 +150,7 @@
                                 </select>
                               </div>
 
-                              <div class="tbox full with-btn ms-2" style="max-width: 300px">
+                              <div class="tbox sttn-nm with-btn ms-2" style="max-width: 300px">
                                 <input
                                   v-model="filterFs.kwd"
                                   type="text"
@@ -175,10 +175,10 @@
             </div>
             <!--end::Card header-->
             <!--begin::Card body-->
-            <div v-if="firestatnList !== undefined && firestatnList !== null" class="card-body p-8">
+            <div v-if="firestatnList !== undefined && firestatnList !== null" class="card-body sttn-col">
               <!--begin::Table-->
               <h5>
-                조회결과<span class="position-absolute translate-middle rounded-pill bg-primary">
+                구급대<span class="position-absolute translate-middle rounded-pill bg-primary">
                 {{firestatnList.length===0?'0':firestatnList.count}}</span>
               </h5>
               <article v-if="firestatnList.length === 0" class="table-list-layout1">
@@ -201,8 +201,6 @@
                     <table>
                       <colgroup>
                         <col style="width: 35px" />
-                        <col style="width: 50px" />
-                        <col style="width: 100px" />
                         <col style="width: 100px" />
                         <col style="width: 100px" />
                         <col style="width: 100px" />
@@ -216,12 +214,10 @@
                               <label> <input type="checkbox" class="all-chk" /><i></i> </label>
                             </div>
                           </th>
-                          <th>순번</th>
-                          <th>지역(시/도)</th>
-                          <th>지역(시/군/구)</th>
-                          <th>구급대 (119안전센터)</th>
+                          <th>지역</th>
+                          <th>구급대<br/>(119안전센터)</th>
                           <th>전화번호</th>
-                          <th>등록 대원 수</th>
+                          <th>등록<br/>대원 수</th>
                           <th>작업</th>
                         </tr>
                       </thead>
@@ -238,9 +234,7 @@
                               <label> <input type="checkbox" /><i></i> </label>
                             </div>
                           </td>
-                          <td>{{ firestatnList.count - i - startIndex }}</td>
-                          <td>{{ item.dstr1Cd }}</td>
-                          <td>{{ item.dstr2Cd }}</td>
+                          <td>{{ item.dstr1Cd }} {{ item.dstr2Cd }}</td>
                           <td>{{ item.instNm }}</td>
                           <td>{{ item.chrgTelno }}</td>
                           <td>{{ item.crewCount ?? '0' }}</td>
@@ -275,7 +269,7 @@
             <!--end::Card body-->
           </div>
 
-          <article class="card-sub-contents px-6" style="width: 560px">
+          <article class="card-sub-contents pe-4" style="width: 560px">
             <div class="card-option p-8">
               <div class="d-flex align-items-center gap-2 gap-lg-3 justify-content-end">
                 <!--                                <a @click="delFM" href="#" class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users"><i class="fa-regular fa-trash-can"></i> 삭제</a>-->
@@ -292,25 +286,20 @@
             </div>
 
             <div class="card-sub-wrap p-8">
-              <!--begin::Card header-->
-              <div class="card-header border-0 p-0 pb-6 d-flex">
-                <h5 class="mt-2 flex-grow-1">구급대원 목록</h5>
-                <div class="tbox w-300px with-btn">
-                  <input v-model='filterFm.kwd' type="text" placeholder="대원이름 또는 ID 입력" @keyup.enter='getFiremen'  />
-                  <a @click='getFiremen' class="input-btn">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </a>
-                </div>
-              </div>
-              <!--end::Card header-->
               <!--begin::Card body-->
               <div class="card-body p-0">
                 <!--begin::Table-->
-                <h5 v-if="firemenList.length!==0">
-                  조회결과<span
-                    class="position-absolute translate-middle rounded-pill bg-primary"
-                    >{{ firemenList.count }}</span
-                  >
+                <h5 v-if="firemenList.length!==0" class="d-flex">
+                  <div class="flex-grow-1 d-flex">
+                    구급대원
+                    <span class="cnt badge bg-primary">{{ firemenList.count }}</span>
+                  </div>
+                  <div class="tbox with-btn">
+                    <input v-model='filterFm.kwd' type="text" placeholder="대원이름 또는 ID 입력" @keyup.enter='getFiremen'  />
+                    <a @click='getFiremen' class="input-btn">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                    </a>
+                  </div>
                 </h5>
                 <h5 v-if="firemenList.length===0">
                   조회결과<span class="position-absolute translate-middle rounded-pill bg-primary"
@@ -385,7 +374,7 @@
                             </td>
                           </tr>
                           <tr v-if="firemenList.count===0">
-                            <td colspan="5">등록된 구급대원이 없습니다</td>
+                            <td class="no-data" colspan="5">등록된 구급대원이 없습니다</td>
                           </tr>
                         </tbody>
                       </table>
@@ -1620,6 +1609,15 @@ export default {
   background-position: right 60px bottom 60px;
   background-repeat: no-repeat;
 }
+.card-body {
+  overflow-x: hidden;
+}
+.sttn-nm {
+  width: 175px;
+}
+.badge.cnt { height: 19px; margin-left: 0.5rem;
+  min-width: 22px; border-radius: 10px; padding: 2px 7px;
+  text-align: center; }
 #map {
   position: absolute !important;
   width: 530px;
@@ -1629,5 +1627,14 @@ export default {
   top: 0;
   left: 0;
   border-top: 1px solid #555;
+}
+.no-data {
+  height: 300px !important;
+}
+.table-list-layout1 {
+  width: 100%;
+}
+.sttn-col {
+  padding: 1.5rem 0 0 2rem;
 }
 </style>

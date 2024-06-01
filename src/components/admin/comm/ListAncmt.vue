@@ -263,22 +263,20 @@
                 <div class="table-box with-scroll small">
                   <table class="table-layout-fixed">
                     <colgroup>
+                      <col style="width: 50px" />
                       <col style="width: 70px" />
-                      <col style="width: 100px" />
                       <col style="width: auto" />
-                      <col style="width: 100px" />
-                      <col style="width: 200px" />
-                      <col style="width: 100px" />
-                      <col style="width: 200px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
+                      <col style="width: 170px" />
+                      <col style="width: 70px" />
+                      <col style="width: 120px" />
+                      <col style="width: 80px" />
+                      <col style="width: 90px" />
                     </colgroup>
                     <thead>
                       <tr class="small">
                         <th>순번</th>
                         <th>구분</th>
                         <th>제목</th>
-                        <th>첨부파일</th>
                         <th>공지기간</th>
                         <th>노출여부</th>
                         <th>수정일시</th>
@@ -296,12 +294,6 @@
                             <div class="txt-box">기능 업데이트에 따른 서버작업 공지 (3시간)</div>
                             <div class="label-box ms-2"><span class="text-primary">NEW</span></div>
                           </div>
-                        </td>
-                        <td>
-                          <i
-                            class="fa-regular fa-floppy-disk"
-                            style="color: #74afeb; font-size: 20px"
-                          ></i>
                         </td>
                         <td>2023-06-01 ~ 2023-09-01</td>
                         <td>
@@ -335,7 +327,6 @@
                             <div class="txt-box">병상배정 시스템 프로젝트 오픈 공지</div>
                           </div>
                         </td>
-                        <td>-</td>
                         <td>2023-06-01 ~ 2023-10-01</td>
                         <td>
                           <i
