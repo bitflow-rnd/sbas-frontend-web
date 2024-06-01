@@ -9,12 +9,11 @@
           <router-link to='/'></router-link>
         </h1>
 
-        <div class='header-menu-box'>
-          <a href="https://bitflow.notion.site/1-c386cb59de4440208ec146d6968bf877?pvs=4" target='_blank' class="btn btn-flex btn-sm btn-primary my-auto fs-1"
-             style='margin-right: 70px'
-          ><i class="fa-solid fa-triangle-exclamation fs-1"></i> 사용자매뉴얼</a
+        <div class='header-menu-box d-flex'>
+          <a href="https://bitflow.notion.site/1-c386cb59de4440208ec146d6968bf877?pvs=4" target='_blank' class="btn btn-flex btn-sm btn-primary my-auto fs-4 py-1"
+          ><i class="fa-solid fa-triangle-exclamation"></i> 사용자매뉴얼</a
           >
-          <router-link to='/login' class='header-menu-btn' v-if='!isMobile'>병상배정 시스템 로그인</router-link>
+          <router-link to='/login' class='ms-4 mt-2 header-menu-btn d-none d-md-block'>병상배정 시스템 로그인</router-link>
         </div>
 
       </div>
@@ -133,21 +132,26 @@
     <section class='section footer fp-auto-height'>
       <footer>
         <div class='inner wrap'>
+
           <div class='footer-menu-box'>
 
-            <div class='footer-menu-list'>
-              <router-link to='/login' class='footer-menu-btn type-primary' v-if='!isMobile'>병상배정 시스템 로그인</router-link>
-              <a :href="setApkLink()" class='footer-menu-btn'>
+            <div class='footer-menu-list row'>
+
+              <router-link to='/login' class='d-none d-md-block col col-4 footer-menu-btn type-primary py-1' v-if='!isMobile'>병상배정 시스템 로그인</router-link>
+
+              <a href="/d/apk.html" class='col col-6 col-md-4 footer-menu-btn'>
                 <img src='/img/common/img_footer_google.svg' alt='이미지'>
               </a>
-              <a href="https://bitflow.notion.site/3-2-Form-93210bffd2174e1a9835aeeadc94d777" target='_blank' class='footer-menu-btn'>
+
+              <a href="https://bitflow.notion.site/3-2-Form-93210bffd2174e1a9835aeeadc94d777" target='_blank' class='col col-6 col-md-4 footer-menu-btn'>
                 <img src='/img/common/img_footer_apple.svg' alt='이미지'>
               </a>
+
             </div>
 
-            <div class='terms' v-if='!isMobile'>
-              <div role='button' @click='showModal(1)'>개인정보 취급방침</div>
-              <div role='button' @click='showModal(2)'>서비스 이용약관</div>
+            <div class='terms row d-none' v-if='!isMobile'>
+              <div class="col col-6" role='button' @click='showModal(1)'>개인정보 취급방침</div>
+              <div class="col col-6" role='button' @click='showModal(2)'>서비스 이용약관</div>
             </div>
 
           </div>
@@ -264,8 +268,24 @@ body, .app-root {
   width: 80%;
 }
 header.main {
-  height: 70px;
+  height: 50px;
 }
+
+.con-box {
+  font-weight: bold;
+  color: white !important;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.text-shadow-sm {
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.accent-txt, .text-shadow-sm-white {
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+
 section.main .swiper-group-box .navigation-box {
   margin-left: 200px;
 }
@@ -323,7 +343,39 @@ footer {
   display: block !important;
 }
 
+.terms > div {
+  width: 250px; line-height: 32px;
+  border: 3px solid #aaa;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 6px;
+  background-color: rgba(255,255,255,0.5);
+  padding: 3px 5px;
+  text-align: center;
+  margin-left: 1.5rem; }
+.terms > div + div { margin-top: 1rem; }
+
+footer .footer-menu-box .footer-menu-list {
+  justify-content: space-around;
+}
+
+.footer-menu-btn {
+  font-size: 1.4rem !important;
+  font-weight: normal !important;
+  line-height: 1.3;
+}
+
+@media (max-width: 768.98px) {
+  .visual-view-box {
+    width: calc(100% - 3rem) !important;
+    top: 15% !important;
+    left: 50%;
+    transform: translateX(-50%) !important;
+  }
+}
+
 @media (max-width: 1024px) {
+
   .inner {
     margin-left: inherit;
   }
@@ -346,15 +398,4 @@ footer {
     z-index: 0;
   }
 }
-.terms > div {
-  width: 250px; line-height: 32px;
-  border: 3px solid #aaa;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border-radius: 6px;
-  background-color: rgba(255,255,255,0.5);
-  padding: 3px 5px;
-  text-align: center;
-  margin-left: 1.5rem; }
-.terms > div + div { margin-top: 1rem; }
 </style>

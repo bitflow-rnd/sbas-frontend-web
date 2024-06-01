@@ -21,14 +21,8 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
 
-const props = defineProps({
-  item: {
-    type: Object,
-    required: true
-  }
-})
+const props = defineProps(['item'] )
 
 function getDate(data) {
   const dData = new Date(data)
@@ -45,5 +39,3 @@ function getDate(data) {
   return dYear + '.' + dMonth + '.' + dDate
 }
 </script>
-
-<style scoped></style>

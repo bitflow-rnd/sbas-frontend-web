@@ -75,7 +75,7 @@
                               style="width: 264px"
                             >
                               <div class="profile-view-box" style="width: 100%; height: 264px">
-                                <img v-if="!model.newPt.attcId" src='@/assets/img/img-no-img.webp'/>
+                                <img v-if="!model.newPt.attcId" src='../../../assets/img/img-no-img.webp'/>
                                 <img v-if='model.newPt.attcId' :src='model.epidReportImage' @click='showImageLightBox' />
 <!--                                <a v-if="model.newPt.attcId !== null || model.newPt.attcId === ''" class="remove-btn">-->
 <!--                                  <img src="/img/common/ic_profile_remove.svg" alt="이미지" />-->
@@ -475,7 +475,7 @@
 
 <script setup>
 import { defineProps, reactive, defineEmits, onMounted } from 'vue'
-import ExistPatntModal from '@/components/user/patnt/ExistPatntModal.vue'
+import ExistPatntModal from '@/components/user/modal/ExistPatntModal.vue'
 import { getAge, openAddressFinder } from '@/util/ui'
 import { useStore } from 'vuex'
 import { API_PROD } from '@/util/constantURL'
