@@ -25,7 +25,7 @@ body { max-width: 100%; overflow-x: hidden; }
 .app-root { background-color: #f3f3f5; }
 .app-wrapper { height: calc(100% - 70px); }
 .app-header .btn-custom i { font-size: 2.23rem; }
-.app-header-logo { margin-right: 60px; }
+.app-header-logo { margin-right: 0; }
 .app-header-logo > a > img { height: 5.39rem; }
 .app-sidebar { display: none; }
 .app-toolbar { padding: 0 !important; }
@@ -105,7 +105,8 @@ td .symbol img{
 }
 @media (min-width: 1200px) {
     .app-header .menu-top-rounded > .menu-item {
-        width: 125px;
+        width: fit-content;
+        max-width: 160px;
         margin-right: 0.65rem !important;
     }
     .app-header .menu-top-rounded > .menu-item > .menu-link {

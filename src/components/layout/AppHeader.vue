@@ -44,9 +44,7 @@
         </div>
         <!--end::Mobile toggle-->
         <!--begin::Logo image-->
-        <router-link to="/dashbd" @click="setActive(0)">
-          <img alt="Logo" src="/img/logos/title-bar.webp" class="theme-light-show" />
-          <img alt="Logo" src="/img/logos/demo44-dark.svg" class="h-25px theme-dark-show" />
+        <router-link to="/dashbd" @click="setActive(0)" class="logo-area">
         </router-link>
         <!--end::Logo image-->
       </div>
@@ -169,8 +167,8 @@
         <div class="app-navbar flex-shrink-0">
           <div class="app-navbar-item" id="kt_app_header_middle_wrapper">
             <a href="https://bitflow.notion.site/1-c386cb59de4440208ec146d6968bf877?pvs=4" target='_blank'
-               class="btn btn-flex btn-sm btn-primary my-auto fs-1">
-              <i class="fa-solid fa-triangle-exclamation fs-1" /> 사용자매뉴얼
+               class="btn btn-flex btn-sm btn-primary my-auto">
+              <i class="fa-solid fa-triangle-exclamation" /> 사용자매뉴얼
             </a>
           </div>
 
@@ -263,8 +261,8 @@
           <div class="app-navbar-item ms-3 ms-lg-2">
             <!--begin::Menu- wrapper-->
             <div class="h-35px h-md-40px" id="kt_activities_toggle">
-              <p>{{ userInfo.userNm }} {{ userInfo.ocpCd }}</p>
-              <p class="text-truncate">{{ userInfo.instNm }}</p>
+              <p>{{ userInfo.userNm }}</p>
+              <p class="text-truncate">{{ userInfo.instNm }}/{{ userInfo.ocpCd }}</p>
             </div>
             <!--end::Menu wrapper-->
           </div>
@@ -783,6 +781,14 @@ export default {
 </script>
 
 <style scoped>
+.logo-area {
+  background-image: url('@/assets/img//title-bar.webp');
+  width: 120px;
+  height: 100%;
+  background-size: 150px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 .fs-5 {
   font-size: 0.85rem !important;
 }

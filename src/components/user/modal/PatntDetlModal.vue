@@ -71,88 +71,90 @@
                             <col style="width: auto" />
                           </colgroup>
                           <tbody>
-                            <tr>
-                              <th>환자ID</th>
-                              <td>{{ model.ptDetail.ptId }}</td>
-                            </tr>
+                          <tr>
+                            <th>환자ID</th>
+                            <td>{{ model.ptDetail.ptId }}</td>
+                          </tr>
 
-                            <tr>
-                              <th>이름</th>
-                              <td>{{ model.ptDetail.ptNm }}</td>
-                            </tr>
+                          <tr>
+                            <th>이름</th>
+                            <td>{{ model.ptDetail.ptNm }}</td>
+                          </tr>
 
-                            <tr>
-                              <th>주민번호</th>
-                              <td>{{ `${model.ptDetail.rrno1}-${model.ptDetail.rrno2}******` }}</td>
-                            </tr>
+                          <tr>
+                            <th>주민번호</th>
+                            <td>{{ `${model.ptDetail.rrno1}-${model.ptDetail.rrno2}******` }}</td>
+                          </tr>
 
-                            <tr>
-                              <th>나이</th>
-                              <td>{{ model.ptDetail.age }}세</td>
-                            </tr>
+                          <tr>
+                            <th>나이</th>
+                            <td>{{ model.ptDetail.age }}세</td>
+                          </tr>
 
-                            <tr>
-                              <th>성별</th>
-                              <td>{{ model.ptDetail.gndr }}자</td>
-                            </tr>
+                          <tr>
+                            <th>성별</th>
+                            <td>{{ model.ptDetail.gndr }}자</td>
+                          </tr>
 
-                            <tr>
-                              <th>주소</th>
-                              <td>
-                                {{ model.ptDetail.zip?'['+model.ptDetail.zip+']\n':'' }}
-                                {{ model.ptDetail.bascAddr }}&nbsp;{{ model.ptDetail.detlAddr }}
-                              </td>
-                            </tr>
+                          <tr>
+                            <th>주소</th>
+                            <td>
+                              {{ model.ptDetail.zip ? '[' + model.ptDetail.zip + ']\n' : '' }}
+                              {{ model.ptDetail.bascAddr }}&nbsp;{{ model.ptDetail.detlAddr }}
+                            </td>
+                          </tr>
 
-                            <tr>
-                              <th>사망여부</th>
-                              <td>{{ model.ptDetail.dethYn === 'Y' ? '사망' : '생존' }}</td>
-                            </tr>
+                          <tr>
+                            <th>사망여부</th>
+                            <td>{{ model.ptDetail.dethYn === 'Y' ? '사망' : '생존' }}</td>
+                          </tr>
 
-                            <tr>
-                              <th>국적</th>
-                              <td>{{ model.ptDetail.natiNm }}</td>
-                            </tr>
+                          <tr>
+                            <th>국적</th>
+                            <td>{{ model.ptDetail.natiNm }}</td>
+                          </tr>
 
-                            <tr>
-                              <th>휴대전화번호</th>
-                              <td>
-                                {{
-                                  model.ptDetail.mpno && model.ptDetail.mpno !== ''
-                                    ? getTelno(model.ptDetail.mpno)
-                                    : '-'
-                                }}
-                              </td>
-                            </tr>
+                          <tr>
+                            <th>휴대전화번호</th>
+                            <td>
+                              {{
+                                model.ptDetail.mpno && model.ptDetail.mpno !== ''
+                                  ? getTelno(model.ptDetail.mpno)
+                                  : '-'
+                              }}
+                            </td>
+                          </tr>
 
-                            <tr>
-                              <th>전화번호</th>
-                              <td>{{ model.ptDetail.telno ? model.ptDetail.telno : '-' }}</td>
-                            </tr>
+                          <tr>
+                            <th>전화번호</th>
+                            <td>{{ model.ptDetail.telno ? model.ptDetail.telno : '-' }}</td>
+                          </tr>
 
-                            <tr>
-                              <th>보호자 이름</th>
-                              <td>{{ model.ptDetail.nokNm ? model.ptDetail.nokNm : '-' }}</td>
-                            </tr>
+                          <tr>
+                            <th>보호자 이름</th>
+                            <td>{{ model.ptDetail.nokNm ? model.ptDetail.nokNm : '-' }}</td>
+                          </tr>
 
-                            <tr>
-                              <th>직업</th>
-                              <td>{{ model.ptDetail.job ? model.ptDetail.job : '-' }}</td>
-                            </tr>
+                          <tr>
+                            <th>직업</th>
+                            <td>{{ model.ptDetail.job ? model.ptDetail.job : '-' }}</td>
+                          </tr>
 
-                            <tr>
-                              <th>기저질환</th>
-                              <td>{{ getTag(model.ptDs?.undrDsesNms || []) }}</td>
-                            </tr>
+                          <tr>
+                            <th>기저질환</th>
+                            <td>{{ getTag(model.ptDs?.undrDsesNms || []) }}</td>
+                          </tr>
 
-                            <tr>
-                              <th>환자유형</th>
-                              <td>{{ getTag(model.ptDs?.ptTypeNms || []) }}</td>
-                            </tr>
+                          <tr>
+                            <th>환자유형</th>
+                            <td>{{ getTag(model.ptDs?.ptTypeNms || []) }}</td>
+                          </tr>
 
                           </tbody>
                         </table>
-                        <svrt-chart-unit-no-title :pt-id="model.ptDetail.ptId==='PT00000305'||model.ptDetail.ptId==='PT00000086'?model.ptDetail.ptId:'PT00000086'" class='mt-5' />
+                        <svrt-chart-unit-no-title
+                          :pt-id="model.ptDetail.ptId==='PT00000305'||model.ptDetail.ptId==='PT00000086'?model.ptDetail.ptId:'PT00000086'"
+                          class='mt-5' />
                       </div>
 
                       <div class="table-img-box pt-4"></div>
@@ -169,8 +171,8 @@
                       >관찰환자 등록
                       </a>
                       <a href='javascript:void(0)'
-                        class="modal-menu-btn menu-primary"
-                        >수정
+                         class="modal-menu-btn menu-primary"
+                      >수정
                       </a>
                     </div>
                   </article>
@@ -226,7 +228,7 @@
                       <router-link
                         to=""
                         class="modal-menu-btn menu-primary"
-                        >병상요청
+                      >병상요청
                       </router-link>
                     </div>
                   </article>
@@ -363,12 +365,6 @@ let model = reactive({
   ptDs: store.getters['bedasgn/getPtDs']
 })
 
-// const ptBI = store.getters['patnt/ptBI']
-// const existPt = store.getters['patnt/existPt']
-// const rptInfo = store.getters['patnt/rptInfo']
-// const attcRpt = store.getters['patnt/attcRpt']
-// const severityData = store.getters['severity/severityData']
-
 onMounted(() => {
   console.log('ptDetail', JSON.stringify(props.ptDetail))
 })
@@ -385,14 +381,22 @@ function closeModal() {
 .modal {
   display: block;
 }
+
 .detail-info-box {
   position: relative;
 }
+
 .detail-foot-box {
   position: absolute;
   bottom: 0;
   width: 100%;
 }
-.head-sub-box { margin-left: 12px; }
-.detail-layout1, .detail-wrap { height: 100%; }
+
+.head-sub-box {
+  margin-left: 12px;
+}
+
+.detail-layout1, .detail-wrap {
+  height: 100%;
+}
 </style>
