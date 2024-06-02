@@ -2408,16 +2408,16 @@
         <!--begin::Modal header-->
         <!--begin::Modal body-->
         <div v-if="rcmdHp !== null" class="modal-body scroll-y py-10 px-10">
-          <article class="table-form-layout1 pb-6">
+          <article class="table-form-layout1 pb-4">
             <div class="form-head-box"></div>
 
             <div class="form-body-box">
               <div class="table-box">
                 <table>
                   <colgroup>
-                    <col style="width: 168px" />
-                    <col style="width: auto" />
-                    <col style="width: 168px" />
+                    <col style="width: 90px" />
+                    <col style="width: 400px" />
+                    <col style="width: 90px" />
                     <col style="width: auto" />
                   </colgroup>
                   <tbody>
@@ -2545,68 +2545,75 @@
                   </tr>
 
                   <tr>
+
                     <th>환자유형</th>
-                    <td>
-                      <div class="item-cell-box full">
-                        <div class="cbox">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">임산부</span>
-                          </label>
+                    <td colspan="3">
+
+                      <div class="d-flex">
+
+                        <div class="item-cell-box ptnt-type full d-flex flex-grow-1">
+
+                          <div class="cbox">
+                            <label>
+                              <input type="checkbox" name="permission" /><i></i>
+                              <span class="txt">임산부</span>
+                            </label>
+                          </div>
+
+                          <div class="cbox ms-4">
+                            <label>
+                              <input type="checkbox" name="permission" /><i></i>
+                              <span class="txt">투석</span>
+                            </label>
+                          </div>
+
+                          <div class="cbox ms-4">
+                            <label>
+                              <input type="checkbox" name="permission" /><i></i>
+                              <span class="txt">수술</span>
+                            </label>
+                          </div>
+
+                          <div class="cbox ms-4">
+                            <label>
+                              <input type="checkbox" name="permission" /><i></i>
+                              <span class="txt">신생아</span>
+                            </label>
+                          </div>
+
+                          <div class="cbox ms-4">
+                            <label>
+                              <input type="checkbox" name="permission" /><i></i>
+                              <span class="txt">소아</span>
+                            </label>
+                          </div>
+
+                          <div class="cbox ms-4">
+                            <label>
+                              <input type="checkbox" name="permission" /><i></i>
+                              <span class="txt">인공호흡기</span>
+                            </label>
+                          </div>
+
+                          <div class="cbox ms-4">
+                            <label>
+                              <input type="checkbox" name="permission" /><i></i>
+                              <span class="txt">적극적치료요청</span>
+                            </label>
+                          </div>
+
                         </div>
 
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">투석</span>
-                          </label>
+                        <div class="tbox w-400px with-btn ms-5">
+                          <input type="text" placeholder="의료기관명 검색" />
+
+                          <a href="javascript:void(0)" class="input-btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                          </a>
                         </div>
 
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">수술</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">신생아</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">소아</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">인공호흡기</span>
-                          </label>
-                        </div>
                       </div>
-                      <div class="item-cell-box full mt-3">
-                        <div class="cbox">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">적극적치료요청</span>
-                          </label>
-                        </div>
-                      </div>
-                    </td>
-                    <td colspan="2">
-                      <div class="tbox w-400px with-btn">
-                        <input type="text" placeholder="의료기관명 검색" />
 
-                        <a href="javascript:void(0)" class="input-btn">
-                          <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                      </div>
                     </td>
                   </tr>
 
@@ -2696,6 +2703,8 @@
               </div>
 
               <div class="option-box">
+
+                <!--
                 <div class="option-item-box d-flex align-items-center">
                   <div class="option-label-box pe-4">목록표시</div>
 
@@ -2718,6 +2727,7 @@
                     </div>
                   </article>
                 </div>
+                -->
 
                 <div class="option-item-box d-flex align-items-center ms-8">
                   <div class="option-label-box pe-4">목록표시</div>
@@ -2743,7 +2753,6 @@
               <div class="table-box with-scroll small">
                 <table>
                   <colgroup>
-                    <col style="width: 70px" />
                     <col style="width: 50px" />
                     <col style="width: 70px" />
                     <col style="width: 200px" />
@@ -2767,7 +2776,6 @@
                   </colgroup>
                   <thead>
                   <tr class="small">
-                    <th>순번</th>
                     <th>
                       <div class="cbox">
                         <label> <input type="checkbox" class="all-chk" /><i></i> </label>
@@ -2792,13 +2800,11 @@
                     <th>CT</th>
                     <th>MRI</th>
                     <th>거리</th>
-                    <!--                      <th>거리 / 예상이동시간</th>-->
                   </tr>
                   </thead>
 
                   <tbody>
                   <tr v-for="(item, i) in rcmdHp.items" :key="i">
-                    <td>{{ i + 1 }}</td>
                     <td>
                       <div class="cbox d-flex justify-content-center">
                         <label>
@@ -2815,18 +2821,13 @@
                         <img
                           src="/img/common/img_profile_dummy.png"
                           alt="이미지"
-                          class="w-100 h-100"
+                          class="w-100 h-100 thum-hspt"
                         />
                       </div>
                     </td>
                     <td class="text-start">
                       <div class="d-flex align-items-center">
                         <div class="text-start text-black" style="">{{ item.hospNm }}</div>
-                        <!--                          <div-->
-                        <!--                            class="label-txt d-inline-flex text-primary px-1 py-1 border border-primary rounded-1 fs-xs ms-2"-->
-                        <!--                            style="min-width: 37px">-->
-                        <!--                            AI추천-->
-                        <!--                          </div>-->
                       </div>
 
                       <div class="text-gray-600 fs-12px pt-2">
@@ -5777,5 +5778,13 @@ article.toggle-list-layout1 .toggle-list label input:checked ~ .txt {
 article.toggle-list-layout1 .toggle-list label .txt {
   padding: 0 13px;
 }
+.thum-hspt {
+  border: 1px solid gray;
+  filter: grayscale(1);
+  border-radius: 6px;
+}
 
+.ptnt-type {
+  padding-top: 8px;
+}
 </style>

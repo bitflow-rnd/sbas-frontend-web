@@ -314,10 +314,9 @@ export default {
         })
         if (response.data?.code === '00') {
           console.log(response.data?.result)
-          // comment.commit('setSPInfo',response.data?.result);
         }
       } catch (e) {
-        console.log(e)
+        console.error('병상승인 실패', e)
       }
     },
     /* 병상 승인 - 의료진 */
