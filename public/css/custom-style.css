@@ -1405,7 +1405,12 @@ article.modal-profile-layout1 .profile-card-box .profile-edit-box .upload-box {
   top: 10px;
   left: 10px;
 }
-
+.detail-foot-box {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+}
 .detail-layout1, .detail-wrap {
   height: 100%;
 }
@@ -1645,7 +1650,7 @@ article.detail-layout1 .detail-wrap .detail-info-box.full {
   min-width: 0;
 }
 article.detail-layout1 .detail-wrap .detail-info-box + .detail-info-box {
-/*  margin-left: 16px;*/
+  position: relative;
 }
 article.detail-layout1 .detail-wrap .detail-head-box {
   height: 60px;

@@ -5721,11 +5721,6 @@ export default {
   height: 100%;
 }
 
-.detail-foot-box {
-  bottom: 0;
-  position: absolute;
-  width: 100%;
-}
 .popup {
   display: block;
 }

@@ -3101,12 +3101,6 @@ export default {
   height: 100%;
 }
 
-.detail-foot-box {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
 li.custom-style::before {
   display: none;
 }
