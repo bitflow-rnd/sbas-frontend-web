@@ -195,8 +195,9 @@ export async function openPopup(idx) {
     document.getElementById('deniedAsgn').focus()
   } else if (idx === 2 && this.timeline !== null) {
     console.log('요청' + this.userInfo.jobCd)
-    if (this.userInfo.jobCd === JobCode.Aprv
-      && this.bdDetail.bedStatCd !== 'BAST0004') {
+
+    if ( (this.userInfo.jobCd === JobCode.Aprv || this.userInfo.jobCd === JobCode.Sysa)
+      && this.bdDetail.bedStatCd !== 'BAST0004' ) {
       /*병상 요청 승인 - 배정반 */
       if (this.timeline.items[0].title.includes('원내')) {
         console.log('원내배정 - 배정반')
@@ -206,7 +207,7 @@ export async function openPopup(idx) {
         await this.$store.dispatch('bedasgn/rcmdHpList', this.bdDetail)
         this.openModal(1)
       }
-    } else if (this.userInfo.jobCd === JobCode.Meds) {
+    } else if (this.userInfo.jobCd === JobCode.Meds || this.userInfo.jobCd === JobCode.Sysa) {
       console.log('의료진 / 해당')
       this.popup = 3
     }
