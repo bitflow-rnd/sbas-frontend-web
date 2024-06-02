@@ -1357,7 +1357,7 @@ article.like-btn .like-btn .fa-solid {
   display: none;
 }
 .timeline-wrap {
-  padding-bottom: 90px;
+  padding-bottom: 5rem !important;
 }
 .modal.show { background-color: rgba(0,0,0,0.4); }
 .modal .modal-header h2 {
@@ -1404,6 +1404,10 @@ article.modal-profile-layout1 .profile-card-box .profile-edit-box .upload-box {
   z-index: 10;
   top: 10px;
   left: 10px;
+}
+
+.detail-layout1, .detail-wrap {
+  height: 100%;
 }
 article.modal-profile-layout1 .profile-card-box .profile-edit-box .upload-box label {
   cursor: pointer;
@@ -1657,9 +1661,9 @@ article.detail-layout1 .detail-wrap .detail-head-box .head-box .head-txt-box {
 }
 article.detail-layout1 .detail-wrap .detail-tabs-group .tabs-box {
   flex-direction: column;
+  position: relative;
   width: 100%;
   height: 100%;
-  max-height: calc(100% - 67px);
   display: flex;
 }
 article.detail-layout1 .detail-wrap .detail-tabs-group .tabs-box[data-tabs=tabs1] {
@@ -1668,7 +1672,9 @@ article.detail-layout1 .detail-wrap .detail-tabs-group .tabs-box[data-tabs=tabs1
 article.detail-layout1 .detail-wrap .detail-tabs-group .scroll-wrap {
   overflow-y: auto;
 }
-
+article.detail-layout1 .detail-wrap .detail-tabs-group {
+  height: calc(100% - 73px);
+}
 article.msg-send-layout1 {
   padding: 13px 24px 0 20px;
   border-top: 1px dashed #DADBDC;

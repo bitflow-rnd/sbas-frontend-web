@@ -512,11 +512,14 @@
                       <td class="text-start">{{ item.bascAddr }}</td>
                       <td v-html='getDtBlue(item.updtDttm)'></td>
                       <td>
-                        <a
+                        <a v-if="!(item.bedStatCd==='BAST0007' || item.bedStatCd==='BAST0008')"
                           class="btn btn-flex btn-xs btn-outline btn-outline-primary justify-content-center"
                           :style="{color: getBtnColor(item.bedStatCd)}"
                         >{{ getBtn(item.bedStatCd)[0] }}</a
                         >
+                        <div v-if="item.bedStatCd==='BAST0007' || item.bedStatCd==='BAST0008'">
+                          {{ getBtn(item.bedStatCd)[0] }}
+                        </div>
                       </td>
                     </tr>
                     </tbody>
@@ -690,15 +693,12 @@
                                     class="profile-view-box"
                                     style="width: 100%; height: 264px"
                                   >
-                                    <img
-                                      v-if="preRpt === null"
-                                      src="../../../assets/img/img-no-img.webp"
-                                      alt="이미지"
-                                    />
-                                    <img v-if="preRpt !== null" :src="preRpt" alt="이미지" @click='showImageLightBox' />
-                                    <a @click="alertOpen(9)" class="remove-btn"
-                                    ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
-                                    /></a>
+                                    <img v-if="preRpt===null" src='@/assets/img/img-no-img.webp' class="no-img" />
+                                    <img v-if='preRpt !== null' :src="preRpt?preRpt:'/img/img-no-img.webp'" class="has-img" @click='showImageLightBox' onerror="this.src='/img/img-no-img.webp'"/>
+
+                                    <a @click="alertOpen(9)" class="remove-btn">
+                                      <img src="/img/common/ic_profile_remove.svg" alt="이미지" />
+                                    </a>
                                     <vue-easy-lightbox
                                       :visible="visibleRef"
                                       :imgs="imgsRef"
@@ -3164,7 +3164,7 @@
                   </article>
                 </div>
 
-                <div class="detail-tabs-group flex-root" style="height: 100%; min-height: 0">
+                <div class="detail-tabs-group" style="height: 100%; min-height: 0">
                   <div class="tabs-box flex-root" v-show="this.tabidx === 0" style="">
                     <div
                       v-if="timeline !== null && timeline !== undefined"
@@ -3983,10 +3983,8 @@
                         </div>
 
                         <div class="ms-3 d-flex">
-                          <div class="px-3 py-2 text-white bg-primary rounded-4">54노1234</div>
-                          <div class="px-3 py-2 text-white bg-primary rounded-4 ms-3">
-                            54노1234
-                          </div>
+                          <div class="px-3 py-2 text-white bg-primary rounded-4" role="button" @click="trsfInfo.vecno='54노1234'">54노1234</div>
+                          <div class="px-3 py-2 text-white bg-primary rounded-4 ms-3" role="button" @click="trsfInfo.vecno='129하8864'">129하8864</div>
                         </div>
                       </div>
                     </td>
@@ -4231,6 +4229,7 @@
                         <input
                           v-model="hosptlzdiscg.chrgTelno"
                           placeholder="의료진 연락처 입력"
+                          maxlength="14"
                         />
                       </div>
                     </td>
@@ -4974,6 +4973,7 @@ export default {
       selectedFm3: '구급대원',
       trsfInfo: {
         instId: '',
+        chfTelno: '',
         ptId: '',
         bdasSeq: '',
         ambsNm: '',
@@ -5725,8 +5725,6 @@ export default {
   bottom: 0;
   position: absolute;
   width: 100%;
-  max-width: 730px;
-  padding-bottom: 30px;
 }
 .popup {
   display: block;
@@ -5788,4 +5786,5 @@ article.toggle-list-layout1 .toggle-list label .txt {
 .ptnt-type {
   padding-top: 8px;
 }
+
 </style>

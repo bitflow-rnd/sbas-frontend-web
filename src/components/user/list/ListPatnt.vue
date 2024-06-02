@@ -841,14 +841,12 @@
                                     class="profile-view-box"
                                     style="width: 100%; height: 264px"
                                   >
-                                    <img
-                                      v-if="newPt.attcId === null || newPt.attcId === ''"
-                                      src='../../../assets/img/img-no-img.webp' />
-                                    <img v-else :src='this.epidReportImage' @click='showImageLightBox' />
-                                    <a v-if="newPt.attcId !== null || newPt.attcId === ''" @click="alertOpen(9)"
-                                       class="remove-btn"
-                                    ><img src="/img/common/ic_profile_remove.svg" alt="이미지"
-                                    /></a>
+                                    <img v-if="newPt.attcId === null || newPt.attcId === ''" src='@/assets/img/img-no-img.webp' class="no-img" />
+                                    <img v-if="!(newPt.attcId === null || newPt.attcId === '')" class="has-img" @click='showImageLightBox' onerror="this.src='/img/img-no-img.webp'"
+                                      :src="this.epidReportImage?this.epidReportImage:'/img/img-no-img.webp'" />
+                                    <a v-if="newPt.attcId !== null || newPt.attcId === ''" @click="alertOpen(9)" class="remove-btn">
+                                      <img src="/img/common/ic_profile_remove.svg" alt="이미지" />
+                                    </a>
                                     <vue-easy-lightbox
                                       :visible="visibleRef"
                                       :imgs="imgsRef"
