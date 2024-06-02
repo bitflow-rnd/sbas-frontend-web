@@ -75,11 +75,8 @@
                               style="width: 264px"
                             >
                               <div class="profile-view-box" style="width: 100%; height: 264px">
-                                <img v-if="!model.newPt.attcId" src='../../../assets/img/img-no-img.webp'/>
-                                <img v-if='model.newPt.attcId' :src='model.epidReportImage' @click='showImageLightBox' />
-<!--                                <a v-if="model.newPt.attcId !== null || model.newPt.attcId === ''" class="remove-btn">-->
-<!--                                  <img src="/img/common/ic_profile_remove.svg" alt="이미지" />-->
-<!--                                </a>-->
+                                <img v-if="!model.newPt.attcId" src='@/assets/img/img-no-img.webp' class="no-img" />
+                                <img v-if='model.newPt.attcId' :src="model.epidReportImage?model.epidReportImage:'/img/img-no-img.webp'" class="has-img" @click='showImageLightBox' onerror="this.src='/img/img-no-img.webp'"/>
                                 <vue-easy-lightbox
                                   :visible="model.visibleRef"
                                   :imgs="model.imgsRef"

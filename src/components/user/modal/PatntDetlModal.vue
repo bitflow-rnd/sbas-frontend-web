@@ -396,7 +396,4 @@ function closeModal() {
   margin-left: 12px;
 }
 
-.detail-layout1, .detail-wrap {
-  height: 100%;
-}
 </style>
