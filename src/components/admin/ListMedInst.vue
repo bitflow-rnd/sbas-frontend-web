@@ -426,7 +426,6 @@
                 <div v-if="medinstList.items.length !== 0" class="table-box with-scroll small">
                   <table class="list-table-hoverable">
                     <colgroup>
-                      <col style="width: 60px" />
                       <col style="width: 40px" class='d-none' />
                       <col style="width: 190px" />
                       <col style="width: 150px" />
@@ -453,7 +452,6 @@
                     </colgroup>
                     <thead>
                     <tr class="small">
-                      <th rowspan="2">순번</th>
                       <th rowspan="2" class='d-none'>이미지</th>
                       <th rowspan="2">의료기관명</th>
                       <th rowspan="2">
@@ -495,7 +493,6 @@
                     </thead>
                     <tbody>
                     <tr v-for="(item, i) in medinstList.items" :key="i" @click="openMedInstDetail(item)">
-                      <td>{{ medinstList['count'] - i - startIndex }}</td>
                       <td class='d-none'>
                         <i
                           class="fa-regular fa-circle-check"
@@ -716,7 +713,7 @@
               </div>
               <div class='addMediBtn' style='text-align: right;'>
                 <a @click='openEditMedi' class="btn btn-sm btn-flex btn-primary align-self-center px-3 ms-2 addMedi">
-                  <i class="fa-solid fa-plus"></i> 의료기관 정보 수정</a>
+                  <i class="fa-solid fa-plus"></i> 감염환자 수용시설 정보 입력/수정</a>
               </div>
               <div class="tabs-contents-box" style='padding-top:5px;'>
                 <div class="tabs-box-list">
@@ -1822,7 +1819,7 @@
           <!--begin::Modal header-->
           <div class="modal-header px-10 py-5 d-flex justify-content-between">
             <!--begin::Modal title-->
-            <h2>의료기관 정보 수정</h2>
+            <h2>감염환자 수용시설 정보 입력/수정</h2>
             <!--end::Modal title-->
             <!--begin::Close-->
             <div class="btn btn-sm btn-icon btn-active-color-primary">

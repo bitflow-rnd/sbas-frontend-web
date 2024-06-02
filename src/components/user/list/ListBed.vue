@@ -2396,11 +2396,10 @@
             <div class="txt-box">
               {{ bdDetail.ptNm }}
               <span class="text-gray-600 fw-normal"
-              >({{ bdDetail.gndr }} / {{ bdDetail.age }}세 / {{ getAddr(bdDetail.bascAddr) }} /
-                {{ getTelno(ptDetail.mpno) }})</span
+              >({{ bdDetail.gndr }} / {{ bdDetail.age }}세 / {{ getAddr(bdDetail.bascAddr) }} {{ ptDetail.mpno ? ('/ ' + getTelno(ptDetail.mpno)) : '' }})</span
               >
             </div>
-            <div class="txt-box">
+            <div class="txt-box" v-if="bdDetail.tagList && bdDetail.tagList.length>0">
               <span class="text-primary">{{ getTag(bdDetail.tagList) }}</span>
             </div>
           </article>
@@ -3118,9 +3117,6 @@
                             <td>
                               <div class="table-img-box pt-4">
                                 <a href="javascript:void(0)" class="img-box">
-                                  <!--
-                                                                    <img src="/img/common/img_dummy_item1.png" alt="이미지">
-                                                                    -->
                                 </a>
                               </div>
                             </td>
@@ -3252,14 +3248,12 @@
                           <div v-if="bdDetail !== null" class="menu-group-box">
                             <article class="modal-menu-layout1">
                               <div class="modal-menu-list">
-                                <a
-                                  v-show="
+                                <!-- && this.chrgUserId.some(item=>item.chrgUserId===userInfo.id)) -->
+                                <a v-show="
                                     (bdDetail.bedStatCd === 'BAST0003' &&
                                       ( userInfo.jobCd === JobCode.Aprv || userInfo.jobCd === JobCode.Sysa )) ||
                                     (bdDetail.bedStatCd === 'BAST0004' &&
-                                      ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa )
-                                      && this.chrgUserId.some(item=>item.chrgUserId===userInfo.id))
-                                  "
+                                      ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa ))"
                                   @click="openPopup(1)"
                                   class="modal-menu-btn menu-primary-outline radius-0 big"
                                 >배정 불가</a
@@ -3275,11 +3269,11 @@
                                   병상요청 승인
                                 </div>
 
+                                <!-- && this.chrgUserId.some(item=>item.chrgUserId===userInfo.id -->
                                 <div
                                   v-show="
                                     bdDetail.bedStatCd === 'BAST0004' &&
-                                    ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa ) &&
-                                   this.chrgUserId.some(item=>item.chrgUserId===userInfo.id)
+                                    ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa )
                                   "
                                   @click="openPopup(2)"
                                   class="modal-menu-btn menu-primary radius-0 big"
@@ -3297,12 +3291,12 @@
                                 >
                                   이송·배차 처리
                                 </div>
+                                <!-- this.chrgUserId.some(item=>item===userInfo.id) -->
                                 <div
                                   v-show="
-                                    bdDetail.bedStatCd === 'BAST0006' && this.chrgUserId.some(item=>item===userInfo.id) &&
-                                    ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Aprv
-                                    || userInfo.jobCd === JobCode.Sysa )
-                                  "
+                                    bdDetail.bedStatCd === 'BAST0006'
+                                    && ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Aprv
+                                    || userInfo.jobCd === JobCode.Sysa )"
                                   @click="openModal(4)"
                                   class="modal-menu-btn menu-primary radius-0 big"
                                 >
@@ -5721,7 +5715,17 @@ export default {
   background-color: rgba(0, 0, 0, 0.4);
   display: block;
 }
+.detail-layout1, detail-wrap {
+  height: 100%;
+}
 
+.detail-foot-box {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  max-width: 730px;
+  padding-bottom: 30px;
+}
 .popup {
   display: block;
 }

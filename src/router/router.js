@@ -103,7 +103,7 @@ const routes = [
       {
         path: 'medinst/list',
         name: 'listmedinst',
-        component: () => import('@/components/admin/organ/ListMedInst.vue')
+        component: () => import('@/components/admin/ListMedInst.vue')
       }
     ]
   },
@@ -115,37 +115,37 @@ const routes = [
       {
         path: 'comm/ancmt/list',
         name: 'ListAncmt',
-        component: () => import('@/components/admin/comm/ListAncmt.vue')
+        component: () => import('@/components/admin/ListAncmt.vue')
       },
       {
         path: 'comm/usgterm/list',
         name: 'ListUsgTerm',
-        component: () => import('@/components/admin/comm/ListUsgTerm.vue')
+        component: () => import('@/components/admin/ListUsgTerm.vue')
       },
       {
         path: 'organ/firestatn/list',
         name: 'ListFirestatn',
-        component: () => import('@/components/admin/organ/ListFirestatn.vue')
+        component: () => import('@/components/admin/ListFirestatn.vue')
       },
       {
         path: 'organ/firestatn/list/nodata',
         name: 'ListFirestatnNoData',
-        component: () => import('@/components/admin/organ/ListFirestatnNoData.vue')
+        component: () => import('@/components/admin/ListFirestatnNoData.vue')
       },
       {
         path: 'organ/medinst/list',
         name: 'ListMedInst',
-        component: () => import('@/components/admin/organ/ListMedInst.vue')
+        component: () => import('@/components/admin/ListMedInst.vue')
       },
       {
         path: 'user/list',
         name: 'ListUser',
-        component: () => import('@/components/admin/user/ListUser.vue')
+        component: () => import('@/components/admin/ListUser.vue')
       },
       {
         path: 'comm/cd/cdgrp/list',
         name: 'ListCdGrp',
-        component: () => import('@/components/admin/comm/ListCdGrp.vue')
+        component: () => import('@/components/admin/ListCdGrp.vue')
       }
     ]
   },

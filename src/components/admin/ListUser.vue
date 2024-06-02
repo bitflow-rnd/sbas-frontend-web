@@ -284,13 +284,13 @@
                   <table v-if="userList.items !== []" class="table-layout-fixed">
                     <colgroup>
                       <col style="width: 35px" />
+                      <col style="width: 90px" />
+                      <col style="width: 180px" />
                       <col style="width: 100px" />
                       <col style="width: 100px" />
                       <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
-                      <col style="width: 100px" />
+                      <col style="width: 80px" />
+                      <col style="width: 80px" />
                       <col style="width: 100px" />
                       <col style="width: 100px" />
                     </colgroup>
@@ -301,10 +301,10 @@
                             <label> <input type="checkbox" class="all-chk" /><i></i> </label>
                           </div>
                         </th>
-                        <th>주 담당지역</th>
                         <th>기관유형</th>
                         <th>소속기관</th>
                         <th>이름</th>
+                        <th>주 담당지역</th>
                         <th>업무</th>
                         <th>가입일</th>
                         <th>최근접속일</th>
@@ -320,13 +320,13 @@
                             <label> <input @click='toggleCheckbox()' type='checkbox' class='all-chk' /><i></i> </label>
                           </div>
                         </td>
-                        <td>{{ item.dutyDstr1CdNm }}</td>
                         <td>{{ getInstNm(item.instTypeCd) }}</td>
-                        <td>{{ item.instNm }}</td>
+                        <td class="text-start">{{ item.instNm }}</td>
                         <td>{{ maskingNm(item.userNm) }}</td>
+                        <td>{{ item.dutyDstr1CdNm }}</td>
                         <td>{{ getJobCd(item.jobCd) }}</td>
-                        <td>{{ getrgDt(item.rgstDttm) }}</td>
-                        <td>{{ getrgDt(item.rgstDttm) }}</td>
+                        <td>{{ getrgDt(item.rgstDttm).substring(2) }}</td>
+                        <td>{{ getrgDt(item.rgstDttm).substring(2) }}</td>
                         <td>{{ item.userStatCdNm }}</td>
                         <td @click='toggleCheckbox()'>
                           <a
@@ -807,7 +807,7 @@
                               <label>
                                 <input type="file" />
                                 <span class="upload-btn-box">
-                                  <img src="@/assets/img/img-no-img.webp" alt="이미지" />
+                                  <img src="../../assets/img/img-no-img.webp" alt="이미지" />
                                   <span class="txt">클릭하여 업로드</span>
                                 </span>
                               </label>
@@ -843,7 +843,7 @@
                               <label>
                                 <input type="file" />
                                 <span class="upload-btn-box">
-                                  <img src="@/assets/img/img-no-img.webp" alt="이미지" />
+                                  <img src="../../assets/img/img-no-img.webp" alt="이미지" />
                                   <span class="txt">클릭하여 업로드</span>
                                 </span>
                               </label>
@@ -1319,7 +1319,7 @@
                               <label>
                                 <input type="file" />
                                 <span class="upload-btn-box">
-                                  <img src="@/assets/img/img-no-img.webp" alt="이미지" />
+                                  <img src="../../assets/img/img-no-img.webp" alt="이미지" />
                                   <span class="txt">클릭하여 업로드</span>
                                 </span>
                               </label>
@@ -1356,7 +1356,7 @@
                               <label>
                                 <input type="file" />
                                 <span class="upload-btn-box">
-                                  <img src="@/assets/img/img-no-img.webp" alt="이미지" />
+                                  <img src="../../assets/img/img-no-img.webp" alt="이미지" />
                                   <span class="txt">클릭하여 업로드</span>
                                 </span>
                               </label>

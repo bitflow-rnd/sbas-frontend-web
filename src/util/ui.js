@@ -60,7 +60,9 @@ export function getTag(data) {
   if (data === '' || data === null) return '-'
   let str = ''
   data.forEach((item) => {
-    str += '#' + item + ' '
+    if (item.length>0) {
+      str += '#' + item + ' '
+    }
   })
   return str
 }
@@ -400,6 +402,6 @@ export function getDtBlue(data) {
   if (curYear === dYear && curMonth === dMonth && curDate === dDate) {
     return `<span style='color: #1976D2;'>${dHours}:${dMinutes}</span>`
   } else {
-    return `${dYear}.${String(dMonth).padStart(2, '0')}.${String(dDate).padStart(2, '0')} ${dHours}:${dMinutes}`
+    return `${dYear.toString().substring(2) + '\''}.${String(dMonth).padStart(2, '0')}.${String(dDate).padStart(2, '0')} ${dHours}시`
   }
 }

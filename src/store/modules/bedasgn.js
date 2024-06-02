@@ -87,7 +87,7 @@ export default {
     async getBdList(comment,data) {
       try {
         const token = sessionStorage.getItem('userToken')
-        const url = `${API_PROD}/api/v1/private/bedasgn/list`
+        const url = `${API_PROD}/api/v1/private/bedasgn/list` // Todo 2
         console.log('병상배정목록')
 
         const params = data
@@ -115,7 +115,7 @@ export default {
     async getBdListWeb(comment,data) {
       try {
         const token = sessionStorage.getItem('userToken')
-        const url = `${API_PROD}/api/v1/private/bedasgn/list-web`
+        const url = `${API_PROD}/api/v1/private/bedasgn/list-web` // Todo 1
         console.log('병상배정목록 - web')
 
         const params = data
