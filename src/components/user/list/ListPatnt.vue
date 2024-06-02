@@ -2508,6 +2508,7 @@
   </article>
 
   <patnt-reg-modal v-if='this.showModal === 2' :exist-pt='this.ptDetail' @closeModal='closeModal(0)' />
+
 </template>
 
 <script>
@@ -2812,7 +2813,6 @@ export default {
       this.tab = 1
       this.showModal = 0
       this.closeModal(0)
-      //this.clearNewPt()
     },
     getDate(data) {
       const dData = new Date(data)

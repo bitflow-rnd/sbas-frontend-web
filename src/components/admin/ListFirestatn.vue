@@ -205,7 +205,7 @@
                         <col style="width: 100px" />
                         <col style="width: 100px" />
                         <col style="width: 50px" />
-                        <col style="width: 100px" />
+                        <col style="width: 90px" />
                       </colgroup>
                       <thead>
                         <tr class="small">
@@ -238,7 +238,7 @@
                           <td>{{ item.instNm }}</td>
                           <td>{{ item.chrgTelno }}</td>
                           <td>{{ item.crewCount ?? '0' }}</td>
-                          <td>
+                          <td class="px-0">
                             <a
                               @click="handleModal(5, item)"
                               class="btn btn-flex btn-xs btn-outline btn-outline-primary"
@@ -1637,4 +1637,5 @@ export default {
 .sttn-col {
   padding: 1.5rem 0 0 2rem;
 }
+.btn.btn-xs { padding-left: 6px; padding-right: 6px; }
 </style>
