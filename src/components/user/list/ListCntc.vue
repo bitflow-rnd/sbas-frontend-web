@@ -43,7 +43,6 @@
                 <h1
                   class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0"
                 >
-                  연락처/메시지
                 </h1>
               </li>
               <li class="breadcrumb-item ml-2">
@@ -99,7 +98,7 @@
                       </article>
                     </div>
                     <div class="input-box">
-                      <input type="text" v-model='kwd' @keyup.enter='searchCntc' placeholder="이름, 휴대폰번호 또는 소속기관명" />
+                      <input type="text" v-model='kwd' @keyup.enter='searchCntc' placeholder="이름,휴대폰번호,기관명" />
                       <a class="input-btn">
                         <i @click='searchCntc' role='button' class="fa-solid fa-magnifying-glass"></i>
                       </a>
@@ -113,7 +112,7 @@
                       <div class="item-box d-inline-flex flex-center justify-content-center">
                         <label>
                           <input v-model='model.instTypeCd' value='ORGN0001' type="checkbox" @change='searchCntc' />
-                          <span class="txt">병상배정반</span>
+                          <span class="txt">배정반</span>
                         </label>
                       </div>
                       <div class="item-box">
@@ -139,6 +138,13 @@
                           <input v-model='model.instTypeCd' value='ORGN0005' type="checkbox" @change='searchCntc' />
                           <span class="txt">전산</span>
                         </label>
+                      </div>
+                      <div class="item-box btn-invite-wrap">
+                        <a
+                          @click="$emit('showUserInvite')"
+                          class="btn btn-flex bg-primary text-white rounded-pill"
+                        >+ 사용자초대</a
+                        >
                       </div>
                     </div>
                   </article>
@@ -282,5 +288,10 @@ function getActivityHistory(userId) {
 
 .view-img-box img {
   height: 450px;
+}
+
+.btn-invite-wrap {
+  flex-grow: 1;
+  text-align: right;
 }
 </style>

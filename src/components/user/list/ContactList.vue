@@ -31,18 +31,6 @@
             <div class="item-option-box"></div>
           </div>
         </div>
-        <div class="list-head-box" :class="{ hide: listBoxesHide['organization'] }">
-          <a
-            href="javascript:void(0)"
-            class="head-box d-flex flex-center justify-content-between"
-            @click="listBoxesHide['organization'] = !listBoxesHide['organization']"
-          >
-            <div class="head-tit-box">내 연락처</div>
-            <!-- 내 조직 -->
-            <i class="fa-solid fa-angle-down" style="color: #9fa1ab"></i>
-            <i class="fa-solid fa-angle-up" style="color: #9fa1ab"></i>
-          </a>
-        </div>
 
         <div class="list-body-box" v-if="model.organList">
           <div
@@ -119,13 +107,6 @@
       </div>
     </div>
 
-    <div class="list-menu-box d-flex justify-content-center pt-8">
-      <a
-        @click="$emit('showUserInvite')"
-        class="btn btn-flex bg-primary text-white rounded-pill"
-        >사용자 초대</a
-      >
-    </div>
   </div>
 </template>
 
@@ -200,5 +181,12 @@ function getUserBelong(user) {
 <style scoped>
 .subject-box {
   font-size: 1.3rem;
+}
+.list-wrap {
+  border-top: 1px solid #ccc;
+}
+.board-body-box {
+  overflow-y: auto;
+  height: 400px;
 }
 </style>
