@@ -386,12 +386,6 @@ function closeModal() {
   position: relative;
 }
 
-.detail-foot-box {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
 .head-sub-box {
   margin-left: 12px;
 }

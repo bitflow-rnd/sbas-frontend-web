@@ -64,7 +64,7 @@ section.cntc-message-board .item-box:hover {
   background-color: #74afeb22;
 }
 section.cntc-message-board .board-head-box {
-  padding: 32px 32px 24px 32px;
+  padding: 24px 16px 9px 24px;
 }
 section.cntc-message-board .board-head-box .head-top-box {
   text-align: center;
@@ -108,8 +108,7 @@ section.cntc-message-board .board-head-box .head-mid-box .input-group-box .input
   color: rgba(105, 105, 113, 0.8);
 }
 section.cntc-message-board .board-body-box {
-  padding-bottom: 300px;
-  height: 100%;
+  height: 530px;
   overflow: auto;
 }
 .board-body-box .chat-list-wrap {
@@ -1251,7 +1250,7 @@ article.check-list-layout1 .list-box {
   flex-flow: row wrap;
 }
 article.check-list-layout1 .list-box .item-box {
-  margin: 6px 5px;
+  margin: 3px 2px 9px;
 }
 article.check-list-layout1 .list-box .item-box label {
   display: inline-flex;
@@ -1405,7 +1404,12 @@ article.modal-profile-layout1 .profile-card-box .profile-edit-box .upload-box {
   top: 10px;
   left: 10px;
 }
-
+.detail-foot-box {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+}
 .detail-layout1, .detail-wrap {
   height: 100%;
 }
@@ -1645,7 +1649,7 @@ article.detail-layout1 .detail-wrap .detail-info-box.full {
   min-width: 0;
 }
 article.detail-layout1 .detail-wrap .detail-info-box + .detail-info-box {
-/*  margin-left: 16px;*/
+  position: relative;
 }
 article.detail-layout1 .detail-wrap .detail-head-box {
   height: 60px;

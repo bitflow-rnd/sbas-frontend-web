@@ -66,6 +66,7 @@ section.cntc-activity .activity-head-box { padding: 12px 32px; }
 .activity-list-group,
 .list-body-box {
   height: 100%;
+  max-height: 800px;
 }
 .activity-list-group {
   position: relative;

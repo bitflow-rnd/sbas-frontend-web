@@ -187,12 +187,7 @@ h2 {
 .card-body > .scroll-y > div + div {
   margin-top: 24px;
 }
-.detail-foot-box {
-  position: absolute;
-  bottom: 0;
-  width: -webkit-fill-available;
-  background-color: white;
-}
+
 article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn {
   background-color: lightgray;
   border-top-left-radius: 0;
