@@ -5391,6 +5391,7 @@ export default {
         this.popup = 100
         this.closeModal()
       } else if (res === 12) {
+        // Todo 전산이 승인하면 담당 병원정보 없어서 에러발생
         this.mediConfirm.ptId = this.bdDetail.ptId
         this.mediConfirm.bdasSeq = this.bdDetail.bdasSeq
         this.mediConfirm.hospId = this.userInfo.instId
