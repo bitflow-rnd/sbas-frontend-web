@@ -8,7 +8,10 @@ export const sverityLineChartOptions = {
       enabled: true
     },
     locales: [ko],
-    defaultLocale: 'ko'
+    defaultLocale: 'ko',
+    toolbar: {
+      show: false
+    },
   },
   colors: [
     '#676767',
@@ -137,7 +140,10 @@ export const simpleSeverityLineChartOpt = {
       enabled: true
     },
     locales: [ko],
-    defaultLocale: 'ko'
+    defaultLocale: 'ko',
+    toolbar: {
+      show: false
+    },
   },
   colors: [
     '#676767',
