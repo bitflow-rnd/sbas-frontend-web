@@ -33,7 +33,7 @@ const routes = [
   {
     path: '/dashbd',
     name: 'dashbd',
-    component: () => import('@/components/common/DashbdView.vue')
+    component: () => import('@/components/user/dsbd/DashbdView.vue')
   },
   {
     path: '/comm',
@@ -60,7 +60,7 @@ const routes = [
       {
         path: '/dashbd',
         name: 'dashbd',
-        component: () => import('@/components/common/DashbdView.vue')
+        component: () => import('@/components/user/dsbd/DashbdView.vue')
       },
       {
         path: 'patnt/list',

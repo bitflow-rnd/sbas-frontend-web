@@ -14,6 +14,7 @@
 <script>
 import VueApexCharts from 'vue3-apexcharts'
 import { mapState } from 'vuex'
+import ko from 'apexcharts/dist/locales/ko.json'
 
 export default {
   name: 'SeverityChart',
@@ -34,7 +35,9 @@ export default {
           type: 'line',
           zoom: {
             enabled: true
-          }
+          },
+          locales: [ko],
+          defaultLocale: 'ko'
         },
         colors: [
           '#676767',
@@ -82,7 +85,7 @@ export default {
           dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
         },
         title: {
-          text: 'Severity level',
+          text: '중증도 스코어',
           align: 'left'
         },
         yaxis: {
@@ -95,7 +98,7 @@ export default {
             }
           },
           title: {
-            text: 'probability'
+            text: '확률'
           }
         },
         xaxis: {

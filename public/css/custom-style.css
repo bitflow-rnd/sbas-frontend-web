@@ -1277,7 +1277,9 @@ article.check-list-layout1 .list-box .item-box label .txt {
   border-radius: 100px;
   color: rgba(103, 106, 122, 0.8);
 }
-
+.apexcharts-toolbar {
+  display: none !important;
+}
 article.state-label-item .state-label-box {
   display: inline-flex;
   align-items: center;
@@ -1713,7 +1715,7 @@ article.msg-send-layout1 .img-upload-result .img-list .img-box img {
 }
 article.msg-send-layout1 .msg-group-box {
   display: flex;
-  border: 1px solid rgba(103, 106, 122, 0.2);
+  border: 1px solid #aaa;
   border-radius: 4px;
 }
 article.msg-send-layout1 .msg-group-box .img-upload-box {
@@ -1726,10 +1728,6 @@ article.msg-send-layout1 .msg-group-box .img-upload-box label {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #888;
-  border-top-left-radius: 7px;
-  border-bottom-left-radius: 7px;
-  border-right-width: 0;
   padding-top: 4px;
 }
 article.msg-send-layout1 .msg-group-box .img-upload-box label input[type=file] {
@@ -1751,8 +1749,13 @@ article.msg-send-layout1 .msg-group-box .msg-input-box input {
   height: 100%;
   width: 100%;
   font-size: 1.5rem;
-  border: 2px solid #888;
+  border: 1px solid #aaa;
 }
+
+article.msg-send-layout1 .msg-group-box .msg-input-box input::placeholder {
+  color: #aaa;
+}
+
 article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn {
   display: inline-flex;
   align-items: center;
@@ -1760,7 +1763,7 @@ article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn {
   width: 48px;
   height: 48px;
   background-color: #74afeb;
-  border: 2px solid #888;
+  border: 1px solid #aaa;
   border-left-width: 0;
   border-radius: 0 4px 4px 0;
 }
