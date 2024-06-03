@@ -152,9 +152,7 @@
 
                           </tbody>
                         </table>
-                        <svrt-chart-unit-no-title
-                          :pt-id="model.ptDetail.ptId==='PT00000305'||model.ptDetail.ptId==='PT00000086'?model.ptDetail.ptId:'PT00000086'"
-                          class='mt-5' />
+
                       </div>
 
                       <div class="table-img-box pt-4"></div>
@@ -162,7 +160,7 @@
                   </article>
                 </div>
 
-                <div class="detail-foot-box">
+                <div class="detail-foot-box pb-5">
                   <article class="modal-menu-layout1 pt-5">
                     <div class="modal-menu-list">
                       <a
@@ -220,10 +218,13 @@
                       </div>
                     </div>
                   </article>
+                  <svrt-chart-unit-no-title
+                    :pt-id="model.ptDetail.ptId==='PT00000305'||model.ptDetail.ptId==='PT00000086'?model.ptDetail.ptId:'PT00000086'"
+                    class='svrt-chart' />
                 </div>
 
-                <div class="detail-foot-box">
-                  <article class="modal-menu-layout1 py-10">
+                <div class="detail-foot-box pb-5">
+                  <article class="modal-menu-layout1">
                     <div class="modal-menu-list">
                       <router-link
                         to=""
@@ -308,7 +309,7 @@
                   </article>
                 </div>
 
-                <div class="detail-foot-box">
+                <div class="detail-foot-box pb-5">
                   <article class="msg-send-layout1">
                     <div class="img-upload-result">
                       <div class="img-list"></div>
@@ -388,6 +389,13 @@ function closeModal() {
 
 .head-sub-box {
   margin-left: 12px;
+}
+
+.svrt-chart {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 1rem);
 }
 
 </style>

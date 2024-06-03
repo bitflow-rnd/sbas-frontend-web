@@ -1,10 +1,14 @@
+import ko from 'apexcharts/dist/locales/ko.json'
+
 export const sverityLineChartOptions = {
   chart: {
     height: 350,
     type: 'line',
     zoom: {
       enabled: true
-    }
+    },
+    locales: [ko],
+    defaultLocale: 'ko'
   },
   colors: [
     '#676767',
@@ -52,7 +56,7 @@ export const sverityLineChartOptions = {
     dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
   },
   title: {
-    text: 'Severity level',
+    text: '중증도 스코어',
     align: 'left'
   },
   yaxis: {
@@ -65,7 +69,7 @@ export const sverityLineChartOptions = {
       }
     },
     title: {
-      text: 'probability'
+      text: '확률'
     }
   },
   xaxis: {
@@ -131,7 +135,9 @@ export const simpleSeverityLineChartOpt = {
     type: 'line',
     zoom: {
       enabled: true
-    }
+    },
+    locales: [ko],
+    defaultLocale: 'ko'
   },
   colors: [
     '#676767',
@@ -261,7 +267,9 @@ export const trendLineChartOptions = {
     },
     toolbar: {
       show: false
-    }
+    },
+    locales: [ko],
+    defaultLocale: 'ko'
   },
   colors: ['#545454'], // '#77B6EA'
   dataLabels: {

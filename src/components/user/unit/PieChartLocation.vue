@@ -4,13 +4,16 @@
 
 <script setup>
 import VueApexCharts from 'vue3-apexcharts'
+import ko from 'apexcharts/dist/locales/ko.json'
 
 const series = [4, 3, 2, 1]
 const chartOptions = {
   chart: {
     width: '100%',
     height: '350px',
-    type: 'pie'
+    type: 'pie',
+    locales: [ko],
+    defaultLocale: 'ko'
   },
   labels: ['중증', '준중증', '준등증', '일반'],
   theme: {
