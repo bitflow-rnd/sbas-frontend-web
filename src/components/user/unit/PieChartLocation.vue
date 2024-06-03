@@ -13,7 +13,10 @@ const chartOptions = {
     height: '350px',
     type: 'pie',
     locales: [ko],
-    defaultLocale: 'ko'
+    defaultLocale: 'ko',
+    toolbar: {
+      show: false
+    },
   },
   labels: ['중증', '준중증', '준등증', '일반'],
   theme: {

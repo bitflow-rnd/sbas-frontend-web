@@ -37,7 +37,10 @@ export default {
             enabled: true
           },
           locales: [ko],
-          defaultLocale: 'ko'
+          defaultLocale: 'ko',
+          toolbar: {
+            show: false
+          },
         },
         colors: [
           '#676767',

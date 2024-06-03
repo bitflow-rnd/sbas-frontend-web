@@ -13,7 +13,10 @@ const chartOptions = {
     height: '350px',
     type: 'pie',
     locales: [ko],
-    defaultLocale: 'ko'
+    defaultLocale: 'ko',
+    toolbar: {
+      show: false
+    },
   },
   labels: ['대구', '경북', '경기', '서울', '부산', '제주'],
   theme: {
