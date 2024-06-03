@@ -33,19 +33,19 @@
       <div class="app-content flex-column-fluid">
         <div class="card">
           <!--begin:: Cardheader-->
-          <div class="card-header border-0 p-8 container-fluid">
+          <div class="card-header border-0 py-8 px-0 container-fluid">
             <table class="dashbd-table">
               <colgroup>
-                <col style="width: auto" />
-                <col style="width: 350px" />
-                <col style="width: 45%" />
+                <col style="width: 33%;" />
+                <col style="width: 33%;" />
+                <col style="width: 33%;" />
               </colgroup>
               <tr>
-                <td rowspan="2">
+                <td>
                   <sevr-patnt-list-unit @onPatientSelected="onPatientSelected" />
                 </td>
                 <td>
-                  <pie-chart />
+                  <svrt-chart-unit :pt-id="'PT00000305'" @onPatientSelected="onPatientSelected" />
                 </td>
                 <td>
                   <svrt-chart-unit :pt-id="'PT00000086'" @onPatientSelected="onPatientSelected" />
@@ -53,15 +53,13 @@
               </tr>
 
               <tr>
-                <td>
+                <td class="align-top">
                   <pie-chart-location />
                 </td>
-                <td>
-                  <svrt-chart-unit :pt-id="'PT00000305'" @onPatientSelected="onPatientSelected" />
+                <td class="align-top">
+                  <pie-chart />
                 </td>
-              </tr>
-              <tr>
-                <td colspan="2">
+                <td class="align-top">
                   <svrt-trend-chart-unit />
                 </td>
               </tr>
