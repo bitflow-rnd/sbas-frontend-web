@@ -693,7 +693,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getTelno, getAuthCd, getPmgr, getPtType, ptType } from '@/util/ui'
+import { getTelno, getPmgr, getPtType, ptType } from '@/util/ui'
 import store from '@/store/store'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import MyInfoModModal from '@/components/user/modal/MyInfoModModal.vue'
@@ -717,7 +717,6 @@ export default {
     ...mapState('user', ['userInfo']),
   },
   methods: {
-    getAuthCd,
     getTelno,
     getPmgr,
     getPtType,

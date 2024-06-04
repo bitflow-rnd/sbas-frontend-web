@@ -14,4 +14,9 @@ const InstType = {
   Sysa: 'ORGN0005',
 }
 
-export { JobCode, InstType }
+const AuthCode = {
+  Member: { code: 'DTPM0001', label: '일반' },
+  Guest: { code: 'DTPM0002', label: '게스트' }
+}
+
+export { JobCode, InstType, AuthCode }

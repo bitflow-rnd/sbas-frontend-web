@@ -108,7 +108,7 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted } from 'vue'
+import { defineEmits, defineProps, onMounted } from 'vue'
 import { getAge, getTelno } from '@/util/ui'
 import { useStore } from 'vuex'
 

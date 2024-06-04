@@ -120,7 +120,7 @@
 
                       <tr>
                         <th>세부권한</th>
-                        <td>{{ getAuthCd(props.userInfo.authCdNm) }}</td>
+                        <td>{{ props.userInfo.authCdNm }}</td>
                       </tr>
 
                       <tr>
@@ -155,7 +155,7 @@
 
 <script setup>
 import { defineProps, onMounted, reactive, ref } from 'vue'
-import { getAuthCd, getPmgr, getPtType, getTelno } from '@/util/ui'
+import { getPmgr, getPtType, getTelno } from '@/util/ui'
 import { useStore } from 'vuex'
 
 const store = useStore()
