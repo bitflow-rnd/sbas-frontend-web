@@ -329,29 +329,24 @@
                 </div>
               </article>
 
-<!--              <article class='modal-menu-layout1 pt-10'>-->
-<!--                <div class='modal-menu-list'>-->
-<!--                  <router-link to='' @click='toggleModal' class='modal-menu-btn menu-cancel'-->
-<!--                  >취소-->
-<!--                  </router-link-->
-<!--                  >-->
-<!--                  <a-->
-<!--                    @click='test'-->
-<!--                    data-bs-toggle='modal'-->
-<!--                    data-bs-target='#kt_modal_edit_user'-->
-<!--                    class='modal-menu-btn menu-primary-outline'-->
-<!--                  >수정</a-->
-<!--                  >-->
-<!--                  <router-link-->
-<!--                    v-show="usrDetail.userStatCd === 'URST0001'"-->
-<!--                    to=''-->
-<!--                    @click='toggleModal'-->
-<!--                    class='modal-menu-btn menu-primary'-->
-<!--                  >승인/반려-->
-<!--                  </router-link-->
-<!--                  >-->
-<!--                </div>-->
-<!--              </article>-->
+<!--              TODO: 버튼 작동   -->
+              <article class='modal-menu-layout1 pt-10'>
+                <div class='modal-menu-list'>
+                  <router-link to='' @click='closeModal' class='modal-menu-btn menu-cancel'
+                  >취소</router-link>
+                  <a
+                    @click='closeModal'
+                    class='modal-menu-btn menu-primary-outline'
+                  >수정</a>
+                  <router-link
+                    v-show="props.usrDetail.userStatCd === 'URST0001'"
+                    to=''
+                    @click='toggleModal'
+                    class='modal-menu-btn menu-primary'
+                  >승인/반려
+                  </router-link>
+                </div>
+              </article>
             </div>
 
             <div v-show='model.showAccessLog' class='tabs-box'>
@@ -675,6 +670,7 @@
     <!--end::Modal dialog-->
   </div>
 </template>
+
 <script setup>
 import { defineProps, defineEmits, reactive } from 'vue'
 import { JobCode } from '@/util/sbas_cnst'
@@ -704,13 +700,6 @@ function detailTabsMove() {
   model.showAccessLog = !model.showAccessLog
 }
 
-function getrgDt(str) {
-  const date = new Date(str)
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  return `${year}.${month}.${day}`
-}
 function getbtDt(dt) {
   const year = dt.substring(0, 4)
   const month = dt.substring(4, 6)
@@ -727,19 +716,6 @@ function getPmgr(code) {
     return 3
   } else if (code === JobCode.Sysa) {
     return 4
-  }
-}
-function getJobCd(code) {
-  if (code === JobCode.Rqst) {
-    return '병상요청그룹'
-  } else if (code === JobCode.Aprv) {
-    return '병상승인그룹'
-  } else if (code === JobCode.Meds) {
-    return '병상배정그룹'
-  } else if (code === JobCode.Sysa) {
-    return '시스템관리자'
-  } else {
-    return code
   }
 }
 
