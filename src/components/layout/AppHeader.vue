@@ -733,7 +733,6 @@ export default {
     getBdList() {
       console.log('리로드')
       this.$store.dispatch('bedasgn/getBdListWeb')
-      this.$store.dispatch('bedasgn/getBdList')
     },
     getPtList() {
       const { dutyDstr1Cd } = this.userInfo

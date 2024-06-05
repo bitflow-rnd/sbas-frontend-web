@@ -20,7 +20,7 @@ export default {
     fmDetail: null,
     organMedi: [],
     hpId: '',
-    medInstEtc: null
+    medInstEtc: null,
   },
   mutations: {
     setSido(state, payload) {
@@ -66,7 +66,7 @@ export default {
     },
     setMedInstEtc(state, payload) {
       state.medInstEtc = payload
-    }
+    },
   },
   actions: {
     /****************commoncode*****************/

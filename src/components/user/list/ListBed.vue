@@ -5116,7 +5116,6 @@ export default {
     },
     getBdList() {
       //this.search = this.initSearch
-      this.$store.dispatch('bedasgn/getBdList')
       this.$store.dispatch('bedasgn/getBdListWeb')
     },
     /*countBdList() {

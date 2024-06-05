@@ -54,8 +54,6 @@
               <!--end::Item-->
             </ul>
             <!--end::Breadcrumb-->
-            <!--begin::Title-->
-            <!--end::Title-->
           </div>
           <!--end::Page title-->
         </div>
@@ -65,41 +63,27 @@
       <!--begin::Content-->
       <div id="kt_app_content" class="app-content flex-column-fluid">
         <div class="card">
-          <!--begin::Card header-->
-          <!--end::Card header-->
           <!--begin::Card body-->
           <div class="card-body p-8">
             <!--begin::Table-->
             <h5>검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">99+</span></h5>
 
             <article class="code-layout1">
-
               <div class="code-form-box">
-
                 <article class="table-list-layout1">
-
                   <div class="table-head-box pb-4">
-
                     <div class="head-box">
-
                       <div class="head-txt-box">그룹 코드 관리</div>
                     </div>
-
                     <div class="option-box">
                       <a @click="codeGroupRemove()" class="btn btn-flex btn-xs btn-outline btn-outline-gray"> <i
                           class="fa-solid fa-trash-can"></i> 선택삭제</a>
-
-
                       <a @click="codeGroupReg()" class="btn btn-flex btn-xs btn-outline btn-outline-primary ms-2">
                         <i class="fa-solid fa-plus"></i> 그룹코드 추가</a>
-
-
                     </div>
-
                   </div>
 
                   <div class="table-body-box">
-
                     <div class="table-box with-scroll small">
                       <table>
                         <colgroup>
@@ -107,26 +91,24 @@
                           <col style="width: 100px;">
                           <col style="width: 100px;">
                           <col style="width: 200px;">
-
                         </colgroup>
                         <thead>
-                        <tr class="small">
-                          <th>
-                            <div class="cbox">
-                              <label>
-                                <input @change="allCodeGroupsChangeState()" type="checkbox"
-                                       class="all-chk"
-                                       v-model="allCodeGroupsSelected"
-                                       :disabled="codeGroupData.length === 0"><i></i>
-                              </label>
-                            </div>
-                          </th>
-                          <th>그룹코드 번호<span class="text-primary">*</span></th>
-                          <th>그룹코드 명<span class="text-primary">*</span></th>
-                          <th>설명</th>
-                        </tr>
+                          <tr class="small">
+                            <th>
+                              <div class="cbox">
+                                <label>
+                                  <input @change="allCodeGroupsChangeState()" type="checkbox"
+                                         class="all-chk"
+                                         v-model="allCodeGroupsSelected"
+                                         :disabled="codeGroupData.length === 0"><i></i>
+                                </label>
+                              </div>
+                            </th>
+                            <th>그룹코드 번호<span class="text-primary">*</span></th>
+                            <th>그룹코드 명<span class="text-primary">*</span></th>
+                            <th>설명</th>
+                          </tr>
                         </thead>
-
                         <tbody id="codeGroup">
 
                         <tr v-show="codeGroupRegShow" id="reg">
@@ -164,7 +146,7 @@
                         </tr>
 
                         <tr v-for="codeGroup in paginatedCodeGroupData" :key="codeGroup['cdGrpId']" class="cursor"
-                            :class="{'selected': (codeGroup.id.cdGrpId === selectedRow.id.cdGrpId)}"
+                            :class="{selected: selectedRow === codeGroup}"
                             @click="selectRow(codeGroup)">
                           <td>
                             <div class="cbox d-flex justify-content-center">
@@ -182,42 +164,28 @@
                               @focus="updateCellValue($event)" contenteditable class="left">{{ codeGroup['rmk'] }}
                           </td>
                         </tr>
-
                         </tbody>
-
                       </table>
                     </div>
                   </div>
-
                 </article>
-
               </div>
+
               <div class="code-form-box">
-
                 <article class="table-list-layout1">
-
                   <div class="table-head-box pb-4">
-
                     <div class="head-box">
-
                       <div class="head-txt-box">코드 관리</div>
                     </div>
-
                     <div class="option-box">
                       <a @click="codeRemove()" class="btn btn-flex btn-xs btn-outline btn-outline-gray"> <i
                           class="fa-solid fa-trash-can"></i> 선택삭제</a>
-
-
                       <a @click="codeReg()" class="btn btn-flex btn-xs btn-outline btn-outline-primary ms-2">
                         <i class="fa-solid fa-plus"></i> 코드 추가</a>
-
-
                     </div>
-
                   </div>
 
                   <div class="table-body-box">
-
                     <div class="table-box with-scroll small">
                       <table>
                         <colgroup>
@@ -226,120 +194,109 @@
                           <col style="width: 100px;">
                           <col style="width: 100px;">
                           <col style="width: 200px;">
-
                         </colgroup>
                         <thead>
-                        <tr class="small">
-                          <th>
-                            <div class="cbox">
-                              <label>
-                                <input @change="allCodesChangeState()" type="checkbox"
-                                       class="all-chk" v-model="allCodesSelected"
-                                       :disabled="codeData.length === 0"><i></i>
-                                <!--                                :checked="checkedCodes.length == codeData.length && codeData.length != 0"><i></i>-->
-
-                              </label>
-                            </div>
-                          </th>
-                          <th>코드 번호<span class="text-primary">*</span></th>
-                          <th>코드 명<span class="text-primary">*</span></th>
-                          <th>정렬순서<span class="text-primary">*</span></th>
-                          <th>설명</th>
-                        </tr>
+                          <tr class="small">
+                            <th>
+                              <div class="cbox">
+                                <label>
+                                  <input @change="allCodesChangeState()" type="checkbox"
+                                         class="all-chk" v-model="allCodesSelected"
+                                         :disabled="codeData.length === 0"><i></i>
+                                  <!--                                :checked="checkedCodes.length == codeData.length && codeData.length != 0"><i></i>-->
+                                </label>
+                              </div>
+                            </th>
+                            <th>코드 번호<span class="text-primary">*</span></th>
+                            <th>코드 명<span class="text-primary">*</span></th>
+                            <th>정렬순서<span class="text-primary">*</span></th>
+                            <th>설명</th>
+                          </tr>
                         </thead>
-
                         <tbody id="code">
-                        <tr v-show="codeRegShow" id="reg">
-                          <td></td>
-                          <td class="vertical-top">
-                            <div class="tbox">
-                              <input v-model="codeRegData['codeNo']" type="text" placeholder="코드 8자리" class="px-3"
-                                     name="codeNo"
-                                     maxlength="8">
-                            </div>
-                            <div v-show="codeRegError['codeNoError']" class="msg-box pt-2">
-                              <span class="text-danger">코드번호를 입력해주세요</span>
-                            </div>
-                          </td>
-                          <td class="vertical-top">
-                            <div class="tbox">
-                              <input v-model="codeRegData['codeName']" type="text" placeholder="코드명" class="px-3"
-                                     name="codeName">
-                            </div>
-                            <div v-show="codeRegError['codeNameError']" class="msg-box pt-2">
-                              <span class="text-danger">코드명을 입력해주세요</span>
-                            </div>
-                          </td>
-                          <td class="vertical-top">
-                            <div class="tbox">
-                              <input v-model="codeRegData['codeOrder']" type="text" placeholder="숫자 3자리 이하" class="px-3"
-                                     name="codeOrder" maxlength="3">
-                            </div>
-                            <div v-show="codeRegError['codeOrderError']" class="msg-box pt-2">
-                              <span class="text-danger">정렬순서를 입력해주세요</span>
-                            </div>
-                          </td>
-                          <td class="left vertical-top">
-                            <div class="tbox d-flex">
-                              <input v-model="codeRegData['codeDesc']" type="text" placeholder="코드 설명" class="px-3"
-                                     name="codeDesc">
-                              <a @click="codeRegFinish()"
-                                 class="btn btn-xs btn-flex justify-content-center btn-primary align-self-center px-3 ms-2 py-0"
-                                 style="min-width:47px; height: 30px;">저장
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr v-for="code in codeData" :key="code['cdId']" class="cursor">
-                          <td>
-                            <div class="cbox d-flex justify-content-center">
-                              <label>
-                                <input type="checkbox" :value="code" v-model="checkedCodes"><i></i>
-                              </label>
-                            </div>
-                          </td>
-                          <td @input="updateCellValue($event)" @blur="updateData('code', code, 'cdId')"
-                              @focus="updateCellValue($event)"
-                              contenteditable>
-                            {{ code['cdId'] }}
-                          </td>
-                          <td @input="updateCellValue($event)" @blur="updateData('code', code, 'cdNm')"
-                              @focus="updateCellValue($event)"
-                              contenteditable>
-                            {{ code['cdNm'] }}
-                          </td>
-                          <td @input="updateCellValue($event)" @blur="updateData('code', code, 'cdSeq')"
-                              @focus="updateCellValue($event)"
-                              contenteditable>
-                            {{ code['cdSeq'] }}
-                          </td>
-                          <td @input="updateCellValue($event)" @blur="updateData('code', code, 'rmk')"
-                              @focus="updateCellValue($event)" contenteditable
-                              class="left">{{ code['rmk'] }}
-                          </td>
-                        </tr>
-
+                          <tr v-show="codeRegShow" id="reg">
+                            <td></td>
+                            <td class="vertical-top">
+                              <div class="tbox">
+                                <input v-model="codeRegData['codeNo']" type="text" placeholder="코드 8자리" class="px-3"
+                                       name="codeNo"
+                                       maxlength="8">
+                              </div>
+                              <div v-show="codeRegError['codeNoError']" class="msg-box pt-2">
+                                <span class="text-danger">코드번호를 입력해주세요</span>
+                              </div>
+                            </td>
+                            <td class="vertical-top">
+                              <div class="tbox">
+                                <input v-model="codeRegData['codeName']" type="text" placeholder="코드명" class="px-3"
+                                       name="codeName">
+                              </div>
+                              <div v-show="codeRegError['codeNameError']" class="msg-box pt-2">
+                                <span class="text-danger">코드명을 입력해주세요</span>
+                              </div>
+                            </td>
+                            <td class="vertical-top">
+                              <div class="tbox">
+                                <input v-model="codeRegData['codeOrder']" type="text" placeholder="숫자 3자리 이하" class="px-3"
+                                       name="codeOrder" maxlength="3">
+                              </div>
+                              <div v-show="codeRegError['codeOrderError']" class="msg-box pt-2">
+                                <span class="text-danger">정렬순서를 입력해주세요</span>
+                              </div>
+                            </td>
+                            <td class="left vertical-top">
+                              <div class="tbox d-flex">
+                                <input v-model="codeRegData['codeDesc']" type="text" placeholder="코드 설명" class="px-3"
+                                       name="codeDesc">
+                                <a @click="codeRegFinish()"
+                                   class="btn btn-xs btn-flex justify-content-center btn-primary align-self-center px-3 ms-2 py-0"
+                                   style="min-width:47px; height: 30px;">저장
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr v-if='codeData' v-for="code in codeData" :key="code['cdId']" class="cursor">
+                            <td>
+                              <div class="cbox d-flex justify-content-center">
+                                <label>
+                                  <input type="checkbox" :value="code" v-model="checkedCodes"><i></i>
+                                </label>
+                              </div>
+                            </td>
+                            <td @input="updateCellValue($event)" @blur="updateData('code', code, 'cdId')"
+                                @focus="updateCellValue($event)"
+                                contenteditable>
+                              {{ code['cdId'] }}
+                            </td>
+                            <td @input="updateCellValue($event)" @blur="updateData('code', code, 'cdNm')"
+                                @focus="updateCellValue($event)"
+                                contenteditable>
+                              {{ code['cdNm'] }}
+                            </td>
+                            <td @input="updateCellValue($event)" @blur="updateData('code', code, 'cdSeq')"
+                                @focus="updateCellValue($event)"
+                                contenteditable>
+                              {{ code['cdSeq'] }}
+                            </td>
+                            <td @input="updateCellValue($event)" @blur="updateData('code', code, 'rmk')"
+                                @focus="updateCellValue($event)" contenteditable
+                                class="left">{{ code['rmk'] }}
+                            </td>
+                          </tr>
                         </tbody>
 
                       </table>
                     </div>
                   </div>
-
                 </article>
-
-
               </div>
-
-
             </article>
-
 
             <data-pagination @change="changePage" :next-page-buttons-count="nextPageButtonsCount"
                              :previous-page-buttons-count="previousPageButtonsCount"
                              :display-change-page-buttons-count="displayChangePageButtonsCount"
                              :display-rows-count="displayRowsCount"
                              :data-length="codeGroupData.length"></data-pagination>
-
 
             <!--end::Table-->
           </div>
@@ -350,7 +307,6 @@
     </div>
     <!--end::Content wrapper-->
   </div>
-
   <!--end:::Main-->
 </template>
 
@@ -366,7 +322,6 @@ export default {
     msg: String
   },
   async created() {
-
     await this.$store.dispatch("admin/loadCodeGroupsData").then(result => (this.codeGroupData = result.data['result']))
     this.selectedRow = this.codeGroupData[0]
   },
@@ -532,11 +487,12 @@ export default {
         return
       }
       const newCode = {
-        cdGrpId: this.selectedRow.cdGrpId,
+        cdGrpId: this.selectedRow.id.cdGrpId,
         cdGrpNm: this.selectedRow.cdGrpNm,
         cdId: this.codeRegData['codeNo'],
         cdNm: this.codeRegData['codeName'],
-        cdSeq: this.codeRegData['codeOrder']
+        cdSeq: this.codeRegData['codeOrder'],
+        rmk: this.codeRegData['codeDesc'],
       }
       this.$store.dispatch("admin/addCode", newCode)
       this.codeData.push(newCode)
@@ -580,6 +536,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
+
 </style>

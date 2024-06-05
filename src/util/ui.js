@@ -227,12 +227,6 @@ export function backBtn(idx) {
   this.popup = 100
 }
 
-export function getBdList() {
-  this.search.kwd = ''
-  this.search.period = null
-  this.$store.dispatch('bedasgn/getBdList')
-}
-
 export function getUndrDses(arr) {
   if (!Array.isArray(arr) || arr.length === 0) {
     return ''

@@ -84,34 +84,6 @@ export default {
   },
   actions: {
     /*병상배정목록*/
-    async getBdList(comment,data) {
-      try {
-        const token = sessionStorage.getItem('userToken')
-        const url = `${API_PROD}/api/v1/private/bedasgn/list` // Todo 2
-        console.log('병상배정목록')
-
-        const params = data
-
-        const response = await axios.get(url,{ params,
-          headers: {
-            Authorization: `Bearer ${token}` // Add the token to the Authorization header
-          }})
-
-        if (response.data?.code === '00') {
-          console.log(response.data)
-          comment.commit('resetBdList')
-          //comment.commit('setbdDetail', response.data?.result[0].items[0])
-          response.data?.result.forEach((item) => {
-            comment.commit('setBdList', item)
-          })
-          comment.commit('setBdList2', response.data?.result)
-          return router.push('/user/bedasgn/list')
-        }
-      } catch (e) {
-        console.error(e)
-        return router.push('/user/bedasgn/list')
-      }
-    },
     async getBdListWeb(comment,data) {
       try {
         const token = sessionStorage.getItem('userToken')
