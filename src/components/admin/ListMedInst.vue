@@ -2121,54 +2121,101 @@
                           <col style="width: auto" />
                         </colgroup>
                         <thead>
-                        <tr>
-                          <th>보유 여부</th>
-                          <th>시설</th>
-                          <th>의료진 수</th>
-                        </tr>
+                          <tr>
+                            <th class='text-center'>보유 여부</th>
+                            <th class='text-center'>시설</th>
+                            <th class='text-center'>의료진 수</th>
+                          </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                          <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.childBirthYn'
-                                     v-model='this.modMedinst.childBirthYn'></td>
-                          <td> 감염병 전용 분만 시설</td>
-                          <td><input type='text' v-show='this.modMedinst.childBirthYn'
-                                     v-model="this.modMedinst.childBirthMed"></td>
-                        </tr>
-                        <tr>
-                          <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.dialysisYn'
-                                     v-model='this.modMedinst.dialysisYn'></td>
-                          <td>감염병 전용 투석 시설</td>
-                          <td><input type='text' v-show='this.modMedinst.dialysisYn'
-                                     v-model='this.modMedinst.dialysisMed'></td>
-                        </tr>
-                        <tr>
-                          <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.childYn'
-                                     v-model='this.modMedinst.childYn'></td>
-                          <td>감염병 전용 소아 시설</td>
-                          <td><input type='text' v-show='this.modMedinst.childYn' v-model=" this.modMedinst.childMed">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.nursingHospitalYn'
-                                     v-model='this.modMedinst.nursingHospitalYn'></td>
-                          <td>감염병 전용 요양병원 시설</td>
-                          <td><input type='text' v-show='this.modMedinst.nursingHospitalYn'
-                                     v-model="this.modMedinst.nursingHospitalMed"></td>
-                        </tr>
-                        <tr>
-                          <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.mentalPatientYn'
-                                     v-model='this.modMedinst.mentalPatientYn'></td>
-                          <td>감염병 전용 정신질환자 시설</td>
-                          <td><input type='text' v-show='this.modMedinst.mentalPatientYn'
-                                     v-model="this.modMedinst.mentalPatientMed"></td>
-                        </tr>
-                        <tr>
-                          <td><input class='editMedi' type='checkbox' :checked='this.modMedinst.negativePressureRoomYn'
-                                     v-model='this.modMedinst.negativePressureRoomYn'></td>
-                          <td>감염병 전용 음압격리 시설</td>
-                          <td></td>
-                        </tr>
+                          <tr>
+                            <td class='cbox d-flex justify-content-center'>
+                              <label>
+                                <input class='editMedi' type='checkbox' id='childBirthYn'
+                                       :checked='this.modMedinst.childBirthYn'
+                                       v-model='this.modMedinst.childBirthYn' /><i></i>
+                              </label>
+                            </td>
+                            <td class='text-center'>
+                              <label for='childBirthYn' class='fs-4' role='button'>감염병 전용 분만 시설</label>
+                            </td>
+                            <td><input class='fs-4 px-5' type='text' v-show='this.modMedinst.childBirthYn'
+                                     v-model='this.modMedinst.childBirthMed'></td>
+                          </tr>
+                          <tr>
+                            <td class='cbox d-flex justify-content-center'>
+                              <label>
+                                <input class='editMedi' type='checkbox' id='dialysisYn'
+                                       :checked='this.modMedinst.dialysisYn'
+                                       v-model='this.modMedinst.dialysisYn'><i></i>
+                              </label>
+                            </td>
+                            <td class='text-center'>
+                              <label for='dialysisYn' class='fs-4' role='button'>감염병 전용 투석 시설</label>
+                            </td>
+                            <td><input class='fs-4 px-5' type='text' v-show='this.modMedinst.dialysisYn'
+                                       v-model='this.modMedinst.dialysisMed'></td>
+                          </tr>
+                          <tr>
+                            <td class='cbox d-flex justify-content-center'>
+                              <label>
+                                <input class='editMedi' type='checkbox' id='childYn'
+                                       :checked='this.modMedinst.childYn'
+                                       v-model='this.modMedinst.childYn'><i></i>
+                              </label>
+                            </td>
+                            <td class='text-center'>
+                              <label for='childYn' class='fs-4' role='button'>감염병 전용 소아 시설</label>
+                            </td>
+                            <td><input class='fs-4 px-5' type='text' v-show='this.modMedinst.childYn'
+                                       v-model='this.modMedinst.childMed'></td>
+                          </tr>
+                          <tr>
+                            <td class='cbox d-flex justify-content-center'>
+                              <label>
+                                <input class='editMedi' type='checkbox' id='nursingHospitalYn'
+                                       :checked='this.modMedinst.nursingHospitalYn'
+                                       v-model='this.modMedinst.nursingHospitalYn'><i></i>
+                              </label>
+                            </td>
+                            <td class='text-center'>
+                              <label for='nursingHospitalYn' class='fs-4' role='button'>감염병 전용 요양병원 시설</label>
+                            </td>
+                            <td><input class='fs-4 px-5' type='text' v-show='this.modMedinst.nursingHospitalYn'
+                                       v-model='this.modMedinst.nursingHospitalMed'></td>
+                          </tr>
+                          <tr>
+                            <td class='cbox d-flex justify-content-center'>
+                              <label>
+                                <input class='editMedi' type='checkbox' id='mentalPatientYn'
+                                       :checked='this.modMedinst.mentalPatientYn'
+                                       v-model='this.modMedinst.mentalPatientYn'><i></i>
+                              </label>
+                            </td>
+                            <td class='text-center'>
+                              <label for='mentalPatientYn' class='fs-4' role='button'>감염병 전용 정신질환자 시설</label>
+                            </td>
+                            <td><input class='fs-4 px-5' type='text' v-show='this.modMedinst.mentalPatientYn'
+                                       v-model='this.modMedinst.mentalPatientMed'></td>
+                          </tr>
+                          <tr>
+                            <td class='cbox d-flex justify-content-center'>
+                              <label>
+                                <input class='editMedi' type='checkbox' id='negativePressureRoomYn'
+                                       :checked='this.modMedinst.negativePressureRoomYn'
+                                       v-model='this.modMedinst.negativePressureRoomYn'><i></i>
+                              </label>
+                            </td>
+                            <td class='text-center'>
+                              <label for='negativePressureRoomYn' class='fs-4' role='button'>감염병 전용 음압 수술실</label>
+                            </td>
+                            <td></td>
+<!--                            <td><input class='editMedi' type='checkbox' -->
+<!--                                       :checked='this.modMedinst.negativePressureRoomYn'-->
+<!--                                       v-model='this.modMedinst.negativePressureRoomYn'></td>-->
+<!--                            <td>감염병 전용 음압격리 시설</td>-->
+<!--                            <td></td>-->
+                          </tr>
                         </tbody>
                       </table>
                     </div>

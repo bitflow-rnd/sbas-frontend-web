@@ -235,7 +235,8 @@
                       <col style="width: 70px" />
                       <col style="width: 50px" />
                       <col style="width: auto" />
-                      <col style="width: 160px" />
+                      <col style="width: 140px" />
+                      <col style="width: 100px" />
                       <col style="width: auto" />
                       <col style="width: 120px" />
                       <col style="width: 100px" />
@@ -250,6 +251,7 @@
                       <th>성별</th>
                       <th>배정병원</th>
                       <th>거주지</th>
+                      <th>중증도</th>
                       <th>질병명</th>
                       <th>연락처</th>
                       <th>국적</th>
@@ -282,6 +284,8 @@
                       <td>{{ pt['gndr'] }}자</td>
                       <td class="text-start">{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
+                      <td v-if="pt['svrtTypeCdNm']">{{ pt['svrtTypeCdNm'] }}<br>({{ pt['svrtIptTypeCdNm'] }})</td>
+                      <td v-if="!pt['svrtTypeCdNm']">-</td>
                       <td class="text-start">{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
                       <td>{{ pt['mpno'] ? pt['mpno'] : '-' }}</td>
                       <td>{{ pt['natiCdNm'] ? pt['natiCdNm'] : '-' }}</td>

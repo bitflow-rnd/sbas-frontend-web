@@ -2837,12 +2837,14 @@
                     </td>
                     <td class="text-start">
                       <div class="d-flex align-items-center">
-                        <div class="text-start text-black" style="">{{ item.hospNm }}</div>
+                        <div class="text-start text-black" style="">
+                          {{ item.hospNm }}<br><span class="text-secondary fs-12px">{{ item.dutyDivNam }}</span>
+                        </div>
                       </div>
 
-                      <div class="text-gray-600 fs-12px pt-2">
-                        {{ getTag(item.tagList) }}
-                      </div>
+<!--                      <div class="text-gray-600 fs-12px pt-2">-->
+<!--                        {{ getTag(item.tagList) }}-->
+<!--                      </div>-->
                     </td>
                     <td><span class="text-black">{{ item.gnbdIcu }}</span></td>
                     <td><span class="text-black">{{ item.gnbdSvrt }}</span></td>
