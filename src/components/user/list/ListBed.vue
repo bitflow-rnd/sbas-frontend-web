@@ -2947,10 +2947,6 @@
                 class="modal-menu-btn menu-cancel"
               >이전
               </router-link>
-              <router-link to="" @click="openPopup(1)" class="modal-menu-btn menu-primary-outline"
-              >배정불가
-              </router-link
-              >
               <router-link to="" @click="openPopup(3)" class="modal-menu-btn menu-primary"
               >배정요청
               </router-link
@@ -3263,11 +3259,16 @@
                                 <!-- && this.chrgUserId.some(item=>item.chrgUserId===userInfo.id)) -->
                                 <a v-show="
                                     (bdDetail.bedStatCd === 'BAST0003' &&
-                                      ( userInfo.jobCd === JobCode.Aprv || userInfo.jobCd === JobCode.Sysa )) ||
-                                    (bdDetail.bedStatCd === 'BAST0004' &&
-                                      ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa ))"
+                                      ( userInfo.jobCd === JobCode.Aprv || userInfo.jobCd === JobCode.Sysa ))"
                                   @click="openPopup(1)"
                                   class="modal-menu-btn menu-primary-outline radius-0 big"
+                                >배정 취소</a
+                                >
+                                <a v-show="
+                                    (bdDetail.bedStatCd === 'BAST0004' &&
+                                      ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa ))"
+                                   @click="openPopup(1)"
+                                   class="modal-menu-btn menu-primary-outline radius-0 big"
                                 >배정 불가</a
                                 >
                                 <div
@@ -4678,45 +4679,42 @@
     </div>
   </article>
 
-  <!--  배정 불가  -->
+  <!--  배정반 배정 취소  -->
   <article v-show="popup === 4" class="popup popup-assignment-cancel" tabindex="-3" style="">
     <div class="popup-wrapper">
       <div class="popup-contents">
         <div class="popup-head-box py-5 px-10">
-          <div class="head-tit-box">배정 불가</div>
-
-          <div @click="closePopup(0)" class="head-option-box">
-            <a class="popup-close-btn">
-              <span class="svg-icon svg-icon-1">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    opacity="0.5"
-                    x="6"
-                    y="17.3137"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(-45 6 17.3137)"
-                    fill="currentColor"
-                  ></rect>
-                  <rect
-                    x="7.41422"
-                    y="6"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(45 7.41422 6)"
-                    fill="currentColor"
-                  ></rect>
-                </svg>
-              </span>
-            </a>
+          <div class="head-tit-box">배정 취소</div>
+          <div @click="closePopup(0)" class="btn btn-sm btn-icon btn-active-color-primary">
+            <span class="svg-icon svg-icon-1">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  opacity="0.5"
+                  x="6"
+                  y="17.3137"
+                  width="16"
+                  height="2"
+                  rx="1"
+                  transform="rotate(-45 6 17.3137)"
+                  fill="currentColor"
+                ></rect>
+                <rect
+                  x="7.41422"
+                  y="6"
+                  width="16"
+                  height="2"
+                  rx="1"
+                  transform="rotate(45 7.41422 6)"
+                  fill="currentColor"
+                ></rect>
+              </svg>
+            </span>
           </div>
         </div>
 
@@ -5301,7 +5299,7 @@ export default {
         this.alertIdx = 4
       } else if (idx === 5) {
         /* 승인배정반 불가 alert*/
-        this.errMsg = '배정불가 처리 하시겠습니까?'
+        this.errMsg = '배정 취소하시겠습니까?'
         this.cncBtn = true
         this.isAlert = true
         if (this.userInfo.jobCd === JobCode.Aprv || this.userInfo.jobCd === JobCode.Sysa) {
