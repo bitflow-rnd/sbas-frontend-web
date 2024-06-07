@@ -2424,33 +2424,41 @@
                   <tr>
                     <th rowspan="2">출발지</th>
                     <td rowspan="2">
-                      <div class="item-cell-box rcmd">
+                      <div class="item-cell-box rcmd address">
                         <div class="rbox">
-                          <label>
-                            <input type="radio" name="permission" /><i></i>
+                          <label @click="onClickDeparture('location')">
+                            <input type="radio" name="permission" v-model='this.departureSelect.model' value="location" /><i></i>
                             <span style='width: 100px' class="txt">위치지정</span>
                           </label>
                           <div class="tbox full">
                             <input
                               style="margin-left: 1px"
                               type="text"
-                              v-model="newPt.zip"
+                              v-model="newPt.bascAddr"
                               readonly
                             />
                           </div>
-                          <a
+                          <button :disabled='!this.departureSelect.isLocation'
                             @click="openAddressFinder(0)"
                             class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
                             style="min-width: 80px"
-                          >주소검색</a
+                          >주소검색</button
                           >
                         </div>
                       </div>
                       <div class="item-cell-box rcmd">
                         <div class="rbox">
-                          <label>
-                            <input type="radio" name="permission" /><i></i>
-                            <span class="txt">시/도지정</span>
+                          <label @click="onClickDeparture('sido')">
+                            <input type="radio" name="permission" v-model='this.departureSelect.model' value="sido"/><i></i>
+                            <span style='width: 100px' class="txt">시/도지정</span>
+                            <div class="sbox w-175px">
+                              <select :disabled='!this.departureSelect.isSido'>
+                                <option value="" id="null">시/도 전체</option>
+                                <option v-for="(item,idx) in cmSido" :key="idx"
+                                        :value="item['cdId']">{{ item['cdNm'] }}
+                                </option>
+                              </select>
+                            </div>
                           </label>
                         </div>
                       </div>
@@ -2771,7 +2779,8 @@
                     <col style="width: 60px" />
                     <col style="width: 60px" />
                     <col style="width: 60px" />
-                    <col style="width: 90px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
                     <col style="width: 90px" />
                   </colgroup>
                   <thead>
@@ -2783,10 +2792,10 @@
                     </th>
                     <th>이미지</th>
                     <th>병원명</th>
-                    <th>중환자</th>
-                    <th>중증</th>
-                    <th>준중증</th>
-                    <th>중등증</th>
+                    <th>[감염] 중환자</th>
+                    <th>[감염] 중증</th>
+                    <th>[감염] 준중증</th>
+                    <th>[감염] 중등증</th>
                     <th>일반</th>
                     <th>분만</th>
                     <th>투석</th>
@@ -2799,6 +2808,7 @@
                     <th>고압 산소</th>
                     <th>CT</th>
                     <th>MRI</th>
+                    <th>혈관 촬영기</th>
                     <th>거리</th>
                   </tr>
                   </thead>
@@ -2838,10 +2848,10 @@
                     <td><span class="text-black">{{ item.gnbdSvrt }}</span></td>
                     <td><span class="text-black">{{ item.gnbdSmsv }}</span></td>
                     <td><span class="text-black">{{ item.gnbdModr }}</span></td>
-                    <td><span class="text-primary">13</span>/55</td>
-                    <td><span class="text-primary">13</span>/55</td>
-                    <td><span class="text-primary">13</span>/55</td>
-                    <td><span class="text-danger">0</span>/1</td>
+                    <td><span class="text-black">13</span></td>
+                    <td><span class="text-black">13</span></td>
+                    <td><span class="text-black">13</span></td>
+                    <td><span class="text-black">0</span></td>
 
                     <td><span :class="{'text-danger': item.ventilator === 'N'}" class="text-primary">{{ item.ventilator
                       }}</span></td>
@@ -2857,6 +2867,7 @@
                               class="text-primary">{{ item.highPressureOxygen }}</span></td>
                     <td><span :class="{'text-danger': item.ct === 'N'}" class="text-primary">{{ item.ct }}</span></td>
                     <td><span :class="{'text-danger': item.mri === 'N'}" class="text-primary">{{ item.mri }}</span></td>
+                    <td><span :class="{'text-danger': item.bloodVesselImaging === 'N'}" class="text-primary">{{ item.bloodVesselImaging }}</span></td>
                     <td>{{ item.distance }}</td>
                   </tr>
                   </tbody>
@@ -4808,7 +4819,7 @@ import {
   maskingNm,
   openAddressFinder,
   regNewPt,
-  openPopup, reqBedType, toggleCheckbox, getUndrDses
+  openPopup, reqBedType, toggleCheckbox, getUndrDses, getSido
 } from '@/util/ui'
 import user from '@/store/modules/user'
 import { JobCode } from '@/util/sbas_cnst'
@@ -5000,7 +5011,12 @@ export default {
       undrDsesCdArr: [],
       visibleRef: false,
       imgsRef: '',
-      indexRef: 0
+      indexRef: 0,
+      departureSelect: {
+        model: '',
+        isLocation: false,
+        isSido: false,
+      },
     }
   },
   computed: {
@@ -5024,7 +5040,7 @@ export default {
     ]),
     ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip', 'isSpinner']),
     ...mapState('user', ['userInfo', 'cmSido', 'chrgInfo']),
-    ...mapState('admin', ['firestatnList', 'firemenList', 'medinstList', 'organMedi']),
+    ...mapState('admin', ['firestatnList', 'firemenList', 'medinstList', 'organMedi', 'cmSido']),
 
     startIndex() {
       return (this.page - 1) * this.displayRowsCount
@@ -5073,6 +5089,7 @@ export default {
     }*/
   },
   methods: {
+    getSido,
     toggleCheckbox,
     changePage(newPage) {
       this.$store.dispatch('bedasgn/getBdListWeb', {
@@ -5705,7 +5722,17 @@ export default {
     },
     onHide() {
       this.visibleRef = false
-    }
+    },
+    onClickDeparture(type) {
+      if (type === 'location') {
+        this.departureSelect.isLocation = true;
+        this.departureSelect.isSido = false;
+      } else if (type === 'sido') {
+        this.departureSelect.isLocation = false;
+        this.departureSelect.isSido = true;
+        getSido()
+      }
+    },
   }
 }
 </script>
@@ -5779,6 +5806,10 @@ article.toggle-list-layout1 .toggle-list label .txt {
 
 .ptnt-type {
   padding-top: 8px;
+}
+
+.address {
+  margin-top: 0px !important;
 }
 
 </style>
