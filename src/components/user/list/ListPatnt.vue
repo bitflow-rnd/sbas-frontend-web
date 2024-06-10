@@ -495,14 +495,15 @@
                   </article>
                 </div>
 
-                <div class="detail-foot-box">
+                <div class="detail-foot-box pb-5">
                   <article class="modal-menu-layout1">
                     <div class="modal-menu-list">
-                      <a
-                        href='javascript:void(0)'
-                        class="modal-menu-btn menu-primary-outline"
-                      >관찰환자 등록
-                      </a>
+                      <router-link
+                        to=""
+                        class="modal-menu-btn menu-primary"
+                        @click='openSvrtInfoModal()'
+                      >관찰환자 정보
+                      </router-link>
                       <router-link
                         to=""
                         data-bs-target="#kt_modal_patnt"
@@ -577,7 +578,7 @@
                   </article>
                 </div>
 
-                <div class="detail-foot-box">
+                <div class="detail-foot-box pb-5">
                   <article class="modal-menu-layout1">
                     <div class="modal-menu-list">
                       <router-link
@@ -667,7 +668,7 @@
                     <div v-if="timeline === null" class="img-box" data-v-70fc8ce7=""><img
                       src="/img/common/img_nodata.svg" alt="이미지" data-v-70fc8ce7="">
                       <h2 data-v-70fc8ce7="">최근 이력 없음</h2></div>
-                    <div class="detail-foot-box">
+                    <div class="detail-foot-box pb-5">
                       <article class="msg-send-layout1">
                         <div class="img-upload-result">
                           <div class="img-list"></div>
@@ -2511,6 +2512,8 @@
 
   <patnt-reg-modal v-if='this.showModal === 2' :exist-pt='this.ptDetail' @closeModal='closeModal(0)' />
 
+  <svrt-info-modal v-if='this.showSvrtInfoModal' :exist-pt='this.ptDetail' @closeModal='closeSvrtInfoModal()' />
+
 </template>
 
 <script>
@@ -2535,9 +2538,11 @@ import {
 } from '@/util/ui'
 import { reactive, ref } from 'vue'
 import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
+import SvrtInfoModal from '@/components/user/modal/SvrtInfoModal.vue'
 
 export default {
   components: {
+    SvrtInfoModal,
     PatntRegModal,
     DataPagination,
     SvrtChartUnitNoTitle
@@ -2665,7 +2670,8 @@ export default {
       medinstInfo: {
         dstr1Cd: ''
       },
-      showPatnt: false
+      showPatnt: false,
+      showSvrtInfoModal: false,
     }
   },
   computed: {
@@ -3066,6 +3072,12 @@ export default {
       if (this.userInfo.dutyDstr1Cd) {
         this.getSecondAddress(this.userInfo.dutyDstr1Cd)
       }
+    },
+    openSvrtInfoModal() {
+      this.showSvrtInfoModal = true
+    },
+    closeSvrtInfoModal() {
+      this.showSvrtInfoModal = false
     }
   }
 }

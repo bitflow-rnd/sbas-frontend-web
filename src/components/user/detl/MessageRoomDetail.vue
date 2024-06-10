@@ -27,7 +27,7 @@
       </div>
       <!--end::Card body-->
       <!--begin::Card footer-->
-      <div class="detail-foot-box">
+      <div class="detail-foot-box pb-5">
         <article class="msg-send-layout1">
           <div class="img-upload-result">
             <div class="img-list"></div>

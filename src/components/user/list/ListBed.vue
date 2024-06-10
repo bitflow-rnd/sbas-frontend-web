@@ -2404,8 +2404,8 @@
             </div>
           </article>
         </div>
-
         <!--begin::Modal header-->
+
         <!--begin::Modal body-->
         <div v-if="rcmdHp !== null" class="modal-body scroll-y py-10 px-10">
           <article class="table-form-layout1 pb-4">
@@ -2846,7 +2846,7 @@
 <!--                        {{ getTag(item.tagList) }}-->
 <!--                      </div>-->
                     </td>
-                    <td><span class="text-black">{{ item.gnbdIcu }}</span></td>
+                    <td><span class="text-black">{{ item.gnbdIcu + item.npidIcu }}</span></td>
                     <td><span class="text-black">{{ item.gnbdSvrt }}</span></td>
                     <td><span class="text-black">{{ item.gnbdSmsv }}</span></td>
                     <td><span class="text-black">{{ item.gnbdModr }}</span></td>
@@ -3230,7 +3230,7 @@
                       </article>
                     </div>
 
-                    <div class="detail-foot-box">
+                    <div class="detail-foot-box pb-5">
                       <article class="msg-send-layout1">
                         <div class="img-upload-result">
                           <div class="img-list"></div>
@@ -4172,6 +4172,12 @@
                             </label>
                           </div>
                         </article>
+                      </div>
+                    </td>
+                    <th>PID</th>
+                    <td>
+                      <div class="tbox full">
+                        <input v-model="hosptlzdiscg.pid" placeholder="PID 입력" />
                       </div>
                     </td>
                   </tr>
