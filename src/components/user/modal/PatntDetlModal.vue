@@ -396,6 +396,7 @@ function closeModal() {
   bottom: 0;
   left: 0;
   width: calc(100% - 1rem);
+  padding-bottom: 55px;
 }
 
 </style>

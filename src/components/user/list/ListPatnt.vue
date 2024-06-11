@@ -488,10 +488,6 @@
 
                       <div class="table-img-box pt-4"></div>
                     </div>
-
-                    <svrt-chart-unit-no-title :pt-id="ptDetail.ptId" class='mt-5'
-                                              v-if="monitorPatntsList?.includes(ptDetail.ptId)" />
-
                   </article>
                 </div>
 
@@ -502,7 +498,7 @@
                         to=""
                         class="modal-menu-btn menu-primary"
                         @click='openSvrtInfoModal()'
-                      >관찰환자 정보
+                      >관찰환자 생체정보
                       </router-link>
                       <router-link
                         to=""
@@ -517,7 +513,7 @@
                 </div>
               </div>
 
-              <div v-if="bdasHis !== undefined" class="detail-info-box w-23">
+              <div v-if="bdasHis !== undefined" class="detail-info-box">
                 <div class="detail-head-box px-10">
                   <div class="head-box">
                     <div class="head-txt-box">병상배정 이력</div>
@@ -576,6 +572,8 @@
                       </div>
                     </div>
                   </article>
+                  <svrt-chart-unit-no-title :pt-id="ptDetail.ptId" class='svrt-chart'
+                                            v-if="monitorPatntsList?.includes(ptDetail.ptId)" />
                 </div>
 
                 <div class="detail-foot-box pb-5">
@@ -3189,4 +3187,12 @@ td > .btn-primary-outline {
   z-index: 400;
   background-color: white;
 }
+.svrt-chart {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 1rem);
+  padding-bottom: 55px;
+}
+
 </style>

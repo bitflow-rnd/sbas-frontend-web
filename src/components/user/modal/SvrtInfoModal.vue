@@ -67,7 +67,6 @@
               <div class="table-box with-scroll small">
                 <table>
                   <colgroup>
-                    <col style="width: 50px" />
                     <col style="width: 90px" />
                     <col style="width: 90px" />
                     <col style="width: 50px" />
@@ -95,13 +94,11 @@
                   </colgroup>
                   <thead>
                     <tr class="small">
-                      <th>입원 날짜</th>
                       <th>진료과</th>
                       <th>병동</th>
                       <th>병실</th>
                       <th>담당의</th>
                       <th>측정 날짜</th>
-                      <th>결과 날짜</th>
                       <th>BUN</th>
                       <th>CRE</th>
                       <th>HEM</th>
@@ -124,32 +121,30 @@
                   </thead>
 
                   <tbody>
-                    <tr v-for="(item, i) in 10" :key="i">
-                      <td><span class="text-black">'23.06.25</span></td>
+                    <tr v-for="(item, i) in model.svrtInfoList" :key="i">
                       <td><span class="text-black">감염내과</span></td>
                       <td><span class="text-black">106서병동</span></td>
                       <td><span class="text-black">10602</span></td>
                       <td><span class="text-black">담당의</span></td>
                       <td><span class="text-black">'20.04.30</span></td>
-                      <td><span class="text-black">'20.04.30</span></td>
-                      <td><span class="text-black">17.6</span></td>
-                      <td><span class="text-black">0.99</span></td>
-                      <td><span class="text-black">16.7</span></td>
-                      <td><span class="text-black">381</span></td>
-                      <td><span class="text-black">1.7</span></td>
-                      <td><span class="text-black">96.2</span></td>
-                      <td><span class="text-black">201</span></td>
-                      <td><span class="text-black">3.9</span></td>
-                      <td><span class="text-black">132</span></td>
-                      <td><span class="text-black">20.03</span></td>
-                      <td><span class="text-black">11.15</span></td>
-                      <td><span class="text-black">36.5</span></td>
-                      <td><span class="text-black">28</span></td>
-                      <td><span class="text-black">63</span></td>
-                      <td><span class="text-black">186</span></td>
-                      <td><span class="text-black">83</span></td>
-                      <td><span class="text-black">99</span></td>
-                      <td><span class="text-black">HFNC</span></td>
+                      <td><span class="text-black number">{{ item['bun'] }}</span></td>
+                      <td><span class="text-black number">{{ item['cre'] }}</span></td>
+                      <td><span class="text-black number">{{ item['hem'] }}</span></td>
+                      <td><span class="text-black number">{{ item['ldh'] }}</span></td>
+                      <td><span class="text-black number">{{ item['lym'] }}</span></td>
+                      <td><span class="text-black number">{{ item['neu'] }}</span></td>
+                      <td><span class="text-black number">{{ item['pla'] }}</span></td>
+                      <td><span class="text-black number">{{ item['pot'] }}</span></td>
+                      <td><span class="text-black number">{{ item['sod'] }}</span></td>
+                      <td><span class="text-black number">{{ item['wbc'] }}</span></td>
+                      <td><span class="text-black number">{{ item['crp'] }}</span></td>
+                      <td><span class="text-black number">{{ item['bdtp'] }}</span></td>
+                      <td><span class="text-black number">{{ item['resp'] }}</span></td>
+                      <td><span class="text-black number">{{ item['hr'] }}</span></td>
+                      <td><span class="text-black number">{{ item['sbp'] }}</span></td>
+                      <td><span class="text-black number">{{ item['dbp'] }}</span></td>
+                      <td><span class="text-black number">{{ item['spo2'] }}</span></td>
+                      <td><span class="text-black">{{ item['oxygenApply'] }}</span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -181,12 +176,12 @@
 </template>
 
 <script setup>
-import { defineProps, reactive, defineEmits, onMounted } from 'vue'
+import { defineEmits, defineProps, onMounted, reactive } from 'vue'
 import { useStore } from 'vuex'
-import { axios_cstm } from '@/util/axios_cstm'
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
-import { API_PROD } from '@/util/constantURL'
 import { getTag } from '@/util/ui'
+import { axios_cstm } from '@/util/axios_cstm'
+import { API_PROD } from '@/util/constantURL'
 
 const props = defineProps({
   existPt: Object,
@@ -201,6 +196,8 @@ onMounted(() => {
 
 const model = reactive({
   displayRowsCount: 15,
+  svrtInfo: null,
+  svrtInfoList: [],
 })
 
 function closeModal() {
@@ -208,17 +205,24 @@ function closeModal() {
 }
 
 function getSvrtInfo() {
-  // const url = `${API_PROD}/api/v1/private/patient/exist`
-  //   axios_cstm().get(url)
-  //     .then((response) => {
-  //       const data = response.data
-  //       if (data.code === '00') {
-  //         console.log(data)
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       console.log(e)
-  //     })
+  const url = `${API_PROD}/api/v1/private/severity/infos/${props.existPt.ptId}`
+  return new Promise(() => {
+    axios_cstm().get(url)
+      .then((response) => {
+        const data = response.data
+        if (data.code === '00') {
+          console.log(data)
+          model.svrtInfoList = data.result
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  })
+}
+
+function changePage(page) {
+  console.log(page)
 }
 
 </script>
@@ -238,4 +242,10 @@ article.detail-layout1 .detail-wrap .detail-head-box .head-box .head-txt-box {
   line-height: 28px;
 }
 
+.table-box td {
+  max-width: 65px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 </style>
