@@ -1572,10 +1572,9 @@ import { getGugun, getPtType, getSido, toggleCheckbox } from '@/util/ui'
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { JobCode } from '@/util/sbas_cnst'
 import UserDetailAdminModal from '@/components/admin/UserDetailAdminModal.vue'
-import UserDetailModal from '@/components/admin/UserDetailModal.vue'
 
 export default {
-  components: { UserDetailModal, UserDetailAdminModal, DataPagination},
+  components: { UserDetailAdminModal, DataPagination},
   computed: {
     ...mapState('admin', ['cmSido','cmGugun','userList', 'usrDetail', 'organMedi']),
     startIndex() {
