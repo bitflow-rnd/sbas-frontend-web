@@ -50,14 +50,14 @@
               <img src='/img/common/ic_request_patient.svg' alt='이미지' />
             </div>
             <div class='txt-box'>
-<!--              {{ model.bdDetail.ptNm }}-->
-<!--              <span class='text-gray-600 fw-normal'-->
-<!--              >({{ props.bdDetail.gndr }} / {{ props.bdDetail.age }}세 / {{ getAddr }} {{ props.ptDetail.mpno ? ('/ ' + getTelno) : '' }})</span-->
-<!--              >-->
+              {{ props.bdDetail.ptNm }}
+              <span class='text-gray-600 fw-normal'
+              >({{ props.bdDetail.gndr }} / {{ props.bdDetail.age }}세 {{ props.bdDetail.mpno ? ('/ ' + getTelno(props.bdDetail.mpno)) : '' }})</span
+              >
             </div>
-<!--            <div class='txt-box' v-if='props.bdDetail.tagList && props.bdDetail.tagList.length>0'>-->
-<!--              <span class='text-primary'>{{ getTag }}</span>-->
-<!--            </div>-->
+            <div class='txt-box' v-if='props.bdDetail.tagList && props.bdDetail.tagList.length>0'>
+              <span class='text-primary'>{{ getTag(props.bdDetail.tagList) }}</span>
+            </div>
           </article>
         </div>
         <!--begin::Modal header-->
@@ -82,44 +82,43 @@
                     <td rowspan='2'>
                       <div class='item-cell-box rcmd address'>
                         <div class='rbox'>
-<!--                          <label @click='onClickDeparture'>-->
-<!--                            <input type='radio' name='permission' v-model='this.departureSelect.model'-->
-<!--                                   value='location' /><i></i>-->
-<!--                            <span style='width: 100px' class='txt'>위치지정</span>-->
-<!--                          </label>-->
-<!--                          <div class='tbox full'>-->
-<!--                            <input-->
-<!--                              style='margin-left: 1px'-->
-<!--                              type='text'-->
-<!--                              v-model='newPt.bascAddr'-->
-<!--                              readonly-->
-<!--                            />-->
-<!--                          </div>-->
-<!--                          <button :disabled='!this.departureSelect.isLocation'-->
-<!--                                  @click='openAddressFinder'-->
-<!--                                  class='btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1'-->
-<!--                                  style='min-width: 80px'-->
-<!--                          >주소검색-->
-<!--                          </button-->
-<!--                          >-->
+                          <label @click="onClickDeparture('location')">
+                            <input type='radio' name='permission' v-model='model.departureSelect.model'
+                                   value='location' /><i></i>
+                            <span style='width: 100px' class='txt'>위치지정</span>
+                          </label>
+                          <div class='tbox full'>
+                            <input
+                              style='margin-left: 1px'
+                              type='text'
+                              readonly
+                            />
+                          </div>
+                          <button :disabled='!model.departureSelect.isLocation'
+                                  @click='openAddressFinder'
+                                  class='btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1'
+                                  style='min-width: 80px'
+                          >주소검색
+                          </button
+                          >
                         </div>
                       </div>
                       <div class='item-cell-box rcmd'>
-<!--                        <div class='rbox'>-->
-<!--                          <label @click='onClickDeparture'>-->
-<!--                            <input type='radio' name='permission' v-model='this.departureSelect.model'-->
-<!--                                   value='sido' /><i></i>-->
-<!--                            <span style='width: 100px' class='txt'>시/도지정</span>-->
-<!--                            <div class='sbox w-175px'>-->
-<!--                              <select :disabled='!this.departureSelect.isSido'>-->
-<!--                                <option value='' id='null'>시/도 전체</option>-->
-<!--                                <option v-for='(item,idx) in cmSido' :key='idx'-->
-<!--                                        :value="item['cdId']">{{ item['cdNm'] }}-->
-<!--                                </option>-->
-<!--                              </select>-->
-<!--                            </div>-->
-<!--                          </label>-->
-<!--                        </div>-->
+                        <div class='rbox'>
+                          <label @click="onClickDeparture('sido')">
+                            <input type='radio' name='permission' v-model='model.departureSelect.model'
+                                   value='sido' /><i></i>
+                            <span style='width: 100px' class='txt'>시/도지정</span>
+                            <div class='sbox w-175px'>
+                              <select :disabled='!model.departureSelect.isSido'>
+                                <option value='' id='null'>시/도 전체</option>
+                                <option v-for='(item,idx) in model.cmSido' :key='idx'
+                                        :value="item['cdId']">{{ item['cdNm'] }}
+                                </option>
+                              </select>
+                            </div>
+                          </label>
+                        </div>
                       </div>
                     </td>
                     <th>병상유형</th>
@@ -498,30 +497,30 @@
                         <!--                        {{ getTag(item.tagList) }}-->
                         <!--                      </div>-->
                       </td>
-                      <td><span class='text-black'>{{ item.gnbdIcu + item.npidIcu }}</span></td>
-                      <td><span class='text-black'>{{ item.gnbdSvrt }}</span></td>
-                      <td><span class='text-black'>{{ item.gnbdSmsv }}</span></td>
-                      <td><span class='text-black'>{{ item.gnbdModr }}</span></td>
+                      <td><span class='text-black'>{{ item['gnbdIcu'] + item['npidIcu'] }}</span></td>
+                      <td><span class='text-black'>{{ item['gnbdSvrt'] }}</span></td>
+                      <td><span class='text-black'>{{ item['gnbdSmsv'] }}</span></td>
+                      <td><span class='text-black'>{{ item['gnbdModr'] }}</span></td>
                       <td><span class='text-black'>13</span></td>
                       <td><span class='text-black'>13</span></td>
                       <td><span class='text-black'>13</span></td>
                       <td><span class='text-black'>0</span></td>
 
-                      <td><span :class="{'text-danger': item.ventilator === 'N'}" class='text-primary'>{{ item.ventilator
-                        }}</span></td>
-                      <td><span :class="{'text-danger': item.ventilatorPreemie === 'N'}"
-                                class='text-primary'>{{ item.ventilatorPreemie }}</span></td>
-                      <td><span :class="{'text-danger': item.incubator === 'N'}" class='text-primary'>{{ item.incubator
-                        }}</span></td>
-                      <td><span :class="{'text-danger': item.ecmo === 'N'}" class='text-primary'>{{ item.ecmo }}</span>
+                      <td><span :class="{'text-danger': item['ventilator'] === 'N'}" class='text-primary'>
+                        {{ item['ventilator'] }}</span></td>
+                      <td><span :class="{'text-danger': item['ventilatorPreemie'] === 'N'}" class='text-primary'>
+                        {{ item['ventilatorPreemie'] }}</span></td>
+                      <td><span :class="{'text-danger': item['incubator'] === 'N'}" class='text-primary'>
+                        {{ item['incubator'] }}</span></td>
+                      <td><span :class="{'text-danger': item['ecmo'] === 'N'}" class='text-primary'>{{ item['ecmo'] }}</span>
                       </td>
-                      <td><span :class="{'text-danger': item.bodyTemperatureControl === 'N'}"
-                                class='text-primary'>{{ item.bodyTemperatureControl }}</span></td>
-                      <td><span :class="{'text-danger': item.highPressureOxygen === 'N'}"
-                                class='text-primary'>{{ item.highPressureOxygen }}</span></td>
-                      <td><span :class="{'text-danger': item.ct === 'N'}" class='text-primary'>{{ item.ct }}</span></td>
-                      <td><span :class="{'text-danger': item.mri === 'N'}" class='text-primary'>{{ item.mri }}</span></td>
-                      <td><span :class="{'text-danger': item.bloodVesselImaging === 'N'}" class='text-primary'>{{ item.bloodVesselImaging }}</span>
+                      <td><span :class="{'text-danger': item['bodyTemperatureControl'] === 'N'}"
+                                class='text-primary'>{{ item['bodyTemperatureControl'] }}</span></td>
+                      <td><span :class="{'text-danger': item['highPressureOxygen'] === 'N'}"
+                                class='text-primary'>{{ item['highPressureOxygen'] }}</span></td>
+                      <td><span :class="{'text-danger': item['ct'] === 'N'}" class='text-primary'>{{ item['ct'] }}</span></td>
+                      <td><span :class="{'text-danger': item['mri'] === 'N'}" class='text-primary'>{{ item['mri'] }}</span></td>
+                      <td><span :class="{'text-danger': item['bloodVesselImaging'] === 'N'}" class='text-primary'>{{ item['bloodVesselImaging'] }}</span>
                       </td>
                       <td>{{ item.distance }}</td>
                     </tr>
@@ -595,17 +594,16 @@
 
           <article class='modal-menu-layout1 pt-10'>
             <div class='modal-menu-list'>
-              <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
               <router-link
                 to=''
                 @click='closeModal'
                 class='modal-menu-btn menu-cancel'
               >이전
               </router-link>
-              <router-link to='' @click='openPopup' class='modal-menu-btn menu-primary'
-              >배정요청
-              </router-link
-              >
+<!--              <router-link to='' @click='openPopup' class='modal-menu-btn menu-primary'-->
+<!--              >배정요청-->
+<!--              </router-link-->
+<!--              >-->
             </div>
           </article>
         </div>
@@ -616,12 +614,13 @@
     <!--end::Modal dialog-->
   </div>
 </template>
+
 <script setup>
 import { defineProps, defineEmits, reactive, onMounted } from 'vue'
-import { getTelno } from '@/util/ui'
+import { getGugun, getTag, getTelno, openAddressFinder } from '@/util/ui'
 import { API_PROD } from '@/util/constantURL'
-import axios from 'axios'
 import { axios_cstm } from '@/util/axios_cstm'
+import { useStore } from 'vuex'
 
 const props = defineProps({
   bdDetail: {
@@ -630,19 +629,20 @@ const props = defineProps({
   },
 })
 const emits = defineEmits(['closeModal'])
+const store = useStore()
 
 const model = reactive({
   bdDetail: props.bdDetail,
   rcmdHp: null,
-  // departureSelect: {
-  //   model: 'location',
-  //   isLocation: true,
-  //   isSido: false
-  // },
+  departureSelect: {
+    model: '',
+    isLocation: false,
+    isSido: false,
+  },
+  cmSido: null,
   // newPt: {
   //   bascAddr: ''
   // },
-  // cmSido: [],
   // aprv: {
   //   reqHospIdList: []
   // }
@@ -651,11 +651,8 @@ const model = reactive({
 onMounted(() => {
   console.log(props.bdDetail)
   getRcmdHpList()
+  store.dispatch('admin/getSido')
 })
-
-function closeModal() {
-  emits('closeModal')
-}
 
 function getRcmdHpList() {
   const url = `${API_PROD}/api/v1/private/bedasgn/hosp-list/${props.bdDetail.ptId}/${props.bdDetail.bdasSeq}`
@@ -670,6 +667,21 @@ function getRcmdHpList() {
     .catch((error) => {
       console.log(error)
     })
+}
+
+function onClickDeparture(type) {
+  if (type === 'location') {
+    model.departureSelect.isLocation = true;
+    model.departureSelect.isSido = false;
+  } else if (type === 'sido') {
+    model.departureSelect.isLocation = false;
+    model.departureSelect.isSido = true;
+    model.cmSido = store.getters['admin/getCmSido']
+  }
+}
+
+function closeModal() {
+  emits('closeModal')
 }
 
 </script>

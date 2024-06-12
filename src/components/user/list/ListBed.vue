@@ -4398,11 +4398,6 @@ export default {
       visibleRef: false,
       imgsRef: '',
       indexRef: 0,
-      departureSelect: {
-        model: '',
-        isLocation: false,
-        isSido: false,
-      },
       showRcmdHospModal: false,
     }
   },
@@ -5109,16 +5104,6 @@ export default {
     },
     onHide() {
       this.visibleRef = false
-    },
-    onClickDeparture(type) {
-      if (type === 'location') {
-        this.departureSelect.isLocation = true;
-        this.departureSelect.isSido = false;
-      } else if (type === 'sido') {
-        this.departureSelect.isLocation = false;
-        this.departureSelect.isSido = true;
-        getSido()
-      }
     },
     closeRcmdHospModal() {
       this.showRcmdHospModal = false

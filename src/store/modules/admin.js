@@ -68,6 +68,14 @@ export default {
       state.medInstEtc = payload
     },
   },
+  getters: {
+    getCmSido: (state) => {
+      return state.cmSido
+    },
+    getGuGun: (state) => {
+      return state.cmGugun
+    },
+  },
   actions: {
     /****************commoncode*****************/
     getSido(comment) {
