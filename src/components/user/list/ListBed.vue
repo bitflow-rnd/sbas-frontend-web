@@ -2336,7 +2336,7 @@
 
   <!--  추천병원선택 1  -->
   <RcmdHospModal v-if='this.showRcmdHospModal' :bd-detail='this.bdDetail'
-                @closeModal='closeRcmdHospModal()' />
+                @closeModal='closeRcmdHospModal()' @returnToList='returnToList()' />
 
   <!--  병상배정 세부 내용 2 -->
   <div class="modal fade" id="kt_modal_detail" tabindex="-1" aria-hidden="true" style=""
@@ -4753,6 +4753,7 @@ export default {
         console.log('역학조사서 확인')
         this.alertClose()
       } else if (res === 5) {
+        // 배정반 배정 불가
         this.aprv.aprvYn = 'N'
         this.aprv.ptId = this.bdDetail.ptId
         this.aprv.bdasSeq = this.bdDetail.bdasSeq
@@ -4763,6 +4764,7 @@ export default {
         this.alertClose()
         this.setNull()
       } else if (res === 7) {
+        // 배정반 승인
         this.aprv.ptId = this.bdDetail.ptId
         this.aprv.bdasSeq = this.bdDetail.bdasSeq
         this.$store.dispatch('bedasgn/aprvBedAsgn', this.aprv)
@@ -5113,6 +5115,10 @@ export default {
       this.showRcmdHospModal = true
       this.showModal = 1
     },
+    returnToList() {
+      this.showRcmdHospModal = false
+      this.getBdList()
+    }
   }
 }
 </script>

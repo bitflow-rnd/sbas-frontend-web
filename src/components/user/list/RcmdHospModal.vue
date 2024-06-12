@@ -9,41 +9,8 @@
           <!--begin::Modal title-->
           <h2>추천병원 선택</h2>
           <!--end::Modal title-->
-          <!--begin::Close-->
-          <div class='btn btn-sm btn-icon btn-active-color-primary' @click='closeModal'>
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class='svg-icon svg-icon-1'>
-              <svg
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                fill='none'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <rect
-                  opacity='0.5'
-                  x='6'
-                  y='17.3137'
-                  width='16'
-                  height='2'
-                  rx='1'
-                  transform='rotate(-45 6 17.3137)'
-                  fill='currentColor'
-                ></rect>
-                <rect
-                  x='7.41422'
-                  y='6'
-                  width='16'
-                  height='2'
-                  rx='1'
-                  transform='rotate(45 7.41422 6)'
-                  fill='currentColor'
-                ></rect>
-              </svg>
-            </span>
-            <!--end::Svg Icon-->
-          </div>
-          <!--end::Close-->
+
+          <closeButton @close='closeModal'/>
 
           <article class='floating-request-box'>
             <div class='img-box'>
@@ -88,19 +55,14 @@
                             <span style='width: 100px' class='txt'>위치지정</span>
                           </label>
                           <div class='tbox full'>
-                            <input
-                              style='margin-left: 1px'
-                              type='text'
-                              readonly
-                            />
+                            <input style='margin-left: 1px' type='text' readonly />
                           </div>
                           <button :disabled='!model.departureSelect.isLocation'
                                   @click='openAddressFinder'
                                   class='btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1'
                                   style='min-width: 80px'
                           >주소검색
-                          </button
-                          >
+                          </button>
                         </div>
                       </div>
                       <div class='item-cell-box rcmd'>
@@ -124,45 +86,10 @@
                     <th>병상유형</th>
                     <td>
                       <div class='item-cell-box'>
-                        <div class='cbox'>
+                        <div :class="{'ms-4': idx !== 0}" class='cbox' v-for='(item, idx) in model.bedTypeList' :key='idx'>
                           <label>
-                            <input type='checkbox' name='permission' /><i></i>
-                            <span class='txt'>음압격리</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='permission' /><i></i>
-                            <span class='txt'>중증일반격리</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='permission' /><i></i>
-                            <span class='txt'>소아음압격리</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='permission' /><i></i>
-                            <span class='txt'>소아일반격리</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='permission' /><i></i>
-                            <span class='txt'>소아</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='permission' /><i></i>
-                            <span class='txt'>일반</span>
+                            <input type='checkbox' name='permission' :value='item' v-model='model.searchParams.reqBedTypeCd'/><i></i>
+                            <span class='txt'>{{ item }}</span>
                           </label>
                         </div>
                       </div>
@@ -362,32 +289,6 @@
               </div>
 
               <div class='option-box'>
-
-                <!--
-                <div class="option-item-box d-flex align-items-center">
-                  <div class="option-label-box pe-4">목록표시</div>
-
-                  <article class="toggle-list-layout2">
-                    <div class="toggle-list">
-                      <label>
-                        <input type="radio" name="toggle1" checked="" />
-                        <span class="txt">10행</span>
-                      </label>
-
-                      <label>
-                        <input type="radio" name="toggle1" />
-                        <span class="txt">25행</span>
-                      </label>
-
-                      <label>
-                        <input type="radio" name="toggle1" />
-                        <span class="txt">50행</span>
-                      </label>
-                    </div>
-                  </article>
-                </div>
-                -->
-
                 <div class='option-item-box d-flex align-items-center ms-8'>
                   <div class='option-label-box pe-4'>목록표시</div>
 
@@ -469,11 +370,11 @@
                       <td>
                         <div class='cbox d-flex justify-content-center'>
                           <label>
-<!--                            <input-->
-<!--                              v-model='aprv.reqHospIdList'-->
-<!--                              type='checkbox'-->
-<!--                              :value='item.hospId'-->
-<!--                            /><i></i>-->
+                            <input
+                              v-model='model.aprv.reqHospIdList'
+                              type='checkbox'
+                              :value='item.hospId'
+                            /><i></i>
                           </label>
                         </div>
                       </td>
@@ -531,65 +432,8 @@
           </article>
 
           <div class='row mt-10'>
-            <div
-              class='col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'
-            ></div>
-            <div class='col-12 d-flex align-items-center justify-content-center'>
-              <div class='dataTables_paginate paging_simple_numbers'>
-                <ul class='pagination'>
-                  <li class='paginate_button page-item previous disabled'>
-                    <a
-                      href='#'
-                      aria-controls='kt_table_users'
-                      data-dt-idx='0'
-                      tabindex='0'
-                      class='page-link'
-                    ><i class='previous'></i
-                    ></a>
-                  </li>
-                  <li class='paginate_button page-item active'>
-                    <a
-                      href='#'
-                      aria-controls='kt_table_users'
-                      data-dt-idx='1'
-                      tabindex='0'
-                      class='page-link'
-                    >1</a
-                    >
-                  </li>
-                  <li class='paginate_button page-item'>
-                    <a
-                      href='#'
-                      aria-controls='kt_table_users'
-                      data-dt-idx='2'
-                      tabindex='0'
-                      class='page-link'
-                    >2</a
-                    >
-                  </li>
-                  <li class='paginate_button page-item'>
-                    <a
-                      href='#'
-                      aria-controls='kt_table_users'
-                      data-dt-idx='3'
-                      tabindex='0'
-                      class='page-link'
-                    >3</a
-                    >
-                  </li>
-                  <li class='paginate_button page-item next'>
-                    <a
-                      href='#'
-                      aria-controls='kt_table_users'
-                      data-dt-idx='4'
-                      tabindex='0'
-                      class='page-link'
-                    ><i class='next'></i
-                    ></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <data-pagination :data-length='model.rcmdHp.count' :data-page-size='model.searchParams.pageSize'
+                             :data-page-no='model.searchParams.pageNo' @pageChange='' />
           </div>
 
           <article class='modal-menu-layout1 pt-10'>
@@ -600,10 +444,10 @@
                 class='modal-menu-btn menu-cancel'
               >이전
               </router-link>
-<!--              <router-link to='' @click='openPopup' class='modal-menu-btn menu-primary'-->
-<!--              >배정요청-->
-<!--              </router-link-->
-<!--              >-->
+              <router-link to='' @click='openAprvPopup' class='modal-menu-btn menu-primary'
+              >배정요청
+              </router-link
+              >
             </div>
           </article>
         </div>
@@ -613,14 +457,62 @@
     </div>
     <!--end::Modal dialog-->
   </div>
+
+  <article v-show="model.showAprv" class="popup popup-assignment-request1" style="">
+    <div class="popup-wrapper">
+      <div class="popup-contents">
+        <div class="popup-head-box py-5 px-10">
+          <div class="head-tit-box">병상요청 승인</div>
+          <closeButton @close='closeAprvPopup'/>
+        </div>
+
+        <div class="popup-body-box py-5 px-10">
+          <div>
+            <div>
+              <div class="textbox">
+                <textarea
+                  @input="updateCharacterCount"
+                  maxlength="500"
+                  placeholder="메시지 입력"
+                  style="height: 120px"
+                  v-model="model.aprv.msg"
+                ></textarea>
+                <div class="limit-box">
+                  <span id="textarea1">{{ model.characterCount }}</span
+                  >/500자
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="popup-foot-box py-5 px-10">
+          <article class="modal-menu-layout1">
+            <div class="modal-menu-list">
+              <router-link to="" @click="aprvBedAsgn" class="modal-menu-btn menu-primary"
+              >승인완료
+              </router-link>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SbasAlert :is-alert='model.isAlert' :err-msg='model.errMsg' :cnc-btn='false'
+             @confirm-alert='confirmAlert' />
+
 </template>
 
 <script setup>
-import { defineProps, defineEmits, reactive, onMounted } from 'vue'
-import { getGugun, getTag, getTelno, openAddressFinder } from '@/util/ui'
+import { defineEmits, defineProps, onMounted, reactive } from 'vue'
+import { getTag, getTelno, openAddressFinder } from '@/util/ui'
 import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
+import DataPagination from '@/components/user/cpnt/DataPagination.vue'
+import CloseButton from '@/components/common/CloseButton.vue'
+import SbasAlert from '@/components/common/SbasAlert.vue'
 
 const props = defineProps({
   bdDetail: {
@@ -628,7 +520,7 @@ const props = defineProps({
     required: true
   },
 })
-const emits = defineEmits(['closeModal'])
+const emits = defineEmits(['closeModal', 'returnToList'])
 const store = useStore()
 
 const model = reactive({
@@ -640,12 +532,23 @@ const model = reactive({
     isSido: false,
   },
   cmSido: null,
-  // newPt: {
-  //   bascAddr: ''
-  // },
-  // aprv: {
-  //   reqHospIdList: []
-  // }
+  bedTypeList: [
+    '음압격리', '중증일반격리', '소아음압격리', '소아일반격리', '소아', '일반',
+  ],
+  showAprv: false,
+  aprv: {
+    msg: null,
+    reqHospIdList: [],
+  },
+  characterCount: 0,
+  isAlert: false,
+  searchParams: {
+    pageNo: 1,
+    pageSize: 15,
+    sort: 'distance',
+    order: 'asc',
+    reqBedTypeCd: [],
+  },
 })
 
 onMounted(() => {
@@ -680,8 +583,56 @@ function onClickDeparture(type) {
   }
 }
 
+function aprvBedAsgn() {
+  const url = `${API_PROD}/api/v1/private/bedasgn/reqconfirm`
+  const data = {
+    ptId: props.bdDetail.ptId,
+    bdasSeq: props.bdDetail.bdasSeq,
+    aprvYn: 'Y',
+    msg: model.aprv.msg,
+    reqHospIdList: model.aprv.reqHospIdList,
+  }
+  console.log('병상승인', data)
+  axios_cstm().post(url, data)
+    .then((response) => {
+      const data = response.data
+      if (data.code === '00') {
+        emits('returnToList')
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+function updateCharacterCount() {
+  const currentMessage = model.aprv.msg
+  if (currentMessage === null || currentMessage === '' || currentMessage === undefined) {
+    model.characterCount = 0
+  } else {
+    model.characterCount = currentMessage.length
+  }
+}
+
 function closeModal() {
   emits('closeModal')
+}
+
+function openAprvPopup() {
+  if (model.aprv.reqHospIdList.length === 0) {
+    model.errMsg = '병원을 선택해주세요.'
+    model.isAlert = true
+    return
+  }
+  model.showAprv = true
+}
+
+function closeAprvPopup() {
+  model.showAprv = false
+}
+
+function confirmAlert() {
+  model.isAlert = false
 }
 
 </script>
