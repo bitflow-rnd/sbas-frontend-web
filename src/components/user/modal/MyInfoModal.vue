@@ -62,6 +62,7 @@
                 <img
                   v-if="props.userInfo.attcId === null || props.userInfo.attcId === '' "
                   src='@/assets/img/img-no-img.webp' />
+                <img v-else-if = "model.myImage === ''" src='@/assets/img/img-no-img.webp' />
                 <img v-else :src='model.myImage' />
               </div>
               <div class="profile-info-box">
@@ -182,8 +183,11 @@ onMounted(() => {
     logoutLink.value.addEventListener('click', handleLogout)
   }
   store.dispatch('user/readPrivateImage', props.userInfo.attcId).then((result) => {
+    console.log(result)
     const blob = new Blob([result], { type: 'image/jpeg' })
     model.myImage = URL.createObjectURL(blob)
+  }).catch(() => {
+    model.myImage = ''
   })
 })
 
