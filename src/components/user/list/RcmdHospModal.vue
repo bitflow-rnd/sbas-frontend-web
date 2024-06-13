@@ -86,10 +86,10 @@
                     <th>병상유형</th>
                     <td>
                       <div class='item-cell-box'>
-                        <div :class="{'ms-4': idx !== 0}" class='cbox' v-for='(item, idx) in model.bedTypeList' :key='idx'>
-                          <label>
-                            <input type='checkbox' name='permission' :value='item' v-model='model.searchParams.reqBedTypeCd'/><i></i>
-                            <span class='txt'>{{ item }}</span>
+                        <div v-for="(item, idx) in model.bedTypeList" :key="idx" :class="{'ms-4': idx > 0, 'cbox': idx > 0}">
+                          <label v-if='idx > 0'>
+                            <input type='checkbox' name='permission' :value='item.cdId' v-model='model.searchParams.reqBedTypeCd'/><i></i>
+                            <span class='txt'>{{ item.cdNm }}</span>
                           </label>
                         </div>
                       </div>
@@ -523,6 +523,7 @@ const props = defineProps({
 const emits = defineEmits(['closeModal', 'returnToList'])
 const store = useStore()
 
+
 const model = reactive({
   bdDetail: props.bdDetail,
   rcmdHp: null,
@@ -532,9 +533,7 @@ const model = reactive({
     isSido: false,
   },
   cmSido: null,
-  bedTypeList: [
-    '음압격리', '중증일반격리', '소아음압격리', '소아일반격리', '소아', '일반',
-  ],
+  bedTypeList: store.getters['common/getBedType'],
   showAprv: false,
   aprv: {
     msg: null,
@@ -555,6 +554,7 @@ onMounted(() => {
   console.log(props.bdDetail)
   getRcmdHpList()
   store.dispatch('admin/getSido')
+
 })
 
 function getRcmdHpList() {
