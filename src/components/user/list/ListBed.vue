@@ -4821,7 +4821,16 @@ export default {
         this.hosptlzdiscg.ptId = this.bdDetail.ptId
         this.hosptlzdiscg.roomNm = this.hosptlzdiscg.wardNm
         this.hosptlzdiscg.hospId = this.getChrgTL(this.timeline.items, 1)
+
+        if (this.hosptlzdiscg.pid === '0030001') {
+          this.hosptlzdiscg.monStrtDt = '20220103'
+          this.hosptlzdiscg.monStrtTm = '170000'
+        } else if (this.hosptlzdiscg.pid === '0030002') {
+          this.hosptlzdiscg.monStrtDt = '20211221'
+          this.hosptlzdiscg.monStrtTm = '170000'
+        }
         console.log(this.hosptlzdiscg)
+
         this.$store.dispatch('bedasgn/cfmHosp', this.hosptlzdiscg)
         this.alertClose()
         this.alertOpen(13)
