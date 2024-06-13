@@ -45,7 +45,7 @@
         </div>
 
         <!--begin::Modal body-->
-        <div class="modal-body py-10 px-10">
+        <div class="modal-body scroll-y py-10 px-10">
           <article v-if="model.ptDetail" class="detail-layout1">
             <div class="detail-wrap">
               <div class="detail-info-box">
@@ -163,14 +163,15 @@
                 <div class="detail-foot-box pb-5">
                   <article class="modal-menu-layout1 pt-5">
                     <div class="modal-menu-list">
-                      <a
-                        href='javascript:void(0)'
+                      <router-link
+                        to=""
                         class="modal-menu-btn menu-primary"
-                      >관찰환자 등록
-                      </a>
+                        @click='openSvrtInfoModal()'
+                      >관찰환자 생체정보
+                      </router-link>
                       <a href='javascript:void(0)'
                          class="modal-menu-btn menu-primary"
-                      >수정
+                      >환자 정보 수정
                       </a>
                     </div>
                   </article>
@@ -343,6 +344,9 @@
     </div>
     <!--end::Modal dialog-->
   </div>
+
+  <svrt-info-modal v-if='model.showSvrtInfoModal' :exist-pt='model.ptDetail' @closeModal='closeSvrtInfoModal()' />
+
 </template>
 
 <script setup>
@@ -350,6 +354,7 @@ import { reactive, defineProps, onMounted, defineEmits } from 'vue'
 import { getTag, getTelno, getTLDt, getTLIcon } from '@/util/ui'
 import { useStore } from 'vuex'
 import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
+import SvrtInfoModal from '@/components/user/modal/SvrtInfoModal.vue'
 
 const emit = defineEmits(['closeModal'])
 const props = defineProps({
@@ -363,7 +368,8 @@ const store = useStore()
 let model = reactive({
   ptDetail: props.ptDetail,
   timeline: store.getters['bedasgn/getTimeline'],
-  ptDs: store.getters['bedasgn/getPtDs']
+  ptDs: store.getters['bedasgn/getPtDs'],
+  showSvrtInfoModal: false,
 })
 
 onMounted(() => {
@@ -374,6 +380,14 @@ function closeModal() {
   store.commit('bedasgn/setTimeline', null)
   store.commit('bedasgn/setDisesInfo', null)
   emit('closeModal')
+}
+
+function openSvrtInfoModal() {
+  model.showSvrtInfoModal = true
+}
+
+function closeSvrtInfoModal() {
+  model.showSvrtInfoModal = false
 }
 
 </script>
