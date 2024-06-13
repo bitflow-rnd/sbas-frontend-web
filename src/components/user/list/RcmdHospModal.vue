@@ -86,7 +86,7 @@
                     <th>병상유형</th>
                     <td>
                       <div class='item-cell-box'>
-                        <div v-for="(item, idx) in model.bedTypeList" :key="idx" :class="{'ms-4': idx > 0, 'cbox': idx > 0}">
+                        <div v-for="(item, idx) in model.bedTypeList" :key="idx" :class="{ 'ms-4': idx > 1 }" class="cbox">
                           <label v-if='idx > 0'>
                             <input type='checkbox' name='permission' :value='item.cdId' v-model='model.searchParams.reqBedTypeCd'/><i></i>
                             <span class='txt'>{{ item.cdNm }}</span>
@@ -99,40 +99,14 @@
                     <th>중등도</th>
                     <td>
                       <div class='item-cell-box'>
-                        <div class='cbox'>
+
+                        <div class='cbox' :class="{'ms-4': idx > 0}" v-for='(item, idx) in model.severityTypeList' :key='idx'>
                           <label>
-                            <input type='checkbox' name='permission' /><i></i>
-                            <span class='txt'>중환자</span>
+                            <input type='checkbox' name='permission' :value='item.cdId' v-model='model.searchParams.reqSeverityTypeCd' /><i></i>
+                            <span class='txt'>{{ item.cdNm }}</span>
                           </label>
                         </div>
 
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='permission' /><i></i>
-                            <span class='txt'>중증</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='permission' /><i></i>
-                            <span class='txt'>준증증</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='permission' /><i></i>
-                            <span class='txt'>중등증</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='permission' /><i></i>
-                            <span class='txt'>일반</span>
-                          </label>
-                        </div>
                       </div>
                     </td>
                   </tr>
@@ -534,6 +508,7 @@ const model = reactive({
   },
   cmSido: null,
   bedTypeList: store.getters['common/getBedType'],
+  severityTypeList: store.getters['common/getSeverityType'],
   showAprv: false,
   aprv: {
     msg: null,

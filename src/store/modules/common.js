@@ -8,9 +8,14 @@ const commonCodesUrl = `${API_PROD}/api/v1/public/common/codes`
 export default {
   namespaced: true,
   state: {
+    //병상 배정 상태
     bedAssignmentStatus: [],
+    //병상 유형
     bedType: [],
+    //병상 배정 불가 사유
     bedNoReason: [],
+    //중증 유형 타입
+    severityType: [],
   },
   mutations: {
     setBedAssignmentStatus(state, payload) {
@@ -21,6 +26,9 @@ export default {
     },
     setBedNoReason(state, payload) {
       state.bedNoReason = payload
+    },
+    setSeverityType(state, payload) {
+      state.severityType = payload
     }
   },
   getters: {
@@ -32,13 +40,17 @@ export default {
     },
     getBedNoReason(state) {
       return state.bedNoReason
+    },
+    getSeverityType(state) {
+      return state.severityType
     }
   },
   actions: {
     getCommonCodes({ dispatch }) {
       dispatch('getBedAssignmentStatusCodes')
       dispatch('getBedTypeCodes')
-      dispatch('getBedNoReason')
+      dispatch('getBedNoReasonCodes')
+      dispatch('getSeverityTypeCodes')
     },
     getBedAssignmentStatusCodes({ commit }) {
       const url = `${commonCodesUrl}/BAST`
@@ -58,7 +70,7 @@ export default {
         console.log(e)
       })
     },
-    getBedNoReason({ commit }) {
+    getBedNoReasonCodes({ commit }) {
       const url = `${commonCodesUrl}/BNRN`
 
       axios_cstm().get(url).then((response) => {
@@ -66,6 +78,15 @@ export default {
       }).catch( e => {
         console.log(e)
       })
-    }
+    },
+    getSeverityTypeCodes({ commit }) {
+      const url = `${commonCodesUrl}/SVTP`
+
+      axios_cstm().get(url).then((response) => {
+        commit('setSeverityType', response.data?.result)
+      }).catch( e => {
+        console.log(e)
+      })
+    },
   }
 }
