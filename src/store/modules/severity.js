@@ -38,7 +38,8 @@ export default {
             ).getTime()
             state.severityData.first.push({
               prdtDt: date,
-              CovSF: parseFloat(prdtRow.CovSF?.replace(',', '.'))
+              CovSF: parseFloat(prdtRow.covSf?.replace(',', '.')),
+              oxygenApply: prdtRow.oxygenApply,
             })
         })
       }

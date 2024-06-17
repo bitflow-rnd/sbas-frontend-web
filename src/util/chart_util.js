@@ -30,14 +30,23 @@ export const sverityLineChartOptions = {
   ],
   tooltip: {
     shared: true,
-    y: {
-      formatter: function (val) {
-        return val.toFixed(2)
+    y: [
+      {
+        formatter: function(val) {
+          return val.toFixed(2)
+        }
+      },
+      {
+        formatter: function(val) {
+          const labels = ['HFNC', 'NASAL', 'ROOM AIR']
+          const index = val - 6
+          return labels[index]
+        }
       }
-    }
+    ]
   },
   markers: {
-    size: [0, 0, 0, 4, 4, 4, 0, 0, 4, 0, 0, 4, 0]
+    size: [2.5, 2.5]
   },
   fill: {
     type: 'gradient',
@@ -60,21 +69,48 @@ export const sverityLineChartOptions = {
   },
   title: {
     text: '중증도 스코어',
-    align: 'left'
-  },
-  yaxis: {
-    min: 0,
-    max: 1,
-    tickAmount: 10,
-    labels: {
-      formatter: (y) => {
-        return y?.toFixed(1)
-      }
-    },
-    title: {
-      text: '확률'
+    align: 'center',
+    offsetY: 10,
+    margin: -10,
+    style: {
+      fontSize: '18px',
+      color: '#fc1f1f',
     }
   },
+  yaxis: [
+    {
+      seriesName: 'CovSF',
+      min: 0,
+      max: 1,
+      tickAmount: 10,
+      labels: {
+        formatter: (y) => {
+          return y?.toFixed(1)
+        }
+      },
+      title: {
+        text: 'CovSF'
+      }
+    },
+    {
+      min: 0,
+      max: 10,
+      tickAmount: 10,
+      seriesName: 'oxygenApply',
+      opposite: true,
+      labels: {
+        show: true,
+        formatter: function (value) {
+          const labels = ['HFNC', 'NASAL', 'ROOM AIR'];
+          const index = value - 6;
+          return labels[index];
+        }
+      },
+      title: {
+        text: '산소치료수준',
+      },
+    }
+  ],
   xaxis: {
     type: 'datetime'
   },
@@ -115,21 +151,21 @@ export const sverityLineChartOptions = {
         fillColor: '#fc1f1f',
         opacity: 0.1
       }
-    ]
+    ],
   },
-  legend: {
-    show: true,
-    position: 'right',
-    offsetY: 50,
-    height: 2530,
-    formatter: (seriesName, opts) => {
-      if (opts.seriesIndex > 5) return ''
-      return seriesName
-    },
-    markers: {
-      width: [12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0]
-    }
-  }
+  // legend: {
+  //   show: true,
+  //   position: 'right',
+  //   offsetY: 50,
+  //   height: 2530,
+  //   formatter: (seriesName, opts) => {
+  //     if (opts.seriesIndex > 5) return ''
+  //     return seriesName
+  //   },
+  //   markers: {
+  //     width: [12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0]
+  //   }
+  // }
 }
 
 export const simpleSeverityLineChartOpt = {
