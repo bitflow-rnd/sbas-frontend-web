@@ -10,7 +10,7 @@
           <h2>추천병원 선택</h2>
           <!--end::Modal title-->
 
-          <closeButton @close='closeModal'/>
+          <CloseButton @close='closeModal'/>
 
           <article class='floating-request-box'>
             <div class='img-box'>
@@ -102,7 +102,7 @@
 
                         <div class='cbox' :class="{'ms-4': idx > 0}" v-for='(item, idx) in model.severityTypeList' :key='idx'>
                           <label>
-                            <input type='checkbox' name='permission' :value='item.cdId' v-model='model.searchParams.reqSeverityTypeCd' /><i></i>
+                            <input type='checkbox' name='permission' :value='item.cdId' v-model='model.searchParams.svrtTypeCd' /><i></i>
                             <span class='txt'>{{ item.cdNm }}</span>
                           </label>
                         </div>
@@ -115,61 +115,22 @@
                     <th>환자유형</th>
                     <td colspan='3'>
                       <div class='d-flex'>
-                        <div class='item-cell-box ptnt-type full d-flex flex-grow-1'>
-                          <div class='cbox'>
+                        <div class='item-cell-box ptnt-type me-10'>
+                          <div class='cbox' :class="{'ms-4': idx > 0}" v-for='(item, idx) in model.ptTypeList' :key='idx'>
                             <label>
-                              <input type='checkbox' name='permission' /><i></i>
-                              <span class='txt'>임산부</span>
+                              <input type='checkbox' name='permission' :value='item.cdId' v-model='model.searchParams.ptTypeCd' /><i></i>
+                              <span class='txt'>{{ item.cdNm }}</span>
                             </label>
                           </div>
-
-                          <div class='cbox ms-4'>
-                            <label>
-                              <input type='checkbox' name='permission' /><i></i>
-                              <span class='txt'>투석</span>
-                            </label>
-                          </div>
-
-                          <div class='cbox ms-4'>
-                            <label>
-                              <input type='checkbox' name='permission' /><i></i>
-                              <span class='txt'>수술</span>
-                            </label>
-                          </div>
-
-                          <div class='cbox ms-4'>
-                            <label>
-                              <input type='checkbox' name='permission' /><i></i>
-                              <span class='txt'>신생아</span>
-                            </label>
-                          </div>
-
-                          <div class='cbox ms-4'>
-                            <label>
-                              <input type='checkbox' name='permission' /><i></i>
-                              <span class='txt'>소아</span>
-                            </label>
-                          </div>
-
-                          <div class='cbox ms-4'>
-                            <label>
-                              <input type='checkbox' name='permission' /><i></i>
-                              <span class='txt'>인공호흡기</span>
-                            </label>
-                          </div>
-
-                          <div class='cbox ms-4'>
-                            <label>
-                              <input type='checkbox' name='permission' /><i></i>
-                              <span class='txt'>적극적치료요청</span>
-                            </label>
-                          </div>
-
                         </div>
-                        <div class='tbox w-400px with-btn ms-5'>
-                          <input type='text' placeholder='의료기관명 검색' />
+                        <div class='tbox w-300px with-btn ms-10'>
+                          <input
+                            type='text' placeholder='의료기관명 검색'
+                            v-model='model.searchParams.hospNm'
+                            @keyup.enter='searchList'
+                          />
 
-                          <a href='javascript:void(0)' class='input-btn'>
+                          <a @click='searchList' class='input-btn'>
                             <i class='fa-solid fa-magnifying-glass'></i>
                           </a>
                         </div>
@@ -509,6 +470,7 @@ const model = reactive({
   cmSido: null,
   bedTypeList: store.getters['common/getBedType'],
   severityTypeList: store.getters['common/getSeverityType'],
+  ptTypeList: store.getters['common/getPatientType'],
   showAprv: false,
   aprv: {
     msg: null,
@@ -518,10 +480,11 @@ const model = reactive({
   isAlert: false,
   searchParams: {
     pageNo: 1,
-    pageSize: 15,
-    sort: 'distance',
-    order: 'asc',
+    // sort: 'distance',
     reqBedTypeCd: [],
+    svrtTypeCd: [],
+    ptTypeCd: [],
+    hospNm: null,
   },
 })
 
@@ -529,12 +492,33 @@ onMounted(() => {
   console.log(props.bdDetail)
   getRcmdHpList()
   store.dispatch('admin/getSido')
-
 })
 
 function getRcmdHpList() {
   const url = `${API_PROD}/api/v1/private/bedasgn/hosp-list/${props.bdDetail.ptId}/${props.bdDetail.bdasSeq}`
   axios_cstm().get(url, {params : {}})
+    .then((response) => {
+      const data = response.data
+      if (data.code === '00') {
+        console.log(data.result)
+        model.rcmdHp = data.result
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+function searchList() {
+  console.log(model.searchParams)
+  const params = {
+    ...model.searchParams,
+    reqBedTypeCd: model.searchParams.reqBedTypeCd.join(','),
+    svrtTypeCd: model.searchParams.svrtTypeCd.join(','),
+    ptTypeCd: model.searchParams.ptTypeCd.join(','),
+  }
+  const url = `${API_PROD}/api/v1/private/bedasgn/hosp-list/${props.bdDetail.ptId}/${props.bdDetail.bdasSeq}`
+  axios_cstm().get(url, {params : params})
     .then((response) => {
       const data = response.data
       if (data.code === '00') {
@@ -626,7 +610,7 @@ function confirmAlert() {
 }
 
 .thum-hspt {
-  border: 1px solid gray;
+  border: 1px solid rgb(128, 128, 128);
   filter: grayscale(1);
   border-radius: 6px;
 }

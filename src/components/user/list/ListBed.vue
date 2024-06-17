@@ -5132,7 +5132,6 @@ export default {
 }
 </script>
 
-<!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped>
 .modal.show {
   background-color: rgba(0, 0, 0, 0.4);
@@ -5192,19 +5191,6 @@ article.toggle-list-layout1 .toggle-list label input:checked ~ .txt {
 
 article.toggle-list-layout1 .toggle-list label .txt {
   padding: 0 13px;
-}
-.thum-hspt {
-  border: 1px solid gray;
-  filter: grayscale(1);
-  border-radius: 6px;
-}
-
-.ptnt-type {
-  padding-top: 8px;
-}
-
-.address {
-  margin-top: 0px !important;
 }
 
 </style>
