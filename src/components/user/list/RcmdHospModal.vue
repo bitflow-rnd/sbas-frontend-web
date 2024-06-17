@@ -126,8 +126,9 @@
                         <div class='tbox w-300px with-btn ms-10'>
                           <input
                             type='text' placeholder='의료기관명 검색'
-                            v-model='model.searchParams.hospNm'
+                            v-model='model.searchParams.dutyName'
                             @keyup.enter='searchList'
+                            @blur='searchList'
                           />
 
                           <a @click='searchList' class='input-btn'>
@@ -484,15 +485,21 @@ const model = reactive({
     reqBedTypeCd: [],
     svrtTypeCd: [],
     ptTypeCd: [],
-    hospNm: null,
+    dutyName: null,
   },
 })
 
 onMounted(() => {
   console.log(props.bdDetail)
+  init()
   getRcmdHpList()
-  store.dispatch('admin/getSido')
 })
+
+function init() {
+  store.dispatch('admin/getSido')
+  model.departureSelect.model = props.bdDetail.bascAddr
+  model.departureSelect.isLocation = true
+}
 
 function getRcmdHpList() {
   const url = `${API_PROD}/api/v1/private/bedasgn/hosp-list/${props.bdDetail.ptId}/${props.bdDetail.bdasSeq}`
