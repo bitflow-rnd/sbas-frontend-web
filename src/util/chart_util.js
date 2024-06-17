@@ -67,16 +67,16 @@ export const sverityLineChartOptions = {
     curve: 'smooth',
     dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
   },
-  title: {
-    text: '중증도 스코어',
-    align: 'center',
-    offsetY: 10,
-    margin: -10,
-    style: {
-      fontSize: '18px',
-      color: '#fc1f1f',
-    }
-  },
+  // title: {
+  //   text: '중증도 스코어',
+  //   align: 'center',
+  //   offsetY: 10,
+  //   margin: -10,
+  //   style: {
+  //     fontSize: '18px',
+  //     color: '#fc1f1f',
+  //   }
+  // },
   yaxis: [
     {
       seriesName: 'CovSF',
