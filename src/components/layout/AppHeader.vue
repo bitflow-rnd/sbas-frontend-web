@@ -735,7 +735,9 @@ export default {
       this.$store.dispatch('bedasgn/getBdListWeb')
     },
     getPtList() {
-      const { dutyDstr1Cd } = this.userInfo
+      // 대구로 설정
+      const dutyDstr1Cd = '27'
+      // const { dutyDstr1Cd } = this.userInfo
       if (dutyDstr1Cd) {
         const data = { dstr1Cd: dutyDstr1Cd }
         this.$store.dispatch('patnt/getPatntList', data)
@@ -745,7 +747,9 @@ export default {
       this.$store.dispatch('admin/getSido')
     },
     getMediList() {
-      const { dutyDstr1Cd } = this.userInfo
+      // 대구로 설정
+      const dutyDstr1Cd = '27'
+      // const { dutyDstr1Cd } = this.userInfo
       if (dutyDstr1Cd) {
         this.$store.dispatch('admin/getMedinst', { dstr1Cd: dutyDstr1Cd })
       } else {

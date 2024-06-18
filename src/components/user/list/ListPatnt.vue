@@ -3066,10 +3066,13 @@ export default {
       this.visibleRef = false
     },
     setDefaultDstr1Cd() {
-      this.filterPatient.address.first = this.userInfo.dutyDstr1Cd
-      if (this.userInfo.dutyDstr1Cd) {
-        this.getSecondAddress(this.userInfo.dutyDstr1Cd)
-      }
+      // 대구로 설정
+      this.filterPatient.address.first = '27'
+      this.getSecondAddress('27')
+      // this.filterPatient.address.first = this.userInfo.dutyDstr1Cd
+      // if (this.userInfo.dutyDstr1Cd) {
+        // this.getSecondAddress(this.userInfo.dutyDstr1Cd)
+      // }
     },
     openSvrtInfoModal() {
       this.showSvrtInfoModal = true

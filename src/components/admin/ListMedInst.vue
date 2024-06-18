@@ -2525,11 +2525,14 @@ export default {
       this.getMediInstEtc()
     },
     setDefaultDstr1Cd() {
-      const userInfo = store.getters['user/getUserInfo']
-      if (userInfo.dutyDstr1Cd) {
-        this.filterMedinst['dstr1Cd'] = userInfo.dutyDstr1Cd
-        this.getSecondAddress(userInfo.dutyDstr1Cd)
-      }
+      // 대구로 설정
+      this.filterMedinst['dstr1Cd'] = '27'
+      this.getSecondAddress('27')
+      // const userInfo = store.getters['user/getUserInfo']
+      // if (userInfo.dutyDstr1Cd) {
+        // this.filterMedinst['dstr1Cd'] = userInfo.dutyDstr1Cd
+        // this.getSecondAddress(userInfo.dutyDstr1Cd)
+      // }
     }
   }
 }
