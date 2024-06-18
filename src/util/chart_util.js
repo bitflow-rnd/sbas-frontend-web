@@ -14,19 +14,11 @@ export const sverityLineChartOptions = {
     },
   },
   colors: [
-    '#676767',
+    '#fc1f1f',
     '#000000',
     '#676767',
     '#00ff26',
     '#fcce14',
-    '#fc1f1f',
-    '#00ff26',
-    '#00ff26',
-    '#00ff26',
-    '#fcce14',
-    '#fcce14',
-    '#fcce14',
-    '#fc1f1f'
   ],
   tooltip: {
     shared: true,
@@ -45,9 +37,9 @@ export const sverityLineChartOptions = {
       }
     ]
   },
-  markers: {
-    size: [2.5, 2.5]
-  },
+  // markers: {
+  //   size: [3, 3]
+  // },
   fill: {
     type: 'gradient',
     gradient: {
@@ -63,9 +55,9 @@ export const sverityLineChartOptions = {
     enabled: false
   },
   stroke: {
-    width: [2, 2, 2, 2, 2, 2, 1, 1, 2, 1, 1, 2, 1],
+    width: [3, 3],
     curve: 'smooth',
-    dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
+    // dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
   },
   // title: {
   //   text: '중증도 스코어',
@@ -106,18 +98,35 @@ export const sverityLineChartOptions = {
           return labels[index];
         }
       },
-      title: {
-        text: '산소치료수준',
-      },
+      // title: {
+      //   text: '산소치료수준',
+      // },
     }
   ],
   xaxis: {
     type: 'datetime'
   },
   annotations: {
+    xaxis: [{
+      x: new Date(1639872000000).getTime(),
+      strokeDashArray: 0,
+      borderColor: '#008FFB',
+      borderWidth: 3,
+      label: {
+        orientation: 'horizontal',
+        borderColor: '#008FFB',
+        style: {
+          fontSize: '14px',
+          color: '#fff',
+          background: '#008FFB',
+        },
+        text: '오늘(12.19)',
+      }
+    }],
     yaxis: [
+      // 기준선 
       {
-        y: 0.3,
+        y: 0.4,
         borderColor: '#f36666',
         opacity: 0.5,
         borderWidth: 1,
@@ -130,15 +139,16 @@ export const sverityLineChartOptions = {
         borderWidth: 1,
         strokeDashArray: 5
       },
+      // 백그라운드 색깔
       {
         y: 0.0,
-        y2: 0.3,
+        y2: 0.4,
         borderColor: '#000000',
         fillColor: '#2eff00',
         opacity: 0.1
       },
       {
-        y: 0.3,
+        y: 0.4,
         y2: 0.8,
         borderColor: '#000000',
         fillColor: '#fcce14',
@@ -182,19 +192,11 @@ export const simpleSeverityLineChartOpt = {
     },
   },
   colors: [
-    '#676767',
+    '#fc1f1f',
     '#000000',
     '#676767',
     '#00ff26',
     '#fcce14',
-    '#fc1f1f',
-    '#00ff26',
-    '#00ff26',
-    '#00ff26',
-    '#fcce14',
-    '#fcce14',
-    '#fcce14',
-    '#fc1f1f'
   ],
   tooltip: {
     shared: true,
@@ -204,9 +206,9 @@ export const simpleSeverityLineChartOpt = {
       }
     }
   },
-  markers: {
-    size: [0, 0, 0, 4, 4, 4, 0, 0, 4, 0, 0, 4, 0]
-  },
+  // markers: {
+  //   size: [1.5, 1.5]
+  // },
   fill: {
     type: 'gradient',
     gradient: {
@@ -222,29 +224,69 @@ export const simpleSeverityLineChartOpt = {
     enabled: false
   },
   stroke: {
-    width: [2, 2, 2, 2, 2, 2, 1, 1, 2, 1, 1, 2, 1],
+    width: [3, 3],
     curve: 'smooth',
-    dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
+    // dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
   },
   title: { },
-  yaxis: {
-    min: 0,
-    max: 1,
-    tickAmount: 10,
-    labels: {
-      formatter: (y) => {
-        return y?.toFixed(1)
+  yaxis: [
+    {
+      seriesName: 'CovSF',
+      min: 0,
+      max: 1,
+      tickAmount: 10,
+      labels: {
+        formatter: (y) => {
+          return y?.toFixed(1)
+        }
+      },
+      title: {
+        text: 'CovSF'
       }
     },
-    title: {}
-  },
+    {
+      min: 0,
+      max: 10,
+      tickAmount: 10,
+      seriesName: 'oxygenApply',
+      opposite: true,
+      labels: {
+        show: true,
+        formatter: function (value) {
+          const labels = ['HFNC', 'NASAL', 'ROOM AIR'];
+          const index = value - 6;
+          return labels[index];
+        }
+      },
+      // title: {
+      //   text: '산소치료수준',
+      // },
+    }
+  ],
   xaxis: {
     type: 'datetime'
   },
   annotations: {
+    xaxis: [{
+      x: new Date(1639872000000).getTime(),
+      strokeDashArray: 0,
+      borderColor: '#008FFB',
+      borderWidth: 3,
+      label: {
+        orientation: 'horizontal',
+        borderColor: '#008FFB',
+        style: {
+          fontSize: '14px',
+          color: '#fff',
+          background: '#008FFB',
+        },
+        text: '오늘(12.19)',
+      }
+    }],
     yaxis: [
+      // 기준선
       {
-        y: 0.3,
+        y: 0.4,
         borderColor: '#f36666',
         opacity: 0.5,
         borderWidth: 1,
@@ -257,15 +299,16 @@ export const simpleSeverityLineChartOpt = {
         borderWidth: 1,
         strokeDashArray: 5
       },
+      // 백그라운드 색깔
       {
         y: 0.0,
-        y2: 0.3,
+        y2: 0.4,
         borderColor: '#000000',
         fillColor: '#2eff00',
         opacity: 0.1
       },
       {
-        y: 0.3,
+        y: 0.4,
         y2: 0.8,
         borderColor: '#000000',
         fillColor: '#fcce14',
@@ -280,19 +323,19 @@ export const simpleSeverityLineChartOpt = {
       }
     ]
   },
-  legend: {
-    show: false,
-    position: 'right',
-    offsetY: 50,
-    height: 2530,
-    formatter: (seriesName, opts) => {
-      if (opts.seriesIndex > 5) return ''
-      return seriesName
-    },
-    markers: {
-      width: [12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0]
-    }
-  }
+  // legend: {
+  //   show: false,
+  //   position: 'right',
+  //   offsetY: 50,
+  //   height: 2530,
+  //   formatter: (seriesName, opts) => {
+  //     if (opts.seriesIndex > 5) return ''
+  //     return seriesName
+  //   },
+  //   markers: {
+  //     width: [12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0]
+  //   }
+  // }
 }
 
 export const trendLineChartOptions = {

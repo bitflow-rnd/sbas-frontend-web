@@ -54,18 +54,32 @@ function updateChart(result) {
   if (typeof result === 'undefined' || result.length < 1) {
     return
   }
-
   let chartData = [
     { name: 'CovSF', data: [] },
+    { name: 'oxygenApply', data: [], type: 'line' },
   ]
 
   result.first.forEach((day) => {
     chartData[0].data.push({
       x: day.prdtDt,
-      y: parseFloat(day.CovSF)
+      y: parseFloat(day.CovSF),
+    })
+    chartData[1].data.push({
+      x: day.prdtDt,
+      y: convertToChartValue(day.oxygenApply),
     })
   })
   model.series = chartData
+}
+
+function convertToChartValue(data) {
+  if (data === 'HFNC') {
+    return 6
+  } else if (data === 'NASAL') {
+    return 7
+  } else if (data === 'ROOM AIR') {
+    return 8
+  }
 }
 </script>
 
