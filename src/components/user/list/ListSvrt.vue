@@ -75,7 +75,6 @@
             <!--begin::Card toolbar-->
             <article class="table-form-layout1">
               <div class="form-head-box"></div>
-
               <div class="form-body-box">
                 <div class="table-box">
                   <table>
@@ -128,40 +127,6 @@
                     </tr>
 
                     <tr>
-                      <th>배정상태</th>
-                      <td class="pb-0">
-                        <div
-                          class="item-cell-box"
-                          v-for="(status, idx) in Object.entries(assignmentStatuses)"
-                          :key="idx"
-                        >
-                          <div class="cbox me-4">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="filterPatient['assignmentStatus']"
-                                name="state"
-                                :value="status[1]"
-                                @change="search"
-                              /><i></i>
-                              <span class="txt">{{ status[0] }}</span>
-                            </label>
-                          </div>
-                        </div>
-                        <div class="item-cell-box">
-                          <div class="cbox me-4">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="filterPatient['monitoring']"
-                                :value="true"
-                                @change="search"
-                              /><i></i>
-                              <span class="txt">관찰 환자</span>
-                            </label>
-                          </div>
-                        </div>
-                      </td>
                       <th>검색어</th>
                       <td>
                         <div class="item-cell-box">
@@ -704,7 +669,6 @@ import {
   getTelno,
   getTLDt,
   getTLIcon,
-  getUndrDses,
   toggleCheckbox
 } from '@/util/ui'
 import { reactive, ref } from 'vue'
@@ -775,43 +739,8 @@ export default {
         instId: '',
         rcptPhc: 0
       },
-      svInfo: {
-        ptId: '',
-        ptTypeCd: [],
-        svrtIptTypeCd: 'SVIP0001',
-        svrtTypeCd: '',
-        undrDsesCd: []
-      },
       bioAnlys: {},
-      spInfo: {
-        ptId: '',
-        dprtDstrTypeCd: '',
-        dprtDstrBascAddr: '',
-        dprtDstrDetlAddr: '',
-        dprtDstrZip: '',
-        nok1Telno: '',
-        nok2Telno: '',
-        chrgTelno: '',
-        spclNm: '',
-        dprtHospId: '',
-        inhpAsgnYn: 'N',
-        reqDstr1Cd: '27',
-        reqDstr2Cd: null
-      },
-      assignmentStatuses: {
-        '병상요청': 'BAST0003',
-        '병상배정': 'BAST0004',
-        '이송·배차': 'BAST0005',
-        '입·퇴원처리': 'BAST0006',
-        '완료': 'BAST0007,BAST0008',
-        '환자등록': 'BAST0001'
-      },
-      d: '관찰 환자',
       genders: ['남', '여'],
-      dateRanges: ['1개월', '3개월', '6개월', '1년', '전체', '직접지정'],
-      selectedPatient: null,
-      selectedPatientBasicInfo: null,
-      selectedPatientDiseaseInfo: null,
       patientData: [],
       patientBasicInfo: [],
       patientDiseaseInfo: [],
@@ -856,7 +785,7 @@ export default {
       return this.page * this.displayRowsCount
     },
     filterData() {
-      let params = {}
+      let params = { sever: true }
       if (this.filterPatient['searchText']) params = { ...params, ptNm: this.filterPatient['searchText'] }
       if (this.filterPatient['searchText']) params = { ...params, rrno1: this.filterPatient['searchText'] }
       if (this.filterPatient['searchText']) params = { ...params, mpno: this.filterPatient['searchText'] }
@@ -870,10 +799,6 @@ export default {
       }
       if (this.filterPatient['hospitalName']) params = { ...params, hospNm: this.filterPatient['hospitalName'] }
       if (this.filterPatient['monitoring']) params = { ...params, sever: this.filterPatient['monitoring'] }
-      if (this.filterPatient['assignmentStatus']) params = {
-        ...params,
-        bedStatCd: this.filterPatient['assignmentStatus'].length ? this.filterPatient['assignmentStatus'].toString() : null
-      }
 
       return params
     },
@@ -913,19 +838,6 @@ export default {
     getTelno,
     getTLDt,
     getTLIcon,
-    validateInput(idx) {
-      if (idx === 0) {
-        this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[^0-9]/g, '')
-        this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[^0-9]/g, '')
-        this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[^0-9]/g, '')
-      } else if (idx === 1) {
-        this.newPt.mpno = this.newPt.mpno.replace(/[^0-9]/g, '')
-        this.newPt.telno = this.newPt.telno.replace(/[^0-9]/g, '')
-      } else if (idx === 2) {
-        this.newPt.rrno1 = this.newPt.rrno1.replace(/[^0-9]/g, '')
-        this.newPt.rrno2 = this.newPt.rrno2.replace(/[^0-9]/g, '')
-      }
-    },
     getSecondAddress(address) {
       if (address) {
         this.$store.dispatch('admin/getGuGun', address)
@@ -1008,8 +920,6 @@ export default {
       this.rptYn = false
       this.newPt = JSON.parse(JSON.stringify(this.initNewPt))
       this.dsInfo = JSON.parse(JSON.stringify(this.initDsInfo))
-      //this.svInfo = this.initSvInfo
-      //this.spInfo =  this.initSpInfo
       this.$store.commit('patnt/setRpt', null)
       this.preRpt = null
       this.undrDsesCdArr = []
