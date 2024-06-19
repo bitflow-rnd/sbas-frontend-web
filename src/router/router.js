@@ -101,6 +101,11 @@ const routes = [
         component: () => import('@/components/user/dsbd/SvrtDashbd.vue')
       },
       {
+        path: 'svrt/list',
+        name: 'svrtList',
+        component: () => import('@/components/user/list/ListSvrt.vue')
+      },
+      {
         path: 'medinst/list',
         name: 'listmedinst',
         component: () => import('@/components/admin/ListMedInst.vue')

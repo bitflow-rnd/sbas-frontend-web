@@ -73,7 +73,7 @@
             <!--begin:Menu item-->
             <router-link
               to="/user/bedasgn/list"
-              @click="handlefunc(getBdList, 1)"
+              @click="getBdList"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -86,7 +86,7 @@
             <!--begin:Menu item-->
             <router-link
               to="/user/patnt/list"
-              @click="handlefunc(getPtList, 2)"
+              @click="getPtList"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -99,7 +99,7 @@
             <!--begin:Menu item-->
             <router-link
               to="/user/cntc/list"
-              @click="handlefunc(getUsersList, 3)"
+              @click="getUsersList"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -110,8 +110,19 @@
             </router-link>
             <!--end:Menu item-->
             <!--begin:Menu item-->
+<!--            <router-link-->
+<!--              to="/user/svrt/dashbd"-->
+<!--              class="menu-item me-0 me-lg-1"-->
+<!--            >-->
+<!--              &lt;!&ndash;begin:Menu link&ndash;&gt;-->
+<!--              <span class="menu-link">-->
+<!--                <span class="menu-title">중증환자모니터링</span>-->
+<!--              </span>-->
+<!--              &lt;!&ndash;end:Menu link&ndash;&gt;-->
+<!--            </router-link>-->
             <router-link
-              to="/user/svrt/dashbd"
+              to="/user/svrt/list"
+              @click="getPtList"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -124,7 +135,7 @@
             <!--begin:Menu item-->
             <router-link
               to="/user/medinst/list"
-              @click="handlefunc(getMediList, 7)"
+              @click="getMediList"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -138,7 +149,7 @@
             <router-link
               v-show="userInfo.jobCd === JobCode.Sysa"
               to="/admin/user/list"
-              @click="handlefunc(getUserList, 5)"
+              @click="getUserList"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -693,8 +704,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getTelno, getPmgr, getPtType, ptType } from '@/util/ui'
-import store from '@/store/store'
+import { getTelno, ptType } from '@/util/ui'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import MyInfoModModal from '@/components/user/modal/MyInfoModModal.vue'
 import { JobCode } from '@/util/sbas_cnst'
@@ -718,11 +728,6 @@ export default {
   },
   methods: {
     getTelno,
-    getPmgr,
-    getPtType,
-    handlefunc(fun, idx) {
-      fun()
-    },
     getUserList() {
       this.$store.dispatch('admin/getSido')
       this.$store.dispatch('admin/getUserList')
