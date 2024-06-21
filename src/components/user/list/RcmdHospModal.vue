@@ -246,58 +246,68 @@
             </div>
 
             <div v-if='model.rcmdHp.count !== 0' class='table-body-box'>
-              <div class='table-box with-scroll small'>
+              <div class='table-box with-scroll small hosp-list'>
                 <table>
                   <colgroup>
                     <col style='width: 50px' />
                     <col style='width: 70px' />
-                    <col style='width: 200px' />
+                    <col style='width: 200px' /> <!-- 병원명 -->
+
+                    <col style='width: 70px' />
+                    <col style='width: 70px' />
+                    <col style='width: 70px' />
+                    <col style='width: 75px' />
+                    <col style='width: 105px' />
+                    <col style='width: 70px' />
+
                     <col style='width: 60px' />
                     <col style='width: 60px' />
                     <col style='width: 60px' />
                     <col style='width: 60px' />
+
+                    <col style='width: 60px' />
+                    <col style='width: 80px' />
+                    <col style='width: 60px' />
+                    <col style='width: 60px' />
+                    <col style='width: 95px' />
                     <col style='width: 60px' />
                     <col style='width: 60px' />
                     <col style='width: 60px' />
-                    <col style='width: 60px' />
-                    <col style='width: 60px' />
-                    <col style='width: 60px' />
-                    <col style='width: 60px' />
-                    <col style='width: 60px' />
-                    <col style='width: 60px' />
-                    <col style='width: 60px' />
-                    <col style='width: 60px' />
-                    <col style='width: 60px' />
-                    <col style='width: 60px' />
+                    <col style='width: 70px' />
                     <col style='width: 90px' />
                   </colgroup>
                   <thead>
                   <tr class='small'>
-                    <th>
+                    <th rowspan='2'>
                       <div class='cbox'>
                         <label> <input type='checkbox' class='all-chk' /><i></i> </label>
                       </div>
                     </th>
-                    <th>이미지</th>
-                    <th>병원명</th>
-                    <th>[감염] 중환자</th>
-                    <th>[감염] 중증</th>
-                    <th>[감염] 준중증</th>
-                    <th>[감염] 중등증</th>
-                    <th>일반</th>
-                    <th>분만</th>
-                    <th>투석</th>
-                    <th>소아</th>
-                    <th>인공 호흡</th>
-                    <th>인공호흡 (조산아)</th>
-                    <th>인큐 베이터</th>
-                    <th>ECMO</th>
-                    <th>중심체온 조절유도기</th>
-                    <th>고압 산소</th>
-                    <th>CT</th>
-                    <th>MRI</th>
-                    <th>혈관 촬영기</th>
-                    <th>거리</th>
+                    <th rowspan='2'>이미지</th>
+                    <th rowspan='2'>병원명</th>
+                    <th colspan='6'><b>감염병 전용 수용시설</b></th>
+                    <th rowspan='2'>[감염]<br>중환자</th>
+                    <th rowspan='2'>[감염]<br>중증</th>
+                    <th rowspan='2'>[감염]<br>준중증</th>
+                    <th rowspan='2'>[감염]<br>중등증</th>
+                    <th rowspan='2'>인공<br>호흡</th>
+                    <th rowspan='2'>인공호흡<br>(조산아)</th>
+                    <th rowspan='2'>인큐<br>베이터</th>
+                    <th rowspan='2'>ECMO</th>
+                    <th rowspan='2'>중심체온<br>조절유도기</th>
+                    <th rowspan='2'>고압<br>산소</th>
+                    <th rowspan='2'>CT</th>
+                    <th rowspan='2'>MRI</th>
+                    <th rowspan='2'>혈관<br>촬영기</th>
+                    <th rowspan='2'>거리</th>
+                  </tr>
+                  <tr class='small'>
+                    <th>분만<br>(의료진)</th>
+                    <th>투석<br>(의료진)</th>
+                    <th>소아<br>(의료진)</th>
+                    <th>요양병원<br>시설<br>(의료진)</th>
+                    <th>정신질환자<br>시설<br>(의료진)</th>
+                    <th>음압<br>수술실</th>
                   </tr>
                   </thead>
 
@@ -329,19 +339,39 @@
                             {{ item.hospNm }}<br><span class='text-secondary fs-12px'>{{ item.dutyDivNam }}</span>
                           </div>
                         </div>
-
                         <!--                      <div class="text-gray-600 fs-12px pt-2">-->
                         <!--                        {{ getTag(item.tagList) }}-->
                         <!--                      </div>-->
                       </td>
+                      <td>
+                        <span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childBirthYn'] === false  }">
+                        {{ item['facilityStatus']['childBirthYn'] ? 'Y' : 'N' }}</span>
+                        <span class='text-black'>({{ item['medicalTeamCount']['childBirthMed'] }})</span>
+                      </td>
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childYn'] === false  }">
+                        {{ item['facilityStatus']['childYn'] ? 'Y' : 'N' }}</span>
+                        <span class='text-black'>({{ item['medicalTeamCount']['childMed'] }})</span>
+                      </td>
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['dialysisYn'] === false  }">
+                        {{ item['facilityStatus']['dialysisYn'] ? 'Y' : 'N' }}</span>
+                        <span class='text-black'>({{ item['medicalTeamCount']['dialysisMed'] }})</span>
+                      </td>
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['mentalPatientYn'] === false  }">
+                        {{ item['facilityStatus']['mentalPatientYn'] ? 'Y' : 'N' }}</span>
+                        <span class='text-black'>({{ item['medicalTeamCount']['mentalPatientMed'] }})</span>
+                      </td>
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['nursingHospitalYn'] === false  }">
+                        {{ item['facilityStatus']['nursingHospitalYn'] ? 'Y' : 'N' }}</span>
+                        <span class='text-black'>({{ item['medicalTeamCount']['nursingHospitalMed'] }})</span>
+                      </td>
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['negativePressureRoomYn'] === false  }">
+                        {{ item['facilityStatus']['negativePressureRoomYn'] ? 'Y' : 'N' }}</span>
+                      </td>
+
                       <td><span class='text-black'>{{ item['gnbdIcu'] + item['npidIcu'] }}</span></td>
                       <td><span class='text-black'>{{ item['gnbdSvrt'] }}</span></td>
                       <td><span class='text-black'>{{ item['gnbdSmsv'] }}</span></td>
                       <td><span class='text-black'>{{ item['gnbdModr'] }}</span></td>
-                      <td><span class='text-black'>13</span></td>
-                      <td><span class='text-black'>13</span></td>
-                      <td><span class='text-black'>13</span></td>
-                      <td><span class='text-black'>0</span></td>
 
                       <td><span :class="{'text-danger': item['ventilator'] === 'N'}" class='text-primary'>
                         {{ item['ventilator'] }}</span></td>
@@ -628,6 +658,14 @@ function confirmAlert() {
 
 .address {
   margin-top: 0px !important;
+}
+
+.hosp-list {
+  overflow-x: auto;
+}
+
+table {
+  min-width: 1500px;
 }
 
 </style>
