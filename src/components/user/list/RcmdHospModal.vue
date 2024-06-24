@@ -285,7 +285,7 @@
                     </th>
                     <th rowspan='2'>이미지</th>
                     <th rowspan='2'>병원명</th>
-                    <th colspan='6'><b>감염병 전용 수용시설</b></th>
+                    <th colspan='6'>감염병 전용 수용시설</th>
                     <th rowspan='2'>[감염]<br>중환자</th>
                     <th rowspan='2'>[감염]<br>중증</th>
                     <th rowspan='2'>[감염]<br>준중증</th>

@@ -53,7 +53,7 @@
                   <a href="javascript:void(0)" class="item-box state-finish" role="button">
                     <div class="info-box">
                       <div class="state-box">
-                        <div class="state-txt type-finish">{{ item['activityDetail'] }}</div>
+                        <div class="state-txt type-finish">{{ model.bedStatCd.find(code => code.cdId === item['activityDetail']).cdNm }}</div>
                       </div>
 
                       <div class="user-box">
@@ -414,14 +414,20 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, reactive } from 'vue'
 import { getTLDt } from '@/util/ui'
+import { useStore } from 'vuex'
 
+const store = useStore()
 const props = defineProps({
   historyList: {
     type: Array,
     required: true,
   },
+})
+
+const model = reactive({
+  bedStatCd: store.getters['common/getBedAssignmentStatusCodes'],
 })
 
 </script>
