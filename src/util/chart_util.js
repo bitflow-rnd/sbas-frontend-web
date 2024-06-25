@@ -200,11 +200,20 @@ export const simpleSeverityLineChartOpt = {
   ],
   tooltip: {
     shared: true,
-    y: {
-      formatter: function (val) {
-        return val.toFixed(2)
+    y: [
+      {
+        formatter: function(val) {
+          return val.toFixed(2)
+        }
+      },
+      {
+        formatter: function(val) {
+          const labels = ['HFNC', 'NASAL', 'ROOM AIR']
+          const index = val - 6
+          return labels[index]
+        }
       }
-    }
+    ]
   },
   // markers: {
   //   size: [1.5, 1.5]
@@ -222,6 +231,9 @@ export const simpleSeverityLineChartOpt = {
   },
   dataLabels: {
     enabled: false
+  },
+  forecastDataPoints: {
+    count: 3,
   },
   stroke: {
     width: [3, 3],
@@ -321,7 +333,7 @@ export const simpleSeverityLineChartOpt = {
         fillColor: '#fc1f1f',
         opacity: 0.1
       }
-    ]
+    ],
   },
   // legend: {
   //   show: false,

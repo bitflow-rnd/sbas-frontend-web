@@ -434,7 +434,7 @@
                 </div>
               </div>
 
-              <div v-if="bdasHis !== undefined" class="detail-info-box">
+              <div v-if="bdasHisInfo" class="detail-info-box">
                 <div class="detail-head-box px-10">
                   <div class="head-box">
                     <div class="head-txt-box">병상배정 이력</div>
@@ -448,12 +448,12 @@
                     <div class="table-body-box overflow-y-auto">
                       <div class="table-box">
 
-                        <table v-if='bdasHis.items && bdasHis.items.length>0'>
+                        <table v-if='bdasHisInfo.items && bdasHisInfo.items.length>0'>
                           <colgroup>
                             <col style="width: 50px" />
                             <col style="width: auto" />
                           </colgroup>
-                          <tr v-for="(item,i) in bdasHis.items" :key="i">
+                          <tr v-for="(item,i) in bdasHisInfo.items" :key="i">
                             <td class="py-5 px-1 text-center text-gray-700 fw-medium fs-6">
                               <div
                                 class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2">
@@ -485,7 +485,7 @@
                           </tr>
                         </table>
 
-                        <div class="img-box" v-if='!bdasHis.items || bdasHis.items.length===0'>
+                        <div class="img-box" v-if='!bdasHisInfo.items || bdasHisInfo.items.length===0'>
                           <img src="/img/common/img_nodata.svg" alt="이미지">
                           <h2 data-v-70fc8ce7="">최근 이력 없음</h2>
                         </div>
@@ -775,7 +775,7 @@ export default {
   computed: {
     ...mapState('user', ['userInfo']),
     ...mapState('admin', ['cmSido', 'cmGugun', 'organMedi']),
-    ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHis']),
+    ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHisInfo']),
     ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPts', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
     startIndex() {

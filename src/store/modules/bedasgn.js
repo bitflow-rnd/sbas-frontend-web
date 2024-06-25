@@ -16,7 +16,8 @@ export default {
     ptBio: null,
     ptSp: null,
     rcmdModal: 1,
-    rcmdHp: null
+    rcmdHp: null,
+    bdasHisInfo: null,
   },
   getters: {
     getTimeline: (state) => {
@@ -70,7 +71,7 @@ export default {
       state.transInfo = payload
     },
     setBdasHisInfo(state, payload) {
-      state.bdasHis = payload
+      state.bdasHisInfo = payload
     },
     isTrsf(state, payload) {
       state.isTrsf = payload
