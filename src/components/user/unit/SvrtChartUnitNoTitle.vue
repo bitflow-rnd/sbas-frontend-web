@@ -13,7 +13,7 @@
 
 <script setup>
 import VueApexCharts from 'vue3-apexcharts'
-import { simpleSeverityLineChartOpt } from '@/util/chart_util'
+import { data, simpleSeverityLineChartOpt } from '@/util/chart_util'
 import {defineProps, onMounted, reactive, watch} from 'vue'
 import { useStore } from 'vuex'
 
@@ -56,19 +56,25 @@ function updateChart(result) {
   }
   let chartData = [
     { name: 'CovSF', data: [] },
-    { name: 'oxygenApply', data: [], type: 'line' },
+    // { name: 'OxygenApply', data: [] },
   ]
+  const oxygenApply = []
+  if (result.first && result.first.length > 0) {
+    data.firstMsreDt = result.first[0].prdtDt
+  }
 
   result.first.forEach((day) => {
     chartData[0].data.push({
       x: day.prdtDt,
       y: parseFloat(day.CovSF),
     })
-    chartData[1].data.push({
-      x: day.prdtDt,
-      y: convertToChartValue(day.oxygenApply),
-    })
+    oxygenApply.push(day.oxygenApply)
+    // chartData[1].data.push({
+    //   x: day.prdtDt,
+    //   y: convertToChartValue(day.oxygenApply),
+    // })
   })
+  data.oxygenApply = oxygenApply
   model.series = chartData
 }
 

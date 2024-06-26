@@ -3,10 +3,34 @@ import ko from 'apexcharts/dist/locales/ko.json'
 let today = new Date();
 let formattedDate = today.toISOString().split('T')[0];
 let todayDate = `${today.getMonth() + 1}.${today.getDate()}`
-let oxyAppFormatter = function(value) {
-  const labels = ['UNDEFINED', 'ROOM AIR', 'NASAL', 'MASK', 'HFNC', 'VENTILATION'];
-  const index = value - 4;
-  return labels[index]
+
+export let data = {
+  firstMsreDt: null,
+  oxygenApply: [],
+};
+
+function setTodayLine(date) {
+  if (!date) {
+    return null
+  }
+  if (date < today) {
+    return {
+      x: new Date(formattedDate).getTime(),
+      strokeDashArray: 0,
+      borderColor: '#008FFB',
+      borderWidth: 1.5,
+      label: {
+        orientation: 'horizontal',
+        borderColor: '#008FFB',
+        style: {
+          fontSize: '13px',
+          color: '#fff',
+          background: '#008FFB'
+        },
+        text: `오늘(${todayDate})`
+      }
+    }
+  }
 }
 
 export const simpleSeverityLineChartOpt = {
@@ -14,7 +38,7 @@ export const simpleSeverityLineChartOpt = {
     height: 350,
     type: 'line',
     zoom: {
-      enabled: true
+      enabled: false
     },
     locales: [ko],
     defaultLocale: 'ko',
@@ -30,21 +54,17 @@ export const simpleSeverityLineChartOpt = {
     '#fcce14',
   ],
   tooltip: {
-    shared: true,
-    y: [
-      {
-        formatter: function(val) {
-          return val.toFixed(3)
-        }
-      },
-      {
-        formatter: oxyAppFormatter
-      }
-    ]
+    custom: function({series, seriesIndex, dataPointIndex, w}) {
+      return '<div>' +
+        '<span>' + new Date(w.globals.labels[dataPointIndex]).toISOString().split('T')[0] + '</span>' + '<br>' +
+        '<span>' + 'CovSF: ' + series[seriesIndex][dataPointIndex] + '</span>' + '<br>' +
+        '<span>' + 'OxygenApply: ' + (data.oxygenApply[seriesIndex]) + '</span>' +
+        '</div>'
+    }
   },
-  // markers: {
-  //   size: [1.5, 1.5]
-  // },
+  markers: {
+    size: 2
+  },
   fill: {
     type: 'gradient',
     gradient: {
@@ -63,61 +83,42 @@ export const simpleSeverityLineChartOpt = {
     count: 2,
   },
   stroke: {
-    width: [3, 3],
+    width: 3,
     curve: 'smooth',
     // dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
   },
   title: { },
-  yaxis: [
-    {
-      seriesName: 'CovSF',
-      min: 0,
-      max: 1,
-      tickAmount: 10,
-      labels: {
-        formatter: (y) => {
-          return y?.toFixed(1)
-        }
-      },
-      title: {
-        text: 'CovSF'
+  yaxis: {
+    seriesName: 'CovSF',
+    min: 0,
+    max: 1,
+    tickAmount: 10,
+    labels: {
+      formatter: (y) => {
+        return y?.toFixed(1)
       }
     },
-    {
-      min: 0,
-      max: 10,
-      tickAmount: 10,
-      seriesName: 'oxygenApply',
-      opposite: true,
-      labels: {
-        show: true,
-        formatter: oxyAppFormatter
-      },
-      // title: {
-      //   text: '산소치료수준',
-      // },
+    title: {
+      text: 'CovSF'
     }
-  ],
+  },
   xaxis: {
-    type: 'datetime'
+    type: 'category',
+    labels: {
+      formatter: function(value) {
+        let date = new Date(value)
+        return `${date.getMonth() + 1}월 ${date.getDate()}일`
+      }
+    },
+    crosshairs: {
+      show: true,
+    },
+    tooltip: {
+      enabled: false,
+    }
   },
   annotations: {
-    xaxis: [{
-      x: new Date(formattedDate).getTime(),
-      strokeDashArray: 0,
-      borderColor: '#008FFB',
-      borderWidth: 1.5,
-      label: {
-        orientation: 'horizontal',
-        borderColor: '#008FFB',
-        style: {
-          fontSize: '13px',
-          color: '#fff',
-          background: '#008FFB',
-        },
-        text: `오늘(${todayDate})`,
-      }
-    }],
+    xaxis: [setTodayLine(data.firstMsreDt)],
     yaxis: [
       // 기준선
       {
