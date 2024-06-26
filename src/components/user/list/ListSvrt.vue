@@ -127,40 +127,6 @@
                     </tr>
 
                     <tr>
-                      <th>배정상태</th>
-                      <td class="pb-0">
-                        <div
-                          class="item-cell-box"
-                          v-for="(status, idx) in Object.entries(assignmentStatuses)"
-                          :key="idx"
-                        >
-                          <div class="cbox me-4">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="filterPatient['assignmentStatus']"
-                                name="state"
-                                :value="status[1]"
-                                @change="search"
-                              /><i></i>
-                              <span class="txt">{{ status[0] }}</span>
-                            </label>
-                          </div>
-                        </div>
-                        <div class="item-cell-box">
-                          <div class="cbox me-4">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="filterPatient['monitoring']"
-                                :value="true"
-                                @change="search"
-                              /><i></i>
-                              <span class="txt">관찰 환자</span>
-                            </label>
-                          </div>
-                        </div>
-                      </td>
                       <th>검색어</th>
                       <td>
                         <div class="item-cell-box">
@@ -468,7 +434,7 @@
                 </div>
               </div>
 
-              <div v-if="bdasHisInfo !== undefined" class="detail-info-box">
+              <div v-if="bdasHisInfo" class="detail-info-box">
                 <div class="detail-head-box px-10">
                   <div class="head-box">
                     <div class="head-txt-box">병상배정 이력</div>

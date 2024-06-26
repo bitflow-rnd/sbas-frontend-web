@@ -11,7 +11,7 @@
       class="severity-chart"
       type="area"
       height="350"
-      :options="sverityLineChartOptions"
+      :options="simpleSeverityLineChartOpt"
       :series="model.series"
     ></vue-apex-charts>
   </div>
@@ -19,7 +19,7 @@
 
 <script setup>
 import VueApexCharts from 'vue3-apexcharts'
-import { sverityLineChartOptions } from '@/util/chart_util'
+import { simpleSeverityLineChartOpt } from '@/util/chart_util'
 import { defineEmits, defineProps, onMounted, reactive } from 'vue'
 import { useStore } from 'vuex'
 

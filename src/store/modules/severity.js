@@ -24,7 +24,7 @@ export default {
       state.severityData.hospId = null
       state.severityData.anlyDt = null
       state.severityData.first = []
-      if (payload) {
+      if (payload && payload.length > 0) {
         state.severityData.ptId = payload[0].ptId
         state.severityData.hospId = payload[0].hospId
         state.severityData.anlyDt = payload[0].anlyDt

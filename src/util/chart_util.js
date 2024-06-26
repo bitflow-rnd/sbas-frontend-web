@@ -3,183 +3,10 @@ import ko from 'apexcharts/dist/locales/ko.json'
 let today = new Date();
 let formattedDate = today.toISOString().split('T')[0];
 let todayDate = `${today.getMonth() + 1}.${today.getDate()}`
-
-export const sverityLineChartOptions = {
-  chart: {
-    height: 350,
-    type: 'line',
-    zoom: {
-      enabled: true
-    },
-    locales: [ko],
-    defaultLocale: 'ko',
-    toolbar: {
-      show: false
-    },
-  },
-  colors: [
-    '#fc1f1f',
-    '#000000',
-    '#676767',
-    '#00ff26',
-    '#fcce14',
-  ],
-  tooltip: {
-    shared: true,
-    y: [
-      {
-        formatter: function(val) {
-          return val.toFixed(2)
-        }
-      },
-      {
-        formatter: function(val) {
-          const labels = ['HFNC', 'NASAL', 'ROOM AIR']
-          const index = val - 6
-          return labels[index]
-        }
-      }
-    ]
-  },
-  // markers: {
-  //   size: [3, 3]
-  // },
-  fill: {
-    type: 'gradient',
-    gradient: {
-      shade: 'dark',
-      shadeIntensity: 1,
-      inverseColors: false,
-      opacityFrom: 0.5,
-      opacityTo: 0,
-      stops: [0, 0, 100]
-    }
-  },
-  dataLabels: {
-    enabled: false
-  },
-  stroke: {
-    width: [3, 3],
-    curve: 'smooth',
-    // dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
-  },
-  // title: {
-  //   text: '중증도 스코어',
-  //   align: 'center',
-  //   offsetY: 10,
-  //   margin: -10,
-  //   style: {
-  //     fontSize: '18px',
-  //     color: '#fc1f1f',
-  //   }
-  // },
-  yaxis: [
-    {
-      seriesName: 'CovSF',
-      min: 0,
-      max: 1,
-      tickAmount: 10,
-      labels: {
-        formatter: (y) => {
-          return y?.toFixed(1)
-        }
-      },
-      title: {
-        text: 'CovSF'
-      }
-    },
-    {
-      min: 0,
-      max: 10,
-      tickAmount: 10,
-      seriesName: 'oxygenApply',
-      opposite: true,
-      labels: {
-        show: true,
-        formatter: function (value) {
-          const labels = ['UNDEFINED', 'ROOM AIR', 'NASAL', 'MASK', 'HFNC', 'VENTILATION'];
-          const index = value - 4;
-          return labels[index];
-        }
-      },
-      // title: {
-      //   text: '산소치료수준',
-      // },
-    }
-  ],
-  xaxis: {
-    type: 'datetime'
-  },
-  annotations: {
-    xaxis: [{
-      x: new Date(formattedDate).getTime(),
-      strokeDashArray: 0,
-      borderColor: '#008FFB',
-      borderWidth: 3,
-      label: {
-        orientation: 'horizontal',
-        borderColor: '#008FFB',
-        style: {
-          fontSize: '14px',
-          color: '#fff',
-          background: '#008FFB',
-        },
-        text: `오늘(${todayDate})`,
-      }
-    }],
-    yaxis: [
-      // 기준선 
-      {
-        y: 0.4,
-        borderColor: '#f36666',
-        opacity: 0.5,
-        borderWidth: 1,
-        strokeDashArray: 5
-      },
-      {
-        y: 0.8,
-        borderColor: '#ffb009',
-        opacity: 0.5,
-        borderWidth: 1,
-        strokeDashArray: 5
-      },
-      // 백그라운드 색깔
-      {
-        y: 0.0,
-        y2: 0.4,
-        borderColor: '#000000',
-        fillColor: '#2eff00',
-        opacity: 0.1
-      },
-      {
-        y: 0.4,
-        y2: 0.8,
-        borderColor: '#000000',
-        fillColor: '#fcce14',
-        opacity: 0.1
-      },
-      {
-        y: 0.8,
-        y2: 1.0,
-        borderColor: '#000000',
-        fillColor: '#fc1f1f',
-        opacity: 0.1
-      }
-    ],
-  },
-  // legend: {
-  //   show: true,
-  //   position: 'right',
-  //   offsetY: 50,
-  //   height: 2530,
-  //   formatter: (seriesName, opts) => {
-  //     if (opts.seriesIndex > 5) return ''
-  //     return seriesName
-  //   },
-  //   markers: {
-  //     width: [12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0]
-  //   }
-  // }
+let oxyAppFormatter = function(value) {
+  const labels = ['UNDEFINED', 'ROOM AIR', 'NASAL', 'MASK', 'HFNC', 'VENTILATION'];
+  const index = value - 4;
+  return labels[index]
 }
 
 export const simpleSeverityLineChartOpt = {
@@ -207,15 +34,11 @@ export const simpleSeverityLineChartOpt = {
     y: [
       {
         formatter: function(val) {
-          return val.toFixed(2)
+          return val.toFixed(3)
         }
       },
       {
-        formatter: function(val) {
-          const labels = ['HFNC', 'NASAL', 'ROOM AIR']
-          const index = val - 6
-          return labels[index]
-        }
+        formatter: oxyAppFormatter
       }
     ]
   },
@@ -268,11 +91,7 @@ export const simpleSeverityLineChartOpt = {
       opposite: true,
       labels: {
         show: true,
-        formatter: function (value) {
-          const labels = ['UNDEFINED', 'ROOM AIR', 'NASAL', 'MASK', 'HFNC', 'VENTILATION'];
-          const index = value - 4;
-          return labels[index];
-        }
+        formatter: oxyAppFormatter
       },
       // title: {
       //   text: '산소치료수준',
@@ -287,12 +106,12 @@ export const simpleSeverityLineChartOpt = {
       x: new Date(formattedDate).getTime(),
       strokeDashArray: 0,
       borderColor: '#008FFB',
-      borderWidth: 3,
+      borderWidth: 1.5,
       label: {
         orientation: 'horizontal',
         borderColor: '#008FFB',
         style: {
-          fontSize: '14px',
+          fontSize: '13px',
           color: '#fff',
           background: '#008FFB',
         },

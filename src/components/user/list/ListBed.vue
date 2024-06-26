@@ -4822,12 +4822,22 @@ export default {
         this.hosptlzdiscg.roomNm = this.hosptlzdiscg.wardNm
         this.hosptlzdiscg.hospId = this.getChrgTL(this.timeline.items, 1)
 
+        // 샘플데이터
         if (this.hosptlzdiscg.pid === '0030001') {
-          this.hosptlzdiscg.monStrtDt = '20220103'
-          this.hosptlzdiscg.monStrtTm = '170000'
+          this.hosptlzdiscg.monStrtDt = '20220208'
+          this.hosptlzdiscg.monStrtTm = '230000'
         } else if (this.hosptlzdiscg.pid === '0030002') {
-          this.hosptlzdiscg.monStrtDt = '20211221'
-          this.hosptlzdiscg.monStrtTm = '170000'
+          this.hosptlzdiscg.monStrtDt = '20210115'
+          this.hosptlzdiscg.monStrtTm = '230000'
+        } else if (this.hosptlzdiscg.pid === '0030003') {
+          this.hosptlzdiscg.monStrtDt = '20220223'
+          this.hosptlzdiscg.monStrtTm = '214000'
+        } else if (this.hosptlzdiscg.pid === '0030004') {
+          this.hosptlzdiscg.monStrtDt = '20200905'
+          this.hosptlzdiscg.monStrtTm = '230000'
+        } else if (this.hosptlzdiscg.pid === '0030005') {
+          this.hosptlzdiscg.monStrtDt = '20201117'
+          this.hosptlzdiscg.monStrtTm = '230000'
         }
         console.log(this.hosptlzdiscg)
 
