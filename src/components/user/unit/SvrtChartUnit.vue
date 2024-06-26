@@ -76,12 +76,18 @@ function updateChart(result) {
 }
 
 function convertToChartValue(data) {
-  if (data === 'HFNC') {
-    return 6
-  } else if (data === 'NASAL') {
-    return 7
+  if (data === 'UNDEFINED') {
+    return 4
   } else if (data === 'ROOM AIR') {
+    return 5
+  } else if (data === 'NASAL') {
+    return 6
+  } else if (data === 'MASK') {
+    return 7
+  } else if (data === 'HFNC') {
     return 8
+  } else if (data === 'VENTILATION') {
+    return 9
   }
 }
 

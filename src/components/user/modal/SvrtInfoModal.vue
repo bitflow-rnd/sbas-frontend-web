@@ -9,40 +9,7 @@
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
           <!--begin::Modal title-->
           <h2>중증 관찰 환자 정보</h2>
-          <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal()" >
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class="svg-icon svg-icon-1">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  opacity="0.5"
-                  x="6"
-                  y="17.3137"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(-45 6 17.3137)"
-                  fill="currentColor"
-                ></rect>
-                <rect
-                  x="7.41422"
-                  y="6"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(45 7.41422 6)"
-                  fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-            <!--end::Svg Icon-->
-          </div>
-          <!--end::Close-->
+          <CloseButton @click="closeModal" />
           <article class="floating-request-box">
             <div class="img-box">
               <img src="/img/common/ic_request_patient.svg" alt="이미지" />
@@ -69,28 +36,27 @@
                   <colgroup>
                     <col style="width: 90px" />
                     <col style="width: 90px" />
-                    <col style="width: 50px" />
+                    <col style="width: 60px" />
                     <col style="width: 75px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
                     <col style="width: 70px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 50px" />
+                    <col style="width: 90px" />
                   </colgroup>
                   <thead>
                     <tr class="small">
@@ -155,8 +121,12 @@
           <data-pagination
             @change="changePage"
             :display-rows-count="model.displayRowsCount"
-            :data-length="20"
+            :data-length="model.svrtInfoList.length"
           ></data-pagination>
+
+          <div class='severity-chart'>
+            <svrt-chart-unit-no-title :pt-id="props.existPt.ptId" />
+          </div>
 
           <article class="modal-menu-layout1 pt-10">
             <div class="modal-menu-list">
@@ -182,6 +152,8 @@ import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { getTag } from '@/util/ui'
 import { axios_cstm } from '@/util/axios_cstm'
 import { API_PROD } from '@/util/constantURL'
+import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
+import CloseButton from '@/components/common/CloseButton.vue'
 
 const props = defineProps({
   existPt: Object,
@@ -190,7 +162,6 @@ const emits = defineEmits(['closeModal'])
 const store = useStore()
 
 onMounted(() => {
-  console.log(props.existPt)
   getSvrtInfo()
 })
 
@@ -211,7 +182,6 @@ function getSvrtInfo() {
       .then((response) => {
         const data = response.data
         if (data.code === '00') {
-          console.log(data)
           model.svrtInfoList = data.result
         }
       })
@@ -222,6 +192,7 @@ function getSvrtInfo() {
 }
 
 function changePage(page) {
+  // TODO
   console.log(page)
 }
 
@@ -248,4 +219,14 @@ article.detail-layout1 .detail-wrap .detail-head-box .head-box .head-txt-box {
   white-space: nowrap;
   overflow: hidden;
 }
+
+table {
+  min-width: 1200px;
+}
+
+.severity-chart {
+  width: 100%;
+  height: 350px;
+}
+
 </style>

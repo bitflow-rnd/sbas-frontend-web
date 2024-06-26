@@ -1,5 +1,9 @@
 import ko from 'apexcharts/dist/locales/ko.json'
 
+let today = new Date();
+let formattedDate = today.toISOString().split('T')[0];
+let todayDate = `${today.getMonth() + 1}.${today.getDate()}`
+
 export const sverityLineChartOptions = {
   chart: {
     height: 350,
@@ -93,8 +97,8 @@ export const sverityLineChartOptions = {
       labels: {
         show: true,
         formatter: function (value) {
-          const labels = ['HFNC', 'NASAL', 'ROOM AIR'];
-          const index = value - 6;
+          const labels = ['UNDEFINED', 'ROOM AIR', 'NASAL', 'MASK', 'HFNC', 'VENTILATION'];
+          const index = value - 4;
           return labels[index];
         }
       },
@@ -108,7 +112,7 @@ export const sverityLineChartOptions = {
   },
   annotations: {
     xaxis: [{
-      x: new Date(1639872000000).getTime(),
+      x: new Date(formattedDate).getTime(),
       strokeDashArray: 0,
       borderColor: '#008FFB',
       borderWidth: 3,
@@ -120,7 +124,7 @@ export const sverityLineChartOptions = {
           color: '#fff',
           background: '#008FFB',
         },
-        text: '오늘(12.19)',
+        text: `오늘(${todayDate})`,
       }
     }],
     yaxis: [
@@ -233,7 +237,7 @@ export const simpleSeverityLineChartOpt = {
     enabled: false
   },
   forecastDataPoints: {
-    count: 3,
+    count: 2,
   },
   stroke: {
     width: [3, 3],
@@ -265,8 +269,8 @@ export const simpleSeverityLineChartOpt = {
       labels: {
         show: true,
         formatter: function (value) {
-          const labels = ['HFNC', 'NASAL', 'ROOM AIR'];
-          const index = value - 6;
+          const labels = ['UNDEFINED', 'ROOM AIR', 'NASAL', 'MASK', 'HFNC', 'VENTILATION'];
+          const index = value - 4;
           return labels[index];
         }
       },
@@ -280,7 +284,7 @@ export const simpleSeverityLineChartOpt = {
   },
   annotations: {
     xaxis: [{
-      x: new Date(1639872000000).getTime(),
+      x: new Date(formattedDate).getTime(),
       strokeDashArray: 0,
       borderColor: '#008FFB',
       borderWidth: 3,
@@ -292,7 +296,7 @@ export const simpleSeverityLineChartOpt = {
           color: '#fff',
           background: '#008FFB',
         },
-        text: '오늘(12.19)',
+        text: `오늘(${todayDate})`,
       }
     }],
     yaxis: [
