@@ -39,24 +39,24 @@
                     <col style="width: 60px" />
                     <col style="width: 75px" />
                     <col style="width: 70px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 50px" />
-                    <col style="width: 90px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 60px" />
+                    <col style="width: 150px" />
                   </colgroup>
                   <thead>
                     <tr class="small">
@@ -221,7 +221,7 @@ article.detail-layout1 .detail-wrap .detail-head-box .head-box .head-txt-box {
 }
 
 table {
-  min-width: 1200px;
+  min-width: 1300px;
 }
 
 .severity-chart {

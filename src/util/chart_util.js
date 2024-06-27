@@ -55,10 +55,10 @@ export const simpleSeverityLineChartOpt = {
   ],
   tooltip: {
     custom: function({series, seriesIndex, dataPointIndex, w}) {
-      return '<div>' +
+      return '<div style="padding: 10px">' +
         '<span>' + new Date(w.globals.labels[dataPointIndex]).toISOString().split('T')[0] + '</span>' + '<br>' +
         '<span>' + 'CovSF: ' + series[seriesIndex][dataPointIndex] + '</span>' + '<br>' +
-        '<span>' + 'OxygenApply: ' + (data.oxygenApply[seriesIndex]) + '</span>' +
+        '<span>' + 'OxygenApply: ' + (data.oxygenApply[dataPointIndex]) + '</span>' +
         '</div>'
     }
   },
@@ -159,19 +159,6 @@ export const simpleSeverityLineChartOpt = {
       }
     ],
   },
-  // legend: {
-  //   show: false,
-  //   position: 'right',
-  //   offsetY: 50,
-  //   height: 2530,
-  //   formatter: (seriesName, opts) => {
-  //     if (opts.seriesIndex > 5) return ''
-  //     return seriesName
-  //   },
-  //   markers: {
-  //     width: [12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0]
-  //   }
-  // }
 }
 
 export const trendLineChartOptions = {
