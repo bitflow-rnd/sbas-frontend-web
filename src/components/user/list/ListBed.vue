@@ -4197,6 +4197,7 @@ import user from '@/store/modules/user'
 import { JobCode } from '@/util/sbas_cnst'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import RcmdHospModal from '@/components/user/list/RcmdHospModal.vue'
+import { getHisSampleData } from '@/util/his_sample_data'
 
 export default {
 
@@ -4813,22 +4814,10 @@ export default {
         this.hosptlzdiscg.hospId = this.getChrgTL(this.timeline.items, 1)
 
         // 샘플데이터
-        if (this.hosptlzdiscg.pid === '0030001') {
-          this.hosptlzdiscg.monStrtDt = '20220208'
-          this.hosptlzdiscg.monStrtTm = '230000'
-        } else if (this.hosptlzdiscg.pid === '0030002') {
-          this.hosptlzdiscg.monStrtDt = '20210115'
-          this.hosptlzdiscg.monStrtTm = '230000'
-        } else if (this.hosptlzdiscg.pid === '0030003') {
-          this.hosptlzdiscg.monStrtDt = '20220223'
-          this.hosptlzdiscg.monStrtTm = '214000'
-        } else if (this.hosptlzdiscg.pid === '0030004') {
-          this.hosptlzdiscg.monStrtDt = '20200905'
-          this.hosptlzdiscg.monStrtTm = '230000'
-        } else if (this.hosptlzdiscg.pid === '0030005') {
-          this.hosptlzdiscg.monStrtDt = '20201117'
-          this.hosptlzdiscg.monStrtTm = '230000'
-        }
+        const sampleData = getHisSampleData(this.hosptlzdiscg.pid)
+        this.hosptlzdiscg.admsDt = sampleData.admsDt
+        this.hosptlzdiscg.monStrtDt = sampleData.monStrtDt
+        this.hosptlzdiscg.monStrtTm = sampleData.monStrtTm
         console.log(this.hosptlzdiscg)
 
         this.$store.dispatch('bedasgn/cfmHosp', this.hosptlzdiscg)
