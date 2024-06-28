@@ -174,25 +174,23 @@
           </div>
 
           <!--begin::Activities-->
-          <div class="app-navbar-item ms-2 me-2 d-none d-xxl-flex">
+<!--          <div class="app-navbar-item ms-2 me-2 d-none d-xxl-flex">-->
             <!--begin::Drawer toggle-->
-            <div
-              class="bell-wrapper btn btn-icon btn-custom w-35px h-35px w-md-40px h-md-40px position-relative"
-              data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-              data-kt-menu-attach="parent"
-              data-kt-menu-placement="bottom-end"
-            >
-              <img src='@/assets/img/ic-bell.webp' />
-              <div
-                class="badge-bell position-absolute top-0 start-100 translate-middle badge badge-sm rounded-pill mt-3 bg-primary"
-              >1
-              </div
-              >
-            </div>
+<!--            <div-->
+<!--              class="bell-wrapper btn btn-icon btn-custom w-35px h-35px w-md-40px h-md-40px position-relative"-->
+<!--              data-kt-menu-trigger="{default: 'click', lg: 'hover'}"-->
+<!--              data-kt-menu-attach="parent"-->
+<!--              data-kt-menu-placement="bottom-end"-->
+<!--            >-->
+<!--              <img src='@/assets/img/ic-bell.webp' />-->
+<!--              <div-->
+<!--                class="badge-bell position-absolute top-0 start-100 translate-middle badge badge-sm rounded-pill mt-3 bg-primary"-->
+<!--              >1-->
+<!--              </div>-->
+<!--            </div>-->
             <!--end::Drawer toggle-->
-          </div>
+<!--          </div>-->
           <!--end::Activities-->
-
 
           <!--begin::User menu-->
           <div class="app-navbar-item ms-lg-3" id="kt_header_user_menu_toggle">
@@ -738,6 +736,7 @@ export default {
     getBdList() {
       console.log('리로드')
       this.$store.dispatch('bedasgn/getBdListWeb')
+      this.$store.dispatch('bedasgn/getBedStatCount')
     },
     getPtList() {
       // 대구로 설정

@@ -68,7 +68,6 @@
                 >
                   병상배정 현황
                 </h1>
-
               </li>
               <li class="breadcrumb-item ml-2 ms-5">
                 <span>내 기관에 할당된 병상배정 업무 목록을 표시합니다</span>
@@ -81,24 +80,10 @@
               <!--end::Item-->
             </ul>
             <!--end::Breadcrumb-->
-            <!--begin::Title-->
-            <!--end::Title-->
           </div>
           <!--end::Page title-->
           <!--begin::Actions-->
           <div class="d-flex align-items-center gap-2 gap-lg-3">
-            <a
-              href="javascript:void(0);"
-              class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7"
-            ><i class="fa-regular fa-trash-can"></i> 삭제</a
-            >
-            <!-- data-bs-toggle="modal" -->
-            <a
-              href="#"
-              class="btn btn-flex btn-sm btn-secondary fs-7"
-            ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
-            >
-            <!-- data-bs-toggle="modal" -->
             <a
               @click="openModal(0)"
               class="btn btn-sm btn-flex btn-primary align-self-center px-3"
@@ -155,7 +140,7 @@
                                   <span class='txt'>전체</span>
                                 </label>
                               </div>
-                              <div v-for='(item, idx) in bdList2'
+                              <div v-for='(item, idx) in bedStatCount'
                                    :key='idx' class="toggle-list">
                                 <label>
                                   <input
@@ -164,10 +149,12 @@
                                     v-model='search.bedStatCd'
                                     :value='this.filter.selectedStates[idx]'
                                     @change='searchBedAsgn' /><i></i>
-                                  <span class='txt'>{{ item.title }}
-                                      <span class='cnt ms-1'
-                                            style='color: rgb(255, 102, 110)'>&nbsp;&nbsp;&nbsp;{{ item.count }}</span>
+                                  <span class='txt'>{{ this.filter.states[idx].label }}
+                                    <span class='cnt ms-1'
+                                          style='color: rgb(255, 102, 110)'>
+                                      &nbsp;&nbsp;&nbsp;{{ item.count }}
                                     </span>
+                                  </span>
                                 </label>
                               </div>
                             </div>
@@ -4211,7 +4198,6 @@ import { JobCode } from '@/util/sbas_cnst'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import RcmdHospModal from '@/components/user/list/RcmdHospModal.vue'
 
-
 export default {
 
   components: { RcmdHospModal, MyInfoModal, DataPagination },
@@ -4263,12 +4249,11 @@ export default {
       mode: '',
       filter: {
         states: [
-          { label: '병상요청', value: 'BAST0003' },
-          { label: '병상배정', value: 'BAST0004' },
-          { label: '이송 · 배차', value: 'BAST0005' },
-          { label: '입 ·퇴원 처리', value: 'BAST0006' },
-          { label: '완료', value: 'BAST0007' },
-          { label: '완료', value: 'BAST0008' }
+          { label: '승인대기', value: 'BAST0003' },
+          { label: '배정대기', value: 'BAST0004' },
+          { label: '이송대기', value: 'BAST0005' },
+          { label: '이송중', value: 'BAST0006' },
+          { label: '완료', value: 'BAST0007,BAST0008' },
         ],
         selectedStates: ['BAST0003', 'BAST0004', 'BAST0005', 'BAST0006', 'BAST0007,BAST0008'],
         selectedRow: 0
@@ -4407,7 +4392,6 @@ export default {
     },
     ...mapState('bedasgn', [
       'bdList',
-      'bdList2',
       'bdListWeb',
       'bdCnt',
       'bdDetail',
@@ -4418,7 +4402,8 @@ export default {
       'timeline',
       'rcmdModal',
       'rcmdHp',
-      'transInfo'
+      'transInfo',
+      'bedStatCount',
     ]),
     ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip', 'isSpinner']),
     ...mapState('user', ['userInfo', 'cmSido', 'chrgInfo']),
@@ -4478,6 +4463,10 @@ export default {
         ...this.filterData,
         page: newPage
       })
+      this.$store.dispatch('bedasgn/getBedStatCount', {
+        ...this.filterData,
+        page: newPage
+      })
       this.page = newPage
     },
     openModal(idx) {
@@ -4516,6 +4505,8 @@ export default {
     getBdList() {
       //this.search = this.initSearch
       this.$store.dispatch('bedasgn/getBdListWeb')
+      this.$store.dispatch('bedasgn/getBedStatCount')
+      console.log(this.bedStatCount)
     },
     /*countBdList() {
       if (this.filter.selectedStates.length === 0) {
@@ -4613,7 +4604,6 @@ export default {
       } else return ''
     },
     getTelno,
-
     setNull() {
       console.log('실행' + this.initNewPt)
       this.tab = 0
