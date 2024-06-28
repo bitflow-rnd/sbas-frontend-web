@@ -510,26 +510,19 @@
                                     </div>
 
                                     <div class="bottom-box text-end pt-4">
-
                                       <div class="cnt-box"><span class="text-black fw-bold">113</span> <span class="text-black fw-bold" style="font-size: 20px;">개</span></div>
                                       <div class="rate-box">
                                         <span class="text-gray-600">전 주 대비</span>
                                         <span class="text-danger">4.5% ▼</span>
                                       </div>
-
                                     </div>
-
                                   </div>
-
-                                    <a href="javascript:void(0);" class="card-box">
-
-                                        <div class="card-add-btn-box">
-                                            <img src="/img/common/ic_dashboard_add.svg" alt="이미지">
-                                            <div class="text-primary fs-6 pt-4">추가하기</div>
-                                        </div>
-
-                                    </a>
-
+<!--                                    <a href="javascript:void(0);" class="card-box">-->
+<!--                                        <div class="card-add-btn-box">-->
+<!--                                            <img src="/img/common/ic_dashboard_add.svg" alt="이미지">-->
+<!--                                            <div class="text-primary fs-6 pt-4">추가하기</div>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
                                 </div>
 
                             </div>

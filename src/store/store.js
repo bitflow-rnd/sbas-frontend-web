@@ -5,6 +5,7 @@ import admin from "../store/modules/admin"
 import bedasgn from "../store/modules/bedasgn";
 import patnt from "../store/modules/patnt";
 import severity from "@/store/modules/severity";
+import common from "@/store/modules/common";
 
 const store = createStore({
     modules: {
@@ -12,7 +13,8 @@ const store = createStore({
         admin,
         bedasgn,
         patnt,
-        severity
+        severity,
+        common
     },
     state: {
     },

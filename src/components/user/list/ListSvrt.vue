@@ -18,9 +18,7 @@
                 </router-link>
               </li>
               <!--end::Item-->
-              <!--begin::Item-->
               <li class="breadcrumb-item">
-                <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
                 <span class="svg-icon svg-icon-4 mx-n1">
                   <svg
                     width="24"
@@ -35,15 +33,9 @@
                     />
                   </svg>
                 </span>
-                <!--end::Svg Icon-->
               </li>
-              <!--end::Item-->
-              <!--begin::Item-->
               <li class="breadcrumb-item text-gray-700 fw-semibold lh-1 mx-n1 fs-6">환자관리</li>
-              <!--end::Item-->
-              <!--begin::Item-->
               <li class="breadcrumb-item">
-                <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
                 <span class="svg-icon svg-icon-4 mx-n1">
                   <svg
                     width="24"
@@ -58,39 +50,19 @@
                     />
                   </svg>
                 </span>
-                <!--end::Svg Icon-->
               </li>
-              <!--end::Item-->
-              <!--begin::Item-->
               <li class="breadcrumb-item text-gray-500 mx-n1">
                 <h1
                   class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0"
                 >
-                  환자 정보 관리
+                  중증 환자 관리
                 </h1>
               </li>
               <li class="breadcrumb-item ml-2">
-                <span>&nbsp;병상배정 이력이 있거나, 배정 예정 중인 환자 목록입니다.</span>
+                <span>&nbsp;중증 모니터링 중인 환자 목록입니다.</span>
               </li>
             </ul>
           </div>
-          <!--begin::Actions-->
-          <div class="d-flex align-items-center gap-2 gap-lg-3">
-            <a
-              href="#"
-              class="btn btn-flex btn-sm btn-secondary fs-7"
-              data-bs-toggle="modal"
-              data-bs-target="#kt_modal_view_users"
-            ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
-            >
-            <a
-              @click="openRgstModal()"
-              class="btn btn-sm btn-flex btn-primary align-self-center px-3"
-            >
-              <i class="fa-solid fa-plus"></i> 환자등록
-            </a>
-          </div>
-          <!--end::Actions-->
         </div>
         <!--end::Toolbar wrapper-->
       </div>
@@ -103,7 +75,6 @@
             <!--begin::Card toolbar-->
             <article class="table-form-layout1">
               <div class="form-head-box"></div>
-
               <div class="form-body-box">
                 <div class="table-box">
                   <table>
@@ -156,40 +127,6 @@
                     </tr>
 
                     <tr>
-                      <th>배정상태</th>
-                      <td class="pb-0">
-                        <div
-                          class="item-cell-box"
-                          v-for="(status, idx) in Object.entries(assignmentStatuses)"
-                          :key="idx"
-                        >
-                          <div class="cbox me-4">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="filterPatient['assignmentStatus']"
-                                name="state"
-                                :value="status[1]"
-                                @change="search"
-                              /><i></i>
-                              <span class="txt">{{ status[0] }}</span>
-                            </label>
-                          </div>
-                        </div>
-                        <div class="item-cell-box">
-                          <div class="cbox me-4">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="filterPatient['monitoring']"
-                                :value="true"
-                                @change="search"
-                              /><i></i>
-                              <span class="txt">관찰 환자</span>
-                            </label>
-                          </div>
-                        </div>
-                      </td>
                       <th>검색어</th>
                       <td>
                         <div class="item-cell-box">
@@ -273,9 +210,6 @@
                               pt['ptNm'].length > 1 ? (pt['ptNm'].substring(0, 1) + '*' + pt['ptNm'].substring(2, pt['ptNm'].length)) : pt['ptNm']
                             }}
                           </div>
-                          <div class="text-secondary" v-if="pt.monitoring">※
-                            관찰환자
-                          </div>
                         </div>
                       </td>
                       <td>
@@ -326,24 +260,16 @@
   <!--  환자 상세 정보  -->
   <div v-show='showModal === 1' class="modal fade" :class="{'show' : showModal === 1}" id="kt_modal_patnt_detail"
        tabindex="-1" aria-hidden="true" style="">
-    <!--begin::Modal dialog-->
     <div class="modal-dialog mw-1500px modal-dialog-centered">
-      <!--begin::Modal content-->
       <div class="modal-content">
-        <!--begin::Modal header-->
         <div class="modal-header px-10 pt-5 pb-0 d-flex justify-content-between">
-          <!--begin::Modal title-->
           <h2>환자 상세 정보</h2>
-          <!--end::Modal title-->
-          <!--begin::Close-->
-
           <div class="btn-list">
             <div
               class="btn btn-sm btn-icon btn-active-color-primary"
               @click="closeModal(0)"
               data-bs-dismiss="modal"
             >
-              <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
               <span class="svg-icon svg-icon-1">
                 <svg
                   width="24"
@@ -373,14 +299,9 @@
                   ></rect>
                 </svg>
               </span>
-              <!--end::Svg Icon-->
             </div>
           </div>
-
-          <!--end::Close-->
         </div>
-
-        <!--begin::Modal body-->
         <div class="modal-body scroll-y py-10 px-10">
           <article v-if="ptDetail !== null" class="detail-layout1">
             <div class="detail-wrap">
@@ -513,7 +434,7 @@
                 </div>
               </div>
 
-              <div v-if="bdasHisInfo !== undefined" class="detail-info-box">
+              <div v-if="bdasHisInfo" class="detail-info-box">
                 <div class="detail-head-box px-10">
                   <div class="head-box">
                     <div class="head-txt-box">병상배정 이력</div>
@@ -846,7 +767,7 @@
                                   >
                                     <img v-if="newPt.attcId === null || newPt.attcId === ''" src='@/assets/img/img-no-img.webp' class="no-img" />
                                     <img v-if="!(newPt.attcId === null || newPt.attcId === '')" class="has-img" @click='showImageLightBox' onerror="this.src='/img/img-no-img.webp'"
-                                      :src="this.epidReportImage?this.epidReportImage:'/img/img-no-img.webp'" />
+                                         :src="this.epidReportImage?this.epidReportImage:'/img/img-no-img.webp'" />
                                     <a v-if="newPt.attcId !== null || newPt.attcId === ''" @click="alertOpen(9)" class="remove-btn">
                                       <img src="/img/common/ic_profile_remove.svg" alt="이미지" />
                                     </a>
@@ -3071,7 +2992,7 @@ export default {
       this.getSecondAddress('27')
       // this.filterPatient.address.first = this.userInfo.dutyDstr1Cd
       // if (this.userInfo.dutyDstr1Cd) {
-        // this.getSecondAddress(this.userInfo.dutyDstr1Cd)
+      // this.getSecondAddress(this.userInfo.dutyDstr1Cd)
       // }
     },
     openSvrtInfoModal() {

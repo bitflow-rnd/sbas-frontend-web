@@ -72,8 +72,6 @@
               <!--end::Item-->
             </ul>
             <!--end::Breadcrumb-->
-            <!--begin::Title-->
-            <!--end::Title-->
           </div>
           <!--end::Page title-->
           <!--begin::Actions-->
@@ -330,7 +328,7 @@
                         <td>{{ item.userStatCdNm }}</td>
                         <td @click='toggleCheckbox()'>
                           <a
-                            @click="setUsrSts(item)"
+                            @click.prevent="setUsrSts(item)"
                             class="btn btn-flex btn-xs btn-outline btn-outline-primary w-75px px-0 justify-content-center"
                             >{{ getBtn(item.userStatCd)[0] }}</a
                           >
@@ -998,7 +996,7 @@
                       <td class="vertical-top">
                         <div class="item-cell-box full">
                           <div class="tbox full">
-                            <input type="text" :value="gettelno(usrDetail.telno)" />
+                            <input type="text" :value="getTelno(usrDetail.telno)" />
                           </div>
                         </div>
                       </td>
@@ -1412,690 +1410,8 @@
   </div>
 
   <!-- 상세정보-승인/반려 모달    -->
-  <div
-    v-show='isDetail'
-    class="modal fade"
-    id="kt_modal_view_user"
-    tabindex="-1"
-    aria-hidden="true"
-    style=""
-    :class="{'show' : isDetail}"
-  >
-    <!--begin::Modal dialog-->
-    <div v-if='usrDetail!==null' class="modal-dialog mw-1500px modal-dialog-centered">
-      <!--begin::Modal content-->
-      <div class="modal-content">
-        <!--begin::Modal header-->
-        <div class="modal-header px-10 py-5 d-flex justify-content-between">
-          <!--begin::Modal title-->
-          <h2>사용자 상세 정보</h2>
-          <!--end::Modal title-->
-          <!--begin::Close-->
-          <div class="btn btn-sm btn-icon btn-active-color-primary" @click='closeModal'>
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class="svg-icon svg-icon-1">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  opacity="0.5"
-                  x="6"
-                  y="17.3137"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(-45 6 17.3137)"
-                  fill="currentColor"
-                ></rect>
-                <rect
-                  x="7.41422"
-                  y="6"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(45 7.41422 6)"
-                  fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-            <!--end::Svg Icon-->
-          </div>
-          <!--end::Close-->
-        </div>
-
-        <!--begin::Modal header-->
-        <!--begin::Modal body-->
-        <div class="modal-body scroll-y py-10 px-10">
-          <div class="tabs-head-box" style="max-width: 460px; margin: 0 auto">
-            <article class="tabs-list-layout1 w-100">
-              <div class="tabs-list full">
-                <router-link
-                  to=""
-                  @click="detailTabsMove(1)"
-                  class="tabs-btn"
-                  :class="{ active: detail1 === true }"
-                >
-                  <span class="txt">개요</span>
-                </router-link>
-
-                <router-link
-                  to=""
-                  @click="detailTabsMove(2)"
-                  class="tabs-btn"
-                  :class="{ active: detail2 === true }"
-                >
-                  <span class="txt">접속기록</span>
-                </router-link>
-              </div>
-            </article>
-          </div>
-
-          <div class="tabs-group flex-root">
-            <div v-show="detail1" class="tabs-box">
-              <article class="table-form-layout1">
-                <div class="form-head-box">
-                  <div class="head-box">
-                    <div class="head-txt-box fs-16px fw-bold pb-5">사용자 기본 정보</div>
-                  </div>
-                </div>
-                <div class="form-body-box">
-                  <div class="table-box">
-                    <table>
-                      <colgroup>
-                        <col style="width: 191px" />
-                        <col style="width: 168px" />
-                        <col style="width: auto" />
-                        <col style="width: 168px" />
-                        <col style="width: auto" />
-                      </colgroup>
-                      <tbody>
-                        <tr>
-                          <td rowspan="4" class="p-0">
-                            <img src="" />
-                          </td>
-                          <th>사용자번호</th>
-                          <td>수정필요</td>
-                          <th>아이디</th>
-                          <td>{{ usrDetail.id }}</td>
-                        </tr>
-                        <tr>
-                          <th>이름</th>
-                          <td>{{ usrDetail.userNm }}</td>
-                          <th>휴대전화번호</th>
-                          <td>{{ gettelno(usrDetail.telno) }}</td>
-                        </tr>
-                        <tr>
-                          <th>생년월일</th>
-                          <td>{{ getbtDt(usrDetail.btDt) }}</td>
-                          <th>성별</th>
-                          <td>{{ getGndr(usrDetail.gndr) }}</td>
-                        </tr>
-                        <tr>
-                          <th>소셜로그인 사용</th>
-                          <td colspan="3">사용 - 수정</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </article>
-
-              <article class="table-form-layout1 mt-10">
-                <div class="form-head-box">
-                  <div class="head-box">
-                    <div class="head-txt-box fs-16px fw-bold pb-5">업무역할</div>
-                  </div>
-                </div>
-                <div class="form-body-box">
-                  <div class="table-box">
-                    <table>
-                      <colgroup>
-                        <col style="width: 168px" />
-                        <col style="width: auto" />
-                        <col style="width: 168px" />
-                        <col style="width: auto" />
-                      </colgroup>
-                      <tbody>
-                        <tr>
-                          <th>소속기관 유형</th>
-                          <td>{{ getInstNm(usrDetail.instTypeCd) }}</td>
-                          <th>직급</th>
-                          <td>{{ usrDetail.ocpCd }}</td>
-                        </tr>
-
-                        <tr>
-                          <th>권한그룹</th>
-                          <td>
-                            <div class="item-cell-box full">
-                              <article class="permission-selector-layout">
-                                <div class="selector-box" style="cursor: default">
-                                  <div v-if="getPmgr(usrDetail.jobCd) === 1"
-                                    class="selector-wrap"
-                                  >
-                                    <div class="img-box">
-                                      <img
-                                        src="/img/common/img_permission_item1.svg"
-                                        alt="이미지"
-                                        class="on"
-                                      />
-                                    </div>
-                                    <div class="info-box">
-                                      <div class="main-box">병상요청그룹</div>
-                                      <div class="sub-box">보건소, 병상배정반, 의료진</div>
-                                    </div>
-                                  </div>
-                                  <div  v-show="getPmgr(usrDetail.jobCd) === 2"
-                                    class="selector-wrap"
-                                  >
-                                    <div class="img-box">
-                                      <img
-                                        src="/img/common/img_permission_item2.svg"
-                                        alt="이미지"
-                                        class="on"
-                                      />
-                                    </div>
-                                    <div class="info-box">
-                                      <div class="main-box">병상승인그룹</div>
-                                      <div class="sub-box">보건소, 병상배정반, 의료진</div>
-                                    </div>
-                                  </div>
-                                  <div v-show="getPmgr(usrDetail.jobCd) === 3"
-                                    class="selector-wrap"
-                                  >
-                                    <div class="img-box">
-                                      <img
-                                        src="/img/common/img_permission_item3.svg"
-                                        alt="이미지"
-                                        class="on"
-                                      />
-                                    </div>
-                                    <div class="info-box">
-                                      <div class="main-box">병상배정그룹</div>
-                                      <div class="sub-box">보건소, 병상배정반, 의료진</div>
-                                    </div>
-                                  </div>
-                                  <div v-show="getPmgr(usrDetail.jobCd) === 4"
-                                    class="selector-wrap"
-                                  >
-                                    <div class="img-box">
-                                      <img
-                                        src="/img/common/img_permission_item4.svg"
-                                        alt="이미지"
-                                        class="on"
-                                      />
-                                    </div>
-                                    <div class="info-box">
-                                      <div class="main-box">시스템관리그룹</div>
-                                      <div class="sub-box">보건소, 병상배정반, 의료진</div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </article>
-                            </div>
-                          </td>
-                          <th>세부권한</th>
-                          <td>{{usrDetail.authCd}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </article>
-
-              <article class="table-form-layout1 mt-10">
-                <div class="form-head-box">
-                  <div class="head-box">
-                    <div class="head-txt-box fs-16px fw-bold pb-5">소속기관</div>
-                  </div>
-                </div>
-                <div class="form-body-box">
-                  <div class="table-box">
-                    <table>
-                      <colgroup>
-                        <col style="width: 168px" />
-                        <col style="width: auto" />
-                        <col style="width: 168px" />
-                        <col style="width: auto" />
-                      </colgroup>
-                      <tbody>
-                        <tr>
-                          <th>주 담당지역</th>
-                          <td>{{ usrDetail.dutyDstr1CdNm ?? '-' }}</td>
-
-                          <th>소속기관</th>
-                          <td>{{usrDetail.instNm}}</td>
-                        </tr>
-
-                        <tr>
-                          <th>담당환자 유형</th>
-                          <td colspan="3">{{getPtType(usrDetail.ptTypeCd)}}</td>
-                        </tr>
-
-                        <tr>
-                          <th>소속 증명 정보</th>
-                          <td colspan="3">
-                            <article class="img-upload-layout">
-                              <div class="result-list">
-                                <div class="result-box">
-                                  <!--
-                                                                <img src="/img/common/img_profile_dummy.png" alt="이미지">
-                                                                -->
-                                </div>
-                              </div>
-                            </article>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </article>
-
-              <article class="table-form-layout1 mt-10">
-                <div class="form-head-box">
-                  <div class="head-box">
-                    <div class="head-txt-box fs-16px fw-bold pb-5">기타정보</div>
-                  </div>
-                </div>
-                <div class="form-body-box">
-                  <div class="table-box">
-                    <table>
-                      <colgroup>
-                        <col style="width: 168px" />
-                        <col style="width: auto" />
-                        <col style="width: 168px" />
-                        <col style="width: auto" />
-                      </colgroup>
-                      <tbody>
-                        <tr>
-                          <th>사용자 상태</th>
-                          <td>{{ usrDetail.userStatCd }}</td>
-
-                          <th>등록일 / 최근접속일</th>
-                          <td>{{ getDt(usrDetail.rgstDttm) }} / 2023-03-11</td>
-                        </tr>
-
-                        <tr>
-                          <th>승인(초대) 일자</th>
-                          <td>{{ usrDetail.aprvDttm === null ? '-':getDt(usrDetail.aprvDttm) }}</td>
-
-                          <th>승인(초대)자</th>
-                          <td>정현오/서울특별시/라임헬스케어/수석</td>
-                        </tr>
-                        <tr>
-                          <th>임시비밀번호</th>
-                          <td>
-                            <a
-                              href="javascript:confirmPopupOpen('$회원번호(회원명)$님에게<br/> 임시비밀번호를 발급하시겠습니까?',function()
-                                                    {confirmPopupClose();alertPopupOpen('휴대폰으로 임시비밀번호가<br/>전송 되었습니다.');});"
-                              class="btn btn-sm btn-flex btn-primary align-self-center px-3"
-                              >임시비밀번호 발급</a
-                            >
-                          </td>
-
-                          <th>사용자 탈퇴처리</th>
-                          <td>
-                            <router-link
-                              to=""
-                              @click="toggleModal(2)"
-                              class="btn btn-sm btn-flex btn-primary align-self-center px-3"
-                              >탈퇴처리</router-link
-                            >
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </article>
-
-              <article class="modal-menu-layout1 pt-10">
-                <div class="modal-menu-list">
-                  <router-link to="" @click="toggleModal(1)" class="modal-menu-btn menu-cancel"
-                    >취소</router-link
-                  >
-                  <a
-                    @click="test()"
-                    data-bs-toggle="modal"
-                    data-bs-target="#kt_modal_edit_user"
-                    class="modal-menu-btn menu-primary-outline"
-                    >수정</a
-                  >
-                  <router-link
-                    v-show="usrDetail.userStatCd === 'URST0001'"
-                    to=""
-                    @click="toggleModal(4)"
-                    class="modal-menu-btn menu-primary"
-                    >승인/반려</router-link
-                  >
-                </div>
-              </article>
-            </div>
-
-            <div v-show="detail2" class="tabs-box">
-              <div class="d-flex pt-6">
-                <div class="table-wrap">
-                  <article class="table-list-layout1">
-                    <div class="table-head-box pb-4">
-                      <div class="head-box">
-                        <div class="head-txt-box">1. 사용자 상태 변경 이력</div>
-                      </div>
-                    </div>
-
-                    <div class="table-body-box">
-                      <div class="table-box with-scroll small">
-                        <table class="table-layout-fixed">
-                          <colgroup>
-                            <col style="width: 70px" />
-                            <col style="width: 100px" />
-                            <col style="width: 100px" />
-                            <col style="width: 100px" />
-                          </colgroup>
-                          <thead>
-                            <tr class="small">
-                              <th>순번</th>
-                              <th>작업</th>
-                              <th>처리자</th>
-                              <th>일자</th>
-                            </tr>
-                          </thead>
-
-                          <tbody>
-                            <tr>
-                              <td>7</td>
-                              <td>비밀번호 재발급</td>
-                              <td>본인</td>
-                              <td>2023.07.01</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </article>
-                  <div class="row mt-10">
-                    <div
-                      class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"
-                    ></div>
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                      <div class="dataTables_paginate paging_simple_numbers" id="">
-                        <ul class="pagination">
-                          <li class="paginate_button page-item previous disabled" id="">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="0"
-                              tabindex="0"
-                              class="page-link"
-                              ><i class="previous"></i
-                            ></a>
-                          </li>
-                          <li class="paginate_button page-item active">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="1"
-                              tabindex="0"
-                              class="page-link"
-                              >1</a
-                            >
-                          </li>
-                          <li class="paginate_button page-item">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="2"
-                              tabindex="0"
-                              class="page-link"
-                              >2</a
-                            >
-                          </li>
-                          <li class="paginate_button page-item">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="3"
-                              tabindex="0"
-                              class="page-link"
-                              >3</a
-                            >
-                          </li>
-                          <li class="paginate_button page-item next" id="">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="4"
-                              tabindex="0"
-                              class="page-link"
-                              ><i class="next"></i
-                            ></a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="table-wrap ms-8">
-                  <article class="table-list-layout1">
-                    <div class="table-head-box pb-4">
-                      <div class="head-box">
-                        <div class="head-txt-box">2. 로그인 이력</div>
-                      </div>
-                    </div>
-
-                    <div class="table-body-box">
-                      <div class="table-box with-scroll small">
-                        <table class="table-layout-fixed">
-                          <colgroup>
-                            <col style="width: 70px" />
-                            <col style="width: 100px" />
-                            <col style="width: 150px" />
-                            <col style="width: 100px" />
-                          </colgroup>
-                          <thead>
-                            <tr class="small">
-                              <th>순번</th>
-                              <th>IP</th>
-                              <th>장치</th>
-                              <th>일자</th>
-                            </tr>
-                          </thead>
-
-                          <tbody>
-                            <tr>
-                              <td>7</td>
-                              <td>207.46.34.110</td>
-                              <td>Chome - Windows</td>
-                              <td>2023.07.01</td>
-                            </tr>
-                            <tr>
-                              <td>7</td>
-                              <td>207.46.34.110</td>
-                              <td>Chome - Windows</td>
-                              <td>2023.07.01</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </article>
-                  <div class="row mt-10">
-                    <div
-                      class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"
-                    ></div>
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                      <div class="dataTables_paginate paging_simple_numbers" id="">
-                        <ul class="pagination">
-                          <li class="paginate_button page-item previous disabled" id="">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="0"
-                              tabindex="0"
-                              class="page-link"
-                              ><i class="previous"></i
-                            ></a>
-                          </li>
-                          <li class="paginate_button page-item active">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="1"
-                              tabindex="0"
-                              class="page-link"
-                              >1</a
-                            >
-                          </li>
-                          <li class="paginate_button page-item">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="2"
-                              tabindex="0"
-                              class="page-link"
-                              >2</a
-                            >
-                          </li>
-                          <li class="paginate_button page-item">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="3"
-                              tabindex="0"
-                              class="page-link"
-                              >3</a
-                            >
-                          </li>
-                          <li class="paginate_button page-item next" id="">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="4"
-                              tabindex="0"
-                              class="page-link"
-                              ><i class="next"></i
-                            ></a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="table-wrap ms-8">
-                  <article class="table-list-layout1">
-                    <div class="table-head-box pb-4">
-                      <div class="head-box">
-                        <div class="head-txt-box">3. 활동 로그</div>
-                      </div>
-                    </div>
-
-                    <div class="table-body-box">
-                      <div class="table-box with-scroll small">
-                        <table class="table-layout-fixed">
-                          <colgroup>
-                            <col style="width: 70px" />
-                            <col style="width: 100px" />
-                            <col style="width: 300px" />
-                            <col style="width: 100px" />
-                          </colgroup>
-                          <thead>
-                            <tr class="small">
-                              <th>순번</th>
-                              <th>STATUS</th>
-                              <th>URL</th>
-                              <th>일자</th>
-                            </tr>
-                          </thead>
-
-                          <tbody>
-                            <tr>
-                              <td>7</td>
-                              <td>200</td>
-                              <td class="left">/api/v1/hospitals</td>
-                              <td>2023.07.01</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </article>
-                  <div class="row mt-10">
-                    <div
-                      class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"
-                    ></div>
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                      <div class="dataTables_paginate paging_simple_numbers" id="">
-                        <ul class="pagination">
-                          <li class="paginate_button page-item previous disabled" id="">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="0"
-                              tabindex="0"
-                              class="page-link"
-                              ><i class="previous"></i
-                            ></a>
-                          </li>
-                          <li class="paginate_button page-item active">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="1"
-                              tabindex="0"
-                              class="page-link"
-                              >1</a
-                            >
-                          </li>
-                          <li class="paginate_button page-item">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="2"
-                              tabindex="0"
-                              class="page-link"
-                              >2</a
-                            >
-                          </li>
-                          <li class="paginate_button page-item">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="3"
-                              tabindex="0"
-                              class="page-link"
-                              >3</a
-                            >
-                          </li>
-                          <li class="paginate_button page-item next" id="">
-                            <a
-                              href="#"
-                              aria-controls="kt_table_users"
-                              data-dt-idx="4"
-                              tabindex="0"
-                              class="page-link"
-                              ><i class="next"></i
-                            ></a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--end::Modal body-->
-      </div>
-      <!--end::Modal content-->
-    </div>
-    <!--end::Modal dialog-->
-  </div>
+  <UserDetailAdminModal v-if='this.usrDetail' @close-modal='closeModal'
+                        :usr-detail='this.usrDetail'/>
 
   <!--탈퇴 팝업창-->
   <article v-show="isWithdraw" class="popup popup-leave" style="">
@@ -2252,12 +1568,13 @@
 <script>
 import { mapState } from 'vuex'
 import { ref } from 'vue'
-import { getAuthCd, getDt, getGugun, getPtType, getSido, toggleCheckbox } from '@/util/ui'
-import DataPagination from "@/components/user/cpnt/DataPagination.vue"
+import { getGugun, getPtType, getSido, toggleCheckbox } from '@/util/ui'
+import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { JobCode } from '@/util/sbas_cnst'
+import UserDetailAdminModal from '@/components/admin/UserDetailAdminModal.vue'
 
 export default {
-  components: {DataPagination},
+  components: { UserDetailAdminModal, DataPagination},
   computed: {
     ...mapState('admin', ['cmSido','cmGugun','userList', 'usrDetail', 'organMedi']),
     startIndex() {
@@ -2362,6 +1679,7 @@ export default {
         { value: 'ORGN0004', label: '의료진' },
         { value: 'ORGN0005', label: '전산담당' },
       ],
+      usrDetail: null,
     }
   },
   setup() {
@@ -2420,7 +1738,6 @@ export default {
     }
   },
   methods: {
-    getDt,
     getPtType,
     toggleCheckbox,
     getGugun,
@@ -2454,8 +1771,8 @@ export default {
       this.characterCount = this.content.length
     },
     async openUsrDetail(data){
-      console.log('실행')
-      await this.$store.dispatch('admin/getUserInfo', data.userId)
+      console.log('openUsrDetail', data)
+      this.usrDetail = data
       this.isDetail = true
       this.toggleModal(1)
     },
@@ -2464,6 +1781,7 @@ export default {
       this.isDetail = false
       this.detail1 = true
       this.detail2 = false
+      this.usrDetail = null
     },
     checkInfo() {
       console.log(this.$store.state.userList)
@@ -2481,7 +1799,6 @@ export default {
         return '전산담당'
       }
     },
-    getAuthCd,
     getrgDt(str) {
       const date = new Date(str)
       const year = date.getFullYear()
@@ -2495,7 +1812,7 @@ export default {
       const day = dt.substring(6)
       return `${year}-${month}-${day}`
     },
-    gettelno(num) {
+    getTelno(num) {
       const num1 = num.substring(0, 3)
       const num2 = num.substring(3, 7)
       const num3 = num.substring(7)
@@ -2543,15 +1860,13 @@ export default {
       }
     },
     setUsrSts(data) {
-      console.log(1111111111111111);
       console.log(data);
-      console.log(1111111111111111);
       if (data.userStatCd === 'URST0001') {
-        this.$store.dispatch('admin/getUserInfo', data.userId)
         this.isDetail = true
+        this.usrDetail = data
       } else {
-        this.$store.dispatch('admin/getUserInfo', data.userId)
         this.isDetail = true
+        this.usrDetail = data
       }
     },
     detailTabsMove(num) {
@@ -2627,9 +1942,6 @@ export default {
           })
         // this.$store.dispatch('admin/regUsr', {...this.form, ptTypeCd: this.form['ptTypeCd'].join(';')})
       }
-    },
-    test() {
-      console.log('test')
     },
     validateForm() {
       if (!this.form.id) {

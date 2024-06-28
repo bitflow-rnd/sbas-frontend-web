@@ -1,133 +1,34 @@
 import ko from 'apexcharts/dist/locales/ko.json'
 
-export const sverityLineChartOptions = {
-  chart: {
-    height: 350,
-    type: 'line',
-    zoom: {
-      enabled: true
-    },
-    locales: [ko],
-    defaultLocale: 'ko',
-    toolbar: {
-      show: false
-    },
-  },
-  colors: [
-    '#676767',
-    '#000000',
-    '#676767',
-    '#00ff26',
-    '#fcce14',
-    '#fc1f1f',
-    '#00ff26',
-    '#00ff26',
-    '#00ff26',
-    '#fcce14',
-    '#fcce14',
-    '#fcce14',
-    '#fc1f1f'
-  ],
-  tooltip: {
-    shared: true,
-    y: {
-      formatter: function (val) {
-        return val.toFixed(2)
+let today = new Date();
+let formattedDate = today.toISOString().split('T')[0];
+let todayDate = `${today.getMonth() + 1}.${today.getDate()}`
+
+export let data = {
+  firstMsreDt: null,
+  oxygenApply: [],
+};
+
+function setTodayLine(date) {
+  if (!date) {
+    return null
+  }
+  if (date < today) {
+    return {
+      x: new Date(formattedDate).getTime(),
+      strokeDashArray: 0,
+      borderColor: '#008FFB',
+      borderWidth: 1.5,
+      label: {
+        orientation: 'horizontal',
+        borderColor: '#008FFB',
+        style: {
+          fontSize: '13px',
+          color: '#fff',
+          background: '#008FFB'
+        },
+        text: `오늘(${todayDate})`
       }
-    }
-  },
-  markers: {
-    size: [0, 0, 0, 4, 4, 4, 0, 0, 4, 0, 0, 4, 0]
-  },
-  fill: {
-    type: 'gradient',
-    gradient: {
-      shade: 'dark',
-      shadeIntensity: 1,
-      inverseColors: false,
-      opacityFrom: 0.5,
-      opacityTo: 0,
-      stops: [0, 0, 100]
-    }
-  },
-  dataLabels: {
-    enabled: false
-  },
-  stroke: {
-    width: [2, 2, 2, 2, 2, 2, 1, 1, 2, 1, 1, 2, 1],
-    curve: 'smooth',
-    dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
-  },
-  title: {
-    text: '중증도 스코어',
-    align: 'left'
-  },
-  yaxis: {
-    min: 0,
-    max: 1,
-    tickAmount: 10,
-    labels: {
-      formatter: (y) => {
-        return y?.toFixed(1)
-      }
-    },
-    title: {
-      text: '확률'
-    }
-  },
-  xaxis: {
-    type: 'datetime'
-  },
-  annotations: {
-    yaxis: [
-      {
-        y: 0.3,
-        borderColor: '#f36666',
-        opacity: 0.5,
-        borderWidth: 1,
-        strokeDashArray: 5
-      },
-      {
-        y: 0.8,
-        borderColor: '#ffb009',
-        opacity: 0.5,
-        borderWidth: 1,
-        strokeDashArray: 5
-      },
-      {
-        y: 0.0,
-        y2: 0.3,
-        borderColor: '#000000',
-        fillColor: '#2eff00',
-        opacity: 0.1
-      },
-      {
-        y: 0.3,
-        y2: 0.8,
-        borderColor: '#000000',
-        fillColor: '#fcce14',
-        opacity: 0.1
-      },
-      {
-        y: 0.8,
-        y2: 1.0,
-        borderColor: '#000000',
-        fillColor: '#fc1f1f',
-        opacity: 0.1
-      }
-    ]
-  },
-  legend: {
-    show: true,
-    position: 'right',
-    offsetY: 50,
-    height: 2530,
-    formatter: (seriesName, opts) => {
-      if (opts.seriesIndex > 5) return ''
-      return seriesName
-    },
-    markers: {
-      width: [12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0]
     }
   }
 }
@@ -137,7 +38,7 @@ export const simpleSeverityLineChartOpt = {
     height: 350,
     type: 'line',
     zoom: {
-      enabled: true
+      enabled: false
     },
     locales: [ko],
     defaultLocale: 'ko',
@@ -146,30 +47,23 @@ export const simpleSeverityLineChartOpt = {
     },
   },
   colors: [
-    '#676767',
+    '#fc1f1f',
     '#000000',
     '#676767',
     '#00ff26',
     '#fcce14',
-    '#fc1f1f',
-    '#00ff26',
-    '#00ff26',
-    '#00ff26',
-    '#fcce14',
-    '#fcce14',
-    '#fcce14',
-    '#fc1f1f'
   ],
   tooltip: {
-    shared: true,
-    y: {
-      formatter: function (val) {
-        return val.toFixed(2)
-      }
+    custom: function({series, seriesIndex, dataPointIndex, w}) {
+      return '<div style="padding: 10px">' +
+        '<span>' + new Date(w.globals.labels[dataPointIndex]).toISOString().split('T')[0] + '</span>' + '<br>' +
+        '<span>' + 'CovSF: ' + series[seriesIndex][dataPointIndex] + '</span>' + '<br>' +
+        '<span>' + 'OxygenApply: ' + (data.oxygenApply[dataPointIndex]) + '</span>' +
+        '</div>'
     }
   },
   markers: {
-    size: [0, 0, 0, 4, 4, 4, 0, 0, 4, 0, 0, 4, 0]
+    size: 2
   },
   fill: {
     type: 'gradient',
@@ -185,13 +79,17 @@ export const simpleSeverityLineChartOpt = {
   dataLabels: {
     enabled: false
   },
+  forecastDataPoints: {
+    count: 2,
+  },
   stroke: {
-    width: [2, 2, 2, 2, 2, 2, 1, 1, 2, 1, 1, 2, 1],
+    width: 3,
     curve: 'smooth',
-    dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
+    // dashArray: [2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 2]
   },
   title: { },
   yaxis: {
+    seriesName: 'CovSF',
     min: 0,
     max: 1,
     tickAmount: 10,
@@ -200,15 +98,31 @@ export const simpleSeverityLineChartOpt = {
         return y?.toFixed(1)
       }
     },
-    title: {}
+    title: {
+      text: 'CovSF'
+    }
   },
   xaxis: {
-    type: 'datetime'
+    type: 'category',
+    labels: {
+      formatter: function(value) {
+        let date = new Date(value)
+        return `${date.getMonth() + 1}월 ${date.getDate()}일`
+      }
+    },
+    crosshairs: {
+      show: true,
+    },
+    tooltip: {
+      enabled: false,
+    }
   },
   annotations: {
+    xaxis: [setTodayLine(data.firstMsreDt)],
     yaxis: [
+      // 기준선
       {
-        y: 0.3,
+        y: 0.4,
         borderColor: '#f36666',
         opacity: 0.5,
         borderWidth: 1,
@@ -221,15 +135,16 @@ export const simpleSeverityLineChartOpt = {
         borderWidth: 1,
         strokeDashArray: 5
       },
+      // 백그라운드 색깔
       {
         y: 0.0,
-        y2: 0.3,
+        y2: 0.4,
         borderColor: '#000000',
         fillColor: '#2eff00',
         opacity: 0.1
       },
       {
-        y: 0.3,
+        y: 0.4,
         y2: 0.8,
         borderColor: '#000000',
         fillColor: '#fcce14',
@@ -242,21 +157,8 @@ export const simpleSeverityLineChartOpt = {
         fillColor: '#fc1f1f',
         opacity: 0.1
       }
-    ]
+    ],
   },
-  legend: {
-    show: false,
-    position: 'right',
-    offsetY: 50,
-    height: 2530,
-    formatter: (seriesName, opts) => {
-      if (opts.seriesIndex > 5) return ''
-      return seriesName
-    },
-    markers: {
-      width: [12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0]
-    }
-  }
 }
 
 export const trendLineChartOptions = {

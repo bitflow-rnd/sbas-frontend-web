@@ -72,10 +72,7 @@ export default {
   actions: {
     /*환자 목록 조회*/
     async getPatntList(comment, data) {
-      //const token = localStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/search`
-      // const url = `http://localhost:8080/api/v1/private/patient/search`
-
       const params = data
 
       console.log('환자 목록 조회' + data)
@@ -96,8 +93,6 @@ export default {
     },
     async getHospList(comment, data) {
       const url = `${API_PROD}/api/v1/private/patient/searchhosps`
-      // const url = `http://localhost:8080/api/v1/private/patient/searchhosps`
-
       const params = data
 
       try {

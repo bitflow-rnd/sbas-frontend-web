@@ -2335,624 +2335,8 @@
   </div>
 
   <!--  추천병원선택 1  -->
-  <div
-    v-if="bdDetail !== null && ptDetail !== null"
-    class="modal fade"
-    id="kt_modal_recommend"
-    tabindex="-1"
-    aria-hidden="true"
-    style=""
-    :class="{'show' : showModal===1}" v-show="showModal===1"
-  >
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog mw-1500px modal-dialog-centered">
-      <!--begin::Modal content-->
-      <div class="modal-content">
-        <!--begin::Modal header-->
-        <div class="modal-header px-10 py-5 d-flex justify-content-between">
-          <!--begin::Modal title-->
-          <h2>추천병원 선택</h2>
-          <!--end::Modal title-->
-          <!--begin::Close-->
-          <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal(1)">
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class="svg-icon svg-icon-1">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  opacity="0.5"
-                  x="6"
-                  y="17.3137"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(-45 6 17.3137)"
-                  fill="currentColor"
-                ></rect>
-                <rect
-                  x="7.41422"
-                  y="6"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(45 7.41422 6)"
-                  fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-            <!--end::Svg Icon-->
-          </div>
-          <!--end::Close-->
-
-          <article class="floating-request-box">
-            <div class="img-box">
-              <img src="/img/common/ic_request_patient.svg" alt="이미지" />
-            </div>
-            <div class="txt-box">
-              {{ bdDetail.ptNm }}
-              <span class="text-gray-600 fw-normal"
-              >({{ bdDetail.gndr }} / {{ bdDetail.age }}세 / {{ getAddr(bdDetail.bascAddr) }} {{ ptDetail.mpno ? ('/ ' + getTelno(ptDetail.mpno)) : '' }})</span
-              >
-            </div>
-            <div class="txt-box" v-if="bdDetail.tagList && bdDetail.tagList.length>0">
-              <span class="text-primary">{{ getTag(bdDetail.tagList) }}</span>
-            </div>
-          </article>
-        </div>
-
-        <!--begin::Modal header-->
-        <!--begin::Modal body-->
-        <div v-if="rcmdHp !== null" class="modal-body scroll-y py-10 px-10">
-          <article class="table-form-layout1 pb-4">
-            <div class="form-head-box"></div>
-
-            <div class="form-body-box">
-              <div class="table-box">
-                <table>
-                  <colgroup>
-                    <col style="width: 90px" />
-                    <col style="width: 400px" />
-                    <col style="width: 90px" />
-                    <col style="width: auto" />
-                  </colgroup>
-                  <tbody>
-                  <tr>
-                    <th rowspan="2">출발지</th>
-                    <td rowspan="2">
-                      <div class="item-cell-box rcmd">
-                        <div class="rbox">
-                          <label>
-                            <input type="radio" name="permission" /><i></i>
-                            <span style='width: 100px' class="txt">위치지정</span>
-                          </label>
-                          <div class="tbox full">
-                            <input
-                              style="margin-left: 1px"
-                              type="text"
-                              v-model="newPt.zip"
-                              readonly
-                            />
-                          </div>
-                          <a
-                            @click="openAddressFinder(0)"
-                            class="btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1"
-                            style="min-width: 80px"
-                          >주소검색</a
-                          >
-                        </div>
-                      </div>
-                      <div class="item-cell-box rcmd">
-                        <div class="rbox">
-                          <label>
-                            <input type="radio" name="permission" /><i></i>
-                            <span class="txt">시/도지정</span>
-                          </label>
-                        </div>
-                      </div>
-                    </td>
-                    <th>병상유형</th>
-                    <td>
-                      <div class="item-cell-box">
-                        <div class="cbox">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">음압격리</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">중증일반격리</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">소아음압격리</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">소아일반격리</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">소아</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">일반</span>
-                          </label>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>중등도</th>
-                    <td>
-                      <div class="item-cell-box">
-                        <div class="cbox">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">중환자</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">중증</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">준증증</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">중등증</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="permission" /><i></i>
-                            <span class="txt">일반</span>
-                          </label>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-
-                    <th>환자유형</th>
-                    <td colspan="3">
-
-                      <div class="d-flex">
-
-                        <div class="item-cell-box ptnt-type full d-flex flex-grow-1">
-
-                          <div class="cbox">
-                            <label>
-                              <input type="checkbox" name="permission" /><i></i>
-                              <span class="txt">임산부</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="permission" /><i></i>
-                              <span class="txt">투석</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="permission" /><i></i>
-                              <span class="txt">수술</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="permission" /><i></i>
-                              <span class="txt">신생아</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="permission" /><i></i>
-                              <span class="txt">소아</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="permission" /><i></i>
-                              <span class="txt">인공호흡기</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="permission" /><i></i>
-                              <span class="txt">적극적치료요청</span>
-                            </label>
-                          </div>
-
-                        </div>
-
-                        <div class="tbox w-400px with-btn ms-5">
-                          <input type="text" placeholder="의료기관명 검색" />
-
-                          <a href="javascript:void(0)" class="input-btn">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                          </a>
-                        </div>
-
-                      </div>
-
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th>장비정보</th>
-                    <td colspan="3">
-                      <div class="item-cell-box">
-                        <div class="cbox">
-                          <label>
-                            <input type="checkbox" name="type3" /><i></i>
-                            <span class="txt">인공호흡기 일반</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="type3" /><i></i>
-                            <span class="txt">인공호흡기 조산아</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="type3" /><i></i>
-                            <span class="txt">인큐베이터</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="type3" /><i></i>
-                            <span class="txt">ECMO</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="type3" /><i></i>
-                            <span class="txt">중심체온조절유도기</span>
-                          </label>
-                        </div>
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="type3" /><i></i>
-                            <span class="txt">고압산소치료기</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="type3" /><i></i>
-                            <span class="txt">CT</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="type3" /><i></i>
-                            <span class="txt">MRI</span>
-                          </label>
-                        </div>
-
-                        <div class="cbox ms-4">
-                          <label>
-                            <input type="checkbox" name="type3" /><i></i>
-                            <span class="txt">혈관촬영기</span>
-                          </label>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-
-          <article class="table-list-layout1">
-            <div class="table-head-box pb-4">
-              <div class="head-box">
-                <div class="head-txt-box">
-                  검색결과
-                  <span class="rounded-pill bg-primary text-white px-2 ms-2">{{
-                      rcmdHp.count
-                    }}</span>
-                </div>
-              </div>
-
-              <div class="option-box">
-
-                <!--
-                <div class="option-item-box d-flex align-items-center">
-                  <div class="option-label-box pe-4">목록표시</div>
-
-                  <article class="toggle-list-layout2">
-                    <div class="toggle-list">
-                      <label>
-                        <input type="radio" name="toggle1" checked="" />
-                        <span class="txt">10행</span>
-                      </label>
-
-                      <label>
-                        <input type="radio" name="toggle1" />
-                        <span class="txt">25행</span>
-                      </label>
-
-                      <label>
-                        <input type="radio" name="toggle1" />
-                        <span class="txt">50행</span>
-                      </label>
-                    </div>
-                  </article>
-                </div>
-                -->
-
-                <div class="option-item-box d-flex align-items-center ms-8">
-                  <div class="option-label-box pe-4">목록표시</div>
-
-                  <article class="toggle-list-layout2">
-                    <div class="toggle-list">
-                      <label>
-                        <input type="radio" name="toggle" checked="" />
-                        <span class="txt">거리순</span>
-                      </label>
-
-                      <label>
-                        <input type="radio" name="toggle" />
-                        <span class="txt">추천순</span>
-                      </label>
-                    </div>
-                  </article>
-                </div>
-              </div>
-            </div>
-
-            <div v-if="rcmdHp.count !== 0" class="table-body-box">
-              <div class="table-box with-scroll small">
-                <table>
-                  <colgroup>
-                    <col style="width: 50px" />
-                    <col style="width: 70px" />
-                    <col style="width: 200px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 60px" />
-                    <col style="width: 90px" />
-                    <col style="width: 90px" />
-                  </colgroup>
-                  <thead>
-                  <tr class="small">
-                    <th>
-                      <div class="cbox">
-                        <label> <input type="checkbox" class="all-chk" /><i></i> </label>
-                      </div>
-                    </th>
-                    <th>이미지</th>
-                    <th>병원명</th>
-                    <th>중환자</th>
-                    <th>중증</th>
-                    <th>준중증</th>
-                    <th>중등증</th>
-                    <th>일반</th>
-                    <th>분만</th>
-                    <th>투석</th>
-                    <th>소아</th>
-                    <th>인공 호흡</th>
-                    <th>인공호흡 (조산아)</th>
-                    <th>인큐 베이터</th>
-                    <th>ECMO</th>
-                    <th>중심체온 조절유도기</th>
-                    <th>고압 산소</th>
-                    <th>CT</th>
-                    <th>MRI</th>
-                    <th>거리</th>
-                  </tr>
-                  </thead>
-
-                  <tbody>
-                  <tr v-for="(item, i) in rcmdHp.items" :key="i">
-                    <td>
-                      <div class="cbox d-flex justify-content-center">
-                        <label>
-                          <input
-                            v-model="aprv.reqHospIdList"
-                            type="checkbox"
-                            :value="item.hospId"
-                          /><i></i>
-                        </label>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="img-box w-50px h-50px m-auto">
-                        <img
-                          src="/img/common/img_profile_dummy.png"
-                          alt="이미지"
-                          class="w-100 h-100 thum-hspt"
-                        />
-                      </div>
-                    </td>
-                    <td class="text-start">
-                      <div class="d-flex align-items-center">
-                        <div class="text-start text-black" style="">{{ item.hospNm }}</div>
-                      </div>
-
-                      <div class="text-gray-600 fs-12px pt-2">
-                        {{ getTag(item.tagList) }}
-                      </div>
-                    </td>
-                    <td><span class="text-black">{{ item.gnbdIcu }}</span></td>
-                    <td><span class="text-black">{{ item.gnbdSvrt }}</span></td>
-                    <td><span class="text-black">{{ item.gnbdSmsv }}</span></td>
-                    <td><span class="text-black">{{ item.gnbdModr }}</span></td>
-                    <td><span class="text-primary">13</span>/55</td>
-                    <td><span class="text-primary">13</span>/55</td>
-                    <td><span class="text-primary">13</span>/55</td>
-                    <td><span class="text-danger">0</span>/1</td>
-
-                    <td><span :class="{'text-danger': item.ventilator === 'N'}" class="text-primary">{{ item.ventilator
-                      }}</span></td>
-                    <td><span :class="{'text-danger': item.ventilatorPreemie === 'N'}"
-                              class="text-primary">{{ item.ventilatorPreemie }}</span></td>
-                    <td><span :class="{'text-danger': item.incubator === 'N'}" class="text-primary">{{ item.incubator
-                      }}</span></td>
-                    <td><span :class="{'text-danger': item.ecmo === 'N'}" class="text-primary">{{ item.ecmo }}</span>
-                    </td>
-                    <td><span :class="{'text-danger': item.bodyTemperatureControl === 'N'}"
-                              class="text-primary">{{ item.bodyTemperatureControl }}</span></td>
-                    <td><span :class="{'text-danger': item.highPressureOxygen === 'N'}"
-                              class="text-primary">{{ item.highPressureOxygen }}</span></td>
-                    <td><span :class="{'text-danger': item.ct === 'N'}" class="text-primary">{{ item.ct }}</span></td>
-                    <td><span :class="{'text-danger': item.mri === 'N'}" class="text-primary">{{ item.mri }}</span></td>
-                    <td>{{ item.distance }}</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-
-          <div class="row mt-10">
-            <div
-              class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"
-            ></div>
-            <div class="col-12 d-flex align-items-center justify-content-center">
-              <div class="dataTables_paginate paging_simple_numbers">
-                <ul class="pagination">
-                  <li class="paginate_button page-item previous disabled">
-                    <a
-                      href="#"
-                      aria-controls="kt_table_users"
-                      data-dt-idx="0"
-                      tabindex="0"
-                      class="page-link"
-                    ><i class="previous"></i
-                    ></a>
-                  </li>
-                  <li class="paginate_button page-item active">
-                    <a
-                      href="#"
-                      aria-controls="kt_table_users"
-                      data-dt-idx="1"
-                      tabindex="0"
-                      class="page-link"
-                    >1</a
-                    >
-                  </li>
-                  <li class="paginate_button page-item">
-                    <a
-                      href="#"
-                      aria-controls="kt_table_users"
-                      data-dt-idx="2"
-                      tabindex="0"
-                      class="page-link"
-                    >2</a
-                    >
-                  </li>
-                  <li class="paginate_button page-item">
-                    <a
-                      href="#"
-                      aria-controls="kt_table_users"
-                      data-dt-idx="3"
-                      tabindex="0"
-                      class="page-link"
-                    >3</a
-                    >
-                  </li>
-                  <li class="paginate_button page-item next">
-                    <a
-                      href="#"
-                      aria-controls="kt_table_users"
-                      data-dt-idx="4"
-                      tabindex="0"
-                      class="page-link"
-                    ><i class="next"></i
-                    ></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <article class="modal-menu-layout1 pt-10">
-            <div class="modal-menu-list">
-              <!--								<a href="javascript:requestTabMove(2)" class="modal-menu-btn menu-primary">다음</a>-->
-              <router-link
-                to=""
-                @click="openModal(2)"
-                class="modal-menu-btn menu-cancel"
-              >이전
-              </router-link>
-              <router-link to="" @click="openPopup(1)" class="modal-menu-btn menu-primary-outline"
-              >배정불가
-              </router-link
-              >
-              <router-link to="" @click="openPopup(3)" class="modal-menu-btn menu-primary"
-              >배정요청
-              </router-link
-              >
-            </div>
-          </article>
-        </div>
-        <!--end::Modal body-->
-      </div>
-      <!--end::Modal content-->
-    </div>
-    <!--end::Modal dialog-->
-  </div>
+  <RcmdHospModal v-if='this.showRcmdHospModal' :bd-detail='this.bdDetail'
+                @closeModal='closeRcmdHospModal()' @returnToList='returnToList()' />
 
   <!--  병상배정 세부 내용 2 -->
   <div class="modal fade" id="kt_modal_detail" tabindex="-1" aria-hidden="true" style=""
@@ -3221,7 +2605,7 @@
                       </article>
                     </div>
 
-                    <div class="detail-foot-box">
+                    <div class="detail-foot-box pb-5">
                       <article class="msg-send-layout1">
                         <div class="img-upload-result">
                           <div class="img-list"></div>
@@ -3252,11 +2636,16 @@
                                 <!-- && this.chrgUserId.some(item=>item.chrgUserId===userInfo.id)) -->
                                 <a v-show="
                                     (bdDetail.bedStatCd === 'BAST0003' &&
-                                      ( userInfo.jobCd === JobCode.Aprv || userInfo.jobCd === JobCode.Sysa )) ||
-                                    (bdDetail.bedStatCd === 'BAST0004' &&
-                                      ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa ))"
+                                      ( userInfo.jobCd === JobCode.Aprv || userInfo.jobCd === JobCode.Sysa ))"
                                   @click="openPopup(1)"
                                   class="modal-menu-btn menu-primary-outline radius-0 big"
+                                >배정 취소</a
+                                >
+                                <a v-show="
+                                    (bdDetail.bedStatCd === 'BAST0004' &&
+                                      ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa ))"
+                                   @click="openPopup(1)"
+                                   class="modal-menu-btn menu-primary-outline radius-0 big"
                                 >배정 불가</a
                                 >
                                 <div
@@ -3264,7 +2653,7 @@
                                     bdDetail.bedStatCd === 'BAST0003' &&
                                     ( userInfo.jobCd === JobCode.Aprv || userInfo.jobCd === JobCode.Sysa )
                                   "
-                                  @click="openPopup(2)"
+                                  @click="openRcmdHospModal()"
                                   class="modal-menu-btn menu-primary radius-0 big"
                                 >
                                   병상요청 승인
@@ -4160,6 +3549,12 @@
                         </article>
                       </div>
                     </td>
+                    <th>PID</th>
+                    <td>
+                      <div class="tbox full">
+                        <input v-model="hosptlzdiscg.pid" placeholder="PID 입력" />
+                      </div>
+                    </td>
                   </tr>
                   <tr v-if="hosptlzdiscg.admsStatCd === 'IOST0002'">
                     <th>퇴원 사유</th>
@@ -4667,45 +4062,42 @@
     </div>
   </article>
 
-  <!--  배정 불가  -->
+  <!--  배정반 배정 취소  -->
   <article v-show="popup === 4" class="popup popup-assignment-cancel" tabindex="-3" style="">
     <div class="popup-wrapper">
       <div class="popup-contents">
         <div class="popup-head-box py-5 px-10">
-          <div class="head-tit-box">배정 불가</div>
-
-          <div @click="closePopup(0)" class="head-option-box">
-            <a class="popup-close-btn">
-              <span class="svg-icon svg-icon-1">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    opacity="0.5"
-                    x="6"
-                    y="17.3137"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(-45 6 17.3137)"
-                    fill="currentColor"
-                  ></rect>
-                  <rect
-                    x="7.41422"
-                    y="6"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(45 7.41422 6)"
-                    fill="currentColor"
-                  ></rect>
-                </svg>
-              </span>
-            </a>
+          <div class="head-tit-box">배정 취소</div>
+          <div @click="closePopup(0)" class="btn btn-sm btn-icon btn-active-color-primary">
+            <span class="svg-icon svg-icon-1">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  opacity="0.5"
+                  x="6"
+                  y="17.3137"
+                  width="16"
+                  height="2"
+                  rx="1"
+                  transform="rotate(-45 6 17.3137)"
+                  fill="currentColor"
+                ></rect>
+                <rect
+                  x="7.41422"
+                  y="6"
+                  width="16"
+                  height="2"
+                  rx="1"
+                  transform="rotate(45 7.41422 6)"
+                  fill="currentColor"
+                ></rect>
+              </svg>
+            </span>
           </div>
         </div>
 
@@ -4800,24 +4192,29 @@ import {
   getDt,
   getDtBlue,
   getGndr,
+  getSido,
   getTag,
   getTelno,
   getTLDt,
   getTLIcon,
+  getUndrDses,
   goAsgn,
   maskingNm,
   openAddressFinder,
+  openPopup,
   regNewPt,
-  openPopup, reqBedType, toggleCheckbox, getUndrDses
+  reqBedType,
+  toggleCheckbox
 } from '@/util/ui'
 import user from '@/store/modules/user'
 import { JobCode } from '@/util/sbas_cnst'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
+import RcmdHospModal from '@/components/user/list/RcmdHospModal.vue'
 
 
 export default {
 
-  components: { MyInfoModal, DataPagination },
+  components: { RcmdHospModal, MyInfoModal, DataPagination },
   name: 'ListBed',
   props: {},
 
@@ -5000,7 +4397,8 @@ export default {
       undrDsesCdArr: [],
       visibleRef: false,
       imgsRef: '',
-      indexRef: 0
+      indexRef: 0,
+      showRcmdHospModal: false,
     }
   },
   computed: {
@@ -5024,7 +4422,7 @@ export default {
     ]),
     ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip', 'isSpinner']),
     ...mapState('user', ['userInfo', 'cmSido', 'chrgInfo']),
-    ...mapState('admin', ['firestatnList', 'firemenList', 'medinstList', 'organMedi']),
+    ...mapState('admin', ['firestatnList', 'firemenList', 'medinstList', 'organMedi', 'cmSido']),
 
     startIndex() {
       return (this.page - 1) * this.displayRowsCount
@@ -5073,6 +4471,7 @@ export default {
     }*/
   },
   methods: {
+    getSido,
     toggleCheckbox,
     changePage(newPage) {
       this.$store.dispatch('bedasgn/getBdListWeb', {
@@ -5116,7 +4515,6 @@ export default {
     },
     getBdList() {
       //this.search = this.initSearch
-      this.$store.dispatch('bedasgn/getBdList')
       this.$store.dispatch('bedasgn/getBdListWeb')
     },
     /*countBdList() {
@@ -5285,7 +4683,7 @@ export default {
         this.alertIdx = 4
       } else if (idx === 5) {
         /* 승인배정반 불가 alert*/
-        this.errMsg = '배정불가 처리 하시겠습니까?'
+        this.errMsg = '배정 취소하시겠습니까?'
         this.cncBtn = true
         this.isAlert = true
         if (this.userInfo.jobCd === JobCode.Aprv || this.userInfo.jobCd === JobCode.Sysa) {
@@ -5355,6 +4753,7 @@ export default {
         console.log('역학조사서 확인')
         this.alertClose()
       } else if (res === 5) {
+        // 배정반 배정 불가
         this.aprv.aprvYn = 'N'
         this.aprv.ptId = this.bdDetail.ptId
         this.aprv.bdasSeq = this.bdDetail.bdasSeq
@@ -5365,6 +4764,7 @@ export default {
         this.alertClose()
         this.setNull()
       } else if (res === 7) {
+        // 배정반 승인
         this.aprv.ptId = this.bdDetail.ptId
         this.aprv.bdasSeq = this.bdDetail.bdasSeq
         this.$store.dispatch('bedasgn/aprvBedAsgn', this.aprv)
@@ -5421,7 +4821,26 @@ export default {
         this.hosptlzdiscg.ptId = this.bdDetail.ptId
         this.hosptlzdiscg.roomNm = this.hosptlzdiscg.wardNm
         this.hosptlzdiscg.hospId = this.getChrgTL(this.timeline.items, 1)
+
+        // 샘플데이터
+        if (this.hosptlzdiscg.pid === '0030001') {
+          this.hosptlzdiscg.monStrtDt = '20220208'
+          this.hosptlzdiscg.monStrtTm = '230000'
+        } else if (this.hosptlzdiscg.pid === '0030002') {
+          this.hosptlzdiscg.monStrtDt = '20210115'
+          this.hosptlzdiscg.monStrtTm = '230000'
+        } else if (this.hosptlzdiscg.pid === '0030003') {
+          this.hosptlzdiscg.monStrtDt = '20220223'
+          this.hosptlzdiscg.monStrtTm = '214000'
+        } else if (this.hosptlzdiscg.pid === '0030004') {
+          this.hosptlzdiscg.monStrtDt = '20200905'
+          this.hosptlzdiscg.monStrtTm = '230000'
+        } else if (this.hosptlzdiscg.pid === '0030005') {
+          this.hosptlzdiscg.monStrtDt = '20201117'
+          this.hosptlzdiscg.monStrtTm = '230000'
+        }
         console.log(this.hosptlzdiscg)
+
         this.$store.dispatch('bedasgn/cfmHosp', this.hosptlzdiscg)
         this.alertClose()
         this.alertOpen(13)
@@ -5706,12 +5125,23 @@ export default {
     },
     onHide() {
       this.visibleRef = false
+    },
+    closeRcmdHospModal() {
+      this.showRcmdHospModal = false
+      this.showModal = 2
+    },
+    openRcmdHospModal() {
+      this.showRcmdHospModal = true
+      this.showModal = 1
+    },
+    returnToList() {
+      this.showRcmdHospModal = false
+      this.getBdList()
     }
   }
 }
 </script>
 
-<!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped>
 .modal.show {
   background-color: rgba(0, 0, 0, 0.4);
@@ -5771,15 +5201,6 @@ article.toggle-list-layout1 .toggle-list label input:checked ~ .txt {
 
 article.toggle-list-layout1 .toggle-list label .txt {
   padding: 0 13px;
-}
-.thum-hspt {
-  border: 1px solid gray;
-  filter: grayscale(1);
-  border-radius: 6px;
-}
-
-.ptnt-type {
-  padding-top: 8px;
 }
 
 </style>

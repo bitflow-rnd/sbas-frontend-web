@@ -19,3 +19,4 @@ app
   .use(VueEasyLightbox)
   .mount('#app')
 
+store.dispatch('common/getCommonCodes')

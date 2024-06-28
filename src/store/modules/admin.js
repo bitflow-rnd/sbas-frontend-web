@@ -20,7 +20,7 @@ export default {
     fmDetail: null,
     organMedi: [],
     hpId: '',
-    medInstEtc: null
+    medInstEtc: null,
   },
   mutations: {
     setSido(state, payload) {
@@ -66,7 +66,15 @@ export default {
     },
     setMedInstEtc(state, payload) {
       state.medInstEtc = payload
-    }
+    },
+  },
+  getters: {
+    getCmSido: (state) => {
+      return state.cmSido
+    },
+    getGuGun: (state) => {
+      return state.cmGugun
+    },
   },
   actions: {
     /****************commoncode*****************/
@@ -126,36 +134,17 @@ export default {
       })
     },
     getUserList(comment, data) {
-      return new Promise((resolve, reject) => {
-        const token = sessionStorage.getItem('userToken')
-        //console.log(token)
-        const url = `${API_PROD}/api/v1/admin/user/users`
-        axios({
-          method: 'get',
-          url: url,
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          params: data
+      const url = `${API_PROD}/api/v1/admin/user/users`
+      return axios_cstm()
+        .get(url, { params: data })
+        .then((res) => {
+          console.log(res, '사용자목록')
+          if (res.data?.code === '00') {
+            comment.commit('setUserList', res.data?.result)
+          }
+        }).catch((e) => {
+          console.log(e)
         })
-          .then(response => {
-            console.log(response, '사용자목록')
-            if (response.data?.code === '00') {
-              comment.commit('setUserList', response.data?.result)
-              if (response.data?.result.items.length !== 0) {
-                comment.dispatch('getUserInfo', response.data?.result.items[0].userId)
-              }
-              router.push('/admin/user/list')
-              resolve(response.data?.result.items)
-            } else {
-              reject('에러')
-            }
-          })
-          .catch(e => {
-            console.log(e)
-            reject(e)
-          })
-      })
     },
     getDutyDstr(comment, data) {
       const token = sessionStorage.getItem('userToken')

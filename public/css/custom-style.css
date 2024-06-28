@@ -1631,6 +1631,15 @@ article.popup .popup-head-box .head-option-box .popup-close-btn {
 article.popup .popup-head-box .head-option-box .popup-close-btn svg {
   color: #000;
 }
+article.popup .popup-head-box .btn {
+  color: #000;
+}
+article.popup .popup-head-box .btn .svg-icon {
+  color: #000;
+}
+article.popup .popup-head-box .btn .svg-icon:hover {
+  color: var(--bs-text-primary);
+}
 
 article.cbox-list-layout .cbox-row + .cbox-row {
   margin-top: 8px;

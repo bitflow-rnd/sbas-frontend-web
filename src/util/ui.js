@@ -1,4 +1,4 @@
-import { JobCode } from '@/util/sbas_cnst'
+import { AuthCode, JobCode } from '@/util/sbas_cnst'
 
 export let alertPopupClose = () => {
   console.log('실행')
@@ -18,7 +18,6 @@ export function getTelno(data) {
   if (data !== null && data !== undefined) {
     return data.slice(0, 3) + '-' + data.slice(3, 7) + '-' + data.slice(7, 12)
   } else return ''
-
 }
 
 export function maskingNm(nm) {
@@ -113,14 +112,10 @@ export function getAge(rrno1, rrno2) {
 }
 
 export function getAuthCd(code) {
-  if (code === '일반') {
-    return code
-  } else if (code === '게스트') {
-    return code
-  } else if (code === 'DTPM0001') {
-    return '일반'
-  } else {
-    return '게스트'
+  if (code === AuthCode.Member.code) {
+    return AuthCode.Member.label
+  } else if (code === AuthCode.Guest.code) {
+    return AuthCode.Guest.label
   }
 }
 
@@ -230,12 +225,6 @@ export function toggleCheckbox() {
 export function backBtn(idx) {
   this.tab = idx
   this.popup = 100
-}
-
-export function getBdList() {
-  this.search.kwd = ''
-  this.search.period = null
-  this.$store.dispatch('bedasgn/getBdList')
 }
 
 export function getUndrDses(arr) {

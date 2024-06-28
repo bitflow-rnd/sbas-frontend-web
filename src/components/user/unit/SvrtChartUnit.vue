@@ -11,7 +11,7 @@
       class="severity-chart"
       type="area"
       height="350"
-      :options="sverityLineChartOptions"
+      :options="simpleSeverityLineChartOpt"
       :series="model.series"
     ></vue-apex-charts>
   </div>
@@ -19,7 +19,7 @@
 
 <script setup>
 import VueApexCharts from 'vue3-apexcharts'
-import { sverityLineChartOptions } from '@/util/chart_util'
+import { simpleSeverityLineChartOpt } from '@/util/chart_util'
 import { defineEmits, defineProps, onMounted, reactive } from 'vue'
 import { useStore } from 'vuex'
 
@@ -58,17 +58,39 @@ function updateChart(result) {
     return
   }
   let chartData = [
-    { name: 'CovSF', data: [] }
+    { name: 'CovSF', data: [] },
+    { name: 'oxygenApply', data: [], type: 'line' },
   ]
 
   result.first.forEach((day) => {
     chartData[0].data.push({
       x: day.prdtDt,
-      y: parseFloat(day.CovSF)
+      y: parseFloat(day.CovSF),
+    })
+    chartData[1].data.push({
+      x: day.prdtDt,
+      y: convertToChartValue(day.oxygenApply),
     })
   })
   model.series = chartData
 }
+
+function convertToChartValue(data) {
+  if (data === 'UNDEFINED') {
+    return 4
+  } else if (data === 'ROOM AIR') {
+    return 5
+  } else if (data === 'NASAL') {
+    return 6
+  } else if (data === 'MASK') {
+    return 7
+  } else if (data === 'HFNC') {
+    return 8
+  } else if (data === 'VENTILATION') {
+    return 9
+  }
+}
+
 </script>
 
 <style scoped>
@@ -76,6 +98,9 @@ function updateChart(result) {
   width: 100%;
   height: 350px;
 }
-.patient-info { margin-left: 24px; }
+.patient-info {
+  margin-left: 24px;
+  font-size: 15px;
+}
 .patient-info > i { margin-right: 9px; }
 </style>

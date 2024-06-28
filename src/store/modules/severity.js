@@ -24,21 +24,26 @@ export default {
       state.severityData.hospId = null
       state.severityData.anlyDt = null
       state.severityData.first = []
-      if (payload) {
+      if (payload && payload.length > 0) {
         state.severityData.ptId = payload[0].ptId
         state.severityData.hospId = payload[0].hospId
         state.severityData.anlyDt = payload[0].anlyDt
         payload
-          .sort((a, b) => {
-            return a.prdtDt.localeCompare(b.prdtDt)
-          })
-          .forEach((prdtRow) => {
-            const date = new Date(
-              `${prdtRow.prdtDt.substring(0, 4)}-${prdtRow.prdtDt.substring(4, 6)}-${prdtRow.prdtDt.substring(6)}`
-            ).getTime()
+          .forEach((item) => {
+            let date = null
+            if (item.prdtDt) {
+              date = new Date(
+                `${item.prdtDt.substring(0, 4)}-${item.prdtDt.substring(4, 6)}-${item.prdtDt.substring(6)}`
+              ).getTime()
+            } else if (item.msreDt) {
+              date = new Date(
+                `${item.msreDt.substring(0, 4)}-${item.msreDt.substring(4, 6)}-${item.msreDt.substring(6)}`
+              ).getTime()
+            }
             state.severityData.first.push({
               prdtDt: date,
-              CovSF: parseFloat(prdtRow.CovSF?.replace(',', '.'))
+              CovSF: parseFloat(item.covSf?.replace(',', '.')),
+              oxygenApply: item.oxygenApply,
             })
         })
       }
