@@ -273,7 +273,6 @@ function getActivityHistory(userId) {
 .cntc-message-board .item-box:hover {
   background-color: #74afeb22;
 }
-
 .cntc-dashboard > section {
   width: 25%;
   position: relative;

@@ -30,7 +30,7 @@
             <div class="list-body-box">
               <div class="img-box">
                 <img src="/img/common/img_nodata.svg" alt="이미지" />
-                <h2>최근 이력 없음</h2>
+                <h2>활동내역 없음</h2>
               </div>
             </div>
           </article>

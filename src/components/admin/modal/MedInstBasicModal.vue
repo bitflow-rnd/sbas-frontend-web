@@ -747,5 +747,14 @@ function loadNaverMapAsync() {
 .img-hspt {
   filter: grayscale(1);
 }
-
+article.modal-profile-layout1 .profile-card-box .profile-view-box {
+  overflow: hidden;
+}
+article.modal-profile-layout1 .profile-card-box .profile-view-box > img {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+}
 </style>

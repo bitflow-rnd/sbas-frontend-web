@@ -242,7 +242,7 @@ section.cntc-message-board .board-body-box .list-wrap .list-group-box .list-head
 section.cntc-message-board .board-body-box .list-wrap .list-group-box .list-body-box .item-box {
   display: flex;
   justify-content: space-between;
-  padding: 10px 32px;
+  padding: 10px 19px;
 }
 section.cntc-message-board .board-body-box .list-wrap .list-group-box .list-body-box .item-box + .item-box {
   border-top: 1px solid #DADBDC;
@@ -1755,6 +1755,7 @@ article.msg-send-layout1 .msg-group-box {
   display: flex;
   border: 1px solid #aaa;
   border-radius: 4px;
+  opacity: 0.2;
 }
 article.msg-send-layout1 .msg-group-box .img-upload-box {
   border-right: 1px solid rgba(103, 106, 122, 0.2);
@@ -1815,6 +1816,7 @@ article.msg-send-layout1 .msg-menu-group-box {
 article.msg-send-layout1 .msg-menu-group-box .msg-group-box {
   flex: 1;
   min-width: 0;
+  opacity: 0.2;
 }
 article.msg-send-layout1 .msg-menu-group-box .menu-group-box {
   margin-left: 16px;

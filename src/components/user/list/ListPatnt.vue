@@ -66,7 +66,7 @@
                 <h1
                   class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0"
                 >
-                  환자 정보 관리
+                  환자정보 관리
                 </h1>
               </li>
               <li class="breadcrumb-item ml-2">

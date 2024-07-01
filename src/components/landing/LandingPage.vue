@@ -13,7 +13,7 @@
           <a href="https://bitflow.notion.site/1-c386cb59de4440208ec146d6968bf877?pvs=4" target='_blank' class="btn btn-flex btn-sm btn-primary my-auto fs-4 btn-mnal py-1"
           ><i class="fa-solid fa-triangle-exclamation"></i> 사용자매뉴얼</a
           >
-          <router-link to='/login' class='ms-4 mt-2 header-menu-btn d-none d-md-block'>병상배정 시스템 로그인</router-link>
+          <router-link to='/login' class='ms-4 mt-2 header-menu-btn d-none d-md-block text-gray-700'>병상배정 시스템 로그인</router-link>
         </div>
 
       </div>
@@ -114,11 +114,10 @@
                 <a href='' class='navigation-next-btn'></a>
               </div>
 
+            </div>
 
-              <div class='visual-view-box'>
-                <img src='/img/common/main_visual_item1.svg' alt='이미지'>
-              </div>
-
+            <div class='visual-view-box'>
+              <img src='/img/common/main_visual_item1.svg' alt='이미지'>
             </div>
 
           </div>
@@ -135,7 +134,7 @@
 
           <div class='footer-menu-box'>
 
-            <div class='footer-menu-list row'>
+            <div class='footer-menu-list row gx-0'>
 
               <router-link to='/login' class='d-none d-md-block text-center position-relative col col-4 footer-menu-btn type-primary py-1' v-if='!isMobile'>
                 <div class="btn-txt-center">병상배정 시스템 로그인</div>
@@ -151,10 +150,12 @@
 
             </div>
 
-            <div class='terms row d-none' v-if='!isMobile'>
+            <!--
+            <div class='terms row' v-if='!isMobile'>
               <div class="col col-6" role='button' @click='showModal(1)'>개인정보 취급방침</div>
               <div class="col col-6" role='button' @click='showModal(2)'>서비스 이용약관</div>
             </div>
+            -->
 
           </div>
         </div>
@@ -275,7 +276,7 @@ header.main {
 .btn-txt-center {
   position: absolute;
   left: 50%;
-  width: fit-content;
+  width: 100%;
   top: 50%;
   transform: translate(-50%, -50%);
   height: fit-content;
@@ -286,7 +287,7 @@ header.main {
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-.accent-txt, .text-shadow-sm-white {
+.accent-txt, .text-shadow-sm-white, .con-box {
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
 
@@ -323,7 +324,7 @@ section.main {
   position: relative;
   height: 100%;
 }
-.inner wrap {
+.inner.wrap {
   height: 800px;
   position: absolute;
   top: 50%;
@@ -375,12 +376,15 @@ footer .footer-menu-box .footer-menu-list {
   header.main {
     height: 50px !important;
   }
+  /*
   .visual-view-box {
+  .inner-wrap .visual-view-box {
     width: calc(100% - 3rem) !important;
     top: 15% !important;
     left: 50%;
     transform: translateX(-50%) !important;
   }
+  */
 }
 
 @media (max-width: 1024px) {
@@ -389,10 +393,21 @@ footer .footer-menu-box .footer-menu-list {
     margin-left: inherit;
   }
 
-  footer {
-    bottom: 20px;
+  .section.footer {
+    width: 100%;
+    padding: 0 1rem;
+    bottom: 70px;
+    height: 50px;
+    position: relative;
   }
 
+  .section.footer > footer {
+    padding: 0;
+  }
+
+  footer .footer-menu-box .footer-menu-list {
+    justify-content: center;
+  }
   footer .footer-menu-box .footer-menu-list .footer-menu-btn {
     width: 160px;
   }
@@ -400,10 +415,17 @@ footer .footer-menu-box .footer-menu-list {
   .footer-menu-btn + .footer-menu-btn {
     margin-left: 20px !important;
   }
-
-  section.main .swiper-group-box .visual-view-box {
+  /*
+section.main .swiper-group-box .visual-view-box {
+*/
+  .inner.wrap .visual-view-box {
     position: absolute;
-    top: 200px;
+    width: 86%;
+    left: 7%;
+    height: 425px;
+    margin: 0 auto;
+    top: 50% !important;
+    transform: translateY(-50%);
     z-index: 0;
   }
 }
