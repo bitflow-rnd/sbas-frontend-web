@@ -66,7 +66,7 @@
                 <h1
                   class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0"
                 >
-                  환자 정보 관리
+                  환자정보 관리
                 </h1>
               </li>
               <li class="breadcrumb-item ml-2">
@@ -143,7 +143,7 @@
                       <td>
                         <div class="item-cell-box">
                           <div class="sbox w-175px">
-                            <select :disabled="enableHospitalPicker" v-model="filterPatient['hospitalName']"
+                            <select :disabled="disableHospitalPicker" v-model="filterPatient['hospitalName']"
                                     @change="search()">
                               <option :value="null" id="null">병원 전체</option>
                               <option v-for="(item,idx) in hospList" :key="idx"
@@ -2706,8 +2706,9 @@ export default {
 
       return params
     },
-    enableHospitalPicker() {
-      return this.filterPatient['address']['second'] === ''
+    disableHospitalPicker() {
+      // return this.filterPatient['address']['second'] === ''
+      return this.filterPatient['address']['first'] === ''
     },
     enableSecondAddressPicker() {
       return this.filterPatient['address']['first'] === ''

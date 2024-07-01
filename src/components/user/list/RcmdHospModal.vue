@@ -344,28 +344,28 @@
                         <!--                      </div>-->
                       </td>
                       <td>
-                        <span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childBirthYn'] }">
-                        {{ item['facilityStatus']['childBirthYn'] ? 'Y' : 'N' }}</span>
+                        <span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childBirthYn'] === false }">
+                        {{ item['facilityStatus']['childBirthYn'] ? '있음' : '없음' }}</span><br>
                         <span class='text-black'>({{ item['medicalTeamCount']['childBirthMed'] ?? 0 }})</span>
                       </td>
-                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childYn'] }">
-                        {{ item['facilityStatus']['childYn'] ? 'Y' : 'N' }}</span>
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childYn'] === false }">
+                        {{ item['facilityStatus']['childYn'] ? '있음' : '없음' }}</span><br>
                         <span class='text-black'>({{ item['medicalTeamCount']['childMed'] ?? 0 }})</span>
                       </td>
-                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['dialysisYn'] }">
-                        {{ item['facilityStatus']['dialysisYn'] ? 'Y' : 'N' }}</span>
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['dialysisYn'] === false }">
+                        {{ item['facilityStatus']['dialysisYn'] ? '있음' : '없음' }}</span><br>
                         <span class='text-black'>({{ item['medicalTeamCount']['dialysisMed'] ?? 0 }})</span>
                       </td>
-                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['mentalPatientYn'] }">
-                        {{ item['facilityStatus']['mentalPatientYn'] ? 'Y' : 'N' }}</span>
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['mentalPatientYn'] === false }">
+                        {{ item['facilityStatus']['mentalPatientYn'] ? '있음' : '없음' }}</span><br>
                         <span class='text-black'>({{ item['medicalTeamCount']['mentalPatientMed'] ?? 0 }})</span>
                       </td>
-                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['nursingHospitalYn'] }">
-                        {{ item['facilityStatus']['nursingHospitalYn'] ? 'Y' : 'N' }}</span>
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['nursingHospitalYn'] === false }">
+                        {{ item['facilityStatus']['nursingHospitalYn'] ? '있음' : '없음' }}</span><br>
                         <span class='text-black'>({{ item['medicalTeamCount']['nursingHospitalMed'] ?? 0 }})</span>
                       </td>
-                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['negativePressureRoomYn'] }">
-                        {{ item['facilityStatus']['negativePressureRoomYn'] ? 'Y' : 'N' }}</span>
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['negativePressureRoomYn'] === false }">
+                        {{ item['facilityStatus']['negativePressureRoomYn'] ? '있음' : '없음' }}</span>
                       </td>
 
                       <td><span class='text-black'>{{ item['gnbdIcu'] + item['npidIcu'] }}</span></td>

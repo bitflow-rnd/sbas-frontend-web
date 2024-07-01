@@ -49,9 +49,10 @@
               <!--                            <vue-recaptcha ref="recaptcha" @verify="onRecaptchaVerified" sitekey="" class="captcha-box"></vue-recaptcha>-->
 
               <div class="option-list">
-                <!--                 모달인지 새 페이지인지 확인 필요               -->
-                <a @click="openFindId" class="option-btn">아이디찾기</a> /
-                <a @click="openInitPw" class="option-btn">비밀번호 초기화</a>
+                <!--                 모달인지 새 페이지인지 확인 필요
+                <a @click="openFindId" class="option-btn hover-a">아이디찾기</a> /
+                <a @click="openInitPw" class="option-btn hover-a">비밀번호 초기화</a>
+                 -->
               </div>
             </div>
 
@@ -554,8 +555,7 @@
                         </div>
                         <div class="item-cell-box full">
                           <div class="text-danger pt-2 fs-12px">
-                            ※ 빠른 승인처리를 위해 해당 기관 소속임을 증명할 수 있는 명함, 또는
-                            신분증 사진을 업로드 해주세요.
+                            ※ 해당기관 소속임을 증명할 수 있는 명함, 신분증 사진 등을 업로드 하면, 보다 빠른 승인처리가 가능합니다.
                           </div>
                         </div>
                       </td>
@@ -583,122 +583,26 @@
   <!--end::Modal - 내정보-->
 
   <article v-show="showCertify" class="popup popup-certify" style="">
+    <cert-modal :form="form" :crtfNo="crtfNo" @openCertify="openCertify"
+                @phone-certify="phoneCertify" @remove-hyphens="removeHyphens" @certify-no="certifyNo"
+                @update:crtfNo="value => crtfNo = value"/>
+  </article>
+  <article v-show="findingId" class="popup">
     <div class="popup-wrapper">
-      <div class="popup-contents">
-        <div class="popup-head-box py-5 px-10">
-          <div class="head-tit-box">본인인증</div>
-
-          <div class="head-option-box">
-            <router-link to="" @click="openCertify" class="popup-close-btn">
-              <span class="svg-icon svg-icon-1">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    opacity="0.5"
-                    x="6"
-                    y="17.3137"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(-45 6 17.3137)"
-                    fill="currentColor"
-                  ></rect>
-                  <rect
-                    x="7.41422"
-                    y="6"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(45 7.41422 6)"
-                    fill="currentColor"
-                  ></rect>
-                </svg>
-              </span>
-            </router-link>
+      <div class="popup-contents py-10 px-10" style="width: 300px">
+        <article class="modal-alert-layout pb-10">
+          <div class="alert-view-box pb-6">
+            <img src="/img/common/ic_alert.svg" alt="이미지" />
           </div>
-        </div>
-
-        <div class="popup-body-box py-5 px-10">
-          <article class="modal-head-layout1">
-            <div class="modal-head-box pb-12">
-              <div class="head-box">본인인증</div>
-              <div class="sub-box">입력하신 휴대폰번호로 인증을 진행해 주세요.</div>
-            </div>
-          </article>
-
-          <article class="table-form-layout1">
-            <div class="form-head-box"></div>
-
-            <div class="form-body-box">
-              <div class="table-box">
-                <table>
-                  <colgroup>
-                    <col style="width: 168px" />
-                    <col style="width: auto" />
-                  </colgroup>
-                  <tbody>
-                    <tr>
-                      <th>휴대폰번호 <span class="text-primary">*</span></th>
-                      <td style="padding: 10px;">
-                        <div class="item-row-box">
-                          <div class="item-cell-box">
-                            <div class="tbox short">
-                              <input type="text" v-model="form.telno" @input='removeHyphens'/>
-                            </div>
-<!--                            {{ // form.telno }}-->
-                            <router-link
-                              to=""
-                              @click="phoneCertify"
-                              class="btn btn-sm btn-primary h-30px ms-3 certify-btn"
-                              style="min-width: 103px"
-                              >인증번호 발송</router-link
-                            >
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr class="certify-row" style="display: none">
-                      <th>인증번호 <span class="text-primary">*</span></th>
-                      <td style="padding: 10px;">
-                        <div class="item-row-box">
-                          <div class="item-cell-box">
-                            <div class="tbox short">
-                              <input
-                                type="text"
-                                v-model.trim="crtfNo"
-                                placeholder="인증번호 6자리"
-                              />
-                            </div>
-
-                            <div class="timer-box ms-3 text-danger" style="min-width: 103px">
-                              유효시간: <span class="timer">03:00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="popup-foot-box py-5 px-10">
-          <article class="modal-menu-layout1">
-            <div class="modal-menu-list">
-              <router-link to="" @click="certifyNo(crtfNo)" class="modal-menu-btn menu-primary"
-                >확인</router-link
-              >
-            </div>
-          </article>
-        </div>
+          <div class="alert-msg-box" v-html='formatErrMsg()'></div>
+        </article>
+        <article class="modal-menu-layout1">
+          <div class="modal-menu-list">
+            <router-link to="" @click="openFindId" class="modal-menu-btn menu-primary"
+            >확인</router-link
+            >
+          </div>
+        </article>
       </div>
     </div>
   </article>
@@ -731,10 +635,11 @@ import * as yup from 'yup'
 import { ref } from 'vue'
 import { getGugun, getSido } from '@/util/ui'
 import { JobCode } from '@/util/sbas_cnst'
+import CertModal from '@/components/common/modal/CertModal.vue'
 
 export default {
   name: 'LoginView',
-  components: {},
+  components: { CertModal },
   computed: {
     ...mapState('admin', ['smsCrtfSuccess', 'cmSido', 'cmGugun', 'organMedi'])
   },
@@ -804,6 +709,7 @@ export default {
     const userEditModal = ref(false)
     const showCertify = ref(false)
     const isAlert = ref(false)
+    const findingId = ref(false)
     const errMsg = ''
     let timer = null
     const toggleUserEditModal = function () {
@@ -860,7 +766,7 @@ export default {
       toggleUserEditModal,
       alertOpen,
       alertClose,
-
+      findingId,
       openCertify,
       timerStart
     }
@@ -954,7 +860,8 @@ export default {
       this.$store.dispatch('user/signup', value2)
     },
     openFindId() {
-      console.log('아이디 찾기')
+      this.findingId = !this.findingId
+      console.log('아이디 찾기', this.findingId)
     },
     openInitPw() {
       console.log('비번 찾기')
@@ -1185,5 +1092,10 @@ export default {
     transform: translate(-50%, -50%);
     padding: 1rem !important;
   }
+}
+
+.hover-a:hover {
+  color: blue !important;
+  cursor: pointer;
 }
 </style>

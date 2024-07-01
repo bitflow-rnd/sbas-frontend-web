@@ -114,7 +114,7 @@
                       <td>
                         <div class="item-cell-box">
                           <div class="sbox w-175px">
-                            <select :disabled="enableHospitalPicker" v-model="filterPatient['hospitalName']"
+                            <select :disabled="disableHospitalPicker" v-model="filterPatient['hospitalName']"
                                     @change="search()">
                               <option :value="null" id="null">병원 전체</option>
                               <option v-for="(item,idx) in hospList" :key="idx"
@@ -2627,8 +2627,9 @@ export default {
 
       return params
     },
-    enableHospitalPicker() {
-      return this.filterPatient['address']['second'] === ''
+    disableHospitalPicker() {
+      // return this.filterPatient['address']['second'] === ''
+      return this.filterPatient['address']['first'] === ''
     },
     enableSecondAddressPicker() {
       return this.filterPatient['address']['first'] === ''

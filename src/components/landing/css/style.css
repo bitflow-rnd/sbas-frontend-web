@@ -200,7 +200,7 @@ footer {
     right: 0;
     bottom: 0;
     z-index: 10;
-    padding: 10px 0;
+    padding: 0 2rem;
   }
 }
 footer .footer-menu-box {
@@ -251,6 +251,7 @@ footer .footer-menu-box .footer-menu-list .footer-menu-btn {
 footer .footer-menu-box .footer-menu-list .footer-menu-btn.type-primary {
   background-color: #538ef5;
   color: #fff;
+  font-size: 2rem !important;
 }
 @media (max-width: 1024px) {
   footer .footer-menu-box .footer-menu-list .footer-menu-btn.type-primary {
@@ -355,6 +356,7 @@ section.main .swiper-group-box.type-reverse .visual-view-box {
   left: 50%;
   margin-left: -600px;
 }
+
 @media (max-width: 1024px) {
   section.main .swiper-group-box.type-reverse .visual-view-box {
     position: static;
@@ -428,24 +430,21 @@ section.main .swiper-group-box .navigation-box .navigation-next-btn {
     height: 36px;
   }
 }
+/*
 section.main .swiper-group-box .visual-view-box {
+*/
+.inner.wrap .visual-view-box {
   z-index: 10;
   background-color: #fff;
   position: absolute;
   right: 0;
-  top: 38%;
+  top: 30%;
   transform: translateY(-50%);
 }
-@media (max-width: 1024px) {
-  section.main .swiper-group-box .visual-view-box {
-    width: 100%;
-    margin: 0 auto;
-    padding-top: 20px;
-    position: static;
-    transform: none;
-  }
-}
-section.main .swiper-group-box .visual-view-box img {
+/*
+section.main .swiper-group-box .visual-view-box {
+*/
+.inner.wrap .visual-view-box img {
   max-width: 100%;
   max-height: 640px;
 }
@@ -505,18 +504,16 @@ section.main section.section1 {
 }
 @media (max-width: 1024px) {
   section.main section.section1 {
-    height: 100% !important;
+    height: 580px !important;
     padding-top: 50px;
   }
 }
 @media (max-width: 1024px) {
-  section.main section.section1 .fp-tableCell {
-    height: auto !important;
+  section.main section.section1, section.main section.section1 .fp-tableCell, section.main section.section1 .wrap {
+    height: 100% !important;
   }
-}
-@media (max-width: 1024px) {
   section.main section.section1 .wrap {
-    padding-top: 40px;
+    padding-top: 20px;
   }
 }
 section.main section.section2 {
