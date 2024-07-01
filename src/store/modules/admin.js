@@ -553,27 +553,28 @@ export default {
       })
     },
 
-    /*의료기관 정보 조회 (e-gen 데이터 제외)*/
-    editMedInstEtc(comment, request) {
-      // const token = sessionStorage.getItem('userToken')
+    /*의료기관 정보 수정 (e-gen 데이터 제외)*/
+    async editMedInstEtc(comment, request) {
+      const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/organ/mod-medinstinfo`
-      return axios({
-        method: 'post',
-        url: url,
-        /*headers: {
-            Authorization: `Bearer ${token}`
-        }*/
-        data: request
-      }).then((response) => {
+      try {
+        const response = await axios({
+          method: 'post',
+          url: url,
+          headers: {
+              Authorization: `Bearer ${token}`
+          },
+          data: request
+        })
         console.log(response, '의료기관 정보 수정 egen 제외')
         if (response.data?.code === '00') {
           comment.commit('setMedInstEtc', response.data?.result)
         } else if (response.data?.code === '01') {
           console.log('정보없음')
         }
-      }).catch((e) => {
+      } catch (e) {
         console.log(e)
-      })
+      }
     },
 
 

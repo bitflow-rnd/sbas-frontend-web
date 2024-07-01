@@ -302,11 +302,11 @@
                     <th rowspan='2'>거리</th>
                   </tr>
                   <tr class='small'>
-                    <th>분만<br>(의료진)</th>
-                    <th>투석<br>(의료진)</th>
-                    <th>소아<br>(의료진)</th>
-                    <th>요양병원<br>시설<br>(의료진)</th>
-                    <th>정신질환자<br>시설<br>(의료진)</th>
+                    <th>분만<br>(수용가능인원)</th>
+                    <th>투석<br>(수용가능인원)</th>
+                    <th>소아<br>(수용가능인원)</th>
+                    <th>요양병원<br>시설<br>(수용가능인원)</th>
+                    <th>정신질환자<br>시설<br>(수용가능인원)</th>
                     <th>음압<br>수술실</th>
                   </tr>
                   </thead>
