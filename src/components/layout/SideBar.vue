@@ -128,7 +128,14 @@ export default {
       this.$store.dispatch('admin/getFireStatn')
     },
     getMediList() {
-      this.$store.dispatch('admin/getMedinst', { dstr1Cd: null, dstr2Cd: null })
+      // 대구로 설정
+      const dutyDstr1Cd = '27'
+      // const { dutyDstr1Cd } = this.userInfo
+      if (dutyDstr1Cd) {
+        this.$store.dispatch('admin/getMedinst', { dstr1Cd: dutyDstr1Cd })
+      } else {
+        this.$store.dispatch('admin/getMedinst')
+      }
     }
   }
 }
