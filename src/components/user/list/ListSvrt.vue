@@ -186,7 +186,7 @@
                       <th>이름</th>
                       <th>생년월일</th>
                       <th>성별</th>
-                      <th>배정병원</th>
+                      <th>입원병원</th>
                       <th>거주지</th>
                       <th>중증도</th>
                       <th>질병명</th>
@@ -2606,7 +2606,7 @@ export default {
       return this.page * this.displayRowsCount
     },
     filterData() {
-      let params = {}
+      let params = { sever: true }
       if (this.filterPatient['searchText']) params = { ...params, ptNm: this.filterPatient['searchText'] }
       if (this.filterPatient['searchText']) params = { ...params, rrno1: this.filterPatient['searchText'] }
       if (this.filterPatient['searchText']) params = { ...params, mpno: this.filterPatient['searchText'] }

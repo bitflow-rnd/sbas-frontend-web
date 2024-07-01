@@ -1824,7 +1824,7 @@
             <!--begin::Close-->
             <div class="btn btn-sm btn-icon btn-active-color-primary">
               <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-              <span @click="closeModal" class="svg-icon svg-icon-1">
+              <span @click="closeEditMedi" class="svg-icon svg-icon-1">
               <svg
                 width="24"
                 height="24"
@@ -1873,246 +1873,7 @@
               <div class="tabs-box" style="">
                 <article class="table-form-layout1">
                   <div class="form-head-box"></div>
-
                   <div class="form-body-box">
-
-                    <!--                        <div class="table-box">
-                                              <table>
-                                                <colgroup>
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-                                                </colgroup>
-                                                <tbody>
-                                                <tr>
-                                                  <th>응급실운영여부</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.dutyEryn === '1'">운영중</i>
-                                                    <i v-else>-</i>
-                                                  </td>
-
-                                                  <th>입원실가용여부</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.dutyHayn === '1'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-
-                                                  <th>병상수</th>
-                                                  <td>{{ medinstDetail.hospBasicInfo.dutyHano }}</td>
-                                                </tr>
-                                                </tbody>
-                                              </table>
-                                            </div>-->
-
-                    <!--                        <div class="table-box">
-                                              <table>
-                                                <colgroup>
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-                                                </colgroup>
-                                                <tbody>
-                                                <tr>
-                                                  <th>가용_응급실</th>
-                                                  <td>{{ medinstDetail.hospBasicInfo.hvec ?? '-' }}</td>
-
-                                                  <th>가용_입원실</th>
-                                                  <td>{{ medinstDetail.hospBasicInfo.hvgc ?? '-' }}</td>
-
-                                                  <th>가용_수술실</th>
-                                                  <td>{{ medinstDetail.hospBasicInfo.hvoc ?? '-' }}</td>
-                                                </tr>
-                                                </tbody>
-                                              </table>
-                                            </div>-->
-
-                    <!--                        <div class="table-box">
-                                              <table>
-                                                <colgroup>
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-                                                </colgroup>
-                                                <tbody>
-                                                <tr>
-                                                  <th>기준_병상수</th>
-                                                  <td>{{ medinstDetail.hospBasicInfo.hpbdn ?? '-' }}</td>
-
-                                                  <th>기준_응급실</th>
-                                                  <td>{{ medinstDetail.hospBasicInfo.hperyn ?? '-' }}</td>
-
-                                                  <th>기준_입원실</th>
-                                                  <td>{{ medinstDetail.hospBasicInfo.hpgryn ?? '-' }}</td>
-                                                </tr>
-
-                                                <tr>
-                                                  <th>기준_수술실</th>
-                                                  <td>{{ medinstDetail.hospBasicInfo.hpopyn ?? '-' }}</td>
-
-                                                  <th>기준_신경중환자실</th>
-                                                  <td>{{ medinstDetail.hospBasicInfo.hpcuyn ?? '-' }}</td>
-
-                                                  <th>기준_신생아중환자실</th>
-                                                  <td>{{ medinstDetail.hospBasicInfo.hpnicuyn ?? '-' }}</td>
-                                                </tr>
-
-                                                <tr>
-                                                  <th>기준_흉부중환자실</th>
-                                                  <td>{{ medinstDetail.hospBasicInfo.hpccuyn?? '-' }}</td>
-
-                                                  <th>기준_일반중환자실</th>
-                                                  <td colspan="3">{{ medinstDetail.hospBasicInfo.hpicuyn?? '-' }}</td>
-                                                </tr>
-                                                </tbody>
-                                              </table>
-                                            </div>-->
-
-                    <!--                        <div class="table-box">
-                                              <table>
-                                                <colgroup>
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-
-                                                  <col style="width: 168px"/>
-                                                  <col style="width: auto"/>
-                                                </colgroup>
-                                                <tbody>
-                                                <tr>
-                                                  <th>중증_응급실</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy25 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-
-                                                  <th>중증_뇌출혈수술</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy1 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-
-                                                  <th>중증_뇌경색의재관류</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy2 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-                                                </tr>
-
-                                                <tr>
-                                                  <th>중증_심근경색의재관류</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy3 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-
-                                                  <th>중증_복부손상의수술</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy4 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-
-                                                  <th>중증_사지접합의수술</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy5 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-                                                </tr>
-
-                                                <tr>
-                                                  <th>중증_응급내시경</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy6 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-
-                                                  <th>중증_응급투석</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy7 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-
-                                                  <th>중증_조산산모</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy8 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-                                                </tr>
-
-                                                <tr>
-                                                  <th>중증_정신질환자</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy9 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-
-                                                  <th>중증_신생아</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy10 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-
-                                                  <th>중증_중증화상</th>
-                                                  <td>
-                                                    <i v-if="medinstDetail.hospBasicInfo.mkioskTy11 === 'Y'"
-                                                       class="fa-regular fa-circle-check"
-                                                       style="color: #74afeb; font-size: 20px"
-                                                    ></i>
-                                                    <i v-else>-</i>
-                                                  </td>
-                                                </tr>
-                                                </tbody>
-                                              </table>
-                                            </div>-->
-
                     <div class="table-box">
                       <table>
                         <colgroup>
@@ -2124,7 +1885,7 @@
                           <tr>
                             <th class='text-center'>보유 여부</th>
                             <th class='text-center'>시설</th>
-                            <th class='text-center'>의료진 수</th>
+                            <th class='text-center'>수용 가능 인원</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -2225,7 +1986,7 @@
             </article>
             <article class="modal-menu-layout1 pt-10">
               <div class="modal-menu-list">
-                <a @click="closeModal" class="modal-menu-btn menu-primary">취소</a>
+                <a @click="closeEditMedi" class="modal-menu-btn menu-primary">취소</a>
                 <a @click='editMedInstEtc' class="modal-menu-btn menu-primary">수정</a>
               </div>
             </article>
@@ -2411,6 +2172,9 @@ export default {
       this.showEditMedi = true
       this.getMediInstEtc()
     },
+    closeEditMedi() {
+      this.showEditMedi = false
+    },
     alertOpen(idx) {
 
       this.cncBtn = false
@@ -2519,10 +2283,9 @@ export default {
       }
     },
     editMedInstEtc() {
-      this.modMedinst.hospId = this.hospId
+      this.modMedinst.hospId = this.hpId
       console.log(this.modMedinst)
       this.$store.dispatch('admin/editMedInstEtc', this.modMedinst)
-      this.getMediInstEtc()
     },
     setDefaultDstr1Cd() {
       // 대구로 설정

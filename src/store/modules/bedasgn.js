@@ -18,6 +18,7 @@ export default {
     rcmdModal: 1,
     rcmdHp: null,
     bdasHisInfo: null,
+    bedStatCount: null,
   },
   getters: {
     getTimeline: (state) => {
@@ -38,13 +39,9 @@ export default {
       state.bdList.push(...payload.items)
       state.bdCnt.push(payload.count)
     },
-    setBdList2(state, payload) {
-      state.bdList2 = payload
-    },
     resetBdList(state) {
       state.bdList = []
       state.bdCnt = []
-      state.bdList2 = []
     },
     setbdDetail(state, payload) {
       state.bdDetail = payload
@@ -81,6 +78,9 @@ export default {
     },
     setBdListWeb(state,payload){
       state.bdListWeb = payload
+    },
+    setBedStatCount(state,payload){
+      state.bedStatCount = payload
     }
   },
   actions: {
@@ -90,23 +90,37 @@ export default {
         const token = sessionStorage.getItem('userToken')
         const url = `${API_PROD}/api/v1/private/bedasgn/list-web` // Todo 1
         console.log('병상배정목록 - web')
-
         const params = data
-
         const response = await axios.get(url,{ params,
           headers: {
             Authorization: `Bearer ${token}` // Add the token to the Authorization header
           }})
 
         if (response.data?.code === '00') {
-          console.log(response.data)
-
           comment.commit('setBdListWeb', response.data?.result)
          // return router.push('/user/bedasgn/list')
         }
       } catch (e) {
         console.error(e)
         //return router.push('/user/bedasgn/list')
+      }
+    },
+
+    async getBedStatCount(comment, data) {
+      try {
+        const token = sessionStorage.getItem('userToken')
+        const url = `${API_PROD}/api/v1/private/bedasgn/bedstat-count`
+        console.log('병상배정목록 - web')
+        const params = data
+        const response = await axios.get(url,{ params,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }})
+        if (response.data?.code === '00') {
+          comment.commit('setBedStatCount', response.data?.result)
+        }
+      } catch (e) {
+        console.error(e)
       }
     },
 

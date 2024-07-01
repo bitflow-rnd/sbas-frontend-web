@@ -9,30 +9,6 @@ export let data = {
   oxygenApply: [],
 };
 
-function setTodayLine(date) {
-  if (!date) {
-    return null
-  }
-  if (date < today) {
-    return {
-      x: new Date(formattedDate).getTime(),
-      strokeDashArray: 0,
-      borderColor: '#008FFB',
-      borderWidth: 1.5,
-      label: {
-        orientation: 'horizontal',
-        borderColor: '#008FFB',
-        style: {
-          fontSize: '13px',
-          color: '#fff',
-          background: '#008FFB'
-        },
-        text: `오늘(${todayDate})`
-      }
-    }
-  }
-}
-
 export const simpleSeverityLineChartOpt = {
   chart: {
     height: 350,
@@ -63,7 +39,7 @@ export const simpleSeverityLineChartOpt = {
     }
   },
   markers: {
-    size: 2
+    size: 5
   },
   fill: {
     type: 'gradient',
@@ -107,7 +83,7 @@ export const simpleSeverityLineChartOpt = {
     labels: {
       formatter: function(value) {
         let date = new Date(value)
-        return `${date.getMonth() + 1}월 ${date.getDate()}일`
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
       }
     },
     crosshairs: {
@@ -118,7 +94,22 @@ export const simpleSeverityLineChartOpt = {
     }
   },
   annotations: {
-    xaxis: [setTodayLine(data.firstMsreDt)],
+    xaxis: [{
+      x: new Date(formattedDate).getTime(),
+      strokeDashArray: 0,
+      borderColor: '#008FFB',
+      borderWidth: 1.5,
+      label: {
+        orientation: 'horizontal',
+        borderColor: '#008FFB',
+        style: {
+          fontSize: '13px',
+          color: '#fff',
+          background: '#008FFB'
+        },
+        text: `오늘(${todayDate})`
+      }
+    }],
     yaxis: [
       // 기준선
       {
@@ -157,7 +148,7 @@ export const simpleSeverityLineChartOpt = {
         fillColor: '#fc1f1f',
         opacity: 0.1
       }
-    ],
+    ]
   },
 }
 
