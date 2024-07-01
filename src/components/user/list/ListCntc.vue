@@ -109,7 +109,7 @@
                 <div class="head-bottom-box">
                   <article class="check-list-layout1">
                     <div class="list-box">
-                      <div class="item-box d-inline-flex flex-center justify-content-center">
+                      <div class="item-box">
                         <label>
                           <input v-model='model.instTypeCd' value='ORGN0001' type="checkbox" @change='searchCntc' />
                           <span class="txt">배정반</span>
@@ -276,6 +276,7 @@ function getActivityHistory(userId) {
 
 .cntc-dashboard > section {
   width: 25%;
+  position: relative;
 }
 
 .cntc-message-board {
@@ -284,6 +285,8 @@ function getActivityHistory(userId) {
 
 .cntc-dashboard {
   height: 100%;
+  position: absolute;
+  width: 100%;
 }
 
 .view-img-box img {

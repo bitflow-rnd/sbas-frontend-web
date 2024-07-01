@@ -49,9 +49,10 @@
               <!--                            <vue-recaptcha ref="recaptcha" @verify="onRecaptchaVerified" sitekey="" class="captcha-box"></vue-recaptcha>-->
 
               <div class="option-list">
-                <!--                 모달인지 새 페이지인지 확인 필요               -->
+                <!--                 모달인지 새 페이지인지 확인 필요
                 <a @click="openFindId" class="option-btn hover-a">아이디찾기</a> /
                 <a @click="openInitPw" class="option-btn hover-a">비밀번호 초기화</a>
+                 -->
               </div>
             </div>
 

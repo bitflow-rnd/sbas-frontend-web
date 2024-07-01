@@ -61,8 +61,8 @@
               <div class="profile-view-box">
                 <img
                   v-if="props.userInfo.attcId === null || props.userInfo.attcId === '' "
-                  src='@/assets/img/img-no-img.webp' />
-                <img v-else-if = "model.myImage === ''" src='@/assets/img/img-no-img.webp' />
+                  src='@/assets/img/no-img-64-g.webp' />
+                <img v-else-if = "model.myImage === ''" src='@/assets/img/no-img-64-g.webp' />
                 <img v-else :src='model.myImage' />
               </div>
               <div class="profile-info-box">
