@@ -281,12 +281,6 @@ header.main {
   height: fit-content;
 }
 
-.con-box {
-  font-weight: bold;
-  color: white !important;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-}
-
 .text-shadow-sm {
   color: white;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;

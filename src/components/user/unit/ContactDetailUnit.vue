@@ -26,12 +26,12 @@
           </div>
 
           <div class="item-option-box">
-            <article class="like-btn">
-              <a href="javascript:void(0)" class="like-btn" @click="toggleLike(user['id'])">
-                <i class="fa-regular fa-star" :style = "user['isFavorite'] ? {'color' : '#74AFEB'}:{}"></i>
-                <i class="fa-solid fa-star" :style = "user['isFavorite'] ? {'color' : '#74AFEB'}:{}"></i>
-              </a>
-            </article>
+<!--            <article class="like-btn">-->
+<!--              <a href="javascript:void(0)" class="like-btn" @click="toggleLike(user['id'])">-->
+<!--                <i class="fa-regular fa-star" :style = "user['isFavorite'] ? {'color' : '#74AFEB'}:{}"></i>-->
+<!--                <i class="fa-solid fa-star" :style = "user['isFavorite'] ? {'color' : '#74AFEB'}:{}"></i>-->
+<!--              </a>-->
+<!--            </article>-->
           </div>
         </div>
       </div>

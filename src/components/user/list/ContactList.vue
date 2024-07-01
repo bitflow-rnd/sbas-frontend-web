@@ -3,34 +3,34 @@
     <div class="list-wrap">
       <div class="list-group-box">
 
-        <div class="list-body-box" v-if="model.favUsersList">
-          <div
-            v-for="(user, idx) in model.favUsersList.items"
-            :key="idx"
-            role="button"
-            class="item-box"
-            @click="onSelectUser(user)"
-            :style="user === model.selectedUser ? { 'background-color': '#74AFEB22' } : {}"
-          >
-            <div class="item-info-box">
-              <div class="profile-box">
-                <img src="/img/common/img_profile_default.svg" alt="이미지" />
-              </div>
+<!--        <div class="list-body-box" v-if="model.favUsersList">-->
+<!--          <div-->
+<!--            v-for="(user, idx) in model.favUsersList.items"-->
+<!--            :key="idx"-->
+<!--            role="button"-->
+<!--            class="item-box"-->
+<!--            @click="onSelectUser(user)"-->
+<!--            :style="user === model.selectedUser ? { 'background-color': '#74AFEB22' } : {}"-->
+<!--          >-->
+<!--            <div class="item-info-box">-->
+<!--              <div class="profile-box">-->
+<!--                <img src="/img/common/img_profile_default.svg" alt="이미지" />-->
+<!--              </div>-->
 
-              <div class="info-box">
-                <div class="subject-box">
-                  {{ user['userNm'] }}
-                  <div class="label-txt text-primary">{{ getPmgr(user['jobCd']) }}</div>
-                </div>
-                <div class="con-box">
-                  {{ getUserBelong(user) }}
-                </div>
-              </div>
-            </div>
+<!--              <div class="info-box">-->
+<!--                <div class="subject-box">-->
+<!--                  {{ user['userNm'] }}-->
+<!--                  <div class="label-txt text-primary">{{ getPmgr(user['jobCd']) }}</div>-->
+<!--                </div>-->
+<!--                <div class="con-box">-->
+<!--                  {{ getUserBelong(user) }}-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <div class="item-option-box"></div>
-          </div>
-        </div>
+<!--            <div class="item-option-box"></div>-->
+<!--          </div>-->
+<!--        </div>-->
 
         <div class="list-body-box" v-if="model.organList">
           <div
