@@ -344,27 +344,27 @@
                         <!--                      </div>-->
                       </td>
                       <td>
-                        <span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childBirthYn'] === false  }">
+                        <span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childBirthYn'] }">
                         {{ item['facilityStatus']['childBirthYn'] ? 'Y' : 'N' }}</span>
-                        <span class='text-black'>({{ item['medicalTeamCount']['childBirthMed'] }})</span>
+                        <span class='text-black'>({{ item['medicalTeamCount']['childBirthMed'] ?? 0 }})</span>
                       </td>
-                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childYn'] === false  }">
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childYn'] }">
                         {{ item['facilityStatus']['childYn'] ? 'Y' : 'N' }}</span>
-                        <span class='text-black'>({{ item['medicalTeamCount']['childMed'] }})</span>
+                        <span class='text-black'>({{ item['medicalTeamCount']['childMed'] ?? 0 }})</span>
                       </td>
-                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['dialysisYn'] === false  }">
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['dialysisYn'] }">
                         {{ item['facilityStatus']['dialysisYn'] ? 'Y' : 'N' }}</span>
-                        <span class='text-black'>({{ item['medicalTeamCount']['dialysisMed'] }})</span>
+                        <span class='text-black'>({{ item['medicalTeamCount']['dialysisMed'] ?? 0 }})</span>
                       </td>
-                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['mentalPatientYn'] === false  }">
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['mentalPatientYn'] }">
                         {{ item['facilityStatus']['mentalPatientYn'] ? 'Y' : 'N' }}</span>
-                        <span class='text-black'>({{ item['medicalTeamCount']['mentalPatientMed'] }})</span>
+                        <span class='text-black'>({{ item['medicalTeamCount']['mentalPatientMed'] ?? 0 }})</span>
                       </td>
-                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['nursingHospitalYn'] === false  }">
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['nursingHospitalYn'] }">
                         {{ item['facilityStatus']['nursingHospitalYn'] ? 'Y' : 'N' }}</span>
-                        <span class='text-black'>({{ item['medicalTeamCount']['nursingHospitalMed'] }})</span>
+                        <span class='text-black'>({{ item['medicalTeamCount']['nursingHospitalMed'] ?? 0 }})</span>
                       </td>
-                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['negativePressureRoomYn'] === false  }">
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['negativePressureRoomYn'] }">
                         {{ item['facilityStatus']['negativePressureRoomYn'] ? 'Y' : 'N' }}</span>
                       </td>
 
