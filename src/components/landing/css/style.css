@@ -224,10 +224,10 @@ footer .footer-menu-box .footer-menu-list .footer-menu-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 10px;
   max-width: 384px;
-  width: 100%;
-  height: 110px;
+  width: 330px;
+  height: 90px;
+  padding: 1rem;
   color: #fff;
   font-size: 30px;
   font-weight: 700;
@@ -241,7 +241,7 @@ footer .footer-menu-box .footer-menu-list .footer-menu-btn {
     font-size: 22px;
     padding: 12px;
     border-radius: 10px;
-    width: calc(50% - 3px);
+    width: 44%;
     margin: 0;
   }
   footer .footer-menu-box .footer-menu-list .footer-menu-btn:nth-child(3) {
@@ -327,6 +327,7 @@ section.main section.section .wrap {
   position: relative;
 }
 section.main .swiper-group-box {
+  padding-top: 80px;
   padding-bottom: 100px;
 }
 @media (max-width: 1024px) {
@@ -438,7 +439,7 @@ section.main .swiper-group-box .visual-view-box {
   background-color: #fff;
   position: absolute;
   right: 0;
-  top: 30%;
+  top: 42%;
   transform: translateY(-50%);
 }
 /*

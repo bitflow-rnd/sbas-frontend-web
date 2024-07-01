@@ -325,7 +325,7 @@ section.main {
   height: 100%;
 }
 .inner.wrap {
-  height: 800px;
+  height: 100%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -406,13 +406,13 @@ footer .footer-menu-box .footer-menu-list {
   }
 
   footer .footer-menu-box .footer-menu-list {
-    justify-content: center;
+    justify-content: space-around;
   }
   footer .footer-menu-box .footer-menu-list .footer-menu-btn {
     width: 160px;
   }
 
-  .footer-menu-btn + .footer-menu-btn {
+  .footer-menu-btn:not(:first-child) + .footer-menu-btn {
     margin-left: 20px !important;
   }
   /*
