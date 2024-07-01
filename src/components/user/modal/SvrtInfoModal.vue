@@ -88,11 +88,11 @@
 
                   <tbody>
                     <tr v-for="(item, i) in model.svrtInfoList" :key="i">
-                      <td><span class="text-black">감염내과</span></td>
-                      <td><span class="text-black">106서병동</span></td>
-                      <td><span class="text-black">10602</span></td>
-                      <td><span class="text-black">담당의</span></td>
-                      <td><span class="text-black">'20.04.30</span></td>
+                      <td><span class="text-black">{{ item['deptNm'] }}</span></td>
+                      <td><span class="text-black">{{ item['wardNm'] }}</span></td>
+                      <td><span class="text-black">{{ item['roomNm'] }}</span></td>
+                      <td><span class="text-black">{{ item['spclNm'] }}</span></td>
+                      <td><span class="text-black">{{ item.id.msreDt }}</span></td>
                       <td><span class="text-black number">{{ item['bun'] }}</span></td>
                       <td><span class="text-black number">{{ item['cre'] }}</span></td>
                       <td><span class="text-black number">{{ item['hem'] }}</span></td>
@@ -211,13 +211,6 @@ function changePage(page) {
 
 article.detail-layout1 .detail-wrap .detail-head-box .head-box .head-txt-box {
   line-height: 28px;
-}
-
-.table-box td {
-  max-width: 65px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 table {
