@@ -270,7 +270,7 @@ body, .app-root {
   width: 80%;
 }
 header.main {
-  height: 70px;
+  height: 70px !important;
 }
 .btn-txt-center {
   position: absolute;
@@ -373,7 +373,7 @@ footer .footer-menu-box .footer-menu-list {
 
 @media (max-width: 768.98px) {
   header.main {
-    height: 50px;
+    height: 50px !important;
   }
   .visual-view-box {
     width: calc(100% - 3rem) !important;

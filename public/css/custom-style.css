@@ -16,7 +16,7 @@
 .app-main {
   height: 100%;
 }
-.main, .app-main > div {
+.app-main > div {
   min-height: calc(100% - 64px);
 }
 .app-content {
