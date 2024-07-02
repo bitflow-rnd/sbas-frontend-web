@@ -3,7 +3,7 @@
     <div class="popup-contents">
       <div class="popup-head-box py-5 px-10">
         <div class="head-tit-box">본인인증</div>
-        <div class="head-option-box">
+        <div class="btn btn-sm btn-icon btn-active-color-primary">
           <router-link to="" @click="$emit('openCertify')" class="popup-close-btn">
             <span class="svg-icon svg-icon-1">
               <svg
