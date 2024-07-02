@@ -1163,7 +1163,6 @@ export default {
       this.showEditMedi = false
     },
     alertOpen(idx) {
-
       this.cncBtn = false
       if (idx === 0) {
         /*기관이미지 삭제*/
@@ -1175,6 +1174,11 @@ export default {
         this.errMsg = '기관 이미지가 삭제되었습니다.'
         this.isAlert = true
         this.alertIdx = 1
+      } else if (idx === 2) {
+        this.alertClose()
+        this.$store.dispatch('admin/editMedInstEtc', this.modMedinst)
+        this.showEditMedi = false
+        this.tabidx = 0
       }
     },
     cfrmAl(res) {
@@ -1266,7 +1270,9 @@ export default {
     editMedInstEtc() {
       this.modMedinst.hospId = this.hpId
       console.log(this.modMedinst)
-      this.$store.dispatch('admin/editMedInstEtc', this.modMedinst)
+      this.isAlert = true
+      this.errMsg = '수정되었습니다.'
+      this.alertIdx = 2
     },
     setDefaultDstr1Cd() {
       // 대구로 설정
