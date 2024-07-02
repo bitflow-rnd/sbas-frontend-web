@@ -49,10 +49,9 @@
               <!--                            <vue-recaptcha ref="recaptcha" @verify="onRecaptchaVerified" sitekey="" class="captcha-box"></vue-recaptcha>-->
 
               <div class="option-list">
-                <!--                 모달인지 새 페이지인지 확인 필요
-                <a @click="openFindId" class="option-btn hover-a">아이디찾기</a> /
-                <a @click="openInitPw" class="option-btn hover-a">비밀번호 초기화</a>
-                 -->
+                <!--                 모달인지 새 페이지인지 확인 필요 -->
+<!--                <a @click="openFindId" class="option-btn hover-a">아이디찾기</a> /-->
+<!--                <a @click="openInitPw" class="option-btn hover-a">비밀번호 초기화</a>-->
               </div>
             </div>
 
@@ -148,89 +147,90 @@
                     <col style="width: auto" />
                   </colgroup>
                   <tbody>
-                    <tr>
-                      <th>아이디 <span class="text-primary">*</span></th>
-                      <td class="vertical-top">
-                        <div class="item-cell-box full">
-                          <div class="tbox full">
-                            <input type="text" v-model="form.id" :maxlength='15' @focusout='checkDuplicateUserId()'/>
-                          </div>
+                  <tr>
+                    <th>아이디 <span class="text-primary">*</span></th>
+                    <td class="vertical-top">
+                      <div class="item-cell-box full">
+                        <div class="tbox full">
+                          <input type="text" v-model="form.id" :maxlength='15' @focusout='checkDuplicateUserId()' />
                         </div>
-                        <div v-if="validateInput(3)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 아이디를 입력해 주세요.</div>
+                      </div>
+                      <div v-if="validateInput(3)" class="item-cell-box full">
+                        <div class="text-danger pt-2 fs-12px">※ 아이디를 입력해 주세요.</div>
+                      </div>
+                      <div v-if="isExistId" class="item-cell-box full">
+                        <div class="text-danger pt-2 fs-12px">※ 사용중인 아이디입니다.</div>
+                      </div>
+                    </td>
+                    <th>비밀번호 <span class="text-primary">*</span></th>
+                    <td class="vertical-top">
+                      <div class="item-cell-box full">
+                        <div class="tbox full">
+                          <input type="password" v-model="form.pw" />
                         </div>
-                        <div v-if="isExistId" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 사용중인 아이디입니다.</div>
-                        </div>
-                      </td>
-                      <th>비밀번호 <span class="text-primary">*</span></th>
-                      <td class="vertical-top">
-                        <div class="item-cell-box full">
-                          <div class="tbox full">
-                            <input type="password" v-model="form.pw" />
-                          </div>
-                        </div>
-                        <div v-if="validateInput(4)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 비밀번호를 입력해 주세요.</div>
-                        </div>
-                      </td>
-                    </tr>
+                      </div>
+                      <div v-if="validateInput(4)" class="item-cell-box full">
+                        <div class="text-danger pt-2 fs-12px">※ 비밀번호를 입력해 주세요.</div>
+                      </div>
+                    </td>
+                  </tr>
 
-                    <tr>
-                      <th>휴대폰번호 <span class="text-primary">*</span></th>
-                      <td class="vertical-top">
-                        <div class="item-cell-box full">
-<!--                          <div class="tbox full">-->
-<!--                            <input type="text" v-model="form.telno" @input='removeHyphens'/>-->
-<!--                          </div>-->
-                          <button
-                            @click="openCertify"
-                            class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"
-                            :disabled='isCertified'
-                          >
-                            본인인증</button
-                          >
+                  <tr>
+                    <th>휴대폰번호 <span class="text-primary">*</span></th>
+                    <td class="vertical-top">
+                      <div class="item-cell-box full">
+                        <!--                          <div class="tbox full">-->
+                        <!--                            <input type="text" v-model="form.telno" @input='removeHyphens'/>-->
+                        <!--                          </div>-->
+                        <button
+                          @click="openCertify"
+                          class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"
+                          :disabled='isCertified'
+                        >
+                          본인인증
+                        </button
+                        >
+                      </div>
+                    </td>
+                    <th>비밀번호 확인 <span class="text-primary">*</span></th>
+                    <td class="vertical-top">
+                      <div class="item-cell-box full">
+                        <div class="tbox full">
+                          <input type="password" v-model="valPw" />
                         </div>
-                      </td>
-                      <th>비밀번호 확인 <span class="text-primary">*</span></th>
-                      <td class="vertical-top">
-                        <div class="item-cell-box full">
-                          <div class="tbox full">
-                            <input type="password" v-model="valPw" />
-                          </div>
+                      </div>
+                      <div v-if="validateInput(5)" class="item-cell-box full">
+                        <div class="text-danger pt-2 fs-12px">
+                          ※ 비밀번호가 일치하지 않습니다.
                         </div>
-                        <div v-if="validateInput(5)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">
-                            ※ 비밀번호가 일치하지 않습니다.
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
+                      </div>
+                    </td>
+                  </tr>
 
-                    <tr>
-                      <th>이름 <span class="text-primary">*</span></th>
-                      <td class="vertical-top">
-                        <div class="item-cell-box full">
-                          <div class="tbox full">
-                            <input type="text" v-model="form.userNm" />
-                          </div>
+                  <tr>
+                    <th>이름 <span class="text-primary">*</span></th>
+                    <td class="vertical-top">
+                      <div class="item-cell-box full">
+                        <div class="tbox full">
+                          <input type="text" v-model="form.userNm" />
                         </div>
-                        <div v-if="validateInput(6)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 이름을 입력해 주세요.</div>
+                      </div>
+                      <div v-if="validateInput(6)" class="item-cell-box full">
+                        <div class="text-danger pt-2 fs-12px">※ 이름을 입력해 주세요.</div>
+                      </div>
+                    </td>
+                    <th>생년월일 <span class="text-primary">*</span></th>
+                    <td class="vertical-top">
+                      <div class="item-cell-box full">
+                        <div class="tbox full">
+                          <input type="text" v-model="form.btDt" placeholder='19000101' :maxlength='8' />
                         </div>
-                      </td>
-                      <th>생년월일 <span class="text-primary">*</span></th>
-                      <td class="vertical-top">
-                        <div class="item-cell-box full">
-                          <div class="tbox full">
-                            <input type="text" v-model="form.btDt" placeholder='19000101' :maxlength='8'/>
-                          </div>
-                        </div>
-                        <div v-if="validateInput(7)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 생년월일을 정확히 입력해 주세요.</div>
-                        </div>
-                      </td>
-                    </tr>
+                      </div>
+                      <div v-if="validateInput(7)" class="item-cell-box full">
+                        <div class="text-danger pt-2 fs-12px">※ 생년월일을 정확히 입력해 주세요.</div>
+                      </div>
+                    </td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -251,122 +251,122 @@
                     <col style="width: auto" />
                   </colgroup>
                   <tbody>
-<!--                    <tr>
-                      <th>소속기관 유형 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="item-cell-box full">
-                          <div class='rbox' :class="{ 'ms-4': index > 0 }" v-for='(option, index) in instTypeOptions' :key='option.value'>
-                            <label>
-                              <input type='radio' v-model='form.instTypeCd' :value='option.value' />
-                              <i></i><span class='txt'>{{ option.label }}</span>
-                            </label>
-                          </div>
-                        </div>
-                        <div v-if="validateInput(8)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 소속기관 유형을 선택해 주세요.</div>
-                        </div>
-                      </td>
-                    </tr>-->
+                  <!--                    <tr>
+                                        <th>소속기관 유형 <span class="text-primary">*</span></th>
+                                        <td>
+                                          <div class="item-cell-box full">
+                                            <div class='rbox' :class="{ 'ms-4': index > 0 }" v-for='(option, index) in instTypeOptions' :key='option.value'>
+                                              <label>
+                                                <input type='radio' v-model='form.instTypeCd' :value='option.value' />
+                                                <i></i><span class='txt'>{{ option.label }}</span>
+                                              </label>
+                                            </div>
+                                          </div>
+                                          <div v-if="validateInput(8)" class="item-cell-box full">
+                                            <div class="text-danger pt-2 fs-12px">※ 소속기관 유형을 선택해 주세요.</div>
+                                          </div>
+                                        </td>
+                                      </tr>-->
 
-                    <tr>
-                      <th>소속 기관 유형 <span class="text-primary">*</span></th>
-                      <td>
-                        <div class="item-cell-box full">
-                          <article class="permission-selector-layout">
-                            <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" :value="JobCode.Rqst" />
-                              <div class="selector-wrap">
-                                <div class="img-box">
-                                  <img
-                                    src="/img/common/img_permission_item1.svg"
-                                    alt="이미지"
-                                    class="on"
-                                  />
-                                  <img
-                                    src="/img/common/img_permission_item1_off.svg"
-                                    alt="이미지"
-                                    class="off"
-                                  />
-                                </div>
-                                <div class="info-box">
-                                  <div class="main-box">보건소</div>
-                                  <div class="sub-box">병상요청</div>
-                                </div>
+                  <tr>
+                    <th>소속 기관 유형 <span class="text-primary">*</span></th>
+                    <td>
+                      <div class="item-cell-box full">
+                        <article class="permission-selector-layout">
+                          <label class="selector-box">
+                            <input type="radio" v-model="form.jobCd" :value="JobCode.Rqst" />
+                            <div class="selector-wrap">
+                              <div class="img-box">
+                                <img
+                                  src="/img/common/img_permission_item1.svg"
+                                  alt="이미지"
+                                  class="on"
+                                />
+                                <img
+                                  src="/img/common/img_permission_item1_off.svg"
+                                  alt="이미지"
+                                  class="off"
+                                />
                               </div>
-                            </label>
+                              <div class="info-box">
+                                <div class="main-box">보건소</div>
+                                <div class="sub-box">병상요청</div>
+                              </div>
+                            </div>
+                          </label>
 
-                            <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" :value="JobCode.Aprv" />
-                              <div class="selector-wrap">
-                                <div class="img-box">
-                                  <img
-                                    src="/img/common/img_permission_item2.svg"
-                                    alt="이미지"
-                                    class="on"
-                                  />
-                                  <img
-                                    src="/img/common/img_permission_item2_off.svg"
-                                    alt="이미지"
-                                    class="off"
-                                  />
-                                </div>
-                                <div class="info-box">
-                                  <div class="main-box">병상배정반</div>
-                                  <div class="sub-box">병상요청, 병상승인, 이송처리</div>
-                                </div>
+                          <label class="selector-box">
+                            <input type="radio" v-model="form.jobCd" :value="JobCode.Aprv" />
+                            <div class="selector-wrap">
+                              <div class="img-box">
+                                <img
+                                  src="/img/common/img_permission_item2.svg"
+                                  alt="이미지"
+                                  class="on"
+                                />
+                                <img
+                                  src="/img/common/img_permission_item2_off.svg"
+                                  alt="이미지"
+                                  class="off"
+                                />
                               </div>
-                            </label>
+                              <div class="info-box">
+                                <div class="main-box">병상배정반</div>
+                                <div class="sub-box">병상요청, 병상승인, 이송처리</div>
+                              </div>
+                            </div>
+                          </label>
 
-                            <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" :value="JobCode.Meds" />
-                              <div class="selector-wrap">
-                                <div class="img-box">
-                                  <img
-                                    src="/img/common/img_permission_item3.svg"
-                                    alt="이미지"
-                                    class="on"
-                                  />
-                                  <img
-                                    src="/img/common/img_permission_item3_off.svg"
-                                    alt="이미지"
-                                    class="off"
-                                  />
-                                </div>
-                                <div class="info-box">
-                                  <div class="main-box">의료진</div>
-                                  <div class="sub-box">병상요청, 병상배정, 입원처리</div>
-                                </div>
+                          <label class="selector-box">
+                            <input type="radio" v-model="form.jobCd" :value="JobCode.Meds" />
+                            <div class="selector-wrap">
+                              <div class="img-box">
+                                <img
+                                  src="/img/common/img_permission_item3.svg"
+                                  alt="이미지"
+                                  class="on"
+                                />
+                                <img
+                                  src="/img/common/img_permission_item3_off.svg"
+                                  alt="이미지"
+                                  class="off"
+                                />
                               </div>
-                            </label>
+                              <div class="info-box">
+                                <div class="main-box">의료진</div>
+                                <div class="sub-box">병상요청, 병상배정, 입원처리</div>
+                              </div>
+                            </div>
+                          </label>
 
-                            <label class="selector-box">
-                              <input type="radio" v-model="form.jobCd" :value="JobCode.Sysa" />
-                              <div class="selector-wrap">
-                                <div class="img-box">
-                                  <img
-                                    src="/img/common/img_permission_item4.svg"
-                                    alt="이미지"
-                                    class="on"
-                                  />
-                                  <img
-                                    src="/img/common/img_permission_item4_off.svg"
-                                    alt="이미지"
-                                    class="off"
-                                  />
-                                </div>
-                                <div class="info-box">
-                                  <div class="main-box">시스템 관리자</div>
-                                  <div class="sub-box">모니터링, 테스트</div>
-                                </div>
+                          <label class="selector-box">
+                            <input type="radio" v-model="form.jobCd" :value="JobCode.Sysa" />
+                            <div class="selector-wrap">
+                              <div class="img-box">
+                                <img
+                                  src="/img/common/img_permission_item4.svg"
+                                  alt="이미지"
+                                  class="on"
+                                />
+                                <img
+                                  src="/img/common/img_permission_item4_off.svg"
+                                  alt="이미지"
+                                  class="off"
+                                />
                               </div>
-                            </label>
-                          </article>
-                        </div>
-                        <div v-if="validateInput(9)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">※ 권한그룹을 선택해 주세요.</div>
-                        </div>
-                      </td>
-                    </tr>
+                              <div class="info-box">
+                                <div class="main-box">시스템 관리자</div>
+                                <div class="sub-box">모니터링, 테스트</div>
+                              </div>
+                            </div>
+                          </label>
+                        </article>
+                      </div>
+                      <div v-if="validateInput(9)" class="item-cell-box full">
+                        <div class="text-danger pt-2 fs-12px">※ 권한그룹을 선택해 주세요.</div>
+                      </div>
+                    </td>
+                  </tr>
 
                   </tbody>
                 </table>
@@ -390,176 +390,176 @@
                     <col style="width: auto" />
                   </colgroup>
                   <tbody>
-                    <tr>
-                      <th>담당/근무지역 <span class="text-primary">*</span></th>
-                      <td class="vertical-top">
-                        <div class="item-cell-box full">
-                          <div class="sbox w-175px">
-                            <select v-model="form.dutyDstr1Cd" @change="getGugun(form.dutyDstr1Cd)">
-                              <option :value=null>시/도 전체</option>
-                              <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
-                                {{ item.cdNm }}
-                              </option>
-                            </select>
-                          </div>
-                          <div class="sbox w-175px ms-2">
-                            <select v-model="form.dutyDstr2Cd">
-                              <option :value=null>시/군/구 전체</option>
-                              <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
-                                {{ item.cdNm }}
-                              </option>
-                            </select>
-                          </div>
+                  <tr>
+                    <th>담당/근무지역 <span class="text-primary">*</span></th>
+                    <td class="vertical-top">
+                      <div class="item-cell-box full">
+                        <div class="sbox w-175px">
+                          <select v-model="form.dutyDstr1Cd" @change="getGugun(form.dutyDstr1Cd)">
+                            <option :value=null>시/도 전체</option>
+                            <option v-for="(item, i) in cmSido" :key="i" :value="item.cdId">
+                              {{ item.cdNm }}
+                            </option>
+                          </select>
                         </div>
-                        <div v-if="validateInput(11)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">
-                            ※ 담당/근무지역(시/도)를 선택해 주세요.
-                          </div>
+                        <div class="sbox w-175px ms-2">
+                          <select v-model="form.dutyDstr2Cd">
+                            <option :value=null>시/군/구 전체</option>
+                            <option v-for="(item, i) in cmGugun" :key="i" :value="item.cdId">
+                              {{ item.cdNm }}
+                            </option>
+                          </select>
                         </div>
-                      </td>
+                      </div>
+                      <div v-if="validateInput(11)" class="item-cell-box full">
+                        <div class="text-danger pt-2 fs-12px">
+                          ※ 담당/근무지역(시/도)를 선택해 주세요.
+                        </div>
+                      </div>
+                    </td>
 
-                      <th>소속기관 <span class="text-primary">*</span></th>
-                      <td class="vertical-top">
-                        <div class="item-cell-box full">
-                          <div class="sbox w-175px">
-                            <select v-model="form.instId" @change='handleInstIdChange' @click='getMedInst'>
-                              <option value=null>소속기관 선택</option>
-                              <option value='INST000000'>직접입력</option>
-                              <option v-for='(item, i) in organMedi' :key='i' :value='item.instId'>
-                                {{ item.instNm }}
-                              </option>
-                            </select>
-                          </div>
-                          <div class="tbox full ms-2">
+                    <th>소속기관 <span class="text-primary">*</span></th>
+                    <td class="vertical-top">
+                      <div class="item-cell-box full">
+                        <div class="sbox w-175px">
+                          <select v-model="form.instId" @change='handleInstIdChange' @click='getMedInst'>
+                            <option value=null>소속기관 선택</option>
+                            <option value='INST000000'>직접입력</option>
+                            <option v-for='(item, i) in organMedi' :key='i' :value='item.instId'>
+                              {{ item.instNm }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="tbox full ms-2">
+                          <input
+                            type="text"
+                            v-model="form.instNm"
+                            placeholder="소속기관명 직접 입력"
+                            :disabled="form.instId !== 'INST000000'"
+                          />
+                        </div>
+                      </div>
+                      <div v-if="validateInput(12)" class="item-cell-box full">
+                        <div class="text-danger pt-2 fs-12px">
+                          ※ 소속기관을 입력해 주세요.
+                        </div>
+                      </div>
+                    </td>
+
+                  </tr>
+
+                  <tr>
+
+                    <th>담당환자 유형</th>
+                    <td>
+                      <div class="item-cell-box">
+                        <div class="cbox">
+                          <label>
                             <input
-                              type="text"
-                              v-model="form.instNm"
-                              placeholder="소속기관명 직접 입력"
-                              :disabled="form.instId !== 'INST000000'"
-                            />
-                          </div>
+                              type="checkbox"
+                              v-model="form.ptTypeCd"
+                              value="PTTP0001"
+                            /><i></i>
+                            <span class="txt">일반</span>
+                          </label>
                         </div>
-                        <div v-if="validateInput(12)" class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">
-                            ※ 소속기관을 입력해 주세요.
-                          </div>
+
+                        <div class="cbox ms-4">
+                          <label>
+                            <input
+                              type="checkbox"
+                              v-model="form.ptTypeCd"
+                              value="PTTP0002"
+                            /><i></i>
+                            <span class="txt">소아</span>
+                          </label>
                         </div>
-                      </td>
 
-                    </tr>
-
-                    <tr>
-
-                      <th>담당환자 유형</th>
-                      <td>
-                        <div class="item-cell-box">
-                          <div class="cbox">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="form.ptTypeCd"
-                                value="PTTP0001"
-                              /><i></i>
-                              <span class="txt">일반</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="form.ptTypeCd"
-                                value="PTTP0002"
-                              /><i></i>
-                              <span class="txt">소아</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="form.ptTypeCd"
-                                value="PTTP0003"
-                              /><i></i>
-                              <span class="txt">투석</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="form.ptTypeCd"
-                                value="PTTP0004"
-                              /><i></i>
-                              <span class="txt">산모</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="form.ptTypeCd"
-                                value="PTTP0005"
-                              /><i></i>
-                              <span class="txt">수술</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-model="form.ptTypeCd"
-                                value="PTTP0006"
-                              /><i></i>
-                              <span class="txt">인공호흡기 사용</span>
-                            </label>
-                          </div>
+                        <div class="cbox ms-4">
+                          <label>
+                            <input
+                              type="checkbox"
+                              v-model="form.ptTypeCd"
+                              value="PTTP0003"
+                            /><i></i>
+                            <span class="txt">투석</span>
+                          </label>
                         </div>
-                      </td>
 
-                      <th>직급</th>
-                      <td class="vertical-top">
-                        <div class="item-cell-box full">
-                          <div class="tbox full">
-                            <input type="text" v-model="form.ocpCd" placeholder="직급, 직무 또는 직위 입력" />
-                          </div>
+                        <div class="cbox ms-4">
+                          <label>
+                            <input
+                              type="checkbox"
+                              v-model="form.ptTypeCd"
+                              value="PTTP0004"
+                            /><i></i>
+                            <span class="txt">산모</span>
+                          </label>
                         </div>
-                      </td>
 
-                    </tr>
+                        <div class="cbox ms-4">
+                          <label>
+                            <input
+                              type="checkbox"
+                              v-model="form.ptTypeCd"
+                              value="PTTP0005"
+                            /><i></i>
+                            <span class="txt">수술</span>
+                          </label>
+                        </div>
 
-                    <tr>
-                      <th>소속 증명 정보</th>
-                      <td class="vertical-top" colspan="3">
-                        <div class="item-cell-box full">
-                          <article class="img-upload-layout">
-                            <div class="upload-box">
-                              <label>
-                                <input type="file" @change="onFileChange" />
-                                <span class="upload-btn-box">
+                        <div class="cbox ms-4">
+                          <label>
+                            <input
+                              type="checkbox"
+                              v-model="form.ptTypeCd"
+                              value="PTTP0006"
+                            /><i></i>
+                            <span class="txt">인공호흡기 사용</span>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+
+                    <th>직급</th>
+                    <td class="vertical-top">
+                      <div class="item-cell-box full">
+                        <div class="tbox full">
+                          <input type="text" v-model="form.ocpCd" placeholder="직급, 직무 또는 직위 입력" />
+                        </div>
+                      </div>
+                    </td>
+
+                  </tr>
+
+                  <tr>
+                    <th>소속 증명 정보</th>
+                    <td class="vertical-top" colspan="3">
+                      <div class="item-cell-box full">
+                        <article class="img-upload-layout">
+                          <div class="upload-box">
+                            <label>
+                              <input type="file" @change="onFileChange" />
+                              <span class="upload-btn-box">
                                   <img v-if='this.selectedFile === null || this.selectedFile === undefined'
-                                    src="@/assets/img/img-no-img.webp" alt="이미지" />
+                                       src="@/assets/img/img-no-img.webp" alt="이미지" />
                                   <img v-else :src='this.imgUrl'>
                                 </span>
-                              </label>
-                            </div>
-
-                            <div class="result-list">
-                              <div class="result-box"></div>
-                            </div>
-                          </article>
-                        </div>
-                        <div class="item-cell-box full">
-                          <div class="text-danger pt-2 fs-12px">
-                            ※ 해당기관 소속임을 증명할 수 있는 명함, 신분증 사진 등을 업로드 하면, 보다 빠른 승인처리가 가능합니다.
+                            </label>
                           </div>
+
+                          <div class="result-list">
+                            <div class="result-box"></div>
+                          </div>
+                        </article>
+                      </div>
+                      <div class="item-cell-box full">
+                        <div class="text-danger pt-2 fs-12px">
+                          ※ 해당기관 소속임을 증명할 수 있는 명함, 신분증 사진 등을 업로드 하면, 보다 빠른 승인처리가 가능합니다.
                         </div>
-                      </td>
-                    </tr>
+                      </div>
+                    </td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -569,8 +569,8 @@
           <article class="modal-menu-layout1 pt-9">
             <div class="modal-menu-list">
               <router-link to="" @click="reqUserReg" class="modal-menu-btn menu-primary"
-                >등록 요청 완료</router-link
-              >
+              >등록 요청 완료
+              </router-link>
             </div>
           </article>
         </form>
@@ -585,26 +585,10 @@
   <article v-show="showCertify" class="popup popup-certify" style="">
     <cert-modal :form="form" :crtfNo="crtfNo" @openCertify="openCertify"
                 @phone-certify="phoneCertify" @remove-hyphens="removeHyphens" @certify-no="certifyNo"
-                @update:crtfNo="value => crtfNo = value"/>
+                @update:crtfNo="value => crtfNo = value" />
   </article>
   <article v-show="findingId" class="popup">
-    <div class="popup-wrapper">
-      <div class="popup-contents py-10 px-10" style="width: 300px">
-        <article class="modal-alert-layout pb-10">
-          <div class="alert-view-box pb-6">
-            <img src="/img/common/ic_alert.svg" alt="이미지" />
-          </div>
-          <div class="alert-msg-box" v-html='formatErrMsg()'></div>
-        </article>
-        <article class="modal-menu-layout1">
-          <div class="modal-menu-list">
-            <router-link to="" @click="openFindId" class="modal-menu-btn menu-primary"
-            >확인</router-link
-            >
-          </div>
-        </article>
-      </div>
-    </div>
+    <find-id @openFindId="openFindId"/>
   </article>
   <article v-show="isAlert" class="popup popup-alert">
     <div class="popup-wrapper">
@@ -618,7 +602,8 @@
         <article class="modal-menu-layout1">
           <div class="modal-menu-list">
             <router-link to="" @click="alertClose" class="modal-menu-btn menu-primary"
-              >확인</router-link
+            >확인
+            </router-link
             >
           </div>
         </article>
@@ -636,10 +621,11 @@ import { ref } from 'vue'
 import { getGugun, getSido } from '@/util/ui'
 import { JobCode } from '@/util/sbas_cnst'
 import CertModal from '@/components/common/modal/CertModal.vue'
+import FindId from '@/components/common/FindId.vue'
 
 export default {
   name: 'LoginView',
-  components: { CertModal },
+  components: { FindId, CertModal },
   computed: {
     ...mapState('admin', ['smsCrtfSuccess', 'cmSido', 'cmGugun', 'organMedi'])
   },
@@ -832,8 +818,8 @@ export default {
           this.$store.dispatch('user/login', values)
             .then(message => {
               if (message) {
-                this.alertOpen(message);
-                console.log('응답 메시지:', message);
+                this.alertOpen(message)
+                console.log('응답 메시지:', message)
               }
             })
         }
@@ -963,23 +949,23 @@ export default {
         authCd: { idx: 10 },
         dutyDstr1Cd: { idx: 11 },
         instId: { idx: 12 }
-      };
+      }
 
       for (const field in requiredFields) {
         let showErrorMessage = false
         if (!form[field]) {
           showErrorMessage = true
           this.showErrorMessage = showErrorMessage
-          return false;
+          return false
         }
       }
       return true
     },
     removeHyphens() {
-      this.form.telno = this.form.telno.replace(/-/g, '');
+      this.form.telno = this.form.telno.replace(/-/g, '')
     },
     resetFormData() {
-      this.form = { ...this.initialForm };
+      this.form = { ...this.initialForm }
       this.isCertified = false
     },
     getMedInst() {
@@ -987,29 +973,29 @@ export default {
         dstr1Cd: this.form.dutyDstr1Cd !== null ? this.form.dutyDstr1Cd : undefined,
         dstr2Cd: this.form.dutyDstr2Cd !== null ? this.form.dutyDstr2Cd : undefined,
         instTypeCd: this.form.instTypeCd
-      };
-      this.$store.dispatch('admin/getOrganMedi',data)
+      }
+      this.$store.dispatch('admin/getOrganMedi', data)
     },
     handleInstIdChange() {
-      const selectedInst = this.organMedi?.find(inst => inst.instId === this.form.instId);
+      const selectedInst = this.organMedi?.find(inst => inst.instId === this.form.instId)
       if (selectedInst) {
-        this.form.instNm = selectedInst.instNm;
+        this.form.instNm = selectedInst.instNm
       } else {
-        this.form.instNm = null;
+        this.form.instNm = null
       }
     },
     checkDuplicateUserId() {
       this.$store.dispatch('user/existId', this.form.id).then((result) => {
         if (result) {
-          this.isExistId = true;
+          this.isExistId = true
         } else {
-          this.isExistId = false;
+          this.isExistId = false
         }
       })
     },
     formatErrMsg() {
-      return this.errMsg.replace(/\n/g, '<br>');
-    },
+      return this.errMsg.replace(/\n/g, '<br>')
+    }
   },
   mounted() {
     this.emitter.on('toggleUserEditModal', this.toggleUserEditModal)
@@ -1036,6 +1022,7 @@ export default {
   transform: translateY(-50%);
   max-width: calc(100% - 4rem);
 }
+
 .login-bottom {
   display: none;
 }
@@ -1062,12 +1049,15 @@ export default {
   max-width: calc(100% - 2rem) !important;
   padding: 2rem 4rem !important;
 }
+
 .fade {
   opacity: 100;
 }
+
 .section.login .login-bottom {
   background-color: transparent;
 }
+
 .modal,
 .popup {
   display: inline-block;
@@ -1083,6 +1073,7 @@ export default {
     width: 100% !important;
     max-width: 100%;
   }
+
   .login-contents {
     margin: 0;
     width: 100% !important;
