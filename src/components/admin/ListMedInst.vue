@@ -726,6 +726,7 @@
                   <MedInstBasicModal :image-preview='imagePreview' :medinst-detail='medinstDetail' :tabidx='tabidx'
                                 :upload-image='uploadImage' />
                   <MedInstDetailModal :medinst-detail='medinstDetail' :tabidx='tabidx' />
+                  <MedInstAddModal v-if='tabidx === 3' :hpId='this.hpId'/>
 
                   <div class="tabs-box" v-show="tabidx === 2" style="">
                     <article class="table-list-layout1">
@@ -1031,9 +1032,10 @@ import { getGugun, getSido, toggleCheckbox } from '@/util/ui'
 import DEFT_HOPT_IMG from '@/assets/img/img-hosp-def.jpg'
 import MedInstDetailModal from '@/components/admin/modal/MedInstDetailModal.vue'
 import MedInstBasicModal from '@/components/admin/modal/MedInstBasicModal.vue'
+import MedInstAddModal from '@/components/admin/modal/MedInstAddModal.vue'
 
 export default {
-  components: { MedInstBasicModal, MedInstDetailModal, DataPagination },
+  components: { MedInstAddModal, MedInstBasicModal, MedInstDetailModal, DataPagination },
   name: 'DetlAncmtListMedInst',
   props: {
     msg: String
@@ -1161,7 +1163,6 @@ export default {
       this.showEditMedi = false
     },
     alertOpen(idx) {
-
       this.cncBtn = false
       if (idx === 0) {
         /*기관이미지 삭제*/
@@ -1173,6 +1174,11 @@ export default {
         this.errMsg = '기관 이미지가 삭제되었습니다.'
         this.isAlert = true
         this.alertIdx = 1
+      } else if (idx === 2) {
+        this.alertClose()
+        this.$store.dispatch('admin/editMedInstEtc', this.modMedinst)
+        this.showEditMedi = false
+        this.tabidx = 0
       }
     },
     cfrmAl(res) {
@@ -1264,7 +1270,9 @@ export default {
     editMedInstEtc() {
       this.modMedinst.hospId = this.hpId
       console.log(this.modMedinst)
-      this.$store.dispatch('admin/editMedInstEtc', this.modMedinst)
+      this.isAlert = true
+      this.errMsg = '수정되었습니다.'
+      this.alertIdx = 2
     },
     setDefaultDstr1Cd() {
       // 대구로 설정
