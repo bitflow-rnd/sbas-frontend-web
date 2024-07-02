@@ -394,3 +394,10 @@ export function getDtBlue(data) {
     return `${dYear.toString().substring(2) + '\''}.${String(dMonth).padStart(2, '0')}.${String(dDate).padStart(2, '0')} ${dHours}시`
   }
 }
+
+export function formatYyyyMmDd(data) {
+  const year = data.substring(0, 4)
+  const month = data.substring(4, 6)
+  const day = data.substring(6, 8)
+  return `${year}.${month}.${day}`
+}

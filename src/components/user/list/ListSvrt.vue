@@ -190,7 +190,7 @@
                       <th>입원병원</th>
                       <th>입원일자</th>
                       <th>거주지</th>
-                      <th>중증도</th>
+                      <th>CovSF</th>
                       <th>질병명</th>
                       <th>연락처</th>
                       <th>국적</th>
@@ -219,10 +219,10 @@
                       </td>
                       <td>{{ pt['gndr'] }}자</td>
                       <td class="text-start">{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
-                      <td>{{ pt['admsDt'] ? pt['admsDt'] : '-' }}</td>
+                      <td>{{ pt['admsDt'] ? formatYyyyMmDd(pt['admsDt']) : '-' }}</td>
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
-                      <td v-if="pt['svrtTypeCdNm']">{{ pt['svrtTypeCdNm'] }}<br>({{ pt['svrtIptTypeCdNm'] }})</td>
-                      <td v-if="!pt['svrtTypeCdNm']">-</td>
+                      <td v-if="pt['covSf']">{{ pt['covSf'] }}</td>
+                      <td v-if="!pt['covSf']">-</td>
                       <td class="text-start">{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
                       <td>{{ pt['mpno'] ? pt['mpno'] : '-' }}</td>
                       <td>{{ pt['natiCdNm'] ? pt['natiCdNm'] : '-' }}</td>
@@ -2443,7 +2443,7 @@ import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { mapState } from 'vuex'
 import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
 import {
-  backBtn,
+  backBtn, formatYyyyMmDd,
   getAge,
   getDt,
   getGndr,
@@ -2661,6 +2661,7 @@ export default {
     }
   },
   methods: {
+    formatYyyyMmDd,
     toggleCheckbox,
     getDt,
     backBtn,
