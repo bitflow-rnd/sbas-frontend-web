@@ -36,38 +36,38 @@
 
               <div class='dashboard-head-box d-flex justify-content-between align-items-end pb-5'>
 
-                <div class='head-box'>
-                  <span class='text-black fs-3 fw-bold'>요약 현황</span> <span class='text-gray-600'>(집계기준 : 2023-08-01 00:00 ~ 2023-08-31 23:59)</span>
-                </div>
+<!--                <div class='head-box'>-->
+<!--                  <span class='text-black fs-3 fw-bold'>요약 현황</span> <span class='text-gray-600'>(집계기준 : 2023-08-01 00:00 ~ 2023-08-31 23:59)</span>-->
+<!--                </div>-->
 
-                <div class='option-box d-inline-flex align-items-center'>
-                  <span class='text-gray-600 pe-2'>비교기준일</span>
-                  <article class='toggle-list-layout2'>
+<!--                <div class='option-box d-inline-flex align-items-center'>-->
+<!--                  <span class='text-gray-600 pe-2'>비교기준일</span>-->
+<!--                  <article class='toggle-list-layout2'>-->
 
-                    <div class='toggle-list'>
+<!--                    <div class='toggle-list'>-->
 
-                      <label>
-                        <input type='radio' name='toggle1' checked=''>
-                        <span class='txt'>이틀 전</span>
-                      </label>
+<!--                      <label>-->
+<!--                        <input type='radio' name='toggle1' checked=''>-->
+<!--                        <span class='txt'>이틀 전</span>-->
+<!--                      </label>-->
 
-                      <label>
-                        <input type='radio' name='toggle1'>
-                        <span class='txt'>지난 7일</span>
-                      </label>
+<!--                      <label>-->
+<!--                        <input type='radio' name='toggle1'>-->
+<!--                        <span class='txt'>지난 7일</span>-->
+<!--                      </label>-->
 
-                      <label>
-                        <input type='radio' name='toggle1'>
-                        <span class='txt'>지난 14일</span>
-                      </label>
+<!--                      <label>-->
+<!--                        <input type='radio' name='toggle1'>-->
+<!--                        <span class='txt'>지난 14일</span>-->
+<!--                      </label>-->
 
-                      <label>
-                        <input type='radio' name='toggle1'>
-                        <span class='txt'>지난 30일</span>
-                      </label>
-                    </div>
-                  </article>
-                </div>
+<!--                      <label>-->
+<!--                        <input type='radio' name='toggle1'>-->
+<!--                        <span class='txt'>지난 30일</span>-->
+<!--                      </label>-->
+<!--                    </div>-->
+<!--                  </article>-->
+<!--                </div>-->
               </div>
 
               <div class='dashboard-card-list'>

@@ -50,20 +50,6 @@ export default {
     }
   },
   actions: {
-    getSeverityData(comment, ptId) {
-      const url = `${API_PROD}/api/v1/private/severity/probs?ptId=${ptId}`
-      axios({
-        method: 'get',
-        url: url
-      })
-        .then((response) => {
-          comment.commit('setSeverityData', response.data?.result)
-        })
-        .catch((e) => {
-          console.log(e)
-          return []
-        })
-    },
     getSeverityData2(ctx, ptId) {
       const url = `${API_PROD}/api/v1/private/severity/probs?ptId=${ptId}`
       return new Promise((resolve, reject) => {

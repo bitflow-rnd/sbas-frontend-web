@@ -3647,7 +3647,7 @@
             <div class="modal-menu-list">
               <router-link
                 to=""
-                @click="alertClose"
+                @click="backBtn(1)"
                 class="modal-menu-btn menu-cancel"
               >이전
               </router-link>

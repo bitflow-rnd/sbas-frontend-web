@@ -172,6 +172,7 @@
                       <col style="width: 70px" />
                       <col style="width: 50px" />
                       <col style="width: auto" />
+                      <col style="width: auto" />
                       <col style="width: 140px" />
                       <col style="width: 100px" />
                       <col style="width: auto" />
@@ -187,6 +188,7 @@
                       <th>생년월일</th>
                       <th>성별</th>
                       <th>입원병원</th>
+                      <th>입원일자</th>
                       <th>거주지</th>
                       <th>중증도</th>
                       <th>질병명</th>
@@ -217,6 +219,7 @@
                       </td>
                       <td>{{ pt['gndr'] }}자</td>
                       <td class="text-start">{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
+                      <td>{{ pt['admsDt'] ? pt['admsDt'] : '-' }}</td>
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
                       <td v-if="pt['svrtTypeCdNm']">{{ pt['svrtTypeCdNm'] }}<br>({{ pt['svrtIptTypeCdNm'] }})</td>
                       <td v-if="!pt['svrtTypeCdNm']">-</td>
