@@ -1,8 +1,12 @@
 import ko from 'apexcharts/dist/locales/ko.json'
 
-let today = new Date();
-let formattedDate = today.toISOString().split('T')[0];
-let todayDate = `${today.getMonth() + 1}.${today.getDate()}`
+let today = new Date()
+let year = today.getFullYear()
+let month = (today.getMonth() + 1).toString().padStart(2, '0')
+let day = today.getDate().toString().padStart(2, '0')
+
+let formattedDate = `${year}-${month}-${day}`
+let todayDate = `${month}.${day}`
 
 export let data = {
   firstMsreDt: null,
