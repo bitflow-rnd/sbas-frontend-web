@@ -56,7 +56,7 @@ export const simpleSeverityLineChartOpt = {
     enabled: false
   },
   forecastDataPoints: {
-    count: 2,
+    count: 3,
   },
   stroke: {
     width: 3,
