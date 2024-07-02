@@ -726,6 +726,7 @@
                   <MedInstBasicModal :image-preview='imagePreview' :medinst-detail='medinstDetail' :tabidx='tabidx'
                                 :upload-image='uploadImage' />
                   <MedInstDetailModal :medinst-detail='medinstDetail' :tabidx='tabidx' />
+                  <MedInstAddModal v-if='tabidx === 3' :hpId='this.hpId'/>
 
                   <div class="tabs-box" v-show="tabidx === 2" style="">
                     <article class="table-list-layout1">
@@ -1031,9 +1032,10 @@ import { getGugun, getSido, toggleCheckbox } from '@/util/ui'
 import DEFT_HOPT_IMG from '@/assets/img/img-hosp-def.jpg'
 import MedInstDetailModal from '@/components/admin/modal/MedInstDetailModal.vue'
 import MedInstBasicModal from '@/components/admin/modal/MedInstBasicModal.vue'
+import MedInstAddModal from '@/components/admin/modal/MedInstAddModal.vue'
 
 export default {
-  components: { MedInstBasicModal, MedInstDetailModal, DataPagination },
+  components: { MedInstAddModal, MedInstBasicModal, MedInstDetailModal, DataPagination },
   name: 'DetlAncmtListMedInst',
   props: {
     msg: String
