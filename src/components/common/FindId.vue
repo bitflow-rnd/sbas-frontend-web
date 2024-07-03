@@ -236,8 +236,9 @@ function alertClose() {
 }
 
 function check() {
-  if(!model.isCertified){
+  if(!model.isCertified || !model.form.telno){
     alertOpen('본인인증을 먼저 진행해 주세요.')
+    return
   }
   const url = `${API_PROD}/api/v1/public/user/find-id`
   const request = {
