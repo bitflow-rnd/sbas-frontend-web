@@ -143,6 +143,7 @@ const model = reactive({
   timer: null,
   errMsg: '',
   isAlert: false,
+  didFind: false,
 })
 
 function openCertify() {
@@ -233,6 +234,7 @@ function formatErrMsg() {
 function alertClose() {
   console.log('실행')
   model.isAlert = !model.isAlert
+  if(model.didFind) emit('openFindId')
 }
 
 function check() {

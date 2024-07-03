@@ -154,6 +154,7 @@ const model = reactive({
   timer: null,
   errMsg: '',
   isAlert: false,
+  didInit: false,
 })
 
 function openCertify() {
@@ -244,6 +245,7 @@ function formatErrMsg() {
 function alertClose() {
   console.log('실행')
   model.isAlert = !model.isAlert
+  if(model.didInit) emit('openInitPw')
 }
 
 function check() {
@@ -263,6 +265,7 @@ function check() {
 
     if(data.code === '00') {
       alertOpen(`회원님의 비밀번호는 ${data.result}로 초기화 되었습니다.<br>로그인 후 비밀번호를 바꿔주세요.`)
+      model.didInit = true
     }else if(data.code === '01') {
       alertOpen(data.msg)
     }
