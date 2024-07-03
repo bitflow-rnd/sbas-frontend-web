@@ -553,46 +553,6 @@ export default {
       })
     },
 
-    /*의료기관 정보 수정 (e-gen 데이터 제외)*/
-    async editMedInstEtc(comment, request) {
-      if (request.childBirthYn === false) {
-        request.childBirthMed = 0
-      }
-      if (request.dialysisYn === false) {
-        request.dialysisMed = 0
-      }
-      if (request.nursingHospitalYn === false) {
-        request.nursingHospitalMed = 0
-      }
-      if (request.mentalPatientYn === false) {
-        request.mentalPatientMed = 0
-      }
-      if (request.childYn === false) {
-        request.childMed = 0
-      }
-      const token = sessionStorage.getItem('userToken')
-      const url = `${API_PROD}/api/v1/private/organ/mod-medinstinfo`
-      try {
-        const response = await axios({
-          method: 'post',
-          url: url,
-          headers: {
-              Authorization: `Bearer ${token}`
-          },
-          data: request
-        })
-        console.log(response, '의료기관 정보 수정 egen 제외')
-        if (response.data?.code === '00') {
-          comment.commit('setMedInstEtc', response.data?.result)
-        } else if (response.data?.code === '01') {
-          console.log('정보없음')
-        }
-      } catch (e) {
-        console.log(e)
-      }
-    },
-
-
     loadCodeGroupsData() {
       const token = sessionStorage.getItem('userToken')
       try {

@@ -683,11 +683,14 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted } from 'vue'
+import { defineProps, onMounted, watch } from 'vue'
 
 onMounted(() => {
-  console.log(props.medinstDetail)
-  initNaverMap()
+  loadNaverMapAsync()
+})
+
+watch(() => props.medinstDetail, async () => {
+  loadNaverMapAsync()
 })
 
 const props = defineProps({
@@ -696,16 +699,6 @@ const props = defineProps({
   tabidx: Number,
   uploadImage: Function
 })
-
-function initNaverMap() {
-  // 네이버 지도 API 로드
-  const script = document.createElement('script')
-  script.src = 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1ewyt3v33o'
-  script.async = true
-  script.defer = true
-  document.head.appendChild(script)
-  loadNaverMapAsync()
-}
 
 function loadNaverMapAsync() {
   // 네이버 지도 생성 // 35.9561644!4d128.5653029

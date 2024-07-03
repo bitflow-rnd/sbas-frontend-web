@@ -78,30 +78,11 @@
             <!--end::Title-->
           </div>
           <!--end::Page title-->
-          <!--begin::Actions-->
-          <div class="d-flex align-items-center gap-2 gap-lg-3">
-            <a
-              href="#"
-              class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7 d-none"
-            ><i class="fa-regular fa-trash-can"></i> 삭제</a
-            >
-            <a
-              href="#"
-              class="btn btn-flex btn-sm btn-secondary fs-7"
-            ><i class="fa-solid fa-download"></i> 엑셀다운로드</a
-            >
-            <a
-              href="#"
-              class="btn btn-sm btn-flex btn-primary align-self-center px-3 d-none"
-            >
-              <i class="fa-solid fa-plus"></i> 병상요청
-            </a>
-          </div>
-          <!--end::Actions-->
         </div>
         <!--end::Toolbar wrapper-->
       </div>
       <!--end::Toolbar-->
+
       <!--begin::Content-->
       <div id="kt_app_content" class="app-content flex-column-fluid">
         <div class="card">
@@ -611,15 +592,12 @@
               :display-rows-count="displayRowsCount"
               :data-length="medinstList['count']"
             ></data-pagination>
-            <!--end::Card body-->
           </div>
         </div>
-        <!--end::Content-->
       </div>
-      <!--end::Content wrapper-->
+
     </div>
-    <!--end:::Main-->
-    <!--begin::Modals-->
+
     <div
       v-show="showModal"
       class="modal fade"
@@ -792,203 +770,14 @@
       </div>
       <!--end::Modal dialog-->
     </div>
-    <div
-      v-show="showEditMedi"
-      class="modal fade"
-      id="kt_modal_medinst_view"
-      tabindex="-1"
-      aria-hidden="false"
-      :class="{'show' : showEditMedi}"
-    >
-      <!--begin::Modal dialog-->
-      <div v-if="medinstDetail !== undefined" class="modal-dialog mw-1500px modal-dialog-centered">
-        <!--begin::Modal content-->
-        <div class="modal-content">
-          <!--begin::Modal header-->
-          <div class="modal-header px-10 py-5 d-flex justify-content-between">
-            <!--begin::Modal title-->
-            <h2>감염환자 수용시설 정보 입력/수정</h2>
-            <!--end::Modal title-->
-            <!--begin::Close-->
-            <div class="btn btn-sm btn-icon btn-active-color-primary">
-              <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-              <span @click="closeEditMedi" class="svg-icon svg-icon-1">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  opacity="0.5"
-                  x="6"
-                  y="17.3137"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(-45 6 17.3137)"
-                  fill="currentColor"
-                ></rect>
-                <rect
-                  x="7.41422"
-                  y="6"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(45 7.41422 6)"
-                  fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-              <!--end::Svg Icon-->
-            </div>
-            <!--end::Close-->
 
-            <article class="floating-organ-box">
-              <div class="img-box">
-                <img src="/img/common/ic_lnb_organ.svg" alt="이미지" />
-              </div>
-              <div class="txt-box">{{ medinstDetail.hospBasicInfo.dutyName }}</div>
-            </article>
-          </div>
-
-          <!--begin::Modal header-->
-          <!--begin::Modal body-->
-          <div class="modal-body scroll-y py-10 px-10">
-            <article class="table-form-layout1">
-              <div class="form-head-box"></div>
-              <div class="tabs-box" style="">
-                <article class="table-form-layout1">
-                  <div class="form-head-box"></div>
-                  <div class="form-body-box">
-                    <div class="table-box">
-                      <table>
-                        <colgroup>
-                          <col style="width: 100px" />
-                          <col style="width: auto" />
-                          <col style="width: auto" />
-                        </colgroup>
-                        <thead>
-                          <tr>
-                            <th class='text-center'>보유 여부</th>
-                            <th class='text-center'>시설</th>
-                            <th class='text-center'>수용 가능 인원</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td class='cbox d-flex justify-content-center'>
-                              <label>
-                                <input class='editMedi' type='checkbox' id='childBirthYn'
-                                       :checked='this.modMedinst.childBirthYn'
-                                       v-model='this.modMedinst.childBirthYn' /><i></i>
-                              </label>
-                            </td>
-                            <td class='text-center'>
-                              <label for='childBirthYn' class='fs-4' role='button'>감염병 전용 분만 시설</label>
-                            </td>
-                            <td><input class='fs-4 px-5' type='text' v-show='this.modMedinst.childBirthYn'
-                                     v-model='this.modMedinst.childBirthMed'></td>
-                          </tr>
-                          <tr>
-                            <td class='cbox d-flex justify-content-center'>
-                              <label>
-                                <input class='editMedi' type='checkbox' id='dialysisYn'
-                                       :checked='this.modMedinst.dialysisYn'
-                                       v-model='this.modMedinst.dialysisYn'><i></i>
-                              </label>
-                            </td>
-                            <td class='text-center'>
-                              <label for='dialysisYn' class='fs-4' role='button'>감염병 전용 투석 시설</label>
-                            </td>
-                            <td><input class='fs-4 px-5' type='text' v-show='this.modMedinst.dialysisYn'
-                                       v-model='this.modMedinst.dialysisMed'></td>
-                          </tr>
-                          <tr>
-                            <td class='cbox d-flex justify-content-center'>
-                              <label>
-                                <input class='editMedi' type='checkbox' id='childYn'
-                                       :checked='this.modMedinst.childYn'
-                                       v-model='this.modMedinst.childYn'><i></i>
-                              </label>
-                            </td>
-                            <td class='text-center'>
-                              <label for='childYn' class='fs-4' role='button'>감염병 전용 소아 시설</label>
-                            </td>
-                            <td><input class='fs-4 px-5' type='text' v-show='this.modMedinst.childYn'
-                                       v-model='this.modMedinst.childMed'></td>
-                          </tr>
-                          <tr>
-                            <td class='cbox d-flex justify-content-center'>
-                              <label>
-                                <input class='editMedi' type='checkbox' id='nursingHospitalYn'
-                                       :checked='this.modMedinst.nursingHospitalYn'
-                                       v-model='this.modMedinst.nursingHospitalYn'><i></i>
-                              </label>
-                            </td>
-                            <td class='text-center'>
-                              <label for='nursingHospitalYn' class='fs-4' role='button'>감염병 전용 요양병원 시설</label>
-                            </td>
-                            <td><input class='fs-4 px-5' type='text' v-show='this.modMedinst.nursingHospitalYn'
-                                       v-model='this.modMedinst.nursingHospitalMed'></td>
-                          </tr>
-                          <tr>
-                            <td class='cbox d-flex justify-content-center'>
-                              <label>
-                                <input class='editMedi' type='checkbox' id='mentalPatientYn'
-                                       :checked='this.modMedinst.mentalPatientYn'
-                                       v-model='this.modMedinst.mentalPatientYn'><i></i>
-                              </label>
-                            </td>
-                            <td class='text-center'>
-                              <label for='mentalPatientYn' class='fs-4' role='button'>감염병 전용 정신질환자 시설</label>
-                            </td>
-                            <td><input class='fs-4 px-5' type='text' v-show='this.modMedinst.mentalPatientYn'
-                                       v-model='this.modMedinst.mentalPatientMed'></td>
-                          </tr>
-                          <tr>
-                            <td class='cbox d-flex justify-content-center'>
-                              <label>
-                                <input class='editMedi' type='checkbox' id='negativePressureRoomYn'
-                                       :checked='this.modMedinst.negativePressureRoomYn'
-                                       v-model='this.modMedinst.negativePressureRoomYn'><i></i>
-                              </label>
-                            </td>
-                            <td class='text-center'>
-                              <label for='negativePressureRoomYn' class='fs-4' role='button'>감염병 전용 음압 수술실</label>
-                            </td>
-                            <td></td>
-<!--                            <td><input class='editMedi' type='checkbox' -->
-<!--                                       :checked='this.modMedinst.negativePressureRoomYn'-->
-<!--                                       v-model='this.modMedinst.negativePressureRoomYn'></td>-->
-<!--                            <td>감염병 전용 음압격리 시설</td>-->
-<!--                            <td></td>-->
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </article>
-            <article class="modal-menu-layout1 pt-10">
-              <div class="modal-menu-list">
-                <a @click="closeEditMedi" class="modal-menu-btn menu-primary">취소</a>
-                <a @click='editMedInstEtc' class="modal-menu-btn menu-primary">수정</a>
-              </div>
-            </article>
-          </div>
-          <!--end::Modal body-->
-        </div>
-        <!--end::Modal content-->
-      </div>
-      <!--end::Modal dialog-->
-    </div>
+    <MedInstEditModal v-if="showEditMedi" @close-edit-medi="closeEditMedi"
+                      :medinst-detail='medinstDetail' :hpId='this.hpId' />
 
   </div>
+
   <div v-show="showModal" class="modal-backdrop fade"></div>
-  <!--end::Modals-->
+
   <!--  alert창  -->
   <article v-show="isAlert" class="popup popup-confirm" style="z-index: 1600">
     <div class="popup-wrapper">
@@ -1028,14 +817,15 @@
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { ref } from 'vue'
 import { mapState } from 'vuex'
-import { getGugun, getSido, toggleCheckbox } from '@/util/ui'
+import { getGugun, getSido } from '@/util/ui'
 import DEFT_HOPT_IMG from '@/assets/img/img-hosp-def.jpg'
 import MedInstDetailModal from '@/components/admin/modal/MedInstDetailModal.vue'
 import MedInstBasicModal from '@/components/admin/modal/MedInstBasicModal.vue'
 import MedInstAddModal from '@/components/admin/modal/MedInstAddModal.vue'
+import MedInstEditModal from '@/components/admin/modal/MedInstEditModal.vue'
 
 export default {
-  components: { MedInstAddModal, MedInstBasicModal, MedInstDetailModal, DataPagination },
+  components: { MedInstEditModal, MedInstAddModal, MedInstBasicModal, MedInstDetailModal, DataPagination },
   name: 'DetlAncmtListMedInst',
   props: {
     msg: String
@@ -1157,7 +947,7 @@ export default {
     },
     openEditMedi() {
       this.showEditMedi = true
-      this.getMediInstEtc()
+      // this.getMediInstEtc()
     },
     closeEditMedi() {
       this.showEditMedi = false
@@ -1181,23 +971,12 @@ export default {
         this.tabidx = 0
       }
     },
-    cfrmAl(res) {
-      if (res === 0) {
-        console.log(0)
-        this.removeInstImg()
-        this.alertOpen(1)
-      } else if (res === 1) {
-        console.log('1')
-        this.alertClose()
-      }
-    },
     alertClose() {
       this.errMsg = ''
       this.cncBtn = false
       this.isAlert = false
       this.alertIdx = 100
     },
-    toggleCheckbox,
     getGugun,
     getSido,
     tabsMove(idx) {
@@ -1229,30 +1008,15 @@ export default {
       script.defer = true
       document.head.appendChild(script)
     },
-    // loadNaverMapAsync() {
-    //   // 네이버 지도 생성 // 35.9561644!4d128.5653029
-    //   const map = new window.naver.maps.Map('map', {
-    //     center: new window.naver.maps.LatLng(this.medinstDetail.hospBasicInfo.wgs84Lat, this.medinstDetail.hospBasicInfo.wgs84Lon),
-    //     zoom: 15,
-    //     zoomControlOptions: {
-    //       style: window.naver.maps.ZoomControlStyle.SMALL,
-    //       position: window.naver.maps.Position.TOP_RIGHT
-    //     }
-    //   })
-    //   new window.naver.maps.Marker({
-    //     position: new window.naver.maps.LatLng(this.mdinstDetail.hospBasicInfo.wgs84Lat, this.medinstDetail.hospBasicInfo.wgs84Lon),
-    //     map: map
-    //   })
+    // async getMediInstEtc() {
+    //   if (this.hpId !== '' || this.hpId !== null) {
+    //     await this.$store.dispatch('admin/getMedInstEtc', this.hpId)
+    //   }
+    //   if (this.medInstEtc !== null) {
+    //     this.modMedinst = this.medInstEtc
+    //   }
+    //   console.log(this.modMedinst)
     // },
-    async getMediInstEtc() {
-      if (this.hpId !== '' || this.hpId !== null) {
-        await this.$store.dispatch('admin/getMedInstEtc', this.hpId)
-      }
-      if (this.medInstEtc !== null) {
-        this.modMedinst = this.medInstEtc
-      }
-      console.log(this.modMedinst)
-    },
     uploadImage(event) {
       const input = event.target
       if (input.files && input.files[0]) {
@@ -1319,11 +1083,6 @@ article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
 
 .addMedi {
   margin-top: 5px;
-}
-
-.editMedi {
-  margin-right: 7px;
-  padding-left: 3px;
 }
 
 .tabs-nav-btn.active {
