@@ -122,7 +122,6 @@
 <!--            </router-link>-->
             <router-link
               to="/user/svrt/list"
-              @click="getSvrtPtList"
               class="menu-item me-0 me-lg-1"
             >
               <!--begin:Menu link-->
@@ -750,14 +749,14 @@ export default {
       }
       this.$store.dispatch('admin/getSido')
     },
-    getSvrtPtList() {
-      const dutyDstr1Cd = '27'
-      if (dutyDstr1Cd) {
-        const data = { dstr1Cd: dutyDstr1Cd, sever: true }
-        this.$store.dispatch('patnt/getPatntList', data)
-      }
-      this.$store.dispatch('admin/getSido')
-    },
+    // getSvrtPtList() {
+    //   const dutyDstr1Cd = '27'
+    //   if (dutyDstr1Cd) {
+    //     const data = { dstr1Cd: dutyDstr1Cd, sever: true }
+    //     this.$store.dispatch('patnt/getPatntList', data)
+    //   }
+    //   this.$store.dispatch('admin/getSido')
+    // },
     getMediList() {
       // 대구로 설정
       const dutyDstr1Cd = '27'
