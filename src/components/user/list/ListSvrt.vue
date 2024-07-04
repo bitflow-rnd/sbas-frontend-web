@@ -172,9 +172,12 @@
                       <col style="width: 70px" />
                       <col style="width: 50px" />
                       <col style="width: auto" />
-                      <col style="width: auto" />
-                      <col style="width: 140px" />
                       <col style="width: 100px" />
+                      <col style="width: 120px" />
+                      <col style="width: 60px" />
+                      <col style="width: 60px" />
+                      <col style="width: 60px" />
+                      <col style="width: 60px" />
                       <col style="width: auto" />
                       <col style="width: 120px" />
                       <col style="width: 100px" />
@@ -182,20 +185,26 @@
                       <col style="width: 70px" />
                     </colgroup>
                     <thead>
-                    <tr class="small" style='cursor:default !important'>
-                      <th>배정상태</th>
-                      <th>이름</th>
-                      <th>생년월일</th>
-                      <th>성별</th>
-                      <th>입원병원</th>
-                      <th>입원일자</th>
-                      <th>거주지</th>
-                      <th>CovSF</th>
-                      <th>질병명</th>
-                      <th>연락처</th>
-                      <th>국적</th>
-                      <th>업데이트<br/>일시</th>
-                      <th>작업</th>
+                    <tr class="small">
+                      <th rowspan='2'>배정상태</th>
+                      <th rowspan='2'>이름</th>
+                      <th rowspan='2'>생년월일</th>
+                      <th rowspan='2'>성별</th>
+                      <th rowspan='2'>입원병원</th>
+                      <th rowspan='2'>입원일자</th>
+                      <th rowspan='2'>거주지</th>
+                      <th colspan='4'>CovSF</th>
+                      <th rowspan='2'>질병명</th>
+                      <th rowspan='2'>연락처</th>
+                      <th rowspan='2'>국적</th>
+                      <th rowspan='2'>업데이트<br/>일시</th>
+                      <th rowspan='2'>작업</th>
+                    </tr>
+                    <tr class='small'>
+                      <th>today</th>
+                      <th>+1d</th>
+                      <th>+2d</th>
+                      <th>+3d</th>
                     </tr>
                     </thead>
 
@@ -221,8 +230,10 @@
                       <td class="text-start">{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                       <td>{{ pt['admsDt'] ? formatYyyyMmDd(pt['admsDt']) : '-' }}</td>
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
-                      <td v-if="pt['covSf']">{{ pt['covSf'] }}</td>
-                      <td v-if="!pt['covSf']">-</td>
+                      <td>{{ pt['covSf'] ?  parseFloat(pt['covSf']).toFixed(1) : '-' }}</td>
+                      <td>{{ pt['covSf'] ?  parseFloat(pt['covSf']).toFixed(1) : '-' }}</td>
+                      <td>{{ pt['covSf'] ?  parseFloat(pt['covSf']).toFixed(1) : '-' }}</td>
+                      <td>{{ pt['covSf'] ?  parseFloat(pt['covSf']).toFixed(1) : '-' }}</td>
                       <td class="text-start">{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
                       <td>{{ pt['mpno'] ? pt['mpno'] : '-' }}</td>
                       <td>{{ pt['natiCdNm'] ? pt['natiCdNm'] : '-' }}</td>
@@ -3124,4 +3135,7 @@ td > .btn-primary-outline {
   padding-bottom: 55px;
 }
 
+table {
+  min-width: 1500px;
+}
 </style>
