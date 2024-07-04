@@ -95,7 +95,7 @@
                   <i v-if='model.data.negativePressureRoomYn === true'
                      class='fa-regular fa-circle-check checked'
                   ></i>
-                  <i v-else>-</i>
+                  <i class='un-checked' v-else>-</i>
                 </td>
               </tr>
 
@@ -117,20 +117,37 @@ onMounted(() => {
 })
 
 const props = defineProps({
-  hpId: String
+  hpId: String,
+  data: null,
 })
 
 const model = reactive({
-  data: Object
+  data: {
+    hospId: null,
+    childBirthYn: false,
+    childBirthMed: 0,
+    dialysisYn: false,
+    dialysisMed: 0,
+    nursingHospitalYn: false,
+    nursingHospitalMed: 0,
+    mentalPatientYn: false,
+    mentalPatientMed: 0,
+    childYn: false,
+    childMed: 0,
+    negativePressureRoomYn: false,
+  },
 })
 
 function getData() {
-  const hpId = props.hpId
-  const url = `${API_PROD}/api/v1/private/organ/medinstinfo/${hpId}`
+  const hospId = props.hpId
+  const url = `${API_PROD}/api/v1/private/organ/medinstinfo/${hospId}`
   axios_cstm().get(url)
     .then((response) => {
       const data = response.data
       if (data.code === '00') {
+        if (data.result === null) {
+          return
+        }
         model.data = data.result
       }
     })

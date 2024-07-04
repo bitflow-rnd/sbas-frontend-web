@@ -132,9 +132,12 @@
           <article class="modal-menu-layout1 pt-10">
             <div class="modal-menu-list">
               <a @click="emits('closeEditMedi')" class="modal-menu-btn menu-primary">취소</a>
-              <a @click='editMedInstEtc' class="modal-menu-btn menu-primary">수정</a>
+              <a @click='alertOpen' class="modal-menu-btn menu-primary">수정</a>
             </div>
           </article>
+
+          <SbasAlert :is-alert='model.isAlert' :err-msg='model.errMsg' :cnc-btn='false'
+                     @confirm-alert='confirmAlert' />
 
         </div>
       </div>
@@ -147,9 +150,10 @@ import { defineProps, defineEmits, reactive, onMounted } from 'vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
+import SbasAlert from '@/components/common/SbasAlert.vue'
 
 onMounted(() => {
-  getData()
+  getMedInstEtc()
 })
 
 const props = defineProps({
@@ -174,7 +178,20 @@ const model = reactive({
     childMed: 0,
     negativePressureRoomYn: false,
   },
+  isAlert: false,
+  errMsg: '',
 })
+
+function confirmAlert() {
+  model.isAlert = false
+  emits('closeEditMedi')
+}
+
+function alertOpen() {
+  editMedInstEtc()
+  model.isAlert = true
+  model.errMsg = '수정되었습니다.'
+}
 
 function editMedInstEtc() {
   const request = model.modMedInst
@@ -199,8 +216,6 @@ function editMedInstEtc() {
     .then((response) => {
       const data = response.data
       if (data.code === '00') {
-        // TODO alert 팝업
-        console.log(data)
       }
     })
     .catch((error) => {
@@ -208,14 +223,16 @@ function editMedInstEtc() {
     })
 }
 
-function getData() {
+function getMedInstEtc() {
   const hospId = props.hpId
   const url = `${API_PROD}/api/v1/private/organ/medinstinfo/${hospId}`
   axios_cstm().get(url)
     .then((response) => {
       const data = response.data
       if (data.code === '00') {
-        console.log(data)
+        if (data.result === null) {
+          return
+        }
         model.modMedInst = data.result
       }
     })
