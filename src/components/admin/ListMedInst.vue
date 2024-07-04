@@ -831,7 +831,7 @@ export default {
     msg: String
   },
   computed: {
-    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList', 'medinstDetail', 'hpId', 'medInstEtc']
+    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList', 'medinstDetail', 'hpId']
       , 'user', ['userInfo']),
 
     startIndex() {
@@ -947,10 +947,10 @@ export default {
     },
     openEditMedi() {
       this.showEditMedi = true
-      // this.getMediInstEtc()
     },
     closeEditMedi() {
       this.showEditMedi = false
+      this.tabidx = 0
     },
     alertOpen(idx) {
       this.cncBtn = false
@@ -964,11 +964,6 @@ export default {
         this.errMsg = '기관 이미지가 삭제되었습니다.'
         this.isAlert = true
         this.alertIdx = 1
-      } else if (idx === 2) {
-        this.alertClose()
-        this.$store.dispatch('admin/editMedInstEtc', this.modMedinst)
-        this.showEditMedi = false
-        this.tabidx = 0
       }
     },
     alertClose() {
@@ -1008,15 +1003,6 @@ export default {
       script.defer = true
       document.head.appendChild(script)
     },
-    // async getMediInstEtc() {
-    //   if (this.hpId !== '' || this.hpId !== null) {
-    //     await this.$store.dispatch('admin/getMedInstEtc', this.hpId)
-    //   }
-    //   if (this.medInstEtc !== null) {
-    //     this.modMedinst = this.medInstEtc
-    //   }
-    //   console.log(this.modMedinst)
-    // },
     uploadImage(event) {
       const input = event.target
       if (input.files && input.files[0]) {
@@ -1030,13 +1016,6 @@ export default {
       } else {
         this.imagePreview = ''
       }
-    },
-    editMedInstEtc() {
-      this.modMedinst.hospId = this.hpId
-      console.log(this.modMedinst)
-      this.isAlert = true
-      this.errMsg = '수정되었습니다.'
-      this.alertIdx = 2
     },
     setDefaultDstr1Cd() {
       // 대구로 설정

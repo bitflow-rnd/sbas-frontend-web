@@ -113,7 +113,7 @@ import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
 
 onMounted(() => {
-  getData()
+  getMedInstEtc()
 })
 
 const props = defineProps({
@@ -138,7 +138,7 @@ const model = reactive({
   },
 })
 
-function getData() {
+function getMedInstEtc() {
   const hospId = props.hpId
   const url = `${API_PROD}/api/v1/private/organ/medinstinfo/${hospId}`
   axios_cstm().get(url)
