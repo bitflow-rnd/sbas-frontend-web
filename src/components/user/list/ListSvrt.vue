@@ -68,7 +68,7 @@
       </div>
       <!--end::Toolbar-->
       <!--begin::Content-->
-      <div v-if="ptList !== null" id="kt_app_content" class="app-content flex-column-fluid">
+      <div id="kt_app_content" class="app-content flex-column-fluid">
         <div class="card">
           <!--begin::Card header-->
           <div class="card-header border-0 p-8">
@@ -158,7 +158,7 @@
             <!--begin::Table-->
             <h5>
               검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{
-                ptList.count
+                this.svrtPtListCount
               }}</span>
             </h5>
 
@@ -168,44 +168,50 @@
                   <table class="list-table-hoverable">
                     <colgroup>
                       <col style="width: 100px" />
-                      <col style="width: 100px" />
                       <col style="width: 70px" />
                       <col style="width: 50px" />
-                      <col style="width: auto" />
-                      <col style="width: auto" />
-                      <col style="width: 140px" />
+                      <col style="width: 180px" />
                       <col style="width: 100px" />
-                      <col style="width: auto" />
+                      <col style="width: 120px" />
+                      <col style="width: 60px" />
+                      <col style="width: 60px" />
+                      <col style="width: 60px" />
+                      <col style="width: 60px" />
+                      <col style="width: 180px" />
                       <col style="width: 120px" />
                       <col style="width: 100px" />
                       <col style="width: 50px" />
                       <col style="width: 70px" />
                     </colgroup>
                     <thead>
-                    <tr class="small" style='cursor:default !important'>
-                      <th>배정상태</th>
-                      <th>이름</th>
-                      <th>생년월일</th>
-                      <th>성별</th>
-                      <th>입원병원</th>
-                      <th>입원일자</th>
-                      <th>거주지</th>
-                      <th>CovSF</th>
-                      <th>질병명</th>
-                      <th>연락처</th>
-                      <th>국적</th>
-                      <th>업데이트<br/>일시</th>
-                      <th>작업</th>
+                    <tr class="small">
+                      <th rowspan='2'>이름</th>
+                      <th rowspan='2'>생년월일</th>
+                      <th rowspan='2'>성별</th>
+                      <th rowspan='2'>입원병원</th>
+                      <th rowspan='2'>입원일자</th>
+                      <th rowspan='2'>거주지</th>
+                      <th colspan='4'>CovSF</th>
+                      <th rowspan='2'>질병명</th>
+                      <th rowspan='2'>연락처</th>
+                      <th rowspan='2'>국적</th>
+                      <th rowspan='2'>업데이트<br/>일시</th>
+                      <th rowspan='2'>작업</th>
+                    </tr>
+                    <tr class='small'>
+                      <th>today</th>
+                      <th>+1d</th>
+                      <th>+2d</th>
+                      <th>+3d</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     <tr
-                      v-for="(pt, idx) in ptList['items']"
+                      v-for="(pt, idx) in this.svrtPtList"
                       :key="idx"
                       @click="selectPatient(pt)"
                     >
-                      <td>{{ pt['bedStatCdNm'] ? pt['bedStatCdNm'] : '환자정보등록' }}</td>
                       <td>
                         <div class='text-center'>
                           <div class='pt-nm'>{{
@@ -221,8 +227,16 @@
                       <td class="text-start">{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                       <td>{{ pt['admsDt'] ? formatYyyyMmDd(pt['admsDt']) : '-' }}</td>
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
-                      <td v-if="pt['covSf']">{{ pt['covSf'] }}</td>
-                      <td v-if="!pt['covSf']">-</td>
+
+                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']['today']) > 0.4 }" >
+                        {{ pt['covSf'] ? parseFloat(pt['covSf']['today']).toFixed(1) : '-' }}</td>
+                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']['plusOneDay']) > 0.4 }" >
+                        {{ pt['covSf'] ? parseFloat(pt['covSf']['plusOneDay']).toFixed(1) : '-' }}</td>
+                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']['plusTwoDay']) > 0.4 }" >
+                        {{ pt['covSf'] ? parseFloat(pt['covSf']['plusTwoDay']).toFixed(1) : '-' }}</td>
+                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']['plusThreeDay']) > 0.4 }" >
+                        {{ pt['covSf'] ? parseFloat(pt['covSf']['plusThreeDay']).toFixed(1) : '-' }}</td>
+
                       <td class="text-start">{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
                       <td>{{ pt['mpno'] ? pt['mpno'] : '-' }}</td>
                       <td>{{ pt['natiCdNm'] ? pt['natiCdNm'] : '-' }}</td>
@@ -246,7 +260,7 @@
               :previous-page-buttons-count="previousPageButtonsCount"
               :display-change-page-buttons-count="displayChangePageButtonsCount"
               :display-rows-count="displayRowsCount"
-              :data-length="ptList['count']"
+              :data-length="this.svrtPtListCount"
             ></data-pagination>
 
             <!--end::Table-->
@@ -496,8 +510,7 @@
                       </div>
                     </div>
                   </article>
-                  <svrt-chart-unit-no-title :pt-id="ptDetail.ptId" class='svrt-chart'
-                                            v-if="monitorPatntsList?.includes(ptDetail.ptId)" />
+                  <svrt-chart-unit-no-title :pt-id="ptDetail.ptId" class='svrt-chart' />
                 </div>
 
                 <div class="detail-foot-box pb-5">
@@ -2461,6 +2474,8 @@ import {
 import { reactive, ref } from 'vue'
 import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
 import SvrtInfoModal from '@/components/user/modal/SvrtInfoModal.vue'
+import { axios_cstm } from '@/util/axios_cstm'
+import { API_PROD } from '@/util/constantURL'
 
 export default {
   components: {
@@ -2478,7 +2493,9 @@ export default {
   mounted() {
     this.initNewPt = this.newPt
     this.initDsInfo = this.dsInfo
+    this.$store.dispatch('admin/getSido')
     this.setDefaultDstr1Cd()
+    this.search()
   },
   setup() {
     const isAlert = ref(false)
@@ -2594,6 +2611,8 @@ export default {
       },
       showPatnt: false,
       showSvrtInfoModal: false,
+      svrtPtList: [],
+      svrtPtListCount: 0,
     }
   },
   computed: {
@@ -2609,7 +2628,7 @@ export default {
       return this.page * this.displayRowsCount
     },
     filterData() {
-      let params = { sever: true }
+      let params
       if (this.filterPatient['searchText']) params = { ...params, ptNm: this.filterPatient['searchText'] }
       if (this.filterPatient['searchText']) params = { ...params, rrno1: this.filterPatient['searchText'] }
       if (this.filterPatient['searchText']) params = { ...params, mpno: this.filterPatient['searchText'] }
@@ -2637,9 +2656,6 @@ export default {
     enableSecondAddressPicker() {
       return this.filterPatient['address']['first'] === ''
     },
-    monitorPatntsList() {
-      return this.ptList.items.filter(x => x.monitoring).map(x => x.ptId)
-    }
   },
   //정예준
   watch: {
@@ -2934,8 +2950,16 @@ export default {
       }
     },
     search() {
-      console.log(this.filterPatient['assignmentStatus'])
-      this.$store.dispatch('patnt/getPatntList', this.filterData)
+      const url = `${API_PROD}/api/v1/private/severity/list`
+      const params = this.filterData
+      axios_cstm().get(url, { params })
+        .then((response) => {
+          this.svrtPtList = response.data.result.items
+          this.svrtPtListCount = response.data.result.count
+        })
+        .catch((error) => {
+          console.log(error)
+        })
       this.page = 1
     },
     async showPatntModal(patient, idx) {
@@ -3124,4 +3148,7 @@ td > .btn-primary-outline {
   padding-bottom: 55px;
 }
 
+table {
+  min-width: 1500px;
+}
 </style>

@@ -143,6 +143,7 @@ const model = reactive({
   timer: null,
   errMsg: '',
   isAlert: false,
+  didFind: false,
 })
 
 function openCertify() {
@@ -233,11 +234,13 @@ function formatErrMsg() {
 function alertClose() {
   console.log('실행')
   model.isAlert = !model.isAlert
+  if(model.didFind) emit('openFindId')
 }
 
 function check() {
-  if(!model.isCertified){
+  if(!model.isCertified || !model.form.telno){
     alertOpen('본인인증을 먼저 진행해 주세요.')
+    return
   }
   const url = `${API_PROD}/api/v1/public/user/find-id`
   const request = {

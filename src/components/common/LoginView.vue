@@ -50,8 +50,8 @@
 
               <div class="option-list">
                 <!--                 모달인지 새 페이지인지 확인 필요 -->
-<!--                <a @click="openFindId" class="option-btn hover-a">아이디찾기</a> /-->
-<!--                <a @click="openInitPw" class="option-btn hover-a">비밀번호 초기화</a>-->
+                <a @click="openFindId" class="option-btn hover-a">아이디찾기</a> /
+                <a @click="openInitPw" class="option-btn hover-a">비밀번호 초기화</a>
               </div>
             </div>
 
@@ -590,6 +590,9 @@
   <article v-show="findingId" class="popup">
     <find-id @openFindId="openFindId"/>
   </article>
+  <article v-show="initPw" class="popup">
+    <init-pw @openInitPw="openInitPw"/>
+  </article>
   <article v-show="isAlert" class="popup popup-alert">
     <div class="popup-wrapper">
       <div class="popup-contents py-10 px-10" style="width: 300px">
@@ -622,10 +625,11 @@ import { getGugun, getSido } from '@/util/ui'
 import { JobCode } from '@/util/sbas_cnst'
 import CertModal from '@/components/common/modal/CertModal.vue'
 import FindId from '@/components/common/FindId.vue'
+import InitPw from '@/components/common/InitPw.vue'
 
 export default {
   name: 'LoginView',
-  components: { FindId, CertModal },
+  components: { InitPw, FindId, CertModal },
   computed: {
     ...mapState('admin', ['smsCrtfSuccess', 'cmSido', 'cmGugun', 'organMedi'])
   },
@@ -696,6 +700,7 @@ export default {
     const showCertify = ref(false)
     const isAlert = ref(false)
     const findingId = ref(false)
+    const initPw = ref(false)
     const errMsg = ''
     let timer = null
     const toggleUserEditModal = function () {
@@ -753,6 +758,7 @@ export default {
       alertOpen,
       alertClose,
       findingId,
+      initPw,
       openCertify,
       timerStart
     }
@@ -850,7 +856,8 @@ export default {
       console.log('아이디 찾기', this.findingId)
     },
     openInitPw() {
-      console.log('비번 찾기')
+      this.initPw = !this.initPw
+      console.log('비번 초기화', this.initPw)
     },
     phoneCertify() {
       const certifyRows = document.querySelectorAll('.certify-row')
