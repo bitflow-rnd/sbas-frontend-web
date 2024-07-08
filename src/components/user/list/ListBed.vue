@@ -177,16 +177,16 @@
                             </a>
                           </div>
 
-                          <div class="sbox w-150px ms-5">
-                            <select v-model='search.period' @change="searchBedAsgn">
-                              <option value=''>전체</option>
-                              <option value='7'>최근 1주</option>
-                              <option value='30'>최근 1개월</option>
-                              <option value='90'>최근 3개월</option>
-                              <option value='180'>최근 6개월</option>
-                              <option value='365'>최근 1년</option>
-                            </select>
-                          </div>
+<!--                          <div class="sbox w-150px ms-5">-->
+<!--                            <select v-model='search.period' @change="searchBedAsgn">-->
+<!--                              <option value=''>전체</option>-->
+<!--                              <option value='7'>최근 1주</option>-->
+<!--                              <option value='30'>최근 1개월</option>-->
+<!--                              <option value='90'>최근 3개월</option>-->
+<!--                              <option value='180'>최근 6개월</option>-->
+<!--                              <option value='365'>최근 1년</option>-->
+<!--                            </select>-->
+<!--                          </div>-->
                         </div>
                       </td>
                     </tr>
@@ -328,7 +328,7 @@
                               <label>
                                 <input v-model='search.reqBedTypeCd' value='BDTP0003' type="checkbox" name="type2"
                                        @change="searchBedAsgn" /><i></i>
-                                <span class="txt">읍압격리</span>
+                                <span class="txt">음압격리</span>
                               </label>
                             </div>
 
@@ -352,7 +352,7 @@
                               <label>
                                 <input v-model='search.reqBedTypeCd' value='BDTP0005' type="checkbox" name="type2"
                                        @change="searchBedAsgn" /><i></i>
-                                <span class="txt">소아읍압격리</span>
+                                <span class="txt">소아음압격리</span>
                               </label>
                             </div>
 
@@ -381,17 +381,17 @@
                           <div class="item-cell-box">
                             <div class="cbox">
                               <label>
-                                <input v-model='search.gndr' value='여' type="checkbox" name="type3"
+                                <input v-model='search.gndr' value='남' type="checkbox" name="type3"
                                        @change="searchBedAsgn" /><i></i>
-                                <span class="txt">여자</span>
+                                <span class="txt">남자</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input v-model='search.gndr' value='남' type="checkbox" name="type3"
+                                <input v-model='search.gndr' value='여' type="checkbox" name="type3"
                                        @change="searchBedAsgn" /><i></i>
-                                <span class="txt">남자</span>
+                                <span class="txt">여자</span>
                               </label>
                             </div>
                           </div>
@@ -429,9 +429,13 @@
           <!--begin::Card body-->
           <div class="card-body p-8">
             <!--begin::Table-->
-            <h5 v-if='bdListWeb!==[]'>
-              검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">
-              {{ bdListWeb.count }}</span>
+            <h5 class="d-flex">
+              <div class="flex-grow-1 d-flex fs-16px">
+                <div>검색결과</div>
+                <div class="badge ms-2 rounded-pill bg-primary fs-14px px-2">
+                  {{ bdListWeb.count }}
+                </div>
+              </div>
             </h5>
 
             <article v-if="bdListWeb === []" class="table-list-layout1">
@@ -3701,6 +3705,7 @@
       </div>
     </div>
   </article>
+
   <!--환자정보 존재 -->
   <article v-if="existPt !== null" v-show="popup === 0" class="popup popup-exist" style="">
     <div class="popup-wrapper">

@@ -70,9 +70,7 @@
       <!--begin::Content-->
       <div id="kt_app_content" class="app-content flex-column-fluid">
         <div class="card">
-          <!--begin::Card header-->
           <div class="card-header border-0 p-8">
-            <!--begin::Card toolbar-->
             <article class="table-form-layout1">
               <div class="form-head-box"></div>
               <div class="form-body-box">
@@ -156,16 +154,19 @@
           <!--begin::Card body-->
           <div class="card-body p-8">
             <!--begin::Table-->
-            <h5>
-              검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{
-                this.svrtPtListCount
-              }}</span>
+            <h5 class="d-flex">
+              <div class="flex-grow-1 d-flex fs-16px">
+                <div>검색결과</div>
+                <div class="badge ms-2 rounded-pill bg-primary fs-14px px-2">
+                  {{ this.svrtPtListCount }}
+                </div>
+              </div>
             </h5>
 
             <article class="table-list-layout1">
               <div class="table-body-box">
                 <div class="table-box with-scroll small">
-                  <table class="list-table-hoverable">
+                  <table class="list-table-hoverable svrt-list">
                     <colgroup>
                       <col style="width: 100px" />
                       <col style="width: 70px" />
@@ -326,9 +327,6 @@
                 <div class="detail-head-box px-10">
                   <div class="head-box d-flex">
                     <div class="head-txt-box">환자정보</div>
-                    <div class="btn-primary-outline"
-                         v-if="ptDetail.ptId==='PT00000085' || ptDetail.ptId==='PT00000086'">※ 관찰환자
-                    </div>
                   </div>
 
                   <div class="option-box">
@@ -3034,7 +3032,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .modal {
   --bs-modal-width: 98%;
@@ -3111,15 +3108,6 @@ td > .btn-primary-outline {
   margin-top: 12px;
 }
 
-.chart-apex {
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 100px;
-  height: 350px;
-  background-color: white;
-}
-
 .btn.btn-xs {
   padding: 8px 10px;
 }
@@ -3128,9 +3116,6 @@ td > .btn-primary-outline {
 }
 .detail-info-box.w-44 {
   width: 44% !important;
-}
-.item-cell-box {
-  margin-bottom: 0.5rem;
 }
 .detail-info-box + .detail-info-box {
   border-left: 1px dashed #ccc;
@@ -3148,7 +3133,7 @@ td > .btn-primary-outline {
   padding-bottom: 55px;
 }
 
-table {
+.svrt-list {
   min-width: 1500px;
 }
 </style>
