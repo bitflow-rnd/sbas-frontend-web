@@ -62,8 +62,6 @@
                 </span>
                 <!--end::Svg Icon-->
               </li>
-              <!--end::Item-->
-              <!--begin::Item-->
               <li class="breadcrumb-item text-gray-500 mx-n1">
                 <h1
                   class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0"
@@ -71,24 +69,14 @@
                   의료기관 관리
                 </h1>
               </li>
-              <!--end::Item-->
             </ul>
-            <!--end::Breadcrumb-->
-            <!--begin::Title-->
-            <!--end::Title-->
           </div>
-          <!--end::Page title-->
         </div>
-        <!--end::Toolbar wrapper-->
       </div>
-      <!--end::Toolbar-->
 
-      <!--begin::Content-->
       <div id="kt_app_content" class="app-content flex-column-fluid">
         <div class="card">
-          <!--begin::Card header-->
           <div class="card-header border-0 p-8">
-            <!--begin::Card toolbar-->
             <article class="table-form-layout1">
               <div class="form-head-box"></div>
               <div v-if="medinstList!== undefined" class="form-body-box">
@@ -101,14 +89,14 @@
                 <div class="table-box with-toggle">
                   <table>
                     <colgroup>
-                      <col style="width: 90px" />
+                      <col style="width: 168px" />
                       <col style="width: auto" />
                       <col style="width: 168px" />
                       <col style="width: auto" />
                     </colgroup>
                     <tbody>
                     <tr data-toggle="false">
-                      <th>검색조건</th>
+                      <th>지역</th>
                       <td>
                         <div class="item-cell-box">
                           <div class="sbox w-175px" @click="getSido">
@@ -154,66 +142,36 @@
                           <div class="item-cell-box">
                             <div class="cbox">
                               <label>
-                                <input type="checkbox" name="state" checked /><i></i>
-                                <span class="txt">상급종합병원</span>
+                                <input type="checkbox" name="state" v-model="this.filterMedinst['dutyDivNam']"
+                                       value='권역응급의료센터' @change='search' /><i></i>
+                                <span class="txt">권역응급의료센터</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" checked /><i></i>
-                                <span class="txt">종합병원</span>
+                                <input type="checkbox" name="state" v-model="this.filterMedinst['dutyDivNam']"
+                                       value='지역응급의료센터' @change='search' /><i></i>
+                                <span class="txt">지역응급의료센터</span>
                               </label>
                             </div>
 
                             <div class="cbox ms-4">
                               <label>
-                                <input type="checkbox" name="state" /><i></i>
-                                <span class="txt">병원</span>
+                                <input type="checkbox" name="state" v-model="this.filterMedinst['dutyDivNam']"
+                                       value='지역응급의료기관' @change='search' /><i></i>
+                                <span class="txt">지역응급의료기관</span>
                               </label>
                             </div>
 
-                            <div class="cbox ms-4">
-                              <label>
-                                <input type="checkbox" name="state" /><i></i>
-                                <span class="txt">요양병원</span>
-                              </label>
-                            </div>
+<!--                            <div class="cbox ms-4">-->
+<!--                              <label>-->
+<!--                                <input type="checkbox" name="state" v-model="this.filterMedinst['dutyDivNam']"-->
+<!--                                       value='응급의료기관 외의 의료기관(응급의료시설)' @change='search' /><i></i>-->
+<!--                                <span class="txt">응급의료시설</span>-->
+<!--                              </label>-->
+<!--                            </div>-->
 
-                            <div class="cbox ms-4">
-                              <label>
-                                <input type="checkbox" name="state" /><i></i>
-                                <span class="txt">의원</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input type="checkbox" name="state" /><i></i>
-                                <span class="txt">보건소</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input type="checkbox" name="state" /><i></i>
-                                <span class="txt">보건지소</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input type="checkbox" name="state" /><i></i>
-                                <span class="txt">보건진료소</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input type="checkbox" name="state" /><i></i>
-                                <span class="txt">보건의료원</span>
-                              </label>
-                            </div>
                           </div>
                         </div>
                       </td>
@@ -225,7 +183,7 @@
                           <div class="cbox">
                             <label>
                               <input type="checkbox" name="type1" /><i></i>
-                              <span class="txt">읍압격리</span>
+                              <span class="txt">음압격리</span>
                             </label>
                           </div>
 
@@ -246,7 +204,7 @@
                           <div class="cbox ms-4">
                             <label>
                               <input type="checkbox" name="type1" /><i></i>
-                              <span class="txt">소아읍압격리</span>
+                              <span class="txt">소아음압격리</span>
                             </label>
                           </div>
 
@@ -383,12 +341,12 @@
           </div>
           <!--end::Card header-->
           <!--begin::Card body-->
-          <div v-if='medinstList.items !== undefined' class="card-body pt-5 pb-2 px-0">
+          <div v-if='medinstList.items !== undefined' class="card-body p-8">
             <!--begin::Table-->
-            <h5 class="d-flex px-4">
-              <div class="flex-grow-1 d-flex">
+            <h5 class="d-flex">
+              <div class="flex-grow-1 d-flex fs-16px">
                 <div>검색결과</div>
-                <div class="badge ms-2 rounded-pill bg-primary">
+                <div class="badge ms-2 rounded-pill bg-primary fs-14px px-2">
                   {{ medinstList['count'] }}
                 </div>
               </div>
@@ -407,16 +365,15 @@
                 <div v-if="medinstList.items.length !== 0" class="table-box with-scroll small">
                   <table class="list-table-hoverable">
                     <colgroup>
-                      <col style="width: 40px" class='d-none' />
                       <col style="width: 190px" />
                       <col style="width: 150px" />
                       <col style="width: 60px" />
                       <col style="width: 60px" />
                       <col style="width: 60px" />
+                      <col style="width: 65px" />
+                      <col style="width: 65px" />
                       <col style="width: 60px" />
-                      <col style="width: 60px" />
-                      <col style="width: 60px" />
-                      <col style="width: 60px" />
+                      <col style="width: 65px" />
                       <col style="width: 60px" />
                       <col style="width: 60px" />
                       <col style="width: 60px" />
@@ -433,7 +390,6 @@
                     </colgroup>
                     <thead>
                     <tr class="small">
-                      <th rowspan="2" class='d-none'>이미지</th>
                       <th rowspan="2">의료기관명</th>
                       <th rowspan="2">
                         대표전화/<br />
@@ -468,7 +424,7 @@
                       <th class="px-0">MRI</th>
                       <th class="px-0">혈관<br />촬영기</th>
                       <th class="px-0">
-                        중심제온조절유도
+                        중심체온<br>조절유도기
                       </th>
                     </tr>
                     </thead>
@@ -481,7 +437,7 @@
                         ></i>
                       </td>
                       <td class="text-start" role='button'>
-                        <div class="text-start text-black">{{ item.dutyName }} <span class="text-secondary fs-12px">{{ item.dutyDivNam }}</span></div>
+                        <div class="text-start text-black">{{ item.dutyName }}<br> <span class="text-secondary fs-12px">{{ item.dutyDivNam }}</span></div>
                       </td>
                       <td role='button'>
                         {{ item.dutyTel1 }}<br/>{{ item.dutyTel3 }}
@@ -615,40 +571,9 @@
             <!--begin::Modal title-->
             <h2>의료기관 세부 정보</h2>
             <!--end::Modal title-->
+
             <!--begin::Close-->
-            <div class="btn btn-sm btn-icon btn-active-color-primary">
-              <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-              <span @click="closeModal" class="svg-icon svg-icon-1">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  opacity="0.5"
-                  x="6"
-                  y="17.3137"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(-45 6 17.3137)"
-                  fill="currentColor"
-                ></rect>
-                <rect
-                  x="7.41422"
-                  y="6"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(45 7.41422 6)"
-                  fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-              <!--end::Svg Icon-->
-            </div>
+            <CloseButton @close="closeModal" />
             <!--end::Close-->
 
             <article class="floating-organ-box">
@@ -823,9 +748,10 @@ import MedInstDetailModal from '@/components/admin/modal/MedInstDetailModal.vue'
 import MedInstBasicModal from '@/components/admin/modal/MedInstBasicModal.vue'
 import MedInstAddModal from '@/components/admin/modal/MedInstAddModal.vue'
 import MedInstEditModal from '@/components/admin/modal/MedInstEditModal.vue'
+import CloseButton from '@/components/common/CloseButton.vue'
 
 export default {
-  components: { MedInstEditModal, MedInstAddModal, MedInstBasicModal, MedInstDetailModal, DataPagination },
+  components: { CloseButton, MedInstEditModal, MedInstAddModal, MedInstBasicModal, MedInstDetailModal, DataPagination },
   name: 'DetlAncmtListMedInst',
   props: {
     msg: String
@@ -851,6 +777,9 @@ export default {
       }
       if (this.filterMedinst['dstr1Cd']) params = { ...params, dstr1Cd: this.filterMedinst['dstr1Cd'] }
       if (this.filterMedinst['dstr2Cd']) params = { ...params, dstr2Cd: this.filterMedinst['dstr2Cd'] }
+      if (this.filterMedinst['dutyDivNam'] && this.filterMedinst['dutyDivNam'].length > 0) {
+        params = { ...params, dutyDivNam: this.filterMedinst['dutyDivNam'].join(",") }
+      }
 
       return params
     },
@@ -861,11 +790,10 @@ export default {
   mounted() {
     this.initNaverMap()
     this.setDefaultDstr1Cd()
+    this.search()
   },
-
   setup() {
     const showTable = ref(false)
-    const defaultImage = '@/assets/img/img-hosp-def.jpg'
     const toggleTable = function() {
       showTable.value = !showTable.value
     }
@@ -1019,6 +947,7 @@ export default {
     },
     setDefaultDstr1Cd() {
       // 대구로 설정
+      this.getSido()
       this.filterMedinst['dstr1Cd'] = '27'
       this.getSecondAddress('27')
       // const userInfo = store.getters['user/getUserInfo']
@@ -1039,7 +968,6 @@ export default {
 article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
   display: block;
 }
-
 
 .modal.show {
   background-color: rgba(0, 0, 0, 0.4);

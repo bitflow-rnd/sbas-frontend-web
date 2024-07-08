@@ -277,7 +277,7 @@
                                                         <div class="cbox">
                                                             <label>
                                                                 <input type="checkbox" name="type2"><i></i>
-                                                                <span class="txt">읍압격리</span>
+                                                                <span class="txt">음압격리</span>
                                                             </label>
                                                         </div>
 
@@ -298,7 +298,7 @@
                                                         <div class="cbox ms-4">
                                                             <label>
                                                                 <input type="checkbox" name="type2"><i></i>
-                                                                <span class="txt">소아읍압격리</span>
+                                                                <span class="txt">소아음압격리</span>
                                                             </label>
                                                         </div>
 

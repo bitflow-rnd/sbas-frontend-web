@@ -88,7 +88,7 @@
                           />
                         </div>
                         <div class="timer-box ms-3 text-danger" style="min-width: 103px">
-                          유효시간: <span class="timer">03:00</span>
+                          유효시간: <span class="timer">{{$props.time}}</span>
                         </div>
                       </div>
                     </div>
@@ -113,7 +113,7 @@
 </template>
 
 <script setup>
-defineProps(['form', 'crtfNo'])
+defineProps(['form', 'crtfNo', 'time'])
 const emit = defineEmits(['openCertify', 'removeHyphens', 'phoneCertify', 'certifyNo', 'update:crtfNo'])
 </script>
 

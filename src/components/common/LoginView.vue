@@ -585,7 +585,7 @@
   <article v-show="showCertify" class="popup popup-certify" style="">
     <cert-modal :form="form" :crtfNo="crtfNo" @openCertify="openCertify"
                 @phone-certify="phoneCertify" @remove-hyphens="removeHyphens" @certify-no="certifyNo"
-                @update:crtfNo="value => crtfNo = value" />
+                :time="timeText" @update:crtfNo="value => crtfNo = value" />
   </article>
   <article v-show="findingId" class="popup">
     <find-id @openFindId="openFindId"/>
@@ -701,6 +701,7 @@ export default {
     const isAlert = ref(false)
     const findingId = ref(false)
     const initPw = ref(false)
+    let timeText = ref('03:00')
     const errMsg = ''
     let timer = null
     const toggleUserEditModal = function () {
@@ -719,36 +720,6 @@ export default {
       console.log('실행')
       isAlert.value = !isAlert.value
     }
-    const timerStart = () => {
-      let time = 179 // 기준시간 작성
-      let min = '' // 분
-      let sec = '' // 초
-
-      if (timer) {
-        clearInterval(timer)
-      }
-
-      timer = setInterval(() => {
-        min = parseInt(time / 60) // 몫을 계산
-        sec = time % 60 // 나머지를 계산
-
-        if (min.toString().length === 1) {
-          min = '0' + min.toString()
-        }
-
-        if (sec.toString().length === 1) {
-          sec = '0' + sec.toString()
-        }
-
-        document.querySelector('.timer').textContent = min + ':' + sec
-
-        time--
-
-        if (time < 0) {
-          clearInterval(timer) // setInterval() 실행을 끝냄
-        }
-      }, 1000)
-    }
     return {
       userEditModal,
       showCertify,
@@ -760,7 +731,7 @@ export default {
       findingId,
       initPw,
       openCertify,
-      timerStart
+      timeText,
     }
   },
   methods: {
@@ -768,6 +739,38 @@ export default {
     getSido,
     doLogin() {
       document.form.submit()
+    },
+    timerStart() {
+      let time = 179 // 기준시간 작성
+      let min = '' // 분
+      let sec = '' // 초
+
+      if (this.timer) {
+        clearInterval(this.timer)
+      }
+
+      this.timer = setInterval(() => {
+        min = parseInt(time / 60) // 몫을 계산
+        sec = time % 60 // 나머지를 계산
+
+        if (min.toString().length === 1) {
+          min = '0' + min.toString()
+        }
+
+        if (sec.toString().length === 1) {
+          sec = '0' + sec.toString()
+        }
+
+        // document.querySelector('.timer').textContent = min + ':' + sec
+        this.timeText = min + ':' + sec
+        console.log(this.timeText, 'time')
+
+        time--
+
+        if (time < 0 || !this.showCertify) {
+          clearInterval(this.timer) // setInterval() 실행을 끝냄
+        }
+      }, 1000)
     },
     validateInput(idx) {
       if (idx === 0) {

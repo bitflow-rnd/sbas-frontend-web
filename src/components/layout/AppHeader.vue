@@ -58,106 +58,74 @@
             id="kt_app_header_menu"
             data-kt-menu="true"
           >
-            <!--begin:Menu item-->
             <router-link
               to="/dashbd"
               class="menu-item me-0 me-lg-1"
             >
-              <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">상황판</span>
               </span>
-              <!--end:Menu link-->
             </router-link>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
+
             <router-link
               to="/user/bedasgn/list"
               @click="getBdList"
               class="menu-item me-0 me-lg-1"
             >
-              <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">병상배정</span>
               </span>
-              <!--end:Menu link-->
             </router-link>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
+
             <router-link
               to="/user/patnt/list"
               @click="getPtList"
               class="menu-item me-0 me-lg-1"
             >
-              <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">환자관리</span>
               </span>
-              <!--end:Menu link-->
             </router-link>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
+
             <router-link
               to="/user/cntc/list"
               @click="getUsersList"
               class="menu-item me-0 me-lg-1"
             >
-              <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">연락처/메시지</span>
               </span>
-              <!--end:Menu link-->
             </router-link>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
-<!--            <router-link-->
-<!--              to="/user/svrt/dashbd"-->
-<!--              class="menu-item me-0 me-lg-1"-->
-<!--            >-->
-<!--              &lt;!&ndash;begin:Menu link&ndash;&gt;-->
-<!--              <span class="menu-link">-->
-<!--                <span class="menu-title">중증환자모니터링</span>-->
-<!--              </span>-->
-<!--              &lt;!&ndash;end:Menu link&ndash;&gt;-->
-<!--            </router-link>-->
+
             <router-link
               to="/user/svrt/list"
               class="menu-item me-0 me-lg-1"
             >
-              <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">중증환자모니터링</span>
               </span>
-              <!--end:Menu link-->
             </router-link>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
+
             <router-link
               to="/user/medinst/list"
-              @click="getMediList"
               class="menu-item me-0 me-lg-1"
             >
-              <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">의료기관 조회</span>
               </span>
-              <!--end:Menu link-->
             </router-link>
-            <!--end:Menu item-->
-            <!--begin:Menu item-->
+
             <router-link
               v-show="userInfo.jobCd === JobCode.Sysa"
               to="/admin/user/list"
               @click="getUserList"
               class="menu-item me-0 me-lg-1"
             >
-              <!--begin:Menu link-->
               <span class="menu-link">
                 <span class="menu-title">시스템관리</span>
               </span>
-              <!--end:Menu link-->
             </router-link>
-            <!--end:Menu item-->
+
           </div>
           <!--end::Menu-->
         </div>

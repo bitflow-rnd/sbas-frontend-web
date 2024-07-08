@@ -157,9 +157,9 @@
 
                     <tr>
                       <th>배정상태</th>
-                      <td class="pb-0">
+                      <td>
                         <div
-                          class="item-cell-box"
+                          class="item-cell-box select-box"
                           v-for="(status, idx) in Object.entries(assignmentStatuses)"
                           :key="idx"
                         >
@@ -219,10 +219,13 @@
           <!--begin::Card body-->
           <div class="card-body p-8">
             <!--begin::Table-->
-            <h5>
-              검색결과<span class="position-absolute translate-middle rounded-pill bg-primary">{{
-                ptList.count
-              }}</span>
+            <h5 class="d-flex">
+              <div class="flex-grow-1 d-flex fs-16px">
+                <div>검색결과</div>
+                <div class="badge ms-2 rounded-pill bg-primary fs-14px px-2">
+                  {{ ptList.count }}
+                </div>
+              </div>
             </h5>
 
             <article class="table-list-layout1">
@@ -388,9 +391,6 @@
                 <div class="detail-head-box px-10">
                   <div class="head-box d-flex">
                     <div class="head-txt-box">환자정보</div>
-                    <div class="btn-primary-outline"
-                         v-if="ptDetail.ptId==='PT00000085' || ptDetail.ptId==='PT00000086'">※ 관찰환자
-                    </div>
                   </div>
 
                   <div class="option-box">
@@ -3180,7 +3180,7 @@ td > .btn-primary-outline {
 .detail-info-box.w-44 {
   width: 44% !important;
 }
-.item-cell-box {
+.select-box {
   margin-bottom: 0.5rem;
 }
 .detail-info-box + .detail-info-box {
