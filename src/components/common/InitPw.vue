@@ -105,7 +105,7 @@
       <article v-show="model.showCertify" class="popup popup-certify">
         <cert-modal :form="model.form" :crtfNo="model.crtfNo" @openCertify="openCertify"
                     @phone-certify="phoneCertify" @remove-hyphens="removeHyphens" @certify-no="certifyNo"
-                    @update:crtfNo="value => model.crtfNo = value" />
+                    :time="model.time" @update:crtfNo="value => model.crtfNo = value" />
       </article>
 
     </div>
@@ -155,6 +155,7 @@ const model = reactive({
   errMsg: '',
   isAlert: false,
   didInit: false,
+  time: '03:00'
 })
 
 function openCertify() {
@@ -198,11 +199,11 @@ function timerStart() {
       sec = '0' + sec.toString()
     }
 
-    document.querySelector('.timer').textContent = min + ':' + sec
+    model.time = min + ':' + sec
 
     time--
 
-    if (time < 0) {
+    if (time < 0 || !model.showCertify) {
       clearInterval(model.timer) // setInterval() 실행을 끝냄
     }
   }, 1000)
