@@ -691,7 +691,7 @@
 
               <article class="modal-menu-layout1 pt-10">
                 <div class="modal-menu-list">
-                  <a @click="openPopup(4)" class="modal-menu-btn menu-primary">다음</a>
+                  <a @click="nextStep" class="modal-menu-btn menu-primary">다음</a>
                 </div>
               </article>
             </div>
@@ -2658,6 +2658,9 @@ export default {
       // if (this.userInfo.dutyDstr1Cd) {
       // this.getSecondAddress(this.userInfo.dutyDstr1Cd)
       // }
+    },
+    nextStep() {
+      this.tab = this.tab + 1
     },
   }
 }

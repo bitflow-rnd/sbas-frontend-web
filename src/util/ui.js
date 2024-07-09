@@ -1,11 +1,5 @@
 import { AuthCode, JobCode } from '@/util/sbas_cnst'
 
-export let alertPopupClose = () => {
-  console.log('실행')
-  document.querySelector('.popup-alert').remove()
-}
-
-
 export function getSido() {
   this.$store.dispatch('admin/getSido')
 }
@@ -161,18 +155,6 @@ export const reqBedType = {
   BDTP0007: '소아'
 }
 
-export function setSearchStr(arr) {
-  if (!Array.isArray(arr) || arr.length === 0) {
-    return null
-  } else {
-    console.log(arr)
-    const strArr = arr.map((item) => String(item))
-    const resStr = strArr.join(',')
-    console.log(resStr)
-    return resStr
-  }
-}
-
 export async function openPopup(idx) {
   if (idx === 0 && !this.rptYn) {
     console.log(this.newPt)
@@ -208,13 +190,6 @@ export async function openPopup(idx) {
       console.log('의료진 / 해당')
       this.popup = 3
     }
-  } else if (idx === 3) {
-    /*추천 병원 선택 후 요청 승인 - 배정반*/
-    this.popup = 2
-  } else if (idx === 4) {
-    /*환자 목록 - 병상요청*/
-    console.log('환자등록병상요청')
-    this.tab = 1
   }
 }
 
@@ -242,7 +217,7 @@ export function getUndrDses(arr) {
 export async function goAsgn(idx) {
   if (idx === 2) {
     // 감염병 정보 등록
-    if (this.dsInfo.ptId === '' && this.ptBI !== null) {/* cpdbr wjdqh - rkadudqj*/
+    if (this.dsInfo.ptId === '' && this.ptBI !== null) {
       this.dsInfo.ptId = this.ptBI
     } else if (this.ptDetail !== null) {
       this.dsInfo.ptId = this.ptDetail.ptId

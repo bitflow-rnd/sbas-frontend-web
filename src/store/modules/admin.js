@@ -142,27 +142,6 @@ export default {
           console.log(e)
         })
     },
-    getDutyDstr(comment, data) {
-      const token = sessionStorage.getItem('userToken')
-      const request = {
-        code: data
-      }
-      const url = `${API_PROD}/api/v1/admin/organ/reg-firemanpublic`
-      axios({
-        method: 'get',
-        url: url,
-        data: request,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }).then(response => {
-        console.log(response, '시도공통코드조회')
-
-        return response
-      }).catch(e => {
-        console.log(e)
-      })
-    },
     regUsr(comment, data) {
       const token = sessionStorage.getItem('userToken')
       const request = { ...data, pw: encodingPassword(data['pw']) }
@@ -464,13 +443,10 @@ export default {
         if (response.data.code === '00') {
           comment.commit('setMedinst', response.data?.result)
           console.log(response.data)
-
         }
-
       } catch (e) {
         console.log(e)
       }
-
     },
     /*의료기관 상세*/
     async getMedinstDetail(comment, request) {
@@ -489,7 +465,6 @@ export default {
       } catch (e) {
         console.log(e)
       }
-
     },
     /*의료기관 이미지 삭제*/
     removeMedinstImg(comment, request) {

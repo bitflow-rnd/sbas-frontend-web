@@ -345,43 +345,7 @@
           <h2>병상요청</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
-          <div
-            id="reqest_exit"
-            class="btn btn-sm btn-icon btn-active-color-primary"
-            data-bs-dismiss="modal"
-          >
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class="svg-icon svg-icon-1" @click='closePatntRequest'>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  opacity="0.5"
-                  x="6"
-                  y="17.3137"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(-45 6 17.3137)"
-                  fill="currentColor"
-                ></rect>
-                <rect
-                  x="7.41422"
-                  y="6"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(45 7.41422 6)"
-                  fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-            <!--end::Svg Icon-->
-          </div>
+          <CloseButton @click="closePatntRequest" />
           <!--end::Close-->
 
           <article class="floating-request-box d-none">
@@ -462,14 +426,8 @@
                           <tr>
                             <td>
                               <article class="modal-profile-layout1">
-                                <div
-                                  class="profile-card-box flex-column mx-auto"
-                                  style="width: 264px"
-                                >
-                                  <div
-                                    class="profile-view-box"
-                                    style="width: 100%; height: 264px"
-                                  >
+                                <div class="profile-card-box flex-column mx-auto" style="width: 264px">
+                                  <div class="profile-view-box" style="width: 100%; height: 264px">
                                     <img v-if="newPt.attcId === null || newPt.attcId === ''" src='@/assets/img/img-no-img.webp' class="no-img" />
                                     <img v-if="!(newPt.attcId === null || newPt.attcId === '')" class="has-img" @click='showImageLightBox' onerror="this.src='/img/img-no-img.webp'"
                                       :src="this.epidReportImage?this.epidReportImage:'/img/img-no-img.webp'" />
@@ -742,7 +700,7 @@
 
               <article class="modal-menu-layout1 pt-10">
                 <div class="modal-menu-list">
-                  <a @click="openPopup(4)" class="modal-menu-btn menu-primary">다음</a>
+                  <a @click="nextStep" class="modal-menu-btn menu-primary">다음</a>
                 </div>
               </article>
             </div>
@@ -2168,9 +2126,11 @@ import { reactive, ref } from 'vue'
 import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
 import SvrtInfoModal from '@/components/user/modal/SvrtInfoModal.vue'
 import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
+import CloseButton from '@/components/common/CloseButton.vue'
 
 export default {
   components: {
+    CloseButton,
     PatntDetlModalV2,
     SvrtInfoModal,
     PatntRegModal,
@@ -2709,6 +2669,9 @@ export default {
       // if (this.userInfo.dutyDstr1Cd) {
         // this.getSecondAddress(this.userInfo.dutyDstr1Cd)
       // }
+    },
+    nextStep() {
+      this.tab = this.tab + 1
     },
   }
 }
