@@ -127,6 +127,7 @@
                             type="text"
                             placeholder="의료기관명 또는 ID 입력"
                             @keyup.enter="search"
+                            @blur='search'
                           />
 
                           <router-link to="" @click="search" class="input-btn">

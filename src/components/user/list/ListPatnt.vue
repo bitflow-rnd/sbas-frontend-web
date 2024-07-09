@@ -327,384 +327,10 @@
   <!--end:::Main-->
 
   <!--  환자 상세 정보  -->
-  <div v-show='showModal === 1' class="modal fade" :class="{'show' : showModal === 1}" id="kt_modal_patnt_detail"
-       tabindex="-1" aria-hidden="true" style="">
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog mw-1500px modal-dialog-centered">
-      <!--begin::Modal content-->
-      <div class="modal-content">
-        <!--begin::Modal header-->
-        <div class="modal-header px-10 pt-5 pb-0 d-flex justify-content-between">
-          <!--begin::Modal title-->
-          <h2>환자 상세 정보</h2>
-          <!--end::Modal title-->
-          <!--begin::Close-->
-
-          <div class="btn-list">
-            <div
-              class="btn btn-sm btn-icon btn-active-color-primary"
-              @click="closeModal(0)"
-              data-bs-dismiss="modal"
-            >
-              <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-              <span class="svg-icon svg-icon-1">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    opacity="0.5"
-                    x="6"
-                    y="17.3137"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(-45 6 17.3137)"
-                    fill="currentColor"
-                  ></rect>
-                  <rect
-                    x="7.41422"
-                    y="6"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(45 7.41422 6)"
-                    fill="currentColor"
-                  ></rect>
-                </svg>
-              </span>
-              <!--end::Svg Icon-->
-            </div>
-          </div>
-
-          <!--end::Close-->
-        </div>
-
-        <!--begin::Modal body-->
-        <div class="modal-body scroll-y py-10 px-10">
-          <article v-if="ptDetail !== null" class="detail-layout1">
-            <div class="detail-wrap">
-              <div class="detail-info-box w-33">
-                <div class="detail-head-box px-10">
-                  <div class="head-box d-flex">
-                    <div class="head-txt-box">환자정보</div>
-                  </div>
-
-                  <div class="option-box">
-                    <a href="#none" class="option-btn">
-                      <i class="fa-solid fa-share-nodes text-black" style="font-size: 18px"></i>
-                    </a>
-                  </div>
-                </div>
-
-                <div class="detail-body-box ps-5">
-                  <article class="table-form-layout1">
-                    <div class="form-body-box overflow-y-auto">
-                      <div class="table-box">
-                        <table>
-                          <colgroup>
-                            <col style="width: 128px" />
-                            <col style="width: auto" />
-                          </colgroup>
-                          <tbody>
-                          <tr>
-                            <th>환자ID</th>
-                            <td>{{ ptDetail.ptId }}</td>
-                          </tr>
-
-                          <tr>
-                            <th>이름</th>
-                            <td>{{ ptDetail.ptNm }}</td>
-                          </tr>
-
-                          <tr>
-                            <th>주민번호</th>
-                            <td>{{ `${ptDetail.rrno1}-${ptDetail.rrno2}******` }}</td>
-                          </tr>
-
-                          <tr>
-                            <th>나이</th>
-                            <td>{{ ptDetail.age }}세</td>
-                          </tr>
-
-                          <tr>
-                            <th>성별</th>
-                            <td>{{ ptDetail.gndr }}자</td>
-                          </tr>
-
-                          <tr>
-                            <th>주소</th>
-                            <td>
-                              [{{ ptDetail.zip }}]<br />
-                              {{ ptDetail.bascAddr }}&nbsp;{{ ptDetail.detlAddr }}
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <th>사망여부</th>
-                            <td>{{ ptDetail.dethYn === 'Y' ? '사망' : '생존' }}</td>
-                          </tr>
-
-                          <tr>
-                            <th>국적</th>
-                            <td>{{ ptDetail.natiNm }}</td>
-                          </tr>
-
-                          <tr>
-                            <th>휴대전화번호</th>
-                            <td>{{ getTelno(ptDetail.mpno) }}</td>
-                          </tr>
-
-                          <tr>
-                            <th>전화번호</th>
-                            <td>{{ ptDetail.telno ? ptDetail.telno : '-' }}</td>
-                          </tr>
-
-                          <tr>
-                            <th>보호자 이름</th>
-                            <td>{{ ptDetail.nokNm ? ptDetail.nokNm : '-' }}</td>
-                          </tr>
-
-                          <tr>
-                            <th>직업</th>
-                            <td>{{ ptDetail.job ? ptDetail.job : '-' }}</td>
-                          </tr>
-
-                          <tr>
-                            <th>기저질환</th>
-                            <td>{{ ptDs ? getTag(ptDs?.undrDsesNms || []) : '-' }}</td>
-                          </tr>
-
-                          <tr>
-                            <th>환자유형</th>
-                            <td>{{ ptDs ? getTag(ptDs?.ptTypeNms || []) : '-' }}</td>
-                          </tr>
-                          </tbody>
-                        </table>
-                      </div>
-
-                      <div class="table-img-box pt-4"></div>
-                    </div>
-                  </article>
-                </div>
-
-                <div class="detail-foot-box pb-5">
-                  <article class="modal-menu-layout1">
-                    <div class="modal-menu-list">
-                      <router-link
-                        to=""
-                        class="modal-menu-btn menu-primary"
-                        @click='openSvrtInfoModal()'
-                      >관찰환자 생체정보
-                      </router-link>
-                      <router-link
-                        to=""
-                        data-bs-target="#kt_modal_patnt"
-                        data-bs-toggle="modal"
-                        class="modal-menu-btn menu-primary"
-                        @click='showPatntModal(ptDetail,2)'
-                      >환자 정보 수정
-                      </router-link>
-                    </div>
-                  </article>
-                </div>
-              </div>
-
-              <div v-if="bdasHisInfo !== undefined" class="detail-info-box">
-                <div class="detail-head-box px-10">
-                  <div class="head-box">
-                    <div class="head-txt-box">병상배정 이력</div>
-                  </div>
-
-                  <div class="option-box"></div>
-                </div>
-
-                <div class="detail-body-box px-0">
-                  <article class="table-list-layout2">
-                    <div class="table-body-box overflow-y-auto">
-                      <div class="table-box">
-
-                        <table v-if='bdasHisInfo.items && bdasHisInfo.items.length>0'>
-                          <colgroup>
-                            <col style="width: 50px" />
-                            <col style="width: auto" />
-                          </colgroup>
-                          <tr v-for="(item,i) in bdasHisInfo.items" :key="i">
-                            <td class="py-5 px-1 text-center text-gray-700 fw-medium fs-6">
-                              <div
-                                class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2">
-                                {{ item.order }}차
-                              </div>
-                            </td>
-                            <td class="py-5 px-3">
-                              <div class="top-info-box d-flex align-items-center">
-                                <div
-                                  class="d-inline-flex align-items-center justify-content-center w-auto bg-primary h-25px w-65px text-white rounded-2 px-0 w-auto"
-                                  :class="{'bg-gray-500' : item.bedStatCdNm === '완료'}"
-                                >
-                                  {{ item.bedStatCdNm }}
-                                </div>
-
-                                <div class="eclipse-box mx-3">{{ item.hospNm ? item.hospNm : '-' }}</div>
-                                <div class="date-box text-gray-700 fw-regular">
-                                  {{ item.updttDttm ? getDt(item.updtDttm) : '' }}
-                                </div>
-                              </div>
-                              <div class="bottom-info-box d-flex mt-2">
-                                <!--                                <div class="name-box">{{ item.hospNm ? item.hospNm : '-' }}</div>-->
-                                <div class="tag-box text-primary ms-2">{{
-                                    item.tagList ? getTag(item.tagList) : '-'
-                                  }}
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        </table>
-
-                        <div class="img-box" v-if='!bdasHisInfo.items || bdasHisInfo.items.length===0'>
-                          <img src="/img/common/img_nodata.svg" alt="이미지">
-                          <h2 data-v-70fc8ce7="">최근 이력 없음</h2>
-                        </div>
-
-                      </div>
-                    </div>
-                  </article>
-                  <svrt-chart-unit-no-title :pt-id="ptDetail.ptId" class='svrt-chart'
-                                            v-if="monitorPatntsList?.includes(ptDetail.ptId)" />
-                </div>
-
-                <div class="detail-foot-box pb-5">
-                  <article class="modal-menu-layout1">
-                    <div class="modal-menu-list">
-                      <router-link
-                        to=""
-                        class="modal-menu-btn menu-primary"
-                        @click='showPatntModal(ptDetail,1)'
-                      >병상요청
-                      </router-link>
-                    </div>
-                  </article>
-                </div>
-              </div>
-
-              <div class="detail-info-box w-44 full d-flex flex-column">
-                <div class="detail-head-box px-10 h-60px">
-
-                  <div class="head-box d-flex">
-
-                    <div class="head-txt-box" @click='timelineSection' role='button'>타임라인</div>
-
-                    <div v-if="timeline !== null && timeline !== undefined" class="head-sub-box mt-1">
-                      <div
-                        class="d-inline-flex align-items-center justify-content-center w-auto bg-primary w-40px h-20px text-white rounded-2"
-                      >
-                        1차
-                      </div>
-                      <div
-                        class="d-inline-flex align-items-center justify-content-center w-auto text-gray-700 ms-2"
-                      >
-                        {{ getTLDt(timeline.items[0].updtDttm, 0) }}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="option-box">
-                    <a href="#none" class="option-btn">
-                      <i class="fa-solid fa-share-nodes text-black" style="font-size: 18px"></i>
-                    </a>
-                  </div>
-                </div>
-
-                <div class="detail-body-box flex-root" style="min-height: 0">
-                  <article class="timeline-layout1 pb-5" style="height: 100%">
-                    <div
-                      v-if="timeline !== null"
-                      class="timeline-wrap overflow-y-auto ps-10"
-                      style="height: 100%"
-                    >
-                      <ul>
-                        <li
-                          v-for="(item, idx) in timeline.items"
-                          :key="idx"
-                          :class="{
-                              off: item.timeLineStatus === 'complete',
-                              'custom-style':
-                                idx < timeline.items.length - 1 &&
-                                timeline.items[idx + 1].timeLineStatus === 'closed'
-                            }"
-                        >
-                          <div class="ic-box" v-if="item.timeLineStatus !== 'closed'">
-                            <img :src="getTLIcon(item, idx)" alt="이미지" />
-                          </div>
-
-                          <div
-                            class="item-box"
-                            :class="{ suspend: item.timeLineStatus === 'suspend' }"
-                            v-if="item.timeLineStatus !== 'closed'"
-                          >
-                            <div class="top-item-box">
-                              <div class="state-box">{{ item.title }}</div>
-                              <div class="date-box">
-                                {{ item.updtDttm ? getTLDt(item.updtDttm, 1) : '' }}
-                              </div>
-                            </div>
-                            <div class="mid-item-box">{{ item.by }}</div>
-                            <div class="bottom-item-box">
-                              <div class="item-img-group mb-4">
-                                <div class="img-list"></div>
-                              </div>
-                              <div class="msg-box" v-if="item.msg">{{ item.msg }}</div>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div v-if="timeline === null" class="img-box" data-v-70fc8ce7=""><img
-                      src="/img/common/img_nodata.svg" alt="이미지" data-v-70fc8ce7="">
-                      <h2 data-v-70fc8ce7="">최근 이력 없음</h2></div>
-                    <div class="detail-foot-box pb-5">
-                      <article class="msg-send-layout1">
-                        <div class="img-upload-result">
-                          <div class="img-list"></div>
-                        </div>
-
-                        <div class="msg-group-box">
-                          <div class="img-upload-box">
-                            <label>
-                              <input type="file" />
-                              <img src="/img/common/ic_msg_img_upload.svg" alt="이미지" />
-                            </label>
-                          </div>
-                          <div class="msg-input-box">
-                            <input type="text" placeholder="메시지 입력" />
-                          </div>
-                          <div class="msg-send-box">
-                            <a href="#none" class="send-btn">
-                              <img src="/img/common/ic_msg_send.svg" alt="이미지" />
-                            </a>
-                          </div>
-                        </div>
-                      </article>
-                    </div>
-
-                  </article>
-
-                </div>
-
-              </div>
-            </div>
-          </article>
-        </div>
-        <!--end::Modal body-->
-      </div>
-      <!--end::Modal content-->
-    </div>
-    <!--end::Modal dialog-->
-  </div>
+  <PatntDetlModalV2 v-if='showModal===1' :pt-detail='ptDetail' :pt-ds='ptDs'
+                    :bdas-his-info='bdasHisInfo' :timeline='timeline'
+                    @closeModal='closeModal(0)'
+                    @openBdasModal='this.showPatntModal(ptDetail,1)' />
 
   <!-- Todo: replace this model with BedRequestModal.vue -->
   <!--  신규병상요청   -->
@@ -1143,17 +769,24 @@
                         <td>
                           <div class="item-row-box">
                             <div class="item-cell-box">
-                              <div class="sbox" style="width: 170px">
+                              <div class="sbox" style="width: 120px">
                                 <select v-model="medinstInfo.dstr1Cd" @change="getMedInst"
                                         :disabled='dsInfo.rcptPhc===1'>
-                                  <option value=''>지역 선택</option>
+                                  <option value='' id='null'>시/도 선택</option>
                                   <option v-for='(item,i) in cmSido' :key='i' :value='item.cdId'>{{ item.cdNm }}
                                   </option>
                                 </select>
                               </div>
-                              <div class="sbox ms-3" style="width: 170px">
+                              <div class="sbox ms-2" style="width: 120px">
+                                <select v-model="medinstInfo.dstr2Cd" @change="getMedInst" @click='getDstr2Cd'
+                                        :disabled="dsInfo.rcptPhc===1 || medinstInfo.dstr1Cd===''">
+                                  <option value='' id='null'>시/군/구 선택</option>
+                                  <option v-for='(item,i) in cmGugun' :key='i' :value='item.cdId'>{{ item.cdNm }}
+                                  </option>
+                                </select>
+                              </div>
+                              <div class="sbox ms-2" style="width: 150px">
                                 <select v-model="dsInfo.rcptPhc" :disabled="medinstInfo.dstr1Cd===''">
-                                  <option value='0'>보건소 선택</option>
                                   <option v-for="(item,i) in organMedi" :key="i"
                                           :value='item.instNm'>{{ item.instNm }}
                                   </option>
@@ -2510,14 +2143,11 @@
 
   <patnt-reg-modal v-if='this.showModal === 2' :exist-pt='this.ptDetail' @closeModal='closeModal(0)' />
 
-  <svrt-info-modal v-if='this.showSvrtInfoModal' :exist-pt='this.ptDetail' @closeModal='closeSvrtInfoModal()' />
-
 </template>
 
 <script>
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { mapState } from 'vuex'
-import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
 import {
   backBtn,
   getAge,
@@ -2537,13 +2167,14 @@ import {
 import { reactive, ref } from 'vue'
 import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
 import SvrtInfoModal from '@/components/user/modal/SvrtInfoModal.vue'
+import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
 
 export default {
   components: {
+    PatntDetlModalV2,
     SvrtInfoModal,
     PatntRegModal,
-    DataPagination,
-    SvrtChartUnitNoTitle
+    DataPagination
   },
   name: 'ListPatnt',
   props: {
@@ -2666,7 +2297,8 @@ export default {
       imgsRef: '',
       indexRef: 0,
       medinstInfo: {
-        dstr1Cd: ''
+        dstr1Cd: '',
+        dstr2Cd: '',
       },
       showPatnt: false,
       showSvrtInfoModal: false,
@@ -2767,6 +2399,9 @@ export default {
       if (address) {
         this.$store.dispatch('admin/getGuGun', address)
       }
+    },
+    getDstr2Cd() {
+      this.$store.dispatch('admin/getGuGun', this.medinstInfo.dstr1Cd)
     },
     regStrtPoint() {
       console.log(this.spInfo)
@@ -3027,18 +2662,18 @@ export default {
       }
     },
     async showImage(attcId) {
-      if (attcId === null || attcId === '') {
-        this.epidReportImage = ''
-      } else {
-        await this.$store.dispatch('user/readPrivateImage', attcId)
-          .then((result) => {
-            const blob = new Blob([result], { type: 'image/jpeg' })
-            this.epidReportImage = URL.createObjectURL(blob)
-          })
-          .catch((error) => {
-            console.error('An error occurred while fetching the image:', error)
-          })
-      }
+      // if (attcId === null || attcId === '') {
+      //   this.epidReportImage = ''
+      // } else {
+      //   await this.$store.dispatch('user/readPrivateImage', attcId)
+      //     .then((result) => {
+      //       const blob = new Blob([result], { type: 'image/jpeg' })
+      //       this.epidReportImage = URL.createObjectURL(blob)
+      //     })
+      //     .catch((error) => {
+      //       console.error('An error occurred while fetching the image:', error)
+      //     })
+      // }
     },
     closePatntRequest() {
       this.showPatnt = false
@@ -3075,61 +2710,18 @@ export default {
         // this.getSecondAddress(this.userInfo.dutyDstr1Cd)
       // }
     },
-    openSvrtInfoModal() {
-      this.showSvrtInfoModal = true
-    },
-    closeSvrtInfoModal() {
-      this.showSvrtInfoModal = false
-    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .modal {
   --bs-modal-width: 98%;
   display: block;
 }
 
-.modal.show {
-  background-color: rgba(0, 0, 0, 0.4);
-  display: block;
-}
-
-.item-box.suspend {
-  border: 3px solid #74afeb !important;
-  background-color: #74afeb33;
-}
-
 .chart-container {
   min-height: initial;
-}
-
-.head-sub-box {
-  margin-left: 12px;
-}
-
-.detail-info-box {
-  position: relative;
-}
-
-.detail-layout1,
-.detail-wrap {
-  height: 100%;
-}
-
-li.custom-style::before {
-  display: none;
-}
-
-.bg-gray-500 {
-  --bs-bg-rgb-color: var(--bs-gray-500-rgb);
-  background-color: var(--bs-gray-500) !important;
-}
-
-article.detail-layout1 .detail-wrap .detail-head-box .head-box .head-txt-box {
-  line-height: 28px;
 }
 
 .btn-primary-outline {
@@ -3162,41 +2754,12 @@ td > .btn-primary-outline {
   margin-top: 12px;
 }
 
-.chart-apex {
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 100px;
-  height: 350px;
-  background-color: white;
-}
-
 .btn.btn-xs {
   padding: 8px 10px;
 }
-.detail-info-box.w-23 {
-  width: 23% !important;
-}
-.detail-info-box.w-44 {
-  width: 44% !important;
-}
+
 .select-box {
   margin-bottom: 0.5rem;
-}
-.detail-info-box + .detail-info-box {
-  border-left: 1px dashed #ccc;
-}
-
-.img-upload-box {
-  z-index: 400;
-  background-color: white;
-}
-.svrt-chart {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: calc(100% - 1rem);
-  padding-bottom: 55px;
 }
 
 </style>
