@@ -222,11 +222,11 @@
                                 </div>
                               </div>
 
-                              <div class='item-row-box'>
-                                <div class='item-cell-box'>
-                                  <div class='item-note-box'>* 상세주소 입력</div>
-                                </div>
-                              </div>
+<!--                              <div class='item-row-box'>-->
+<!--                                <div class='item-cell-box'>-->
+<!--                                  <div class='item-note-box'>* 상세주소 입력</div>-->
+<!--                                </div>-->
+<!--                              </div>-->
                             </td>
 
                             <th>휴대전화번호</th>
@@ -975,7 +975,9 @@
                                   <span class='txt'>정신질환</span>
                                 </label>
                               </div>
+                            </div>
 
+                            <div class='cbox-row'>
                               <div class='cbox'>
                                 <label>
                                   <input
@@ -987,9 +989,7 @@
                                   <span class='txt'>결핵</span>
                                 </label>
                               </div>
-                            </div>
 
-                            <div class='cbox-row'>
                               <div class='cbox'>
                                 <label>
                                   <input
@@ -1110,12 +1110,12 @@
                               </div>
                             </article>
                           </div>
-                          <div
-                              class='item-cell-box pt-2'
-                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'
-                          >
-                            * 요청 병상 유형을 선택해주세요
-                          </div>
+<!--                          <div-->
+<!--                              class='item-cell-box pt-2'-->
+<!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
+<!--                          >-->
+<!--                            * 요청 병상 유형을 선택해주세요-->
+<!--                          </div>-->
                         </td>
                       </tr>
 
@@ -1157,12 +1157,12 @@
                               </div>
                             </article>
                           </div>
-                          <div
-                              class='item-cell-box pt-2'
-                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'
-                          >
-                            * DNR 동의여부를 선택해주세요
-                          </div>
+<!--                          <div-->
+<!--                              class='item-cell-box pt-2'-->
+<!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
+<!--                          >-->
+<!--                            * DNR 동의여부를 선택해주세요-->
+<!--                          </div>-->
                         </td>
                       </tr>
 
@@ -1222,24 +1222,24 @@
                                   <span class='txt'>일반</span>
                                 </label>
 
-                                <label @click="model.svInfo.svrtTypeCd = ''">
-                                  <input
-                                      type='radio'
-                                      name='toggle5-1'
-                                      value='SVIP0002'
-                                      v-model='model.svInfo.svrtIptTypeCd'
-                                  />
-                                  <span class='txt'>생체정보AI분석</span>
-                                </label>
+<!--                                <label @click="model.svInfo.svrtTypeCd = ''">-->
+<!--                                  <input-->
+<!--                                      type='radio'-->
+<!--                                      name='toggle5-1'-->
+<!--                                      value='SVIP0002'-->
+<!--                                      v-model='model.svInfo.svrtIptTypeCd'-->
+<!--                                  />-->
+<!--                                  <span class='txt'>생체정보AI분석</span>-->
+<!--                                </label>-->
                               </div>
                             </article>
                           </div>
-                          <div
-                              class='item-cell-box pt-2'
-                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'
-                          >
-                            * 중증 정보를 선택해주세요
-                          </div>
+<!--                          <div-->
+<!--                              class='item-cell-box pt-2'-->
+<!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
+<!--                          >-->
+<!--                            * 중증 정보를 선택해주세요-->
+<!--                          </div>-->
                         </td>
                       </tr>
 
@@ -1403,291 +1403,277 @@
               </article>
             </div>
 
-<!--            <div class='tabs-box' v-show='tab === 3' style='display: none'>-->
-<!--              <div class='d-flex justify-content-end text-danger pb-2'>* 필수 입력 항목</div>-->
+            <div class='tabs-box' v-show='model.tab === 3' style='display: none'>
+              <div class='d-flex justify-content-end text-danger pb-2'>* 필수 입력 항목</div>
 
-<!--              <article class='table-form-layout1'>-->
-<!--                <div class='form-head-box'></div>-->
+              <article class='table-form-layout1'>
+                <div class='form-head-box'></div>
 
-<!--                <div class='form-body-box'>-->
+                <div class='form-body-box'>
 <!--                  <form @submit='regStrtPoint' class='table-box'>-->
-<!--                    <table>-->
-<!--                      <colgroup>-->
-<!--                        <col style='width: 168px' />-->
-<!--                        <col style='width: auto' />-->
-<!--                        <col style='width: 168px' />-->
-<!--                        <col style='width: auto' />-->
-<!--                      </colgroup>-->
-<!--                      <tbody>-->
-<!--                      <tr>-->
-<!--                        <th :rowspan="spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1">-->
-<!--                          배정요청 지역 <span class='text-primary'>*</span>-->
-<!--                        </th>-->
-<!--                        <td :rowspan="spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1">-->
-<!--                          <div class='item-cell-box full' style=''>-->
-<!--                            <div class='sbox w-350px'>-->
-<!--                              <select>-->
-<!--                                <option>대구광역시</option>-->
-<!--                              </select>-->
-<!--                            </div>-->
-<!--                          </div>-->
+                  <form class='table-box'>
+                    <table>
+                      <colgroup>
+                        <col style='width: 168px' />
+                        <col style='width: auto' />
+                        <col style='width: 168px' />
+                        <col style='width: auto' />
+                      </colgroup>
+                      <tbody>
+                      <tr>
+                        <th :rowspan="model.spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1">
+                          배정요청 지역 <span class='text-primary'>*</span>
+                        </th>
+                        <td :rowspan="model.spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1">
+                          <div class='item-cell-box full' style=''>
+                            <div class='sbox w-350px'>
+                              <select>
+                                <option>대구광역시</option>
+                              </select>
+                            </div>
+                          </div>
 <!--                          <div-->
 <!--                              class='item-cell-box pt-2'-->
 <!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
 <!--                          >-->
 <!--                            * 병상배정 지자체를 선택해주세요-->
 <!--                          </div>-->
-<!--                        </td>-->
+                        </td>
 
-<!--                        <th v-show="spInfo.dprtDstrTypeCd !== 'DPTP0002'" style=''>-->
-<!--                          보호자 1 연락처-->
-<!--                        </th>-->
-<!--                        <td v-show="spInfo.dprtDstrTypeCd !== 'DPTP0002'" style=''>-->
-<!--                          <div class='item-cell-box full'>-->
-<!--                            <div class='tbox full'>-->
-<!--                              <input-->
-<!--                                  type='text'-->
-<!--                                  placeholder='보호자1 연락처 입력'-->
-<!--                                  @input='validateInput'-->
-<!--                                  v-model='spInfo.nok1Telno'-->
-<!--                              />-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                        </td>-->
+                        <th v-show="model.spInfo.dprtDstrTypeCd !== 'DPTP0002'" style=''>
+                          보호자 1 연락처
+                        </th>
+                        <td v-show="model.spInfo.dprtDstrTypeCd !== 'DPTP0002'" style=''>
+                          <div class='item-cell-box full'>
+                            <div class='tbox full'>
+                              <input
+                                  type='text'
+                                  placeholder='보호자1 연락처 입력'
+                                  @input='validateInput'
+                                  v-model='model.spInfo.nok1Telno'
+                              />
+                            </div>
+                          </div>
+                        </td>
 
-<!--                        <th v-show="spInfo.dprtDstrTypeCd === 'DPTP0002'">-->
-<!--                          원내배정 여부 <span class='text-primary'>*</span>-->
-<!--                        </th>-->
-<!--                        <td v-show="spInfo.dprtDstrTypeCd === 'DPTP0002'">-->
-<!--                          <div class='item-cell-box full justify-content-between'>-->
-<!--                            <article class='toggle-list-layout2'>-->
-<!--                              <div class='toggle-list'>-->
-<!--                                <label>-->
-<!--                                  <input-->
-<!--                                      type='radio'-->
-<!--                                      name='toggle4-1'-->
-<!--                                      value='N'-->
-<!--                                      v-model='spInfo.inhpAsgnYn'-->
-<!--                                  />-->
-<!--                                  <span class='txt'>전원요청</span>-->
-<!--                                </label>-->
+                        <th v-show="model.spInfo.dprtDstrTypeCd === 'DPTP0002'">
+                          원내배정 여부 <span class='text-primary'>*</span>
+                        </th>
+                        <td v-show="model.spInfo.dprtDstrTypeCd === 'DPTP0002'">
+                          <div class='item-cell-box full justify-content-between'>
+                            <article class='toggle-list-layout2'>
+                              <div class='toggle-list'>
+                                <label>
+                                  <input
+                                      type='radio'
+                                      name='toggle4-1'
+                                      value='N'
+                                      v-model='model.spInfo.inhpAsgnYn'
+                                  />
+                                  <span class='txt'>전원요청</span>
+                                </label>
 
-<!--                                <label>-->
-<!--                                  <input-->
-<!--                                      type='radio'-->
-<!--                                      name='toggle4-1'-->
-<!--                                      value='Y'-->
-<!--                                      v-model='spInfo.inhpAsgnYn'-->
-<!--                                  />-->
-<!--                                  <span class='txt'>원내배정</span>-->
-<!--                                </label>-->
-<!--                              </div>-->
-<!--                            </article>-->
-<!--                          </div>-->
+                                <label>
+                                  <input
+                                      type='radio'
+                                      name='toggle4-1'
+                                      value='Y'
+                                      v-model='model.spInfo.inhpAsgnYn'
+                                  />
+                                  <span class='txt'>원내배정</span>
+                                </label>
+                              </div>
+                            </article>
+                          </div>
 <!--                          <div-->
 <!--                              class='item-cell-box pt-2'-->
 <!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
 <!--                          >-->
 <!--                            * 원내배정 여부 선택-->
 <!--                          </div>-->
-<!--                        </td>-->
-<!--                      </tr>-->
-<!--                      <tr v-if="spInfo.dprtDstrTypeCd === 'DPTP0002'">-->
-<!--                        &lt;!&ndash; 출발지 병원 &ndash;&gt;-->
-<!--                        <th>진료과</th>-->
-<!--                        <td>-->
-<!--                          <div class='item-cell-box full'>-->
-<!--                            <div class='tbox full'>-->
-<!--                              <input-->
-<!--                                  type='text'-->
-<!--                                  placeholder='진료과 입력'-->
-<!--                                  v-model='spInfo.deptNm'-->
-<!--                              />-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                        </td>-->
-<!--                      </tr>-->
-<!--                      <tr>-->
-<!--                        <th-->
-<!--                            :rowspan="spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1"-->
-<!--                            data-type='dynamic'-->
-<!--                        >-->
-<!--                          환자 출발지<span class='text-primary'>*</span>-->
-<!--                        </th>-->
-<!--                        <td-->
-<!--                            :rowspan="spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1"-->
-<!--                            data-type='dynamic'-->
-<!--                            style='vertical-align: top'-->
-<!--                        >-->
-<!--                          <div class='item-cell-box full justify-content-between'>-->
-<!--                            <article class='toggle-list-layout2'>-->
-<!--                              <div class='toggle-list'>-->
-<!--                                <label @click='setSpAddr'>-->
-<!--                                  <input-->
-<!--                                      type='radio'-->
-<!--                                      name='toggle4-2'-->
-<!--                                      value='DPTP0001'-->
-<!--                                      v-model='spInfo.dprtDstrTypeCd'-->
-<!--                                  />-->
-<!--                                  <span class='txt'>자택</span>-->
-<!--                                </label>-->
+                        </td>
+                      </tr>
+                      <tr v-if="model.spInfo.dprtDstrTypeCd === 'DPTP0002'">
+                        <!-- 출발지 병원 -->
+                        <th>진료과</th>
+                        <td>
+                          <div class='item-cell-box full'>
+                            <div class='tbox full'>
+                              <input
+                                  type='text'
+                                  placeholder='진료과 입력'
+                                  v-model='model.spInfo.deptNm'
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th :rowspan="model.spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1">
+                          환자 출발지<span class='text-primary'>*</span>
+                        </th>
+                        <td :rowspan="model.spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1">
+                          <div class='item-cell-box full justify-content-between'>
+                            <article class='toggle-list-layout2'>
+                              <div class='toggle-list'>
+                                <label @click='setSpAddr(0)'>
+                                  <input
+                                      type='radio'
+                                      name='toggle4-2'
+                                      value='DPTP0001'
+                                      v-model='model.spInfo.dprtDstrTypeCd'
+                                  />
+                                  <span class='txt'>자택</span>
+                                </label>
 
-<!--                                <label @click='setSpAddr'>-->
-<!--                                  <input-->
-<!--                                      type='radio'-->
-<!--                                      name='toggle4-2'-->
-<!--                                      value='DPTP0002'-->
-<!--                                      v-model='spInfo.dprtDstrTypeCd'-->
-<!--                                  />-->
-<!--                                  <span class='txt'>병원</span>-->
-<!--                                </label>-->
+                                <label @click='setSpAddr(1)'>
+                                  <input
+                                      type='radio'
+                                      name='toggle4-2'
+                                      value='DPTP0002'
+                                      v-model='model.spInfo.dprtDstrTypeCd'
+                                  />
+                                  <span class='txt'>병원</span>
+                                </label>
 
-<!--                                <label @click='setSpAddr'>-->
-<!--                                  <input-->
-<!--                                      type='radio'-->
-<!--                                      name='toggle4-2'-->
-<!--                                      value='DPTP0003'-->
-<!--                                      v-model='spInfo.dprtDstrTypeCd'-->
-<!--                                  />-->
-<!--                                  <span class='txt'>기타지역</span>-->
-<!--                                </label>-->
-<!--                              </div>-->
-<!--                            </article>-->
-<!--                          </div>-->
+                                <label>
+                                  <input
+                                      type='radio'
+                                      name='toggle4-2'
+                                      value='DPTP0003'
+                                      v-model='model.spInfo.dprtDstrTypeCd'
+                                  />
+                                  <span class='txt'>기타지역</span>
+                                </label>
+                              </div>
+                            </article>
+                          </div>
 <!--                          <div-->
 <!--                              class='item-cell-box pt-2'-->
 <!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
 <!--                          >-->
 <!--                            * 유효성 검사 문구-->
 <!--                          </div>-->
-<!--                        </td>-->
-<!--                        <th v-show="spInfo.dprtDstrTypeCd !== 'DPTP0002'">보호자 2 연락처</th>-->
-<!--                        <td v-show="spInfo.dprtDstrTypeCd !== 'DPTP0002'">-->
-<!--                          <div class='item-cell-box full'>-->
-<!--                            <div class='tbox full'>-->
-<!--                              <input-->
-<!--                                  type='text'-->
-<!--                                  placeholder='보호자 2 연락처 입력'-->
-<!--                                  @input='validateInput'-->
-<!--                                  v-model='spInfo.nok2Telno'-->
-<!--                              />-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                        </td>-->
-<!--                        &lt;!&ndash; 출발지 병원 &ndash;&gt;-->
-<!--                        <th v-show="spInfo.dprtDstrTypeCd === 'DPTP0002'">담당의</th>-->
-<!--                        <td v-show="spInfo.dprtDstrTypeCd === 'DPTP0002'">-->
-<!--                          <div class='item-cell-box full'>-->
-<!--                            <div class='tbox full'>-->
-<!--                              <input-->
-<!--                                  type='text'-->
-<!--                                  placeholder='담당의 이름 입력'-->
-<!--                                  v-model='spInfo.spclNm'-->
-<!--                              />-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                        </td>-->
-<!--                      </tr>-->
-<!--                      &lt;!&ndash; 출발지 병원 &ndash;&gt;-->
-<!--                      <tr v-if="spInfo.dprtDstrTypeCd === 'DPTP0002'">-->
-<!--                        <th>전화번호</th>-->
-<!--                        <td>-->
-<!--                          <div class='item-cell-box full'>-->
-<!--                            <div class='tbox full'>-->
-<!--                              <input-->
-<!--                                  type='text'-->
-<!--                                  placeholder='연락 전화번호 입력'-->
-<!--                                  @input='validateInput'-->
-<!--                                  v-model='spInfo.chrgTelno'-->
-<!--                              />-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                        </td>-->
-<!--                      </tr>-->
-<!--                      <tr>-->
-<!--                        <th>출발지 주소</th>-->
-<!--                        <td>-->
-<!--                          <div class='item-row-box'>-->
-<!--                            <div class='item-cell-box full'>-->
-<!--                              <div class='tbox full'>-->
-<!--                                <input-->
-<!--                                    type='text'-->
-<!--                                    v-model='spInfo.dprtDstrZip'-->
-<!--                                    readonly-->
-<!--                                    placeholder='우편번호'-->
-<!--                                />-->
-<!--                              </div>-->
-<!--                              <a-->
-<!--                                  @click='openAddressFinder'-->
-<!--                                  class='btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1'-->
-<!--                                  style='min-width: 80px'-->
-<!--                              >주소검색</a>-->
-<!--                            </div>-->
-<!--                          </div>-->
+                        </td>
+                        <th v-show="model.spInfo.dprtDstrTypeCd !== 'DPTP0002'">보호자 2 연락처</th>
+                        <td v-show="model.spInfo.dprtDstrTypeCd !== 'DPTP0002'">
+                          <div class='item-cell-box full'>
+                            <div class='tbox full'>
+                              <input
+                                  type='text'
+                                  placeholder='보호자 2 연락처 입력'
+                                  @input='validateInput'
+                                  v-model='model.spInfo.nok2Telno'
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <!-- 출발지 병원 -->
+                        <th v-show="model.spInfo.dprtDstrTypeCd === 'DPTP0002'">담당의</th>
+                        <td v-show="model.spInfo.dprtDstrTypeCd === 'DPTP0002'">
+                          <div class='item-cell-box full'>
+                            <div class='tbox full'>
+                              <input
+                                  type='text'
+                                  placeholder='담당의 이름 입력'
+                                  v-model='model.spInfo.spclNm'
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <!-- 출발지 병원 -->
+                      <tr v-if="model.spInfo.dprtDstrTypeCd === 'DPTP0002'">
+                        <th>전화번호</th>
+                        <td>
+                          <div class='item-cell-box full'>
+                            <div class='tbox full'>
+                              <input
+                                  type='text'
+                                  placeholder='연락 전화번호 입력'
+                                  @input='validateInput'
+                                  v-model='model.spInfo.chrgTelno'
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>출발지 주소</th>
+                        <td>
+                          <div class='item-row-box'>
+                            <div class='item-cell-box full'>
+                              <div class='tbox full'>
+                                <input
+                                    type='text'
+                                    v-model='model.spInfo.dprtDstrZip'
+                                    readonly
+                                    placeholder='우편번호'
+                                />
+                              </div>
+                              <a
+                                  @click='openAddressFinder'
+                                  class='btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1'
+                                  style='min-width: 80px'
+                              >주소검색</a>
+                            </div>
+                          </div>
 
-<!--                          <div class='item-row-box'>-->
-<!--                            <div class='item-cell-box full'>-->
-<!--                              <div class='tbox full'>-->
-<!--                                <input-->
-<!--                                    type='text'-->
-<!--                                    placeholder='기본주소 입력'-->
-<!--                                    v-model='spInfo.dprtDstrBascAddr'-->
-<!--                                    readonly-->
-<!--                                />-->
-<!--                              </div>-->
-<!--                            </div>-->
-<!--                          </div>-->
+                          <div class='item-row-box'>
+                            <div class='item-cell-box full'>
+                              <div class='tbox full'>
+                                <input
+                                    type='text'
+                                    placeholder='기본주소 입력'
+                                    v-model='model.spInfo.dprtDstrBascAddr'
+                                    readonly
+                                />
+                              </div>
+                            </div>
+                          </div>
 
-<!--                          <div class='item-row-box'>-->
-<!--                            <div class='item-cell-box full'>-->
-<!--                              <div class='tbox full'>-->
-<!--                                <input-->
-<!--                                    type='text'-->
-<!--                                    placeholder='상세주소 입력 (선택)'-->
-<!--                                    v-model='spInfo.dprtDstrDetlAddr'-->
-<!--                                />-->
-<!--                              </div>-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                        </td>-->
-<!--                        <th>요청 메시지</th>-->
-<!--                        <td>-->
-<!--                          <div class='item-cell-box full'>-->
-<!--                            <div class='textbox full'>-->
-<!--                                <textarea-->
-<!--                                    style='height: 85px'-->
-<!--                                    class='py-2 px-4'-->
-<!--                                    v-model='spInfo.msg'-->
-<!--                                ></textarea>-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                          <div-->
-<!--                              class='item-cell-box full pt-2 justify-content-end'-->
-<!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
-<!--                          >-->
-<!--                            * 유효성 검사 문구-->
-<!--                          </div>-->
-<!--                        </td>-->
-<!--                      </tr>-->
-<!--                      </tbody>-->
-<!--                    </table>-->
-<!--                  </form>-->
-<!--                </div>-->
-<!--              </article>-->
-<!--              <article class='modal-menu-layout1 pt-10'>-->
-<!--                <div class='modal-menu-list'>-->
-<!--                  <router-link to='' @click='backBtn' class='modal-menu-btn menu-cancel'-->
-<!--                  >이전-->
-<!--                  </router-link-->
-<!--                  >-->
+                          <div class='item-row-box'>
+                            <div class='item-cell-box full'>
+                              <div class='tbox full'>
+                                <input
+                                    type='text'
+                                    placeholder='상세주소 입력 (선택)'
+                                    v-model='model.spInfo.dprtDstrDetlAddr'
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <th>요청 메시지</th>
+                        <td>
+                          <div class='item-cell-box full'>
+                            <div class='textbox full'>
+                                <textarea
+                                    style='height: 85px'
+                                    class='py-2 px-4'
+                                    v-model='model.spInfo.msg'
+                                ></textarea>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </form>
+                </div>
+              </article>
+              <article class='modal-menu-layout1 pt-10'>
+                <div class='modal-menu-list'>
+                  <router-link to='' @click='prevStep' class='modal-menu-btn menu-cancel'
+                  >이전
+                  </router-link>
 
-<!--                  <router-link to='' @click='goAsgn' class='modal-menu-btn menu-primary'-->
-<!--                  >병상요청완료-->
-<!--                  </router-link-->
-<!--                  >-->
-<!--                </div>-->
-<!--              </article>-->
-<!--            </div>-->
+                  <router-link to='' @click='saveInfo' class='modal-menu-btn menu-primary'
+                  >병상요청완료
+                  </router-link>
+                </div>
+              </article>
+            </div>
           </article>
         </div>
         <!--end::Modal body-->
@@ -1699,13 +1685,12 @@
 </template>
 
 <script setup>
-import { defineEmits, defineProps, onBeforeMount, onMounted, reactive, watch } from 'vue'
+import { defineEmits, defineProps, onMounted, reactive, watch } from 'vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import { getAge, getTelno } from '@/util/ui'
 import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
-import axios from 'axios'
 
 const props = defineProps({
   ptId: null,
@@ -1751,6 +1736,7 @@ const model = reactive({
     instNm: null,
     instId: null,
     instTelno: null,
+    instZip: null,
     instBascAddr: null,
     instDetlAddr: null,
     instAddr: null,
@@ -1762,11 +1748,34 @@ const model = reactive({
   svInfo: {
     ptId: props.ptId,
     ptTypeCd: [],
-    svrtIptTypeCd: 'SVIP0001',
-    svrtTypeCd: '',
     undrDsesCd: [],
+    reqBedTypeCd: null,
+    dnrAgreYn: null,
+    svrtIptTypeCd: 'SVIP0001',
+    svrtTypeCd: null,
     undrDsesEtc: null,
   },
+  spInfo: {
+    ptId: props.ptId,
+    dprtDstrTypeCd: null,
+    dprtDstrBascAddr: null,
+    dprtDstrDetlAddr: null,
+    dprtDstrZip: null,
+    nok1Telno: null,
+    nok2Telno: null,
+    inhpAsgnYn: 'N',
+    reqDstr1Cd: '27',
+    reqDstr2Cd: null,
+    deptNm: null,
+    chrgTelno: null,
+    spclNm: null,
+    msg: null,
+  },
+})
+
+onMounted(() => {
+  getBasicInfo(props.ptId)
+  store.dispatch('admin/getSido')
 })
 
 watch(() => model.medInstInfo.dstr1Cd, async () => {
@@ -1780,11 +1789,6 @@ watch(() => store.getters['admin/getGuGun'],
     model.cmGugun = newGuGun
   }
 )
-
-onMounted(() => {
-  getBasicInfo(props.ptId)
-  store.dispatch('admin/getSido')
-})
 
 function getBasicInfo(ptId) {
   const url = `${API_PROD}/api/v1/private/patient/basicinfo/${ptId}`
@@ -1817,6 +1821,43 @@ function getMedInst() {
     })
 }
 
+function saveInfo() {
+  let data = model.dsInfo
+  const url = `${API_PROD}/api/v1/private/patient/regdisesinfo`
+  axios_cstm().post(url, data)
+    .then((response) => {
+      if (response.data.code === '00') {
+        // alert('진단정보가 저장되었습니다.')
+        bedRequest()
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+function bedRequest() {
+  let data = {
+    svrInfo: { ...model.svInfo,
+      ptTypeCd: model.svInfo.ptTypeCd.join(';'),
+      undrDsesCd: model.svInfo.undrDsesCd.join(';'),
+    },
+    dprtInfo: model.spInfo,
+  }
+  const url = `${API_PROD}/api/v1/private/patient/bedassignreq`
+  axios_cstm().post(url, data)
+    .then((response) => {
+      if (response.data.code === '00') {
+        alert('병상요청이 완료되었습니다.')
+        closeModal()
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+
 function validateInput() {
   // props.newPt.rrno1 = props.newPt.rrno1.replace(/[^0-9]/g, '')
   // props.newPt.rrno2 = props.newPt.rrno2.replace(/[^0-9]/g, '')
@@ -1835,6 +1876,8 @@ function closeModal() {
   emits('closePatntRequest')
   model.newPt = null
   model.dsInfo = null
+  model.svInfo = null
+  model.spInfo = null
 }
 
 function nextStep() {
@@ -1880,6 +1923,20 @@ function openAddressFinder(idx) {
 function dsDtSame() {
   model.dsInfo.diagDt = model.dsInfo.occrDt
   model.dsInfo.rptDt = model.dsInfo.occrDt
+}
+
+function setSpAddr(idx) {
+  if (idx === 0) {
+    /* 자택 주소*/
+    model.spInfo.dprtDstrZip = model.newPt.zip
+    model.spInfo.dprtDstrBascAddr = model.newPt.bascAddr
+    model.spInfo.dprtDstrDetlAddr = model.newPt.detlAddr
+  } else if (idx === 1) {
+    /*병원 주소 */
+    model.spInfo.dprtDstrZip = model.dsInfo.instZip
+    model.spInfo.dprtDstrBascAddr = model.dsInfo.instBascAddr
+    model.spInfo.dprtDstrDetlAddr = model.dsInfo.instDetlAddr
+  }
 }
 
 </script>
