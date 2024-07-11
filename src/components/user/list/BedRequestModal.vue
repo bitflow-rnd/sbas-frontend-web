@@ -135,7 +135,6 @@
                     <div class='form-head-box'></div>
 
                     <div class='form-body-box'>
-<!--                      <form @submit='regNewPt' class='table-box'>-->
                       <form class='table-box'>
                         <table>
                           <colgroup>
@@ -165,14 +164,14 @@
                                 <div class='item-cell-box'>
                                   <div class='tbox'>
                                     <input type='text' v-model='model.newPt.rrno1'
-                                           @input='validateInput(0)'
+                                           @input='filterNumericInput(0)'
                                             maxlength='6'/>
                                   </div>
                                   <div class='unit-box mx-2 text-gray-600'>-</div>
                                   <div class='tbox' style='min-width: 20px'>
                                     <input
                                         type='text'
-                                        @input='validateInput(0)'
+                                        @input='filterNumericInput(0)'
                                         v-model='model.newPt.rrno2'
                                         maxlength='7'
                                     />
@@ -235,7 +234,7 @@
                               <div class='item-cell-box full'>
                                 <div class='tbox full'>
                                   <input type='text' v-model='model.newPt.mpno'
-                                         @input='validateInput(1)'
+                                         @input='filterNumericInput(1)'
                                          maxlength='11' />
                                 </div>
                               </div>
@@ -259,7 +258,7 @@
                               <div class='item-cell-box full'>
                                 <div class='tbox full'>
                                   <input type='text' v-model='model.newPt.telno'
-                                         @input='validateInput(1)'
+                                         @input='filterNumericInput(1)'
                                          maxlength='11' />
                                 </div>
                               </div>
@@ -354,7 +353,7 @@
 
               <article class='modal-menu-layout1 pt-10'>
                 <div class='modal-menu-list'>
-                  <a @click='nextStep' class='modal-menu-btn menu-primary'>다음</a>
+                  <a @click='nextStep(0)' class='modal-menu-btn menu-primary'>다음</a>
                 </div>
               </article>
             </div>
@@ -739,7 +738,7 @@
                 <div class='modal-menu-list'>
                   <router-link to='' @click='prevStep' class='modal-menu-btn menu-cancel'>이전
                   </router-link>
-                  <router-link to='' @click='nextStep' class='modal-menu-btn menu-primary'>다음
+                  <router-link to='' @click='nextStep(1)' class='modal-menu-btn menu-primary'>다음
                   </router-link>
                 </div>
               </article>
@@ -767,87 +766,15 @@
                         <th>환자유형</th>
                         <td colspan='4'>
                           <div class='item-cell-box'>
-                            <div class='cbox'>
+                            <div class='cbox' :class="{'ms-4': idx > 0}"
+                                 v-for='(item, idx) in model.ptTypeCd' :key='idx'>
                               <label>
                                 <input
-                                    type='checkbox'
-                                    name='type2_1'
-                                    value='PTTP0003'
-                                    v-model='model.svInfo.ptTypeCd'
+                                  type='checkbox'
+                                  :value='item.cdId'
+                                  v-model='model.svInfo.ptTypeCd'
                                 /><i></i>
-                                <span class='txt'>투석</span>
-                              </label>
-                            </div>
-
-                            <div class='cbox ms-4'>
-                              <label>
-                                <input
-                                    type='checkbox'
-                                    name='type2_2'
-                                    value='PTTP0004'
-                                    v-model='model.svInfo.ptTypeCd'
-                                /><i></i>
-                                <span class='txt'>임산부</span>
-                              </label>
-                            </div>
-
-                            <div class='cbox ms-4'>
-                              <label>
-                                <input
-                                    type='checkbox'
-                                    name='type2_3'
-                                    value='PTTP0005'
-                                    v-model='model.svInfo.ptTypeCd'
-                                /><i></i>
-                                <span class='txt'>수술</span>
-                              </label>
-                            </div>
-
-                            <div class='cbox ms-4'>
-                              <label>
-                                <input
-                                    type='checkbox'
-                                    name='type2_4'
-                                    value='PTTP0008'
-                                    v-model='model.svInfo.ptTypeCd'
-                                /><i></i>
-                                <span class='txt'>신생아</span>
-                              </label>
-                            </div>
-
-                            <div class='cbox ms-4'>
-                              <label>
-                                <input
-                                    type='checkbox'
-                                    name='type2_5'
-                                    value='PTTP0002'
-                                    v-model='model.svInfo.ptTypeCd'
-                                /><i></i>
-                                <span class='txt'>소아</span>
-                              </label>
-                            </div>
-
-                            <div class='cbox ms-4'>
-                              <label>
-                                <input
-                                    type='checkbox'
-                                    name='type2_6'
-                                    value='PTTP0006'
-                                    v-model='model.svInfo.ptTypeCd'
-                                /><i></i>
-                                <span class='txt'>인공호흡기 사용</span>
-                              </label>
-                            </div>
-
-                            <div class='cbox ms-4'>
-                              <label>
-                                <input
-                                    type='checkbox'
-                                    name='type2_7'
-                                    value='PTTP0007'
-                                    v-model='model.svInfo.ptTypeCd'
-                                /><i></i>
-                                <span class='txt'>적극적 치료요청</span>
+                                <span class='txt'>{{ item.cdNm }}</span>
                               </label>
                             </div>
                           </div>
@@ -1048,7 +975,7 @@
                       </tr>
 
                       <tr>
-                        <th>요청 병상 유형 <span class='text-primary'>*</span></th>
+                        <th>요청 병상 유형 <span class='text-danger'>*</span></th>
                         <td colspan='4'>
                           <div class='item-cell-box full justify-content-between'>
                             <article class='toggle-list-layout2'>
@@ -1056,7 +983,6 @@
                                 <label>
                                   <input
                                       type='radio'
-                                      name='toggle3-1'
                                       value='BDTP0003'
                                       v-model='model.svInfo.reqBedTypeCd'
                                   />
@@ -1066,7 +992,6 @@
                                 <label>
                                   <input
                                       type='radio'
-                                      name='toggle3-1'
                                       value='BDTP0002'
                                       v-model='model.svInfo.reqBedTypeCd'
                                   />
@@ -1076,7 +1001,6 @@
                                 <label>
                                   <input
                                       type='radio'
-                                      name='toggle3-1'
                                       value='BDTP0005'
                                       v-model='model.svInfo.reqBedTypeCd'
                                   />
@@ -1086,7 +1010,6 @@
                                 <label>
                                   <input
                                       type='radio'
-                                      name='toggle3-1'
                                       value='BDTP0004'
                                       v-model='model.svInfo.reqBedTypeCd'
                                   />
@@ -1096,7 +1019,6 @@
                                 <label>
                                   <input
                                       type='radio'
-                                      name='toggle3-1'
                                       value='BDTP0007'
                                       v-model='model.svInfo.reqBedTypeCd'
                                   />
@@ -1106,7 +1028,6 @@
                                 <label>
                                   <input
                                       type='radio'
-                                      name='toggle3-1'
                                       value='BDTP0006'
                                       v-model='model.svInfo.reqBedTypeCd'
                                   />
@@ -1115,17 +1036,14 @@
                               </div>
                             </article>
                           </div>
-<!--                          <div-->
-<!--                              class='item-cell-box pt-2'-->
-<!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
-<!--                          >-->
-<!--                            * 요청 병상 유형을 선택해주세요-->
-<!--                          </div>-->
+                          <div v-if='validateInput(0)' class='item-cell-box pt-2 text-danger'>
+                            * 요청 병상 유형을 선택해주세요
+                          </div>
                         </td>
                       </tr>
 
                       <tr>
-                        <th>DNR 동의 여부 <span class='text-primary'>*</span></th>
+                        <th>DNR 동의 여부 <span class='text-danger'>*</span></th>
                         <td colspan='4'>
                           <div class='item-cell-box full justify-content-between'>
                             <article class='toggle-list-layout2'>
@@ -1162,69 +1080,26 @@
                               </div>
                             </article>
                           </div>
-<!--                          <div-->
-<!--                              class='item-cell-box pt-2'-->
-<!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
-<!--                          >-->
-<!--                            * DNR 동의여부를 선택해주세요-->
-<!--                          </div>-->
+                          <div v-if='validateInput(1)' class='item-cell-box pt-2 text-danger'>
+                            * DNR 동의여부를 선택해주세요
+                          </div>
                         </td>
                       </tr>
 
                       <tr>
-                        <th rowspan='6'>중증도분류 <span class='text-primary'>*</span></th>
+                        <th rowspan='6'>중증도분류 <span class='text-danger'>*</span></th>
                         <td colspan='4'>
                           <div class='item-cell-box full justify-content-between'>
                             <article class='toggle-list-layout2'>
                               <div class='toggle-list'>
-                                <label @click="model.svInfo.svrtIptTypeCd = 'SVIP0001'">
+                                <label v-for='(item, idx) in model.svrtTypeCd' :key='idx'
+                                       @click="model.svInfo.svrtIptTypeCd = 'SVIP0001'">
                                   <input
-                                      type='radio'
-                                      name='toggle5-1'
-                                      value='SVTP0006'
-                                      v-model='model.svInfo.svrtTypeCd'
+                                    type='radio'
+                                    :value='item.cdId'
+                                    v-model='model.svInfo.svrtTypeCd'
                                   />
-                                  <span class='txt'>중환자</span>
-                                </label>
-
-                                <label @click="model.svInfo.svrtIptTypeCd = 'SVIP0001'">
-                                  <input
-                                      type='radio'
-                                      name='toggle5-1'
-                                      value='SVTP0005'
-                                      v-model='model.svInfo.svrtTypeCd'
-                                  />
-                                  <span class='txt'>중증</span>
-                                </label>
-
-                                <label @click="model.svInfo.svrtIptTypeCd = 'SVIP0001'">
-                                  <input
-                                      type='radio'
-                                      name='toggle5-1'
-                                      value='SVTP0004'
-                                      v-model='model.svInfo.svrtTypeCd'
-                                  />
-                                  <span class='txt'>준증증</span>
-                                </label>
-
-                                <label @click="model.svInfo.svrtIptTypeCd = 'SVIP0001'">
-                                  <input
-                                      type='radio'
-                                      name='toggle5-1'
-                                      value='SVTP0003'
-                                      v-model='model.svInfo.svrtTypeCd'
-                                  />
-                                  <span class='txt'>중등증</span>
-                                </label>
-
-                                <label @click="model.svInfo.svrtIptTypeCd = 'SVIP0001'">
-                                  <input
-                                      type='radio'
-                                      name='toggle5-1'
-                                      value='SVTP0001'
-                                      v-model='model.svInfo.svrtTypeCd'
-                                  />
-                                  <span class='txt'>일반</span>
+                                  <span class='txt'>{{ item.cdNm }}</span>
                                 </label>
 
 <!--                                <label @click="model.svInfo.svrtTypeCd = ''">-->
@@ -1239,12 +1114,9 @@
                               </div>
                             </article>
                           </div>
-<!--                          <div-->
-<!--                              class='item-cell-box pt-2'-->
-<!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
-<!--                          >-->
-<!--                            * 중증 정보를 선택해주세요-->
-<!--                          </div>-->
+                          <div v-if='validateInput(2)' class='item-cell-box pt-2 text-danger'>
+                            * 중증 정보를 선택해주세요
+                          </div>
                         </td>
                       </tr>
 
@@ -1401,7 +1273,7 @@
                   <router-link to='' @click='prevStep' class='modal-menu-btn menu-cancel'
                   >이전
                   </router-link>
-                  <router-link to='' @click='nextStep' class='modal-menu-btn menu-primary'
+                  <router-link to='' @click='nextStep(2)' class='modal-menu-btn menu-primary'
                   >다음
                   </router-link>
                 </div>
@@ -1426,7 +1298,7 @@
                       <tbody>
                       <tr>
                         <th :rowspan="model.spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1">
-                          배정요청 지역 <span class='text-primary'>*</span>
+                          배정요청 지역 <span class='text-danger'>*</span>
                         </th>
                         <td :rowspan="model.spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1">
                           <div class='item-cell-box full' style=''>
@@ -1436,12 +1308,9 @@
                               </select>
                             </div>
                           </div>
-<!--                          <div-->
-<!--                              class='item-cell-box pt-2'-->
-<!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
-<!--                          >-->
-<!--                            * 병상배정 지자체를 선택해주세요-->
-<!--                          </div>-->
+                          <div v-if='validateInput(3)' class='item-cell-box pt-2 text-danger' >
+                            * 배정요청 지역을 선택해주세요
+                          </div>
                         </td>
 
                         <th v-show="model.spInfo.dprtDstrTypeCd !== 'DPTP0002'" style=''>
@@ -1453,7 +1322,7 @@
                               <input
                                   type='text'
                                   placeholder='보호자1 연락처 입력'
-                                  @input='validateInput(2)'
+                                  @input='filterNumericInput(2)'
                                   maxlength='11'
                                   v-model='model.spInfo.nok1Telno'
                               />
@@ -1462,7 +1331,7 @@
                         </td>
 
                         <th v-show="model.spInfo.dprtDstrTypeCd === 'DPTP0002'">
-                          원내배정 여부 <span class='text-primary'>*</span>
+                          원내배정 여부 <span class='text-danger'>*</span>
                         </th>
                         <td v-show="model.spInfo.dprtDstrTypeCd === 'DPTP0002'">
                           <div class='item-cell-box full justify-content-between'>
@@ -1470,32 +1339,27 @@
                               <div class='toggle-list'>
                                 <label>
                                   <input
-                                      type='radio'
-                                      name='toggle4-1'
-                                      value='N'
-                                      v-model='model.spInfo.inhpAsgnYn'
+                                    type='radio'
+                                    value='N'
+                                    v-model='model.spInfo.inhpAsgnYn'
                                   />
                                   <span class='txt'>전원요청</span>
                                 </label>
 
                                 <label>
                                   <input
-                                      type='radio'
-                                      name='toggle4-1'
-                                      value='Y'
-                                      v-model='model.spInfo.inhpAsgnYn'
+                                    type='radio'
+                                    value='Y'
+                                    v-model='model.spInfo.inhpAsgnYn'
                                   />
                                   <span class='txt'>원내배정</span>
                                 </label>
                               </div>
                             </article>
                           </div>
-<!--                          <div-->
-<!--                              class='item-cell-box pt-2'-->
-<!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
-<!--                          >-->
-<!--                            * 원내배정 여부 선택-->
-<!--                          </div>-->
+                          <div v-if='validateInput(4)' class='item-cell-box pt-2 text-danger'>
+                            * 원내배정 여부를 선택해주세요
+                          </div>
                         </td>
                       </tr>
                       <tr v-if="model.spInfo.dprtDstrTypeCd === 'DPTP0002'">
@@ -1515,7 +1379,7 @@
                       </tr>
                       <tr>
                         <th :rowspan="model.spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1">
-                          환자 출발지<span class='text-primary'>*</span>
+                          환자 출발지<span class='text-danger'>*</span>
                         </th>
                         <td :rowspan="model.spInfo.dprtDstrTypeCd === 'DPTP0002' ? 2 : 1">
                           <div class='item-cell-box full justify-content-between'>
@@ -1524,7 +1388,6 @@
                                 <label @click='setSpAddr(0)'>
                                   <input
                                       type='radio'
-                                      name='toggle4-2'
                                       value='DPTP0001'
                                       v-model='model.spInfo.dprtDstrTypeCd'
                                   />
@@ -1534,7 +1397,6 @@
                                 <label @click='setSpAddr(1)'>
                                   <input
                                       type='radio'
-                                      name='toggle4-2'
                                       value='DPTP0002'
                                       v-model='model.spInfo.dprtDstrTypeCd'
                                   />
@@ -1544,7 +1406,6 @@
                                 <label>
                                   <input
                                       type='radio'
-                                      name='toggle4-2'
                                       value='DPTP0003'
                                       v-model='model.spInfo.dprtDstrTypeCd'
                                   />
@@ -1553,12 +1414,9 @@
                               </div>
                             </article>
                           </div>
-<!--                          <div-->
-<!--                              class='item-cell-box pt-2'-->
-<!--                              style='font-size: 12px; letter-spacing: -0.05em; color: #696971'-->
-<!--                          >-->
-<!--                            * 유효성 검사 문구-->
-<!--                          </div>-->
+                          <div v-if='validateInput(5)' class='item-cell-box pt-2 text-danger'>
+                            * 환자 출발지 유형을 선택해주세요
+                          </div>
                         </td>
                         <th v-show="model.spInfo.dprtDstrTypeCd !== 'DPTP0002'">보호자 2 연락처</th>
                         <td v-show="model.spInfo.dprtDstrTypeCd !== 'DPTP0002'">
@@ -1567,7 +1425,7 @@
                               <input
                                   type='text'
                                   placeholder='보호자 2 연락처 입력'
-                                  @input='validateInput(2)'
+                                  @input='filterNumericInput(2)'
                                   maxlength='11'
                                   v-model='model.spInfo.nok2Telno'
                               />
@@ -1597,7 +1455,7 @@
                               <input
                                   type='text'
                                   placeholder='연락 전화번호 입력'
-                                  @input='validateInput(2)'
+                                  @input='filterNumericInput(2)'
                                   maxlength='11'
                                   v-model='model.spInfo.chrgTelno'
                               />
@@ -1711,7 +1569,7 @@ const emits = defineEmits(['closePatntRequest'])
 const store = useStore()
 
 const model = reactive({
-  tab: 0,
+  tab: 2,
   epidReportImage: null,
   visibleRef: false,
   imgsRef: '',
@@ -1729,6 +1587,8 @@ const model = reactive({
     dstr1Cd: null,
     dstr2Cd: null,
   },
+  ptTypeCd: store.getters['common/getPatientType'],
+  svrtTypeCd: store.getters['common/getSeverityType'],
   cmSido: store.getters['admin/getCmSido'],
   cmGugun: null,
   organMedi: null,
@@ -1785,6 +1645,7 @@ const model = reactive({
   },
   isAlert: false,
   errMsg: '',
+  showErrorMsg: false,
 })
 
 onMounted(() => {
@@ -1836,17 +1697,19 @@ function getMedInst() {
 }
 
 function saveInfo() {
-  let data = model.dsInfo
-  const url = `${API_PROD}/api/v1/private/patient/regdisesinfo`
-  axios_cstm().post(url, data)
-    .then((response) => {
-      if (response.data.code === '00') {
-        bedRequest()
-      }
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+  if (validateFormStep4()) {
+    // let data = model.dsInfo
+    // const url = `${API_PROD}/api/v1/private/patient/regdisesinfo`
+    // axios_cstm().post(url, data)
+    //   .then((response) => {
+    //     if (response.data.code === '00') {
+    //       bedRequest()
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //   })
+  }
 }
 
 function bedRequest() {
@@ -1870,6 +1733,20 @@ function bedRequest() {
     })
 }
 
+function nextStep(idx) {
+  if (idx === 2) {
+    if(validateFormStep3()) {
+      model.tab = model.tab + 1
+    }
+  } else {
+    model.tab = model.tab + 1
+  }
+}
+
+function prevStep() {
+  model.tab = model.tab - 1
+}
+
 function showImageLightBox() {
   model.imgsRef = model.epidReportImage
   model.visibleRef = true
@@ -1885,14 +1762,6 @@ function closeModal() {
   model.dsInfo = null
   model.svInfo = null
   model.spInfo = null
-}
-
-function nextStep() {
-  model.tab = model.tab + 1
-}
-
-function prevStep() {
-  model.tab = model.tab - 1
 }
 
 function getGndr(no2) {
@@ -1946,7 +1815,7 @@ function setSpAddr(idx) {
   }
 }
 
-function validateInput(idx) {
+function filterNumericInput(idx) {
   if (idx === 0) {
     model.newPt.rrno1 = model.newPt.rrno1.replace(/[^0-9]/g, '')
     model.newPt.rrno2 = model.newPt.rrno2.replace(/[^0-9]/g, '')
@@ -1958,6 +1827,60 @@ function validateInput(idx) {
     model.spInfo.nok2Telno = model.spInfo.nok2Telno.replace(/[^0-9]/g, '')
     model.spInfo.chrgTelno = model.spInfo.chrgTelno.replace(/[^0-9]/g, '')
   }
+}
+
+function validateInput(idx) {
+  if (idx === 0) {
+    return model.svInfo.reqBedTypeCd === null && model.showErrorMsg
+  } else if (idx === 1) {
+    return model.svInfo.dnrAgreYn === null && model.showErrorMsg
+  } else if (idx === 2) {
+    return model.svInfo.svrtTypeCd === null && model.showErrorMsg
+  } else if (idx === 3) {
+    return model.spInfo.reqDstr1Cd === null && model.showErrorMsg
+  } else if (idx === 4) {
+    return model.spInfo.inhpAsgnYn === null && model.showErrorMsg
+  } else if (idx === 5) {
+    return model.spInfo.dprtDstrTypeCd === null && model.showErrorMsg
+  }
+}
+
+function validateFormStep3() {
+  const data = model.svInfo
+  const requiredFields = {
+    reqBedTypeCd: { idx: 0 },
+    dnrAgreYn: { idx: 1 },
+    svrtTypeCd: { idx: 2 },
+  }
+
+  for (const field in requiredFields) {
+    let showErrorMsg = false
+    if (!data[field]) {
+      showErrorMsg = true
+      model.showErrorMsg = showErrorMsg
+      return false
+    }
+  }
+  return true
+}
+
+function validateFormStep4() {
+  const data = model.spInfo
+  const requiredFields = {
+    reqDstr1Cd: { idx: 0 },
+    inhpAsgnYn: { idx: 1 },
+    dprtDstrTypeCd: { idx: 2 },
+  }
+
+  for (const field in requiredFields) {
+    let showErrorMsg = false
+    if (!data[field]) {
+      showErrorMsg = true
+      model.showErrorMsg = showErrorMsg
+      return false
+    }
+  }
+  return true
 }
 
 </script>
