@@ -375,17 +375,7 @@
 <script>
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { mapState } from 'vuex'
-import {
-  backBtn,
-  getDt,
-  getTag,
-  getUndrDses,
-  goAsgn,
-  openAddressFinder,
-  openPopup,
-  regNewPt,
-  toggleCheckbox
-} from '@/util/ui'
+import { getUndrDses, toggleCheckbox } from '@/util/ui'
 import { reactive, ref } from 'vue'
 import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
 import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
@@ -455,29 +445,7 @@ export default {
         instId: '',
         rcptPhc: 0
       },
-      svInfo: {
-        ptId: '',
-        ptTypeCd: [],
-        svrtIptTypeCd: 'SVIP0001',
-        svrtTypeCd: '',
-        undrDsesCd: []
-      },
       bioAnlys: {},
-      spInfo: {
-        ptId: '',
-        dprtDstrTypeCd: '',
-        dprtDstrBascAddr: '',
-        dprtDstrDetlAddr: '',
-        dprtDstrZip: '',
-        nok1Telno: '',
-        nok2Telno: '',
-        chrgTelno: '',
-        spclNm: '',
-        dprtHospId: '',
-        inhpAsgnYn: 'N',
-        reqDstr1Cd: '27',
-        reqDstr2Cd: null
-      },
       assignmentStatuses: {
         '병상요청': 'BAST0003',
         '병상배정': 'BAST0004',
@@ -584,20 +552,10 @@ export default {
   },
   methods: {
     toggleCheckbox,
-    getDt,
-    backBtn,
-    goAsgn,
-    openPopup,
-    getTag,
-    openAddressFinder,
-    regNewPt,
     getSecondAddress(address) {
       if (address) {
         this.$store.dispatch('admin/getGuGun', address)
       }
-    },
-    getDstr2Cd() {
-      this.$store.dispatch('admin/getGuGun', this.medinstInfo.dstr1Cd)
     },
     getMedInst() {
       let data = this.medinstInfo
@@ -641,24 +599,9 @@ export default {
       }
       return dYear + '.' + dMonth + '.' + dDate
     },
-    getUndrDses,
     alertOpen(idx) {
       this.cncBtn = false
-      if (idx === 0) {
-        this.errMsg = '병상을 요청하시겠습니까?'
-        this.cncBtn = true
-        this.isAlert = true
-        this.alertIdx = 0
-      } else if (idx === 1) {
-        this.svInfo.undrDsesCd = this.getUndrDses(this.svInfo.undrDsesCd)
-        const data = { svrInfo: this.svInfo, dprtInfo: this.spInfo }
-        console.log(data)
-        this.$store.dispatch('bedasgn/regBedassign', data)
-        this.isAlert = false
-        this.errMsg = '요청되었습니다.'
-        this.isAlert = true
-        this.alertIdx = 1
-      } else if (idx === 2) {
+      if (idx === 2) {
         this.alertClose()
         this.showPatnt = false
         this.closeModal(0)
@@ -700,8 +643,6 @@ export default {
       this.rptYn = false
       this.newPt = JSON.parse(JSON.stringify(this.initNewPt))
       this.dsInfo = JSON.parse(JSON.stringify(this.initDsInfo))
-      //this.svInfo = this.initSvInfo
-      //this.spInfo =  this.initSpInfo
       this.$store.commit('patnt/setRpt', null)
       this.preRpt = null
       this.undrDsesCdArr = []
@@ -871,7 +812,6 @@ export default {
 </script>
 
 <style scoped>
-
 .chart-container {
   min-height: initial;
 }
@@ -906,5 +846,4 @@ td > .btn-primary-outline {
 .select-box {
   margin-bottom: 0.5rem;
 }
-
 </style>

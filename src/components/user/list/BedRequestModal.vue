@@ -178,9 +178,9 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class='item-row-box'>
-                                <div class='item-note-box'>* 주민등록번호 입력</div>
-                              </div>
+<!--                              <div class='item-row-box'>-->
+<!--                                <div class='item-note-box'>* 주민등록번호 입력</div>-->
+<!--                              </div>-->
                             </td>
                             <th>나이 (만)</th>
                             <td v-if='model.newPt.rrno1 !== undefined && model.newPt.rrno2 !== undefined'>
@@ -751,7 +751,6 @@
                 <div class='form-head-box'></div>
 
                 <div class='form-body-box'>
-<!--                  <form @submit='regSvInfo' class='table-box'>-->
                   <form class='table-box'>
                     <table>
                       <colgroup>
@@ -1550,7 +1549,7 @@
 
   <SbasAlert :is-alert='model.isAlert' :err-msg='model.errMsg' :cnc-btn='false'
              @confirm-alert='closeModal' />
-
+<!-- TODO 단계별로 컴포넌트 분리  -->
 </template>
 
 <script setup>
@@ -1569,7 +1568,7 @@ const emits = defineEmits(['closePatntRequest'])
 const store = useStore()
 
 const model = reactive({
-  tab: 2,
+  tab: 0,
   epidReportImage: null,
   visibleRef: false,
   imgsRef: '',
@@ -1698,17 +1697,17 @@ function getMedInst() {
 
 function saveInfo() {
   if (validateFormStep4()) {
-    // let data = model.dsInfo
-    // const url = `${API_PROD}/api/v1/private/patient/regdisesinfo`
-    // axios_cstm().post(url, data)
-    //   .then((response) => {
-    //     if (response.data.code === '00') {
-    //       bedRequest()
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
+    let data = model.dsInfo
+    const url = `${API_PROD}/api/v1/private/patient/regdisesinfo`
+    axios_cstm().post(url, data)
+      .then((response) => {
+        if (response.data.code === '00') {
+          bedRequest()
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 }
 
