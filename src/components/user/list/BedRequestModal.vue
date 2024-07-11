@@ -164,13 +164,15 @@
                               <div class='item-row-box'>
                                 <div class='item-cell-box'>
                                   <div class='tbox'>
-                                    <input type='text' v-model='model.newPt.rrno1' />
+                                    <input type='text' v-model='model.newPt.rrno1'
+                                           @input='validateInput(0)'
+                                            maxlength='6'/>
                                   </div>
                                   <div class='unit-box mx-2 text-gray-600'>-</div>
                                   <div class='tbox' style='min-width: 20px'>
                                     <input
                                         type='text'
-                                        @input='validateInput()'
+                                        @input='validateInput(0)'
                                         v-model='model.newPt.rrno2'
                                         maxlength='7'
                                     />
@@ -196,11 +198,10 @@
                                     <input type='text' v-model='model.newPt.zip' readonly />
                                   </div>
                                   <a
-                                      @click='openAddressFinder(0)'
-                                      class='btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1'
-                                      style='min-width: 80px'
-                                  >주소검색</a
-                                  >
+                                    @click='openAddressFinder(0)'
+                                    class='btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1'
+                                    style='min-width: 80px'
+                                  >주소검색</a>
                                 </div>
                               </div>
 
@@ -233,7 +234,9 @@
                             <td>
                               <div class='item-cell-box full'>
                                 <div class='tbox full'>
-                                  <input type='text' v-model='model.newPt.mpno' />
+                                  <input type='text' v-model='model.newPt.mpno'
+                                         @input='validateInput(1)'
+                                         maxlength='11' />
                                 </div>
                               </div>
                             </td>
@@ -255,7 +258,9 @@
                             <td>
                               <div class='item-cell-box full'>
                                 <div class='tbox full'>
-                                  <input type='text' v-model='model.newPt.telno' />
+                                  <input type='text' v-model='model.newPt.telno'
+                                         @input='validateInput(1)'
+                                         maxlength='11' />
                                 </div>
                               </div>
                             </td>
@@ -1410,7 +1415,6 @@
                 <div class='form-head-box'></div>
 
                 <div class='form-body-box'>
-<!--                  <form @submit='regStrtPoint' class='table-box'>-->
                   <form class='table-box'>
                     <table>
                       <colgroup>
@@ -1449,7 +1453,8 @@
                               <input
                                   type='text'
                                   placeholder='보호자1 연락처 입력'
-                                  @input='validateInput'
+                                  @input='validateInput(2)'
+                                  maxlength='11'
                                   v-model='model.spInfo.nok1Telno'
                               />
                             </div>
@@ -1562,7 +1567,8 @@
                               <input
                                   type='text'
                                   placeholder='보호자 2 연락처 입력'
-                                  @input='validateInput'
+                                  @input='validateInput(2)'
+                                  maxlength='11'
                                   v-model='model.spInfo.nok2Telno'
                               />
                             </div>
@@ -1591,7 +1597,8 @@
                               <input
                                   type='text'
                                   placeholder='연락 전화번호 입력'
-                                  @input='validateInput'
+                                  @input='validateInput(2)'
+                                  maxlength='11'
                                   v-model='model.spInfo.chrgTelno'
                               />
                             </div>
@@ -1682,6 +1689,10 @@
     </div>
     <!--end::Modal dialog-->
   </div>
+
+  <SbasAlert :is-alert='model.isAlert' :err-msg='model.errMsg' :cnc-btn='false'
+             @confirm-alert='closeModal' />
+
 </template>
 
 <script setup>
@@ -1691,6 +1702,7 @@ import { getAge, getTelno } from '@/util/ui'
 import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
+import SbasAlert from '@/components/common/SbasAlert.vue'
 
 const props = defineProps({
   ptId: null,
@@ -1771,6 +1783,8 @@ const model = reactive({
     spclNm: null,
     msg: null,
   },
+  isAlert: false,
+  errMsg: '',
 })
 
 onMounted(() => {
@@ -1827,7 +1841,6 @@ function saveInfo() {
   axios_cstm().post(url, data)
     .then((response) => {
       if (response.data.code === '00') {
-        // alert('진단정보가 저장되었습니다.')
         bedRequest()
       }
     })
@@ -1848,19 +1861,13 @@ function bedRequest() {
   axios_cstm().post(url, data)
     .then((response) => {
       if (response.data.code === '00') {
-        alert('병상요청이 완료되었습니다.')
-        closeModal()
+        model.isAlert = true
+        model.errMsg = "병상요청이 완료되었습니다."
       }
     })
     .catch((error) => {
       console.log(error)
     })
-}
-
-
-function validateInput() {
-  // props.newPt.rrno1 = props.newPt.rrno1.replace(/[^0-9]/g, '')
-  // props.newPt.rrno2 = props.newPt.rrno2.replace(/[^0-9]/g, '')
 }
 
 function showImageLightBox() {
@@ -1939,9 +1946,24 @@ function setSpAddr(idx) {
   }
 }
 
+function validateInput(idx) {
+  if (idx === 0) {
+    model.newPt.rrno1 = model.newPt.rrno1.replace(/[^0-9]/g, '')
+    model.newPt.rrno2 = model.newPt.rrno2.replace(/[^0-9]/g, '')
+  } else if (idx === 1) {
+    model.newPt.mpno = model.newPt.mpno.replace(/[^0-9]/g, '')
+    model.newPt.telno = model.newPt.telno.replace(/[^0-9]/g, '')
+  } else if (idx === 2) {
+    model.spInfo.nok1Telno = model.spInfo.nok1Telno.replace(/[^0-9]/g, '')
+    model.spInfo.nok2Telno = model.spInfo.nok2Telno.replace(/[^0-9]/g, '')
+    model.spInfo.chrgTelno = model.spInfo.chrgTelno.replace(/[^0-9]/g, '')
+  }
+}
+
 </script>
 
 <style scoped>
+
 .modal {
   --bs-modal-width: 98%;
   display: block;
@@ -1958,6 +1980,12 @@ function setSpAddr(idx) {
   color: #595959;
   font-weight: normal;
   margin-top: 12px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 </style>
