@@ -101,7 +101,7 @@
                     </colgroup>
                     <tbody>
                       <tr>
-                        <th>주 담당지역 <span class="text-primary">*</span></th>
+                        <th>주 담당지역</th>
                         <td>
                           <div class="item-cell-box">
                             <div class="sbox w-175px">
@@ -322,7 +322,7 @@
                         <td class="text-start">{{ item.instNm }}</td>
                         <td>{{ maskingNm(item.userNm) }}</td>
                         <td>{{ item.dutyDstr1CdNm }}</td>
-                        <td>{{ getJobCd(item.jobCd) }}</td>
+                        <td>{{ item.jobCdNm }}</td>
                         <td>{{ getrgDt(item.rgstDttm).substring(2) }}</td>
                         <td>{{ getrgDt(item.rgstDttm).substring(2) }}</td>
                         <td>{{ item.userStatCdNm }}</td>
@@ -1566,7 +1566,7 @@
 <script>
 import { mapState } from 'vuex'
 import { ref } from 'vue'
-import { getGugun, getPtType, getSido, toggleCheckbox } from '@/util/ui'
+import { getGugun, getPtType, getSido, getTelno, toggleCheckbox } from '@/util/ui'
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { JobCode } from '@/util/sbas_cnst'
 import UserDetailAdminModal from '@/components/admin/UserDetailAdminModal.vue'
@@ -1736,7 +1736,7 @@ export default {
     }
   },
   methods: {
-    getPtType,
+    getTelno,
     toggleCheckbox,
     getGugun,
     getSido,
@@ -1781,9 +1781,6 @@ export default {
       this.detail2 = false
       this.usrDetail = null
     },
-    checkInfo() {
-      console.log(this.$store.state.userList)
-    },
     getInstNm(code) {
       if (code === 'ORGN0001') {
         return '지방자치단체'
@@ -1810,19 +1807,6 @@ export default {
       const day = dt.substring(6)
       return `${year}-${month}-${day}`
     },
-    getTelno(num) {
-      const num1 = num.substring(0, 3)
-      const num2 = num.substring(3, 7)
-      const num3 = num.substring(7)
-      return `${num1}-${num2}-${num3}`
-    },
-    getGndr(str) {
-      if(str === null){
-        return '-'
-      }else if (str === 'M') {
-        return '남'
-      } else return '여'
-    },
     getPmgr(code) {
       if (code === JobCode.Rqst) {
         return 1
@@ -1832,19 +1816,6 @@ export default {
         return 3
       } else if (code === JobCode.Sysa) {
         return 4
-      }
-    },
-    getJobCd(code) {
-      if (code === JobCode.Rqst) {
-        return '병상요청그룹'
-      } else if (code === JobCode.Aprv) {
-        return '병상승인그룹'
-      } else if (code === JobCode.Meds) {
-        return '병상배정그룹'
-      } else if (code === JobCode.Sysa) {
-        return '시스템관리자'
-      } else {
-        return code
       }
     },
     maskingNm(nm) {
@@ -1865,17 +1836,6 @@ export default {
       } else {
         this.isDetail = true
         this.usrDetail = data
-      }
-    },
-    detailTabsMove(num) {
-      if (num === 1) {
-        this.detail1 = true
-        this.detail2 = false
-        return true
-      } else {
-        this.detail2 = true
-        this.detail1 = false
-        return true
       }
     },
     setWdOrAprv(id, num, idx) {
