@@ -3938,7 +3938,6 @@ import user from '@/store/modules/user'
 import { JobCode } from '@/util/sbas_cnst'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import RcmdHospModal from '@/components/user/list/RcmdHospModal.vue'
-import { getHisSampleData } from '@/util/his_sample_data'
 import BdasAdmsModal from '@/components/user/list/BdasAdmsModal.vue'
 
 export default {
@@ -4111,14 +4110,6 @@ export default {
         hospId: '',
         negCd: '',
         asgnReqSeq: null
-      },
-      hosptlzdiscg: {
-        ptId: '',
-        bdasSeq: '',
-        hospId: '',
-        msg: '',
-        admsStatCd: 'IOST0001',
-        dschRsnCd: ''
       },
       chrgUserId: [],
       undrDsesCdArr: [],
@@ -4443,11 +4434,6 @@ export default {
         this.errMsg = '승인 되었습니다.'
         this.isAlert = true
         this.alertIdx = 13
-      } else if (idx === 14) {
-        this.errMsg = '입/퇴원 처리하시겠습니까?'
-        this.isAlert = true
-        this.cncBtn = true
-        this.alertIdx = 15
       }
     },
     async cfrmAl(res) {
@@ -4528,22 +4514,6 @@ export default {
         this.$store.dispatch('bedasgn/cfmMedi', this.mediConfirm)
         this.alertClose()
         this.alertOpen(13)
-      } else if (res === 15) {
-        this.hosptlzdiscg.bdasSeq = this.bdDetail.bdasSeq
-        this.hosptlzdiscg.ptId = this.bdDetail.ptId
-        this.hosptlzdiscg.roomNm = this.hosptlzdiscg.wardNm
-        this.hosptlzdiscg.hospId = this.getChrgTL(this.timeline.items, 1)
-
-        // 샘플데이터
-        const sampleData = getHisSampleData(this.hosptlzdiscg.pid)
-        this.hosptlzdiscg.admsDt = sampleData.admsDt
-        this.hosptlzdiscg.monStrtDt = sampleData.monStrtDt
-        this.hosptlzdiscg.monStrtTm = sampleData.monStrtTm
-        console.log(this.hosptlzdiscg)
-
-        this.$store.dispatch('bedasgn/cfmHosp', this.hosptlzdiscg)
-        this.alertClose()
-        this.alertOpen(13)
       }
       console.log(res)
     },
@@ -4577,7 +4547,7 @@ export default {
     getDtBlue,
     getTag,
     updateCharacterCount(idx) {
-      const messageProps = [this.aprv, this.mediConfirm, this.hosptlzdiscg, this.trsfInfo]
+      const messageProps = [this.aprv, this.mediConfirm, this.trsfInfo, this.trsfInfo]
       const currentMessage = messageProps[idx].msg
       if (currentMessage === null || currentMessage === '' || currentMessage === undefined) {
         this.characterCount = this.content.length
@@ -4788,20 +4758,6 @@ export default {
       this.trsfInfo[`crew${idx}Nm`] = data.crewNm
       this.trsfInfo[`crew${idx}Telno`] = data.telno
       console.log(this.trsfInfo)
-    },
-    getChrgTL(data, idx) {
-      if (data.length !== 0) {
-        const result = data.find((item) => item.title.includes('입원'))
-
-        if (result) {
-          switch (idx) {
-            case 0:
-              return result.chrgInstNm
-            case 1:
-              return result.chrgInstId
-          }
-        }
-      }
     },
     showImageLightBox() {
       this.imgsRef = this.preRpt

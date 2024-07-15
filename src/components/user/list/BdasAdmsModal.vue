@@ -145,7 +145,7 @@
                     <th>병실</th>
                     <td>
                       <div class='tbox full'>
-                        <input type='text' v-model='model.hosptlzdiscg.wardNm' placeholder='병실번호 입력' />
+                        <input type='text' v-model='model.hosptlzdiscg.roomNm' placeholder='병실번호 입력' />
                       </div>
                     </td>
                   </tr>
@@ -267,12 +267,10 @@ function confirm() {
   }
 }
 
-function cfmHosp(data) {
+function cfmHosp() {
   const url = `${API_PROD}/api/v1/private/bedasgn/confirmhosptlzdiscg`
-  const request = data
-  console.log('입퇴원처리')
-  axios_cstm()
-    .post(url, request)
+  const request = model.hosptlzdiscg
+  axios_cstm().post(url, request)
     .then((response) => {
       const data = response.data
       if (data.code === '00') {
@@ -300,6 +298,9 @@ function checkPid() {
     return false
   } else {
     model.showErrorMsg = false
+    model.hosptlzdiscg.deptNm = data.deptNm
+    model.hosptlzdiscg.roomNm = data.roomNm
+    model.hosptlzdiscg.spclNm = data.spclNm
     return true
   }
 }
