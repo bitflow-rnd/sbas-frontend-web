@@ -108,6 +108,7 @@
 
             <router-link
               to="/user/medinst/list"
+              @click="getMediList"
               class="menu-item me-0 me-lg-1"
             >
               <span class="menu-link">

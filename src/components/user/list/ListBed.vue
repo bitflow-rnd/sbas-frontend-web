@@ -3402,265 +3402,9 @@
   </div>
 
   <!--  입퇴원처리 4 -->
-  <div
-    v-if="bdDetail !== null && ptDetail !== null"
-    class="modal fade"
-    id="kt_modal_hospitalization"
-    tabindex="-1"
-    aria-hidden="true"
-    style=""
-    :class="{'show' : showModal===4}" v-show="showModal===4"
-  >
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog mw-1500px modal-dialog-centered">
-      <!--begin::Modal content-->
-      <div class="modal-content">
-        <!--begin::Modal header-->
-        <div class="modal-header px-10 py-5 d-flex justify-content-between">
-          <!--begin::Modal title-->
-          <h2>입·퇴원 처리</h2>
-          <!--end::Modal title-->
-          <!--begin::Close-->
-          <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal(4)">
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class="svg-icon svg-icon-1">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  opacity="0.5"
-                  x="6"
-                  y="17.3137"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(-45 6 17.3137)"
-                  fill="currentColor"
-                ></rect>
-                <rect
-                  x="7.41422"
-                  y="6"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(45 7.41422 6)"
-                  fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-            <!--end::Svg Icon-->
-          </div>
-          <!--end::Close-->
-
-          <article class="floating-request-box">
-            <div class="img-box">
-              <img src="/img/common/ic_request_patient.svg" alt="이미지" />
-            </div>
-            <div class="txt-box">
-              {{ bdDetail.ptNm }}
-              <span class="text-gray-600 fw-normal"
-              >({{ bdDetail.gndr }} / {{ bdDetail.age }}세 / {{ getAddr(bdDetail.bascAddr) }} /
-                {{ getTelno(ptDetail.mpno) }})</span
-              >
-            </div>
-            <div class="txt-box">
-              <span class="text-primary">{{ getTag(bdDetail.tagList) }}</span>
-            </div>
-          </article>
-        </div>
-
-        <!--begin::Modal header-->
-        <!--begin::Modal body-->
-        <div class="modal-body scroll-y py-10 px-10">
-          <article class="table-form-layout1">
-            <div class="form-head-box"></div>
-
-            <div class="form-body-box">
-              <div class="table-box">
-                <table>
-                  <colgroup>
-                    <col style="width: 168px" />
-                    <col style="width: auto" />
-                    <col style="width: 168px" />
-                    <col style="width: auto" />
-                  </colgroup>
-                  <tbody>
-                  <tr>
-                    <th>병원명</th>
-                    <td colspan="3">{{ timeline ? getChrgTL(timeline.items, 0) : '' }}</td>
-                  </tr>
-
-                  <tr>
-                    <th>처리 유형</th>
-                    <td>
-                      <div class="item-cell-box full justify-content-between">
-                        <article class="toggle-list-layout2">
-                          <div class="toggle-list">
-                            <label @click="setHosptlzdiscg(1)">
-                              <input
-                                type="radio"
-                                name="toggle4-3"
-                                value="IOST0001"
-                                v-model="hosptlzdiscg.admsStatCd"
-                              />
-                              <span class="txt">입원</span>
-                            </label>
-
-                            <label @click="setHosptlzdiscg(2)">
-                              <input
-                                type="radio"
-                                name="toggle4-3"
-                                value="IOST0002"
-                                v-model="hosptlzdiscg.admsStatCd"
-                              />
-                              <span class="txt">퇴원</span>
-                            </label>
-
-                            <label @click="setHosptlzdiscg(3)">
-                              <input
-                                type="radio"
-                                name="toggle4-3"
-                                value="IOST0003"
-                                v-model="hosptlzdiscg.admsStatCd"
-                              />
-                              <span class="txt">재택회송</span>
-                            </label>
-                          </div>
-                        </article>
-                      </div>
-                    </td>
-                    <th>PID</th>
-                    <td>
-                      <div class="tbox full">
-                        <input v-model="hosptlzdiscg.pid" placeholder="PID 입력" />
-                      </div>
-                    </td>
-                  </tr>
-                  <tr v-if="hosptlzdiscg.admsStatCd === 'IOST0002'">
-                    <th>퇴원 사유</th>
-                    <td>
-                      <div class="item-cell-box full justify-content-between">
-                        <article class="toggle-list-layout2">
-                          <div class="toggle-list">
-                            <label>
-                              <input
-                                type="radio"
-                                name="toggle4-4"
-                                value="DCRN0001"
-                                v-model="hosptlzdiscg.dschRsnCd"
-                              />
-                              <span class="txt">입원 불필요</span>
-                            </label>
-
-                            <label>
-                              <input
-                                type="radio"
-                                name="toggle4-4"
-                                value="DCRN0002"
-                                v-model="hosptlzdiscg.dschRsnCd"
-                              />
-                              <span class="txt">입원 거부</span>
-                            </label>
-
-                            <label @click="setHosptlzdiscg(3)">
-                              <input
-                                type="radio"
-                                name="toggle4-4"
-                                value="DCRN0003"
-                                v-model="hosptlzdiscg.dschRsnCd"
-                              />
-                              <span class="txt">재택 승인</span>
-                            </label>
-                          </div>
-                        </article>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>진료과</th>
-                    <td>
-                      <div class="tbox full">
-                        <input v-model="hosptlzdiscg.deptNm" placeholder="진료과 입력" />
-                      </div>
-                    </td>
-                    <th>병실</th>
-                    <td>
-                      <div class="tbox full">
-                        <input v-model="hosptlzdiscg.wardNm" placeholder="병실번호 입력" />
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th>담당의</th>
-                    <td>
-                      <div class="tbox full">
-                        <input v-model="hosptlzdiscg.spclNm" placeholder="담당의 이름 입력" />
-                      </div>
-                    </td>
-                    <th>연락처</th>
-                    <td>
-                      <div class="tbox full">
-                        <input
-                          v-model="hosptlzdiscg.chrgTelno"
-                          placeholder="의료진 연락처 입력"
-                          maxlength="14"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th>전달사항</th>
-                    <td colspan="3">
-                      <div class="item-cell-box full">
-                        <div class="textbox full">
-                            <textarea
-                              @input="updateCharacterCount(2)"
-                              maxlength="500"
-                              placeholder="입원 / 퇴원 / 회송 사유 등 전달 메시지 입력"
-                              style="height: 120px"
-                              v-model="hosptlzdiscg.msg"
-                            ></textarea>
-                          <div class="limit-box">
-                              <span id="textarea1">{{ characterCount }}</span
-                              >/500자
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-
-          <article class="modal-menu-layout1 pt-10">
-            <div class="modal-menu-list">
-              <router-link
-                to=""
-                @click="backBtn(1)"
-                class="modal-menu-btn menu-cancel"
-              >이전
-              </router-link>
-              <router-link to="" @click="alertOpen(14)" class="modal-menu-btn menu-primary-outline"
-              >처리
-              </router-link
-              >
-            </div>
-          </article>
-        </div>
-        <!--end::Modal body-->
-      </div>
-      <!--end::Modal content-->
-    </div>
-    <!--end::Modal dialog-->
-  </div>
+  <BdasAdmsModal v-if='showModal === 4' :bd-detail='bdDetail' :pt-detail='ptDetail'
+                 :trans-info='transInfo'
+                 @close-modal='closeModal(4)' />
 
   <my-info-modal v-if="mode==='chrgInfo'" :isChrgInfo='true' :userInfo='chrgInfo' @closeModal='closeChrgDetail' />
 
@@ -4188,16 +3932,17 @@ import {
   openAddressFinder,
   openPopup,
   regNewPt,
-  reqBedType,
+  reqBedType
 } from '@/util/ui'
 import user from '@/store/modules/user'
 import { JobCode } from '@/util/sbas_cnst'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import RcmdHospModal from '@/components/user/list/RcmdHospModal.vue'
 import { getHisSampleData } from '@/util/his_sample_data'
+import BdasAdmsModal from '@/components/user/list/BdasAdmsModal.vue'
 
 export default {
-  components: { RcmdHospModal, MyInfoModal, DataPagination },
+  components: { BdasAdmsModal, RcmdHospModal, MyInfoModal, DataPagination },
   name: 'ListBed',
   props: {},
 
@@ -4475,6 +4220,7 @@ export default {
         this.dsInfo = this.initDsInfo
       } else {
         this.showModal = null
+        this.getBdList()
       }
     },
     showChrgDetail(chrgId) {
@@ -5055,19 +4801,6 @@ export default {
               return result.chrgInstId
           }
         }
-      }
-    },
-    setHosptlzdiscg(idx) {
-      switch (idx) {
-        case 1:
-          this.hosptlzdiscg.admsStatCd = 'IOST0001'
-          break
-        case 2:
-          this.hosptlzdiscg.admsStatCd = 'IOST0002'
-          break
-        case 3:
-          this.hosptlzdiscg.admsStatCd = 'IOST0003'
-          break
       }
     },
     showImageLightBox() {

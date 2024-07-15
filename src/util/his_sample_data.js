@@ -92,5 +92,10 @@ const sampleData = [
 ]
 
 export function getHisSampleData(pid) {
-  return sampleData.find((data) => data.pid === pid)
+  const data = sampleData.find((data) => data.pid === pid)
+  if (data) {
+    return data
+  } else {
+    return null
+  }
 }

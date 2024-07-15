@@ -99,7 +99,7 @@
                       <th>지역</th>
                       <td>
                         <div class="item-cell-box">
-                          <div class="sbox w-175px" @click="getSido">
+                          <div class="sbox w-175px">
                             <select v-model="filterMedinst['dstr1Cd']"
                                     @change="changeDstrCd1()">
                               <option value="" id="null">시/도 전체</option>
@@ -626,13 +626,13 @@
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { ref } from 'vue'
 import { mapState } from 'vuex'
-import { getGugun, getSido } from '@/util/ui'
 import DEFT_HOPT_IMG from '@/assets/img/img-hosp-def.jpg'
 import MedInstDetailModal from '@/components/admin/modal/MedInstDetailModal.vue'
 import MedInstBasicModal from '@/components/admin/modal/MedInstBasicModal.vue'
 import MedInstAddModal from '@/components/admin/modal/MedInstAddModal.vue'
 import MedInstEditModal from '@/components/admin/modal/MedInstEditModal.vue'
 import CloseButton from '@/components/common/CloseButton.vue'
+import { getSido } from '@/util/ui'
 
 export default {
   components: { CloseButton, MedInstEditModal, MedInstAddModal, MedInstBasicModal, MedInstDetailModal, DataPagination },
@@ -813,7 +813,6 @@ export default {
       this.isAlert = false
       this.alertIdx = 100
     },
-    getGugun,
     getSido,
     tabsMove(idx) {
       this.tabidx = idx
