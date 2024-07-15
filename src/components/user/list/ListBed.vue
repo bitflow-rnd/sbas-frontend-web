@@ -989,7 +989,7 @@
                 <div class="form-head-box"></div>
 
                 <div class="form-body-box">
-                  <form @submit="regDsInfo" class="table-box">
+                  <form class="table-box">
                     <table>
                       <colgroup>
                         <col style="width: 168px" />
@@ -2341,20 +2341,15 @@
           <!--begin::Modal title-->
           <h2>병상배정 세부내용 (<span style='color: #74AFEB'>{{ bdDetail?.bedStatCdNm ?? '' }}</span>)</h2>
           <!--end::Modal title-->
+
           <!--begin::Close-->
-
-          <div class="btn-list">
-            <div class="btn btn-sm btn-icon btn-active-color-primary" @click="closeModal(2)">
-              <i class="fa-solid fa-share-nodes text-black" style="font-size: 18px"></i>
-            </div>
-
-            <div
-              class="btn btn-sm btn-icon btn-active-color-primary"
-              id="asgnDetail-exist"
-              @click="closeModal(2)"
-            >
-              <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-              <span class="svg-icon svg-icon-1">
+          <div
+            class="btn btn-sm btn-icon btn-active-color-primary"
+            id="asgnDetail-exist"
+            @click="closeModal(2)"
+          >
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+            <span class="svg-icon svg-icon-1">
                 <svg
                   width="24"
                   height="24"
@@ -2383,10 +2378,8 @@
                   ></rect>
                 </svg>
               </span>
-              <!--end::Svg Icon-->
-            </div>
+            <!--end::Svg Icon-->
           </div>
-
           <!--end::Close-->
         </div>
 
@@ -4196,7 +4189,6 @@ import {
   openPopup,
   regNewPt,
   reqBedType,
-  toggleCheckbox
 } from '@/util/ui'
 import user from '@/store/modules/user'
 import { JobCode } from '@/util/sbas_cnst'
@@ -4205,7 +4197,6 @@ import RcmdHospModal from '@/components/user/list/RcmdHospModal.vue'
 import { getHisSampleData } from '@/util/his_sample_data'
 
 export default {
-
   components: { RcmdHospModal, MyInfoModal, DataPagination },
   name: 'ListBed',
   props: {},
@@ -4412,15 +4403,8 @@ export default {
       'bedStatCount',
     ]),
     ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip', 'isSpinner']),
-    ...mapState('user', ['userInfo', 'cmSido', 'chrgInfo']),
+    ...mapState('user', ['userInfo', 'chrgInfo']),
     ...mapState('admin', ['firestatnList', 'firemenList', 'medinstList', 'organMedi', 'cmSido']),
-
-    startIndex() {
-      return (this.page - 1) * this.displayRowsCount
-    },
-    endIndex() {
-      return this.page * this.displayRowsCount
-    },
     filterData() {
       let params = {}
       if (this.search['kwd']) params = { ...params, ptNm: this.search['kwd'] }
@@ -4463,13 +4447,8 @@ export default {
   },
   methods: {
     getSido,
-    toggleCheckbox,
     changePage(newPage) {
       this.$store.dispatch('bedasgn/getBdListWeb', {
-        ...this.filterData,
-        page: newPage
-      })
-      this.$store.dispatch('bedasgn/getBedStatCount', {
         ...this.filterData,
         page: newPage
       })
@@ -4494,11 +4473,9 @@ export default {
         this.$store.commit('patnt/setRpt', null)
         this.newPt = this.initNewPt
         this.dsInfo = this.initDsInfo
-
       } else {
         this.showModal = null
       }
-      this.getBdList()
     },
     showChrgDetail(chrgId) {
       this.$store.dispatch('user/getChrgUserInfo', chrgId)
@@ -4521,13 +4498,6 @@ export default {
         return this.filter.selectedStates.reduce((i, state) => i + this.bdCnt[state], 0)
       }
     },*/
-    parseIntAge(age) {
-      if (age !== null) {
-        return parseInt(age)
-      } else {
-        return null
-      }
-    },
     searchBedAsgn() {
       this.$store.dispatch('bedasgn/getBdListWeb', this.filterData)
       this.page = 1
@@ -4928,9 +4898,6 @@ export default {
     dsDtSame() {
       this.dsInfo.diagDt = this.dsInfo.occrDt
       this.dsInfo.rptDt = this.dsInfo.occrDt
-    },
-    regDsInfo() {
-      console.log(this.ptBI)
     },
     regSvInfo() {
       console.log(this.ptSv)

@@ -495,12 +495,6 @@ export default {
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHisInfo']),
     ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPts', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
-    startIndex() {
-      return (this.page - 1) * this.displayRowsCount
-    },
-    endIndex() {
-      return this.page * this.displayRowsCount
-    },
     filterData() {
       let params = {}
       if (this.filterPatient['searchText']) params = { ...params, ptNm: this.filterPatient['searchText'] }

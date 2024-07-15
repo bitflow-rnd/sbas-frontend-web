@@ -13,7 +13,7 @@
           <CloseButton @click='closeModal' />
           <!--end::Close-->
 
-          <article class='floating-request-box d-none'>
+          <article class='floating-request-box'>
             <div class='img-box'>
               <img src='/img/common/ic_request_patient.svg' alt='이미지' />
             </div>
@@ -1889,19 +1889,6 @@ function validateFormStep4() {
 .modal {
   --bs-modal-width: 98%;
   display: block;
-}
-
-.img-box {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.img-box > h2 {
-  color: #595959;
-  font-weight: normal;
-  margin-top: 12px;
 }
 
 input::-webkit-outer-spin-button,

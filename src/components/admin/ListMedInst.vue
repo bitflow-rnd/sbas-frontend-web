@@ -673,7 +673,9 @@ export default {
   mounted() {
     this.initNaverMap()
     this.setDefaultDstr1Cd()
-    this.search()
+    if (!this.medinstList) {
+      this.search()
+    }
   },
   setup() {
     const showTable = ref(false)

@@ -678,7 +678,7 @@ export default {
   name: 'AppHeader',
   components: { MyInfoModModal, MyInfoModal },
   created() {
-    this.$store.dispatch('user/getSido')
+    this.$store.dispatch('admin/getSido')
   },
   data() {
     return {

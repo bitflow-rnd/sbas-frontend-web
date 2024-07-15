@@ -1,32 +1,39 @@
 <template>
   <div class="row mt-5">
-    <div
-        class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
+    <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
     <div class="col-12 d-flex align-items-center justify-content-center">
       <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
         <ul class="pagination">
           <li class="paginate_button page-item previous" :class="{disabled: page < 2 || totalPageCount === 0}"
-              id="kt_table_users_previous"><a
-              @click="changePage(page - 1)" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0"
+              id="kt_table_users_previous">
+            <a @click="changePage(page - 1)"
+               aria-controls="kt_table_users"
+               data-dt-idx="0"
+               tabindex="0"
               class="page-link"><i
-              class="previous"></i></a></li>
+              class="previous"></i></a>
+          </li>
 
           <template v-for="num in [...Array(this.pageEndIndex + 1).keys()].splice(this.pageStartIndex)"
                     :key="num">
-            <li class="paginate_button page-item"><a @click="changePage(num)"
-                                                     aria-controls="kt_table_users" role="button"
-                                                     :class="{active: num === page}"
-                                                     :data-dt-idx="num" tabindex="0"
-                                                     class="page-link">{{ num }}</a></li>
+            <li class="paginate_button page-item">
+              <a @click='changePage(num)'
+                 aria-controls='kt_table_users' role='button'
+                 :class='{active: num === page}'
+                 :data-dt-idx='num' tabindex='0'
+                 class='page-link'>{{ num }}
+              </a></li>
           </template>
+
           <li class="paginate_button page-item next" :class="{disabled: !hasNextPage}"
-              id="kt_table_users_next"><a
-              @click="changePage(page + 1)"
+              id="kt_table_users_next">
+            <a @click="changePage(page + 1)"
               aria-controls="kt_table_users"
               data-dt-idx="4"
               tabindex="0"
               class="page-link"><i
-              class="next"></i></a></li>
+              class="next"></i></a>
+          </li>
         </ul>
       </div>
     </div>
