@@ -441,7 +441,6 @@ h2 {
 }
 .activity-head-box {
   padding: 12px 32px;
-  height: 100%;
 }
 section.cntc-activity .activity-head-box { padding: 12px 32px; }
 .view-img-box {
