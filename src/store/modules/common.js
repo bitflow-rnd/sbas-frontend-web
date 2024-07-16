@@ -1,6 +1,4 @@
-import axios from 'axios'
 import {API_PROD} from '@/util/constantURL'
-import router from '@/router/router'
 import { axios_cstm } from '@/util/axios_cstm'
 
 const commonCodesUrl = `${API_PROD}/api/v1/public/common/codes`

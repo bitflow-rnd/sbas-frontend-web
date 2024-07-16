@@ -99,7 +99,7 @@
                       <th>지역</th>
                       <td>
                         <div class="item-cell-box">
-                          <div class="sbox w-175px" @click="getSido">
+                          <div class="sbox w-175px">
                             <select v-model="filterMedinst['dstr1Cd']"
                                     @change="changeDstrCd1()">
                               <option value="" id="null">시/도 전체</option>
@@ -127,6 +127,7 @@
                             type="text"
                             placeholder="의료기관명 또는 ID 입력"
                             @keyup.enter="search"
+                            @blur='search'
                           />
 
                           <router-link to="" @click="search" class="input-btn">
@@ -177,87 +178,25 @@
                       </td>
                     </tr>
                     <tr v-show="showTable">
-                      <th>가용병상</th>
+                      <th>응급실 격리병상</th>
                       <td>
                         <div class="item-cell-box">
-                          <div class="cbox">
+                          <div class="cbox" :class='{"ms-4": idx > 0}' v-for='(item, idx) in this.emrgncyIsltnBedList' :key='idx'>
                             <label>
-                              <input type="checkbox" name="type1" /><i></i>
-                              <span class="txt">음압격리</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type1" /><i></i>
-                              <span class="txt">일반격리</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type1" /><i></i>
-                              <span class="txt">일반</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type1" /><i></i>
-                              <span class="txt">소아음압격리</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type1" /><i></i>
-                              <span class="txt">소아일반격리</span>
-                            </label>
-                          </div>
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type1" /><i></i>
-                              <span class="txt">소아</span>
+                              <input type="checkbox" :value='item.value' v-model='this.filterMedinst.emrgncyIsltnBed'/><i></i>
+                              <span class="txt">{{ item.name }}</span>
                             </label>
                           </div>
                         </div>
                       </td>
 
-                      <th>가용 중증병상</th>
+                      <th>감염병 입원병상</th>
                       <td>
                         <div class="item-cell-box">
-                          <div class="cbox">
+                          <div class="cbox" :class='{"ms-4": idx > 0}' v-for='(item, idx) in this.infectBedList' :key='idx'>
                             <label>
-                              <input type="checkbox" name="type2" /><i></i>
-                              <span class="txt">중환자</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type2" /><i></i>
-                              <span class="txt">중증</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type2" /><i></i>
-                              <span class="txt">준증증</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type2" /><i></i>
-                              <span class="txt">중등증</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type2" /><i></i>
-                              <span class="txt">기타</span>
+                              <input type="checkbox" :value='item.value' v-model='this.filterMedinst.infectBed'/><i></i>
+                              <span class="txt">{{ item.name }}</span>
                             </label>
                           </div>
                         </div>
@@ -267,65 +206,10 @@
                       <th>가용장비</th>
                       <td colspan="3">
                         <div class="item-cell-box">
-                          <div class="cbox">
+                          <div class="cbox" :class='{"ms-4": idx > 0}' v-for='(item, idx) in this.equipList' :key='idx'>
                             <label>
-                              <input type="checkbox" name="type3" /><i></i>
-                              <span class="txt">인공호흡기 일반</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type3" /><i></i>
-                              <span class="txt">인공호흡기 조산아</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type3" /><i></i>
-                              <span class="txt">인큐베이터</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type3" /><i></i>
-                              <span class="txt">ECMO</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type3" /><i></i>
-                              <span class="txt">중심체온조절유도기</span>
-                            </label>
-                          </div>
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type3" /><i></i>
-                              <span class="txt">고압산소치료기</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type3" /><i></i>
-                              <span class="txt">CT</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type3" /><i></i>
-                              <span class="txt">MRI</span>
-                            </label>
-                          </div>
-
-                          <div class="cbox ms-4">
-                            <label>
-                              <input type="checkbox" name="type3" /><i></i>
-                              <span class="txt">혈관촬영기</span>
+                              <input type="checkbox" :value='item.value' v-model='this.filterMedinst.equip'/><i></i>
+                              <span class="txt">{{ item.name }}</span>
                             </label>
                           </div>
                         </div>
@@ -742,13 +626,13 @@
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { ref } from 'vue'
 import { mapState } from 'vuex'
-import { getGugun, getSido } from '@/util/ui'
 import DEFT_HOPT_IMG from '@/assets/img/img-hosp-def.jpg'
 import MedInstDetailModal from '@/components/admin/modal/MedInstDetailModal.vue'
 import MedInstBasicModal from '@/components/admin/modal/MedInstBasicModal.vue'
 import MedInstAddModal from '@/components/admin/modal/MedInstAddModal.vue'
 import MedInstEditModal from '@/components/admin/modal/MedInstEditModal.vue'
 import CloseButton from '@/components/common/CloseButton.vue'
+import { getSido } from '@/util/ui'
 
 export default {
   components: { CloseButton, MedInstEditModal, MedInstAddModal, MedInstBasicModal, MedInstDetailModal, DataPagination },
@@ -757,8 +641,7 @@ export default {
     msg: String
   },
   computed: {
-    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList', 'medinstDetail', 'hpId']
-      , 'user', ['userInfo']),
+    ...mapState('admin', ['cmSido', 'cmGugun', 'medinstList', 'medinstDetail', 'hpId']),
 
     startIndex() {
       return (this.page - 1) * this.displayRowsCount
@@ -790,7 +673,9 @@ export default {
   mounted() {
     this.initNaverMap()
     this.setDefaultDstr1Cd()
-    this.search()
+    if (!this.medinstList) {
+      this.search()
+    }
   },
   setup() {
     const showTable = ref(false)
@@ -823,7 +708,10 @@ export default {
         dutyDivNam: [],
         dstr1Cd: '',
         dstr2Cd: '',
-        text: ''
+        text: '',
+        equip: [],
+        emrgncyIsltnBed: [],
+        infectBed: [],
       },
       inputValue: null,
       modMedinst: {
@@ -835,7 +723,32 @@ export default {
         mentalPatientYn: false,
         negativePressureRoomYn: false
       },
-      imagePreview: DEFT_HOPT_IMG
+      imagePreview: DEFT_HOPT_IMG,
+      emrgncyIsltnBedList: [
+        { name: '코호트격리', value: 'cohort' },
+        { name: '음압격리', value: 'negativePressure' },
+        { name: '일반격리', value: 'normal' },
+        { name: '소아음압격리', value: 'childNegativePressure' },
+        { name: '소아일반격리', value: 'childNormal' }
+      ],
+      infectBedList: [
+        { name: '중환자실', value: 'icu' },
+        { name: '중환자실내음압격리', value: 'icuNegativePressure' },
+        { name: '중증', value: 'severe' },
+        { name: '준중증', value: 'moderate' },
+        { name: '중등증', value: 'mild' }
+      ],
+      equipList: [
+        { name: '인공호흡기', value: 'ventilator' },
+        { name: '인공호흡기(조산아)', value: 'ventilatorPreemie' },
+        { name: '인큐베이터', value: 'incubator' },
+        { name: 'ECMO', value: 'ecmo' },
+        { name: '고압산소', value: 'highPressureOxygen' },
+        { name: 'CT', value: 'ct' },
+        { name: 'MRI', value: 'mri' },
+        { name: '혈관촬영기', value: 'bloodVesselImaging' },
+        { name: '중심체온조절유도기', value: 'bodyTemperatureControl' },
+      ]
     }
   },
   methods: {
@@ -900,7 +813,6 @@ export default {
       this.isAlert = false
       this.alertIdx = 100
     },
-    getGugun,
     getSido,
     tabsMove(idx) {
       this.tabidx = idx

@@ -1,96 +1,161 @@
 const sampleData = [
   {
     pid: '0010001',
-    admsDt: '20230111',
-    monStrtDt: '20230112',
-    monStrtTm: '230000'
+    admsDt: '20240629',
+    monStrtDt: '20240629',
+    monStrtTm: '230000',
+    deptNm: '감염내과',
+    wardNm: '86동병동',
+    roomNm: '8609',
+    spclNm: '담당의'
   },
   {
     pid: '0010002',
-    admsDt: '20230206',
-    monStrtDt: '20230206',
-    monStrtTm: '223000'
+    admsDt: '20240630',
+    monStrtDt: '20240630',
+    monStrtTm: '223000',
+    deptNm: '호흡기내과',
+    wardNm: '66서병동',
+    roomNm: '6625',
+    spclNm: '담당의'
   },
   {
     pid: '0010003',
-    admsDt: '20230122',
-    monStrtDt: '20230122',
-    monStrtTm: '233000'
+    admsDt: '20240701',
+    monStrtDt: '20240701',
+    monStrtTm: '233000',
+    deptNm: '감염내과',
+    wardNm: '86동병동',
+    roomNm: '8611',
+    spclNm: '담당의'
   },
   {
     pid: '0010004',
-    admsDt: '20230715',
-    monStrtDt: '20230715',
-    monStrtTm: '230000'
+    admsDt: '20240702',
+    monStrtDt: '20240702',
+    monStrtTm: '230000',
+    deptNm: '호흡기내과',
+    wardNm: '66서병동',
+    roomNm: '6630',
+    spclNm: '담당의'
   },
   {
     pid: '0010005',
-    admsDt: '20230320',
-    monStrtDt: '20230320',
-    monStrtTm: '230000'
+    admsDt: '20240703',
+    monStrtDt: '20240703',
+    monStrtTm: '230000',
+    deptNm: '감염내과',
+    wardNm: '73병동',
+    roomNm: '7388',
+    spclNm: '담당의'
   },
   {
     pid: '0020001',
-    admsDt: '20230105',
-    monStrtDt: '20230105',
-    monStrtTm: '210000'
+    admsDt: '20240629',
+    monStrtDt: '20240629',
+    monStrtTm: '210000',
+    deptNm: '감염내과',
+    wardNm: '73병동',
+    roomNm: '7387',
+    spclNm: '담당의'
   },
   {
     pid: '0020002',
-    admsDt: '20230730',
-    monStrtDt: '20230730',
-    monStrtTm: '230000'
+    admsDt: '20240630',
+    monStrtDt: '20240630',
+    monStrtTm: '230000',
+    deptNm: '감염내과',
+    wardNm: '73병동',
+    roomNm: '7391',
+    spclNm: '담당의'
   },
   {
     pid: '0020003',
-    admsDt: '20220103',
-    monStrtDt: '20220103',
-    monStrtTm: '170000'
+    admsDt: '20240701',
+    monStrtDt: '20240701',
+    monStrtTm: '170000',
+    deptNm: '감염내과',
+    wardNm: '43병동',
+    roomNm: '4327',
+    spclNm: '담당의'
   },
   {
     pid: '0020004',
-    admsDt: '20211221',
-    monStrtDt: '20211221',
-    monStrtTm: '170000'
+    admsDt: '20240702',
+    monStrtDt: '20240702',
+    monStrtTm: '170000',
+    deptNm: '감염내과',
+    wardNm: '73병동',
+    roomNm: '7393',
+    spclNm: '담당의'
   },
   {
     pid: '0020005',
-    admsDt: '20211230',
-    monStrtDt: '20211230',
-    monStrtTm: '210000'
+    admsDt: '20240703',
+    monStrtDt: '20240703',
+    monStrtTm: '210000',
+    deptNm: '호흡기내과',
+    wardNm: '73병동',
+    roomNm: '7386',
+    spclNm: '담당의'
   },
   {
     pid: '0030001',
-    admsDt: '20220208',
-    monStrtDt: '20220208',
-    monStrtTm: '230000'
+    admsDt: '20240703',
+    monStrtDt: '20240703',
+    monStrtTm: '230000',
+    deptNm: '감염내과',
+    wardNm: '43병동',
+    roomNm: '4328',
+    spclNm: '담당의'
   },
   {
     pid: '0030002',
-    admsDt: '20210115',
-    monStrtDt: '20210115',
-    monStrtTm: '230000'
+    admsDt: '20240629',
+    monStrtDt: '20240629',
+    monStrtTm: '230000',
+    deptNm: '감염내과',
+    wardNm: '73병동',
+    roomNm: '7393',
+    spclNm: '담당의'
   },
   {
     pid: '0030003',
-    admsDt: '20220223',
-    monStrtDt: '20220223',
-    monStrtTm: '214000'
+    admsDt: '20240630',
+    monStrtDt: '20240630',
+    monStrtTm: '214000',
+    deptNm: '신장내과',
+    wardNm: '73병동',
+    roomNm: '7394',
+    spclNm: '담당의'
   },
   {
     pid: '0030004',
-    admsDt: '20200905',
-    monStrtDt: '20200905',
-    monStrtTm: '230000'
+    admsDt: '20240701',
+    monStrtDt: '20240701',
+    monStrtTm: '230000',
+    deptNm: '알레르기감염내과',
+    wardNm: 'ICU2',
+    roomNm: 'ERW',
+    spclNm: '담당의'
   },
   {
     pid: '0030005',
-    admsDt: '20201117',
-    monStrtDt: '20201117',
-    monStrtTm: '230000'
+    admsDt: '20240702',
+    monStrtDt: '20240702',
+    monStrtTm: '230000',
+    deptNm: '알레르기감염내과',
+    wardNm: 'ICU2',
+    roomNm: 'ERW',
+    spclNm: '담당의'
   },
 ]
 
 export function getHisSampleData(pid) {
-  return sampleData.find((data) => data.pid === pid)
+  const data = sampleData.find((data) => data.pid === pid)
+  if (data) {
+    return data
+  } else {
+    return null
+  }
 }
