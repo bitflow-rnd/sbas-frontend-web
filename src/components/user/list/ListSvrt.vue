@@ -335,7 +335,7 @@ import SvrtInfoModal from '@/components/user/modal/SvrtInfoModal.vue'
 import { axios_cstm } from '@/util/axios_cstm'
 import { API_PROD } from '@/util/constantURL'
 import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
-import BedRequestModal from '@/components/user/list/BedRequestModal.vue'
+import BedRequestModal from '@/components/user/bdas/BedRequestModal.vue'
 
 export default {
   components: {

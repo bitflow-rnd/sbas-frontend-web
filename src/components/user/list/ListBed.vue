@@ -266,52 +266,11 @@
                       <td colspan="3">
                         <div class="item-row-box">
                           <div class="item-cell-box">
-                            <div class="cbox">
+                            <div class="cbox" :class='{"ms-4": idx > 0 }' v-for='(item, idx) in svrtTypeCd' :key='idx'>
                               <label>
-                                <input v-model='search.svrtTypeCd' value='SVTP0006' type="checkbox" name="type3"
+                                <input v-model='search.svrtTypeCd' :value='item.cdId' type="checkbox"
                                        @change="searchBedAsgn" /><i></i>
-                                <span class="txt">위중증</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input v-model='search.svrtTypeCd' value='SVTP0005' type="checkbox" name="type3"
-                                       @change="searchBedAsgn" /><i></i>
-                                <span class="txt">중증</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input v-model='search.svrtTypeCd' value='SVTP0004' type="checkbox" name="type3"
-                                       @change="searchBedAsgn" /><i></i>
-                                <span class="txt">준증증</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input v-model='search.svrtTypeCd' value='SVTP0003' type="checkbox" name="type3"
-                                       @change="searchBedAsgn" /><i></i>
-                                <span class="txt">중등증</span>
-                              </label>
-                            </div>
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input v-model='search.svrtTypeCd' value='SVTP0002' type="checkbox" name="type3"
-                                       @change="searchBedAsgn" /><i></i>
-                                <span class="txt">경증</span>
-                              </label>
-                            </div>
-
-
-                            <div class="cbox ms-4">
-                              <label>
-                                <input v-model='search.svrtTypeCd' value='SVTP0001' type="checkbox" name="type3"
-                                       @change="searchBedAsgn" /><i></i>
-                                <span class="txt">기타</span>
+                                <span class="txt">{{ item.cdNm }}</span>
                               </label>
                             </div>
                           </div>
@@ -1366,7 +1325,7 @@
                 <div class="form-head-box"></div>
 
                 <div class="form-body-box">
-                  <form @submit="regSvInfo" class="table-box">
+                  <form class="table-box">
                     <table>
                       <colgroup>
                         <col style="width: 168px" />
@@ -3913,12 +3872,11 @@
 
 <script>
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
-import { mapState } from 'vuex'
+import { mapState, useStore } from 'vuex'
 import { ref } from 'vue'
 import {
   backBtn,
   getAge,
-  getDt,
   getDtBlue,
   getGndr,
   getSido,
@@ -3938,7 +3896,7 @@ import user from '@/store/modules/user'
 import { JobCode } from '@/util/sbas_cnst'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import RcmdHospModal from '@/components/user/list/RcmdHospModal.vue'
-import BdasAdmsModal from '@/components/user/list/BdasAdmsModal.vue'
+import BdasAdmsModal from '@/components/user/bdas/BdasAdmsModal.vue'
 
 export default {
   components: { BdasAdmsModal, RcmdHospModal, MyInfoModal, DataPagination },
@@ -3965,14 +3923,15 @@ export default {
     const isAlert = ref(false)
     const cncBtn = ref(false)
     const errMsg = ''
-
+    const store = useStore()
     return {
       showTable,
       trsfArr,
       isAlert,
       errMsg,
       cncBtn /* alert 취소버튼 유무 */,
-      toggleTable
+      toggleTable,
+      store
     }
   },
   watch: {},
@@ -4011,6 +3970,7 @@ export default {
         page: 1,
         bedStatCd: null
       },
+      svrtTypeCd: this.store.getters['common/getSeverityType'],
       preRpt: null,
       content: '',
       characterCount: 0,
@@ -4159,27 +4119,6 @@ export default {
       params = { ...params, bedStatCd: this.search['bedStatCd'] }
       return params
     }
-    /*sortedBdList() {
-      let list = []
-      if (this.bdList2 !== null && this.bdList2 !== undefined) {
-        list = this.bdList2.reduce((acc, item, idx) => {
-          return acc.concat(
-            item.items.map((innerItem) => {
-              innerItem.state = idx
-              this.sortedList = innerItem
-              return innerItem
-            })
-          )
-        }, [])
-      }
-      if (this.filter.selectedStates.length === 0) {
-        //this.sortedList = list
-        return list
-      } else {
-        //this.sortedList = list.filter((item) => this.filter.selectedStates.includes(item.state))
-        return list.filter((item) => this.filter.selectedStates.includes(item.state))
-      }
-    }*/
   },
   methods: {
     getSido,
@@ -4247,12 +4186,7 @@ export default {
     allChk() {
       this.sortedBdList.forEach((bdList) => {
         bdList.chked = this.allChked
-        /*삭제기능 있는지 확인*/
-        this.setDelBdList(bdList)
       })
-    },
-    setDelBdList(data) {
-      console.log(data)
     },
     initNaverMap() {
       // 네이버 지도 API 로드
@@ -4543,7 +4477,6 @@ export default {
     getUndrDses,
     goAsgn,
     maskingNm,
-    getDt,
     getDtBlue,
     getTag,
     updateCharacterCount(idx) {
@@ -4614,9 +4547,6 @@ export default {
     dsDtSame() {
       this.dsInfo.diagDt = this.dsInfo.occrDt
       this.dsInfo.rptDt = this.dsInfo.occrDt
-    },
-    regSvInfo() {
-      console.log(this.ptSv)
     },
     regStrtPoint() {
       console.log(this.spInfo)

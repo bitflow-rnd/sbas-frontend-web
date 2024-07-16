@@ -375,11 +375,11 @@
 <script>
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { mapState } from 'vuex'
-import { getUndrDses, toggleCheckbox } from '@/util/ui'
+import { toggleCheckbox } from '@/util/ui'
 import { reactive, ref } from 'vue'
 import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
 import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
-import BedRequestModal from '@/components/user/list/BedRequestModal.vue'
+import BedRequestModal from '@/components/user/bdas/BedRequestModal.vue'
 
 export default {
   components: {
@@ -615,7 +615,7 @@ export default {
         this.isAlert = true
         this.newPt = { ...this.rptInfo, bascAddr: this.rptInfo.baseAddr, undrDsesCd: [], undrDsesEtc: null }
         console.log(this.newPt)
-        this.alertIdx = 4
+        this.alertIdx = 3
       } else if (idx === 9) {
         /*역조서 삭제*/
         this.errMsg = '역학조사서 이미지를\n삭제하시겠습니까?'
@@ -625,7 +625,7 @@ export default {
       } else if (idx === 10) {
         this.errMsg = '역학조사서가\n삭제되었습니다.'
         this.isAlert = true
-        this.alertIdx = 10
+        this.alertIdx = 3
       }
     },
     setNull() {
@@ -643,14 +643,10 @@ export default {
     },
     cfrmAl(res) {
       if (res === 0) {
-        console.log(0)
         this.alertOpen(1)
       } else if (res === 1) {
-        console.log('1')
         this.alertOpen(2)
       } else if (res === 3) {
-        this.alertClose()
-      } else if (res === 4) {
         this.alertClose()
       } else if (res === 9) {
         this.removeRpt()
@@ -658,8 +654,6 @@ export default {
         this.dsInfo = this.initDsInfo
         this.alertClose()
         this.alertOpen(10)
-      } else if (res === 10) {
-        this.alertClose()
       }
     },
     closePopup(idx) {
