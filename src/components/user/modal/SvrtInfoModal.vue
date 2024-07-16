@@ -93,24 +93,24 @@
                       <td><span class="text-black">{{ item['roomNm'] }}</span></td>
                       <td><span class="text-black">{{ item['spclNm'] }}</span></td>
                       <td><span class="text-black">{{ item.id.msreDt }}</span></td>
-                      <td><span class="text-black number">{{ item['bun'] }}</span></td>
-                      <td><span class="text-black number">{{ item['cre'] }}</span></td>
-                      <td><span class="text-black number">{{ item['hem'] }}</span></td>
-                      <td><span class="text-black number">{{ item['ldh'] }}</span></td>
-                      <td><span class="text-black number">{{ item['lym'] }}</span></td>
-                      <td><span class="text-black number">{{ item['neu'] }}</span></td>
-                      <td><span class="text-black number">{{ item['pla'] }}</span></td>
-                      <td><span class="text-black number">{{ item['pot'] }}</span></td>
-                      <td><span class="text-black number">{{ item['sod'] }}</span></td>
-                      <td><span class="text-black number">{{ item['wbc'] }}</span></td>
-                      <td><span class="text-black number">{{ item['crp'] }}</span></td>
-                      <td><span class="text-black number">{{ item['bdtp'] }}</span></td>
-                      <td><span class="text-black number">{{ item['resp'] }}</span></td>
-                      <td><span class="text-black number">{{ item['hr'] }}</span></td>
-                      <td><span class="text-black number">{{ item['sbp'] }}</span></td>
-                      <td><span class="text-black number">{{ item['dbp'] }}</span></td>
-                      <td><span class="text-black number">{{ item['spo2'] }}</span></td>
-                      <td><span class="text-black">{{ item['oxygenApply'] }}</span></td>
+                      <td><span class="text-black number">{{ item['bun'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['cre'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['hem'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['ldh'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['lym'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['neu'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['pla'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['pot'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['sod'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['wbc'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['crp'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['bdtp'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['resp'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['hr'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['sbp'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['dbp'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['spo2'] ?? '-' }}</span></td>
+                      <td><span class="text-black">{{ item['oxygenApply'] ?? '-' }}</span></td>
                     </tr>
                   </tbody>
                 </table>
