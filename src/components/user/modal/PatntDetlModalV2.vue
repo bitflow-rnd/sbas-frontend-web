@@ -317,9 +317,9 @@
     </div>
   </div>
 
-  <svrt-info-modal v-if='model.showSvrtInfoModal' :exist-pt='this.ptDetail' @closeModal='closeSvrtInfoModal()' />
+  <svrt-info-modal v-if='model.showSvrtInfoModal' :exist-pt='props.ptDetail' @closeModal='closeSvrtInfoModal()' />
 
-  <patnt-reg-modal v-if='model.showEditModal' :exist-pt='this.ptDetail' @closeModal='closeEditModal()' />
+  <patnt-reg-modal v-if='model.showEditModal' :exist-pt='props.ptDetail' @closeModal='closeEditModal()' />
 
 </template>
 
