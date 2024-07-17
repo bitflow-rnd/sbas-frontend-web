@@ -18,7 +18,7 @@
             >확인
             </router-link>
             <router-link
-              v-show='cncBtn'
+              v-show='props.cncBtn'
               to=''
               @click='alertClose'
               class='modal-menu-btn menu-cancel'

@@ -10,7 +10,7 @@
           <h2>입·퇴원 처리</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
-          <CloseButton @click='closeModal' />
+          <CloseButton @close='closeModal' />
           <!--end::Close-->
 
           <article class='floating-request-box'>
