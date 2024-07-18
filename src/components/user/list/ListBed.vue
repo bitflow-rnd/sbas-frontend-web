@@ -515,42 +515,7 @@
           <h2>병상요청</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
-          <div
-            id="reqest_exit"
-            class="btn btn-sm btn-icon btn-active-color-primary"
-          >
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span @click="closeModal(0)" class="svg-icon svg-icon-1" data-bs-dismiss="modal">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  opacity="0.5"
-                  x="6"
-                  y="17.3137"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(-45 6 17.3137)"
-                  fill="currentColor"
-                ></rect>
-                <rect
-                  x="7.41422"
-                  y="6"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(45 7.41422 6)"
-                  fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-            <!--end::Svg Icon-->
-          </div>
+          <CloseButton @close="closeModal(0)" />
           <!--end::Close-->
 
           <article class="floating-request-box">
@@ -1998,7 +1963,7 @@
                 <div class="form-head-box"></div>
 
                 <div class="form-body-box">
-                  <form @submit="regStrtPoint" class="table-box">
+                  <form class="table-box">
                     <table>
                       <colgroup>
                         <col style="width: 168px" />
@@ -3505,9 +3470,10 @@ import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import RcmdHospModal from '@/components/user/list/RcmdHospModal.vue'
 import BdasAdmsModal from '@/components/user/bdas/BdasAdmsModal.vue'
 import BdasTrnsModal from '@/components/user/list/BdasTrnsModal.vue'
+import CloseButton from '@/components/common/CloseButton.vue'
 
 export default {
-  components: { BdasTrnsModal, BdasAdmsModal, RcmdHospModal, MyInfoModal, DataPagination },
+  components: { CloseButton, BdasTrnsModal, BdasAdmsModal, RcmdHospModal, MyInfoModal, DataPagination },
   name: 'ListBed',
   props: {},
 
@@ -3658,10 +3624,6 @@ export default {
         msg: '',
         reqHospIdList: []
       },
-      selectedInst: '구급대',
-      selectedFm1: '구급대원',
-      selectedFm2: '구급대원',
-      selectedFm3: '구급대원',
       trsfInfo: {
         instId: '',
         chfTelno: '',
@@ -4091,13 +4053,6 @@ export default {
     },
     getGndr,
     getAge,
-    getAddr(txt) {
-      const words = txt.split(' ')
-
-      if (words.length >= 2) {
-        return words.slice(0, 2).join(' ')
-      } else words
-    },
     openAddressFinder,
     cmpExist(idx) {
       const isMatch = (a, b) => a === b
@@ -4148,9 +4103,6 @@ export default {
     dsDtSame() {
       this.dsInfo.diagDt = this.dsInfo.occrDt
       this.dsInfo.rptDt = this.dsInfo.occrDt
-    },
-    regStrtPoint() {
-      console.log(this.spInfo)
     },
     regBioAnlys() {
       this.$store.dispatch('patnt/regBioAnlys', this.bioAnlys)
@@ -4269,26 +4221,12 @@ export default {
         })
       }
     },
-    loadTrnsfInfo(num) {
-      /*요청자 지역코드 받아와야 됨*/
-      const data = { dstr1Cd: num }
-      this.$store.dispatch('admin/getFireStatn', data)
-      this.openModal(3)
-    },
     getFiremen(data) {
       /*구급대원*/
       console.log(data)
       this.trsfInfo.instId = data.instId
       this.trsfInfo.ambsNm = data.instNm
       this.$store.dispatch('admin/getFiremen', data)
-    },
-    fillFiremen(data, idx) {
-      console.log('실행?' + data)
-      this.trsfInfo[`crew${idx}Id`] = data.crewId
-      this.trsfInfo[`crew${idx}Pstn`] = data.pstn
-      this.trsfInfo[`crew${idx}Nm`] = data.crewNm
-      this.trsfInfo[`crew${idx}Telno`] = data.telno
-      console.log(this.trsfInfo)
     },
     showImageLightBox() {
       this.imgsRef = this.preRpt

@@ -9,7 +9,7 @@
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
           <!--begin::Modal title-->
           <h2>중증 관찰 환자 정보</h2>
-          <CloseButton @click="closeModal" />
+          <CloseButton @close="closeModal" />
           <article class="floating-request-box">
             <div class="img-box">
               <img src="/img/common/ic_request_patient.svg" alt="이미지" />

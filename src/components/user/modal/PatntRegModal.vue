@@ -473,7 +473,7 @@
 <script setup>
 import { defineProps, reactive, defineEmits, onMounted } from 'vue'
 import ExistPatntModal from '@/components/user/modal/ExistPatntModal.vue'
-import { getAge, openAddressFinder } from '@/util/ui'
+import { getAge, openAddressFinder, getGndr } from '@/util/ui'
 import { useStore } from 'vuex'
 import { API_PROD } from '@/util/constantURL'
 import axios from 'axios'
@@ -600,19 +600,6 @@ function showImage(attcId) {
       .catch((error) => {
         console.error("An error occurred while fetching the image:", error);
       })
-  }
-}
-
-function getGndr(no2){
-  if(no2 !== '' && no2 !== null){
-    if(no2.length > 1) {
-      no2 = no2.slice(0,1)
-    }
-    if (no2 === '1' || no2 === '3') {
-      return '남성'
-    } else {
-      return '여성'
-    }
   }
 }
 

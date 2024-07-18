@@ -6,7 +6,7 @@
           <h2>환자 상세 정보</h2>
 
           <div class='btn-list'>
-            <CloseButton @click="emits('closeModal')"/>
+            <CloseButton @close="emits('closeModal')"/>
           </div>
         </div>
 

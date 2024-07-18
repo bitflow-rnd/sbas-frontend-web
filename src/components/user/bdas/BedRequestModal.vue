@@ -10,7 +10,7 @@
           <h2>병상요청</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
-          <CloseButton @click='closeModal' />
+          <CloseButton @close='closeModal' />
           <!--end::Close-->
 
           <article class='floating-request-box'>
@@ -1555,7 +1555,7 @@
 <script setup>
 import { defineEmits, defineProps, onMounted, reactive, watch } from 'vue'
 import CloseButton from '@/components/common/CloseButton.vue'
-import { getAge, getTelno } from '@/util/ui'
+import { getAge, getTelno, getGndr } from '@/util/ui'
 import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
@@ -1761,21 +1761,6 @@ function closeModal() {
   model.dsInfo = null
   model.svInfo = null
   model.spInfo = null
-}
-
-function getGndr(no2) {
-  if (no2 !== '' && no2 !== null) {
-    if (no2.length > 1) {
-      no2 = no2.slice(0, 1)
-    }
-    if (no2 === '1' || no2 === '3') {
-      model.newPt.gndr = '남'
-      return model.newPt.gndr
-    } else {
-      model.newPt.gndr = '여'
-      return model.newPt.gndr
-    }
-  }
 }
 
 function openAddressFinder(idx) {

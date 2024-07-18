@@ -230,7 +230,7 @@
                             <span class='txt'>대원#1</span>
                           </label>
 
-                          <label>
+                          <label v-show='model.trsfInfo.crew2Nm'>
                             <input
                               v-model='model.trsfInfo.chfTelno'
                               :value='model.crew2Telno'
@@ -239,7 +239,7 @@
                             <span class='txt'>대원#2</span>
                           </label>
 
-                          <label>
+                          <label v-show='model.trsfInfo.crew3Nm'>
                             <input
                               v-model='model.trsfInfo.chfTelno'
                               :value='model.crew3Telno'
@@ -358,7 +358,7 @@ const model = reactive({
     crew3Pstn: '',
     crew3Nm: '',
     crew3Telno: null,
-    chfTelno: null,
+    chfTelno: 1,
     vecno: '',
     msg: '',
   },
@@ -374,6 +374,7 @@ const model = reactive({
   errMsg: '',
   cncBtn: false,
   confirmAlert: false,
+  showErrorMsg: false,
 })
 
 onMounted(() => {
@@ -413,16 +414,6 @@ function getFiremen() {
     })
 }
 
-function openAlert() {
-  model.isAlert = true
-  model.errMsg = '이송처리 하시겠습니까?'
-  model.cncBtn = true
-}
-
-function closeAlert() {
-  model.isAlert = false
-}
-
 function cfmTrsf() {
   const url = `${API_PROD}/api/v1/private/bedasgn/confirmtransf`
   model.trsfInfo.instId = model.selectedInst.instId
@@ -440,6 +431,24 @@ function cfmTrsf() {
     .catch((error) => {
       console.log(error)
     })
+}
+
+function openAlert() {
+  if (model.trsfInfo.chfTelno === 1) {
+    model.trsfInfo.chfTelno = model.trsfInfo.crew1Telno
+  } else if (model.trsfInfo.chfTelno === 2) {
+    model.trsfInfo.chfTelno = model.trsfInfo.crew2Telno
+  } else if (model.trsfInfo.chfTelno === 3) {
+    model.trsfInfo.chfTelno = model.trsfInfo.crew3Telno
+  }
+
+  model.isAlert = true
+  model.errMsg = '이송처리 하시겠습니까?'
+  model.cncBtn = true
+}
+
+function closeAlert() {
+  model.isAlert = false
 }
 
 function fillFiremen(data, idx) {
