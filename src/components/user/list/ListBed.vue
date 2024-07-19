@@ -2459,7 +2459,6 @@ import {
   reqBedType
 } from '@/util/ui'
 import user from '@/store/modules/user'
-import { JobCode } from '@/util/sbas_cnst'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import BdasDetailModal from '@/components/user/bdas/BdasDetailModal.vue'
@@ -2504,7 +2503,6 @@ export default {
   watch: {},
   data() {
     return {
-      JobCode,
       sortedList: [],
       reqBedType,
       displayRowsCount: 15,
@@ -2539,8 +2537,6 @@ export default {
       },
       svrtTypeCd: this.store.getters['common/getSeverityType'],
       preRpt: null,
-      content: '',
-      characterCount: 0,
       selectedFile: true,
       imgUrl: null,
       tab: 0 /* 병상요청 */,
@@ -2581,7 +2577,6 @@ export default {
         diagDrNm: '',
         instId: '',
         rcptPhc: 0
-
       },
       svInfo: {
         ptId: '',
@@ -2609,14 +2604,6 @@ export default {
         reqDstr1Cd: '27',
         reqDstr2Cd: null
       },
-      aprv: {
-        ptId: '',
-        bdasSeq: '',
-        aprvYn: 'Y',
-        negCd: null,
-        msg: '',
-        reqHospIdList: []
-      },
       trsfInfo: {
         instId: '',
         chfTelno: '',
@@ -2626,13 +2613,6 @@ export default {
         crew1Id: '구급대원',
         crew2Id: '구급대원',
         crew3Id: '구급대원'
-      },
-      mediConfirm: {
-        ptId: '',
-        aprvYn: 'Y',
-        hospId: '',
-        negCd: '',
-        asgnReqSeq: null
       },
       chrgUserId: [],
       undrDsesCdArr: [],
@@ -2831,7 +2811,6 @@ export default {
         /*신규병상요청 끝*/
         this.getBdList()
       } else if (idx === 3) {
-
         this.errMsg = '환자 정보가\n등록되었습니다.'
         this.isAlert = true
         this.alertIdx = 3
@@ -2858,32 +2837,6 @@ export default {
           console.log(this.dsInfo.ptId)
         }
         this.alertIdx = 4
-      } else if (idx === 5) {
-        /* 승인배정반 불가 alert*/
-        this.errMsg = '배정 취소하시겠습니까?'
-        this.cncBtn = true
-        this.isAlert = true
-        if (this.userInfo.jobCd === JobCode.Aprv || this.userInfo.jobCd === JobCode.Sysa) {
-          this.alertIdx = 5
-        } else if (this.userInfo.jobCd === JobCode.Meds) {
-          this.alertIdx = 14
-        }
-      } else if (idx === 6) {
-        /*승인불가 후 alert*/
-        this.errMsg = '배정불가 처리 되었습니다'
-        this.isAlert = true
-        this.alertIdx = 6
-      } else if (idx === 7) {
-        /*배정반 원내승인 */
-        this.errMsg = '병상요청을\n승인 하시겠습니까?'
-        this.cncBtn = true
-        this.isAlert = true
-        this.alertIdx = 7
-      } else if (idx === 8) {
-        /*배정반 원내승인 후 alert*/
-        this.errMsg = '승인 되었습니다.'
-        this.isAlert = true
-        this.alertIdx = 8
       } else if (idx === 9) {
         /*역조서 삭제*/
         this.errMsg = '역학조사서 이미지를\n삭제하시겠습니까?'
@@ -2894,20 +2847,6 @@ export default {
         this.errMsg = '역학조사서가\n삭제되었습니다.'
         this.isAlert = true
         this.alertIdx = 10
-      } else if (idx === 11) {
-        this.errMsg = '이송처리하겠습니까?'
-        this.isAlert = true
-        this.alertIdx = 11
-      } else if (idx === 12) {
-        /*의료진 승인*/
-        this.errMsg = '병상요청을 승인 하시겠습니까?'
-        this.cncBtn = true
-        this.isAlert = true
-        this.alertIdx = 12
-      } else if (idx === 13) {
-        this.errMsg = '승인 되었습니다.'
-        this.isAlert = true
-        this.alertIdx = 13
       }
     },
     async cfrmAl(res) {
@@ -2924,28 +2863,6 @@ export default {
       } else if (res === 4) {
         console.log('역학조사서 확인')
         this.alertClose()
-      } else if (res === 5) {
-        // 배정반 배정 불가
-        this.aprv.aprvYn = 'N'
-        this.aprv.ptId = this.bdDetail.ptId
-        this.aprv.bdasSeq = this.bdDetail.bdasSeq
-        this.$store.dispatch('bedasgn/aprvBedAsgn', this.aprv)
-        this.alertClose()
-        this.alertOpen(6)
-      } else if (res === 6) {
-        this.alertClose()
-        this.setNull()
-      } else if (res === 7) {
-        // 배정반 승인
-        this.aprv.ptId = this.bdDetail.ptId
-        this.aprv.bdasSeq = this.bdDetail.bdasSeq
-        this.$store.dispatch('bedasgn/aprvBedAsgn', this.aprv)
-        this.alertClose()
-        this.alertOpen(8)
-      } else if (res === 8) {
-        this.alertClose()
-        this.closeModal()
-        this.setNull()
       } else if (res === 9) {
         this.removeRpt()
         this.newPt = this.initNewPt
@@ -2954,40 +2871,6 @@ export default {
         this.alertOpen(10)
       } else if (res === 10) {
         this.alertClose()
-      } else if (res === 11) {
-        this.trsfInfo.bdasSeq = this.bdDetail.bdasSeq
-        this.trsfInfo.ptId = this.bdDetail.ptId
-        console.log(this.trsfInfo)
-        await this.$store.dispatch('bedasgn/cfmTrsf', this.trsfInfo)
-        this.alertClose()
-        this.popup = 100
-        this.closeModal()
-      } else if (res === 12) {
-        // Todo 전산이 승인하면 담당 병원정보 없어서 에러발생
-        this.mediConfirm.ptId = this.bdDetail.ptId
-        this.mediConfirm.bdasSeq = this.bdDetail.bdasSeq
-        this.mediConfirm.hospId = this.userInfo.instId
-        this.mediConfirm.asgnReqSeq = this.getAsgnReqSeq()
-        console.log(this.mediConfirm)
-        this.$store.dispatch('bedasgn/cfmMedi', this.mediConfirm)
-        this.alertClose()
-        this.alertOpen(13)
-      } else if (res === 13) {
-        this.alertClose()
-        this.popup = 100
-        this.closeModal()
-        this.tab = 0
-      } else if (res === 14) {
-        this.mediConfirm.ptId = this.bdDetail.ptId
-        this.mediConfirm.bdasSeq = this.bdDetail.bdasSeq
-        this.mediConfirm.hospId = this.userInfo.instId
-        this.mediConfirm.asgnReqSeq = this.getAsgnReqSeq()
-        this.mediConfirm.negCd = this.aprv.negCd
-        this.mediConfirm.aprvYn = 'N'
-        console.log(this.mediConfirm)
-        this.$store.dispatch('bedasgn/cfmMedi', this.mediConfirm)
-        this.alertClose()
-        this.alertOpen(13)
       }
       console.log(res)
     },
@@ -3001,8 +2884,6 @@ export default {
     closePopup(idx) {
       if (idx === 0) {
         this.popup = 100
-        this.content = ''
-        this.characterCount = 0
       }
     },
     backBtn,
@@ -3037,7 +2918,6 @@ export default {
     async uploadRpt(event) {
       const fileInput = event.target
       const file = fileInput.files[0]
-
       console.log(file)
       const formData = new FormData()
       formData.append('param1', 'edidemreport')
@@ -3047,7 +2927,6 @@ export default {
         console.log('실행')
         this.alertOpen(4)
       }
-
       //역조서 이미지 미리보기 만들기
       const reader = new FileReader()
       reader.onload = (e) => {
@@ -3180,13 +3059,6 @@ export default {
           }
         })
       }
-    },
-    getFiremen(data) {
-      /*구급대원*/
-      console.log(data)
-      this.trsfInfo.instId = data.instId
-      this.trsfInfo.ambsNm = data.instNm
-      this.$store.dispatch('admin/getFiremen', data)
     },
     showImageLightBox() {
       this.imgsRef = this.preRpt

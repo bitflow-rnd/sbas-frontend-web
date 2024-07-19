@@ -281,7 +281,6 @@
                     @closeModal='closeModal(0)'
                     @openBdasModal='this.showPatntModal(ptDetail,1)' />
 
-  <!-- Todo: replace this model with BedRequestModal.vue -->
   <!--  신규병상요청   -->
   <BedRequestModal v-if='showPatnt' @close-patnt-request='closePatntRequest'
                    :pt-id='newPt.ptId' />
@@ -335,7 +334,7 @@ import SvrtInfoModal from '@/components/user/modal/SvrtInfoModal.vue'
 import { axios_cstm } from '@/util/axios_cstm'
 import { API_PROD } from '@/util/constantURL'
 import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
-import BedRequestModal from '@/components/user/bdas/BedRequestModal.vue'
+import BedRequestModal from '@/components/user/bdas/BdasReqModal.vue'
 
 export default {
   components: {

@@ -379,7 +379,7 @@ import { toggleCheckbox } from '@/util/ui'
 import { reactive, ref } from 'vue'
 import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
 import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
-import BedRequestModal from '@/components/user/bdas/BedRequestModal.vue'
+import BedRequestModal from '@/components/user/bdas/BdasReqModal.vue'
 
 export default {
   components: {

@@ -247,8 +247,6 @@ const model = reactive({
     deptNm: null,
     pid: '',
   },
-  characterCount: 0,
-  content: '',
   isAlert: false,
   errMsg: '',
   cncBtn: false,

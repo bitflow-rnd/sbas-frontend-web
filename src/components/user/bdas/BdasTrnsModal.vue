@@ -361,8 +361,6 @@ const model = reactive({
     vecno: '',
     msg: '',
   },
-  content: '',
-  characterCount: 0,
   selectedFm1: null,
   selectedFm2: null,
   selectedFm3: null,
