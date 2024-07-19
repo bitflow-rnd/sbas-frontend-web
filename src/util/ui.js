@@ -66,11 +66,9 @@ export function getGndr(no2) {
       no2 = no2.slice(0, 1)
     }
     if (no2 === '1' || no2 === '3') {
-      this.newPt.gndr = '남'
-      return this.newPt.gndr
+      return '남'
     } else {
-      this.newPt.gndr = '여'
-      return this.newPt.gndr
+      return '여'
     }
   }
 }
