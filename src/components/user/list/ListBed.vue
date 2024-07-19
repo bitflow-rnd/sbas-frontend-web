@@ -2461,15 +2461,12 @@ import {
 import user from '@/store/modules/user'
 import { JobCode } from '@/util/sbas_cnst'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
-import RcmdHospModal from '@/components/user/list/RcmdHospModal.vue'
-import BdasAdmsModal from '@/components/user/bdas/BdasAdmsModal.vue'
-import BdasTrnsModal from '@/components/user/list/BdasTrnsModal.vue'
 import CloseButton from '@/components/common/CloseButton.vue'
-import BdasDetailModal from '@/components/user/list/BdasDetailModal.vue'
-import BdasAprv from '@/components/user/list/BdasAprv.vue'
+import BdasDetailModal from '@/components/user/bdas/BdasDetailModal.vue'
+import RcmdHospModal from '@/components/user/list/RcmdHospModal.vue'
 
 export default {
-  components: { BdasAprv, BdasDetailModal, CloseButton, BdasTrnsModal, BdasAdmsModal, RcmdHospModal, MyInfoModal, DataPagination },
+  components: { RcmdHospModal, BdasDetailModal, CloseButton, MyInfoModal, DataPagination },
   name: 'ListBed',
   props: {},
 
@@ -3014,15 +3011,6 @@ export default {
     maskingNm,
     getDtBlue,
     getTag,
-    updateCharacterCount(idx) {
-      const messageProps = [this.aprv, this.mediConfirm, this.trsfInfo, this.trsfInfo]
-      const currentMessage = messageProps[idx].msg
-      if (currentMessage === null || currentMessage === '' || currentMessage === undefined) {
-        this.characterCount = this.content.length
-      } else {
-        this.characterCount = currentMessage.length
-      }
-    },
     getGndr,
     getAge,
     openAddressFinder,

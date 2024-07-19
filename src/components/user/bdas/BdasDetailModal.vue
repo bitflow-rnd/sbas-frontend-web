@@ -669,11 +669,11 @@ import { defineProps, defineEmits, reactive } from 'vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import { getTag, getTelno, getTLDt, getTLIcon } from '@/util/ui'
 import { JobCode } from '@/util/sbas_cnst'
-import BdasReqAprv from '@/components/user/list/BdasReqAprv.vue'
-import BdasRfse from '@/components/user/list/BdasRfse.vue'
-import BdasAprv from '@/components/user/list/BdasAprv.vue'
+import BdasReqAprv from '@/components/user/bdas/BdasReqAprv.vue'
+import BdasRfse from '@/components/user/bdas/BdasRfse.vue'
+import BdasAprv from '@/components/user/bdas/BdasAprv.vue'
 import BdasAdmsModal from '@/components/user/bdas/BdasAdmsModal.vue'
-import BdasTrnsModal from '@/components/user/list/BdasTrnsModal.vue'
+import BdasTrnsModal from '@/components/user/bdas/BdasTrnsModal.vue'
 
 const props = defineProps({
   bdDetail: Object,

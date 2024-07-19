@@ -279,14 +279,13 @@
                       <div class='item-cell-box full'>
                         <div class='textbox full'>
                             <textarea
-                              @input='updateCharacterCount'
                               maxlength='500'
                               placeholder='메시지 입력'
                               style='height: 120px'
                               v-model='model.trsfInfo.msg'
                             ></textarea>
                           <div class='limit-box'>
-                              <span id='textarea1'>{{ model.characterCount }}</span
+                              <span id='textarea1'>{{ model.trsfInfo.msg.length }}</span
                               >/500자
                           </div>
                         </div>
@@ -456,16 +455,6 @@ function fillFiremen(data, idx) {
   model.trsfInfo[`crew${idx}Pstn`] = data.pstn
   model.trsfInfo[`crew${idx}Nm`] = data.crewNm
   model.trsfInfo[`crew${idx}Telno`] = data.telno
-}
-
-function updateCharacterCount() {
-  const currentMessage = model.trsfInfo.msg
-  if (currentMessage === null || currentMessage === '' || currentMessage === undefined) {
-    model.characterCount = model.content.length
-    model.trsfInfo.msg = null
-  } else {
-    model.characterCount = currentMessage.length
-  }
 }
 
 function closeModal() {

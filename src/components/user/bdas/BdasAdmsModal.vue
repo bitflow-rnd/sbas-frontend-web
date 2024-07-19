@@ -176,14 +176,13 @@
                       <div class='item-cell-box full'>
                         <div class='textbox full'>
                             <textarea
-                              @input='updateCharacterCount'
                               maxlength='500'
                               placeholder='입원 / 퇴원 / 회송 사유 등 전달 메시지 입력'
                               style='height: 120px'
                               v-model='model.hosptlzdiscg.msg'
                             ></textarea>
                           <div class='limit-box'>
-                              <span id='textarea1'>{{ model.characterCount }}</span
+                              <span id='textarea1'>{{ model.hosptlzdiscg.msg.length }}</span
                               >/500자
                           </div>
                         </div>
@@ -242,7 +241,7 @@ const model = reactive({
     ptId: props.bdDetail.ptId,
     bdasSeq: props.bdDetail.bdasSeq,
     hospId: props.transInfo.destinationInfo.hospId,
-    msg: null,
+    msg: '',
     admsStatCd: 'IOST0001',
     dschRsnCd: null,
     deptNm: null,
@@ -320,16 +319,6 @@ function validateForm() {
     }
   }
   return true
-}
-
-function updateCharacterCount() {
-  const currentMessage = model.hosptlzdiscg.msg
-  if (currentMessage === null || currentMessage === '' || currentMessage === undefined) {
-    model.characterCount = model.content.length
-    model.hosptlzdiscg.msg = null
-  } else {
-    model.characterCount = currentMessage.length
-  }
 }
 
 function closeModal() {
