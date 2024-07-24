@@ -2443,7 +2443,6 @@ import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { mapState, useStore } from 'vuex'
 import { ref } from 'vue'
 import {
-  backBtn,
   getAge,
   getDtBlue,
   getGndr,
@@ -2462,7 +2461,7 @@ import user from '@/store/modules/user'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import BdasDetailModal from '@/components/user/bdas/BdasDetailModal.vue'
-import RcmdHospModal from '@/components/user/list/RcmdHospModal.vue'
+import RcmdHospModal from '@/components/user/bdas/RcmdHospModal.vue'
 
 export default {
   components: { RcmdHospModal, BdasDetailModal, CloseButton, MyInfoModal, DataPagination },
@@ -2886,7 +2885,6 @@ export default {
         this.popup = 100
       }
     },
-    backBtn,
     getUndrDses,
     goAsgn,
     maskingNm,
@@ -3059,6 +3057,10 @@ export default {
           }
         })
       }
+    },
+    backBtn(idx) {
+      this.tab = idx
+      this.popup = 100
     },
     showImageLightBox() {
       this.imgsRef = this.preRpt

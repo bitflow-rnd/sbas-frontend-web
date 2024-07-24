@@ -195,11 +195,6 @@ export function toggleCheckbox() {
   event.stopPropagation()
 }
 
-export function backBtn(idx) {
-  this.tab = idx
-  this.popup = 100
-}
-
 export function getUndrDses(arr) {
   if (!Array.isArray(arr) || arr.length === 0) {
     return ''
