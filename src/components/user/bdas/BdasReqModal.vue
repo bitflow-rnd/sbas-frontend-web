@@ -1,5 +1,5 @@
 <template>
-  <div class='modal' id='kt_modal_request' tabindex='-1' aria-hidden='true'>
+  <div class='modal show' id='kt_modal_request' tabindex='-1' aria-hidden='true'>
     <!--begin::Modal dialog-->
     <div class='modal-dialog mw-1500px modal-dialog-centered'>
       <!--begin::Modal content-->
@@ -148,9 +148,12 @@
                                   <input type='text' v-model='model.newPt.ptNm' placeholder='환자이름 입력' />
                                 </div>
                               </div>
+                              <div v-if='validateInputStep1(0)' class='item-cell-box pt-2 text-danger' >
+                                * 환자 이름을 입력해 주세요.
+                              </div>
                             </td>
                             <th>성별</th>
-                            <td v-if="model.newPt.rrno2 !== null || model.newPt.rrno2 !== ''">{{ getGndr(model.newPt.rrno2) }}자</td>
+                            <td>{{ getGndr(model.newPt.rrno2) ? getGndr(model.newPt.rrno2) + '자' : '-' }}</td>
                           </tr>
 
                           <tr>
@@ -169,18 +172,19 @@
                                         type='text'
                                         @input='filterNumericInput(0)'
                                         v-model='model.newPt.rrno2'
-                                        maxlength='7'
+                                        maxlength='1'
                                     />
                                   </div>
                                 </div>
                               </div>
-<!--                              <div class='item-row-box'>-->
-<!--                                <div class='item-note-box'>* 주민등록번호 입력</div>-->
-<!--                              </div>-->
+                              <div v-if='validateInputStep1(1) && validateInputStep1(2)'
+                                   class='item-cell-box pt-2 text-danger'>
+                                * 주민등록번호을 입력해 주세요.
+                              </div>
                             </td>
                             <th>나이 (만)</th>
-                            <td v-if='model.newPt.rrno1 !== undefined && model.newPt.rrno2 !== undefined'>
-                              {{ getAge(model.newPt.rrno1, model.newPt.rrno2) }}세
+                            <td>
+                              {{ getAge(model.newPt.rrno1, model.newPt.rrno2) ? getAge(model.newPt.rrno1, model.newPt.rrno2) + '세' : '-'}}
                             </td>
                           </tr>
 
@@ -218,11 +222,9 @@
                                 </div>
                               </div>
 
-<!--                              <div class='item-row-box'>-->
-<!--                                <div class='item-cell-box'>-->
-<!--                                  <div class='item-note-box'>* 상세주소 입력</div>-->
-<!--                                </div>-->
-<!--                              </div>-->
+                              <div v-if='validateInputStep1(3)' class='item-cell-box pt-2 text-danger'>
+                                * 기본주소를 입력해 주세요.
+                              </div>
                             </td>
 
                             <th>휴대전화번호</th>
@@ -279,9 +281,10 @@
                                       <span class='txt'>사망</span>
                                     </label>
                                   </div>
+                                  <div v-if='validateInputStep1(4)' class='item-cell-box pt-2 text-danger'>
+                                    * 사망여부를 선택해 주세요.
+                                  </div>
                                 </article>
-
-                                <div class='item-note-box'>* 사망여부 선택</div>
                               </div>
                             </td>
 
@@ -310,33 +313,36 @@
 
                                       <label>
                                         <input type='radio' name='nation'
-                                               value='NATI0003' v-model='model.newPt.natiCd' />
-                                        <span class='txt'>알수없음</span>
+                                               value='NATI0002' v-model='model.newPt.natiCd' />
+                                        <span class='txt'>직접입력</span>
                                       </label>
 
                                       <label>
                                         <input type='radio' name='nation'
-                                               value='NATI0002' v-model='model.newPt.natiCd' />
-                                        <span class='txt'>직접입력</span>
+                                               value='NATI0003' v-model='model.newPt.natiCd' />
+                                        <span class='txt'>알수없음</span>
                                       </label>
                                     </div>
                                   </article>
-
-                                  <div class='item-note-box'>* 국적 선택</div>
                                 </div>
-                              </div>
-
-                              <div class='item-row-box'>
-                                <div class='tbox' style='width: 211px'>
+                                <div class='tbox' :class="{ 'pt-2': model.newPt.natiCd === 'NATI0002' }"
+                                     style='width: 211px' v-show="model.newPt.natiCd === 'NATI0002'">
                                   <input
-                                      type='text'
-                                      placeholder='국가명 입력'
-                                      v-model='model.newPt.natiNm'
-                                      :readonly="model.newPt.natiCd !== 'NATI0002'"
-                                      class='nation-input'
+                                    type='text'
+                                    placeholder='국가명 입력'
+                                    v-model='model.newPt.natiNm'
+                                    :readonly="model.newPt.natiCd !== 'NATI0002'"
+                                    class='nation-input'
                                   />
                                 </div>
+                                <div
+                                  v-if='validateInputStep1(5)'
+                                  class='item-cell-box pt-2 text-danger' >
+                                  * 국적을 입력해 주세요.
+                                </div>
                               </div>
+
+
                             </td>
                           </tr>
                           </tbody>
@@ -1547,6 +1553,9 @@
   <SbasAlert :is-alert='model.isAlert' :err-msg='model.errMsg' :cnc-btn='false'
              @confirm-alert='closeModal' />
 
+  <SbasAlert :is-alert='model.confirmAlert' :err-msg='model.errMsg'
+             @confirm-alert='closePopup' />
+
   <!--환자정보 존재 -->
   <exist-patnt-modal v-if='model.openExistPtModal && model.existPt'
                      :exist-pt='model.existPt' :new-pt='model.newPt'
@@ -1578,7 +1587,7 @@ const model = reactive({
   indexRef: 0,
   newPt: {
     ptNm: null, gndr: null, rrno1: null, rrno2: null,
-    dethYn: null, natiCd: null, natiNm: '대한민국',
+    dethYn: null, natiCd: null, natiNm: null,
     dstr1Cd: null, dstr2Cd: null, telno: null, picaVer: null,
     nokNm: null, mpno: null, job: null, attcId: null,
     bascAddr: null, detlAddr: null, zip: null,
@@ -1648,13 +1657,15 @@ const model = reactive({
     msg: null,
   },
   isAlert: false,
+  confirmAlert: false,
   errMsg: '',
   showErrorMsg: false,
-  popup: '',
 })
 
 onMounted(() => {
-  getBasicInfo(props.ptId)
+  if (props.ptId) {
+    getBasicInfo(props.ptId)
+  }
   store.dispatch('admin/getSido')
 })
 
@@ -1702,23 +1713,46 @@ function getMedInst() {
 }
 
 function isExistPt() {
-  const url = `${API_PROD}/api/v1/private/patient/exist`
-  const request = model.newPt
-  axios_cstm().post(url, request)
-    .then((response) => {
-      const data = response.data
-      if (data.code === '00') {
-        if (data.result.isExist) {
-          model.openExistPtModal = true
-          model.existPt = data.result.items
-        } else {
-          model.openExistPtModal = false
+  if (validateFormStep1()) {
+    const url = `${API_PROD}/api/v1/private/patient/exist`
+    const request = model.newPt
+    model.newPt.gndr = getGndr(model.newPt.rrno2)
+    axios_cstm().post(url, request)
+      .then((response) => {
+        const data = response.data
+        if (data.code === '00') {
+          if (data.result.isExist) {
+            model.openExistPtModal = true
+            model.existPt = data.result.items
+          } else {
+            registerNewPt()
+          }
         }
-      }
-    })
-    .catch((e) => {
-      console.log(e)
-    })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+}
+
+function registerNewPt() {
+  const url = `${API_PROD}/api/v1/private/patient/regbasicinfo`
+  const request = model.newPt
+  return new Promise(() => {
+    axios_cstm()
+      .post(url, request)
+      .then((response) => {
+        const data = response.data
+        if (data.code === '00') {
+          model.errMsg = '환자 정보가\n등록되었습니다.'
+          model.confirmAlert = true
+          model.tab = model.tab + 1
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  })
 }
 
 function saveInfo() {
@@ -1783,10 +1817,6 @@ function onHide() {
 
 function closeModal() {
   emits('closePatntRequest')
-  model.newPt = null
-  model.dsInfo = null
-  model.svInfo = null
-  model.spInfo = null
 }
 
 function openAddressFinder(idx) {
@@ -1855,6 +1885,44 @@ function validateInput(idx) {
   }
 }
 
+function validateInputStep1(idx) {
+  if (idx === 0) {
+    return model.newPt.ptNm === null && model.showErrorMsg
+  } else if (idx === 1) {
+    return model.newPt.rrno1 === null && model.showErrorMsg
+  } else if (idx === 2) {
+    return model.newPt.rrno2 === null && model.showErrorMsg
+  } else if (idx === 3) {
+    return model.newPt.bascAddr === null && model.showErrorMsg
+  } else if (idx === 4) {
+    return model.newPt.dethYn === null && model.showErrorMsg
+  } else if (idx === 5) {
+    return model.newPt.natiCd === null && model.showErrorMsg
+  }
+}
+
+function validateFormStep1() {
+  const data = model.newPt
+  const requiredFields = {
+    ptNm: { idx: 0 },
+    rrno1: { idx: 1 },
+    rrno2: { idx: 2 },
+    bascAddr: { idx: 3 },
+    dethYn: { idx: 4 },
+    natiCd: { idx: 5 },
+  }
+
+  for (const field in requiredFields) {
+    let showErrorMsg = false
+    if (!data[field]) {
+      showErrorMsg = true
+      model.showErrorMsg = showErrorMsg
+      return false
+    }
+  }
+  return true
+}
+
 function validateFormStep3() {
   const data = model.svInfo
   const requiredFields = {
@@ -1895,6 +1963,10 @@ function validateFormStep4() {
 
 function closeExistPtModal() {
   model.openExistPtModal = false
+}
+
+function closePopup() {
+  model.confirmAlert = false
 }
 
 </script>
