@@ -498,7 +498,6 @@
   </div>
   <!--end:::Main-->
 
-  <!--begin::Modals-->
   <!--  신규병상요청 0  -->
   <BdasReqModal v-if='this.showModal === 0' @close-patnt-request='closePatntRequest'
                    :pt-id='newPt.ptId' />
@@ -514,42 +513,8 @@
                    @open-rcmd-hosp-modal='openRcmdHospModal()'
                    @close-modal='closeModal(2)' />
 
-  <!--  alert창  -->
-  <article v-show="isAlert" class="popup popup-confirm" style="z-index: 1600">
-    <div class="popup-wrapper">
-      <div class="popup-contents py-10 px-10" style="width: 300px">
-        <article class="modal-alert-layout pb-10">
-          <div class="alert-view-box pb-6">
-            <img src="/img/common/ic_alert.svg" alt="이미지" />
-          </div>
-          <div class="alert-msg-box">{{ errMsg }}</div>
-        </article>
-        <article class="modal-menu-layout1">
-          <div class="modal-menu-list">
-            <router-link
-              to=""
-              @click="cfrmAl(alertIdx)"
-              class="modal-menu-btn menu-primary"
-              data-type="success"
-            >확인
-            </router-link>
-            <router-link
-              v-show="cncBtn"
-              to=""
-              @click="alertClose"
-              class="modal-menu-btn menu-cancel"
-              data-type="cancel"
-            >
-              취소
-            </router-link>
-          </div>
-        </article>
-      </div>
-    </div>
-  </article>
-
   <!--  역학조사서 비교   -->
-  <article v-show="popup === 1" class="popup popup-update-check">
+  <article v-show="false" class="popup popup-update-check">
     <div class="popup-wrapper">
       <div class="popup-contents py-10 px-10" style="width: 300px">
         <article class="modal-alert-layout pb-10">
@@ -611,20 +576,13 @@ export default {
   },
   setup() {
     const showTable = ref(false)
-    const trsfArr = ref([false, false, false, false])
     const toggleTable = function() {
       showTable.value = !showTable.value
     }
-    const isAlert = ref(false)
-    const cncBtn = ref(false)
-    const errMsg = ''
     const store = useStore()
+
     return {
       showTable,
-      trsfArr,
-      isAlert,
-      errMsg,
-      cncBtn /* alert 취소버튼 유무 */,
       toggleTable,
       store
     }
@@ -671,10 +629,6 @@ export default {
       preRpt: null,
       selectedFile: true,
       imgUrl: null,
-      tab: 0 /* 병상요청 */,
-      tabidx: 0 /* 세부내용*/,
-      popup: 100 /* 팝업창 */,
-      alertIdx: 100 /* alert창 확인버튼 */,
       rptYn: false /* 역조서 유무 */,
       medinstInfo: {
         dstr1Cd: ''
@@ -719,7 +673,6 @@ export default {
         dnrAgreYn: null,
         reqBedTypeCd: null
       },
-      showErrorMessage: null,
       bioAnlys: {},
       spInfo: {
         ptId: '',
@@ -748,9 +701,6 @@ export default {
       },
       chrgUserId: [],
       undrDsesCdArr: [],
-      visibleRef: false,
-      imgsRef: '',
-      indexRef: 0,
       showRcmdHospModal: false,
     }
   },
@@ -773,8 +723,8 @@ export default {
       'transInfo',
       'bedStatCount',
     ]),
-    ...mapState('patnt', ['existPt', 'ptBI', 'ptDetail', 'rptInfo', 'zip', 'isSpinner']),
-    ...mapState('user', ['userInfo', 'chrgInfo']),
+    ...mapState('patnt', ['ptDetail', 'rptInfo', 'isSpinner']),
+    ...mapState('user', ['userInfo']),
     ...mapState('admin', ['firestatnList', 'firemenList', 'medinstList', 'organMedi', 'cmSido']),
     filterData() {
       let params = {}
@@ -816,7 +766,6 @@ export default {
       } else if (idx === 2) {
         /*세부내용 모달*/
         this.showModal = null
-        this.tabidx = 0
         this.$store.commit('bedasgn/setDisesInfo', null)
         this.$store.commit('bedasgn/setTimeline', null)
         this.$store.commit('patnt/setBasicInfo', null)
@@ -832,7 +781,6 @@ export default {
       //this.search = this.initSearch
       this.$store.dispatch('bedasgn/getBdListWeb')
       this.$store.dispatch('bedasgn/getBedStatCount')
-      console.log(this.bedStatCount)
     },
     searchBedAsgn() {
       this.$store.dispatch('bedasgn/getBdListWeb', this.filterData)
@@ -842,11 +790,6 @@ export default {
       let data = this.medinstInfo
       data['instTypeCd'] = 'ORGN0003'
       this.$store.dispatch('admin/getOrganMedi', data)
-    },
-    allChk() {
-      this.sortedBdList.forEach((bdList) => {
-        bdList.chked = this.allChked
-      })
     },
     initNaverMap() {
       // 네이버 지도 API 로드
@@ -893,13 +836,8 @@ export default {
         return res
       } else return ''
     },
-    getTelno,
     setNull() {
       console.log('실행' + this.initNewPt)
-      this.tab = 0
-      this.tabidx = 0
-      this.popup = 100
-      this.alertIdx = 100
       this.rptYn = false
       this.newPt = JSON.parse(JSON.stringify(this.initNewPt))
       this.dsInfo = JSON.parse(JSON.stringify(this.initDsInfo))
@@ -909,128 +847,9 @@ export default {
       this.preRpt = null
       this.undrDsesCdArr = []
     },
-    async alertOpen(idx) {
-      this.cncBtn = false
-      if (idx === 0) {
-        this.errMsg = '병상을 요청하시겠습니까?'
-        this.cncBtn = true
-        this.isAlert = true
-        this.alertIdx = 0
-      } else if (idx === 1) {
-        this.svInfo.undrDsesCd = this.getUndrDses(this.undrDsesCdArr)
-        const data = { svrInfo: this.svInfo, dprtInfo: this.spInfo }
-        console.log(data)
-        this.$store.dispatch('bedasgn/regBedassign', data)
-        this.isAlert = false
-        this.errMsg = '요청되었습니다.'
-        this.isAlert = true
-        this.alertIdx = 1
-      } else if (idx === 2) {
-        this.alertClose()
-        this.closeModal()
-        this.preRpt = null
-        this.undrDsesCdArr = []
-        this.setNull()
-        /*신규병상요청 끝*/
-        this.getBdList()
-      } else if (idx === 3) {
-        this.errMsg = '환자 정보가\n등록되었습니다.'
-        this.isAlert = true
-        this.alertIdx = 3
-        if (this.popup === 0) {
-          this.popup = 100
-        }
-      } else if (idx === 4) {
-        /*역조서 파싱 */
-        this.errMsg =
-          '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
-        this.isAlert = true
-        this.newPt = { ...this.rptInfo, bascAddr: this.rptInfo.baseAddr }
-        if (this.rptInfo !== null) {
-          /*역조서 입력 시*/
-          if (this.rptInfo.instAddr !== null) {
-            await this.$store.dispatch('patnt/geoCoding', [1, this.rptInfo.instAddr])
-          }
-          this.dsInfo = this.rptInfo
-          console.log(this.dsInfo.rcptPhc)
-          if (this.rptInfo.rcptPhc !== null) {
-            this.dsInfo.rcptPhc = 1
-            this.medinstInfo.rcptPhc = this.rptInfo.rcptPhc
-          }
-          console.log(this.dsInfo.ptId)
-        }
-        this.alertIdx = 4
-      } else if (idx === 9) {
-        /*역조서 삭제*/
-        this.errMsg = '역학조사서 이미지를\n삭제하시겠습니까?'
-        this.cncBtn = true
-        this.isAlert = true
-        this.alertIdx = 9
-      } else if (idx === 10) {
-        this.errMsg = '역학조사서가\n삭제되었습니다.'
-        this.isAlert = true
-        this.alertIdx = 10
-      }
-    },
-    async cfrmAl(res) {
-      if (res === 0) {
-        console.log(0)
-        this.alertOpen(1)
-      } else if (res === 1) {
-        console.log('1')
-        this.alertOpen(2)
-      } else if (res === 3) {
-        console.log('3')
-        this.alertClose()
-        this.tab = 1
-      } else if (res === 4) {
-        console.log('역학조사서 확인')
-        this.alertClose()
-      } else if (res === 9) {
-        this.removeRpt()
-        this.newPt = this.initNewPt
-        this.dsInfo = this.initDsInfo
-        this.alertClose()
-        this.alertOpen(10)
-      } else if (res === 10) {
-        this.alertClose()
-      }
-      console.log(res)
-    },
-    alertClose() {
-      this.errMsg = ''
-      this.cncBtn = false
-      this.isAlert = false
-      this.alertIdx = 100
-    },
-    closePopup(idx) {
-      if (idx === 0) {
-        this.popup = 100
-      }
-    },
-    getUndrDses,
     maskingNm,
     getDtBlue,
     getTag,
-    cmpExist(idx) {
-      const isMatch = (a, b) => a === b
-      const res1 = ['일치', 'bg-primary']
-      const res2 = ['불일치', 'bg-gray-400']
-
-      switch (idx) {
-        case 0:
-          return isMatch(this.existPt.ptNm, this.newPt.ptNm) ? res1 : res2
-        case 1:
-          return isMatch(this.existPt.rrno1, this.newPt.rrno1) &&
-          isMatch(this.existPt.rrno2, this.newPt.rrno2)
-            ? res1
-            : res2
-        case 2:
-          return isMatch(this.existPt.bascAddr, this.newPt.bascAddr) ? res1 : res2
-        default:
-          return isMatch(this.existPt.mpno, this.newPt.mpno) ? res1 : res2
-      }
-    },
     async uploadRpt(event) {
       const fileInput = event.target
       const file = fileInput.files[0]
@@ -1041,7 +860,6 @@ export default {
       await this.$store.dispatch('patnt/uploadRpt', formData)
       if (this.rptInfo !== null) {
         console.log('실행')
-        this.alertOpen(4)
       }
       //역조서 이미지 미리보기 만들기
       const reader = new FileReader()
@@ -1054,25 +872,6 @@ export default {
       /*역조서 삭제*/
       this.$store.dispatch('patnt/removeRpt', this.rptInfo.attcId)
       this.preRpt = null
-    },
-    validateInput(idx) {
-      if (idx === 0) {
-        this.spInfo.nok1Telno = this.spInfo.nok1Telno.replace(/[^0-9]/g, '')
-        this.spInfo.nok2Telno = this.spInfo.nok2Telno.replace(/[^0-9]/g, '')
-        this.spInfo.chrgTelno = this.spInfo.chrgTelno.replace(/[^0-9]/g, '')
-      } else if (idx === 1) {
-        this.newPt.mpno = this.newPt.mpno.replace(/[^0-9]/g, '')
-        this.newPt.telno = this.newPt.telno.replace(/[^0-9]/g, '')
-      } else if (idx === 2) {
-        this.newPt.rrno1 = this.newPt.rrno1.replace(/[^0-9]/g, '')
-        this.newPt.rrno2 = this.newPt.rrno2.replace(/[^0-9]/g, '')
-      } else if (idx === 3) {
-        return this.svInfo.reqBedTypeCd === null && this.showErrorMessage
-      } else if (idx === 4) {
-        return this.svInfo.dnrAgreYn === null && this.showErrorMessage
-      } else if (idx === 5) {
-        return this.svInfo.svrtTypeCd === null && this.showErrorMessage
-      }
     },
     getBtn(sts) {
       if (sts === 'BAST0001') {
@@ -1152,6 +951,7 @@ export default {
     },
     closePatntRequest() {
       this.showModal = null
+      this.getBdList()
     },
     returnToList() {
       this.showRcmdHospModal = false
