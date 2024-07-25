@@ -1,55 +1,12 @@
 <template>
-  <!--환자등록/수정 -->
   <div class="modal show" tabindex="-1" aria-hidden="true" style="">
-    <!--begin::Modal dialog-->
     <div class="modal-dialog col-lg-3 modal-dialog-centered">
-      <!--begin::Modal content-->
       <div class="modal-content">
-        <!--begin::Modal header-->
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
-          <!--begin::Modal title-->
           <h2>환자 등록/수정</h2>
-          <div
-            class="btn btn-sm btn-icon btn-active-color-primary"
-            @click="closeModal()"
-            data-bs-dismiss="modal"
-          >
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span class="svg-icon svg-icon-1">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  opacity="0.5"
-                  x="6"
-                  y="17.3137"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(-45 6 17.3137)"
-                  fill="currentColor"
-                ></rect>
-                <rect
-                  x="7.41422"
-                  y="6"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(45 7.41422 6)"
-                  fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-            <!--end::Svg Icon-->
-          </div>
-          <!--end::Close-->
+          <CloseButton @close="closeModal" />
         </div>
 
-        <!--begin::Modal header-->
         <!--begin::Modal body-->
         <div class="modal-body scroll-y py-10 px-10">
           <div class="d-flex">
@@ -75,8 +32,11 @@
                               style="width: 264px"
                             >
                               <div class="profile-view-box" style="width: 100%; height: 264px">
-                                <img v-if="!model.newPt.attcId" src='@/assets/img/img-no-img.webp' class="no-img" />
-                                <img v-if='model.newPt.attcId' :src="model.epidReportImage?model.epidReportImage:'/img/img-no-img.webp'" class="has-img" @click='showImageLightBox' onerror="this.src='/img/img-no-img.webp'"/>
+                                <img v-if='!model.newPt.attcId' src='@/assets/img/img-no-img.webp' class='no-img' />
+                                <img v-if='model.newPt.attcId'
+                                     :src="model.epidReportImage?model.epidReportImage:'/img/img-no-img.webp'"
+                                     class='has-img' @click='showImageLightBox'
+                                     onerror="this.src='/img/img-no-img.webp'" />
                                 <vue-easy-lightbox
                                   :visible="model.visibleRef"
                                   :imgs="model.imgsRef"
@@ -479,6 +439,7 @@ import { API_PROD } from '@/util/constantURL'
 import axios from 'axios'
 import SbasAlert from '@/components/common/SbasAlert.vue'
 import { axios_cstm } from '@/util/axios_cstm'
+import CloseButton from '@/components/common/CloseButton.vue'
 
 const props = defineProps({
   existPt: Object,

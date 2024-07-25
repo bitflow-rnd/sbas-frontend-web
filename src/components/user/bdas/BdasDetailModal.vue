@@ -203,11 +203,8 @@
                                     {{ getTLDt(item.updtDttm, 1) }}
                                   </div>
                                 </div>
-<!--                                <div class='mid-item-box' v-if='item.by' @click='showChrgDetail'-->
-<!--                                     role='button'>{{ item.by }}-->
-<!--                                </div>-->
-                                <div class='mid-item-box' v-if='item.by'>
-                                  {{ item.by }}
+                                <div class='mid-item-box' v-if='item.by' @click='openChrgDetail(item.chrgUserId)'
+                                     role='button'>{{ item.by }}
                                 </div>
                                 <div class='bottom-item-box'>
                                   <div class='item-img-group mb-4'>
@@ -662,6 +659,8 @@
                  :trans-info='transInfo'
                  @closeModal='emits("closeModal")' />
 
+  <my-info-modal v-if="model.popup==='chrgInfo'" :isChrgInfo='true' :userInfo='model.chrgInfo' @closeModal='closePopup' />
+
 </template>
 
 <script setup>
@@ -674,6 +673,8 @@ import BdasRfse from '@/components/user/bdas/BdasRfse.vue'
 import BdasAprv from '@/components/user/bdas/BdasAprv.vue'
 import BdasAdmsModal from '@/components/user/bdas/BdasAdmsModal.vue'
 import BdasTrnsModal from '@/components/user/bdas/BdasTrnsModal.vue'
+import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
+import { useStore } from 'vuex'
 
 const props = defineProps({
   bdDetail: Object,
@@ -691,7 +692,9 @@ const emits = defineEmits(['closeModal', 'openRcmdHospModal'])
 const model = reactive({
   tabIdx: 0,
   popup: '',
+  chrgInfo: null,
 })
+const store = useStore()
 
 function setActive(idx) {
   model.tabIdx = idx
@@ -740,6 +743,12 @@ function openTrnsModal() {
 
 function openAdmsModal() {
   model.popup = 'adms'
+}
+
+function openChrgDetail(chrgId) {
+  model.popup = 'chrgInfo'
+  store.dispatch('user/getChrgUserInfo', chrgId)
+  model.chrgInfo = store.getters['user/getChrgUserInfo']
 }
 
 function closePopup() {

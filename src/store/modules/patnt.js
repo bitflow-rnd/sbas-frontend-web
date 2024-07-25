@@ -144,7 +144,6 @@ export default {
     async regBasicInfo(comment, data) {
       const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/regbasicinfo`
-      // const url = `http://localhost:8080/api/v1/private/patient/regbasicinfo`
       const request = data
       // console.log('환자 등록 - 기본 정보')
       try {
@@ -154,7 +153,6 @@ export default {
           }
         })
         if (response.data?.code === '00') {
-          // console.log(response.data?.result)
           comment.commit('regBasicInfo', response.data?.result)
         }
       } catch (e) {

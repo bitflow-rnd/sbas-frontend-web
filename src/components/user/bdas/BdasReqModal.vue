@@ -6,17 +6,14 @@
       <div class='modal-content'>
         <!--begin::Modal header-->
         <div class='modal-header px-10 pt-5 pb-0 d-flex justify-content-between'>
-          <!--begin::Modal title-->
           <h2>병상요청</h2>
-          <!--end::Modal title-->
-          <!--begin::Close-->
           <CloseButton @close='closeModal' />
-          <!--end::Close-->
 
           <article class='floating-request-box'>
             <div class='img-box'>
               <img src='/img/common/ic_request_patient.svg' alt='이미지' />
             </div>
+<!--            <div v-show="ptBI === null && rptInfo === null" class="txt-box">신규 환자 등록</div>-->
             <div v-if='model.newPt.mpno' class='txt-box'>
               {{ model.newPt.ptNm }}
               <span class='text-gray-600 fw-normal'
@@ -27,7 +24,6 @@
           </article>
         </div>
 
-        <!--begin::Modal header-->
         <!--begin::Modal body-->
         <div class='modal-body scroll-y py-10 px-10'>
           <article class='request-step-layout'>
@@ -353,7 +349,7 @@
 
               <article class='modal-menu-layout1 pt-10'>
                 <div class='modal-menu-list'>
-                  <a @click='nextStep(0)' class='modal-menu-btn menu-primary'>다음</a>
+                  <a @click='isExistPt' class='modal-menu-btn menu-primary'>다음</a>
                 </div>
               </article>
             </div>
@@ -1547,9 +1543,15 @@
     <!--end::Modal dialog-->
   </div>
 
+  <!-- TODO 단계별로 컴포넌트 분리  -->
   <SbasAlert :is-alert='model.isAlert' :err-msg='model.errMsg' :cnc-btn='false'
              @confirm-alert='closeModal' />
-<!-- TODO 단계별로 컴포넌트 분리  -->
+
+  <!--환자정보 존재 -->
+  <exist-patnt-modal v-if='model.openExistPtModal && model.existPt'
+                     :exist-pt='model.existPt' :new-pt='model.newPt'
+                     @closePopup='closeExistPtModal' />
+
 </template>
 
 <script setup>
@@ -1560,6 +1562,7 @@ import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
 import SbasAlert from '@/components/common/SbasAlert.vue'
+import ExistPatntModal from '@/components/user/modal/ExistPatntModal.vue'
 
 const props = defineProps({
   ptId: null,
@@ -1581,6 +1584,8 @@ const model = reactive({
     bascAddr: null, detlAddr: null, zip: null,
     undrDsesCd: [], undrDsesEtc: null,
   },
+  existPt: null,
+  openExistPtModal: false,
   selectPhcType: 'select',
   medInstInfo: {
     dstr1Cd: null,
@@ -1645,6 +1650,7 @@ const model = reactive({
   isAlert: false,
   errMsg: '',
   showErrorMsg: false,
+  popup: '',
 })
 
 onMounted(() => {
@@ -1692,6 +1698,26 @@ function getMedInst() {
     })
     .catch((error) => {
       console.log(error)
+    })
+}
+
+function isExistPt() {
+  const url = `${API_PROD}/api/v1/private/patient/exist`
+  const request = model.newPt
+  axios_cstm().post(url, request)
+    .then((response) => {
+      const data = response.data
+      if (data.code === '00') {
+        if (data.result.isExist) {
+          model.openExistPtModal = true
+          model.existPt = data.result.items
+        } else {
+          model.openExistPtModal = false
+        }
+      }
+    })
+    .catch((e) => {
+      console.log(e)
     })
 }
 
@@ -1865,6 +1891,10 @@ function validateFormStep4() {
     }
   }
   return true
+}
+
+function closeExistPtModal() {
+  model.openExistPtModal = false
 }
 
 </script>

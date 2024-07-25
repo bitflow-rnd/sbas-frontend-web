@@ -480,6 +480,9 @@
 
             <data-pagination
               @change="changePage"
+              :next-page-buttons-count="nextPageButtonsCount"
+              :previous-page-buttons-count="previousPageButtonsCount"
+              :display-change-page-buttons-count="displayChangePageButtonsCount"
               :display-rows-count="displayRowsCount"
               :data-length="bdListWeb.count"
             ></data-pagination>
@@ -511,12 +514,8 @@
         </div>
         <!--begin::Modal header-->
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
-          <!--begin::Modal title-->
           <h2>병상요청</h2>
-          <!--end::Modal title-->
-          <!--begin::Close-->
           <CloseButton @close="closeModal(0)" />
-          <!--end::Close-->
 
           <article class="floating-request-box">
             <div class="img-box">
@@ -2259,9 +2258,6 @@
                    :trans-condition1='transCondition1' :trans-condition2='transCondition2' :user-info='userInfo'
                    @open-rcmd-hosp-modal='openRcmdHospModal()'
                    @close-modal='closeModal(2)' />
-<!--                :show-chrg-detail='showChrgDetail(item.chrgUserId)' /> -->
-
-  <my-info-modal v-if="mode==='chrgInfo'" :isChrgInfo='true' :userInfo='chrgInfo' @closeModal='closeChrgDetail' />
 
   <!--  alert창  -->
   <article v-show="isAlert" class="popup popup-confirm" style="z-index: 1600">
@@ -2293,114 +2289,6 @@
             </router-link>
           </div>
         </article>
-      </div>
-    </div>
-  </article>
-
-  <!--환자정보 존재 -->
-  <article v-if="existPt !== null" v-show="popup === 0" class="popup popup-exist" style="">
-    <div class="popup-wrapper">
-      <div class="popup-contents">
-        <div class="popup-head-box py-5 px-10">
-          <div class="head-tit-box">환자정보 존재</div>
-
-          <div class="head-option-box">
-            <div @click="closePopup(0)" class="popup-close-btn">
-              <span class="svg-icon svg-icon-1">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    opacity="0.5"
-                    x="6"
-                    y="17.3137"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(-45 6 17.3137)"
-                    fill="currentColor"
-                  ></rect>
-                  <rect
-                    x="7.41422"
-                    y="6"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(45 7.41422 6)"
-                    fill="currentColor"
-                  ></rect>
-                </svg>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="popup-body-box py-5 px-10">
-          <div class="patient-exist-box">
-            <div class="exist-box d-flex align-items-center">
-              <div
-                class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0"
-                :class="cmpExist(0)[1]"
-              >
-                {{ cmpExist(0)[0] }}
-              </div>
-              <div class="d-inline-flex w-auto ms-3">
-                이름 : {{ existPt.ptNm }} ({{ existPt.gndr }}/{{
-                  getAge(existPt.rrno1, existPt.rrno2)
-                }}세)
-              </div>
-            </div>
-
-            <div class="exist-box d-flex align-items-center mt-3">
-              <div
-                class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0"
-                :class="cmpExist(1)[1]"
-              >
-                {{ cmpExist(1)[0] }}
-              </div>
-              <div class="d-inline-flex w-auto ms-3">
-                주민등록번호 : {{ existPt.rrno1 }}-{{ existPt.rrno2 }}******
-              </div>
-            </div>
-
-            <div class="exist-box d-flex align-items-center mt-3">
-              <div
-                class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0"
-                :class="cmpExist(2)[1]"
-              >
-                {{ cmpExist(2)[0] }}
-              </div>
-              <div class="d-inline-flex w-auto ms-3">주소 : {{ existPt.bascAddr }}</div>
-            </div>
-
-            <div class="exist-box d-flex align-items-center mt-3">
-              <div
-                class="d-inline-flex align-items-center justify-content-center w-auto h-30px w-50px text-white rounded-4 px-0"
-                :class="cmpExist(3)[1]"
-              >
-                {{ cmpExist(3)[0] }}
-              </div>
-              <div class="d-inline-flex w-auto ms-3">연락처 : {{ getTelno(existPt.mpno) }}</div>
-            </div>
-
-            <div class="exist-box d-flex align-items-center mt-6">
-              <div class="text-gray-800">※ 동명이인 여부를 확인해주세요.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="popup-foot-box py-5 px-10">
-          <article class="modal-menu-layout1">
-            <div class="modal-menu-list">
-              <a @click="regNewPt" class="modal-menu-btn menu-primary-outline">신규등록</a>
-              <a @click="goAsgn(3)" class="modal-menu-btn menu-primary">기존정보 업데이트</a>
-            </div>
-          </article>
-        </div>
       </div>
     </div>
   </article>
@@ -2504,6 +2392,9 @@ export default {
     return {
       sortedList: [],
       reqBedType,
+      displayChangePageButtonsCount: 10,
+      previousPageButtonsCount: 4,
+      nextPageButtonsCount: 4,
       displayRowsCount: 15,
       page: 1,
       showModal: null,
@@ -2690,19 +2581,10 @@ export default {
         this.$store.commit('patnt/setRpt', null)
         this.newPt = this.initNewPt
         this.dsInfo = this.initDsInfo
-        this.getBdList()
       } else {
         this.showModal = null
         this.getBdList()
       }
-    },
-    showChrgDetail(chrgId) {
-      this.$store.dispatch('user/getChrgUserInfo', chrgId)
-      this.mode = 'chrgInfo'
-      //console.log('showChrgDetail', JSON.stringify(this.chrgInfo))
-    },
-    closeChrgDetail() {
-      this.mode = ''
     },
     getBdList() {
       //this.search = this.initSearch
@@ -3030,15 +2912,6 @@ export default {
       this.transCondition2 = this.bdDetail.bedStatCd === 'BAST0005' || this.bdDetail.bedStatCd === 'BAST0006' || this.bdDetail.bedStatCd === 'BAST0007'
       this.getChrgId()
       this.openModal(2)
-    },
-    getAsgnReqSeq() {
-      let asgnReqSeq
-      this.chrgUserId.forEach((item) => {
-        if (item.chrgUserId === this.userInfo.id) {
-          asgnReqSeq = item.asgnReqSeq
-        }
-      })
-      return asgnReqSeq
     },
     getChrgId() {
       if (this.timeline !== null) {
