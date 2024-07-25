@@ -146,8 +146,8 @@
                             <select :disabled="disableHospitalPicker" v-model="filterPatient['hospitalName']"
                                     @change="search()">
                               <option :value="null" id="null">병원 전체</option>
-                              <option v-for="(item,idx) in hospList" :key="idx"
-                                      :value="item">{{ item }}
+                              <option v-for="(item,idx) in model.hospList" :key="idx"
+                                      :value="item">{{ item.dutyName }}
                               </option>
                             </select>
                           </div>
@@ -380,6 +380,9 @@ import { reactive, ref } from 'vue'
 import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
 import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
 import BedRequestModal from '@/components/user/bdas/BdasReqModal.vue'
+import { API_PROD } from '@/util/constantURL'
+import axios from 'axios'
+import { axios_cstm } from '@/util/axios_cstm'
 
 export default {
   components: {
@@ -392,17 +395,19 @@ export default {
   props: {
     msg: String
   },
-  mounted() {
+  async mounted() {
     this.initNewPt = this.newPt
     this.initDsInfo = this.dsInfo
     this.setDefaultDstr1Cd()
+    await this.getHospitalList()
   },
   setup() {
     const isAlert = ref(false)
     const cncBtn = ref(false)
     const errMsg = ''
     let model = reactive({
-      timeline: ''
+      timeline: '',
+      hospList: [],
     })
 
     return {
@@ -795,6 +800,15 @@ export default {
         // this.getSecondAddress(this.userInfo.dutyDstr1Cd)
       // }
     },
+    async getHospitalList() {
+      const url = `${API_PROD}/api/v1/private/patient/bdas-hosp`
+      await axios_cstm().get(url)
+        .then(async response => {
+          if (response.data?.code === '00') {
+            this.model.hospList = await response.data?.result.items
+          }
+        })
+    }
   }
 }
 </script>
