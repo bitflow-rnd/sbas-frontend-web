@@ -1774,13 +1774,10 @@ function saveInfo() {
 function bedRequest() {
   let data = {
     svrInfo: { ...model.svInfo,
-      ptTypeCd: model.svInfo.ptTypeCd.join(';'),
-      undrDsesCd: model.svInfo.undrDsesCd.join(';'),
+      ptTypeCd: model.svInfo.ptTypeCd.length > 0 ? model.svInfo.ptTypeCd.join(';') : null,
+      undrDsesCd: model.svInfo.undrDsesCd.length > 0 ? model.svInfo.undrDsesCd.join(';') : null,
     },
     dprtInfo: model.spInfo,
-  }
-  if (data.svrInfo.undrDsesCd.length === 0) {
-    data.svrInfo.undrDsesCd = null
   }
   if (data.svrInfo.ptTypeCd.length === 0) {
     data.svrInfo.ptTypeCd = null

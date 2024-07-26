@@ -65,14 +65,15 @@
                           </button>
                         </div>
                       </div>
-                      <div class='item-cell-box rcmd'>
+                      <div class='item-cell-box rcmd pt-2'>
                         <div class='rbox'>
                           <label @click="onClickDeparture('sido')">
                             <input type='radio' name='permission' v-model='model.departureSelect.model'
-                                   value='sido' /><i></i>
+                                   value='sido' checked /><i></i>
                             <span style='width: 100px' class='txt'>시/도지정</span>
                             <div class='sbox w-175px'>
-                              <select :disabled='!model.departureSelect.isSido'>
+                              <select v-model='model.searchParams.dstr1Cd'
+                                      :disabled='!model.departureSelect.isSido'>
                                 <option value='' id='null'>시/도 전체</option>
                                 <option v-for='(item,idx) in model.cmSido' :key='idx'
                                         :value="item['cdId']">{{ item['cdNm'] }}
@@ -86,10 +87,11 @@
                     <th>병상유형</th>
                     <td>
                       <div class='item-cell-box'>
-                        <div v-for="(item, idx) in model.bedTypeList" :key="idx" :class="{ 'ms-4': idx > 1 }" class="cbox">
-                          <label v-if='idx > 0'>
-                            <input type='checkbox' name='permission' :value='item.cdId' v-model='model.searchParams.reqBedTypeCd'/><i></i>
-                            <span class='txt'>{{ item.cdNm }}</span>
+                        <div class="cbox" :class="{ 'ms-4': idx > 0 }" v-for="(item, idx) in model.bedTypeList" :key="idx" >
+                          <label>
+                            <input type='checkbox' name='permission' :value='item.value' v-model='model.searchParams.reqBedTypeCd'
+                                   @change='searchList' /><i></i>
+                            <span class='txt'>{{ item.name }}</span>
                           </label>
                         </div>
                       </div>
@@ -102,8 +104,9 @@
 
                         <div class='cbox' :class="{'ms-4': idx > 0}" v-for='(item, idx) in model.severityTypeList' :key='idx'>
                           <label>
-                            <input type='checkbox' name='permission' :value='item.cdId' v-model='model.searchParams.svrtTypeCd' /><i></i>
-                            <span class='txt'>{{ item.cdNm }}</span>
+                            <input type='checkbox' name='permission' :value='item.value' v-model='model.searchParams.svrtTypeCd'
+                                   @change='searchList' /><i></i>
+                            <span class='txt'>{{ item.name }}</span>
                           </label>
                         </div>
 
@@ -118,8 +121,9 @@
                         <div class='item-cell-box ptnt-type me-10'>
                           <div class='cbox' :class="{'ms-4': idx > 0}" v-for='(item, idx) in model.ptTypeList' :key='idx'>
                             <label>
-                              <input type='checkbox' name='permission' :value='item.cdId' v-model='model.searchParams.ptTypeCd' /><i></i>
-                              <span class='txt'>{{ item.cdNm }}</span>
+                              <input type='checkbox' name='permission' :value='item.value' v-model='model.searchParams.ptTypeCd'
+                                     @change='searchList' /><i></i>
+                              <span class='txt'>{{ item.name }}</span>
                             </label>
                           </div>
                         </div>
@@ -142,66 +146,12 @@
                   <tr>
                     <th>장비정보</th>
                     <td colspan='3'>
-                      <div class='item-cell-box'>
-                        <div class='cbox'>
+                      <div class="item-cell-box">
+                        <div class="cbox" :class='{"ms-4": idx > 0}' v-for='(item, idx) in model.equipmentList' :key='idx'>
                           <label>
-                            <input type='checkbox' name='type3' /><i></i>
-                            <span class='txt'>인공호흡기 일반</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='type3' /><i></i>
-                            <span class='txt'>인공호흡기 조산아</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='type3' /><i></i>
-                            <span class='txt'>인큐베이터</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='type3' /><i></i>
-                            <span class='txt'>ECMO</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='type3' /><i></i>
-                            <span class='txt'>중심체온조절유도기</span>
-                          </label>
-                        </div>
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='type3' /><i></i>
-                            <span class='txt'>고압산소치료기</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='type3' /><i></i>
-                            <span class='txt'>CT</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='type3' /><i></i>
-                            <span class='txt'>MRI</span>
-                          </label>
-                        </div>
-
-                        <div class='cbox ms-4'>
-                          <label>
-                            <input type='checkbox' name='type3' /><i></i>
-                            <span class='txt'>혈관촬영기</span>
+                            <input type="checkbox" :value='item.value' v-model='model.searchParams.equipment'
+                                   @change='searchList' /><i></i>
+                            <span class="txt">{{ item.name }}</span>
                           </label>
                         </div>
                       </div>
@@ -261,6 +211,7 @@
                     <col style='width: 70px' />
 
                     <col style='width: 60px' />
+                    <col style='width: 80px' />
                     <col style='width: 60px' />
                     <col style='width: 60px' />
                     <col style='width: 60px' />
@@ -287,6 +238,7 @@
                     <th rowspan='2'>병원명</th>
                     <th colspan='6'>감염병 전용 수용시설</th>
                     <th rowspan='2'>[감염]<br>중환자</th>
+                    <th rowspan='2'>[감염]<br>중환자실내<br>음압격리</th>
                     <th rowspan='2'>[감염]<br>중증</th>
                     <th rowspan='2'>[감염]<br>준중증</th>
                     <th rowspan='2'>[감염]<br>중등증</th>
@@ -348,13 +300,13 @@
                         {{ item['facilityStatus']['childBirthYn'] ? '있음' : '없음' }}</span><br>
                         <span class='text-black'>({{ item['medicalTeamCount']['childBirthMed'] ?? 0 }})</span>
                       </td>
-                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childYn'] === false }">
-                        {{ item['facilityStatus']['childYn'] ? '있음' : '없음' }}</span><br>
-                        <span class='text-black'>({{ item['medicalTeamCount']['childMed'] ?? 0 }})</span>
-                      </td>
                       <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['dialysisYn'] === false }">
                         {{ item['facilityStatus']['dialysisYn'] ? '있음' : '없음' }}</span><br>
                         <span class='text-black'>({{ item['medicalTeamCount']['dialysisMed'] ?? 0 }})</span>
+                      </td>
+                      <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['childYn'] === false }">
+                        {{ item['facilityStatus']['childYn'] ? '있음' : '없음' }}</span><br>
+                        <span class='text-black'>({{ item['medicalTeamCount']['childMed'] ?? 0 }})</span>
                       </td>
                       <td><span class='text-primary' :class="{ 'text-danger' : item['facilityStatus']['mentalPatientYn'] === false }">
                         {{ item['facilityStatus']['mentalPatientYn'] ? '있음' : '없음' }}</span><br>
@@ -368,7 +320,8 @@
                         {{ item['facilityStatus']['negativePressureRoomYn'] ? '있음' : '없음' }}</span>
                       </td>
 
-                      <td><span class='text-black'>{{ item['gnbdIcu'] + item['npidIcu'] }}</span></td>
+                      <td><span class='text-black'>{{ item['gnbdIcu'] }}</span></td>
+                      <td><span class='text-black'>{{ item['npidIcu'] }}</span></td>
                       <td><span class='text-black'>{{ item['gnbdSvrt'] }}</span></td>
                       <td><span class='text-black'>{{ item['gnbdSmsv'] }}</span></td>
                       <td><span class='text-black'>{{ item['gnbdModr'] }}</span></td>
@@ -499,23 +452,55 @@ const model = reactive({
     isSido: false,
   },
   cmSido: null,
-  bedTypeList: store.getters['common/getBedType'],
-  severityTypeList: store.getters['common/getSeverityType'],
-  ptTypeList: store.getters['common/getPatientType'],
+  bedTypeList: [
+    { name: '코호트격리', value: 'cohtBed' },
+    { name: '음압격리', value: 'emrgncyNgtvIsltnBed' },
+    { name: '일반격리', value: 'emrgncyNrmlIsltnBed' },
+    { name: '소아음압격리', value: 'ngtvIsltnChild' },
+    { name: '소아일반격리', value: 'nrmlIsltnChild' },
+  ],
+  severityTypeList: [
+    { name: '중환자실', value: 'gnbdIcu' },
+    { name: '중환자실내음압격리', value: 'npidIcu' },
+    { name: '중증', value: 'gnbdSvrt' },
+    { name: '준중증', value: 'gnbdSmsv' },
+    { name: '중등증', value: 'gnbdModr' },
+  ],
+  ptTypeList: [
+    { name: '분만', value: 'childBirthMed' },
+    { name: '투석', value: 'dialysisMed' },
+    { name: '소아', value: 'childMed' },
+    { name: '요양병원', value: 'nursingHospitalMed' },
+    { name: '정신질환자', value: 'mentalPatientMed' },
+    { name: '음압수술', value: 'negativePressureRoomYn' },
+  ],
   showAprv: false,
   aprv: {
     msg: null,
     reqHospIdList: [],
   },
+  equipmentList: [
+    { name: '인공호흡기', value: 'ventilator' },
+    { name: '인공호흡기(조산아)', value: 'ventilatorPreemie' },
+    { name: '인큐베이터', value: 'incubator' },
+    { name: 'ECMO', value: 'ecmo' },
+    { name: '고압산소', value: 'highPressureOxygen' },
+    { name: 'CT', value: 'ct' },
+    { name: 'MRI', value: 'mri' },
+    { name: '혈관촬영기', value: 'bloodVesselImaging' },
+    { name: '중심체온조절유도기', value: 'bodyTemperatureControl' },
+  ],
   characterCount: 0,
   isAlert: false,
   searchParams: {
     pageNo: 1,
     // sort: 'distance',
+    dstr1Cd: '27',
     reqBedTypeCd: [],
     svrtTypeCd: [],
     ptTypeCd: [],
     dutyName: null,
+    equipment: [],
   },
 })
 
@@ -527,8 +512,9 @@ onMounted(() => {
 
 function init() {
   store.dispatch('admin/getSido')
+  model.cmSido = store.getters['admin/getCmSido']
   model.departureSelect.model = props.bdDetail.bascAddr
-  model.departureSelect.isLocation = true
+  model.departureSelect.isSido = true
 }
 
 function getRcmdHpList() {
@@ -550,9 +536,10 @@ function searchList() {
   console.log(model.searchParams)
   const params = {
     ...model.searchParams,
-    reqBedTypeCd: model.searchParams.reqBedTypeCd.join(','),
-    svrtTypeCd: model.searchParams.svrtTypeCd.join(','),
-    ptTypeCd: model.searchParams.ptTypeCd.join(','),
+    reqBedTypeCd: model.searchParams.reqBedTypeCd.length > 0 ? model.searchParams.reqBedTypeCd.join(',') : null,
+    svrtTypeCd: model.searchParams.svrtTypeCd.length > 0 ? model.searchParams.svrtTypeCd.join(',') : null,
+    ptTypeCd: model.searchParams.ptTypeCd.length > 0 ? model.searchParams.ptTypeCd.join(',') : null,
+    equipment: model.searchParams.equipment.length > 0 ? model.searchParams.equipment.join(',') : null,
   }
   const url = `${API_PROD}/api/v1/private/bedasgn/hosp-list/${props.bdDetail.ptId}/${props.bdDetail.bdasSeq}`
   axios_cstm().get(url, {params : params})
@@ -632,7 +619,9 @@ function confirmAlert() {
 }
 
 </script>
+
 <style scoped>
+
 .modal.show {
   background-color: rgba(0, 0, 0, 0.4);
   display: block;
@@ -665,7 +654,7 @@ function confirmAlert() {
 }
 
 table {
-  min-width: 1500px;
+  min-width: 1600px;
 }
 
 </style>
