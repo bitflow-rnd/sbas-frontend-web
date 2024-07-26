@@ -1779,6 +1779,12 @@ function bedRequest() {
     },
     dprtInfo: model.spInfo,
   }
+  if (data.svrInfo.undrDsesCd.length === 0) {
+    data.svrInfo.undrDsesCd = null
+  }
+  if (data.svrInfo.ptTypeCd.length === 0) {
+    data.svrInfo.ptTypeCd = null
+  }
   const url = `${API_PROD}/api/v1/private/patient/bedassignreq`
   axios_cstm().post(url, data)
     .then((response) => {
@@ -1963,6 +1969,7 @@ function validateFormStep4() {
 
 function closeExistPtModal() {
   model.openExistPtModal = false
+  model.tab = model.tab + 1
 }
 
 function closePopup() {

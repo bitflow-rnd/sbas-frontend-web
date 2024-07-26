@@ -147,7 +147,7 @@
                                     @change="search()">
                               <option :value="null" id="null">병원 전체</option>
                               <option v-for="(item,idx) in model.hospList" :key="idx"
-                                      :value="item">{{ item.dutyName }}
+                                      :value="item.dutyName">{{ item.dutyName }}
                               </option>
                             </select>
                           </div>
@@ -381,7 +381,6 @@ import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
 import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
 import BedRequestModal from '@/components/user/bdas/BdasReqModal.vue'
 import { API_PROD } from '@/util/constantURL'
-import axios from 'axios'
 import { axios_cstm } from '@/util/axios_cstm'
 
 export default {
