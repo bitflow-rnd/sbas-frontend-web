@@ -247,7 +247,7 @@
                   <div class="txt-box pt-10">조회 결과가 없습니다.</div>
                 </div>
                 <div v-if="medinstList.items.length !== 0" class="table-box with-scroll small">
-                  <table class="list-table-hoverable">
+                  <table class="list-table-hoverable list">
                     <colgroup>
                       <col style="width: 190px" />
                       <col style="width: 150px" />
@@ -907,5 +907,9 @@ article.tabs-group-layout .tabs-contents-box .tabs-box-list .tabs-box {
 .tabs-nav-btn.active {
   background-color: rgb(116, 175, 235);
   color: white !important;
+}
+
+.list {
+  min-width: 1300px;
 }
 </style>

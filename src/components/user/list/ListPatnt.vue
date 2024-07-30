@@ -237,11 +237,11 @@
                       <col style="width: 100px" />
                       <col style="width: 70px" />
                       <col style="width: 50px" />
-                      <col style="width: auto" />
                       <col style="width: 140px" />
+                      <col style="width: 120px" />
                       <col style="width: 100px" />
                       <col style="width: auto" />
-                      <col style="width: 120px" />
+                      <col style="width: 110px" />
                       <col style="width: 100px" />
                       <col style="width: 50px" />
                       <col style="width: 70px" />

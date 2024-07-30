@@ -1,6 +1,6 @@
 <template>
   <!--환자등록/수정 -->
-  <div class="modal show" tabindex="-1" aria-hidden="true" style="">
+  <div class="modal show" tabindex="-1" style="">
     <!--begin::Modal dialog-->
     <div class="modal-dialog col-lg-3 modal-dialog-centered">
       <!--begin::Modal content-->
