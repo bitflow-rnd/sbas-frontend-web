@@ -147,7 +147,7 @@
                                     @change="search()">
                               <option :value="null" id="null">병원 전체</option>
                               <option v-for="(item,idx) in model.hospList" :key="idx"
-                                      :value="item.dutyName">{{ item.dutyName }}
+                                      :value="item">{{ item }}
                               </option>
                             </select>
                           </div>
@@ -398,7 +398,7 @@ export default {
     this.initNewPt = this.newPt
     this.initDsInfo = this.dsInfo
     this.setDefaultDstr1Cd()
-    await this.getHospitalList()
+    this.getHospitalList()
   },
   setup() {
     const isAlert = ref(false)
@@ -746,6 +746,7 @@ export default {
       console.log(this.filterPatient['assignmentStatus'])
       this.$store.dispatch('patnt/getPatntList', this.filterData)
       this.page = 1
+      this.getHospitalList()
     },
     async showPatntModal(patient, idx) {
       await this.$store.dispatch('patnt/getBasicInfo', patient)
@@ -799,12 +800,13 @@ export default {
         // this.getSecondAddress(this.userInfo.dutyDstr1Cd)
       // }
     },
-    async getHospitalList() {
-      const url = `${API_PROD}/api/v1/private/patient/bdas-hosp`
-      await axios_cstm().get(url)
-        .then(async response => {
+    getHospitalList() {
+      const url = `${API_PROD}/api/v1/private/patient/searchhosps`
+      axios_cstm()
+        .get(url, { params: this.filterData })
+        .then(response => {
           if (response.data?.code === '00') {
-            this.model.hospList = await response.data?.result.items
+            this.model.hospList = response.data?.result.items
           }
         })
     }

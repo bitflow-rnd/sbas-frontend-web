@@ -174,25 +174,25 @@
                 </div>
               </div>
 
-              <div class='option-box'>
-                <div class='option-item-box d-flex align-items-center ms-8'>
-                  <div class='option-label-box pe-4'>목록표시</div>
+<!--              <div class='option-box'>-->
+<!--                <div class='option-item-box d-flex align-items-center ms-8'>-->
+<!--                  <div class='option-label-box pe-4'>목록표시</div>-->
 
-                  <article class='toggle-list-layout2'>
-                    <div class='toggle-list'>
-                      <label>
-                        <input type='radio' name='toggle' checked='' />
-                        <span class='txt'>거리순</span>
-                      </label>
+<!--                  <article class='toggle-list-layout2'>-->
+<!--                    <div class='toggle-list'>-->
+<!--                      <label>-->
+<!--                        <input type='radio' name='toggle' checked='' />-->
+<!--                        <span class='txt'>거리순</span>-->
+<!--                      </label>-->
 
-                      <label>
-                        <input type='radio' name='toggle' />
-                        <span class='txt'>추천순</span>
-                      </label>
-                    </div>
-                  </article>
-                </div>
-              </div>
+<!--                      <label>-->
+<!--                        <input type='radio' name='toggle' />-->
+<!--                        <span class='txt'>추천순</span>-->
+<!--                      </label>-->
+<!--                    </div>-->
+<!--                  </article>-->
+<!--                </div>-->
+<!--              </div>-->
             </div>
 
             <div v-if='model.rcmdHp.count !== 0' class='table-body-box'>
