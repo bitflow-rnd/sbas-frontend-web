@@ -52,11 +52,12 @@
                   <div class="subject-box">연락처</div>
                   <div class="con-box">{{ getTelno(user['telno']) }}</div>
 
-                  <a
-                    href="javascript:void(0)"
-                    class="chat-btn"
+                  <router-link
+                    to=''
+                    class='chat-btn'
+                    @click='emits("openChatRoom")'
                     style="background-image: url('/img/common/ic_floating_chat.svg')"
-                  ></a>
+                  ></router-link>
                 </div>
 
                 <div class="inner-item-box">
@@ -77,43 +78,31 @@
   </section>
 </template>
 
-<script>
-import { getPmgr, getPtType, getTag, getTelno, getTLDt } from '@/util/ui'
-import { mapState } from 'vuex'
+<script setup>
+import { getPmgr, getPtType, getTelno, getTLDt } from '@/util/ui'
+import { defineProps, defineEmits } from 'vue'
 
-export default {
-  name: 'ContactDetailUnit',
-  props: {
-    user: {
-      type: Object,
-      required: true
-    }
-  },
-  computed: {
-    ...mapState( 'user', ['userInfo'])
-  },
-  methods: {
-    getPmgr,
-    getPtType,
-    getTag,
-    getTelno,
-    getTLDt,
-    getUserBelong() {
-      if (this.user.ocpCd) {
-        return `${this.user.ocpCd} / ${this.user.dutyDstr1CdNm} / ${this.user.instNm}`;
-      } else {
-        return `${this.user.dutyDstr1CdNm} / ${this.user.instNm}`;
-      }
-    },
-    toggleLike(reqId){
-      //console.log(this.userInfo.id)
-      console.log(reqId)
-      const request = {id:this.userInfo.id,mbrId:reqId}
-      console.log(request)
-      this.$store.dispatch('user/regFavUser',request)
-    },
+const props = defineProps({
+  user: Object,
+})
+const emits = defineEmits(['openChatRoom'])
+
+function getUserBelong() {
+  if (props.user.ocpCd) {
+    return `${props.user.ocpCd} / ${props.user.dutyDstr1CdNm} / ${props.user.instNm}`;
+  } else {
+    return `${props.user.dutyDstr1CdNm} / ${props.user.instNm}`;
   }
 }
+
+function toggleLike(reqId) {
+  //console.log(this.userInfo.id)
+  console.log(reqId)
+  const request = {id:this.userInfo.id,mbrId:reqId}
+  console.log(request)
+  this.$store.dispatch('user/regFavUser',request)
+}
+
 </script>
 
 <style scoped></style>

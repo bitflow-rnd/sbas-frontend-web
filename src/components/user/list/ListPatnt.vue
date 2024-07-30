@@ -69,7 +69,7 @@
                   환자정보 관리
                 </h1>
               </li>
-              <li class="breadcrumb-item ml-2">
+              <li class="breadcrumb-item ml-2 ms-5">
                 <span>&nbsp;병상배정 이력이 있거나, 배정 예정 중인 환자 목록입니다.</span>
               </li>
             </ul>

@@ -58,7 +58,7 @@
                   중증 환자 관리
                 </h1>
               </li>
-              <li class="breadcrumb-item ml-2">
+              <li class="breadcrumb-item ml-2 ms-5">
                 <span>&nbsp;중증 모니터링 중인 환자 목록입니다.</span>
               </li>
             </ul>
