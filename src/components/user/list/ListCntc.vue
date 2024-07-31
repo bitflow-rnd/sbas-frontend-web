@@ -184,7 +184,7 @@
               <contact-detail-unit
                 v-if="model.selectedUser"
                 :user="model.selectedUser"
-                @openChatRoom='onTabSelected(1)'
+                @openChatRoom='openChatRoom()'
               />
               <!-- contact detail -->
 
@@ -225,13 +225,14 @@ import MessageRoomList from '@/components/user/list/MessageRoomList.vue'
 import { onMounted, reactive, ref } from 'vue'
 import MessageRoomDetail from '@/components/user/detl/MessageRoomDetail.vue'
 import NoMessageRoomDetail from '@/components/user/detl/NoMessageRoomDetail.vue'
-import store from '@/store/store'
+import { axios_cstm } from '@/util/axios_cstm'
+import { API_PROD } from '@/util/constantURL'
+import { useStore } from 'vuex'
 
 const tab1 = ref()
 const tab2 = ref()
 
 let kwd = ''
-
 let model = reactive({
   mode: 'contact',
   selectedUser: null,
@@ -242,12 +243,10 @@ let model = reactive({
   userCnt: 0,
   params: null,
 })
+const store = useStore()
 
 onMounted(() => {
-  store.dispatch('user/getUsersListSync').then((result) => {
-    model.userCnt = result?.totalCnt
-    console.log(model.userCnt)
-  })
+
 })
 
 function onUserSelected(user) {
@@ -270,6 +269,26 @@ function onTabSelected(idx) {
     tab1.value.classList.remove('active')
     tab2.value.classList.add('active')
   }
+}
+
+function openChatRoom() {
+  const myInfo = store.getters['user/getUserInfo']
+  const url = `${API_PROD}/api/v1/private/talk/personal`
+  const data = {
+    id: myInfo.id,
+    userId: model.selectedUser.id,
+    userNm: model.selectedUser.userNm
+  }
+
+  axios_cstm().post(url, data)
+    .then((response) => {
+      model.mode = 'message'
+      tab1.value.classList.remove('active')
+      tab2.value.classList.add('active')
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 function searchCntc() {

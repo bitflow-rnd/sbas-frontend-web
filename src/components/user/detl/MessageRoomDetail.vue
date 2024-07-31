@@ -101,7 +101,6 @@ watch(
 onMounted(() => {
   console.warn('room', JSON.stringify(props.roomInfo))
   model.userInfo = store.getters['user/getUserInfo']
-  console.log('userInfo', JSON.stringify(model.userInfo))
   connectWebsocket()
   socket.onmessage = (event) => {
     try {
@@ -109,7 +108,7 @@ onMounted(() => {
       console.log('type', typeof(msgs))
       if (typeof(msgs)==='object' && msgs.length>0) {
         console.log('messageList', msgs[0])
-        model.messageList = msgs[0]
+        loadMessages()
       } else {
         loadMessages()
       }
@@ -122,7 +121,7 @@ onMounted(() => {
 
 function connectWebsocket() {
   let webSocket = import.meta.env.VITE_APP_CHAT_URL
-  socket = new WebSocket(`${webSocket}/chat-rooms/room/`
+  socket = new WebSocket(`${webSocket}/room/`
     + props.roomInfo.tkrmId);
   socket.onopen = function () {
     socket.send("hello|" + model.userInfo.id)

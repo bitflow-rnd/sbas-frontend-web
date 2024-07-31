@@ -138,10 +138,6 @@ const model = reactive({
   favUsersList :[],
   selectedUser: null,
   userCnt : 0,
-  params: {
-    search: '',
-    instTypeCd: '',
-  }
 })
 
 onMounted( () => {
@@ -163,7 +159,6 @@ function executeSearch() {
     store.dispatch('user/getUsersListSync').then((result) => {
       model.reqList = result?.items?.filter((item) => item['userStatCd']==='URST0001')
       model.organList = result?.items?.filter((item) => item['userStatCd']==='URST0002')
-      console.log(model.userCnt)
     })
   }
   // store.dispatch('user/getFavUsersList').then((result2) => {
