@@ -109,8 +109,6 @@ onMounted(() => {
       if (typeof(msgs)==='object' && msgs.length>0) {
         console.log('messageList', msgs[0])
         loadMessages()
-      } else {
-        loadMessages()
       }
     } catch (e) {
       console.log('event.data', event.data)

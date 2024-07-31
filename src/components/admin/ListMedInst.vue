@@ -181,9 +181,10 @@
                       <th>응급실 격리병상</th>
                       <td>
                         <div class="item-cell-box">
-                          <div class="cbox" :class='{"ms-4": idx > 0}' v-for='(item, idx) in this.emrgncyIsltnBedList' :key='idx'>
+                          <div class="cbox" :class='{"ms-4": idx > 0}' v-for='(item, idx) in this.bedTypeList' :key='idx'>
                             <label>
-                              <input type="checkbox" :value='item.value' v-model='this.filterMedinst.emrgncyIsltnBed'/><i></i>
+                              <input type='checkbox' v-model='this.filterMedinst["reqBedTypeCd"]'
+                                     :value='item.value' @change='search' /><i></i>
                               <span class="txt">{{ item.name }}</span>
                             </label>
                           </div>
@@ -193,9 +194,10 @@
                       <th>감염병 입원병상</th>
                       <td>
                         <div class="item-cell-box">
-                          <div class="cbox" :class='{"ms-4": idx > 0}' v-for='(item, idx) in this.infectBedList' :key='idx'>
+                          <div class="cbox" :class='{"ms-4": idx > 0}' v-for='(item, idx) in this.severityTypeList' :key='idx'>
                             <label>
-                              <input type="checkbox" :value='item.value' v-model='this.filterMedinst.infectBed'/><i></i>
+                              <input type="checkbox" v-model='this.filterMedinst["svrtTypeCd"]'
+                                     :value='item.value' @change='search' /><i></i>
                               <span class="txt">{{ item.name }}</span>
                             </label>
                           </div>
@@ -206,9 +208,10 @@
                       <th>가용장비</th>
                       <td colspan="3">
                         <div class="item-cell-box">
-                          <div class="cbox" :class='{"ms-4": idx > 0}' v-for='(item, idx) in this.equipList' :key='idx'>
+                          <div class="cbox" :class='{"ms-4": idx > 0}' v-for='(item, idx) in this.equipmentList' :key='idx'>
                             <label>
-                              <input type="checkbox" :value='item.value' v-model='this.filterMedinst.equip'/><i></i>
+                              <input type="checkbox" v-model='this.filterMedinst["equipment"]'
+                                     :value='item.value' @change='search' /><i></i>
                               <span class="txt">{{ item.name }}</span>
                             </label>
                           </div>
@@ -661,7 +664,25 @@ export default {
       if (this.filterMedinst['dstr1Cd']) params = { ...params, dstr1Cd: this.filterMedinst['dstr1Cd'] }
       if (this.filterMedinst['dstr2Cd']) params = { ...params, dstr2Cd: this.filterMedinst['dstr2Cd'] }
       if (this.filterMedinst['dutyDivNam'] && this.filterMedinst['dutyDivNam'].length > 0) {
-        params = { ...params, dutyDivNam: this.filterMedinst['dutyDivNam'].join(",") }
+        params = { ...params, dutyDivNam: this.filterMedinst['dutyDivNam'].join(',') }
+      }
+
+      if (this.filterMedinst['reqBedTypeCd'] && this.filterMedinst['reqBedTypeCd'].length > 0) {
+        params.reqBedTypeCd = this.filterMedinst['reqBedTypeCd'].join(',')
+      } else {
+        params.reqBedTypeCd = null
+      }
+
+      if (this.filterMedinst['svrtTypeCd'] && this.filterMedinst['svrtTypeCd'].length > 0) {
+        params.svrtTypeCd = this.filterMedinst['svrtTypeCd'].join(',')
+      } else {
+        params.svrtTypeCd = null
+      }
+
+      if (this.filterMedinst['equipment'] && this.filterMedinst['equipment'].length > 0) {
+        params.equipment = this.filterMedinst['equipment'].join(',')
+      } else {
+        params.equipment = null
       }
 
       return params
@@ -709,9 +730,9 @@ export default {
         dstr1Cd: '',
         dstr2Cd: '',
         text: '',
-        equip: [],
-        emrgncyIsltnBed: [],
-        infectBed: [],
+        reqBedTypeCd: [],
+        svrtTypeCd: [],
+        equipment: [],
       },
       inputValue: null,
       modMedinst: {
@@ -724,21 +745,21 @@ export default {
         negativePressureRoomYn: false
       },
       imagePreview: DEFT_HOPT_IMG,
-      emrgncyIsltnBedList: [
-        { name: '코호트격리', value: 'cohort' },
-        { name: '음압격리', value: 'negativePressure' },
-        { name: '일반격리', value: 'normal' },
-        { name: '소아음압격리', value: 'childNegativePressure' },
-        { name: '소아일반격리', value: 'childNormal' }
+      bedTypeList: [
+        { name: '코호트격리', value: 'cohtBed' },
+        { name: '음압격리', value: 'emrgncyNgtvIsltnBed' },
+        { name: '일반격리', value: 'emrgncyNrmlIsltnBed' },
+        { name: '소아음압격리', value: 'ngtvIsltnChild' },
+        { name: '소아일반격리', value: 'nrmlIsltnChild' },
       ],
-      infectBedList: [
-        { name: '중환자실', value: 'icu' },
-        { name: '중환자실내음압격리', value: 'icuNegativePressure' },
-        { name: '중증', value: 'severe' },
-        { name: '준중증', value: 'moderate' },
-        { name: '중등증', value: 'mild' }
+      severityTypeList: [
+        { name: '중환자실', value: 'gnbdIcu' },
+        { name: '중환자실내음압격리', value: 'npidIcu' },
+        { name: '중증', value: 'gnbdSvrt' },
+        { name: '준중증', value: 'gnbdSmsv' },
+        { name: '중등증', value: 'gnbdModr' },
       ],
-      equipList: [
+      equipmentList: [
         { name: '인공호흡기', value: 'ventilator' },
         { name: '인공호흡기(조산아)', value: 'ventilatorPreemie' },
         { name: '인큐베이터', value: 'incubator' },
@@ -748,7 +769,7 @@ export default {
         { name: 'MRI', value: 'mri' },
         { name: '혈관촬영기', value: 'bloodVesselImaging' },
         { name: '중심체온조절유도기', value: 'bodyTemperatureControl' },
-      ]
+      ],
     }
   },
   methods: {
