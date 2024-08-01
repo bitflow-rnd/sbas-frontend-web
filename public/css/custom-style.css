@@ -1755,7 +1755,6 @@ article.msg-send-layout1 .msg-group-box {
   display: flex;
   border: 1px solid #aaa;
   border-radius: 4px;
-  opacity: 0.2;
 }
 article.msg-send-layout1 .msg-group-box .img-upload-box {
   border-right: 1px solid rgba(103, 106, 122, 0.2);

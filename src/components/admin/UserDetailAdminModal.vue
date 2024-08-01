@@ -316,7 +316,6 @@
                         <td>
                           <router-link
                             to=''
-                            @click='toggleModal'
                             class='btn btn-sm btn-flex btn-primary align-self-center px-3'
                           >탈퇴처리
                           </router-link
@@ -341,7 +340,6 @@
                   <router-link
                     v-show="props.usrDetail.userStatCd === 'URST0001'"
                     to=''
-                    @click='toggleModal'
                     class='modal-menu-btn menu-primary'
                   >승인/반려
                   </router-link>

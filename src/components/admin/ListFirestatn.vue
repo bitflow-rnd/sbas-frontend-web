@@ -816,7 +816,7 @@
               <div class="table-box">
                 <table>
                   <colgroup>
-                    <col style="width: 530px" />
+                    <col style="width: 400px" />
                     <col style="width: 168px" />
                     <col style="width: auto" />
                     <col style="width: 168px" />
@@ -824,7 +824,7 @@
                   </colgroup>
                   <tbody>
                     <tr>
-                      <td rowspan="6" class="p-0">
+                      <td rowspan="6" class="map-wrapper">
                         <div id="map"></div>
                       </td>
                       <th>구급대 ID</th>
@@ -1453,22 +1453,18 @@ export default {
       document.head.appendChild(script)
     },
     loadNaverMapAsync(lat, lon) {
-      if (this.naverMap === null) {
-        this.naverMap = new window.naver.maps.Map('map', {
-          center: new window.naver.maps.LatLng(lat, lon),
-          zoom: 15,
-        });
-      } else {
-        this.naverMap.setCenter(new window.naver.maps.LatLng(lat, lon));
-      }
-      if (this.marker === null) {
-        this.marker = new window.naver.maps.Marker({
-          position: new window.naver.maps.LatLng(lat, lon),
-          map: this.naverMap,
-        });
-      } else {
-        this.marker.setPosition(new window.naver.maps.LatLng(lat, lon));
-      }
+      const map = new window.naver.maps.Map('map', {
+        center: new window.naver.maps.LatLng(lat, lon),
+        zoom: 15,
+        zoomControlOptions: {
+          style: window.naver.maps.ZoomControlStyle.SMALL,
+          position: window.naver.maps.Position.TOP_RIGHT
+        }
+      })
+      new window.naver.maps.Marker({
+        position: new window.naver.maps.LatLng(lat, lon),
+        map: map
+      })
     },
     updateCharacterCount() {
       if (this.fsDetail.rmk === null || this.fsForm.rmk === '') {
@@ -1618,16 +1614,25 @@ export default {
 .badge.cnt { height: 19px; margin-left: 0.5rem;
   min-width: 22px; border-radius: 10px; padding: 2px 7px;
   text-align: center; }
+
+.map-wrapper {
+  padding: 0;
+  height: 400px;
+  position: relative;
+}
+
 #map {
-  position: absolute !important;
-  width: 530px;
-  height: 430px;
+  position: relative !important;
+  width: 480px;
+  height: 400px;
   margin: 0;
   padding: 0;
   top: 0;
   left: 0;
-  border-top: 1px solid #555;
+  border: 1px solid #555;
+  max-width: 100%;
 }
+
 .no-data {
   height: 300px !important;
 }
