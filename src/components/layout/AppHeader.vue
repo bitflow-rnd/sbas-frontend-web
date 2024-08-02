@@ -142,22 +142,17 @@
           </div>
 
           <!--begin::Activities-->
-<!--          <div class="app-navbar-item ms-2 me-2 d-none d-xxl-flex">-->
-            <!--begin::Drawer toggle-->
-<!--            <div-->
-<!--              class="bell-wrapper btn btn-icon btn-custom w-35px h-35px w-md-40px h-md-40px position-relative"-->
-<!--              data-kt-menu-trigger="{default: 'click', lg: 'hover'}"-->
-<!--              data-kt-menu-attach="parent"-->
-<!--              data-kt-menu-placement="bottom-end"-->
-<!--            >-->
-<!--              <img src='@/assets/img/ic-bell.webp' />-->
-<!--              <div-->
-<!--                class="badge-bell position-absolute top-0 start-100 translate-middle badge badge-sm rounded-pill mt-3 bg-primary"-->
-<!--              >1-->
-<!--              </div>-->
-<!--            </div>-->
-            <!--end::Drawer toggle-->
-<!--          </div>-->
+          <div class="app-navbar-item ms-2 me-2 d-none d-xxl-flex">
+<!--            begin::Drawer toggle-->
+            <div class='bell-wrapper btn btn-icon btn-custom w-35px h-35px w-md-40px h-md-40px position-relative'
+                 @click='openNotificationList' >
+              <img src='@/assets/img/ic-bell.webp' />
+              <div class="badge-bell position-absolute top-0 start-100 translate-middle badge badge-sm rounded-pill mt-3 bg-primary">
+                1
+              </div>
+            </div>
+<!--            end::Drawer toggle-->
+          </div>
           <!--end::Activities-->
 
           <!--begin::User menu-->
@@ -663,9 +658,10 @@
     </div>
     <!--end::Modal dialog-->
   </div>
-  <!--end::Modal - 내정보 수정 -->
-
   <!--end::Modals-->
+
+  <NotificationModal v-if='this.mode==="notification"' @closePopup='closeModal' />
+
 </template>
 
 <script>
@@ -674,10 +670,12 @@ import { getTelno, ptType } from '@/util/ui'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import MyInfoModModal from '@/components/user/modal/MyInfoModModal.vue'
 import { JobCode } from '@/util/sbas_cnst'
+import SvrtInfoModal from '@/components/user/modal/SvrtInfoModal.vue'
+import NotificationModal from '@/components/user/modal/NotificationModal.vue'
 
 export default {
   name: 'AppHeader',
-  components: { MyInfoModModal, MyInfoModal },
+  components: { NotificationModal, SvrtInfoModal, MyInfoModModal, MyInfoModal },
   created() {
     this.$store.dispatch('admin/getSido')
   },
@@ -744,7 +742,10 @@ export default {
     },
     closeModal() {
       this.mode = ''
-    }
+    },
+    openNotificationList() {
+      this.mode = 'notification'
+    },
   }
 }
 </script>
