@@ -350,7 +350,7 @@
                                 <th>질병급</th>
                                 <td>{{ ptDs.diagGrdept ? ptDs.diagGrdept : '-' }}</td>
                                 <th>DNR 동의</th>
-                                <td>{{ ptDs.dnrAgreYn ? ptDs.dnrAgreYn : '-' }}</td>
+                                <td>{{ ptDs.dnrAgreYn === "DNRA0001" ? '동의' : '비동의' }}</td>
                               </tr>
 
                               <tr>
@@ -417,7 +417,7 @@
                               <tr>
                                 <th>발병일 / 진단일 / 신고일</th>
                                 <td colspan='3'>
-                                  {{ ptDs.occrDt ? ptDs.occrDt : '- ' }}/ {{ ptDs.diagDt ? ptDs.diagDt : ' - ' }} /
+                                  {{ ptDs.occrDt ? ptDs.occrDt : '- ' }} / {{ ptDs.diagDt ? ptDs.diagDt : ' - ' }} /
                                   {{ ptDs.rptDt ? ptDs.rptDt : ' -' }}
                                 </td>
                               </tr>
