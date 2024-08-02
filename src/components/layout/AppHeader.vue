@@ -147,8 +147,9 @@
             <div class='bell-wrapper btn btn-icon btn-custom w-35px h-35px w-md-40px h-md-40px position-relative'
                  @click='openNotificationList' >
               <img src='@/assets/img/ic-bell.webp' />
-              <div class="badge-bell position-absolute top-0 start-100 translate-middle badge badge-sm rounded-pill mt-3 bg-primary">
-                1
+              <div class="badge-bell position-absolute top-0 start-100 translate-middle badge badge-sm rounded-pill mt-3 bg-primary"
+                   style='font-size: 0.85rem'>
+                {{ this.notificationCount }}
               </div>
             </div>
 <!--            end::Drawer toggle-->
@@ -672,6 +673,8 @@ import MyInfoModModal from '@/components/user/modal/MyInfoModModal.vue'
 import { JobCode } from '@/util/sbas_cnst'
 import SvrtInfoModal from '@/components/user/modal/SvrtInfoModal.vue'
 import NotificationModal from '@/components/user/modal/NotificationModal.vue'
+import { axios_cstm } from '@/util/axios_cstm'
+import { API_PROD } from '@/util/constantURL'
 
 export default {
   name: 'AppHeader',
@@ -684,8 +687,15 @@ export default {
       tabidx: 0,
       mode: '',
       ptType,
-      JobCode
+      JobCode,
+      notificationCount: 0,
     }
+  },
+  mounted() {
+    this.getNotificationCount()
+  },
+  watch: {
+    '$route': 'getNotificationCount',
   },
   computed: {
     ...mapState('user', ['userInfo']),
@@ -742,9 +752,23 @@ export default {
     },
     closeModal() {
       this.mode = ''
+      this.getNotificationCount()
     },
     openNotificationList() {
       this.mode = 'notification'
+    },
+    getNotificationCount() {
+      const url = `${API_PROD}/api/v1/private/user/alarm-count`
+      axios_cstm().get(url)
+        .then((response) => {
+          const data = response.data
+          if (data.code === '00') {
+            this.notificationCount = data.result
+          }
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     },
   }
 }

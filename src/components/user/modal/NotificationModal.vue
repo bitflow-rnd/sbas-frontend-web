@@ -78,12 +78,27 @@ function closePopup() {
 
 function getList() {
   const url = `${API_PROD}/api/v1/private/user/alarm-list`
+  axios_cstm().get(url)
+    .then((response) => {
+      const data = response.data
+      if (data.code === '00') {
+        model.list = data.result.items
+        readNotification()
+      }
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+}
+
+function readNotification() {
+  const url = `${API_PROD}/api/v1/private/user/read-alarms`
   return new Promise(() => {
-    axios_cstm().get(url)
+    axios_cstm().post(url)
       .then((response) => {
         const data = response.data
         if (data.code === '00') {
-          model.list = data.result.items
+          console.log(data.result)
         }
       })
       .catch((e) => {
