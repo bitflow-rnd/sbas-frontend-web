@@ -241,7 +241,7 @@
                       <td class="text-start">{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
                       <td>{{ pt['mpno'] ? pt['mpno'] : '-' }}</td>
                       <td>{{ pt['natiCdNm'] ? pt['natiCdNm'] : '-' }}</td>
-                      <td>{{ getDate(pt['updtDttm']) }}</td>
+                      <td>{{ formatTimestampWithDot(pt['updtDttm']) }}</td>
                       <td
                         @click='toggleCheckbox()'
                       ><a @click.stop='showPatntModal(pt,2)'
@@ -327,7 +327,7 @@
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { mapState } from 'vuex'
 import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
-import { formatYyyyMmDd, toggleCheckbox } from '@/util/ui'
+import { formatTimestampWithDot, formatYyyyMmDd, toggleCheckbox } from '@/util/ui'
 import { reactive, ref } from 'vue'
 import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
 import SvrtInfoModal from '@/components/user/modal/SvrtInfoModal.vue'
@@ -413,7 +413,6 @@ export default {
         '완료': 'BAST0007,BAST0008',
         '환자등록': 'BAST0001'
       },
-      d: '관찰 환자',
       genders: ['남', '여'],
       dateRanges: ['1개월', '3개월', '6개월', '1년', '전체', '직접지정'],
       selectedPatient: null,
@@ -435,11 +434,9 @@ export default {
           second: ''
         },
         hospitalName: null,
-        monitoring: null,
         assignmentStatus: [],
         searchText: ''
       },
-      image: 'assets/logo.png',
       medinstInfo: {
         dstr1Cd: ''
       },
@@ -453,7 +450,7 @@ export default {
     ...mapState('user', ['userInfo']),
     ...mapState('admin', ['cmSido', 'cmGugun', 'organMedi']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHisInfo']),
-    ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPts', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
+    ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
     ...mapState('severity', ['severityData']),
     startIndex() {
       return (this.page - 1) * this.displayRowsCount
@@ -475,7 +472,6 @@ export default {
         dstr2Cd: this.filterPatient['address']['second']
       }
       if (this.filterPatient['hospitalName']) params = { ...params, hospNm: this.filterPatient['hospitalName'] }
-      if (this.filterPatient['monitoring']) params = { ...params, sever: this.filterPatient['monitoring'] }
       if (this.filterPatient['assignmentStatus']) params = {
         ...params,
         bedStatCd: this.filterPatient['assignmentStatus'].length ? this.filterPatient['assignmentStatus'].toString() : null
@@ -491,7 +487,6 @@ export default {
       return this.filterPatient['address']['first'] === ''
     },
   },
-  //정예준
   watch: {
     checkedPatients() {
       this.allPatientsSelected = this.checkedPatients.length === this.patientData.length
@@ -499,18 +494,9 @@ export default {
         this.allPatientsSelected = false
       }
     },
-    severPts(newValue) {
-      this.filterPatient.monitoring = newValue
-    },
-    'newPt.natiCd': function(newNatiCd) {
-      if (newNatiCd === 'NATI0001') {
-        this.newPt.natiNm = '대한민국'
-      } else {
-        this.newPt.natiNm = null
-      }
-    }
   },
   methods: {
+    formatTimestampWithDot,
     formatYyyyMmDd,
     toggleCheckbox,
     getSecondAddress(address) {
@@ -545,20 +531,6 @@ export default {
       this.tab = 1
       this.showModal = 0
       this.closeModal(0)
-    },
-    getDate(data) {
-      const dData = new Date(data)
-      const dYear = dData.getFullYear()
-      let dMonth = dData.getMonth() + 1
-      let dDate = dData.getDate()
-
-      if (dMonth < 10) {
-        dMonth = '0' + dMonth
-      }
-      if (dDate < 10) {
-        dDate = '0' + dDate
-      }
-      return dYear + '.' + dMonth + '.' + dDate
     },
     alertOpen(idx) {
       this.cncBtn = false

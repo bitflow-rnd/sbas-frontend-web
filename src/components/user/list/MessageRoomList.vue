@@ -18,7 +18,7 @@
 
               <div class="info-box">
                 <div class="subject-box">[{{ item['tkrmId'] }}] {{ item['tkrmNm'] }}</div>
-                <div class="con-box">생성일시 {{ getDate(item['updtDttm']) }}</div>
+                <div class="con-box">생성일시 {{ formatTimestampWithDot(item['updtDttm']) }}</div>
               </div>
             </div>
 
@@ -45,6 +45,7 @@
 <script setup>
 import { useStore } from 'vuex'
 import { defineEmits, onMounted, reactive } from 'vue'
+import { formatTimestampWithDot } from '@/util/ui'
 
 const store = useStore()
 const emit = defineEmits(['onRoomSelected'])
@@ -65,20 +66,6 @@ function onSelectRoom(room) {
   emit('onRoomSelected', room)
 }
 
-function getDate(data) {
-  const dData = new Date(data)
-  const dYear = dData.getFullYear()
-  let dMonth = dData.getMonth() + 1
-  let dDate = dData.getDate()
-
-  if (dMonth < 10) {
-    dMonth = '0' + dMonth
-  }
-  if (dDate < 10) {
-    dDate = '0' + dDate
-  }
-  return dYear + '.' + dMonth + '.' + dDate
-}
 </script>
 
 <style scoped></style>
