@@ -11,7 +11,7 @@ export function getGugun(code) {
 export function getTelno(data) {
   if (data !== null && data !== undefined) {
     return data.slice(0, 3) + '-' + data.slice(3, 7) + '-' + data.slice(7, 12)
-  } else return ''
+  } else return '-'
 }
 
 export function maskingNm(nm) {

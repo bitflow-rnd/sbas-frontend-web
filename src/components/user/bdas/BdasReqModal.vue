@@ -614,7 +614,7 @@
                                 />
                               </div>
                               <a
-                                  @click='openAddressFinder'
+                                  @click='openAddressFinder(1)'
                                   class='btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1'
                                   style='min-width: 80px'
                               >주소검색</a
@@ -1478,7 +1478,7 @@
                                 />
                               </div>
                               <a
-                                  @click='openAddressFinder'
+                                  @click='openAddressFinder(2)'
                                   class='btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px ms-3 certify-btn rounded-1'
                                   style='min-width: 80px'
                               >주소검색</a>
@@ -1593,6 +1593,7 @@ const model = reactive({
     bascAddr: null, detlAddr: null, zip: null,
     undrDsesCd: [], undrDsesEtc: null,
   },
+  ptId: '',
   existPt: null,
   openExistPtModal: false,
   selectPhcType: 'select',
@@ -1724,6 +1725,9 @@ function isExistPt() {
           if (data.result.isExist) {
             model.openExistPtModal = true
             model.existPt = data.result.items
+            model.dsInfo.ptId = data.result.items.ptId
+            model.svInfo.ptId = data.result.items.ptId
+            model.spInfo.ptId = data.result.items.ptId
           } else {
             registerNewPt()
           }
@@ -1745,6 +1749,9 @@ function registerNewPt() {
         const data = response.data
         if (data.code === '00') {
           model.errMsg = '환자 정보가\n등록되었습니다.'
+          model.dsInfo.ptId = data.result
+          model.svInfo.ptId = data.result
+          model.spInfo.ptId = data.result
           model.confirmAlert = true
           model.tab = model.tab + 1
         }
@@ -1831,7 +1838,7 @@ function openAddressFinder(idx) {
       } else if (idx === 1) {
         model.dsInfo.instZip = data.zonecode
         model.dsInfo.instBascAddr = data.address
-      } else if (idx === 3) {
+      } else if (idx === 2) {
         model.spInfo.dprtDstrZip = data.zonecode
         model.spInfo.dprtDstrBascAddr = data.address
       }

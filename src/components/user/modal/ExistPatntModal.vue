@@ -42,7 +42,7 @@
               >
                 {{ cmpExist(2)[0] }}
               </div>
-              <div class="d-inline-flex w-auto ms-3">주소 : {{ props.existPt.dstr1CdNm }} {{ props.existPt.dstr2CdNm }}</div>
+              <div class="d-inline-flex w-auto ms-3">주소 : {{ props.existPt.bascAddr }} {{ props.existPt.detlAddr ?? '-' }}</div>
             </div>
 
             <div class="exist-box d-flex align-items-center mt-3">
@@ -98,7 +98,7 @@ function cmpExist(idx) {
   const conditions = {
     0: () => props.existPt.ptNm === props.newPt.ptNm,
     1: () => props.existPt.rrno1 === props.newPt.rrno1 && props.existPt.rrno2 === props.newPt.rrno2,
-    2: () => props.existPt.dstr1Cd === props.newPt.dstr1Cd && props.existPt.dstr2Cd === props.newPt.dstr2Cd,
+    2: () => props.existPt.bascAddr === props.newPt.bascAddr,
     3: () => props.existPt.mpno === props.newPt.mpno,
   };
 
