@@ -18,7 +18,7 @@
 
               <div class="info-box">
                 <div class="subject-box">[{{ item['tkrmId'] }}] {{ item['tkrmNm'] }}</div>
-                <div class="con-box">생성일시 {{ formatTimestampWithDot(item['updtDttm']) }}</div>
+                <div class="con-box">생성일시 {{ TimestampToDateWithDot(item['updtDttm']) }}</div>
               </div>
             </div>
 
@@ -45,7 +45,7 @@
 <script setup>
 import { useStore } from 'vuex'
 import { defineEmits, onMounted, reactive } from 'vue'
-import { formatTimestampWithDot } from '@/util/ui'
+import { TimestampToDateWithDot } from '@/util/ui'
 
 const store = useStore()
 const emit = defineEmits(['onRoomSelected'])

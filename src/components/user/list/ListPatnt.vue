@@ -274,7 +274,7 @@
                       <td class="text-start">{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
                       <td>{{ pt['mpno'] ? pt['mpno'] : '-' }}</td>
                       <td>{{ pt['natiCdNm'] ? pt['natiCdNm'] : '-' }}</td>
-                      <td>{{ formatTimestampWithDot(pt['updtDttm']) }}</td>
+                      <td>{{ TimestampToDateWithDot(pt['updtDttm']) }}</td>
                       <td
                         @click='toggleCheckbox()'
                       ><a @click.stop='showPatntModal(pt,2)'
@@ -318,40 +318,6 @@
   <BedRequestModal v-if='showPatnt' @close-patnt-request='closePatntRequest'
                    :pt-id='newPt.ptId' />
 
-  <!--  alert창  -->
-  <article v-show="isAlert" class="popup popup-confirm" style="z-index: 1600">
-    <div class="popup-wrapper">
-      <div class="popup-contents py-10 px-10" style="width: 300px">
-        <article class="modal-alert-layout pb-10">
-          <div class="alert-view-box pb-6">
-            <img src="/img/common/ic_alert.svg" alt="이미지" />
-          </div>
-          <div class="alert-msg-box">{{ errMsg }}</div>
-        </article>
-        <article class="modal-menu-layout1">
-          <div class="modal-menu-list">
-            <router-link
-              to=""
-              @click="cfrmAl(alertIdx)"
-              class="modal-menu-btn menu-primary"
-              data-type="success"
-            >확인
-            </router-link>
-            <router-link
-              v-show="cncBtn"
-              to=""
-              @click="alertClose"
-              class="modal-menu-btn menu-cancel"
-              data-type="cancel"
-            >
-              취소
-            </router-link>
-          </div>
-        </article>
-      </div>
-    </div>
-  </article>
-
   <patnt-reg-modal v-if='this.showModal === 2' :exist-pt='this.ptDetail' @closeModal='closeModal(0)' />
 
 </template>
@@ -359,8 +325,8 @@
 <script>
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { mapState } from 'vuex'
-import { formatTimestampWithDot, toggleCheckbox } from '@/util/ui'
-import { reactive, ref } from 'vue'
+import { TimestampToDateWithDot, toggleCheckbox } from '@/util/ui'
+import { reactive } from 'vue'
 import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
 import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
 import BedRequestModal from '@/components/user/bdas/BdasReqModal.vue'
@@ -379,33 +345,21 @@ export default {
     msg: String
   },
   async mounted() {
-    this.initNewPt = this.newPt
-    this.initDsInfo = this.dsInfo
     this.setDefaultDstr1Cd()
     this.getHospitalList()
   },
   setup() {
-    const isAlert = ref(false)
-    const cncBtn = ref(false)
-    const errMsg = ''
     let model = reactive({
-      timeline: '',
       hospList: [],
     })
 
     return {
-      isAlert,
-      errMsg,
-      cncBtn, /* alert 취소버튼 유무 */
       model
     }
   },
   data() {
     return {
       showModal: 0,
-      tab: 0 /* 병상요청 */,
-      alertIdx: 100 /* alert창 확인버튼 */,
-      popup: 100 /* 팝업창 */,
       rptYn: false /* 역조서 유무 */,
       preRpt: null /*역조서 이미지 링크*/,
       reportFile: null,
@@ -444,12 +398,7 @@ export default {
       },
       genders: ['남', '여'],
       dateRanges: ['1개월', '3개월', '6개월', '1년', '전체', '직접지정'],
-      selectedPatient: null,
-      selectedPatientBasicInfo: null,
-      selectedPatientDiseaseInfo: null,
       patientData: [],
-      patientBasicInfo: [],
-      patientDiseaseInfo: [],
       displayRowsCount: 15,
       displayChangePageButtonsCount: 10,
       previousPageButtonsCount: 4,
@@ -478,8 +427,7 @@ export default {
     ...mapState('user', ['userInfo']),
     ...mapState('admin', ['cmSido', 'cmGugun', 'organMedi']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHisInfo']),
-    ...mapState('patnt', ['ptDetail', 'ptBI', 'existPt', 'ptList', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
-    ...mapState('severity', ['severityData']),
+    ...mapState('patnt', ['ptDetail', 'ptBI', 'ptList', 'hospList', 'rptInfo', 'attcRpt']),
     filterData() {
       let params = {}
       if (this.filterPatient['searchText']) params = { ...params, ptNm: this.filterPatient['searchText'] }
@@ -518,7 +466,7 @@ export default {
     },
   },
   methods: {
-    formatTimestampWithDot,
+    TimestampToDateWithDot,
     toggleCheckbox,
     getSecondAddress(address) {
       if (address) {
@@ -545,84 +493,6 @@ export default {
       this.$store.dispatch('patnt/getHospList', this.filterData)
       console.log(this.hospList)
     },
-    async updateExistPt() {
-      const data = { ptId: this.existPt.ptId, newPt: this.newPt }
-      await this.$store.dispatch('patnt/modiPtInfo', data)
-      this.closePopup(0)
-      this.tab = 1
-      this.showModal = 0
-      this.closeModal(0)
-    },
-    alertOpen(idx) {
-      this.cncBtn = false
-      if (idx === 2) {
-        this.alertClose()
-        this.showPatnt = false
-        this.closeModal(0)
-        this.preRpt = null
-        //this.undrDsesCdArr=[]
-        this.setNull()
-        /*신규병상요청 끝*/
-        //this.getBdList()
-      } else if (idx === 3) {
-        this.errMsg = '환자 정보가\n등록되었습니다.'
-        this.isAlert = true
-        this.alertIdx = 3
-      } else if (idx === 4) {
-        /*역조서 파싱 */
-        this.errMsg =
-          '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
-        this.isAlert = true
-        this.newPt = { ...this.rptInfo, bascAddr: this.rptInfo.baseAddr, undrDsesCd: [], undrDsesEtc: null }
-        console.log(this.newPt)
-        this.alertIdx = 3
-      } else if (idx === 9) {
-        /*역조서 삭제*/
-        this.errMsg = '역학조사서 이미지를\n삭제하시겠습니까?'
-        this.cncBtn = true
-        this.isAlert = true
-        this.alertIdx = 9
-      } else if (idx === 10) {
-        this.errMsg = '역학조사서가\n삭제되었습니다.'
-        this.isAlert = true
-        this.alertIdx = 3
-      }
-    },
-    setNull() {
-      console.log('실행' + this.initNewPt)
-      this.tab = 0
-      this.tabidx = 0
-      this.popup = 100
-      this.alertIdx = 100
-      this.rptYn = false
-      this.newPt = JSON.parse(JSON.stringify(this.initNewPt))
-      this.dsInfo = JSON.parse(JSON.stringify(this.initDsInfo))
-      this.$store.commit('patnt/setRpt', null)
-      this.preRpt = null
-      this.undrDsesCdArr = []
-    },
-    cfrmAl(res) {
-      if (res === 0) {
-        this.alertOpen(1)
-      } else if (res === 1) {
-        this.alertOpen(2)
-      } else if (res === 3) {
-        this.alertClose()
-      } else if (res === 9) {
-        this.removeRpt()
-        this.newPt = this.initNewPt
-        this.dsInfo = this.initDsInfo
-        this.alertClose()
-        this.alertOpen(10)
-      }
-    },
-    closePopup(idx) {
-      if (idx === 0) {
-        this.popup = 100
-        this.content = ''
-        this.characterCount = 0
-      }
-    },
     closeModal(idx) {
       if (idx === 0) {
         /*세부내용 모달*/
@@ -633,12 +503,6 @@ export default {
         this.$store.commit('patnt/setRpt', null)
         this.reportFile = null
       }
-    },
-    alertClose() {
-      this.errMsg = ''
-      this.cncBtn = false
-      this.isAlert = false
-      this.alertIdx = 100
     },
     async uploadRpt(event) {
       const fileInput = event.target
@@ -652,7 +516,7 @@ export default {
       await this.$store.dispatch('patnt/uploadRpt', formData)
       if (this.rptInfo !== null) {
         // console.log('실행')
-        this.alertOpen(4)
+        // this.alertOpen(4)
       }
       //역조서 이미지 미리보기 만들기
       await this.showImage(this.rptInfo.attcId)
@@ -771,23 +635,6 @@ export default {
 </script>
 
 <style scoped>
-.chart-container {
-  min-height: initial;
-}
-
-.btn-primary-outline {
-  border: 1px solid #82b7ed;
-  color: #82b7ed;
-  background-color: #fff;
-  margin-left: 12px;
-  border-radius: 19px;
-  padding: 4px 9px 4px 6px;
-}
-
-td > .btn-primary-outline {
-  width: 85px;
-}
-
 .pt-nm {
   line-height: 24px;
 }

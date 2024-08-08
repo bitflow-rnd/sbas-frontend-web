@@ -15,7 +15,7 @@
           <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">{{
             props.item.rgstUserId
           }}</a>
-          <span class="text-muted fs-7 mb-1">{{ formatTimestampWithDot(props.item.rgstDttm) }}</span>
+          <span class="text-muted fs-7 mb-1">{{ TimestampToDateWithDot(props.item.rgstDttm) }}</span>
         </div>
         <!--end::Details-->
       </div>
@@ -35,7 +35,7 @@
 
 <script setup>
 import { defineProps } from 'vue'
-import { formatTimestampWithDot } from '@/util/ui'
+import { TimestampToDateWithDot } from '@/util/ui'
 
 const props = defineProps({
   item: {

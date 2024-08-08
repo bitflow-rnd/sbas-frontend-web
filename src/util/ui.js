@@ -265,7 +265,7 @@ export function formatYyyyMmDd(data) {
   return `${year}.${month}.${day}`
 }
 
-export function formatTimestampWithDot(data) {
+export function TimestampToDateWithDot(data) {
   const dData = new Date(data)
   const dYear = dData.getFullYear()
   let dMonth = dData.getMonth() + 1
