@@ -1,5 +1,5 @@
 <template>
-  <div class='modal show' id='kt_modal_detail' tabindex='-1' aria-hidden='true' style=''>
+  <div class='modal show' id='kt_modal_detail' tabindex='-1' style=''>
     <!--begin::Modal dialog-->
     <div class='modal-dialog mw-1500px modal-dialog-centered'>
       <!--begin::Modal content-->
@@ -173,15 +173,25 @@
                     >
                       <article class='timeline-layout1 pb-5' style='height: 100%'>
                         <div class='timeline-wrap overflow-y-auto ps-10 pe-5' style='height: 100%'>
-                          <div class='text-center py-4 fw-bold'>
-                            {{ getTLDt(timeline.items[0].updtDttm, 0) }}
+                          <div class='py-4 fw-bold d-flex' style='align-items: center;'>
+                            <div class='timeline-date'>
+                              {{ getTLDt(timeline.items[0].updtDttm, 0) }}
+                            </div>
+                            <div class="gap-2 gap-lg-3" style='margin-left: auto'>
+                              <a
+                                @click="toggleAll"
+                                class="btn btn-sm btn-flex btn-primary px-2"
+                              >
+                                <i v-if='model.showAll' class="fa-regular fa-plus" style='font-size: 16px'>&nbsp;&nbsp;모두 열기</i>
+                                <i v-if='!model.showAll' class="fa-regular fa-minus" style='font-size: 16px'>&nbsp;&nbsp;모두 닫기</i>
+                              </a>
+                            </div>
                           </div>
 
                           <ul>
-                            <li
-                              v-for='(item, idx) in timeline.items'
-                              :key='idx'
+                            <li v-for='(item, idx) in timeline.items' :key='idx'
                               :class="{
+                                off: item.timeLineStatus === 'complete',
                                 'custom-style':
                                   idx < timeline.items.length - 1 &&
                                   timeline.items[idx + 1].timeLineStatus === 'closed'
@@ -196,21 +206,31 @@
                                 :class="{ suspend: item.timeLineStatus === 'suspend' }"
                               >
                                 <div class='top-item-box'>
-                                  <div class='state-box'><b>{{ item.title }}</b></div>
-                                  <div class='date-box' v-if='item.updtDttm'>
+                                  <div class='state-box'
+                                       :class="{
+                                        'state-rfse': item.title.includes('불가'),
+                                        'state-closed': item.timeLineStatus === 'closed',
+                                        }"
+                                  >{{ item.title }}
+                                  </div>
+                                  <div class='date-box' v-if='item.by || item.updtDttm'>
                                     {{ getTLDt(item.updtDttm, 1) }}
+                                    <i v-if='!model.showDetails[idx]' class='fa-solid fa-plus-square ms-2 icon-button' role='button' @click='toggleDetails(idx)'></i>
+                                    <i v-if='model.showDetails[idx]' class='fa-solid fa-minus-square ms-2 icon-button' role='button' @click='toggleDetails(idx)'></i>
                                   </div>
                                 </div>
-                                <div class='mid-item-box' v-if='item.by' @click='openChrgDetail(item.chrgUserId)'
+                                <div class='mid-item-box'
+                                     :class="{ 'mb-2': item.msg !== null && item.msg !== '' && item.msg !== undefined }"
+                                     v-if='item.by && model.showDetails[idx]' @click='openChrgDetail(item.chrgUserId)'
                                      role='button'>{{ item.by }}
                                 </div>
                                 <div class='bottom-item-box'>
-                                  <div class='item-img-group mb-4'>
-                                    <div class='img-list'>
-                                    </div>
-                                  </div>
+<!--                                  <div class='item-img-group mb-4'>-->
+<!--                                    <div class='img-list'>-->
+<!--                                    </div>-->
+<!--                                  </div>-->
 
-                                  <div class='msg-box' v-if='item.msg'>{{ item.msg }}</div>
+                                  <div class='msg-box' v-if='item.msg && model.showDetails[idx]'>{{ item.msg }}</div>
                                 </div>
                               </div>
                             </li>
@@ -662,7 +682,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, reactive } from 'vue'
+import { defineProps, defineEmits, reactive, ref, onMounted } from 'vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import { getTag, getTelno, getTLDt, getTLIcon } from '@/util/ui'
 import { JobCode } from '@/util/sbas_cnst'
@@ -691,8 +711,17 @@ const model = reactive({
   tabIdx: 0,
   popup: '',
   chrgInfo: null,
+  showDetails: [],
+  showAll: true,
 })
 const store = useStore()
+
+onMounted(() => {
+  const filteredItems = props.timeline.items.filter(item => item.by !== undefined);
+  model.showDetails = Array.from({ length: filteredItems.length }, () => {
+    return false
+  })
+})
 
 function setActive(idx) {
   model.tabIdx = idx
@@ -753,6 +782,38 @@ function closePopup() {
   model.popup = ''
 }
 
+function toggleDetails(idx) {
+  // 항목의 열림 상태를 반전
+  model.showDetails[idx] = !model.showDetails[idx];
+  // 모든 항목이 닫혀 있는지 확인
+  const allClosed = model.showDetails.every(item => item === false);
+
+  // 모든 항목이 열려 있는지 확인
+  const allOpened = model.showDetails.every(item => item === true);
+
+  if (allClosed) {
+    model.showAll = true
+  } else if (allOpened) {
+    model.showAll = false
+  } else {
+    model.showAll = true
+  }
+}
+
+function toggleAll() {
+  if (model.showAll) {
+    // 현재 상태에서 모든 항목을 여는 경우
+    model.showDetails = model.showDetails.map(() => true)
+  } else {
+    // 현재 상태에서 모든 항목을 닫는 경우
+    model.showDetails = model.showDetails.map(() => false)
+  }
+  // `showAll` 상태를 반전시킵니다.
+  model.showAll = !model.showAll
+}
+
+
+
 </script>
 
 <style scoped>
@@ -798,4 +859,29 @@ li.custom-style::before {
   max-height: 150%;
   max-width: 150%;
 }
+
+.state-rfse {
+  color: #FF666EFF !important;
+}
+
+.state-closed {
+  color: #838693 !important;
+}
+
+.mid-item-box:hover {
+  color: #74afeb !important;
+}
+
+.icon-button {
+  font-size: 24px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.timeline-date {
+  font-size: 1.15rem;
+  flex-grow: 1; /* 텍스트가 가능한 많은 공간을 차지하도록 함 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+}
+
 </style>

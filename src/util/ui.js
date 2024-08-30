@@ -24,6 +24,9 @@ idx === 1: (오후/오전) hh시 mm분
 idx === 2: YYYY년 MM월 DD일,(오후/오전) hh시 mm분
 */
 export function getTLDt(date, idx) {
+  if (date === null || date === undefined) {
+    return ''
+  }
   /*표준시라서  +9 해줘야 함 */
   let dd = new Date(date)
   if (idx === 0) {
