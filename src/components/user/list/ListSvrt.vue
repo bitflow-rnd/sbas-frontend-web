@@ -285,8 +285,6 @@
   <BedRequestModal v-if='showPatnt' @close-patnt-request='closePatntRequest'
                    :pt-id='newPt.ptId' />
 
-  <patnt-reg-modal v-if='this.showModal === 2' :exist-pt='this.ptDetail' @closeModal='closeModal(0)' />
-
 </template>
 
 <script>

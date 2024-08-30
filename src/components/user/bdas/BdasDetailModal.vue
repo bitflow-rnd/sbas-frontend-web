@@ -182,23 +182,21 @@
                               v-for='(item, idx) in timeline.items'
                               :key='idx'
                               :class="{
-                                off: item.timeLineStatus === 'complete',
                                 'custom-style':
                                   idx < timeline.items.length - 1 &&
                                   timeline.items[idx + 1].timeLineStatus === 'closed'
                               }"
                             >
-                              <div class='ic-box' v-if="item.timeLineStatus !== 'closed'">
-                                <img :src='getTLIcon(item, idx)' alt='이미지' />
+                              <div class='ic-box' style='width: 50px' >
+                                <img :src='getTLIcon(item, idx)' alt='이미지' class='timeline-img' />
                               </div>
 
                               <div
                                 class='item-box'
                                 :class="{ suspend: item.timeLineStatus === 'suspend' }"
-                                v-if="item.timeLineStatus !== 'closed'"
                               >
                                 <div class='top-item-box'>
-                                  <div class='state-box'>{{ item.title }}</div>
+                                  <div class='state-box'><b>{{ item.title }}</b></div>
                                   <div class='date-box' v-if='item.updtDttm'>
                                     {{ getTLDt(item.updtDttm, 1) }}
                                   </div>
@@ -791,6 +789,13 @@ function closePopup() {
 }
 
 li.custom-style::before {
-  display: none;
+  border: 1px dotted #838693 !important;
+}
+
+.timeline-img {
+  width: 150%;
+  height: 150%;
+  max-height: 150%;
+  max-width: 150%;
 }
 </style>

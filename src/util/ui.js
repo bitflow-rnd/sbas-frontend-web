@@ -191,31 +191,47 @@ export function openAddressFinder(idx) {
 export function getTLIcon(data, idx) {
   const iconSuffixes = [
     'state0',
-    'state6',
+    'state1',
+    'state2',
+    'state3',
     'state4',
     'state5',
-    'state3',
-    'state2'
   ]
   const iconBasePath = '/img/common/ic_timeline_'
 
-  const iconState = data.timeLineStatus === 'complete' ? '' : '_off'
+  let iconState = ''
+  if (data.timeLineStatus === 'complete') {
+    iconState = ''
+  } else if (data.timeLineStatus === 'suspend') {
+    iconState = ''
+  } else {
+    iconState = '_off'
+  }
 
+  let img = ''
   if (idx >= 0) {
-    if (data.title.includes('요청')) {
-      return `${iconBasePath}${iconSuffixes[0]}${iconState}.svg`
+    if (data.title.includes('병상요청')) {
+      img = `${iconBasePath}${iconSuffixes[0]}${iconState}.svg`
     } else if (data.title.includes('승인')) {
-      return `${iconBasePath}${iconSuffixes[1]}${iconState}.svg`
+      img = `${iconBasePath}${iconSuffixes[1]}${iconState}.svg`
     } else if (data.title.includes('배정')) {
-      return `${iconBasePath}${iconSuffixes[2]}${iconState}.svg`
+      img = `${iconBasePath}${iconSuffixes[1]}${iconState}.svg`
     } else if (data.title.includes('이송')) {
-      return `${iconBasePath}${iconSuffixes[3]}${iconState}.svg`
-    } else if (data.title.includes('불가')) {
-      return `${iconBasePath}${iconSuffixes[5]}${iconState}.svg`
-    } else {
-      return `${iconBasePath}${iconSuffixes[4]}${iconState}.svg`
+      img = `${iconBasePath}${iconSuffixes[4]}${iconState}.svg`
+    } else if (data.title.includes('입원')) {
+      img = `${iconBasePath}${iconSuffixes[3]}${iconState}.svg`
+    }
+    if (data.title.includes('불가')) {
+      img = `${iconBasePath}${iconSuffixes[2]}${iconState}.svg`
+    }
+    if (data.title.includes('대기')) {
+      img = `${iconBasePath}${iconSuffixes[5]}${iconState}.svg`
+    }
+    if (data.title.includes('이송중')) {
+      img = `${iconBasePath}${iconSuffixes[5]}${iconState}.svg`
     }
   }
+  return img
 }
 
 export function getDt(data) {
