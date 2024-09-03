@@ -2,7 +2,7 @@
   <article class='popup popup-card-remove'>
     <div class='popup-wrapper'>
       <div class='popup-contents py-10 px-10' style='width: 300px;'>
-        <article class='modal-alert-layout pb-10'>
+        <article class='modal-alert-layout pb-5'>
           <div class='alert-view-box pb-6'>
             <img src='/img/common/ic_alert.svg' alt='이미지'>
           </div>
@@ -15,8 +15,7 @@
           <input type='hidden' name='cardIdx'>
           <div class='modal-menu-list'>
             <a @click='closePopup' class='modal-menu-btn menu-cancel' data-type='cancel'>취소</a>
-            <a href="javascript:popupClose('card-remove'); cardRemoveProc()" class='modal-menu-btn menu-primary'
-               data-type='success'>확인</a>
+            <a @click='' class='modal-menu-btn menu-primary' data-type='success'>확인</a>
           </div>
         </article>
       </div>

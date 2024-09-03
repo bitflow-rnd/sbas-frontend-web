@@ -449,7 +449,7 @@
                       </div>
                     </div>
                   </div>
-                  <a class="card-box" role='button' @click='openSelectPopup'>
+                  <a class="card-box" role='button' @click='openAddPopup'>
                       <div class="card-add-btn-box">
                           <img src="/img/common/ic_dashboard_add.svg" alt="이미지">
                           <div class="text-primary fs-6 pt-4">추가하기</div>
@@ -473,22 +473,23 @@
   <DsbdCardRemove v-if='model.removePopup' @closePopup='closePopup' />
 
   <!-- 현황카드 항목선택 -->
-  <DsbdCardSelect v-if='model.selectPopup' @closePopup='closePopup' />
+  <DsbdCardSelect v-if='model.addPopup' @closePopup='closePopup' />
 
 </template>
 
 <script setup>
-import DsbdCardSelect from '@/components/user/dsbd/DsbdCardSelect.vue'
+import DsbdCardSelect from '@/components/user/dsbd/DsbdCardAdd.vue'
 import DsbdCardRemove from '@/components/user/dsbd/DsbdCardRemove.vue'
 import { reactive } from 'vue'
 
 const model = reactive({
-  selectPopup: false,
-  removePopup: false
+  bdasCountList: [],
+  addPopup: false,
+  removePopup: false,
 })
 
-function openSelectPopup() {
-  model.selectPopup = true
+function openAddPopup() {
+  model.addPopup = true
 }
 
 function openRemovePopup() {
@@ -496,7 +497,7 @@ function openRemovePopup() {
 }
 
 function closePopup() {
-  model.selectPopup = false
+  model.addPopup = false
   model.removePopup = false
 }
 
