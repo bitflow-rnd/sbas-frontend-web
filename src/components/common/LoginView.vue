@@ -46,11 +46,9 @@
             </form>
 
             <div class="login-option-box">
-              <!--                            <vue-recaptcha ref="recaptcha" @verify="onRecaptchaVerified" sitekey="" class="captcha-box"></vue-recaptcha>-->
-
               <div class="option-list">
                 <!--                 모달인지 새 페이지인지 확인 필요 -->
-                <a @click="openFindId" class="option-btn hover-a">아이디찾기</a> /
+                <a @click="openFindId" class="option-btn hover-a">아이디찾기</a>&nbsp;/&nbsp;
                 <a @click="openInitPw" class="option-btn hover-a">비밀번호 초기화</a>
               </div>
             </div>
@@ -97,39 +95,7 @@
           <h2>사용자 정보 등록</h2>
           <!--end::Modal title-->
           <!--begin::Close-->
-          <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-            <span @click="toggleUserEditModal" class="svg-icon svg-icon-1">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  opacity="0.5"
-                  x="6"
-                  y="17.3137"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(-45 6 17.3137)"
-                  fill="currentColor"
-                ></rect>
-                <rect
-                  x="7.41422"
-                  y="6"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  transform="rotate(45 7.41422 6)"
-                  fill="currentColor"
-                ></rect>
-              </svg>
-            </span>
-            <!--end::Svg Icon-->
-          </div>
+          <CloseButton @close='toggleUserEditModal' />
           <!--end::Close-->
         </div>
 
@@ -183,13 +149,21 @@
                         <!--                            <input type="text" v-model="form.telno" @input='removeHyphens'/>-->
                         <!--                          </div>-->
                         <button
+                          v-if='isCertified===false'
                           @click="openCertify"
                           class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"
                           :disabled='isCertified'
                         >
                           본인인증
-                        </button
+                        </button>
+                        <button
+                          v-if='isCertified'
+                          @click="openCertify"
+                          class="btn btn-flex w-100 btn-sm btn-secondary fs-7 justify-content-center"
+                          :disabled='isCertified'
                         >
+                          본인인증 완료
+                        </button>
                       </div>
                     </td>
                     <th>비밀번호 확인 <span class="text-primary">*</span></th>
@@ -593,6 +567,7 @@
   <article v-show="initPw" class="popup">
     <init-pw @openInitPw="openInitPw"/>
   </article>
+
   <article v-show="isAlert" class="popup popup-alert">
     <div class="popup-wrapper">
       <div class="popup-contents py-10 px-10" style="width: 300px">
@@ -626,10 +601,11 @@ import { JobCode } from '@/util/sbas_cnst'
 import CertModal from '@/components/common/modal/CertModal.vue'
 import FindId from '@/components/common/FindId.vue'
 import InitPw from '@/components/common/InitPw.vue'
+import CloseButton from '@/components/common/CloseButton.vue'
 
 export default {
   name: 'LoginView',
-  components: { InitPw, FindId, CertModal },
+  components: { CloseButton, InitPw, FindId, CertModal },
   computed: {
     ...mapState('admin', ['smsCrtfSuccess', 'cmSido', 'cmGugun', 'organMedi'])
   },
@@ -737,9 +713,6 @@ export default {
   methods: {
     getGugun,
     getSido,
-    doLogin() {
-      document.form.submit()
-    },
     timerStart() {
       let time = 179 // 기준시간 작성
       let min = '' // 분
@@ -1096,7 +1069,7 @@ export default {
 }
 
 .hover-a:hover {
-  color: blue !important;
+  color: #74AFEB !important;
   cursor: pointer;
 }
 </style>

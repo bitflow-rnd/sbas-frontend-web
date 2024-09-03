@@ -25,7 +25,10 @@ export default {
     },
     getUserList: (state) => {
       return state.usersList
-    }
+    },
+    getChrgUserInfo(state){
+      return state.chrgInfo
+    },
   },
   mutations: {
     loginSuccess(state, payload) {

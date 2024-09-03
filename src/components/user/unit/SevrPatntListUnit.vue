@@ -99,21 +99,7 @@ function handler() {
   store.dispatch('patnt/getPatntList', {sever: true})
   store.dispatch('admin/getSido')
 }
-/*
-function getDate(data) {
-  const dData = new Date(data)
-  const dYear = dData.getFullYear()
-  let dMonth = dData.getMonth() + 1
-  let dDate = dData.getDate()
-  if (dMonth < 10) {
-    dMonth = '0' + dMonth
-  }
-  if (dDate < 10) {
-    dDate = '0' + dDate
-  }
-  return dYear + '.' + dMonth + '.' + dDate
-}
-*/
+
 </script>
 
 <style scoped>

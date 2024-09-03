@@ -5,7 +5,6 @@ export default {
   namespaced: true,
   state: {
     ptList: null,
-    severPts: null,
     severPtList: null,
     hospList: null,
     ptBI: null,
@@ -23,9 +22,6 @@ export default {
   mutations: {
     setPatntList(state, payload) {
       state.ptList = payload
-    },
-    setSeverPatnts(state, payload) {
-      state.severPts = payload
     },
     setSeverPatntList(state, payload) {
       state.severPtList = payload
@@ -80,12 +76,6 @@ export default {
         const response = await axios.get(url, { params })
         if (response.data?.code === '00') {
           await comment.commit('setPatntList', response.data?.result)
-          console.log(response.data?.result)
-          if (params && Object.keys(params).length === 1 && params.sever) {
-            await comment.commit('setSeverPatnts', false)
-            await comment.commit('setSeverPatnts', true)
-            comment.commit('setSeverPatntList', response.data?.result)
-          }
         }
       } catch (e) {
         console.log(e)
@@ -144,7 +134,6 @@ export default {
     async regBasicInfo(comment, data) {
       const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/regbasicinfo`
-      // const url = `http://localhost:8080/api/v1/private/patient/regbasicinfo`
       const request = data
       // console.log('환자 등록 - 기본 정보')
       try {
@@ -154,7 +143,6 @@ export default {
           }
         })
         if (response.data?.code === '00') {
-          // console.log(response.data?.result)
           comment.commit('regBasicInfo', response.data?.result)
         }
       } catch (e) {
@@ -306,6 +294,7 @@ export default {
       } catch (e) {
         console.log(e)
       }
-    }
+    },
+
   }
 }

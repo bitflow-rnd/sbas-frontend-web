@@ -48,7 +48,7 @@
             </div>
 
             <div class="list-body-box">
-              <ul>
+              <ul class="scroll-body-box">
                 <li v-for='(item, idx) in props.historyList' :key='idx'>
                   <a href="javascript:void(0)" class="item-box state-finish" role="button">
                     <div class="info-box">
@@ -439,9 +439,18 @@ h2 {
   font-weight: normal;
   text-align: center;
 }
-.activity-head-box { padding: 12px 32px; }
+.activity-head-box {
+  padding: 12px 32px;
+}
 section.cntc-activity .activity-head-box { padding: 12px 32px; }
 .view-img-box {
   border-bottom: 1px solid #666;
+}
+.list-body-box {
+  height: 100%;
+  max-height: 1000px;
+}
+.scroll-body-box {
+  overflow-y: auto;
 }
 </style>

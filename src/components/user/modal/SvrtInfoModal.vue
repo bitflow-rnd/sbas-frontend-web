@@ -1,6 +1,6 @@
 <template>
   <!--환자등록/수정 -->
-  <div class="modal show" tabindex="-1" aria-hidden="true" style="">
+  <div class="modal show" tabindex="-1" style="">
     <!--begin::Modal dialog-->
     <div class="modal-dialog col-lg-3 modal-dialog-centered">
       <!--begin::Modal content-->
@@ -9,7 +9,7 @@
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
           <!--begin::Modal title-->
           <h2>중증 관찰 환자 정보</h2>
-          <CloseButton @click="closeModal" />
+          <CloseButton @close="closeModal" />
           <article class="floating-request-box">
             <div class="img-box">
               <img src="/img/common/ic_request_patient.svg" alt="이미지" />
@@ -93,24 +93,24 @@
                       <td><span class="text-black">{{ item['roomNm'] }}</span></td>
                       <td><span class="text-black">{{ item['spclNm'] }}</span></td>
                       <td><span class="text-black">{{ item.id.msreDt }}</span></td>
-                      <td><span class="text-black number">{{ item['bun'] }}</span></td>
-                      <td><span class="text-black number">{{ item['cre'] }}</span></td>
-                      <td><span class="text-black number">{{ item['hem'] }}</span></td>
-                      <td><span class="text-black number">{{ item['ldh'] }}</span></td>
-                      <td><span class="text-black number">{{ item['lym'] }}</span></td>
-                      <td><span class="text-black number">{{ item['neu'] }}</span></td>
-                      <td><span class="text-black number">{{ item['pla'] }}</span></td>
-                      <td><span class="text-black number">{{ item['pot'] }}</span></td>
-                      <td><span class="text-black number">{{ item['sod'] }}</span></td>
-                      <td><span class="text-black number">{{ item['wbc'] }}</span></td>
-                      <td><span class="text-black number">{{ item['crp'] }}</span></td>
-                      <td><span class="text-black number">{{ item['bdtp'] }}</span></td>
-                      <td><span class="text-black number">{{ item['resp'] }}</span></td>
-                      <td><span class="text-black number">{{ item['hr'] }}</span></td>
-                      <td><span class="text-black number">{{ item['sbp'] }}</span></td>
-                      <td><span class="text-black number">{{ item['dbp'] }}</span></td>
-                      <td><span class="text-black number">{{ item['spo2'] }}</span></td>
-                      <td><span class="text-black">{{ item['oxygenApply'] }}</span></td>
+                      <td><span class="text-black number">{{ item['bun'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['cre'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['hem'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['ldh'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['lym'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['neu'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['pla'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['pot'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['sod'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['wbc'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['crp'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['bdtp'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['resp'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['hr'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['sbp'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['dbp'] ?? '-' }}</span></td>
+                      <td><span class="text-black number">{{ item['spo2'] ?? '-' }}</span></td>
+                      <td><span class="text-black">{{ item['oxygenApply'] ?? '-' }}</span></td>
                     </tr>
                   </tbody>
                 </table>

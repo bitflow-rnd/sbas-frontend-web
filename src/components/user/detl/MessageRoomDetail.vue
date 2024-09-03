@@ -27,7 +27,7 @@
       </div>
       <!--end::Card body-->
       <!--begin::Card footer-->
-      <div class="detail-foot-box pb-5">
+      <div class="detail-foot-box pb-5" style='width: 75%'>
         <article class="msg-send-layout1">
           <div class="img-upload-result">
             <div class="img-list"></div>
@@ -101,7 +101,6 @@ watch(
 onMounted(() => {
   console.warn('room', JSON.stringify(props.roomInfo))
   model.userInfo = store.getters['user/getUserInfo']
-  console.log('userInfo', JSON.stringify(model.userInfo))
   connectWebsocket()
   socket.onmessage = (event) => {
     try {
@@ -109,8 +108,6 @@ onMounted(() => {
       console.log('type', typeof(msgs))
       if (typeof(msgs)==='object' && msgs.length>0) {
         console.log('messageList', msgs[0])
-        model.messageList = msgs[0]
-      } else {
         loadMessages()
       }
     } catch (e) {
@@ -122,7 +119,7 @@ onMounted(() => {
 
 function connectWebsocket() {
   let webSocket = import.meta.env.VITE_APP_CHAT_URL
-  socket = new WebSocket(`${webSocket}/chat-rooms/room/`
+  socket = new WebSocket(`${webSocket}/room/`
     + props.roomInfo.tkrmId);
   socket.onopen = function () {
     socket.send("hello|" + model.userInfo.id)
@@ -189,7 +186,6 @@ h2 {
 }
 
 article.msg-send-layout1 .msg-group-box .msg-send-box .send-btn {
-  background-color: lightgray;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }

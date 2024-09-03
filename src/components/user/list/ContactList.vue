@@ -117,8 +117,12 @@ import { getPmgr } from '@/util/ui'
 
 const store = useStore()
 const emit = defineEmits(['onUserSelected'])
-const props = defineProps(['searchCntc'])
-const searchCntcRef = reactive(props.searchCntc)
+const props = defineProps({
+  params: {
+    type: Object,
+    default: () => ({})
+  },
+})
 
 const listBoxesHide = reactive({
   request: false,
@@ -133,12 +137,20 @@ const model = reactive({
   organList:[],
   favUsersList :[],
   selectedUser: null,
-  userCnt : 0
+  userCnt : 0,
 })
 
-const executeSearch = (searchParams = searchCntcRef) => {
-  const params = searchParams.valueOf()
-  if(searchParams?.search || searchParams?.instTypeCd){
+onMounted( () => {
+  executeSearch()
+})
+
+watch(() => props.params, () => {
+  executeSearch()
+})
+
+function executeSearch() {
+  const params = { ...props.params }
+  if (params.instTypeCd || params.search) {
     store.dispatch('user/getSearchUser',params).then((result)=>{
       model.reqList = result?.items?.filter((item) => item['userStatCd']==='URST0001')
       model.organList = result?.items?.filter((item) => item['userStatCd']==='URST0002')
@@ -147,21 +159,12 @@ const executeSearch = (searchParams = searchCntcRef) => {
     store.dispatch('user/getUsersListSync').then((result) => {
       model.reqList = result?.items?.filter((item) => item['userStatCd']==='URST0001')
       model.organList = result?.items?.filter((item) => item['userStatCd']==='URST0002')
-      console.log(model.userCnt)
     })
   }
-  store.dispatch('user/getFavUsersList').then((result2) => {
-    model.favUsersList = result2
-  })
+  // store.dispatch('user/getFavUsersList').then((result2) => {
+  //   model.favUsersList = result2
+  // })
 }
-
-watch(searchCntcRef,(newSearchCntc)=>{
-  executeSearch(newSearchCntc)
-}, { deep: true })
-
-onMounted( () => {
-  executeSearch()
-})
 
 function onSelectUser(user) {
   model.selectedUser = user

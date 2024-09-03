@@ -4,40 +4,7 @@
       <div class="popup-contents">
         <div class="popup-head-box py-5 px-10">
           <div class="head-tit-box">환자정보 존재</div>
-
-          <div class="head-option-box">
-            <div @click="emits('closePopup')" class="popup-close-btn" role='button'>
-              <span class="svg-icon svg-icon-1">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    opacity="0.5"
-                    x="6"
-                    y="17.3137"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(-45 6 17.3137)"
-                    fill="currentColor"
-                  ></rect>
-                  <rect
-                    x="7.41422"
-                    y="6"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(45 7.41422 6)"
-                    fill="currentColor"
-                  ></rect>
-                </svg>
-              </span>
-            </div>
-          </div>
+          <CloseButton @close='emits("closePopup")' />
         </div>
 
         <div class="popup-body-box py-5 px-10">
@@ -75,7 +42,7 @@
               >
                 {{ cmpExist(2)[0] }}
               </div>
-              <div class="d-inline-flex w-auto ms-3">주소 : {{ props.existPt.dstr1CdNm }} {{ props.existPt.dstr2CdNm }}</div>
+              <div class="d-inline-flex w-auto ms-3">주소 : {{ props.existPt.bascAddr }} {{ props.existPt.detlAddr ?? '-' }}</div>
             </div>
 
             <div class="exist-box d-flex align-items-center mt-3">
@@ -111,6 +78,7 @@
 import { defineEmits, defineProps, onMounted } from 'vue'
 import { getAge, getTelno } from '@/util/ui'
 import { useStore } from 'vuex'
+import CloseButton from '@/components/common/CloseButton.vue'
 
 const store = useStore()
 const emits = defineEmits(['closePopup', 'closeExistPt'])
@@ -130,7 +98,7 @@ function cmpExist(idx) {
   const conditions = {
     0: () => props.existPt.ptNm === props.newPt.ptNm,
     1: () => props.existPt.rrno1 === props.newPt.rrno1 && props.existPt.rrno2 === props.newPt.rrno2,
-    2: () => props.existPt.dstr1Cd === props.newPt.dstr1Cd && props.existPt.dstr2Cd === props.newPt.dstr2Cd,
+    2: () => props.existPt.bascAddr === props.newPt.bascAddr,
     3: () => props.existPt.mpno === props.newPt.mpno,
   };
 

@@ -23,15 +23,36 @@
                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
                 <span class="svg-icon svg-icon-4 mx-n1">
                   <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
-                      fill="currentColor"
+                        d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
+                        fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                <!--end::Svg Icon-->
+              </li>
+              <!--end::Item-->
+              <!--begin::Item-->
+              <li class="breadcrumb-item text-gray-700 fw-semibold lh-1 mx-n1 fs-6">연락처</li>
+              <li class="breadcrumb-item">
+                <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
+                <span class="svg-icon svg-icon-4 mx-n1">
+                  <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                        d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
+                        fill="currentColor"
                     />
                   </svg>
                 </span>
@@ -41,11 +62,12 @@
               <!--begin::Item-->
               <li class="breadcrumb-item text-gray-500 mx-n1">
                 <h1
-                  class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0"
+                    class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2 m-0"
                 >
+                  연락처/메시지
                 </h1>
               </li>
-              <li class="breadcrumb-item ml-2">
+              <li class="breadcrumb-item ml-2 ms-5">
                 <span>내 지역의 병상배정 유관기관과 연락할 수 있습니다</span>
               </li>
               <!--end::Item-->
@@ -80,7 +102,7 @@
                   </article>
                 </div>
 
-                <div class="head-mid-box">
+                <div class="head-mid-box" v-if="model.mode === 'contact'">
                   <div class="input-group-box d-flex flex-center">
                     <div class="option-box">
                       <article class="toggle-list-layout1">
@@ -106,7 +128,7 @@
                   </div>
                 </div>
 
-                <div class="head-bottom-box">
+                <div class="head-bottom-box" v-if="model.mode === 'contact'">
                   <article class="check-list-layout1">
                     <div class="list-box">
                       <div class="item-box">
@@ -151,7 +173,7 @@
                 </div>
               </div>
 
-              <contact-list v-if="model.mode === 'contact'" @onUserSelected="onUserSelected" :searchCntc='searchCntc' />
+              <contact-list v-if="model.mode === 'contact'" @onUserSelected="onUserSelected" :params='model.params' />
               <message-room-list v-if="model.mode === 'message'" @onRoomSelected="onRoomSelected" />
 
             </section>
@@ -162,6 +184,7 @@
               <contact-detail-unit
                 v-if="model.selectedUser"
                 :user="model.selectedUser"
+                @openChatRoom='openChatRoom()'
               />
               <!-- contact detail -->
 
@@ -202,13 +225,14 @@ import MessageRoomList from '@/components/user/list/MessageRoomList.vue'
 import { onMounted, reactive, ref } from 'vue'
 import MessageRoomDetail from '@/components/user/detl/MessageRoomDetail.vue'
 import NoMessageRoomDetail from '@/components/user/detl/NoMessageRoomDetail.vue'
-import store from '@/store/store'
+import { axios_cstm } from '@/util/axios_cstm'
+import { API_PROD } from '@/util/constantURL'
+import { useStore } from 'vuex'
 
 const tab1 = ref()
 const tab2 = ref()
 
 let kwd = ''
-
 let model = reactive({
   mode: 'contact',
   selectedUser: null,
@@ -216,14 +240,13 @@ let model = reactive({
   historyList: null,
   search: null,
   instTypeCd: [],
-  userCnt: 0
+  userCnt: 0,
+  params: null,
 })
+const store = useStore()
 
 onMounted(() => {
-  store.dispatch('user/getUsersListSync').then((result) => {
-    model.userCnt = result?.totalCnt
-    console.log(model.userCnt)
-  })
+
 })
 
 function onUserSelected(user) {
@@ -248,13 +271,33 @@ function onTabSelected(idx) {
   }
 }
 
+function openChatRoom() {
+  const myInfo = store.getters['user/getUserInfo']
+  const url = `${API_PROD}/api/v1/private/talk/personal`
+  const data = {
+    id: myInfo.id,
+    userId: model.selectedUser.id,
+    userNm: model.selectedUser.userNm
+  }
+
+  axios_cstm().post(url, data)
+    .then((response) => {
+      model.mode = 'message'
+      tab1.value.classList.remove('active')
+      tab2.value.classList.add('active')
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
 function searchCntc() {
   if (kwd !== '') model.search = kwd
   let params = {}
   if (model.search) params = { ...params, search: model.search }
   if (model.instTypeCd && model.instTypeCd.length !== 0) params = { ...params, instTypeCd: model.instTypeCd.join(',') }
 
-  return params
+  model.params = params
 }
 
 function getActivityHistory(userId) {

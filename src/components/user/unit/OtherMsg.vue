@@ -15,7 +15,7 @@
           <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">{{
             props.item.rgstUserId
           }}</a>
-          <span class="text-muted fs-7 mb-1">{{ getDate(props.item.rgstDttm) }}</span>
+          <span class="text-muted fs-7 mb-1">{{ TimestampToDateWithDot(props.item.rgstDttm) }}</span>
         </div>
         <!--end::Details-->
       </div>
@@ -35,6 +35,7 @@
 
 <script setup>
 import { defineProps } from 'vue'
+import { TimestampToDateWithDot } from '@/util/ui'
 
 const props = defineProps({
   item: {
@@ -43,20 +44,6 @@ const props = defineProps({
   }
 })
 
-function getDate(data) {
-  const dData = new Date(data)
-  const dYear = dData.getFullYear()
-  let dMonth = dData.getMonth() + 1
-  let dDate = dData.getDate()
-
-  if (dMonth < 10) {
-    dMonth = '0' + dMonth
-  }
-  if (dDate < 10) {
-    dDate = '0' + dDate
-  }
-  return dYear + '.' + dMonth + '.' + dDate
-}
 </script>
 
 <style scoped></style>
