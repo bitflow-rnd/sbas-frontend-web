@@ -429,12 +429,12 @@
                     <DsbdCardItem v-if='model.cardItemList.length > 0' :cardItem='item' @openRemovePopup='openRemovePopup' />
                   </div>
 
-                  <a class="card-box" role='button' @click='openAddPopup'>
-                    <div class="card-add-btn-box">
-                      <img src="/img/common/ic_dashboard_add.svg" alt="이미지">
-                      <div class="text-primary fs-6 pt-4">추가하기</div>
-                    </div>
-                  </a>
+<!--                  <a class="card-box" role='button' @click='openAddPopup'>-->
+<!--                    <div class="card-add-btn-box">-->
+<!--                      <img src="/img/common/ic_dashboard_add.svg" alt="이미지">-->
+<!--                      <div class="text-primary fs-6 pt-4">추가하기</div>-->
+<!--                    </div>-->
+<!--                  </a>-->
                 </div>
               </div>
             </div>
