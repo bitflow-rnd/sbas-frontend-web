@@ -82,9 +82,11 @@
                       <tr>
                         <th>환자이름 <span class="text-primary">*</span></th>
                         <td>
-                          <div class="item-cell-box">
-                            <div class="tbox">
-                              <input type="text" v-model="model.newPt.ptNm"/>
+                          <div class='item-row-box'>
+                            <div class="item-cell-box">
+                              <div class="tbox">
+                                <input type="text" v-model="model.newPt.ptNm"/>
+                              </div>
                             </div>
                           </div>
                           <div v-if='validateInputStep1(0)' class='item-cell-box pt-2 text-danger' >
@@ -122,8 +124,8 @@
                           </div>
                         </td>
                         <th>나이 (만)</th>
-                        <td v-if="model.newPt.rrno1 !== undefined && model.newPt.rrno2 !== undefined">
-                          {{ getAge(model.newPt.rrno1, model.newPt.rrno2) }}세
+                        <td>
+                          {{ getAge(model.newPt.rrno1, model.newPt.rrno2) ? getAge(model.newPt.rrno1, model.newPt.rrno2) + '세' : '-'}}
                         </td>
                       </tr>
 
@@ -204,34 +206,34 @@
                       <tr>
                         <th>사망여부 <span class="text-primary">*</span></th>
                         <td>
-                          <div class="item-cell-box full justify-content-between">
-                            <article class="toggle-list-layout2">
-                              <div class="toggle-list">
-                                <label>
-                                  <input
-                                    type="radio"
-                                    name="toggle1"
-                                    value="N"
-                                    v-model="model.newPt.dethYn"
-                                  />
-                                  <span class="txt">생존</span>
-                                </label>
-
-                                <label>
-                                  <input
-                                    type="radio"
-                                    name="toggle1"
-                                    value="Y"
-                                    v-model="model.newPt.dethYn"
-                                  />
-                                  <span class="txt">사망</span>
-                                </label>
-                              </div>
-                              <div v-if='validateInputStep1(4)' class='item-cell-box pt-2 text-danger'>
-                                * 사망여부를 선택해 주세요.
-                              </div>
-                            </article>
-
+                          <div class='item-row-box'>
+                            <div class="item-cell-box full justify-content-between">
+                              <article class="toggle-list-layout2">
+                                <div class="toggle-list">
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      name="toggle1"
+                                      value="N"
+                                      v-model="model.newPt.dethYn"
+                                    />
+                                    <span class="txt">생존</span>
+                                  </label>
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      name="toggle1"
+                                      value="Y"
+                                      v-model="model.newPt.dethYn"
+                                    />
+                                    <span class="txt">사망</span>
+                                  </label>
+                                </div>
+                              </article>
+                            </div>
+                          </div>
+                          <div v-if='validateInputStep1(4)' class='item-cell-box pt-2 text-danger'>
+                            * 사망여부를 선택해 주세요.
                           </div>
                         </td>
 
@@ -346,7 +348,7 @@
           <article class="modal-menu-layout1 pt-40">
             <div class="modal-menu-list pt-5">
               <a v-if='props.existPt' @click="openExistPtModal" class="modal-menu-btn menu-primary">다음</a>
-              <a v-if='!props.existPt' @click="registerNewPt" class="modal-menu-btn menu-primary">신규 등록</a>
+              <a v-if='!props.existPt' @click="isExistPt" class="modal-menu-btn menu-primary">신규 등록</a>
             </div>
           </article>
         </div>
@@ -472,24 +474,25 @@ function registerNewPt() {
 }
 
 function isExistPt() {
-  const url = `${API_PROD}/api/v1/private/patient/exist`
-  const request = model.newPt
-  return new Promise(() => {
+  if (validateFormStep1()) {
+    const url = `${API_PROD}/api/v1/private/patient/exist`
+    const request = model.newPt
+    model.newPt.gndr = getGndr(model.newPt.rrno2)
     axios_cstm().post(url, request)
-    .then((response) => {
-      const data = response.data
-      if (data.code === '00') {
-        if (data.result.isExist) {
-          model.openExistPtModal = true
-        } else {
-          model.openExistPtModal = false
+      .then((response) => {
+        const data = response.data
+        if (data.code === '00') {
+          if (data.result.isExist) {
+            model.openExistPtModal = true
+          } else {
+            model.openExistPtModal = false
+          }
         }
-      }
-    })
-    .catch((e) => {
-      console.log(e)
-    })
-  })
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
 }
 
 function showImage(attcId) {
@@ -539,6 +542,28 @@ function validateInputStep1(idx) {
   } else if (idx === 5) {
     return model.newPt.natiCd === null && model.showErrorMsg
   }
+}
+
+function validateFormStep1() {
+  const data = model.newPt
+  const requiredFields = {
+    ptNm: { idx: 0 },
+    rrno1: { idx: 1 },
+    rrno2: { idx: 2 },
+    bascAddr: { idx: 3 },
+    dethYn: { idx: 4 },
+    natiCd: { idx: 5 },
+  }
+
+  for (const field in requiredFields) {
+    let showErrorMsg = false
+    if (!data[field]) {
+      showErrorMsg = true
+      model.showErrorMsg = showErrorMsg
+      return false
+    }
+  }
+  return true
 }
 
 function confirmAlert(idx) {

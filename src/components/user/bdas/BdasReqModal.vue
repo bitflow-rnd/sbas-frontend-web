@@ -143,9 +143,11 @@
                           <tr>
                             <th>환자이름 <span class='text-primary'>*</span></th>
                             <td>
-                              <div class='item-cell-box'>
-                                <div class='tbox'>
-                                  <input type='text' v-model='model.newPt.ptNm' placeholder='환자이름 입력' />
+                              <div class='item-row-box'>
+                                <div class='item-cell-box'>
+                                  <div class='tbox'>
+                                    <input type='text' v-model='model.newPt.ptNm' placeholder='환자이름 입력' />
+                                  </div>
                                 </div>
                               </div>
                               <div v-if='validateInputStep1(0)' class='item-cell-box pt-2 text-danger' >
@@ -266,25 +268,27 @@
                           <tr>
                             <th>사망여부 <span class='text-primary'>*</span></th>
                             <td>
-                              <div class='item-cell-box full justify-content-between'>
-                                <article class='toggle-list-layout2'>
-                                  <div class='toggle-list'>
-                                    <label>
-                                      <input type='radio' name='toggle1'
-                                             value='N' v-model='model.newPt.dethYn' />
-                                      <span class='txt'>생존</span>
-                                    </label>
+                              <div class='item-row-box'>
+                                <div class='item-cell-box full justify-content-between'>
+                                  <article class='toggle-list-layout2'>
+                                    <div class='toggle-list'>
+                                      <label>
+                                        <input type='radio' name='toggle1'
+                                               value='N' v-model='model.newPt.dethYn' />
+                                        <span class='txt'>생존</span>
+                                      </label>
 
-                                    <label>
-                                      <input type='radio' name='toggle1'
-                                             value='Y' v-model='model.newPt.dethYn' />
-                                      <span class='txt'>사망</span>
-                                    </label>
-                                  </div>
-                                  <div v-if='validateInputStep1(4)' class='item-cell-box pt-2 text-danger'>
-                                    * 사망여부를 선택해 주세요.
-                                  </div>
-                                </article>
+                                      <label>
+                                        <input type='radio' name='toggle1'
+                                               value='Y' v-model='model.newPt.dethYn' />
+                                        <span class='txt'>사망</span>
+                                      </label>
+                                    </div>
+                                  </article>
+                                </div>
+                              </div>
+                              <div v-if='validateInputStep1(4)' class='item-cell-box pt-2 text-danger'>
+                                * 사망여부를 선택해 주세요.
                               </div>
                             </td>
 
