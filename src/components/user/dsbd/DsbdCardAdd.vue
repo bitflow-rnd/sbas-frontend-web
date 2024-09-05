@@ -24,7 +24,7 @@
               <div v-for='(item, idx) in model.bedStat' :key='idx' class='row mt-3' :class="{'mt-4': idx > 0}">
                 <div class='cbox'>
                   <label>
-                    <input type='checkbox' v-model='model.selectedItems' :value='item'><i></i>
+                    <input type='checkbox' v-model='model.selectedItems' :value='item.value'><i></i>
                     <span class='txt'>{{item.name}}</span>
                   </label>
                 </div>
@@ -56,29 +56,41 @@ import { axios_cstm } from '@/util/axios_cstm'
 import { API_PROD } from '@/util/constantURL'
 
 const emits = defineEmits(['closePopup'])
+const props = defineProps({
+  cardItemList: [],
+})
 
 const model = reactive({
   bedStat: [
-    { name: '코로나19 감염환자 현황', value: 'cov19' },
-    { name: '병상요청 현황', value: 'BAST' },
-    { name: '병상배정 현황', value: 'BAST' },
-    { name: '이송/배차 현황', value: 'BAST' },
-    { name: '입/퇴원처리 현황', value: 'BAST' },
-    { name: '완료 처리 현황', value: 'BAST' },
+    { name: '병상요청 현황', value: 'BAST0003' },
+    { name: '병상배정 현황', value: 'BAST0005' },
+    { name: '이송/배차 현황', value: 'BAST0006' },
+    { name: '입/퇴원처리 현황', value: 'BAST0007' },
+    // { name: '불가 처리 현황', value: 'BAST0008' },
   ],
   selectedItems: [],
 })
 
 function addItem() {
-  const url = `${API_PROD}/api/v1/public/dsbd`
-  const request = model.selectedItems
-  axios_cstm().post(url, request)
+  const period = '180'
+  const url = `${API_PROD}/api/v1/public/dsbd/bedStat/${period}`
+  const selectedItems = model.selectedItems
+
+  console.log(selectedItems.includes('BAST0003'))
+
+  axios_cstm().get(url)
     .then((response) => {
       if (response.data?.code === '00') {
+        const filteredData = response.data.result.filter(item =>
+          selectedItems.includes(item.title)
+        )
+        props.cardItemList.push(...filteredData)
+        closePopup()
+        console.log('성공', filteredData)
       }
     })
     .catch((e) => {
-      console.error('추가 실패', e)
+      console.error('실패', e)
     })
 }
 

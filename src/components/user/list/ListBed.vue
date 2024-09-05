@@ -799,16 +799,6 @@ export default {
       script.defer = true
       document.head.appendChild(script)
     },
-    getStrType() {
-      console.log(this.dsInfo.admsYn)
-      if (this.dsInfo.admsYn === '재택' || this.dsInfo.admsYn === '자택') {
-        return 'DPTP0001'
-      } else if (this.dsInfo.admsYn === '기타') {
-        return 'DPTP0003'
-      } else {
-        return 'DPTP0002'
-      }
-    },
     showUdrDses(arr) {
       if (this.undrDsesCdArr.length !== 0) {
         const data = {
@@ -850,29 +840,6 @@ export default {
     maskingNm,
     getDtBlue,
     getTag,
-    async uploadRpt(event) {
-      const fileInput = event.target
-      const file = fileInput.files[0]
-      console.log(file)
-      const formData = new FormData()
-      formData.append('param1', 'edidemreport')
-      formData.append('param2', file)
-      await this.$store.dispatch('patnt/uploadRpt', formData)
-      if (this.rptInfo !== null) {
-        console.log('실행')
-      }
-      //역조서 이미지 미리보기 만들기
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        this.preRpt = e.target.result
-      }
-      reader.readAsDataURL(file)
-    },
-    removeRpt() {
-      /*역조서 삭제*/
-      this.$store.dispatch('patnt/removeRpt', this.rptInfo.attcId)
-      this.preRpt = null
-    },
     getBtn(sts) {
       if (sts === 'BAST0001') {
         return ['배정 없음', '']

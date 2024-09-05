@@ -221,8 +221,8 @@
                                 </div>
                                 <div class='mid-item-box'
                                      :class="{ 'mb-2': item.msg !== null && item.msg !== '' && item.msg !== undefined }"
-                                     v-if='item.by && model.showDetails[idx]' @click='openChrgDetail(item.chrgUserId)'
-                                     role='button'>{{ item.by }}
+                                     v-if='item.by && model.showDetails[idx]'>
+                                  <span class='mid-item-box-text' @click='openChrgDetail(item.chrgUserId)' role='button'>{{ item.by }}</span>
                                 </div>
                                 <div class='bottom-item-box'>
 <!--                                  <div class='item-img-group mb-4'>-->
@@ -290,7 +290,7 @@
                                   @click='openReqAprv'
                                   class='modal-menu-btn menu-primary radius-0 big'
                                 >
-                                  병상요청 승인
+                                  병상 요청 승인
                                 </div>
 
                                 <!-- && this.chrgUserId.some(item=>item.chrgUserId===userInfo.id -->
@@ -302,7 +302,7 @@
                                   @click='openAprvPopup'
                                   class='modal-menu-btn menu-primary radius-0 big'
                                 >
-                                  병상요청 승인
+                                  병상 배정 승인
                                 </div>
 
                                 <div
@@ -868,7 +868,7 @@ li.custom-style::before {
   color: #838693 !important;
 }
 
-.mid-item-box:hover {
+.mid-item-box-text:hover {
   color: #74afeb !important;
 }
 

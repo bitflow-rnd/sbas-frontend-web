@@ -1,5 +1,5 @@
 <template>
-  <div class='modal show' id='kt_modal_request' tabindex='-1' aria-hidden='true'>
+  <div class='modal show' id='kt_modal_request' tabindex='-1'>
     <!--begin::Modal dialog-->
     <div class='modal-dialog mw-1500px modal-dialog-centered'>
       <!--begin::Modal content-->
@@ -94,8 +94,8 @@
                                     <img v-if="!(model.newPt.attcId === null || model.newPt.attcId === '')" class='has-img'
                                          @click='showImageLightBox' onerror="this.src='/img/img-no-img.webp'"
                                          :src="model.epidReportImage ? model.epidReportImage:'/img/img-no-img.webp'" />
-                                    <a v-if="model.newPt.attcId !== null || model.newPt.attcId === ''" @click='alertOpen'
-                                       class='remove-btn'>
+                                    <a v-if="model.newPt.attcId !== null || model.newPt.attcId === ''" @click='openRemovePopup'
+                                       class='remove-btn' role='button'>
                                       <img src='/img/common/ic_profile_remove.svg' alt='이미지' />
                                     </a>
                                     <vue-easy-lightbox
@@ -108,12 +108,12 @@
 
                                   <div class='profile-upload-box'>
                                     <div class='upload-box'>
-<!--                                      <label-->
-<!--                                          class='btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary'-->
-<!--                                      >-->
-<!--                                        <input type='file' @change='uploadRpt' :value='reportFile' />-->
-<!--                                        업로드-->
-<!--                                      </label>-->
+                                      <label
+                                          class='btn btn-flex justify-content-center btn-primary py-0 px-0 h-30px w-80px certify-btn rounded-1 mt-2 btn-outline btn-outline-primary'
+                                      >
+                                        <input type='file' @change='uploadRpt' :value='model.reportFile' />
+                                        업로드
+                                      </label>
                                     </div>
                                   </div>
                                 </div>
@@ -1556,6 +1556,9 @@
   <SbasAlert :is-alert='model.confirmAlert' :err-msg='model.errMsg'
              @confirm-alert='closePopup' />
 
+  <SbasAlert :is-alert='model.confirmAlert' :err-msg='model.errMsg' :cnc-btn='true'
+             @alertClose='closePopup' @confirm-alert='removeRpt' />
+
   <!--환자정보 존재 -->
   <exist-patnt-modal v-if='model.openExistPtModal && model.existPt'
                      :exist-pt='model.existPt' :new-pt='model.newPt'
@@ -1572,6 +1575,7 @@ import { axios_cstm } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
 import SbasAlert from '@/components/common/SbasAlert.vue'
 import ExistPatntModal from '@/components/user/modal/ExistPatntModal.vue'
+import axios from 'axios'
 
 const props = defineProps({
   ptId: null,
@@ -1593,6 +1597,8 @@ const model = reactive({
     bascAddr: null, detlAddr: null, zip: null,
     undrDsesCd: [], undrDsesEtc: null,
   },
+  rptInfo: null,
+  reportFile: null,
   ptId: '',
   existPt: null,
   openExistPtModal: false,
@@ -1607,29 +1613,13 @@ const model = reactive({
   cmGugun: null,
   organMedi: null,
   dsInfo: {
-    ptId: props.ptId,
-    rcptPhc: null,
-    diagNm: null,
-    diagGrde: null,
-    cv19Symp: null,
-    occrDt: null,
-    diagDt: null,
-    rptDt: null,
-    dfdgExamRslt: null,
-    ptCatg: null,
-    admsYn: null,
-    rmk: null,
-    instNm: null,
-    instId: null,
-    instTelno: null,
-    instZip: null,
-    instBascAddr: null,
-    instDetlAddr: null,
-    instAddr: null,
-    diagDrNm: null,
-    rptChfNm: null,
-    diagAttcId: null,
-    esvyAttcId: null,
+    ptId: props.ptId, rcptPhc: null,
+    diagNm: null, diagGrde: null, cv19Symp: null,
+    occrDt: null, diagDt: null, rptDt: null,
+    dfdgExamRslt: null, ptCatg: null, admsYn: null, rmk: null,
+    instNm: null, instId: null, instTelno: null, instZip: null,
+    instBascAddr: null, instDetlAddr: null, instAddr: null,
+    diagDrNm: null, rptChfNm: null, diagAttcId: null, esvyAttcId: null,
   },
   svInfo: {
     ptId: props.ptId,
@@ -1706,6 +1696,98 @@ function getMedInst() {
     .then((response) => {
       if (response.data.code === '00') {
         model.organMedi = response.data.result.items
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+function uploadRpt(event) {
+  const fileInput = event.target
+  const file = fileInput.files[0]
+
+  const formData = new FormData()
+  formData.append('param1', 'epidreport')
+  formData.append('param2', file)
+
+  const token = sessionStorage.getItem('userToken')
+  const url = `${API_PROD}/api/v1/private/patient/upldepidreport`
+
+  axios
+    .post(url, formData, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then((response) => {
+      if (response.data.code === '00') {
+        //역조서 이미지 미리보기 만들기
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          model.epidReportImage = e.target.result
+        }
+        reader.readAsDataURL(file)
+        setPatientInfo(response.data.result)
+        setDsInfo(response.data.result)
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+function setPatientInfo(result) {
+  model.newPt.ptNm = result.ptNm
+  model.newPt.rrno1 = result.rrno1
+  model.newPt.rrno2 = result.rrno2
+  model.newPt.gndr = result.gndr
+  model.newPt.natiCd = 'NATI0001'
+  model.newPt.natiNm = result.natiNm
+  model.newPt.telno = result.telno
+  model.newPt.dstr1Cd = result.dstr1Cd
+  model.newPt.dstr2Cd = result.dstr2Cd
+  model.newPt.bascAddr = result.baseAddr
+  model.newPt.detlAddr = result.dtlAddr
+  model.newPt.zip = result.zip
+  model.newPt.mpno = result.mpno
+  model.newPt.nokNm = result.nokNm
+  model.newPt.job = result.job
+  model.newPt.attcId = result.attcId
+  model.newPt.dethYn = result.dethYn === '생존' ? 'N' : 'Y'
+}
+
+function setDsInfo(result) {
+  model.dsInfo.rcptPhc = result.rcptPhc
+  model.dsInfo.diagNm = result.diagNm
+  model.dsInfo.diagGrde = result.diagGrde
+  model.dsInfo.cv19Symp = result.cv19Symp
+  model.dsInfo.occrDt = result.occrDt
+  model.dsInfo.diagDt = result.diagDt
+  model.dsInfo.rptDt = result.rptDt
+  model.dsInfo.dfdgExamRslt = result.dfdgExamRslt
+  model.dsInfo.ptCatg = result.ptCatg
+  model.dsInfo.admsYn = result.admsYn
+  model.dsInfo.rptType = result.rptType
+  model.dsInfo.rmk = result.rmk
+  model.dsInfo.instNm = result.instNm
+  model.dsInfo.instId = result.instId
+  model.dsInfo.instTelno = result.instTelno
+  model.dsInfo.instAddr = result.instAddr
+  model.dsInfo.diagDrNm = result.diagDrNm
+  model.dsInfo.rptChfNm = result.rptChfNm
+}
+
+function openRemovePopup() {
+  model.confirmAlert = true
+  model.errMsg = '역학조사서를 삭제하시겠습니까?'
+}
+
+function removeRpt() {
+  const url = `${API_PROD}/api/v1/private/patient/delepidreport/${model.newPt.attcId}`
+  axios_cstm().post(url)
+    .then((response) => {
+      if (response.data.code === '00') {
+        setPatientInfo(null)
+        setDsInfo(null)
       }
     })
     .catch((error) => {

@@ -66,30 +66,6 @@
                   <div class='card-box'>
                     <div class='top-box'>
                       <div class='subject-box'>
-                        <div class='label-txt bg-primary'>전국</div>
-                        <div class='subject-txt'>감염병 환자 현황</div>
-                      </div>
-                      <div class='remove-box'>
-                        <a @click='openRemovePopup' role='button'>
-                          <i class='fa-solid fa-circle-minus minus'></i>
-                        </a>
-                      </div>
-                    </div>
-                    <div class='bottom-box text-end pt-4'>
-                      <div class='cnt-box'>
-                        <span class='text-black fw-bold'>3,796&nbsp;</span>
-                        <span class='text-black fw-bold' style='font-size: 20px;'>명</span>
-                      </div>
-                      <div class='rate-box'>
-                        <span class='text-gray-600'>전 주 대비</span>
-                        <span class='text-primary'>13.4% ▲</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class='card-box'>
-                    <div class='top-box'>
-                      <div class='subject-box'>
                         <div class='label-txt bg-primary'>최다</div>
                         <div class='subject-txt'>수용 지역</div>
                       </div>
@@ -449,12 +425,16 @@
                       </div>
                     </div>
                   </div>
-                  <a class="card-box" role='button' @click='openAddPopup'>
-                      <div class="card-add-btn-box">
-                          <img src="/img/common/ic_dashboard_add.svg" alt="이미지">
-                          <div class="text-primary fs-6 pt-4">추가하기</div>
-                      </div>
-                  </a>
+                  <div class='card-box' v-for='(item, idx) in model.cardItemList' :key='idx'>
+                    <DsbdCardItem v-if='model.cardItemList.length > 0' :cardItem='item' @openRemovePopup='openRemovePopup' />
+                  </div>
+
+<!--                  <a class="card-box" role='button' @click='openAddPopup'>-->
+<!--                    <div class="card-add-btn-box">-->
+<!--                      <img src="/img/common/ic_dashboard_add.svg" alt="이미지">-->
+<!--                      <div class="text-primary fs-6 pt-4">추가하기</div>-->
+<!--                    </div>-->
+<!--                  </a>-->
                 </div>
               </div>
             </div>
@@ -473,7 +453,7 @@
   <DsbdCardRemove v-if='model.removePopup' @closePopup='closePopup' />
 
   <!-- 현황카드 항목선택 -->
-  <DsbdCardSelect v-if='model.addPopup' @closePopup='closePopup' />
+  <DsbdCardSelect :cardItemList='model.cardItemList' v-if='model.addPopup' @closePopup='closePopup' />
 
 </template>
 
@@ -481,11 +461,13 @@
 import DsbdCardSelect from '@/components/user/dsbd/DsbdCardAdd.vue'
 import DsbdCardRemove from '@/components/user/dsbd/DsbdCardRemove.vue'
 import { reactive } from 'vue'
+import DsbdCardItem from '@/components/user/dsbd/DsbdCardItem.vue'
 
 const model = reactive({
   bdasCountList: [],
   addPopup: false,
   removePopup: false,
+  cardItemList: [],
 })
 
 function openAddPopup() {

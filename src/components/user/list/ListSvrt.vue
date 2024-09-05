@@ -168,10 +168,10 @@
                 <div class="table-box with-scroll small">
                   <table class="list-table-hoverable svrt-list">
                     <colgroup>
+                      <col style="width: 180px" />
                       <col style="width: 100px" />
                       <col style="width: 70px" />
                       <col style="width: 50px" />
-                      <col style="width: 180px" />
                       <col style="width: 100px" />
                       <col style="width: 120px" />
                       <col style="width: 60px" />
@@ -186,10 +186,10 @@
                     </colgroup>
                     <thead>
                     <tr class="small">
+                      <th rowspan='2'>입원병원</th>
                       <th rowspan='2'>이름</th>
                       <th rowspan='2'>생년월일</th>
                       <th rowspan='2'>성별</th>
-                      <th rowspan='2'>입원병원</th>
                       <th rowspan='2'>입원일자</th>
                       <th rowspan='2'>거주지</th>
                       <th colspan='4'>CovSF</th>
@@ -213,6 +213,7 @@
                       :key="idx"
                       @click="selectPatient(pt)"
                     >
+                      <td class="text-start">{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                       <td>
                         <div class='text-center'>
                           <div class='pt-nm'>{{
@@ -225,7 +226,6 @@
                         {{ pt['rrno1'] ? pt['rrno1'].slice(0, 2) + '.' + pt['rrno1'].slice(2, 4) + '.' + pt['rrno1'].slice(4) : '-' }}
                       </td>
                       <td>{{ pt['gndr'] }}자</td>
-                      <td class="text-start">{{ pt['hospNm'] ? pt['hospNm'] : '-' }}</td>
                       <td>{{ pt['admsDt'] ? formatYyyyMmDd(pt['admsDt']) : '-' }}</td>
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
 
