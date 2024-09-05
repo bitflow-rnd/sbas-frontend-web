@@ -1562,7 +1562,7 @@
   <!--환자정보 존재 -->
   <exist-patnt-modal v-if='model.openExistPtModal && model.existPt'
                      :exist-pt='model.existPt' :new-pt='model.newPt'
-                     @closePopup='closeExistPtModal' />
+                     @closePopup='closePopup' @closeExistPt='closeExistPtModal' />
 
 </template>
 
@@ -2060,6 +2060,7 @@ function closeExistPtModal() {
 
 function closePopup() {
   model.confirmAlert = false
+  model.openExistPtModal = false
 }
 
 </script>

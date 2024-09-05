@@ -1,5 +1,5 @@
 <template>
-  <div class="modal show" tabindex="-1" aria-hidden="true" style="">
+  <div class="modal show" tabindex="-1" style="">
     <div class="modal-dialog col-lg-3 modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header px-10 py-5 d-flex justify-content-between">
@@ -426,7 +426,7 @@
   <!--환자정보 존재 -->
   <exist-patnt-modal v-if='model.openExistPtModal && props.existPt'
                      :exist-pt='props.existPt' :new-pt='model.newPt'
-                     @closeExistPt='closeExistPtModal()' />
+                     @closePopup='closePopup' @closeExistPt='openExistPtModal' />
 
 </template>
 
@@ -578,6 +578,10 @@ function closeModal() {
 
 function openExistPtModal() {
   isExistPt()
+}
+
+function closePopup() {
+  model.openExistPtModal = false
 }
 
 function closeExistPtModal() {
