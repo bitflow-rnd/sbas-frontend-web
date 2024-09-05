@@ -22,7 +22,7 @@
                       </colgroup>
                       <tbody>
                       <tr>
-                        <th>역학조사서 업로드</th>
+                        <th>역학조사서 업로드 (선택)</th>
                       </tr>
                       <tr>
                         <td>
@@ -87,6 +87,9 @@
                               <input type="text" v-model="model.newPt.ptNm"/>
                             </div>
                           </div>
+                          <div v-if='validateInputStep1(0)' class='item-cell-box pt-2 text-danger' >
+                            * 환자 이름을 입력해 주세요.
+                          </div>
                         </td>
                         <th>성별</th>
                         <td v-if="model.newPt.rrno2 !== undefined">{{ getGndr(model.newPt.rrno2) }}</td>
@@ -98,22 +101,24 @@
                           <div class="item-row-box">
                             <div class="item-cell-box">
                               <div class="tbox">
-                                <input type="text" v-model="model.newPt.rrno1"/>
+                                <input type='text' v-model='model.newPt.rrno1'
+                                       @input='filterNumericInput(0)'
+                                       maxlength='6' />
                               </div>
                               <div class="unit-box mx-2 text-gray-600">-</div>
-                              <div class="tbox w-30px" style="min-width: 30px">
+                              <div class="tbox" style="min-width: 20px">
                                 <input
-                                  type="password"
+                                  type="text"
+                                  @input='filterNumericInput(0)'
                                   v-model="model.newPt.rrno2"
-                                  class="p-0 text-center fs-3x"
                                   maxlength="1"
                                 />
                               </div>
-                              <div class="unit-box ms-2" style="line-height: 30px">●●●●●●</div>
                             </div>
                           </div>
-                          <div class="item-row-box">
-                            <div class="item-note-box">* 주민등록번호 입력</div>
+                          <div v-if='validateInputStep1(1) && validateInputStep1(2)'
+                               class='item-cell-box pt-2 text-danger'>
+                            * 주민등록번호을 입력해 주세요.
                           </div>
                         </td>
                         <th>나이 (만)</th>
@@ -155,10 +160,8 @@
                             </div>
                           </div>
 
-                          <div class="item-row-box">
-                            <div class="item-cell-box">
-                              <div class="item-note-box">* 상세주소 입력</div>
-                            </div>
+                          <div v-if='validateInputStep1(3)' class='item-cell-box pt-2 text-danger'>
+                            * 기본주소를 입력해 주세요.
                           </div>
                         </td>
 
@@ -166,7 +169,9 @@
                         <td>
                           <div class="item-cell-box full">
                             <div class="tbox full">
-                              <input type="text" v-model="model.newPt.mpno"/>
+                              <input type="text" v-model="model.newPt.mpno"
+                              @input='filterNumericInput(1)'
+                              maxlength='11' />
                             </div>
                           </div>
                         </td>
@@ -188,7 +193,9 @@
                         <td>
                           <div class="item-cell-box full">
                             <div class="tbox full">
-                              <input type="text" v-model="model.newPt.telno"/>
+                              <input type="text" v-model="model.newPt.telno"
+                              @input='filterNumericInput(1)'
+                              maxlength='11'/>
                             </div>
                           </div>
                         </td>
@@ -220,9 +227,11 @@
                                   <span class="txt">사망</span>
                                 </label>
                               </div>
+                              <div v-if='validateInputStep1(4)' class='item-cell-box pt-2 text-danger'>
+                                * 사망여부를 선택해 주세요.
+                              </div>
                             </article>
 
-                            <div class="item-note-box">* 사망여부 선택</div>
                           </div>
                         </td>
 
@@ -275,19 +284,24 @@
                                 </div>
                               </article>
                             </div>
-                          </div>
-
-                          <div class="item-row-box">
-                            <div class="tbox" style="width: 211px">
+                            <div class='tbox' :class="{ 'pt-2': model.newPt.natiCd === 'NATI0002' }"
+                                 style='width: 211px' v-show="model.newPt.natiCd === 'NATI0002'">
                               <input
-                                type="text"
-                                placeholder="국가명 입력"
-                                v-model="model.newPt.natiNm"
+                                type='text'
+                                placeholder='국가명 입력'
+                                v-model='model.newPt.natiNm'
                                 :readonly="model.newPt.natiCd !== 'NATI0002'"
-                                class="nation-input"
+                                class='nation-input'
                               />
                             </div>
+                            <div
+                              v-if='validateInputStep1(5)'
+                              class='item-cell-box pt-2 text-danger' >
+                              * 국적을 입력해 주세요.
+                            </div>
                           </div>
+
+
                         </td>
                       </tr>
                       <tr>
@@ -295,91 +309,11 @@
                         <td colspan="3">
                           <article class="cbox-list-layout">
                             <div class="cbox-row">
-                              <div class="cbox">
+                              <div class="cbox" :class='{"mt-2": idx > 4}'
+                                   v-for='(item, idx) in model.undrDsesCdList.filter((item) => item.cdId !== "UDDS0014")' :key='idx'>
                                 <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">고혈압</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">당뇨</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">고지혈증</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">심혈관</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">뇌혈관</span>
-                                </label>
-                              </div>
-                            </div>
-
-                            <div class="cbox-row">
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">암</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">만성폐질환</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">신장질환</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">정신질환</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">결핵</span>
-                                </label>
-                              </div>
-                            </div>
-
-                            <div class="cbox-row">
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">천식 등 알레르기</span>
-                                </label>
-                              </div>
-
-                              <div class="cbox">
-                                <label>
-                                  <input type="checkbox" name="disease"/><i></i>
-                                  <span class="txt">면역력저하자</span>
+                                  <input type="checkbox" name="disease" :value='item.cdId' v-model='model.newPt.undrDsesCd'/><i></i>
+                                  <span class="txt">{{item.cdNm}}</span>
                                 </label>
                               </div>
                             </div>
@@ -388,13 +322,13 @@
                               <div class="d-inline-flex">
                                 <div class="cbox w-auto">
                                   <label>
-                                    <input type="checkbox" name="disease"/><i></i>
+                                    <input type="checkbox" name="disease" value='UDDS0014' v-model='model.newPt.undrDsesCd'/><i></i>
                                     <span class="txt">기타</span>
                                   </label>
                                 </div>
 
                                 <div class="tbox d-inline-flex ms-4 w-300px">
-                                  <input type="text" placeholder="직접 입력"/>
+                                  <input type="text" placeholder="직접 입력" v-model='model.newPt.undrDsesEtc' :disabled='!model.newPt.undrDsesCd.includes("UDDS0014")'/>
                                 </div>
                               </div>
                             </div>
@@ -426,7 +360,7 @@
   <!--환자정보 존재 -->
   <exist-patnt-modal v-if='model.openExistPtModal && props.existPt'
                      :exist-pt='props.existPt' :new-pt='model.newPt'
-                     @closePopup='closePopup' @closeExistPt='openExistPtModal' />
+                     @closePopup='closePopup' @closeExistPt='closeExistPtModal' />
 
 </template>
 
@@ -455,7 +389,14 @@ onMounted(() => {
 
 const model = reactive({
   openExistPtModal: false,
-  newPt: Object,
+  newPt: {
+    ptNm: null, gndr: null, rrno1: null, rrno2: null,
+    dethYn: null, natiCd: null, natiNm: null,
+    dstr1Cd: null, dstr2Cd: null, telno: null, picaVer: null,
+    nokNm: null, mpno: null, job: null, attcId: null,
+    bascAddr: null, detlAddr: null, zip: null,
+    undrDsesCd: [], undrDsesEtc: null,
+  },
   reportFile: null,
   epidReportImage: null,
   rptInfo: null,
@@ -466,6 +407,8 @@ const model = reactive({
   isAlert: false,
   cncBtn: false,
   alertIdx: 0,
+  undrDsesCdList: store.getters['common/getUnderLyingDisease'],
+  showErrorMsg: false,
 })
 
 function uploadRpt(event) {
@@ -561,6 +504,40 @@ function showImage(attcId) {
       .catch((error) => {
         console.error("An error occurred while fetching the image:", error);
       })
+  }
+}
+
+function filterNumericInput(idx) {
+  if (idx === 0) {
+    if (model.newPt.rrno1) {
+      model.newPt.rrno1 = model.newPt.rrno1.replace(/[^0-9]/g, '')
+    }
+    if (model.newPt.rrno2) {
+      model.newPt.rrno2 = model.newPt.rrno2.replace(/[^0-9]/g, '')
+    }
+  } else if (idx === 1) {
+    if (model.newPt.mpno) {
+      model.newPt.mpno = model.newPt.mpno.replace(/[^0-9]/g, '')
+    }
+    if (model.newPt.telno) {
+      model.newPt.telno = model.newPt.telno.replace(/[^0-9]/g, '')
+    }
+  }
+}
+
+function validateInputStep1(idx) {
+  if (idx === 0) {
+    return model.newPt.ptNm === null && model.showErrorMsg
+  } else if (idx === 1) {
+    return model.newPt.rrno1 === null && model.showErrorMsg
+  } else if (idx === 2) {
+    return model.newPt.rrno2 === null && model.showErrorMsg
+  } else if (idx === 3) {
+    return model.newPt.bascAddr === null && model.showErrorMsg
+  } else if (idx === 4) {
+    return model.newPt.dethYn === null && model.showErrorMsg
+  } else if (idx === 5) {
+    return model.newPt.natiCd === null && model.showErrorMsg
   }
 }
 
