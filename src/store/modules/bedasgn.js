@@ -17,6 +17,7 @@ export default {
     ptSp: null,
     rcmdModal: 1,
     rcmdHp: null,
+    transInfo: null,
     bdasHisInfo: null,
     bedStatCount: null,
   },

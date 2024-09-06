@@ -550,7 +550,7 @@
 import DataPagination from '@/components/user/cpnt/DataPagination.vue'
 import { mapState, useStore } from 'vuex'
 import { ref } from 'vue'
-import { getDtBlue, getSido, getTag, getTelno, getUndrDses, maskingNm, reqBedType } from '@/util/ui'
+import { getDtBlue, getSido, getTag, maskingNm, reqBedType } from '@/util/ui'
 import user from '@/store/modules/user'
 import MyInfoModal from '@/components/user/modal/MyInfoModal.vue'
 import CloseButton from '@/components/common/CloseButton.vue'
@@ -718,14 +718,11 @@ export default {
       'ptSv',
       'ptBio',
       'timeline',
-      'rcmdModal',
-      'rcmdHp',
       'transInfo',
       'bedStatCount',
     ]),
-    ...mapState('patnt', ['ptDetail', 'rptInfo', 'isSpinner']),
+    ...mapState('patnt', ['ptDetail']),
     ...mapState('user', ['userInfo']),
-    ...mapState('admin', ['firestatnList', 'firemenList', 'medinstList', 'organMedi', 'cmSido']),
     filterData() {
       let params = {}
       if (this.search['kwd']) params = { ...params, ptNm: this.search['kwd'] }
@@ -786,11 +783,6 @@ export default {
       this.$store.dispatch('bedasgn/getBdListWeb', this.filterData)
       this.page = 1
     },
-    getMedInst() {
-      let data = this.medinstInfo
-      data['instTypeCd'] = 'ORGN0003'
-      this.$store.dispatch('admin/getOrganMedi', data)
-    },
     initNaverMap() {
       // 네이버 지도 API 로드
       const script = document.createElement('script')
@@ -798,33 +790,6 @@ export default {
       script.async = true
       script.defer = true
       document.head.appendChild(script)
-    },
-    showUdrDses(arr) {
-      if (this.undrDsesCdArr.length !== 0) {
-        const data = {
-          'UDDS0001': '고혈압',
-          'UDDS0002': '당뇨',
-          'UDDS0003': '고지혈증',
-          'UDDS0004': '심혈관',
-          'UDDS0005': '뇌혈관',
-          'UDDS0006': '암',
-          'UDDS0007': '만성폐질환',
-          'UDDS0008': '폐럼',
-          'UDDS0009': '신장질환',
-          'UDDS0010': '정신질환',
-          'UDDS0011': '결핵',
-          'UDDS0012': '천식 등 알레르기',
-          'UDDS0013': '면역력저하자',
-          'UDDS0014': '기타'
-        }
-        const res = []
-        arr.forEach((key) => {
-          if (Object.prototype.hasOwnProperty.call(data, key)) {
-            res.push(data[key])
-          }
-        })
-        return res
-      } else return ''
     },
     setNull() {
       console.log('실행' + this.initNewPt)
