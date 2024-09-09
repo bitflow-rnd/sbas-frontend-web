@@ -226,12 +226,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class='option-box'>
-                    <a href='#none' class='option-btn'>
-                      <i class='fa-solid fa-share-nodes text-black' style='font-size: 18px'></i>
-                    </a>
-                  </div>
                 </div>
 
                 <div class='detail-body-box flex-root' style='min-height: 0'>
@@ -252,8 +246,8 @@
                                 timeline.items[idx + 1].timeLineStatus === 'closed'
                             }"
                         >
-                          <div class='ic-box' v-if="item.timeLineStatus !== 'closed'">
-                            <img :src='getTLIcon(item, idx)' alt='이미지' />
+                          <div class='ic-box' style='width: 50px' v-if="item.timeLineStatus !== 'closed'">
+                            <img :src='getTLIcon(item, idx)' alt='이미지' class='timeline-img' />
                           </div>
 
                           <div
@@ -436,6 +430,13 @@ article.detail-layout1 .detail-wrap .detail-head-box .head-box .head-txt-box {
   left: 0;
   width: calc(100% - 1rem);
   padding-bottom: 55px;
+}
+
+.timeline-img {
+  width: 150%;
+  height: 150%;
+  max-height: 150%;
+  max-width: 150%;
 }
 
 </style>

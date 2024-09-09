@@ -437,11 +437,6 @@ export default {
         this.$store.dispatch('admin/getGuGun', address)
       }
     },
-    getMedInst() {
-      let data = this.medinstInfo
-      data['instTypeCd'] = 'ORGN0003'
-      this.$store.dispatch('admin/getOrganMedi', data)
-    },
     changeDstrCd1() {
       this.getSecondAddress(this.filterPatient['address']['first'])
       this.filterPatient['address']['second'] = ''
@@ -517,14 +512,6 @@ export default {
         page: newPage
       })
       this.page = newPage
-    },
-    allCodesChangeState() {
-      if (this.allPatientsSelected) {
-        this.checkedPatients = []
-        this.patientData.forEach((patient) => this.checkedPatients.push(patient))
-      } else {
-        this.checkedPatients = []
-      }
     },
     search() {
       const url = `${API_PROD}/api/v1/private/severity/list`
