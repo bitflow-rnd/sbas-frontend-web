@@ -1560,7 +1560,7 @@
   <SbasAlert :is-alert='model.confirmAlert' :err-msg='model.errMsg'
              @confirm-alert='closePopup' />
 
-  <SbasAlert :is-alert='model.confirmAlert' :err-msg='model.errMsg' :cnc-btn='true'
+  <SbasAlert :is-alert='model.epidConfirmAlert' :err-msg='model.errMsg' :cnc-btn='true'
              @alertClose='closePopup' @confirm-alert='removeRpt' />
 
   <!--환자정보 존재 -->
@@ -1653,6 +1653,7 @@ const model = reactive({
   },
   isAlert: false,
   confirmAlert: false,
+  epidConfirmAlert: false,
   errMsg: '',
   showErrorMsg: false,
 })
@@ -1781,7 +1782,7 @@ function setDsInfo(result) {
 }
 
 function openRemovePopup() {
-  model.confirmAlert = true
+  model.epidConfirmAlert = true
   model.errMsg = '역학조사서를 삭제하시겠습니까?'
 }
 
