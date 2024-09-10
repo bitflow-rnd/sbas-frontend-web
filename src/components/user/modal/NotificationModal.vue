@@ -12,7 +12,13 @@
             <div class="list-wrap">
               <div class="list-group-box">
                 <div class="list-body-box">
+                  <div class="img-box alarm-img-box" v-if='model.list.length <= 0'>
+                    <img src="/img/common/img_nodata.svg" alt="이미지" />
+                    <h2>알림 없음</h2>
+                  </div>
+
                   <div
+                    v-if='model.list.length > 0'
                     v-for="(item, idx) in model.list"
                     :key="idx"
                     class="item-box"
@@ -137,6 +143,19 @@ function readNotification() {
 
 .date-box {
   font-size: 1.0rem;
+}
+
+.alarm-img-box {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.img-box > h2 {
+  font-size: 2rem;
+  color: #666;
+  font-weight: normal;
+  margin-top: 12px;
 }
 
 </style>
