@@ -273,11 +273,11 @@
                                       ( userInfo.jobCd === JobCode.Aprv || userInfo.jobCd === JobCode.Sysa ))"
                                    @click='openRfsePopup'
                                    class='modal-menu-btn menu-primary-outline radius-0 big'
-                                >배정 취소</a
+                                >배정 불가</a
                                 >
                                 <a v-show="
-                                    (bdDetail.bedStatCd === 'BAST0004' &&
-                                      ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa ))"
+                                    (bdDetail.bedStatCd === 'BAST0004' && (checkChrgInst() || userInfo.jobCd === JobCode.Sysa)
+                                     && ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa ))"
                                    @click='openRfsePopup'
                                    class='modal-menu-btn menu-primary-outline radius-0 big'
                                 >배정 불가</a
@@ -296,9 +296,8 @@
                                 <!-- && this.chrgUserId.some(item=>item.chrgUserId===userInfo.id -->
                                 <div
                                   v-show="
-                                    bdDetail.bedStatCd === 'BAST0004' &&
-                                    ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa )
-                                  "
+                                    (bdDetail.bedStatCd === 'BAST0004' && (checkChrgInst() || userInfo.jobCd === JobCode.Sysa)
+                                     && ( userInfo.jobCd === JobCode.Meds || userInfo.jobCd === JobCode.Sysa ))"
                                   @click='openAprvPopup'
                                   class='modal-menu-btn menu-primary radius-0 big'
                                 >
@@ -682,7 +681,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, reactive, ref, onMounted } from 'vue'
+import { defineEmits, defineProps, onMounted, reactive } from 'vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import { getTag, getTelno, getTLDt, getTLIcon } from '@/util/ui'
 import { JobCode } from '@/util/sbas_cnst'
@@ -713,6 +712,7 @@ const model = reactive({
   chrgInfo: null,
   showDetails: [],
   showAll: true,
+  asgnHospital: [],
 })
 const store = useStore()
 
@@ -721,6 +721,9 @@ onMounted(() => {
   model.showDetails = Array.from({ length: filteredItems.length }, () => {
     return false
   })
+  model.asgnHospital = props.timeline.items
+    .filter(item => item.chrgInstId  && item.chrgInstId.startsWith("HP"))
+    .map(item => item.chrgInstId)
 })
 
 function setActive(idx) {
@@ -812,7 +815,9 @@ function toggleAll() {
   model.showAll = !model.showAll
 }
 
-
+function checkChrgInst() {
+  return model.asgnHospital.includes(props.userInfo.instId)
+}
 
 </script>
 
