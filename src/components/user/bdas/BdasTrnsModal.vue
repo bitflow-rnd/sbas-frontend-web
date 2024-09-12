@@ -49,7 +49,7 @@
                       <div class='item-cell-box'>
                         <div class='sbox w-175px'>
                           <select>
-                            <option>{{ model.fireStatnList[0].dstr1Cd }}</option>
+                            <option>{{ model.cmSido.find(item => item.cdId === '27')['cdNm'] }}</option>
                           </select>
                         </div>
 
@@ -329,14 +329,17 @@ import { getTag, getTelno } from '@/util/ui'
 import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
 import SbasAlert from '@/components/common/SbasAlert.vue'
+import { useStore } from 'vuex'
 
 const props = defineProps({
   bdDetail: Object,
   ptDetail: Object,
 })
 const emits = defineEmits(['closeModal'])
+const store = useStore()
 
 const model = reactive({
+  cmSido: store.getters['admin/getCmSido'],
   fireStatnList: [],
   firemenList: [],
   selectedInst: null,
@@ -379,8 +382,8 @@ onMounted(() => {
 })
 
 function loadFireStatnList() {
-  const url = `${API_PROD}/api/v1/public/organ/firestatns`
-  const data = { dstr1Cd: '27' }
+  const url = `${API_PROD}/api/v1/public/organ/codes`
+  const data = { dstr1Cd: '27', instTypeCd: 'ORGN0002' }
   axios_cstm()
     .get(url, { params: data })
     .then((response) => {
