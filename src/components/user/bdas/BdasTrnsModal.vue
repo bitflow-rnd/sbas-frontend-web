@@ -113,6 +113,7 @@
                           <input
                             v-if="model.selectedFm1 === '직접입력'"
                             v-model='model.trsfInfo.crew1Telno'
+                            maxlength='11'
                             placeholder=' 전화번호 입력'
                           />
                           <input v-else v-model='model.trsfInfo.crew1Telno'
@@ -160,6 +161,7 @@
                           <input
                             v-if="model.selectedFm2 === '직접입력'"
                             v-model='model.trsfInfo.crew2Telno'
+                            maxlength='11'
                             placeholder=' 전화번호 입력'
                           />
                           <input v-else v-model='model.trsfInfo.crew2Telno'
@@ -207,6 +209,7 @@
                           <input
                             v-if="model.selectedFm3 === '직접입력'"
                             v-model='model.trsfInfo.crew3Telno'
+                            maxlength='11'
                             placeholder=' 전화번호 입력'
                           />
                           <input v-else v-model='model.trsfInfo.crew3Telno'
@@ -348,20 +351,20 @@ const model = reactive({
     bdasSeq: props.bdDetail.bdasSeq,
     instId: '',
     ambsNm: '',
-    crew1Id: '',
-    crew1Pstn: '',
-    crew1Nm: '',
+    crew1Id: null,
+    crew1Pstn: null,
+    crew1Nm: null,
     crew1Telno: null,
-    crew2Id: '',
-    crew2Pstn: '',
-    crew2Nm: '',
+    crew2Id: null,
+    crew2Pstn: null,
+    crew2Nm: null,
     crew2Telno: null,
-    crew3Id: '',
-    crew3Pstn: '',
-    crew3Nm: '',
+    crew3Id: null,
+    crew3Pstn: null,
+    crew3Nm: null,
     crew3Telno: null,
     chfTelno: 1,
-    vecno: '',
+    vecno: null,
     msg: '',
   },
   selectedFm1: null,
