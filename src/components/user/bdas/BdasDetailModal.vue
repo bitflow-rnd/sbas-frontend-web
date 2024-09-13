@@ -776,9 +776,13 @@ function openAdmsModal() {
 }
 
 function openChrgDetail(chrgId) {
-  model.popup = 'chrgInfo'
-  store.dispatch('user/getChrgUserInfo', chrgId)
-  model.chrgInfo = store.getters['user/getChrgUserInfo']
+  if (chrgId || chrgId !== '') {
+    model.popup = 'chrgInfo'
+    store.dispatch('user/getChrgUserInfo', chrgId)
+    model.chrgInfo = store.getters['user/getChrgUserInfo']
+  } else {
+    return null
+  }
 }
 
 function closePopup() {
