@@ -251,13 +251,13 @@
                 </div>
 
                 <div class="option-box">
-                  <a
-                    href="#"
-                    class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7"
-                    data-bs-toggle="modal"
-                    data-bs-target="#kt_modal_view_users"
-                    ><i class="fa-regular fa-trash-can"></i> 삭제</a
-                  >
+<!--                  <a-->
+<!--                    href="#"-->
+<!--                    class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7"-->
+<!--                    data-bs-toggle="modal"-->
+<!--                    data-bs-target="#kt_modal_view_users"-->
+<!--                    ><i class="fa-regular fa-trash-can"></i> 삭제</a-->
+<!--                  >-->
 
                   <router-link
                     to=""

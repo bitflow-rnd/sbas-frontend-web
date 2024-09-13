@@ -130,7 +130,7 @@ function refuseBdasReq() {
 function refuseMedBdas() {
   const url = `${API_PROD}/api/v1/private/bedasgn/asgnconfirm`
   const request = model.data
-  let find = props.timeline.items.find((item) => item.chrgUserId === props.userInfo.id)
+  let find = props.timeline.items.find((item) => item.chrgInstId === props.userInfo.instId)
   request.asgnReqSeq = find.asgnReqSeq ?? 1
   request.hospId = find.chrgInstId ?? 'INST000000'
   axios_cstm().post(url, request)
