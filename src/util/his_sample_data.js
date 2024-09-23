@@ -149,6 +149,56 @@ const sampleData = [
     roomNm: 'ERW',
     spclNm: '담당의'
   },
+  {
+    pid: '0040001',
+    admsDt: '20240620',
+    monStrtDt: '20240620',
+    monStrtTm: '230000',
+    deptNm: '외과',
+    wardNm: 'MICU',
+    roomNm: 'MICUC',
+    spclNm: '담당의'
+  },
+  {
+    pid: '0040002',
+    admsDt: '20240711',
+    monStrtDt: '20240711',
+    monStrtTm: '210000',
+    deptNm: '감염내과',
+    wardNm: '43병동',
+    roomNm: '4328',
+    spclNm: '담당의'
+  },
+  {
+    pid: '0040003',
+    admsDt: '20240713',
+    monStrtDt: '20240713',
+    monStrtTm: '210000',
+    deptNm: '감염내과',
+    wardNm: '66동병동',
+    roomNm: '6604',
+    spclNm: '담당의'
+  },
+  {
+    pid: '0040004',
+    admsDt: '20240711',
+    monStrtDt: '20240711',
+    monStrtTm: '225200',
+    deptNm: '외과',
+    wardNm: 'ICU2',
+    roomNm: 'ERW',
+    spclNm: '담당의'
+  },
+  {
+    pid: '0040005',
+    admsDt: '20240711',
+    monStrtDt: '20240711',
+    monStrtTm: '230000',
+    deptNm: '외과',
+    wardNm: 'ICU2',
+    roomNm: 'ERW',
+    spclNm: '담당의'
+  }
 ]
 
 export function getHisSampleData(pid) {
