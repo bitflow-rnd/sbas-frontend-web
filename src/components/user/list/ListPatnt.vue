@@ -232,6 +232,7 @@
                       <col style="width: 100px" />
                       <col style="width: 50px" />
                       <col style="width: 70px" />
+                      <col v-if='isSysAdm()' style="width: 70px" />
                     </colgroup>
                     <thead>
                     <tr class="small" style='cursor:default !important'>
@@ -247,6 +248,7 @@
                       <th>국적</th>
                       <th>업데이트<br/>일시</th>
                       <th>작업</th>
+                      <th v-if='isSysAdm()'>삭제</th>
                     </tr>
                     </thead>
 
@@ -280,6 +282,12 @@
                       ><a @click.stop='showPatntModal(pt,2)'
                           class='btn btn-flex btn-xs btn-outline btn-outline-primary'
                       >수정</a>
+                      </td>
+                      <td v-if='isSysAdm()'
+                      ><a @click.stop='openDeletePopup(pt)'
+                          class='btn btn-flex btn-xs btn-outline btn-outline-primary'
+                          style='color: #FF666EFF'
+                      >삭제</a>
                       </td>
                     </tr>
                     </tbody>
@@ -320,6 +328,9 @@
 
   <patnt-reg-modal v-if='this.showModal === 2' :exist-pt='this.ptDetail' @closeModal='closeModal(0)' />
 
+  <SbasAlert :is-alert='this.confirmAlert' :err-msg='this.errMsg' :cnc-btn='true'
+             @confirmAlert='deletePatient(deletePt)' @alertClose='closeDeletePopup' />
+
 </template>
 
 <script>
@@ -332,9 +343,11 @@ import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
 import BedRequestModal from '@/components/user/bdas/BdasReqModal.vue'
 import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
+import SbasAlert from '@/components/common/SbasAlert.vue'
 
 export default {
   components: {
+    SbasAlert,
     BedRequestModal,
     PatntDetlModalV2,
     PatntRegModal,
@@ -421,6 +434,9 @@ export default {
       },
       showPatnt: false,
       showSvrtInfoModal: false,
+      deletePt: null,
+      confirmAlert: false,
+      errMsg: '',
     }
   },
   computed: {
@@ -615,6 +631,7 @@ export default {
       // 대구로 설정
       this.filterPatient.address.first = '27'
       this.getSecondAddress('27')
+      console.log(this.userInfo)
       // this.filterPatient.address.first = this.userInfo.dutyDstr1Cd
       // if (this.userInfo.dutyDstr1Cd) {
         // this.getSecondAddress(this.userInfo.dutyDstr1Cd)
@@ -629,7 +646,31 @@ export default {
             this.model.hospList = response.data?.result.items
           }
         })
-    }
+    },
+    isSysAdm() {
+      return this.userInfo.jobCd === 'PMGR0004';
+    },
+    openDeletePopup(patient) {
+      this.deletePt = patient
+      this.confirmAlert = true
+      this.errMsg = '해당 환자를 삭제하시겠습니까?'
+    },
+    closeDeletePopup() {
+      this.confirmAlert = false
+      this.errMsg = ''
+    },
+    deletePatient(patient) {
+      const url = `${API_PROD}/api/v1/private/bedasgn/remove/${patient.ptId}/6`
+      axios_cstm()
+        .get(url)
+        .then(response => {
+          if (response.data?.code === '00') {
+            this.changePage(this.page)
+            this.confirmAlert = false
+            this.errMsg = ''
+          }
+        })
+    },
   }
 }
 </script>

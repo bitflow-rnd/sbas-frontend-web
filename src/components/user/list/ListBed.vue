@@ -769,6 +769,7 @@ export default {
         this.$store.commit('patnt/setRpt', null)
         this.newPt = this.initNewPt
         this.dsInfo = this.initDsInfo
+        this.getBdList()
       } else {
         this.showModal = null
         this.getBdList()
