@@ -232,7 +232,7 @@
                       <col style="width: 100px" />
                       <col style="width: 50px" />
                       <col style="width: 70px" />
-                      <col v-if='isSysAdm' style="width: 70px" />
+                      <col v-if='isSysAdm()' style="width: 70px" />
                     </colgroup>
                     <thead>
                     <tr class="small" style='cursor:default !important'>
@@ -248,7 +248,7 @@
                       <th>국적</th>
                       <th>업데이트<br/>일시</th>
                       <th>작업</th>
-                      <th v-if='isSysAdm'>삭제</th>
+                      <th v-if='isSysAdm()'>삭제</th>
                     </tr>
                     </thead>
 
@@ -283,7 +283,7 @@
                           class='btn btn-flex btn-xs btn-outline btn-outline-primary'
                       >수정</a>
                       </td>
-                      <td v-if='isSysAdm'
+                      <td v-if='isSysAdm()'
                       ><a @click.stop='openDeletePopup(pt)'
                           class='btn btn-flex btn-xs btn-outline btn-outline-primary'
                           style='color: #FF666EFF'
@@ -648,7 +648,7 @@ export default {
         })
     },
     isSysAdm() {
-      return this.userInfo.instTypeCd === 'PMGR0004';
+      return this.userInfo.jobCd === 'PMGR0004';
     },
     openDeletePopup(patient) {
       this.deletePt = patient
