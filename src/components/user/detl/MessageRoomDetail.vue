@@ -103,25 +103,15 @@ onMounted(() => {
   model.userInfo = store.getters['user/getUserInfo']
   connectWebsocket()
   socket.onmessage = (event) => {
-    try {
-      const msgs = JSON.parse(event.data)
-      console.log('type', typeof(msgs))
-      if (typeof(msgs)==='object' && msgs.length>0) {
-        console.log('messageList', msgs[0])
-        loadMessages()
-      }
-    } catch (e) {
-      console.log('event.data', event.data)
-      loadMessages()
-    }
-   }
+    loadMessages()
+  }
 })
 
 function connectWebsocket() {
   let webSocket = import.meta.env.VITE_APP_CHAT_URL
-  socket = new WebSocket(`${webSocket}/room/`
-    + props.roomInfo.tkrmId);
+  socket = new WebSocket(`${webSocket}/room/` + props.roomInfo.tkrmId);
   socket.onopen = function () {
+    console.log('websocket connected')
     socket.send("hello|" + model.userInfo.id)
   }
 }
@@ -150,7 +140,9 @@ function onMessageChange() {
 }
 
 function sendMessage() {
-  console.log('sendMessage', messageTxt.value.value)
+  if (messageTxt.value.value.length === 0) {
+    return
+  }
   try {
     socket.send(model.userInfo.id + "|" + messageTxt.value.value)
   } catch (e) {
