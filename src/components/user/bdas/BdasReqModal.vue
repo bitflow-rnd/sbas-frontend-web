@@ -694,44 +694,38 @@
                       </tr>
 
                       <tr>
-                        <th>기타 진단 이미지·영상</th>
+                        <th>기타 진단 이미지</th>
                         <td colspan='3'>
                           <article class='upload-form-layout1'>
-                            <div class='upload-result-wrap d-none'>
+                            <div class='upload-result-wrap'>
                               <div class='img-upload-result'>
                                 <div class='img-list'>
-                                  <div href='javascript:void(0)' class='img-box'>
-                                    <img src='/img/common/img_dummy_item1.png' alt='이미지' />
-                                    <a
-                                        href='javascript:void(0)'
-                                        class='remove-btn'
-                                        onclick="$(this).parents('.img-box').remove();"
-                                    >
+                                  <div class='img-box' v-for='(item, idx) in model.imgUrl' :key='idx'>
+                                    <img :src='item' alt='이미지' @click='showEsvyImageLightBox(item)' />
+                                    <a class='remove-btn' @click='removeImage(idx)'>
                                       <img src='/img/common/ic_profile_remove.svg' alt='이미지' />
                                     </a>
                                   </div>
-
-                                  <div href='javascript:void(0)' class='img-box'>
-                                    <img src='/img/common/img_dummy_item1.png' alt='이미지' />
-                                    <a
-                                        href='javascript:void(0)'
-                                        class='remove-btn'
-                                        onclick="$(this).parents('.img-box').remove();"
-                                    >
-                                      <img src='/img/common/ic_profile_remove.svg' alt='이미지' />
-                                    </a>
-                                  </div>
+                                  <vue-easy-lightbox
+                                    :visible='model.visibleRef'
+                                    :imgs='model.imgsRef'
+                                    :index='model.indexRef'
+                                    @hide='onHide'
+                                  ></vue-easy-lightbox>
                                 </div>
                               </div>
                             </div>
 
                             <div class='upload-form-wrap' style='height: 70px'>
-                              <div class='no-file-box' role='button'>
-                                <div class='txt-box' >
-                                  클릭해서 첨부 파일들 업로드
-                                </div>
+                              <div class='no-file-box'>
+                                <label for='upload-image'>
+                                  <div class='txt-box' role='button'>
+                                    클릭해서 첨부 파일들 업로드
+                                  </div>
+                                </label>
                               </div>
                             </div>
+                            <input type='file' id='upload-image' @change='onFileChange' hidden multiple accept='image/*'/>
                           </article>
                         </td>
                       </tr>
@@ -1588,7 +1582,7 @@ const emits = defineEmits(['closePatntRequest'])
 const store = useStore()
 
 const model = reactive({
-  tab: 0,
+  tab: 1,
   epidReportImage: null,
   visibleRef: false,
   imgsRef: '',
@@ -1656,6 +1650,8 @@ const model = reactive({
   epidConfirmAlert: false,
   errMsg: '',
   showErrorMsg: false,
+  esvyImgFiles: [],
+  imgUrl: [],
 })
 
 onMounted(() => {
@@ -1916,6 +1912,41 @@ function closeModal() {
   emits('closePatntRequest')
 }
 
+function onFileChange(event) {
+  console.log('업로드 이벤트', event.target.files)
+  const selectedFiles = Array.from(event.target.files)  // 선택된 파일들을 배열로 변환
+  if (selectedFiles.length + model.esvyImgFiles.length > 5) {
+    alert('최대 5개의 이미지만 업로드할 수 있습니다.')
+    return
+  }
+
+  // 파일을 추가 (이전 파일들과 병합)
+  model.esvyImgFiles.push(selectedFiles)
+
+  model.esvyImgFiles.forEach(file => {
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        // 이미지 미리보기 URL을 model에 추가
+        model.imgUrl.push(e.target.result);
+      };
+
+      reader.readAsDataURL(file);  // 파일을 읽어서 Data URL로 변환
+    }
+  })
+}
+
+function showEsvyImageLightBox(image) {
+  model.imgsRef = image
+  model.visibleRef = true
+}
+
+function removeImage(index) {
+  model.imgUrl.splice(index, 1)
+  model.esvyImgFiles.splice(index, 1)
+}
+
 function openAddressFinder(idx) {
   new daum.Postcode({
     oncomplete: function(data) {
@@ -2066,6 +2097,7 @@ function closeExistPtModal() {
 function closePopup() {
   model.confirmAlert = false
   model.openExistPtModal = false
+  model.epidConfirmAlert = false
 }
 
 </script>
