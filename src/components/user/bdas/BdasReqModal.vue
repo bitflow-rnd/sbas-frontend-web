@@ -631,7 +631,7 @@
                               <div class='tbox full'>
                                 <input
                                     type='text'
-                                    v-model='model.dsInfo.instBascAddr'
+                                    v-model='model.dsInfo.instAddr'
                                     placeholder='기본주소 입력'
                                 />
                               </div>
@@ -702,7 +702,7 @@
                                 <div class='img-list'>
                                   <div class='img-box' v-for='(item, idx) in model.imgUrl' :key='idx'>
                                     <img :src='item' alt='이미지' @click='showEsvyImageLightBox(item)' />
-                                    <a class='remove-btn' @click='removeImage(idx)'>
+                                    <a class='remove-btn' @click='removeImage(idx)' role='button'>
                                       <img src='/img/common/ic_profile_remove.svg' alt='이미지' />
                                     </a>
                                   </div>
@@ -1532,7 +1532,7 @@
                   >이전
                   </router-link>
 
-                  <router-link to='' @click='saveInfo' class='modal-menu-btn menu-primary'
+                  <router-link to='' @click='uploadEsvyImg' class='modal-menu-btn menu-primary'
                   >병상요청완료
                   </router-link>
                 </div>
@@ -1650,7 +1650,7 @@ const model = reactive({
   epidConfirmAlert: false,
   errMsg: '',
   showErrorMsg: false,
-  esvyImgFiles: [],
+  diagImgFiles: [],
   imgUrl: [],
 })
 
@@ -1811,6 +1811,7 @@ function isExistPt() {
             model.dsInfo.ptId = data.result.items.ptId
             model.svInfo.ptId = data.result.items.ptId
             model.spInfo.ptId = data.result.items.ptId
+            getEsvyInfo()
           } else {
             registerNewPt()
           }
@@ -1914,26 +1915,94 @@ function closeModal() {
 
 function onFileChange(event) {
   console.log('업로드 이벤트', event.target.files)
-  const selectedFiles = Array.from(event.target.files)  // 선택된 파일들을 배열로 변환
-  if (selectedFiles.length + model.esvyImgFiles.length > 5) {
-    alert('최대 5개의 이미지만 업로드할 수 있습니다.')
-    return
+  const selectedFiles = Array.from(event.target.files)
+
+  // 이미지 파일만 필터링
+  const imageFiles = selectedFiles.filter(file => file.type.startsWith('image/'))
+  if (imageFiles.length < selectedFiles.length) {
+    model.confirmAlert = true
+    model.errMsg = '이미지 파일만 업로드 가능합니다.'
   }
 
-  // 파일을 추가 (이전 파일들과 병합)
-  model.esvyImgFiles.push(selectedFiles)
+  // 업로드할 이미지의 총 개수가 5개를 넘지 않도록 제어
+  const totalFiles = imageFiles.length + model.diagImgFiles.length
+  if (totalFiles > 5) {
+    model.confirmAlert = true
+    model.errMsg = '이미지 파일은 최대 5개까지 업로드 가능합니다.'
+  }
 
-  model.esvyImgFiles.forEach(file => {
-    if (file.type.startsWith('image/')) {
-      const reader = new FileReader();
+  // 이미지 파일들을 배열에 추가 (최대 5개까지만)
+  imageFiles.forEach(file => {
+    if (model.diagImgFiles.length < 5) {  // 파일이 5개 이하일 때만 추가
+      model.diagImgFiles.push(file)
 
+      // 이미지 미리보기 생성
+      const reader = new FileReader()
       reader.onload = function(e) {
         // 이미지 미리보기 URL을 model에 추가
-        model.imgUrl.push(e.target.result);
-      };
-
-      reader.readAsDataURL(file);  // 파일을 읽어서 Data URL로 변환
+        model.imgUrl.push(e.target.result)
+      }
+      reader.readAsDataURL(file) // 파일을 읽어서 Data URL로 변환
     }
+  })
+}
+
+function uploadEsvyImg() {
+  const formData = new FormData()
+  formData.append('param1', 'esvyImage')
+  model.diagImgFiles.forEach(file => {
+    formData.append('param2', file)
+  })
+
+  const url = `${API_PROD}/api/v1/private/common/upload`
+  const headers = {}
+  const token = sessionStorage.getItem('userToken')
+  headers.Authorization = `Bearer ${token}`
+
+  axios({
+    method: 'post',
+    url: url,
+    data: formData,
+    headers: headers,
+  }).then((response) => {
+    const data = response.data
+    if (data.code === '00') {
+      model.dsInfo.diagAttcId = data.result.attcId.join(';')
+      saveInfo()
+    }
+  }).catch((e) => {
+    console.log(e)
+  })
+}
+
+function getEsvyInfo() {
+  const ptId = props.ptId
+  if (ptId) {
+    const url = `${API_PROD}/api/v1/private/patient/esvyinfo/${ptId}`
+    axios_cstm().get(url)
+      .then((response) => {
+        const data = response.data
+        if (data.code === '00' && data.result !== null) {
+          model.dsInfo = data.result
+          model.dsInfo.diagAttcId.split(';').forEach(attcId => {
+            readImage(attcId)
+          })
+        }
+      })
+  }
+}
+
+function readImage(attcId) {
+  const url = `${API_PROD}/api/v1/private/common/image/${attcId}`
+  axios({
+    method: 'get',
+    url: url,
+    responseType: 'arraybuffer'
+  }).then((response) => {
+    const blob = new Blob([response.data], { type: 'image/jpeg' })
+    const file = new File([blob], `image_${attcId}.jpg`, { type: 'image/jpeg' })
+    model.imgUrl.push(URL.createObjectURL(blob))
+    model.diagImgFiles.push(file)
   })
 }
 
@@ -1944,7 +2013,7 @@ function showEsvyImageLightBox(image) {
 
 function removeImage(index) {
   model.imgUrl.splice(index, 1)
-  model.esvyImgFiles.splice(index, 1)
+  model.diagImgFiles.splice(index, 1)
 }
 
 function openAddressFinder(idx) {
@@ -1956,6 +2025,7 @@ function openAddressFinder(idx) {
       } else if (idx === 1) {
         model.dsInfo.instZip = data.zonecode
         model.dsInfo.instBascAddr = data.address
+        model.dsInfo.instAddr = data.address
       } else if (idx === 2) {
         model.spInfo.dprtDstrZip = data.zonecode
         model.spInfo.dprtDstrBascAddr = data.address
@@ -1978,7 +2048,7 @@ function setSpAddr(idx) {
   } else if (idx === 1) {
     /*병원 주소 */
     model.spInfo.dprtDstrZip = model.dsInfo.instZip
-    model.spInfo.dprtDstrBascAddr = model.dsInfo.instBascAddr
+    model.spInfo.dprtDstrBascAddr = model.dsInfo.instAddr
     model.spInfo.dprtDstrDetlAddr = model.dsInfo.instDetlAddr
   }
 }
