@@ -93,8 +93,20 @@ watch(
   (first, second) => {
     console.log('first second', first, second)
     console.log('scroll', chatRoomScroll.value.scrollHeight)
+
+    // 기존 소켓이 있을 경우 닫음
+    if (socket) {
+      console.log('이전 방 소켓 닫기');
+      socket.close();
+    }
+    // 새로운 방 정보로 소켓 연결
+    connectWebsocket();
+    console.log('방', props.roomInfo)
     model.roomInfo = second
     loadMessages()
+    socket.onmessage = (event) => {
+      loadMessages()
+    }
   }
 )
 
