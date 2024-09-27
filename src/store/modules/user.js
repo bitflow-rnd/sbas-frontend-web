@@ -2,6 +2,7 @@ import axios from 'axios'
 import router from '@/router/router'
 import { encodingPassword } from '@/util/encodingPasswd'
 import { API_PROD } from '@/util/constantURL'
+import { axios_cstm } from '@/util/axios_cstm'
 
 export default {
   namespaced: true,
@@ -312,6 +313,19 @@ export default {
           method: 'get',
           url: url
         })
+          .then((response) => {
+            resolve(response.data?.result)
+          })
+          .catch((e) => {
+            console.log(e)
+            reject(e)
+          })
+      })
+    },
+    getMessageMyRoomListSync() {
+      const url = `${API_PROD}/api/v1/private/talk/my-chats`
+      return new Promise((resolve, reject) => {
+        axios_cstm().get(url)
           .then((response) => {
             resolve(response.data?.result)
           })

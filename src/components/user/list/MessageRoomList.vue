@@ -56,7 +56,7 @@ let model = reactive({
 })
 
 onMounted(() => {
-  store.dispatch('user/getMessageRoomListSync').then((result) => {
+  store.dispatch('user/getMessageMyRoomListSync').then((result) => {
     model.messageList = result
   })
 })

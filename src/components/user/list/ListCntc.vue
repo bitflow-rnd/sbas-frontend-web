@@ -161,13 +161,13 @@
                           <span class="txt">전산</span>
                         </label>
                       </div>
-                      <div class="item-box btn-invite-wrap">
-                        <a
-                          @click="$emit('showUserInvite')"
-                          class="btn btn-flex bg-primary text-white rounded-pill"
-                        >+ 사용자초대</a
-                        >
-                      </div>
+<!--                      <div class="item-box btn-invite-wrap">-->
+<!--                        <a-->
+<!--                          @click="$emit('showUserInvite')"-->
+<!--                          class="btn btn-flex bg-primary text-white rounded-pill"-->
+<!--                        >+ 사용자초대</a-->
+<!--                        >-->
+<!--                      </div>-->
                     </div>
                   </article>
                 </div>
