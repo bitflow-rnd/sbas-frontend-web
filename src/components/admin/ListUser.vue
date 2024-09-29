@@ -123,7 +123,7 @@
                             </div>
 
                             <div class="tbox w-500px with-btn ms-2">
-                              <input type="text" v-model="search.kwd" @keyup.enter='searchUserList' placeholder="사용자 이름 또는 휴대전화번호 입력" />
+                              <input type="text" :readonly="!isFocused" @focus="isFocused = true" @blur="isFocused = false" v-model="search.kwd" @keyup.enter='searchUserList' placeholder="사용자 이름 또는 휴대전화번호 입력" />
 
                               <a @click='searchUserList' role='button' class="input-btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -1504,61 +1504,61 @@
   </article>
 
   <!--alert창-->
-  <article v-show="isAlert" class="popup popup-confirm" style="display: block">
-    <div class="popup-wrapper">
-      <div class="popup-contents py-10 px-10" style="width: 300px">
-        <article class="modal-alert-layout pb-10">
-          <div class="alert-view-box pb-6">
-            <img src="/img/common/ic_alert.svg" alt="이미지" />
-          </div>
-          <div class="alert-msg-box">{{ errMsg }}</div>
-        </article>
-        <article class="modal-menu-layout1">
-          <div class="modal-menu-list">
-            <!--                        <router-link to="" @click="alertClose" class="modal-menu-btn menu-cancel" data-type=cancel>취소</router-link>-->
-            <router-link
-              to=""
-              @click="alertClose"
-              class="modal-menu-btn menu-primary"
-              data-type="success"
-              >확인</router-link
-            >
-          </div>
-        </article>
-      </div>
-    </div>
-  </article>
+<!--  <article v-show="isAlert" class="popup popup-confirm" style="display: block">-->
+<!--    <div class="popup-wrapper">-->
+<!--      <div class="popup-contents py-10 px-10" style="width: 300px">-->
+<!--        <article class="modal-alert-layout pb-10">-->
+<!--          <div class="alert-view-box pb-6">-->
+<!--            <img src="/img/common/ic_alert.svg" alt="이미지" />-->
+<!--          </div>-->
+<!--          <div class="alert-msg-box">{{ errMsg }}</div>-->
+<!--        </article>-->
+<!--        <article class="modal-menu-layout1">-->
+<!--          <div class="modal-menu-list">-->
+<!--            &lt;!&ndash;                        <router-link to="" @click="alertClose" class="modal-menu-btn menu-cancel" data-type=cancel>취소</router-link>&ndash;&gt;-->
+<!--            <router-link-->
+<!--              to=""-->
+<!--              @click="alertClose"-->
+<!--              class="modal-menu-btn menu-primary"-->
+<!--              data-type="success"-->
+<!--              >확인</router-link-->
+<!--            >-->
+<!--          </div>-->
+<!--        </article>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </article>-->
 
-  <article v-show="isAlertWd" class="popup popup-confirm" style="display: block">
-    <div class="popup-wrapper">
-      <div class="popup-contents py-10 px-10" style="width: 300px">
-        <article class="modal-alert-layout pb-10">
-          <div class="alert-view-box pb-6">
-            <img src="/img/common/ic_alert.svg" alt="이미지" />
-          </div>
-          <div class="alert-msg-box">{{ this.msgUsr }}</div>
-        </article>
-        <article class="modal-menu-layout1">
-          <div class="modal-menu-list">
-            <router-link
-              to=""
-              @click="setWdOrAprv(usrDetail.userId, num, 1)"
-              class="modal-menu-btn menu-cancel"
-              data-type="cancel"
-              >취소</router-link
-            >
-            <router-link
-              to=""
-              @click="setWdOrAprv(usrDetail.userId, num, 0)"
-              class="modal-menu-btn menu-primary"
-              data-type="success"
-              >확인</router-link
-            >
-          </div>
-        </article>
-      </div>
-    </div>
-  </article>
+<!--  <article v-show="isAlertWd" class="popup popup-confirm" style="display: block">-->
+<!--    <div class="popup-wrapper">-->
+<!--      <div class="popup-contents py-10 px-10" style="width: 300px">-->
+<!--        <article class="modal-alert-layout pb-10">-->
+<!--          <div class="alert-view-box pb-6">-->
+<!--            <img src="/img/common/ic_alert.svg" alt="이미지" />-->
+<!--          </div>-->
+<!--          <div class="alert-msg-box">{{ this.msgUsr }}</div>-->
+<!--        </article>-->
+<!--        <article class="modal-menu-layout1">-->
+<!--          <div class="modal-menu-list">-->
+<!--            <router-link-->
+<!--              to=""-->
+<!--              @click="setWdOrAprv(usrDetail.userId, num, 1)"-->
+<!--              class="modal-menu-btn menu-cancel"-->
+<!--              data-type="cancel"-->
+<!--              >취소</router-link-->
+<!--            >-->
+<!--            <router-link-->
+<!--              to=""-->
+<!--              @click="setWdOrAprv(usrDetail.userId, num, 0)"-->
+<!--              class="modal-menu-btn menu-primary"-->
+<!--              data-type="success"-->
+<!--              >확인</router-link-->
+<!--            >-->
+<!--          </div>-->
+<!--        </article>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </article>-->
 
   <!--end::Modals-->
 </template>
@@ -1678,6 +1678,7 @@ export default {
         { value: 'ORGN0005', label: '전산담당' },
       ],
       usrDetail: null,
+      isFocused: false,
     }
   },
   setup() {
