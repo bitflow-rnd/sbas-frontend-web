@@ -88,13 +88,13 @@
                         </article>
                       </div>
                     </td>
-                    <th>PID</th>
+                    <th>병원 등록번호</th>
                     <td>
                       <div class='tbox full'>
-                        <input type='text' v-model='model.hosptlzdiscg.pid' @blur='checkPid' placeholder='PID 입력' />
+                        <input type='text' v-model='model.hosptlzdiscg.pid' @blur='checkPid' placeholder='병원 등록번호 입력' />
                       </div>
                       <div v-if='validateInput(0) || validateInput(1)' class='item-cell-box full'>
-                        <div class='text-danger pt-2 fs-12px'>※ PID를 확인해 주세요.</div>
+                        <div class='text-danger pt-2 fs-12px'>※ 병원 등록번호를 확인해 주세요.</div>
                       </div>
                     </td>
                   </tr>

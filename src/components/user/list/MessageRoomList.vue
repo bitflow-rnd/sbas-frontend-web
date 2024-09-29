@@ -18,7 +18,7 @@
 
               <div class="info-box">
                 <div class="subject-box">[{{ item['tkrmId'] }}] {{ item['tkrmNm'] }}</div>
-                <div class="con-box">생성일시 {{ TimestampToDateWithDot(item['updtDttm']) }}</div>
+                <div class="con-box">생성일시 {{ TimestampToDateWithDot(item['rgstDttm']) }}</div>
               </div>
             </div>
 
@@ -56,7 +56,7 @@ let model = reactive({
 })
 
 onMounted(() => {
-  store.dispatch('user/getMessageRoomListSync').then((result) => {
+  store.dispatch('user/getMessageMyRoomListSync').then((result) => {
     model.messageList = result
   })
 })

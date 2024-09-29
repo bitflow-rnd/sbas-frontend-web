@@ -631,7 +631,7 @@
                               <div class='tbox full'>
                                 <input
                                     type='text'
-                                    v-model='model.dsInfo.instBascAddr'
+                                    v-model='model.dsInfo.instAddr'
                                     placeholder='기본주소 입력'
                                 />
                               </div>
@@ -694,44 +694,38 @@
                       </tr>
 
                       <tr>
-                        <th>기타 진단 이미지·영상</th>
+                        <th>기타 진단 이미지</th>
                         <td colspan='3'>
                           <article class='upload-form-layout1'>
-                            <div class='upload-result-wrap d-none'>
+                            <div class='upload-result-wrap'>
                               <div class='img-upload-result'>
                                 <div class='img-list'>
-                                  <div href='javascript:void(0)' class='img-box'>
-                                    <img src='/img/common/img_dummy_item1.png' alt='이미지' />
-                                    <a
-                                        href='javascript:void(0)'
-                                        class='remove-btn'
-                                        onclick="$(this).parents('.img-box').remove();"
-                                    >
+                                  <div class='img-box' v-for='(item, idx) in model.imgUrl' :key='idx'>
+                                    <img :src='item' alt='이미지' @click='showEsvyImageLightBox(item)' />
+                                    <a class='remove-btn' @click='removeImage(idx)' role='button'>
                                       <img src='/img/common/ic_profile_remove.svg' alt='이미지' />
                                     </a>
                                   </div>
-
-                                  <div href='javascript:void(0)' class='img-box'>
-                                    <img src='/img/common/img_dummy_item1.png' alt='이미지' />
-                                    <a
-                                        href='javascript:void(0)'
-                                        class='remove-btn'
-                                        onclick="$(this).parents('.img-box').remove();"
-                                    >
-                                      <img src='/img/common/ic_profile_remove.svg' alt='이미지' />
-                                    </a>
-                                  </div>
+                                  <vue-easy-lightbox
+                                    :visible='model.visibleRef'
+                                    :imgs='model.imgsRef'
+                                    :index='model.indexRef'
+                                    @hide='onHide'
+                                  ></vue-easy-lightbox>
                                 </div>
                               </div>
                             </div>
 
                             <div class='upload-form-wrap' style='height: 70px'>
-                              <div class='no-file-box' role='button'>
-                                <div class='txt-box' >
-                                  클릭해서 첨부 파일들 업로드
-                                </div>
+                              <div class='no-file-box'>
+                                <label for='upload-image'>
+                                  <div class='txt-box' role='button'>
+                                    클릭해서 첨부 파일들 업로드
+                                  </div>
+                                </label>
                               </div>
                             </div>
+                            <input type='file' id='upload-image' @change='onFileChange' hidden multiple accept='image/*'/>
                           </article>
                         </td>
                       </tr>
@@ -1538,7 +1532,7 @@
                   >이전
                   </router-link>
 
-                  <router-link to='' @click='saveInfo' class='modal-menu-btn menu-primary'
+                  <router-link to='' @click='uploadEsvyImg' class='modal-menu-btn menu-primary'
                   >병상요청완료
                   </router-link>
                 </div>
@@ -1588,7 +1582,7 @@ const emits = defineEmits(['closePatntRequest'])
 const store = useStore()
 
 const model = reactive({
-  tab: 0,
+  tab: 1,
   epidReportImage: null,
   visibleRef: false,
   imgsRef: '',
@@ -1656,6 +1650,8 @@ const model = reactive({
   epidConfirmAlert: false,
   errMsg: '',
   showErrorMsg: false,
+  diagImgFiles: [],
+  imgUrl: [],
 })
 
 onMounted(() => {
@@ -1815,6 +1811,7 @@ function isExistPt() {
             model.dsInfo.ptId = data.result.items.ptId
             model.svInfo.ptId = data.result.items.ptId
             model.spInfo.ptId = data.result.items.ptId
+            getEsvyInfo()
           } else {
             registerNewPt()
           }
@@ -1916,6 +1913,109 @@ function closeModal() {
   emits('closePatntRequest')
 }
 
+function onFileChange(event) {
+  console.log('업로드 이벤트', event.target.files)
+  const selectedFiles = Array.from(event.target.files)
+
+  // 이미지 파일만 필터링
+  const imageFiles = selectedFiles.filter(file => file.type.startsWith('image/'))
+  if (imageFiles.length < selectedFiles.length) {
+    model.confirmAlert = true
+    model.errMsg = '이미지 파일만 업로드 가능합니다.'
+  }
+
+  // 업로드할 이미지의 총 개수가 5개를 넘지 않도록 제어
+  const totalFiles = imageFiles.length + model.diagImgFiles.length
+  if (totalFiles > 5) {
+    model.confirmAlert = true
+    model.errMsg = '이미지 파일은 최대 5개까지 업로드 가능합니다.'
+  }
+
+  // 이미지 파일들을 배열에 추가 (최대 5개까지만)
+  imageFiles.forEach(file => {
+    if (model.diagImgFiles.length < 5) {  // 파일이 5개 이하일 때만 추가
+      model.diagImgFiles.push(file)
+
+      // 이미지 미리보기 생성
+      const reader = new FileReader()
+      reader.onload = function(e) {
+        // 이미지 미리보기 URL을 model에 추가
+        model.imgUrl.push(e.target.result)
+      }
+      reader.readAsDataURL(file) // 파일을 읽어서 Data URL로 변환
+    }
+  })
+}
+
+function uploadEsvyImg() {
+  const formData = new FormData()
+  formData.append('param1', 'esvyImage')
+  model.diagImgFiles.forEach(file => {
+    formData.append('param2', file)
+  })
+
+  const url = `${API_PROD}/api/v1/private/common/upload`
+  const headers = {}
+  const token = sessionStorage.getItem('userToken')
+  headers.Authorization = `Bearer ${token}`
+
+  axios({
+    method: 'post',
+    url: url,
+    data: formData,
+    headers: headers,
+  }).then((response) => {
+    const data = response.data
+    if (data.code === '00') {
+      model.dsInfo.diagAttcId = data.result.attcId.join(';')
+      saveInfo()
+    }
+  }).catch((e) => {
+    console.log(e)
+  })
+}
+
+function getEsvyInfo() {
+  const ptId = props.ptId
+  if (ptId) {
+    const url = `${API_PROD}/api/v1/private/patient/esvyinfo/${ptId}`
+    axios_cstm().get(url)
+      .then((response) => {
+        const data = response.data
+        if (data.code === '00' && data.result !== null) {
+          model.dsInfo = data.result
+          model.dsInfo.diagAttcId.split(';').forEach(attcId => {
+            readImage(attcId)
+          })
+        }
+      })
+  }
+}
+
+function readImage(attcId) {
+  const url = `${API_PROD}/api/v1/private/common/image/${attcId}`
+  axios({
+    method: 'get',
+    url: url,
+    responseType: 'arraybuffer'
+  }).then((response) => {
+    const blob = new Blob([response.data], { type: 'image/jpeg' })
+    const file = new File([blob], `image_${attcId}.jpg`, { type: 'image/jpeg' })
+    model.imgUrl.push(URL.createObjectURL(blob))
+    model.diagImgFiles.push(file)
+  })
+}
+
+function showEsvyImageLightBox(image) {
+  model.imgsRef = image
+  model.visibleRef = true
+}
+
+function removeImage(index) {
+  model.imgUrl.splice(index, 1)
+  model.diagImgFiles.splice(index, 1)
+}
+
 function openAddressFinder(idx) {
   new daum.Postcode({
     oncomplete: function(data) {
@@ -1925,6 +2025,7 @@ function openAddressFinder(idx) {
       } else if (idx === 1) {
         model.dsInfo.instZip = data.zonecode
         model.dsInfo.instBascAddr = data.address
+        model.dsInfo.instAddr = data.address
       } else if (idx === 2) {
         model.spInfo.dprtDstrZip = data.zonecode
         model.spInfo.dprtDstrBascAddr = data.address
@@ -1947,7 +2048,7 @@ function setSpAddr(idx) {
   } else if (idx === 1) {
     /*병원 주소 */
     model.spInfo.dprtDstrZip = model.dsInfo.instZip
-    model.spInfo.dprtDstrBascAddr = model.dsInfo.instBascAddr
+    model.spInfo.dprtDstrBascAddr = model.dsInfo.instAddr
     model.spInfo.dprtDstrDetlAddr = model.dsInfo.instDetlAddr
   }
 }
@@ -2066,6 +2167,7 @@ function closeExistPtModal() {
 function closePopup() {
   model.confirmAlert = false
   model.openExistPtModal = false
+  model.epidConfirmAlert = false
 }
 
 </script>
