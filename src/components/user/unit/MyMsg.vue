@@ -14,9 +14,9 @@
       class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end"
       data-kt-element="message-text"
     >
-      {{ props.item.msg }}
+      <span v-html="convertNewLines(props.item.msg)"></span>
       <div>
-        <img class='chat-img' v-if='props.item.attcId' :src='model.imgUrl' alt='이미지' @click='showImageLightBox' />
+        <img class='chat-img' v-if='props.item.attcId && model.imgUrl' :src='model.imgUrl' alt='이미지' @click='showImageLightBox' />
       </div>
     </div>
   </div>
@@ -71,6 +71,10 @@ function showImageLightBox() {
 
 function onHide() {
   model.visibleRef = false
+}
+
+function convertNewLines(text) {
+  return text ? text.replace(/\n/g, '<br>') : '';  // \n을 <br>로 변환
 }
 
 </script>
