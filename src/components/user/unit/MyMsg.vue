@@ -11,7 +11,7 @@
       </div>
     </div>
     <div
-      class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end"
+      class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-start"
       data-kt-element="message-text"
     >
       <span v-html="convertNewLines(props.item.msg)"></span>
