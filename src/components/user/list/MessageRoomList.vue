@@ -28,31 +28,32 @@
       </div>
     </div>
 
-    <!--
     <div class="list-menu-box d-flex justify-content-center pt-8">
       <a
-        href="#none"
         class="btn btn-flex bg-primary text-white rounded-pill"
-        data-bs-toggle="modal"
-        data-bs-target="#kt_modal_user_invite"
-        >사용자 초대</a
+        @click='openModal()'
+        >대화방 생성</a
       >
     </div>
-    -->
   </div>
+
+  <ChatRoomRegModal v-if='model.showChatRoomRegModal' @closeModal='closeModal()' />
+
 </template>
 
 <script setup>
 import { useStore } from 'vuex'
 import { defineEmits, onMounted, reactive } from 'vue'
 import { TimestampToDateWithDot } from '@/util/ui'
+import ChatRoomRegModal from '@/components/user/modal/ChatRoomRegModal.vue'
 
 const store = useStore()
 const emit = defineEmits(['onRoomSelected'])
 
 let model = reactive({
   messageList: [],
-  selectedRoom: null
+  selectedRoom: null,
+  showChatRoomRegModal: false,
 })
 
 onMounted(() => {
@@ -64,6 +65,14 @@ onMounted(() => {
 function onSelectRoom(room) {
   model.selectedRoom = room
   emit('onRoomSelected', room)
+}
+
+function openModal() {
+  model.showChatRoomRegModal = true
+}
+
+function closeModal() {
+  model.showChatRoomRegModal = false
 }
 
 </script>
