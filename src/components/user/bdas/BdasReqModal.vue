@@ -1582,7 +1582,7 @@ const emits = defineEmits(['closePatntRequest'])
 const store = useStore()
 
 const model = reactive({
-  tab: 1,
+  tab: 0,
   epidReportImage: null,
   visibleRef: false,
   imgsRef: '',

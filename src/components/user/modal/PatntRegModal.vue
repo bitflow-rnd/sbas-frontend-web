@@ -369,7 +369,7 @@
 <script setup>
 import { defineProps, reactive, defineEmits, onMounted } from 'vue'
 import ExistPatntModal from '@/components/user/modal/ExistPatntModal.vue'
-import { getAge, openAddressFinder, getGndr } from '@/util/ui'
+import { getAge, getGndr } from '@/util/ui'
 import { useStore } from 'vuex'
 import { API_PROD } from '@/util/constantURL'
 import axios from 'axios'
@@ -450,6 +450,7 @@ function setPatientInfo(result) {
   model.newPt = { ...result,
     bascAddr: result.baseAddr,
     dethYn: result.dethYn === '생존' ? 'N' : 'Y',
+    undrDsesCd: [],
   }
 }
 
@@ -486,6 +487,7 @@ function isExistPt() {
             model.openExistPtModal = true
           } else {
             model.openExistPtModal = false
+            registerNewPt()
           }
         }
       })
@@ -572,6 +574,17 @@ function confirmAlert(idx) {
   if (idx === 1) {
     closeModal()
   }
+}
+
+function openAddressFinder(idx) {
+  new daum.Postcode({
+    oncomplete: function(data) {
+      if (idx === 0) {
+        model.newPt.zip = data.zonecode
+        model.newPt.bascAddr = data.address
+      }
+    }
+  }).open()
 }
 
 function closeModal() {
