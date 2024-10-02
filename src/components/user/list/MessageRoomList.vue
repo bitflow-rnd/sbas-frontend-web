@@ -57,10 +57,14 @@ let model = reactive({
 })
 
 onMounted(() => {
+  getRoomList()
+})
+
+function getRoomList() {
   store.dispatch('user/getMessageMyRoomListSync').then((result) => {
     model.messageList = result
   })
-})
+}
 
 function onSelectRoom(room) {
   model.selectedRoom = room
@@ -73,6 +77,7 @@ function openModal() {
 
 function closeModal() {
   model.showChatRoomRegModal = false
+  getRoomList()
 }
 
 </script>

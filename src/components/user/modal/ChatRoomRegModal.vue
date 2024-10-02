@@ -1,5 +1,5 @@
 <template>
-  <div class='modal show' id='kt_modal_recommend' tabindex='-1' aria-hidden='true'>
+  <div class='modal show' id='kt_modal_recommend' tabindex='-1'>
     <div class='modal-dialog mw-1500px modal-dialog-centered'>
       <!--begin::Modal content-->
       <div class='modal-content'>
@@ -136,7 +136,7 @@
                 <div class='head-txt-box'>
                   검색결과
                   <span class='rounded-pill bg-primary text-white px-2 ms-2'>{{
-                      model.userList.count
+                      model.userCnt
                     }}</span>
                 </div>
               </div>
@@ -144,7 +144,7 @@
 
             <div class='table-body-box'>
               <div class='table-box with-scroll small'>
-                <table v-if='model.userList.items !== []' class='table-layout-fixed'>
+                <table v-if='model.userList !== []' class='table-layout-fixed'>
                   <colgroup>
                     <col style='width: 35px' />
                     <col style='width: 90px' />
@@ -169,10 +169,10 @@
                   </thead>
 
                   <tbody>
-                  <tr v-for='(item, i) in model.userList.items' :key='i'>
-                    <td @click='toggleCheckbox()'>
-                      <div @click='toggleCheckbox()' class='cbox'>
-                        <label> <input @click='toggleCheckbox()' type='checkbox' class='all-chk' /><i></i> </label>
+                  <tr v-for='(item, i) in model.userList' :key='i'>
+                    <td>
+                      <div class='cbox'>
+                        <label> <input @click='toggleCheckbox(item)' type='checkbox' class='all-chk' /><i></i> </label>
                       </div>
                     </td>
                     <td>{{ getInstNm(item.instTypeCd) }}</td>
@@ -187,11 +187,11 @@
             </div>
           </article>
 
-          <div class='row mt-10'>
+          <div class='row mt-2'>
             <!--페이징처리-->
             <data-pagination
               @change='changePage'
-              :data-length='model.userList.count'
+              :data-length='model.userCnt'
             ></data-pagination>
           </div>
 
@@ -203,10 +203,9 @@
                 class='modal-menu-btn menu-cancel'
               >이전
               </router-link>
-<!--              <router-link to='' @click='openAprvPopup' class='modal-menu-btn menu-primary'-->
-<!--              >배정요청-->
-<!--              </router-link-->
-<!--              >-->
+              <router-link to='' @click='makeChatRoom' class='modal-menu-btn menu-primary'
+              >생성
+              </router-link>
             </div>
           </article>
         </div>
@@ -223,7 +222,6 @@
 
 <script setup>
 import { defineEmits, defineProps, onMounted, reactive } from 'vue'
-import { getTag, getTelno, openAddressFinder, TimestampToDateWithDot } from '@/util/ui'
 import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
@@ -237,6 +235,7 @@ const store = useStore()
 
 const model = reactive({
   userList: [],
+  userCnt: 0,
   cmSido: [],
   search: {
     dstr1Cd: '',
@@ -257,7 +256,9 @@ const model = reactive({
   },
   usrDetail: null,
   isFocused: false,
-  page: 1
+  page: 1,
+  tkrmNm: null,
+  userIdList: [],
 })
 
 onMounted(() => {
@@ -272,12 +273,13 @@ function init() {
 
 function searchUserList() {
   const url = `${API_PROD}/api/v1/admin/user/users`
-  return axios_cstm()
+  axios_cstm()
     .get(url)
     .then((res) => {
       console.log(res, '사용자목록')
       if (res.data?.code === '00') {
-        model.userList = res.data.result
+        model.userList = res.data.result.items
+        model.userCnt = res.data.result.count
         model.page = 1
       }
     }).catch((e) => {
@@ -299,19 +301,31 @@ function changeDstrCd2() {
   searchUserList()
 }
 
+function toggleCheckbox(user) {
+  model.userIdList.push(user.userNm)
+}
+
+function changePage(page) {
+  model.page = page
+  searchUserList()
+}
 
 function makeChatRoom() {
   const myInfo = store.getters['user/getUserInfo']
   const url = `${API_PROD}/api/v1/private/talk/group`
   const data = {
     id: myInfo.id,
+    tkrmNm: model.tkrmNm,
+    userIds: model.userIdList,
   }
-
   axios_cstm().post(url, data)
     .then((response) => {
-      model.mode = 'message'
-      tab1.value.classList.remove('active')
-      tab2.value.classList.add('active')
+      if (response.data.code === '00') {
+        model.isAlert = true
+        model.errMsg = '대화방이 생성되었습니다.'
+        model.tkrmNm = null
+        model.userIdList = []
+      }
     })
     .catch((error) => {
       console.log(error)
@@ -346,6 +360,7 @@ function closeModal() {
 
 function confirmAlert() {
   model.isAlert = false
+  closeModal()
 }
 
 </script>
