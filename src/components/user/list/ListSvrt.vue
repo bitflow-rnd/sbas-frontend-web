@@ -375,7 +375,8 @@ export default {
         },
         hospitalName: null,
         assignmentStatus: [],
-        searchText: ''
+        searchText: '',
+        page: 1,
       },
       medinstInfo: {
         dstr1Cd: ''
@@ -391,7 +392,7 @@ export default {
     ...mapState('user', ['userInfo']),
     ...mapState('admin', ['cmSido', 'cmGugun', 'organMedi']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHisInfo']),
-    ...mapState('patnt', ['ptDetail', 'ptBI', 'ptList', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
+    ...mapState('patnt', ['ptDetail', 'ptBI', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
     filterData() {
       let params
       if (this.filterPatient['searchText']) params = { ...params, ptNm: this.filterPatient['searchText'] }
@@ -487,11 +488,9 @@ export default {
       this.showModal = 1
     },
     changePage(newPage) {
-      this.$store.dispatch('patnt/getPatntList', {
-        ...this.filterData,
-        page: newPage
-      })
+      this.filterData['page'] = newPage
       this.page = newPage
+      this.search()
     },
     search() {
       const url = `${API_PROD}/api/v1/private/severity/list`
@@ -535,19 +534,6 @@ export default {
     },
     closePatntRequest() {
       this.showPatnt = false
-    },
-    openRgstModal() {
-      this.newPt = {
-        ptNm: '', gndr: null, rrno1: null, rrno2: null,
-        dethYn: '', natiCd: '', natiNm: '대한민국',
-        dstr1Cd: '', dstr2Cd: '', telno: '', picaVer: null,
-        nokNm: '', mpno: '', job: '', attcId: null,
-        bascAddr: '', detlAddr: '', zip: '',
-        undrDsesCd: [], undrDsesEtc: null
-      }
-      this.preRpt = null
-      this.epidReportImage = ''
-      this.showModal = 2
     },
     setDefaultDstr1Cd() {
       // 대구로 설정
