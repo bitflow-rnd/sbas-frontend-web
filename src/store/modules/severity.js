@@ -50,8 +50,8 @@ export default {
     }
   },
   actions: {
-    getSeverityData2(ctx, ptId) {
-      const url = `${API_PROD}/api/v1/private/severity/probs?ptId=${ptId}`
+    getSeverityData2(ctx, data) {
+      const url = `${API_PROD}/api/v1/private/severity/probs?ptId=${data.ptId}&rgstSeq=${data.rgstSeq}`
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',

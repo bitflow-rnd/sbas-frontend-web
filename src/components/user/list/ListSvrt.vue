@@ -277,7 +277,7 @@
 
   <!--  환자 상세 정보  -->
   <PatntDetlModalV2 v-if='showModal===1' :pt-detail='ptDetail' :pt-ds='ptDs'
-                    :bdas-his-info='bdasHisInfo' :timeline='timeline'
+                    :bdas-his-info='bdasHisInfo' :timeline='timeline' :rgst-seq='this.rgstSeq'
                     @closeModal='closeModal(0)'
                     @openBdasModal='this.showPatntModal(ptDetail,1)' />
 
@@ -308,7 +308,7 @@ export default {
     DataPagination,
     SvrtChartUnitNoTitle
   },
-  name: 'ListPatnt',
+  name: 'ListSvrt',
   props: {
     msg: String
   },
@@ -384,6 +384,7 @@ export default {
       showSvrtInfoModal: false,
       svrtPtList: [],
       svrtPtListCount: 0,
+      rgstSeq: 1,
     }
   },
   computed: {
@@ -463,29 +464,8 @@ export default {
         this.reportFile = null
       }
     },
-    async uploadRpt(event) {
-      const fileInput = event.target
-      const file = fileInput.files[0]
-
-      console.log(file)
-      const formData = new FormData()
-      formData.append('param1', 'edidemreport')
-      formData.append('param2', file)
-
-      await this.$store.dispatch('patnt/uploadRpt', formData)
-      if (this.rptInfo !== null) {
-        // console.log('실행')
-        // this.alertOpen(4)
-      }
-      //역조서 이미지 미리보기 만들기
-      await this.showImage(this.rptInfo.attcId)
-    },
-    removeRpt() {
-      /*역조서 삭제*/
-      this.$store.dispatch('patnt/removeRpt', this.rptInfo.attcId)
-      this.preRpt = null
-    },
     async selectPatient(patient) {
+      this.rgstSeq = patient.rgstSeq
       if (patient['bdasSeq']) {
         await this.$store.dispatch('bedasgn/getTimeline', patient)
         await this.$store.dispatch('bedasgn/getDSInfo', patient)

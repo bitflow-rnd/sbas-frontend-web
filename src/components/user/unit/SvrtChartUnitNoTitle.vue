@@ -21,7 +21,8 @@ const props = defineProps({
   ptId: {
     type: String,
     required: true
-  }
+  },
+  rgstSeq: null,
 })
 const store = useStore()
 let model = reactive({
@@ -35,7 +36,7 @@ onMounted(() => {
 
 function getPtData() {
   if (props.ptId) {
-    store.dispatch('severity/getSeverityData2', props.ptId).then((result) => {
+    store.dispatch('severity/getSeverityData2', { ptId: props.ptId, rgstSeq: props.rgstSeq }).then((result) => {
       updateChart(result)
     })
     store.dispatch('patnt/getBasicInfo2', { ptId: props.ptId }).then((result) => {

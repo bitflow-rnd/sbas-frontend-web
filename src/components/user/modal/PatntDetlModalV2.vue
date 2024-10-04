@@ -191,7 +191,7 @@
                       </div>
                     </div>
                   </article>
-                  <svrt-chart-unit-no-title :pt-id='ptDetail.ptId' class='svrt-chart'
+                  <svrt-chart-unit-no-title :pt-id='ptDetail.ptId' :rgst-seq='props.rgstSeq' class='svrt-chart'
                                             v-if='ptDetail.monitoring' />
                 </div>
 
@@ -318,7 +318,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, reactive } from 'vue'
+import { defineProps, defineEmits, reactive, onMounted } from 'vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
 import { getDt, getTag, getTelno, getTLDt, getTLIcon } from '@/util/ui'
@@ -330,12 +330,17 @@ const props = defineProps({
   bdasHisInfo: Object,
   timeline: Object,
   ptDs: Object,
+  rgstSeq: null,
 })
 const emits = defineEmits(['closeModal', 'openBdasModal'])
 
 const model = reactive({
   showSvrtInfoModal: false,
   showEditModal: false,
+})
+
+onMounted(() => {
+  console.log('ptDetail', props.rgstSeq)
 })
 
 function openEditModal() {
