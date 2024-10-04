@@ -1784,15 +1784,17 @@ export default {
     },
     getInstNm(code) {
       if (code === 'ORGN0001') {
-        return '지방자치단체'
+        return '병상배정반'
       } else if (code === 'ORGN0002') {
         return '구급대'
       } else if (code === 'ORGN0003') {
         return '보건소'
       } else if (code === 'ORGN0004') {
         return '의료기관'
-      } else {
+      } else if (code === 'ORGN0005') {
         return '전산담당'
+      } else {
+        return '기타'
       }
     },
     getrgDt(str) {

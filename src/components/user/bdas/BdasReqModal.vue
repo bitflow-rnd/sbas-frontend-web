@@ -1847,19 +1847,17 @@ function registerNewPt() {
 }
 
 function saveInfo() {
-  if (validateFormStep4()) {
-    let data = model.dsInfo
-    const url = `${API_PROD}/api/v1/private/patient/regdisesinfo`
-    axios_cstm().post(url, data)
-      .then((response) => {
-        if (response.data.code === '00') {
-          bedRequest()
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
+  let data = model.dsInfo
+  const url = `${API_PROD}/api/v1/private/patient/regdisesinfo`
+  axios_cstm().post(url, data)
+    .then((response) => {
+      if (response.data.code === '00') {
+        bedRequest()
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 function bedRequest() {
@@ -1948,31 +1946,37 @@ function onFileChange(event) {
 }
 
 function uploadEsvyImg() {
-  const formData = new FormData()
-  formData.append('param1', 'esvyImage')
-  model.diagImgFiles.forEach(file => {
-    formData.append('param2', file)
-  })
+  if (validateFormStep4()) {
+    const formData = new FormData()
+    formData.append('param1', 'esvyImage')
+    model.diagImgFiles.forEach(file => {
+      formData.append('param2', file)
+    })
 
-  const url = `${API_PROD}/api/v1/private/common/upload`
-  const headers = {}
-  const token = sessionStorage.getItem('userToken')
-  headers.Authorization = `Bearer ${token}`
+    const url = `${API_PROD}/api/v1/private/common/upload`
+    const headers = {}
+    const token = sessionStorage.getItem('userToken')
+    headers.Authorization = `Bearer ${token}`
 
-  axios({
-    method: 'post',
-    url: url,
-    data: formData,
-    headers: headers,
-  }).then((response) => {
-    const data = response.data
-    if (data.code === '00') {
-      model.dsInfo.diagAttcId = data.result.attcId.join(';')
+    if (model.diagImgFiles.length > 0) {
+      axios({
+        method: 'post',
+        url: url,
+        data: formData,
+        headers: headers,
+      }).then((response) => {
+        const data = response.data
+        if (data.code === '00') {
+          model.dsInfo.diagAttcId = data.result.attcId.join(';')
+          saveInfo()
+        }
+      }).catch((e) => {
+        console.log(e)
+      })
+    } else {
       saveInfo()
     }
-  }).catch((e) => {
-    console.log(e)
-  })
+  }
 }
 
 function getEsvyInfo() {

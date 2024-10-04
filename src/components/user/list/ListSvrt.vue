@@ -229,14 +229,14 @@
                       <td>{{ pt['admsDt'] ? formatYyyyMmDd(pt['admsDt']) : '-' }}</td>
                       <td>{{ `${pt['dstr1CdNm']} ${pt['dstr2CdNm'] || ''}` }}</td>
 
-                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']['today']) > 0.4 }" >
-                        {{ pt['covSf'] ? parseFloat(pt['covSf']['today']).toFixed(1) : '-' }}</td>
-                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']['plusOneDay']) > 0.4 }" >
-                        {{ pt['covSf'] ? parseFloat(pt['covSf']['plusOneDay']).toFixed(1) : '-' }}</td>
-                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']['plusTwoDay']) > 0.4 }" >
-                        {{ pt['covSf'] ? parseFloat(pt['covSf']['plusTwoDay']).toFixed(1) : '-' }}</td>
-                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']['plusThreeDay']) > 0.4 }" >
-                        {{ pt['covSf'] ? parseFloat(pt['covSf']['plusThreeDay']).toFixed(1) : '-' }}</td>
+                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']?.today ?? '0') > 0.4 }" >
+                        {{ pt['covSf'] ? parseFloat(pt['covSf']?.today ?? '0').toFixed(1) : '-' }}</td>
+                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']?.plusOneDay ?? '0') > 0.4 }" >
+                        {{ pt['covSf'] ? parseFloat(pt['covSf']?.plusOneDay ?? '0').toFixed(1) : '-' }}</td>
+                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']?.plusTwoDay ?? '0') > 0.4 }" >
+                        {{ pt['covSf'] ? parseFloat(pt['covSf']?.plusTwoDay ?? '0').toFixed(1) : '-' }}</td>
+                      <td class='text-primary' :class="{ 'text-danger': parseFloat(pt['covSf']?.plusThreeDay ?? '0') > 0.4 }" >
+                        {{ pt['covSf'] ? parseFloat(pt['covSf']?.plusThreeDay ?? '0').toFixed(1) : '-' }}</td>
 
                       <td class="text-start">{{ pt['tagList'].length > 0 ? pt['tagList'].join(', ') : '-' }}</td>
                       <td>{{ pt['mpno'] ? pt['mpno'] : '-' }}</td>

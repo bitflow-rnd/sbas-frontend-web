@@ -11,18 +11,77 @@
       </div>
     </div>
     <div
-      class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end"
+      class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-start"
       data-kt-element="message-text"
     >
-      {{ props.item.msg }}
+      <span v-html="convertNewLines(props.item.msg)"></span>
+      <div>
+        <img class='chat-img' v-if='props.item.attcId && model.imgUrl' :src='model.imgUrl' alt='이미지' @click='showImageLightBox' />
+      </div>
     </div>
   </div>
+
+  <vue-easy-lightbox
+    v-if='props.item.attcId'
+    :visible='model.visibleRef'
+    :imgs='model.imgsRef'
+    :index='model.indexRef'
+    @hide='onHide'
+  ></vue-easy-lightbox>
+
   <!--end::Message(out)-->
 </template>
 
 <script setup>
 import { TimestampToDateWithDot } from '@/util/ui'
+import { API_PROD } from '@/util/constantURL'
+import axios from 'axios'
+import { onMounted, reactive } from 'vue'
 
 const props = defineProps(['item'] )
+const model = reactive({
+  imgUrl: null,
+  visibleRef: false,
+  imgsRef: '',
+  indexRef: 0,
+})
+
+onMounted(() => {
+  if (props.item.attcId) {
+    getImage()
+  }
+})
+
+function getImage() {
+  const url = `${API_PROD}/api/v1/private/common/image/${props.item.attcId}`
+  axios({
+    method: 'get',
+    url: url,
+    responseType: 'arraybuffer'
+  }).then((response) => {
+    const blob = new Blob([response.data], { type: 'image/jpeg' })
+    model.imgUrl = URL.createObjectURL(blob)
+  })
+}
+
+function showImageLightBox() {
+  model.imgsRef = model.imgUrl
+  model.visibleRef = true
+}
+
+function onHide() {
+  model.visibleRef = false
+}
+
+function convertNewLines(text) {
+  return text ? text.replace(/\n/g, '<br>') : '';  // \n을 <br>로 변환
+}
 
 </script>
+
+<style scoped>
+.chat-img {
+  width: 40%;
+  height: 40%;
+}
+</style>
