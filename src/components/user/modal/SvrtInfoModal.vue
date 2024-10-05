@@ -177,7 +177,7 @@ function closeModal() {
 }
 
 function getSvrtInfo() {
-  const url = `${API_PROD}/api/v1/private/severity/infos/${props.existPt.ptId}`
+  const url = `${API_PROD}/api/v1/private/severity/infos/${props.existPt.ptId}/${props.rgstSeq}`
   return new Promise(() => {
     axios_cstm().get(url)
       .then((response) => {
