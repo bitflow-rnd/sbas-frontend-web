@@ -285,7 +285,7 @@ export function formatYyyyMmDd(data) {
 }
 
 export function TimestampToDateWithDot(data) {
-  const dData = new Date(data)
+  const dData = data ? new Date(data) : new Date()
   const dYear = dData.getFullYear()
   let dMonth = dData.getMonth() + 1
   let dDate = dData.getDate()

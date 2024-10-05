@@ -125,7 +125,7 @@
           ></data-pagination>
 
           <div class='severity-chart'>
-            <svrt-chart-unit-no-title :pt-id="props.existPt.ptId" />
+            <svrt-chart-unit-no-title :pt-id="props.existPt.ptId" :rgst-seq='props.rgstSeq' />
           </div>
 
           <article class="modal-menu-layout1 pt-10">
@@ -157,6 +157,7 @@ import CloseButton from '@/components/common/CloseButton.vue'
 
 const props = defineProps({
   existPt: Object,
+  rgstSeq: null,
 })
 const emits = defineEmits(['closeModal'])
 const store = useStore()
