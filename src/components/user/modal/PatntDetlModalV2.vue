@@ -311,7 +311,7 @@
     </div>
   </div>
 
-  <svrt-info-modal v-if='model.showSvrtInfoModal' :exist-pt='props.ptDetail' @closeModal='closeSvrtInfoModal()' />
+  <svrt-info-modal v-if='model.showSvrtInfoModal' :exist-pt='props.ptDetail' :rgst-seq='props.rgstSeq' @closeModal='closeSvrtInfoModal()' />
 
   <patnt-reg-modal v-if='model.showEditModal' :exist-pt='props.ptDetail' @closeModal='closeEditModal()' />
 
