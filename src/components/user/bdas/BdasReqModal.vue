@@ -1578,7 +1578,7 @@ import axios from 'axios'
 const props = defineProps({
   ptId: null,
 })
-const emits = defineEmits(['closePatntRequest'])
+const emits = defineEmits(['closePatntRequest', 'closeDetailModal'])
 const store = useStore()
 
 const model = reactive({
@@ -1877,6 +1877,7 @@ function bedRequest() {
       if (response.data.code === '00') {
         model.isAlert = true
         model.errMsg = "병상요청이 완료되었습니다."
+        closeAll()
       }
     })
     .catch((error) => {
@@ -1909,6 +1910,11 @@ function onHide() {
 
 function closeModal() {
   emits('closePatntRequest')
+}
+
+function closeAll() {
+  emits('closePatntRequest')
+  emits('closeDetailModal')
 }
 
 function onFileChange(event) {

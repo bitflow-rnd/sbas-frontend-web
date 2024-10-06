@@ -500,7 +500,8 @@
 
   <!--  신규병상요청 0  -->
   <BdasReqModal v-if='this.showModal === 0' @close-patnt-request='closePatntRequest'
-                   :pt-id='newPt.ptId' />
+                @closeDetailModal="closeModal(2)"
+                :pt-id='newPt.ptId' />
 
   <!--  추천병원선택 1  -->
   <RcmdHospModal v-if='this.showRcmdHospModal' :bd-detail='this.bdDetail'
