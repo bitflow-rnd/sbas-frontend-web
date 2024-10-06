@@ -52,7 +52,7 @@
 
                           <tr>
                             <th>주민등록번호</th>
-                            <td>{{ ptDetail.rrno1 }}-{{ ptDetail.rrno2 }}*******</td>
+                            <td>{{ ptDetail.rrno1 }}-{{ ptDetail.rrno2.charAt(0) }}*******</td>
                           </tr>
 
                           <tr>

@@ -31,7 +31,7 @@
                 {{ cmpExist(1)[0] }}
               </div>
               <div class="d-inline-flex w-auto ms-3">
-                주민등록번호 : {{ props.existPt.rrno1 }}-{{ props.existPt.rrno2 }}******
+                주민등록번호 : {{ props.existPt.rrno1 }}-{{ props.existPt.rrno2.charAt(0) }}******
               </div>
             </div>
 

@@ -319,11 +319,13 @@
   <!--  환자 상세 정보  -->
   <PatntDetlModalV2 v-if='showModal===1' :pt-detail='ptDetail' :pt-ds='ptDs'
                     :bdas-his-info='bdasHisInfo' :timeline='timeline'
+                    :rgst-seq='this.rgstSeq'
                     @closeModal='closeModal(0)'
                     @openBdasModal='this.showPatntModal(ptDetail,1)' />
 
   <!--  신규병상요청   -->
   <BedRequestModal v-if='showPatnt' @close-patnt-request='closePatntRequest'
+                   @closeDetailModal="closeModal(0)"
                    :pt-id='newPt.ptId' />
 
   <patnt-reg-modal v-if='this.showModal === 2' :exist-pt='this.ptDetail' @closeModal='closeModal(0)' />
@@ -437,6 +439,7 @@ export default {
       deletePt: null,
       confirmAlert: false,
       errMsg: '',
+      rgstSeq: 1,
     }
   },
   computed: {
@@ -543,6 +546,9 @@ export default {
       this.preRpt = null
     },
     async selectPatient(patient) {
+      if (patient['rgstSeq']) {
+        this.rgstSeq = patient['rgstSeq']
+      }
       if (patient['bdasSeq']) {
         await this.$store.dispatch('bedasgn/getTimeline', patient)
         await this.$store.dispatch('bedasgn/getDSInfo', patient)
