@@ -83,7 +83,7 @@
 
                           <tr>
                             <th>주민번호</th>
-                            <td>{{ `${model.ptDetail.rrno1}-${model.ptDetail.rrno2}******` }}</td>
+                            <td>{{ `${model.ptDetail.rrno1}-${model.ptDetail.rrno2.charAt(0)}******` }}</td>
                           </tr>
 
                           <tr>
