@@ -144,8 +144,8 @@ function aprvMed() {
     request.hospId = find.chrgInstId
   } else {
     let find = props.timeline.items.find((item) => item.chrgInstId === props.userInfo.instId)
-    request.asgnReqSeq = find.asgnReqSeq ?? 1
-    request.hospId = find.chrgInstId
+    request.asgnReqSeq = find?.asgnReqSeq ?? 1
+    request.hospId = find?.chrgInstId
   }
 
   axios_cstm().post(url, request)
