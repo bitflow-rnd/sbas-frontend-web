@@ -255,11 +255,24 @@ const model = reactive({
 
 function confirm() {
   if (validateForm() && checkPid()) {
-    // 샘플데이터
     const sampleData = getHisSampleData(model.hosptlzdiscg.pid)
-    model.hosptlzdiscg.admsDt = sampleData.admsDt
-    model.hosptlzdiscg.monStrtDt = sampleData.monStrtDt
-    model.hosptlzdiscg.monStrtTm = sampleData.monStrtTm
+    if (sampleData === null) {
+      const today = new Date()
+      const year = today.getFullYear()
+      const month = String(today.getMonth() + 1).padStart(2, '0')
+      const day = String(today.getDate()).padStart(2, '0')
+      const hours = String(today.getHours()).padStart(2, '0')
+      const minutes = String(today.getMinutes()).padStart(2, '0')
+      const seconds = String(today.getSeconds()).padStart(2, '0')
+
+      model.hosptlzdiscg.admsDt = `${year}${month}${day}`
+      model.hosptlzdiscg.monStrtDt = `${year}${month}${day}`
+      model.hosptlzdiscg.monStrtTm = `${hours}${minutes}${seconds}`
+    } else {
+      model.hosptlzdiscg.admsDt = sampleData.admsDt
+      model.hosptlzdiscg.monStrtDt = sampleData.monStrtDt
+      model.hosptlzdiscg.monStrtTm = sampleData.monStrtTm
+    }
     cfmHosp()
   }
 }
@@ -290,16 +303,13 @@ function validateInput(idx) {
 
 function checkPid() {
   const data = getHisSampleData(model.hosptlzdiscg.pid)
-  if (data === null) {
-    model.showErrorMsg = true
-    return false
-  } else {
-    model.showErrorMsg = false
+  model.showErrorMsg = false
+  if (data !== null) {
     model.hosptlzdiscg.deptNm = data.deptNm
     model.hosptlzdiscg.roomNm = data.roomNm
     model.hosptlzdiscg.spclNm = data.spclNm
-    return true
   }
+  return true
 }
 
 function validateForm() {
