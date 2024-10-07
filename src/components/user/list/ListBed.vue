@@ -757,11 +757,7 @@ export default {
       this.showModal = idx
     },
     closeModal(idx) {
-      if (idx === 0) {
-        console.log(this.initNewPt, +'닫기')
-        this.showModal = null
-        this.setNull()
-      } else if (idx === 2) {
+      if (idx === 2) {
         /*세부내용 모달*/
         this.showModal = null
         this.$store.commit('bedasgn/setDisesInfo', null)
@@ -770,10 +766,7 @@ export default {
         this.$store.commit('patnt/setRpt', null)
         this.newPt = this.initNewPt
         this.dsInfo = this.initDsInfo
-        this.getBdList()
-      } else {
-        this.showModal = null
-        this.getBdList()
+        this.$store.dispatch('bedasgn/getBdListWeb', this.filterData)
       }
     },
     getBdList() {

@@ -521,6 +521,7 @@ export default {
         this.$store.commit('patnt/setBasicInfo', null)
         this.$store.commit('patnt/setRpt', null)
         this.reportFile = null
+        this.search()
       }
     },
     async uploadRpt(event) {
