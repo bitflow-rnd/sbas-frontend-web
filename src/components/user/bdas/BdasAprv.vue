@@ -137,9 +137,17 @@ const model = reactive({
 function aprvMed() {
   const url = `${API_PROD}/api/v1/private/bedasgn/asgnconfirm`
   const request = model.data
-  let find = props.timeline.items.find((item) => item.title === '배정대기' && item.chrgInstId === props.userInfo.instId)
-  request.asgnReqSeq = find.asgnReqSeq ?? 1
-  request.hospId = find.chrgInstId ?? 'INST000000'
+
+  if (props.userInfo.instId === 'INST000000') {
+    const find = props.timeline.items.find((item) => item.title === '배정대기')
+    request.asgnReqSeq = 1
+    request.hospId = find.chrgInstId
+  } else {
+    let find = props.timeline.items.find((item) => item.chrgInstId === props.userInfo.instId)
+    request.asgnReqSeq = find.asgnReqSeq ?? 1
+    request.hospId = find.chrgInstId
+  }
+
   axios_cstm().post(url, request)
     .then((response) => {
       if (response.data?.code === '00') {

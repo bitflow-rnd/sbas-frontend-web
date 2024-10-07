@@ -201,7 +201,7 @@
                       <router-link
                           to=''
                           class='modal-menu-btn menu-primary'
-                          @click='emits("openBdasModal")'
+                          @click='openBdasModal'
                       >병상요청
                       </router-link>
                     </div>
@@ -315,6 +315,9 @@
 
   <patnt-reg-modal v-if='model.showEditModal' :exist-pt='props.ptDetail' @closeModal='closeEditModal()' />
 
+  <SbasAlert :is-alert='model.confirmAlert' :err-msg='model.errMsg'
+             @confirm-alert='closeAlert' />
+
 </template>
 
 <script setup>
@@ -324,6 +327,7 @@ import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vu
 import { getDt, getTag, getTelno, getTLDt, getTLIcon } from '@/util/ui'
 import SvrtInfoModal from '@/components/user/modal/SvrtInfoModal.vue'
 import PatntRegModal from '@/components/user/modal/PatntRegModal.vue'
+import SbasAlert from '@/components/common/SbasAlert.vue'
 
 const props = defineProps({
   ptDetail: Object,
@@ -337,11 +341,31 @@ const emits = defineEmits(['closeModal', 'openBdasModal'])
 const model = reactive({
   showSvrtInfoModal: false,
   showEditModal: false,
+  confirmAlert: false,
+  errMsg: '',
 })
 
 onMounted(() => {
   console.log('ptDetail', props.rgstSeq)
 })
+
+function openBdasModal() {
+  if (props.bdasHisInfo.count === 0) {
+    emits('openBdasModal')
+  } else {
+    let bedStatCd = props.bdasHisInfo.items[0].bedStatCd
+    if (bedStatCd === 'BAST0007' || bedStatCd === 'BAST0008') {
+      emits('openBdasModal')
+    } else {
+      model.confirmAlert = true
+      model.errMsg = '병상배정이 진행중입니다.'
+    }
+  }
+}
+
+function closeAlert() {
+  model.confirmAlert = false
+}
 
 function openEditModal() {
   model.showEditModal = true
