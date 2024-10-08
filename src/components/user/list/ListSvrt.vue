@@ -217,7 +217,7 @@
                       <td>
                         <div class='text-center'>
                           <div class='pt-nm'>{{
-                              pt['ptNm'].length > 1 ? (pt['ptNm'].substring(0, 1) + '*' + pt['ptNm'].substring(2, pt['ptNm'].length)) : pt['ptNm']
+                              pt['ptNm']
                             }}
                           </div>
                         </div>
