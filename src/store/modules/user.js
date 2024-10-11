@@ -306,22 +306,6 @@ export default {
           })
       })
     },
-    getMessageRoomListSync() {
-      const url = `${API_PROD}/api/v1/private/talk/all-chats`
-      return new Promise((resolve, reject) => {
-        axios({
-          method: 'get',
-          url: url
-        })
-          .then((response) => {
-            resolve(response.data?.result)
-          })
-          .catch((e) => {
-            console.log(e)
-            reject(e)
-          })
-      })
-    },
     getMessageMyRoomListSync() {
       const url = `${API_PROD}/api/v1/private/talk/my-chats`
       return new Promise((resolve, reject) => {
@@ -409,30 +393,6 @@ export default {
           reject(e)
         })
       })
-    },
-    loadPatientData() {
-      try {
-        return axios.get(`${API_PROD}/api/v1/private/patient/search`)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    loadPatientBasicInfo(_, id) {
-      try {
-        return axios.get(`${API_PROD}/api/v1/private/patient/basicinfo?ptId=${id}`)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    loadPatientDiseaseInfo(_, id) {
-      try {
-        return axios.get(`${API_PROD}/api/v1/private/patient/disease-info/${id}`)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    getNoticeList() {
-
     },
     getActivityHistory(comment, userId) {
       const url = `${API_PROD}/api/v1/private/user/activity-history/${userId}`
