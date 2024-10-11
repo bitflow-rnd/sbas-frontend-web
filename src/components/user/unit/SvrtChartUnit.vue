@@ -41,9 +41,6 @@ onMounted(() => {
     store.dispatch('severity/getSeverityData2', props.ptId).then((result) => {
       updateChart(result)
     })
-    store.dispatch('patnt/getBasicInfo2', { ptId: props.ptId }).then((result) => {
-      model.ptDetail = result
-    })
   }
 })
 

@@ -39,9 +39,6 @@ function getPtData() {
     store.dispatch('severity/getSeverityData2', { ptId: props.ptId, rgstSeq: props.rgstSeq }).then((result) => {
       updateChart(result)
     })
-    store.dispatch('patnt/getBasicInfo2', { ptId: props.ptId }).then((result) => {
-      model.ptDetail = result
-    })
   }
 }
 
@@ -77,22 +74,6 @@ function updateChart(result) {
   })
   data.oxygenApply = oxygenApply
   model.series = chartData
-}
-
-function convertToChartValue(data) {
-  if (data === 'UNDEFINED') {
-    return 4
-  } else if (data === 'ROOM AIR') {
-    return 5
-  } else if (data === 'NASAL') {
-    return 6
-  } else if (data === 'MASK') {
-    return 7
-  } else if (data === 'HFNC') {
-    return 8
-  } else if (data === 'VENTILATION') {
-    return 9
-  }
 }
 
 </script>

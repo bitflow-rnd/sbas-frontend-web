@@ -359,9 +359,9 @@ export default {
   props: {
     msg: String
   },
-  async mounted() {
+  created() {
     this.setDefaultDstr1Cd()
-    this.getHospitalList()
+    this.search()
   },
   setup() {
     let model = reactive({
@@ -377,7 +377,6 @@ export default {
       showModal: 0,
       rptYn: false /* 역조서 유무 */,
       preRpt: null /*역조서 이미지 링크*/,
-      reportFile: null,
       newPt: {
         ptNm: '', gndr: null, rrno1: null, rrno2: null,
         dethYn: '', natiCd: '', natiNm: '대한민국',
@@ -402,7 +401,6 @@ export default {
         instId: '',
         rcptPhc: 0
       },
-      bioAnlys: {},
       assignmentStatuses: {
         '병상요청': 'BAST0003',
         '병상배정': 'BAST0004',
@@ -492,11 +490,6 @@ export default {
         this.$store.dispatch('admin/getGuGun', address)
       }
     },
-    getMedInst() {
-      let data = this.medinstInfo
-      data['instTypeCd'] = 'ORGN0003'
-      this.$store.dispatch('admin/getOrganMedi', data)
-    },
     changeDstrCd1() {
       this.getSecondAddress(this.filterPatient['address']['first'])
       this.filterPatient['address']['second'] = ''
@@ -520,31 +513,8 @@ export default {
         this.$store.commit('bedasgn/setTimeline', null)
         this.$store.commit('patnt/setBasicInfo', null)
         this.$store.commit('patnt/setRpt', null)
-        this.reportFile = null
         this.search()
       }
-    },
-    async uploadRpt(event) {
-      const fileInput = event.target
-      const file = fileInput.files[0]
-
-      console.log(file)
-      const formData = new FormData()
-      formData.append('param1', 'edidemreport')
-      formData.append('param2', file)
-
-      await this.$store.dispatch('patnt/uploadRpt', formData)
-      if (this.rptInfo !== null) {
-        // console.log('실행')
-        // this.alertOpen(4)
-      }
-      //역조서 이미지 미리보기 만들기
-      await this.showImage(this.rptInfo.attcId)
-    },
-    removeRpt() {
-      /*역조서 삭제*/
-      this.$store.dispatch('patnt/removeRpt', this.rptInfo.attcId)
-      this.preRpt = null
     },
     async selectPatient(patient) {
       if (patient['rgstSeq']) {
@@ -597,26 +567,11 @@ export default {
         this.newPt = this.ptDetail
         console.log('showPatntModal', this.newPt)
       }
-      await this.showImage(this.newPt.attcId)
       if (idx === 2) {
         this.showModal = idx
       } else {
         this.showPatnt = true
       }
-    },
-    async showImage(attcId) {
-      // if (attcId === null || attcId === '') {
-      //   this.epidReportImage = ''
-      // } else {
-      //   await this.$store.dispatch('user/readPrivateImage', attcId)
-      //     .then((result) => {
-      //       const blob = new Blob([result], { type: 'image/jpeg' })
-      //       this.epidReportImage = URL.createObjectURL(blob)
-      //     })
-      //     .catch((error) => {
-      //       console.error('An error occurred while fetching the image:', error)
-      //     })
-      // }
     },
     closePatntRequest() {
       this.showPatnt = false

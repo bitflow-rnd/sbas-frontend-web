@@ -386,6 +386,7 @@ const store = useStore()
 onMounted(() => {
   if (props.existPt) {
     model.newPt = props.existPt
+    showImage(model.newPt.attcId)
   }
 })
 

@@ -69,7 +69,6 @@
 
             <router-link
               to="/user/bedasgn/list"
-              @click="getBdList"
               class="menu-item me-0 me-lg-1"
             >
               <span class="menu-link">
@@ -79,7 +78,6 @@
 
             <router-link
               to="/user/patnt/list"
-              @click="getPtList"
               class="menu-item me-0 me-lg-1"
             >
               <span class="menu-link">

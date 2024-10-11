@@ -239,42 +239,6 @@ export default {
         console.log(e)
       }
     },
-    getBasicInfo2(comment, data) {
-      const url = `${API_PROD}/api/v1/private/patient/basicinfo/${data.ptId}`
-      return new Promise((resolve, reject) => {
-        axios
-          .get(url)
-          .then((response) => {
-            if (response.data?.code === '00') {
-              resolve(response.data?.result)
-            } else {
-              reject()
-            }
-          })
-          .catch((e) => {
-            console.log(e)
-            reject(e)
-          })
-      })
-    },
-
-    /*환자 중복 유효성*/
-    async isExistPt(comment, data) {
-      const url = `${API_PROD}/api/v1/private/patient/exist`
-      const request = data
-      try {
-        const response = await axios.post(url, request)
-        if (response.data?.code === '00') {
-          if (response.data?.result.isExist) {
-            comment.commit('setExPt', response.data?.result.items)
-          } else {
-            comment.commit('setExPt', null)
-          }
-        }
-      } catch (e) {
-        console.log(e)
-      }
-    },
     /*생체정보 입력 분석 - 중증도 분류 AI 분석*/
     async regBioAnlys(comment, data) {
       //const token = localStorage.getItem('userToken')
