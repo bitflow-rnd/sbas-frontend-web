@@ -41,7 +41,7 @@
                         </div>
 
                         <div class='sbox w-175px ms-2'>
-                          <select v-model='model.search.dstr2Cd' :disabled='enableSecondAddressPicker'
+                          <select v-model='model.search.dstr2Cd' :disabled='enableSecondAddressPicker()'
                                   @change='changeDstrCd2()'>
                             <option value='' id='null'>시/군/구 전체</option>
                             <option v-for='(item, i) in model.cmGugun' :key='i' :value='item.cdId'>
@@ -172,13 +172,13 @@
                   <tr v-for='(item, i) in model.userList' :key='i'>
                     <td>
                       <div class='cbox'>
-                        <label> <input @click='toggleCheckbox(item)' type='checkbox' class='all-chk' /><i></i> </label>
+                        <label> <input @click='toggleCheckbox(item)' type='checkbox' class='all-chk' :checked='model.checkedUsers.has(item.id)' /><i></i> </label>
                       </div>
                     </td>
                     <td>{{ getInstNm(item.instTypeCd) }}</td>
                     <td class='text-start'>{{ item.instNm }}</td>
                     <td>{{ (item.userNm) }}</td>
-                    <td>{{ item.dutyDstr1CdNm }}</td>
+                    <td>{{ item.dutyDstr1CdNm }}&nbsp;{{ item.dutyDstr2Cd ? item.dutyDstr2CdNm : ''}}</td>
                     <td>{{ item.jobCdNm }}</td>
                   </tr>
                   </tbody>
@@ -221,7 +221,7 @@
 </template>
 
 <script setup>
-import { defineEmits, defineProps, onMounted, reactive } from 'vue'
+import { computed, defineEmits, defineProps, onMounted, reactive, watch } from 'vue'
 import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
@@ -237,6 +237,7 @@ const model = reactive({
   userList: [],
   userCnt: 0,
   cmSido: [],
+  cmGugun: null,
   search: {
     dstr1Cd: '',
     dstr2Cd: '',
@@ -259,11 +260,25 @@ const model = reactive({
   page: 1,
   tkrmNm: null,
   userIdList: [],
+  userNmList: [],
+  checkedUsers: new Set(),
 })
 
 onMounted(() => {
   init()
 })
+
+watch(() => model.search.dstr1Cd, async () => {
+  if (model.search.dstr1Cd) {
+    await store.dispatch('admin/getGuGun', model.search.dstr1Cd)
+  }
+})
+
+watch(() => store.getters['admin/getGuGun'],
+  (newGuGun) => {
+    model.cmGugun = newGuGun
+  }
+)
 
 function init() {
   store.dispatch('admin/getSido')
@@ -271,10 +286,33 @@ function init() {
   searchUserList()
 }
 
+const filterData = computed(() => {
+  let params = {};
+  if (model.search.dstr1Cd) params = { ...params, dstr1Cd: model.search.dstr1Cd }
+  if (model.search.dstr2Cd) params = { ...params, dstr2Cd: model.search.dstr2Cd }
+  if (model.search.kwd) {
+    params = { ...params, userNm: model.search.kwd }
+    params = { ...params, telno: model.search.kwd }
+  }
+  if (model.search.instTypeCd.length !== 0) {
+    params = { ...params, instTypeCd: model.search.instTypeCd.join(',') }
+  }
+  if (model.search.ptTypeCd.length !== 0) {
+    params = { ...params, ptTypeCd: model.search.ptTypeCd.join(',') }
+  }
+
+  return params
+})
+
 function searchUserList() {
   const url = `${API_PROD}/api/v1/admin/user/users`
+  const data = {
+    page: model.page,
+    ...filterData.value,
+  }
+
   axios_cstm()
-    .get(url)
+    .get(url, {params: data})
     .then((res) => {
       console.log(res, '사용자목록')
       if (res.data?.code === '00') {
@@ -292,7 +330,6 @@ function enableSecondAddressPicker() {
 }
 
 function changeDstrCd1() {
-  getSecondAddress(model.search['dstr1Cd'])
   model.search['dstr2Cd'] = ''
   searchUserList()
 }
@@ -302,7 +339,17 @@ function changeDstrCd2() {
 }
 
 function toggleCheckbox(user) {
-  model.userIdList.push(user.userNm)
+  // 체크 해제
+  if (model.checkedUsers.has(user.id)) {
+    model.checkedUsers.delete(user.id);
+    model.userIdList = model.userIdList.filter(id => id !== user.id); // ID 제거
+    model.userNmList = model.userNmList.filter(name => name !== user.userNm); // 이름 제거
+  } else {
+    // 체크
+    model.checkedUsers.add(user.id);
+    model.userIdList.push(user.id); // ID 추가
+    model.userNmList.push(user.userNm); // 이름 추가
+  }
 }
 
 function changePage(page) {
@@ -315,9 +362,12 @@ function makeChatRoom() {
   const url = `${API_PROD}/api/v1/private/talk/group`
   const data = {
     id: myInfo.id,
+    userNm: myInfo.userNm,
     tkrmNm: model.tkrmNm,
-    userIds: model.userIdList,
+    userIdList: model.userIdList,
+    userNmList: model.userNmList,
   }
+
   axios_cstm().post(url, data)
     .then((response) => {
       if (response.data.code === '00') {
@@ -345,12 +395,6 @@ function getInstNm(code) {
     return '전산담당'
   } else {
     return '기타'
-  }
-}
-
-function getSecondAddress(address) {
-  if (address) {
-    this.$store.dispatch('admin/getGuGun', address)
   }
 }
 
