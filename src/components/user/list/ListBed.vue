@@ -430,7 +430,7 @@
                       <th>배정상태</th>
                       <th>환자이름</th>
                       <th>성별</th>
-                      <th>나이</th>
+                      <th>생년월일</th>
                       <th>진단명</th>
                       <th>중증도</th>
                       <th>병상유형</th>
@@ -765,7 +765,10 @@ export default {
         this.$store.commit('patnt/setRpt', null)
         this.newPt = this.initNewPt
         this.dsInfo = this.initDsInfo
-        this.$store.dispatch('bedasgn/getBdListWeb', this.filterData)
+        const filterDataWithoutBedStatCd = { ...this.filterData };
+        delete filterDataWithoutBedStatCd.bedStatCd;
+        this.$store.dispatch('bedasgn/getBdListWeb', this.filterData);
+        this.$store.dispatch('bedasgn/getBedStatCount', filterDataWithoutBedStatCd);
       }
     },
     getBdList() {
