@@ -1569,7 +1569,7 @@ import { defineEmits, defineProps, onMounted, reactive, watch } from 'vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import { getAge, getTelno, getGndr } from '@/util/ui'
 import { API_PROD } from '@/util/constantURL'
-import { axios_cstm } from '@/util/axios_cstm'
+import { axios_cstm, isLoading } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
 import SbasAlert from '@/components/common/SbasAlert.vue'
 import ExistPatntModal from '@/components/user/modal/ExistPatntModal.vue'
@@ -1714,7 +1714,7 @@ function uploadRpt(event) {
 
   const token = sessionStorage.getItem('userToken')
   const url = `${API_PROD}/api/v1/private/patient/upldepidreport`
-
+  isLoading.value = true
   axios
     .post(url, formData, {
       headers: { Authorization: `Bearer ${token}` }
@@ -1733,6 +1733,9 @@ function uploadRpt(event) {
     })
     .catch((error) => {
       console.log(error)
+    })
+    .finally(() => {
+      isLoading.value = false
     })
 }
 
@@ -1963,7 +1966,7 @@ function uploadEsvyImg() {
     const headers = {}
     const token = sessionStorage.getItem('userToken')
     headers.Authorization = `Bearer ${token}`
-
+    isLoading.value = true
     if (model.diagImgFiles.length > 0) {
       axios({
         method: 'post',
@@ -1978,6 +1981,8 @@ function uploadEsvyImg() {
         }
       }).catch((e) => {
         console.log(e)
+      }).finally(() => {
+        isLoading.value = false
       })
     } else {
       saveInfo()

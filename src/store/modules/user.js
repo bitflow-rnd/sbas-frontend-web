@@ -2,7 +2,7 @@ import axios from 'axios'
 import router from '@/router/router'
 import { encodingPassword } from '@/util/encodingPasswd'
 import { API_PROD } from '@/util/constantURL'
-import { axios_cstm } from '@/util/axios_cstm'
+import { axios_cstm, isLoading } from '@/util/axios_cstm'
 
 export default {
   namespaced: true,
@@ -360,6 +360,7 @@ export default {
       })
     },
     readPrivateImage(comment, attcId) {
+      isLoading.value = true
       if(attcId == null) return
       const url = `${API_PROD}/api/v1/private/common/image/${attcId}`
       return new Promise((resolve, reject) => {
@@ -372,6 +373,8 @@ export default {
         }).catch((e) => {
           console.log(e)
           reject(e)
+        }).finally(() => {
+          isLoading.value = false
         })
       })
     },

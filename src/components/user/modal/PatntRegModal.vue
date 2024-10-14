@@ -374,7 +374,7 @@ import { useStore } from 'vuex'
 import { API_PROD } from '@/util/constantURL'
 import axios from 'axios'
 import SbasAlert from '@/components/common/SbasAlert.vue'
-import { axios_cstm } from '@/util/axios_cstm'
+import { axios_cstm, isLoading } from '@/util/axios_cstm'
 import CloseButton from '@/components/common/CloseButton.vue'
 
 const props = defineProps({
@@ -424,6 +424,7 @@ function uploadRpt(event) {
 
   const token = sessionStorage.getItem('userToken')
   const url = `${API_PROD}/api/v1/private/patient/upldepidreport`
+  isLoading.value = true
   return new Promise(() => {
     axios
       .post(url, formData, {
@@ -443,6 +444,9 @@ function uploadRpt(event) {
       })
       .catch((e) => {
         console.log(e)
+      })
+      .finally(() => {
+        isLoading.value = false
       })
   })
 }
