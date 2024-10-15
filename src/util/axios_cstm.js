@@ -8,7 +8,7 @@ laxios.defaults.headers['Access-Control-Allow-Credentials'] = 'true'
 laxios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 laxios.defaults.withCredentials = true
 
-const isLoading = ref(false)  // 글로벌 로딩 상태
+const isLoading = ref(false)
 
 const axios_cstm = () => {
   const token = sessionStorage.getItem('userToken')

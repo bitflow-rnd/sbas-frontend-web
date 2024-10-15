@@ -343,7 +343,7 @@ export default {
         const token = sessionStorage.getItem('userToken')
         headers.Authorization = `Bearer ${token}`
       }
-
+      isLoading.value = true
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
@@ -356,13 +356,15 @@ export default {
         }).catch((e) => {
           console.log(e)
           reject(e)
+        }).finally(() => {
+          isLoading.value = false
         })
       })
     },
     readPrivateImage(comment, attcId) {
-      isLoading.value = true
       if(attcId == null) return
       const url = `${API_PROD}/api/v1/private/common/image/${attcId}`
+      isLoading.value = true
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',

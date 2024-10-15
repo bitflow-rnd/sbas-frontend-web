@@ -2,7 +2,7 @@
   <div class="modal show" id="kt_modal_request" tabindex="-1">
     <div class="modal-dialog mw-1500px modal-dialog-centered">
       <div class="spinner-container">
-        <VueSpinner size="150" color="#74AFEB" thickness='2' />
+        <VueSpinner size="150" color="#74AFEB" :thickness='2' />
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@ import { VueSpinner } from 'vue3-spinners'
   display: flex; /* 모달 내부를 중앙으로 정렬 */
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0) !important;
   z-index: 9999;
 }
 
