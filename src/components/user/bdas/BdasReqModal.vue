@@ -179,7 +179,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div v-if='validateInputStep1(1) && validateInputStep1(2)'
+                              <div v-if='validateInputStep1(1) || validateInputStep1(2)'
                                    class='item-cell-box pt-2 text-danger'>
                                 * 주민등록번호을 입력해 주세요.
                               </div>
@@ -345,7 +345,6 @@
                                   * 국적을 입력해 주세요.
                                 </div>
                               </div>
-
 
                             </td>
                           </tr>
@@ -2084,33 +2083,33 @@ function filterNumericInput(idx) {
 
 function validateInput(idx) {
   if (idx === 0) {
-    return model.svInfo.reqBedTypeCd === null && model.showErrorMsg
+    return (model.svInfo.reqBedTypeCd === null || model.svInfo.reqBedTypeCd === '') && model.showErrorMsg
   } else if (idx === 1) {
-    return model.svInfo.dnrAgreYn === null && model.showErrorMsg
+    return (model.svInfo.dnrAgreYn === null || model.svInfo.dnrAgreYn === '') && model.showErrorMsg
   } else if (idx === 2) {
-    return model.svInfo.svrtTypeCd === null && model.showErrorMsg
+    return (model.svInfo.svrtTypeCd === null || model.svInfo.svrtTypeCd === '') && model.showErrorMsg
   } else if (idx === 3) {
-    return model.spInfo.reqDstr1Cd === null && model.showErrorMsg
+    return (model.spInfo.reqDstr1Cd === null || model.spInfo.reqDstr1Cd === '') && model.showErrorMsg
   } else if (idx === 4) {
-    return model.spInfo.inhpAsgnYn === null && model.showErrorMsg
+    return (model.spInfo.inhpAsgnYn === null || model.spInfo.inhpAsgnYn === '') && model.showErrorMsg
   } else if (idx === 5) {
-    return model.spInfo.dprtDstrTypeCd === null && model.showErrorMsg
+    return (model.spInfo.dprtDstrTypeCd === null || model.spInfo.dprtDstrTypeCd === '') && model.showErrorMsg
   }
 }
 
 function validateInputStep1(idx) {
   if (idx === 0) {
-    return model.newPt.ptNm === null && model.showErrorMsg
+    return (model.newPt.ptNm === null || model.newPt.ptNm === '') && model.showErrorMsg
   } else if (idx === 1) {
-    return model.newPt.rrno1 === null && model.showErrorMsg
+    return (model.newPt.rrno1 === null || model.newPt.rrno1 === '') && model.showErrorMsg
   } else if (idx === 2) {
-    return model.newPt.rrno2 === null && model.showErrorMsg
+    return (model.newPt.rrno2 === null || model.newPt.rrno2 === '') && model.showErrorMsg
   } else if (idx === 3) {
-    return model.newPt.bascAddr === null && model.showErrorMsg
+    return (model.newPt.bascAddr === null || model.newPt.bascAddr === '') && model.showErrorMsg
   } else if (idx === 4) {
-    return model.newPt.dethYn === null && model.showErrorMsg
+    return (model.newPt.dethYn === null || model.newPt.dethYn === '') && model.showErrorMsg
   } else if (idx === 5) {
-    return model.newPt.natiCd === null && model.showErrorMsg
+    return (model.newPt.natiCd === null || model.newPt.natiCd === '') && model.showErrorMsg
   }
 }
 

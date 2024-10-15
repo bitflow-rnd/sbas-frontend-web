@@ -510,9 +510,9 @@ function changeDstrCd2() {
 
 function validateInput(idx) {
   if (idx === 0) {
-    return model.selectedInst === null && model.showErrorMsg
+    return (model.selectedInst === null || model.selectedInst === '') && model.showErrorMsg
   } else if (idx === 1) {
-    return model.trsfInfo.chfTelno === null && model.showErrorMsg
+    return (model.trsfInfo.chfTelno === null || model.trsfInfo.chfTelno === '') && model.showErrorMsg
   }
 }
 
