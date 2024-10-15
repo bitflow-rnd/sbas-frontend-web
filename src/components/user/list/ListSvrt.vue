@@ -392,7 +392,7 @@ export default {
     ...mapState('user', ['userInfo']),
     ...mapState('admin', ['cmSido', 'cmGugun', 'organMedi']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHisInfo']),
-    ...mapState('patnt', ['ptDetail', 'ptBI', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
+    ...mapState('patnt', ['ptDetail', 'severPtList', 'hospList', 'attcRpt']),
     filterData() {
       let params
       if (this.filterPatient['searchText']) params = { ...params, ptNm: this.filterPatient['searchText'] }

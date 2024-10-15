@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { API_PROD } from '@/util/constantURL'
+import { axios_cstm } from '@/util/axios_cstm'
 
 export default {
   namespaced: true,
@@ -7,12 +8,9 @@ export default {
     ptList: null,
     severPtList: null,
     hospList: null,
-    ptBI: null,
     existPt: null,
     ptDetail: null,
-    rptInfo: null,
     attcRpt: null,
-    isSpinner:0
   },
   getters: {
     getPtDetail: (state) => {
@@ -28,9 +26,6 @@ export default {
     },
     setHospList(state, payload) {
       state.hospList = payload['items'].filter(x => !!x)
-    },
-    regBasicInfo(state, payload) {
-      state.ptBI = payload
     },
     setExPt(state, payload) {
       state.existPt = payload
@@ -58,12 +53,6 @@ export default {
     setAttcRpt(state, payload) {
       state.attcRpt = payload
     },
-    setRpt(state, payload) {
-      state.rptInfo = payload
-    },
-    startSpinner(state,payload){
-      state.isSpinner = payload
-    }
   },
   actions: {
     /*환자 목록 조회*/
@@ -112,42 +101,6 @@ export default {
             reject(e)
           })
       })
-    },
-    /*환자 정보 수정*/
-    async modiPtInfo(comment, data) {
-      //const token = localStorage.getItem('userToken')
-      console.log(data)
-      const url = `${API_PROD}/api/v1/private/patient/modinfo/${data.ptId}`
-      const request = data.newPt
-      console.log('기존 환자 정보 업데이트')
-      try {
-        const response = await axios.post(url, request)
-        if (response.data?.code === '00') {
-          //console.log(response.data?.result)
-          await comment.commit('setRpt', null)
-        }
-      } catch (e) {
-        console.log(e)
-      }
-    },
-    /*환자 기본 정보 등록 - 1단계*/
-    async regBasicInfo(comment, data) {
-      const token = sessionStorage.getItem('userToken')
-      const url = `${API_PROD}/api/v1/private/patient/regbasicinfo`
-      const request = data
-      // console.log('환자 등록 - 기본 정보')
-      try {
-        const response = await axios.post(url, request, {
-          headers: {
-            Authorization: `Bearer ${token}` // Add the token to the Authorization header
-          }
-        })
-        if (response.data?.code === '00') {
-          comment.commit('regBasicInfo', response.data?.result)
-        }
-      } catch (e) {
-        console.log(e)
-      }
     },
     /*역조서 업로드*/
     async uploadRpt(comment, data) {
@@ -259,6 +212,19 @@ export default {
         console.log(e)
       }
     },
-
   }
+}
+
+export function registerNewPt(data, onSuccess, onError) {
+  const url = `${API_PROD}/api/v1/private/patient/regbasicinfo`
+  axios_cstm()
+    .post(url, data)
+    .then((response) => {
+      const data = response.data
+      if (data.code === '00') {
+        onSuccess()
+      }
+    }).catch((e) => {
+      console.error(e)
+    })
 }

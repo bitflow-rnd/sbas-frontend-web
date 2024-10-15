@@ -42,7 +42,7 @@
               >
                 {{ cmpExist(2)[0] }}
               </div>
-              <div class="d-inline-flex w-auto ms-3">주소 : {{ props.existPt.bascAddr }} {{ props.existPt.detlAddr ?? '-' }}</div>
+              <div class="d-inline-flex w-auto ms-3">주소 : {{ props.existPt.bascAddr }} {{ props.existPt.detlAddr ?? '' }}</div>
             </div>
 
             <div class="exist-box d-flex align-items-center mt-3">
@@ -65,22 +65,28 @@
           <article class="modal-menu-layout1">
             <div class="modal-menu-list">
               <a @click="updateExistPt" class="modal-menu-btn menu-primary">기존정보 업데이트</a>
-              <a @click="registerNewPt" v-show='props.existPt === null' class="modal-menu-btn menu-primary-outline">신규등록</a>
+              <a @click="register" v-show='props.existPt === null' class="modal-menu-btn menu-primary-outline">신규등록</a>
             </div>
           </article>
         </div>
       </div>
     </div>
   </article>
+
+  <SbasAlert :is-alert='model.confirmAlert' :err-msg='model.errMsg'
+             @confirm-alert='closeAlert' />
+
 </template>
 
 <script setup>
-import { defineEmits, defineProps, onMounted } from 'vue'
+import { defineEmits, defineProps, onMounted, reactive } from 'vue'
 import { getAge, getTelno } from '@/util/ui'
-import { useStore } from 'vuex'
 import CloseButton from '@/components/common/CloseButton.vue'
+import SbasAlert from '@/components/common/SbasAlert.vue'
+import { API_PROD } from '@/util/constantURL'
+import { axios_cstm } from '@/util/axios_cstm'
+import { registerNewPt } from '@/store/modules/patnt'
 
-const store = useStore()
 const emits = defineEmits(['closePopup', 'closeExistPt'])
 const props = defineProps({
   existPt: {
@@ -89,6 +95,11 @@ const props = defineProps({
   newPt: {
     type: Object,
   },
+})
+
+const model = reactive({
+  errMsg: '',
+  confirmAlert: false,
 })
 
 onMounted(() => {
@@ -109,14 +120,30 @@ function cmpExist(idx) {
 
 function updateExistPt() {
   const data = {ptId: props.existPt.ptId, newPt: props.newPt}
-  store.dispatch('patnt/modiPtInfo', data)
-  emits('closePopup')
-  emits('closeExistPt')
+  const url = `${API_PROD}/api/v1/private/patient/modinfo/${data.ptId}`
+  const request = data.newPt
+  axios_cstm()
+    .post(url, request)
+    .then((response) => {
+      const data = response.data
+      if (data.code === '00') {
+        model.errMsg = '환자 정보가\n수정되었습니다.'
+        model.confirmAlert = true
+      }
+    }).catch((error) => {
+      console.error(error)
+    })
 }
 
-function registerNewPt() {
-  console.log(this.newPt)
-  store.dispatch('patnt/regBasicInfo',this.newPt)
+function register() {
+  registerNewPt(props.newPt, () => {
+    model.errMsg = '환자 정보가\n등록되었습니다.'
+    model.confirmAlert = true
+  })
+}
+
+function closeAlert() {
+  model.confirmAlert = false
   emits('closePopup')
   emits('closeExistPt')
 }
