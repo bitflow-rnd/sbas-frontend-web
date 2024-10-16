@@ -203,7 +203,7 @@
                 class='modal-menu-btn menu-cancel'
               >이전
               </router-link>
-              <router-link to='' @click='makeChatRoom' class='modal-menu-btn menu-primary'
+              <router-link to='' @click='openPopup' class='modal-menu-btn menu-primary'
               >생성
               </router-link>
             </div>
@@ -214,6 +214,64 @@
       <!--end::Content-->
     </div>
   </div>
+
+  <article v-show="model.showPopup" class="popup popup-assignment-request1" style="">
+    <div class="popup-wrapper">
+      <div class="popup-contents">
+        <div class="popup-head-box py-5 px-10">
+          <div class="head-tit-box">대화방 생성</div>
+          <closeButton @close='closePopup'/>
+        </div>
+
+        <div class="popup-body-box py-5 px-10">
+          <div class='d-flex flex-column'>
+
+            <div class=''>
+              <article class='table-form-layout1'>
+                <div class='form-body-box'>
+                  <div class='table-box'>
+                    <table>
+                      <colgroup>
+                        <col style='width: 127px' />
+                        <col style='width: auto' />
+                      </colgroup>
+                      <tbody>
+                      <tr>
+                        <th>대화방 이름</th>
+                        <td>
+                          <div class='tbox full'>
+                            <input v-model='model.tkrmNm'
+                                   placeholder='대화방 이름 입력' class='tkrmNm-input' />
+                          </div>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="popup-foot-box py-5 px-10">
+          <article class="modal-menu-layout1">
+            <div class="modal-menu-list">
+              <router-link
+                to=''
+                @click='closePopup'
+                class='modal-menu-btn menu-cancel'
+              >취소
+              </router-link>
+              <router-link to="" @click.once="makeChatRoom" class="modal-menu-btn menu-primary"
+              >확인
+              </router-link>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </article>
 
   <SbasAlert :is-alert='model.isAlert' :err-msg='model.errMsg' :cnc-btn='false'
              @confirm-alert='confirmAlert' />
@@ -262,6 +320,7 @@ const model = reactive({
   userIdList: [],
   userNmList: [],
   checkedUsers: new Set(),
+  showPopup: false,
 })
 
 onMounted(() => {
@@ -398,6 +457,15 @@ function getInstNm(code) {
   }
 }
 
+function openPopup() {
+  model.showPopup = true
+}
+
+function closePopup() {
+  model.showPopup = false
+  model.tkrmNm = null
+}
+
 function closeModal() {
   emits('closeModal')
 }
@@ -423,6 +491,10 @@ function confirmAlert() {
 .modal-dialog {
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+.tkrmNm-input {
+  height: 40px !important;
 }
 
 </style>

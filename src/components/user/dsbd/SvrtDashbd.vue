@@ -100,9 +100,7 @@ function closeModal() {
 </script>
 
 <style scoped>
-.card-header.p-8 {
-  padding-bottom: 22px;
-}
+
 .dashbd-table {
   width: 100%;
 }
