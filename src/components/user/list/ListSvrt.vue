@@ -281,6 +281,8 @@
                     @closeModal='closeModal(0)'
                     @openBdasModal='this.showPatntModal(ptDetail,1)' />
 
+  <patnt-reg-modal v-if='this.showModal === 2' :exist-pt='this.ptDetail' @closeModal='closeModal(0)' />
+
   <!--  신규병상요청   -->
   <BedRequestModal v-if='showPatnt' @close-patnt-request='closePatntRequest'
                    :pt-id='newPt.ptId' />
@@ -324,7 +326,6 @@ export default {
       showModal: 0,
       rptYn: false /* 역조서 유무 */,
       preRpt: null /*역조서 이미지 링크*/,
-      reportFile: null,
       newPt: {
         ptNm: '', gndr: null, rrno1: null, rrno2: null,
         dethYn: '', natiCd: '', natiNm: '대한민국',
@@ -349,7 +350,6 @@ export default {
         instId: '',
         rcptPhc: 0
       },
-      bioAnlys: {},
       assignmentStatuses: {
         '병상요청': 'BAST0003',
         '병상배정': 'BAST0004',
@@ -392,7 +392,7 @@ export default {
     ...mapState('user', ['userInfo']),
     ...mapState('admin', ['cmSido', 'cmGugun', 'organMedi']),
     ...mapState('bedasgn', ['timeline', 'ptDs', 'bdasHisInfo']),
-    ...mapState('patnt', ['ptDetail', 'ptBI', 'severPtList', 'hospList', 'rptInfo', 'attcRpt']),
+    ...mapState('patnt', ['ptDetail', 'severPtList', 'hospList', 'attcRpt']),
     filterData() {
       let params
       if (this.filterPatient['searchText']) params = { ...params, ptNm: this.filterPatient['searchText'] }
@@ -462,7 +462,7 @@ export default {
         this.$store.commit('bedasgn/setTimeline', null)
         this.$store.commit('patnt/setBasicInfo', null)
         this.$store.commit('patnt/setRpt', null)
-        this.reportFile = null
+        this.search()
       }
     },
     async selectPatient(patient) {
@@ -509,27 +509,12 @@ export default {
       await this.$store.dispatch('patnt/getBasicInfo', patient)
       if (this.ptDetail !== null) {
         this.newPt = this.ptDetail
-        console.log(this.newPt)
+        console.log('showPatntModal', this.newPt)
       }
-      await this.showImage(this.newPt.attcId)
       if (idx === 2) {
         this.showModal = idx
       } else {
         this.showPatnt = true
-      }
-    },
-    async showImage(attcId) {
-      if (attcId === null || attcId === '') {
-        this.epidReportImage = ''
-      } else {
-        await this.$store.dispatch('user/readPrivateImage', attcId)
-          .then((result) => {
-            const blob = new Blob([result], { type: 'image/jpeg' })
-            this.epidReportImage = URL.createObjectURL(blob)
-          })
-          .catch((error) => {
-            console.error('An error occurred while fetching the image:', error)
-          })
       }
     },
     closePatntRequest() {

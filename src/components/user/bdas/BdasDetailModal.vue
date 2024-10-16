@@ -44,7 +44,7 @@
                           </colgroup>
                           <tbody>
                           <tr>
-                            <th>진료과</th>
+                            <th>환자</th>
                             <td>
                               {{ ptDetail.ptNm }} ({{ ptDetail.gndr }}/{{ ptDetail.age }}세)
                             </td>

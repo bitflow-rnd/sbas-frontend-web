@@ -72,7 +72,7 @@
               <li class="breadcrumb-item ml-2 ms-5">
                 <span>내 기관에 할당된 병상배정 업무 목록을 표시합니다</span>
               </li>
-              <div @click='getBdList' style='cursor: pointer; margin-left: 30px;'>
+              <div @click='searchBedAsgn' style='cursor: pointer; margin-left: 30px;'>
                 <a class="btn btn-flex btn-sm btn-outline btn-outline-light fs-7">
                   <i class="fa-solid fa-arrows-rotate"></i> 새로고침
                 </a>
@@ -430,7 +430,7 @@
                       <th>배정상태</th>
                       <th>환자이름</th>
                       <th>성별</th>
-                      <th>나이</th>
+                      <th>생년월일</th>
                       <th>진단명</th>
                       <th>중증도</th>
                       <th>병상유형</th>
@@ -710,7 +710,6 @@ export default {
       return user
     },
     ...mapState('bedasgn', [
-      'bdList',
       'bdListWeb',
       'bdCnt',
       'bdDetail',
@@ -766,7 +765,10 @@ export default {
         this.$store.commit('patnt/setRpt', null)
         this.newPt = this.initNewPt
         this.dsInfo = this.initDsInfo
-        this.$store.dispatch('bedasgn/getBdListWeb', this.filterData)
+        const filterDataWithoutBedStatCd = { ...this.filterData };
+        delete filterDataWithoutBedStatCd.bedStatCd;
+        this.$store.dispatch('bedasgn/getBdListWeb', this.filterData);
+        this.$store.dispatch('bedasgn/getBedStatCount', filterDataWithoutBedStatCd);
       }
     },
     getBdList() {
@@ -775,8 +777,11 @@ export default {
       this.$store.dispatch('bedasgn/getBedStatCount')
     },
     searchBedAsgn() {
-      this.$store.dispatch('bedasgn/getBdListWeb', this.filterData)
-      this.page = 1
+      const filterDataWithoutBedStatCd = { ...this.filterData };
+      delete filterDataWithoutBedStatCd.bedStatCd;
+      this.$store.dispatch('bedasgn/getBdListWeb', this.filterData);
+      this.$store.dispatch('bedasgn/getBedStatCount', filterDataWithoutBedStatCd);
+      this.page = 1;
     },
     initNaverMap() {
       // 네이버 지도 API 로드

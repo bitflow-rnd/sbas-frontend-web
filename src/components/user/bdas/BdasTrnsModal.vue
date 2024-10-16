@@ -1,5 +1,5 @@
 <template>
-  <div class='modal show' id='kt_modal_dispatch' tabindex='-1' aria-hidden='true' style=''>
+  <div class='modal show' id='kt_modal_dispatch' tabindex='-1' style=''>
     <!--begin::Modal dialog-->
     <div class='modal-dialog mw-1500px modal-dialog-centered'>
       <!--begin::Modal content-->
@@ -44,18 +44,30 @@
                   </colgroup>
                   <tbody>
                   <tr>
-                    <th>출발지</th>
+                    <th>구급대</th>
                     <td colspan='4'>
                       <div class='item-cell-box'>
-                        <div class='sbox w-175px'>
-                          <select>
-                            <option>{{ model.cmSido.find(item => item.cdId === '27')['cdNm'] }}</option>
+                        <div class='sbox w-150px'>
+                          <select v-model='model.dstr1Cd' @change='changeDstrCd1()'>
+                            <option value='' id='null'>시/도 전체</option>
+                            <option v-for='(item, i) in model.cmSido' :key='i' :value='item.cdId'>
+                              {{ item.cdNm }}
+                            </option>
                           </select>
                         </div>
 
-                        <div class='sbox w-175px ms-3'>
+                        <div class='sbox w-150px ms-2'>
+                          <select v-model='model.dstr2Cd' @change='changeDstrCd2'>
+                            <option value='' id='null'>시/군/구 전체</option>
+                            <option v-for='(item, i) in model.cmGugun' :key='i' :value='item.cdId'>
+                              {{ item.cdNm }}
+                            </option>
+                          </select>
+                        </div>
+
+                        <div class='sbox w-175px ms-2'>
                           <select v-model='model.selectedInst' @change='getFiremen' >
-                            <option value='null'>구급대 선택</option>
+                            <option value='null' selected>구급대 선택</option>
                             <option v-for='(item, i) in model.fireStatnList' :key='i' :value='item'>
                               {{ item.instNm }}
                             </option>
@@ -71,6 +83,9 @@
 <!--                          />-->
 <!--                          <input v-else placeholder='구급대명 직접 입력' readonly />-->
 <!--                        </div>-->
+                      </div>
+                      <div v-if='validateInput(0)' class='item-row-box pt-2 text-danger'>
+                        * 구급대를 선택해 주세요.
                       </div>
                     </td>
                   </tr>
@@ -92,6 +107,8 @@
                         </div>
 
                         <div class='tbox w-125px ms-3'>
+                          <input v-if="model.selectedFm1 === '직접입력'"
+                                 v-model='model.trsfInfo.crew1Id' hidden='hidden' />
                           <input
                             v-if="model.selectedFm1 === '직접입력'"
                             v-model='model.trsfInfo.crew1Pstn'
@@ -104,20 +121,20 @@
                           <input
                             v-if="model.selectedFm1 === '직접입력'"
                             v-model='model.trsfInfo.crew1Nm'
-                            placeholder=' 이름 입력'
+                            placeholder='이름 입력'
                           />
                           <input v-else v-model='model.trsfInfo.crew1Nm'
-                                 placeholder=' 이름 입력' readonly />
+                                 placeholder='이름 입력' readonly />
                         </div>
                         <div class='tbox w-175px ms-3'>
                           <input
                             v-if="model.selectedFm1 === '직접입력'"
                             v-model='model.trsfInfo.crew1Telno'
                             maxlength='11'
-                            placeholder=' 전화번호 입력'
+                            placeholder='전화번호 입력'
                           />
                           <input v-else v-model='model.trsfInfo.crew1Telno'
-                                 placeholder=' 전화번호 입력' readonly />
+                                 placeholder='전화번호 입력' readonly />
                         </div>
                       </div>
                     </td>
@@ -140,6 +157,8 @@
                         </div>
 
                         <div class='tbox w-125px ms-3'>
+                          <input v-if="model.selectedFm2 === '직접입력'"
+                                 v-model='model.trsfInfo.crew2Id' hidden='hidden' />
                           <input
                             v-if="model.selectedFm2 === '직접입력'"
                             v-model='model.trsfInfo.crew2Pstn'
@@ -152,20 +171,20 @@
                           <input
                             v-if="model.selectedFm2 === '직접입력'"
                             v-model='model.trsfInfo.crew2Nm'
-                            placeholder=' 이름 입력'
+                            placeholder='이름 입력'
                           />
                           <input v-else v-model='model.trsfInfo.crew2Nm'
-                                 placeholder=' 이름 입력' readonly />
+                                 placeholder='이름 입력' readonly />
                         </div>
                         <div class='tbox w-175px ms-3'>
                           <input
                             v-if="model.selectedFm2 === '직접입력'"
                             v-model='model.trsfInfo.crew2Telno'
                             maxlength='11'
-                            placeholder=' 전화번호 입력'
+                            placeholder='전화번호 입력'
                           />
                           <input v-else v-model='model.trsfInfo.crew2Telno'
-                                 placeholder=' 전화번호 입력' readonly />
+                                 placeholder='전화번호 입력' readonly />
                         </div>
                       </div>
                     </td>
@@ -188,6 +207,8 @@
                         </div>
 
                         <div class='tbox w-125px ms-3'>
+                          <input v-if="model.selectedFm3 === '직접입력'"
+                                 v-model='model.trsfInfo.crew3Id' hidden='hidden' />
                           <input
                             v-if="model.selectedFm3 === '직접입력'"
                             v-model='model.trsfInfo.crew3Pstn'
@@ -200,20 +221,20 @@
                           <input
                             v-if="model.selectedFm3 === '직접입력'"
                             v-model='model.trsfInfo.crew3Nm'
-                            placeholder=' 이름 입력'
+                            placeholder='이름 입력'
                           />
                           <input v-else v-model='model.trsfInfo.crew3Nm'
-                                 placeholder=' 이름 입력' readonly />
+                                 placeholder='이름 입력' readonly />
                         </div>
                         <div class='tbox w-175px ms-3'>
                           <input
                             v-if="model.selectedFm3 === '직접입력'"
                             v-model='model.trsfInfo.crew3Telno'
                             maxlength='11'
-                            placeholder=' 전화번호 입력'
+                            placeholder='전화번호 입력'
                           />
                           <input v-else v-model='model.trsfInfo.crew3Telno'
-                                 placeholder=' 전화번호 입력' readonly />
+                                 placeholder='전화번호 입력' readonly />
                         </div>
                       </div>
                     </td>
@@ -227,7 +248,7 @@
                           <label>
                             <input
                               v-model='model.trsfInfo.chfTelno'
-                              :value='model.crew1Telno'
+                              :value='1'
                               type='radio'
                             />
                             <span class='txt'>대원#1</span>
@@ -236,7 +257,7 @@
                           <label v-show='model.trsfInfo.crew2Nm'>
                             <input
                               v-model='model.trsfInfo.chfTelno'
-                              :value='model.crew2Telno'
+                              :value='2'
                               type='radio'
                             />
                             <span class='txt'>대원#2</span>
@@ -245,11 +266,14 @@
                           <label v-show='model.trsfInfo.crew3Nm'>
                             <input
                               v-model='model.trsfInfo.chfTelno'
-                              :value='model.crew3Telno'
+                              :value='3'
                               type='radio'
                             />
                             <span class='txt'>대원#3</span>
                           </label>
+                        </div>
+                        <div v-if='validateInput(1)' class='item-row-box pt-2 text-danger'>
+                          * 대표 연락처를 입력해 주세요.
                         </div>
                       </article>
                     </td>
@@ -326,7 +350,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, reactive, onMounted } from 'vue'
+import { defineProps, defineEmits, reactive, onMounted, watch } from 'vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import { getTag, getTelno } from '@/util/ui'
 import { API_PROD } from '@/util/constantURL'
@@ -342,7 +366,10 @@ const emits = defineEmits(['closeModal'])
 const store = useStore()
 
 const model = reactive({
+  dstr1Cd: '',
+  dstr2Cd: '',
   cmSido: store.getters['admin/getCmSido'],
+  cmGugun: null,
   fireStatnList: [],
   firemenList: [],
   selectedInst: null,
@@ -363,7 +390,7 @@ const model = reactive({
     crew3Pstn: null,
     crew3Nm: null,
     crew3Telno: null,
-    chfTelno: 1,
+    chfTelno: null,
     vecno: null,
     msg: '',
   },
@@ -373,6 +400,7 @@ const model = reactive({
   crew1Telno: 1,
   crew2Telno: 2,
   crew3Telno: 3,
+  selectedTelno: null,
   isAlert: false,
   errMsg: '',
   cncBtn: false,
@@ -381,12 +409,31 @@ const model = reactive({
 })
 
 onMounted(() => {
+  model.dstr1Cd = '27'
   loadFireStatnList()
 })
 
+watch(() => model.dstr1Cd, async () => {
+  if (model.dstr1Cd) {
+    await store.dispatch('admin/getGuGun', model.dstr1Cd)
+  }
+})
+
+watch(() => store.getters['admin/getGuGun'],
+  (newGuGun) => {
+    model.cmGugun = newGuGun
+  }
+)
+
 function loadFireStatnList() {
   const url = `${API_PROD}/api/v1/public/organ/codes`
-  const data = { dstr1Cd: '27', instTypeCd: 'ORGN0002' }
+  const data = {
+    dstr1Cd: model.dstr1Cd,
+    instTypeCd: 'ORGN0002',
+  }
+  if (model.dstr2Cd) {
+    data.dstr2Cd = model.dstr2Cd
+  }
   axios_cstm()
     .get(url, { params: data })
     .then((response) => {
@@ -404,6 +451,8 @@ function getFiremen() {
   console.log(model.selectedInst)
   const url = `${API_PROD}/api/v1/private/organ/firemen`
   const data = { instId: model.selectedInst.instId }
+  model.trsfInfo.instId = model.selectedInst.instId
+  model.trsfInfo.ambsNm = model.selectedInst.instNm
   axios_cstm()
     .get(url, { params: data })
     .then((response) => {
@@ -419,9 +468,8 @@ function getFiremen() {
 
 function cfmTrsf() {
   const url = `${API_PROD}/api/v1/private/bedasgn/confirmtransf`
-  model.trsfInfo.instId = model.selectedInst.instId
-  model.trsfInfo.ambsNm = model.selectedInst.instNm
-  const data = model.trsfInfo
+  const data = { ...model.trsfInfo, chfTelno: model.selectedTelno }
+  console.log(data);
   axios_cstm().post(url, data)
     .then((response) => {
       if (response.data.code === '00') {
@@ -437,17 +485,53 @@ function cfmTrsf() {
 }
 
 function openAlert() {
-  if (model.trsfInfo.chfTelno === 1) {
-    model.trsfInfo.chfTelno = model.trsfInfo.crew1Telno
-  } else if (model.trsfInfo.chfTelno === 2) {
-    model.trsfInfo.chfTelno = model.trsfInfo.crew2Telno
-  } else if (model.trsfInfo.chfTelno === 3) {
-    model.trsfInfo.chfTelno = model.trsfInfo.crew3Telno
+  if (validateForm()) {
+    if (model.trsfInfo.chfTelno === 1) {
+      model.selectedTelno = model.trsfInfo.crew1Telno
+    } else if (model.trsfInfo.chfTelno === 2) {
+      model.selectedTelno = model.trsfInfo.crew2Telno
+    } else if (model.trsfInfo.chfTelno === 3) {
+      model.selectedTelno = model.trsfInfo.crew3Telno
+    }
+    model.isAlert = true
+    model.errMsg = '이송처리 하시겠습니까?'
+    model.cncBtn = true
+  }
+}
+
+function changeDstrCd1() {
+  model.dstr2Cd = ''
+  loadFireStatnList()
+}
+
+function changeDstrCd2() {
+  loadFireStatnList()
+}
+
+function validateInput(idx) {
+  if (idx === 0) {
+    return (model.selectedInst === null || model.selectedInst === '') && model.showErrorMsg
+  } else if (idx === 1) {
+    return (model.trsfInfo.chfTelno === null || model.trsfInfo.chfTelno === '') && model.showErrorMsg
+  }
+}
+
+function validateForm() {
+  const data = model.trsfInfo
+  const requiredFields = {
+    instId: { idx: 0 },
+    chfTelno: { idx: 1 },
   }
 
-  model.isAlert = true
-  model.errMsg = '이송처리 하시겠습니까?'
-  model.cncBtn = true
+  for (const field in requiredFields) {
+    let showErrorMsg = false
+    if (!data[field]) {
+      showErrorMsg = true
+      model.showErrorMsg = showErrorMsg
+      return false
+    }
+  }
+  return true
 }
 
 function closeAlert() {

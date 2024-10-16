@@ -1,5 +1,5 @@
 <template>
-  <div class='modal show' id='kt_modal_hospitalization' tabindex='-1' aria-hidden='true' style=''>
+  <div class='modal show' id='kt_modal_hospitalization' tabindex='-1' style=''>
     <!--begin::Modal dialog-->
     <div class='modal-dialog mw-1500px modal-dialog-centered'>
       <!--begin::Modal content-->

@@ -2,7 +2,7 @@ import axios from 'axios'
 import router from '@/router/router'
 import { encodingPassword } from '@/util/encodingPasswd'
 import { API_PROD } from '@/util/constantURL'
-import { axios_cstm } from '@/util/axios_cstm'
+import { axios_cstm, isLoading } from '@/util/axios_cstm'
 
 export default {
   namespaced: true,
@@ -306,22 +306,6 @@ export default {
           })
       })
     },
-    getMessageRoomListSync() {
-      const url = `${API_PROD}/api/v1/private/talk/all-chats`
-      return new Promise((resolve, reject) => {
-        axios({
-          method: 'get',
-          url: url
-        })
-          .then((response) => {
-            resolve(response.data?.result)
-          })
-          .catch((e) => {
-            console.log(e)
-            reject(e)
-          })
-      })
-    },
     getMessageMyRoomListSync() {
       const url = `${API_PROD}/api/v1/private/talk/my-chats`
       return new Promise((resolve, reject) => {
@@ -359,7 +343,7 @@ export default {
         const token = sessionStorage.getItem('userToken')
         headers.Authorization = `Bearer ${token}`
       }
-
+      isLoading.value = true
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
@@ -372,12 +356,15 @@ export default {
         }).catch((e) => {
           console.log(e)
           reject(e)
+        }).finally(() => {
+          isLoading.value = false
         })
       })
     },
     readPrivateImage(comment, attcId) {
       if(attcId == null) return
       const url = `${API_PROD}/api/v1/private/common/image/${attcId}`
+      isLoading.value = true
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',
@@ -388,6 +375,8 @@ export default {
         }).catch((e) => {
           console.log(e)
           reject(e)
+        }).finally(() => {
+          isLoading.value = false
         })
       })
     },
@@ -409,30 +398,6 @@ export default {
           reject(e)
         })
       })
-    },
-    loadPatientData() {
-      try {
-        return axios.get(`${API_PROD}/api/v1/private/patient/search`)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    loadPatientBasicInfo(_, id) {
-      try {
-        return axios.get(`${API_PROD}/api/v1/private/patient/basicinfo?ptId=${id}`)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    loadPatientDiseaseInfo(_, id) {
-      try {
-        return axios.get(`${API_PROD}/api/v1/private/patient/disease-info/${id}`)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    getNoticeList() {
-
     },
     getActivityHistory(comment, userId) {
       const url = `${API_PROD}/api/v1/private/user/activity-history/${userId}`

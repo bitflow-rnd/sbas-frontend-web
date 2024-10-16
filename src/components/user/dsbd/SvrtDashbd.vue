@@ -74,7 +74,7 @@
   </div>
   <!--end:::Main-->
 
-  <patnt-detl-modal v-if="model.ptDetail" :pt-detail="model.ptDetail" @closeModal="closeModal" />
+  <PatntDetlModalV2 v-if="model.ptDetail" :ptDetail="model.ptDetail" @closeModal="closeModal" />
 </template>
 
 <script setup>
@@ -82,7 +82,7 @@ import SvrtChartUnit from '@/components/user/unit/SvrtChartUnit.vue'
 import PieChart from '@/components/user/unit/PieChart.vue'
 import PieChartLocation from '@/components/user/unit/PieChartLocation.vue'
 import SevrPatntListUnit from '@/components/user/unit/SevrPatntListUnit.vue'
-import PatntDetlModal from '@/components/user/modal/PatntDetlModal.vue'
+import PatntDetlModalV2 from '@/components/user/modal/PatntDetlModalV2.vue'
 import SvrtTrendChartUnit from '@/components/user/unit/SvrtTrendChartUnit.vue'
 import { reactive } from 'vue'
 
@@ -100,9 +100,7 @@ function closeModal() {
 </script>
 
 <style scoped>
-.card-header.p-8 {
-  padding-bottom: 22px;
-}
+
 .dashbd-table {
   width: 100%;
 }

@@ -27,10 +27,7 @@
                       <tr>
                         <td>
                           <article class="modal-profile-layout1">
-                            <div
-                              class="profile-card-box flex-column mx-auto"
-                              style="width: 264px"
-                            >
+                            <div class="profile-card-box flex-column mx-auto" style="width: 264px">
                               <div class="profile-view-box" style="width: 100%; height: 264px">
                                 <img v-if='!model.newPt.attcId' src='@/assets/img/img-no-img.webp' class='no-img' />
                                 <img v-if='model.newPt.attcId'
@@ -118,7 +115,7 @@
                               </div>
                             </div>
                           </div>
-                          <div v-if='validateInputStep1(1) && validateInputStep1(2)'
+                          <div v-if='validateInputStep1(1) || validateInputStep1(2)'
                                class='item-cell-box pt-2 text-danger'>
                             * 주민등록번호을 입력해 주세요.
                           </div>
@@ -360,8 +357,8 @@
              @confirm-alert='confirmAlert(model.alertIdx)' />
 
   <!--환자정보 존재 -->
-  <exist-patnt-modal v-if='model.openExistPtModal && props.existPt'
-                     :exist-pt='props.existPt' :new-pt='model.newPt'
+  <exist-patnt-modal v-if='model.openExistPtModal && model.existPt'
+                     :exist-pt='model.existPt' :new-pt='model.newPt'
                      @closePopup='closePopup' @closeExistPt='closeExistPtModal' />
 
 </template>
@@ -374,8 +371,9 @@ import { useStore } from 'vuex'
 import { API_PROD } from '@/util/constantURL'
 import axios from 'axios'
 import SbasAlert from '@/components/common/SbasAlert.vue'
-import { axios_cstm } from '@/util/axios_cstm'
+import { axios_cstm, isLoading } from '@/util/axios_cstm'
 import CloseButton from '@/components/common/CloseButton.vue'
+import { registerNewPt } from '@/store/modules/patnt'
 
 const props = defineProps({
   existPt: Object,
@@ -386,6 +384,7 @@ const store = useStore()
 onMounted(() => {
   if (props.existPt) {
     model.newPt = props.existPt
+    showImage(model.newPt.attcId)
   }
 })
 
@@ -399,6 +398,7 @@ const model = reactive({
     bascAddr: null, detlAddr: null, zip: null,
     undrDsesCd: [], undrDsesEtc: null,
   },
+  existPt: null,
   reportFile: null,
   epidReportImage: null,
   rptInfo: null,
@@ -414,36 +414,40 @@ const model = reactive({
 })
 
 function uploadRpt(event) {
-  const fileInput = event.target;
-  const file = fileInput.files[0];
+  const fileInput = event.target
+  const file = fileInput.files[0]
 
-  const formData = new FormData();
-  formData.append('param1', 'edidemreport');
-  formData.append('param2', file);
+  const formData = new FormData()
+  formData.append('param1', 'epidreport')
+  formData.append('param2', file)
 
   const token = sessionStorage.getItem('userToken')
   const url = `${API_PROD}/api/v1/private/patient/upldepidreport`
-  return new Promise(() => {
-    axios
-      .post(url, formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      .then((response) => {
-        const data = response.data
-        if (data.code === '00') {
-          setPatientInfo(data.result)
-          model.errMsg =
-            '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
-          model.isAlert = true
-
-          //역조서 이미지 미리보기 만들기
-          showImage(data.result.attcId)
+  isLoading.value = true
+  axios
+    .post(url, formData, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).then((response) => {
+      const data = response.data
+      if (data.code === '00') {
+        //역조서 이미지 미리보기 만들기
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          model.epidReportImage = e.target.result
         }
-      })
-      .catch((e) => {
-        console.log(e)
-      })
-  })
+        reader.readAsDataURL(file)
+
+        model.errMsg =
+          '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
+        model.isAlert = true
+
+        setPatientInfo(data.result)
+      }
+    }).catch((e) => {
+      console.log(e)
+    }).finally(() => {
+      isLoading.value = false
+    })
 }
 
 function setPatientInfo(result) {
@@ -454,23 +458,11 @@ function setPatientInfo(result) {
   }
 }
 
-function registerNewPt() {
-  const url = `${API_PROD}/api/v1/private/patient/regbasicinfo`
-  const request = model.newPt
-  return new Promise(() => {
-    axios_cstm()
-      .post(url, request)
-      .then((response) => {
-        const data = response.data
-        if (data.code === '00') {
-          model.alertIdx = 1
-          model.errMsg = '환자 정보가\n등록되었습니다.'
-          model.isAlert = true
-        }
-      })
-      .catch((e) => {
-        console.log(e)
-      })
+function register() {
+  registerNewPt(model.newPt, () => {
+    model.alertIdx = 1
+    model.errMsg = '환자 정보가\n등록되었습니다.'
+    model.isAlert = true
   })
 }
 
@@ -485,9 +477,9 @@ function isExistPt() {
         if (data.code === '00') {
           if (data.result.isExist) {
             model.openExistPtModal = true
+            model.existPt = data.result.items
           } else {
-            model.openExistPtModal = false
-            registerNewPt()
+            register()
           }
         }
       })
@@ -532,17 +524,17 @@ function filterNumericInput(idx) {
 
 function validateInputStep1(idx) {
   if (idx === 0) {
-    return model.newPt.ptNm === null && model.showErrorMsg
+    return (model.newPt.ptNm === null || model.newPt.ptNm === '') && model.showErrorMsg
   } else if (idx === 1) {
-    return model.newPt.rrno1 === null && model.showErrorMsg
+    return (model.newPt.rrno1 === null || model.newPt.rrno1 === '') && model.showErrorMsg
   } else if (idx === 2) {
-    return model.newPt.rrno2 === null && model.showErrorMsg
+    return (model.newPt.rrno2 === null || model.newPt.rrno2 === '') && model.showErrorMsg
   } else if (idx === 3) {
-    return model.newPt.bascAddr === null && model.showErrorMsg
+    return (model.newPt.bascAddr === null || model.newPt.bascAddr === '') && model.showErrorMsg
   } else if (idx === 4) {
-    return model.newPt.dethYn === null && model.showErrorMsg
+    return (model.newPt.dethYn === null || model.newPt.dethYn === '') && model.showErrorMsg
   } else if (idx === 5) {
-    return model.newPt.natiCd === null && model.showErrorMsg
+    return (model.newPt.natiCd === null || model.newPt.natiCd === '') && model.showErrorMsg
   }
 }
 

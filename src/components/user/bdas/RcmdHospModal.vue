@@ -1,5 +1,5 @@
 <template>
-  <div class='modal show' id="kt_modal_recommend" tabindex='-1' aria-hidden='true' >
+  <div class='modal show' id="kt_modal_recommend" tabindex='-1' >
     <!--begin::Modal dialog-->
     <div class='modal-dialog mw-1500px modal-dialog-centered'>
       <!--begin::Modal content-->

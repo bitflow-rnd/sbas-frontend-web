@@ -179,7 +179,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div v-if='validateInputStep1(1) && validateInputStep1(2)'
+                              <div v-if='validateInputStep1(1) || validateInputStep1(2)'
                                    class='item-cell-box pt-2 text-danger'>
                                 * 주민등록번호을 입력해 주세요.
                               </div>
@@ -345,7 +345,6 @@
                                   * 국적을 입력해 주세요.
                                 </div>
                               </div>
-
 
                             </td>
                           </tr>
@@ -1569,11 +1568,12 @@ import { defineEmits, defineProps, onMounted, reactive, watch } from 'vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import { getAge, getTelno, getGndr } from '@/util/ui'
 import { API_PROD } from '@/util/constantURL'
-import { axios_cstm } from '@/util/axios_cstm'
+import { axios_cstm, isLoading } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
 import SbasAlert from '@/components/common/SbasAlert.vue'
 import ExistPatntModal from '@/components/user/modal/ExistPatntModal.vue'
 import axios from 'axios'
+import { registerNewPt } from '@/store/modules/patnt'
 
 const props = defineProps({
   ptId: null,
@@ -1714,25 +1714,31 @@ function uploadRpt(event) {
 
   const token = sessionStorage.getItem('userToken')
   const url = `${API_PROD}/api/v1/private/patient/upldepidreport`
-
+  isLoading.value = true
   axios
     .post(url, formData, {
       headers: { Authorization: `Bearer ${token}` }
-    })
-    .then((response) => {
-      if (response.data.code === '00') {
+    }).then((response) => {
+      const data = response.data
+      if (data.code === '00') {
         //역조서 이미지 미리보기 만들기
         const reader = new FileReader()
         reader.onload = (e) => {
           model.epidReportImage = e.target.result
         }
         reader.readAsDataURL(file)
-        setPatientInfo(response.data.result)
-        setDsInfo(response.data.result)
+
+        model.errMsg =
+          '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
+        model.confirmAlert = true
+
+        setPatientInfo(data.result)
+        setDsInfo(data.result)
       }
-    })
-    .catch((error) => {
+    }).catch((error) => {
       console.log(error)
+    }).finally(() => {
+      isLoading.value = false
     })
 }
 
@@ -1813,7 +1819,7 @@ function isExistPt() {
             model.spInfo.ptId = data.result.items.ptId
             getEsvyInfo()
           } else {
-            registerNewPt()
+            register()
           }
         }
       })
@@ -1823,26 +1829,14 @@ function isExistPt() {
   }
 }
 
-function registerNewPt() {
-  const url = `${API_PROD}/api/v1/private/patient/regbasicinfo`
-  const request = model.newPt
-  return new Promise(() => {
-    axios_cstm()
-      .post(url, request)
-      .then((response) => {
-        const data = response.data
-        if (data.code === '00') {
-          model.errMsg = '환자 정보가\n등록되었습니다.'
-          model.dsInfo.ptId = data.result
-          model.svInfo.ptId = data.result
-          model.spInfo.ptId = data.result
-          model.confirmAlert = true
-          model.tab = model.tab + 1
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+function register() {
+  registerNewPt(model.newPt, () => {
+    model.errMsg = '환자 정보가\n등록되었습니다.'
+    model.dsInfo.ptId = data.result
+    model.svInfo.ptId = data.result
+    model.spInfo.ptId = data.result
+    model.confirmAlert = true
+    model.tab = model.tab + 1
   })
 }
 
@@ -1963,7 +1957,7 @@ function uploadEsvyImg() {
     const headers = {}
     const token = sessionStorage.getItem('userToken')
     headers.Authorization = `Bearer ${token}`
-
+    isLoading.value = true
     if (model.diagImgFiles.length > 0) {
       axios({
         method: 'post',
@@ -1978,6 +1972,8 @@ function uploadEsvyImg() {
         }
       }).catch((e) => {
         console.log(e)
+      }).finally(() => {
+        isLoading.value = false
       })
     } else {
       saveInfo()
@@ -1994,9 +1990,11 @@ function getEsvyInfo() {
         const data = response.data
         if (data.code === '00' && data.result !== null) {
           model.dsInfo = data.result
-          model.dsInfo.diagAttcId.split(';').forEach(attcId => {
-            readImage(attcId)
-          })
+          if (model.dsInfo.diagAttcId !== null || model.dsInfo.diagAttcId !== '') {
+            model.dsInfo.diagAttcId.split(';').forEach(attcId => {
+              readImage(attcId)
+            })
+          }
         }
       })
   }
@@ -2079,33 +2077,33 @@ function filterNumericInput(idx) {
 
 function validateInput(idx) {
   if (idx === 0) {
-    return model.svInfo.reqBedTypeCd === null && model.showErrorMsg
+    return (model.svInfo.reqBedTypeCd === null || model.svInfo.reqBedTypeCd === '') && model.showErrorMsg
   } else if (idx === 1) {
-    return model.svInfo.dnrAgreYn === null && model.showErrorMsg
+    return (model.svInfo.dnrAgreYn === null || model.svInfo.dnrAgreYn === '') && model.showErrorMsg
   } else if (idx === 2) {
-    return model.svInfo.svrtTypeCd === null && model.showErrorMsg
+    return (model.svInfo.svrtTypeCd === null || model.svInfo.svrtTypeCd === '') && model.showErrorMsg
   } else if (idx === 3) {
-    return model.spInfo.reqDstr1Cd === null && model.showErrorMsg
+    return (model.spInfo.reqDstr1Cd === null || model.spInfo.reqDstr1Cd === '') && model.showErrorMsg
   } else if (idx === 4) {
-    return model.spInfo.inhpAsgnYn === null && model.showErrorMsg
+    return (model.spInfo.inhpAsgnYn === null || model.spInfo.inhpAsgnYn === '') && model.showErrorMsg
   } else if (idx === 5) {
-    return model.spInfo.dprtDstrTypeCd === null && model.showErrorMsg
+    return (model.spInfo.dprtDstrTypeCd === null || model.spInfo.dprtDstrTypeCd === '') && model.showErrorMsg
   }
 }
 
 function validateInputStep1(idx) {
   if (idx === 0) {
-    return model.newPt.ptNm === null && model.showErrorMsg
+    return (model.newPt.ptNm === null || model.newPt.ptNm === '') && model.showErrorMsg
   } else if (idx === 1) {
-    return model.newPt.rrno1 === null && model.showErrorMsg
+    return (model.newPt.rrno1 === null || model.newPt.rrno1 === '') && model.showErrorMsg
   } else if (idx === 2) {
-    return model.newPt.rrno2 === null && model.showErrorMsg
+    return (model.newPt.rrno2 === null || model.newPt.rrno2 === '') && model.showErrorMsg
   } else if (idx === 3) {
-    return model.newPt.bascAddr === null && model.showErrorMsg
+    return (model.newPt.bascAddr === null || model.newPt.bascAddr === '') && model.showErrorMsg
   } else if (idx === 4) {
-    return model.newPt.dethYn === null && model.showErrorMsg
+    return (model.newPt.dethYn === null || model.newPt.dethYn === '') && model.showErrorMsg
   } else if (idx === 5) {
-    return model.newPt.natiCd === null && model.showErrorMsg
+    return (model.newPt.natiCd === null || model.newPt.natiCd === '') && model.showErrorMsg
   }
 }
 
