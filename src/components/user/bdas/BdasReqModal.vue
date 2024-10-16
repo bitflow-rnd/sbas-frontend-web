@@ -1990,9 +1990,11 @@ function getEsvyInfo() {
         const data = response.data
         if (data.code === '00' && data.result !== null) {
           model.dsInfo = data.result
-          model.dsInfo.diagAttcId.split(';').forEach(attcId => {
-            readImage(attcId)
-          })
+          if (model.dsInfo.diagAttcId !== null || model.dsInfo.diagAttcId !== '') {
+            model.dsInfo.diagAttcId.split(';').forEach(attcId => {
+              readImage(attcId)
+            })
+          }
         }
       })
   }
