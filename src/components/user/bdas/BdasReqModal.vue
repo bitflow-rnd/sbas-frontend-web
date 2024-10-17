@@ -1736,6 +1736,9 @@ function uploadRpt(event) {
         setDsInfo(data.result)
       }
     }).catch((error) => {
+      model.errMsg =
+        '역학조사서 인식에 실패했습니다.\n다시 한번 시도해주세요.'
+      model.isAlert = true
       console.log(error)
     }).finally(() => {
       isLoading.value = false
@@ -1830,7 +1833,7 @@ function isExistPt() {
 }
 
 function register() {
-  registerNewPt(model.newPt, () => {
+  registerNewPt(model.newPt, (data) => {
     model.errMsg = '환자 정보가\n등록되었습니다.'
     model.dsInfo.ptId = data.result
     model.svInfo.ptId = data.result

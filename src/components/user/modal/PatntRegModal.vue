@@ -444,6 +444,9 @@ function uploadRpt(event) {
         setPatientInfo(data.result)
       }
     }).catch((e) => {
+      model.errMsg =
+        '역학조사서 인식에 실패했습니다.\n다시 한번 시도해주세요.'
+      model.isAlert = true
       console.log(e)
     }).finally(() => {
       isLoading.value = false

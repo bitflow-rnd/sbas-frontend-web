@@ -222,9 +222,13 @@ export function registerNewPt(data, onSuccess, onError) {
     .then((response) => {
       const data = response.data
       if (data.code === '00') {
-        onSuccess()
+        onSuccess(data)
       }
     }).catch((e) => {
       console.error(e)
     })
+}
+
+export function uploadRpt() {
+
 }
