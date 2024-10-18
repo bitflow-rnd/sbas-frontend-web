@@ -50,6 +50,16 @@ const sampleData = [
     spclNm: '전문의'
   },
   {
+    pid: '0010006',
+    admsDt: '20241008',
+    monStrtDt: '20241008',
+    monStrtTm: '230000',
+    deptNm: '혈액종양내과',
+    wardNm: 'SICU',
+    roomNm: 'SICU',
+    spclNm: '전문의'
+  },
+  {
     pid: '0020001',
     admsDt: '20241003',
     monStrtDt: '20241003',
@@ -97,6 +107,16 @@ const sampleData = [
     deptNm: '외과',
     wardNm: 'ICU2',
     roomNm: 'ERW',
+    spclNm: '전문의'
+  },
+  {
+    pid: '0020006',
+    admsDt: '20241008',
+    monStrtDt: '20241008',
+    monStrtTm: '230000',
+    deptNm: '감염내과',
+    wardNm: '43병동',
+    roomNm: '4324',
     spclNm: '전문의'
   },
   {
