@@ -209,7 +209,7 @@
                               <div class='item-row-box'>
                                 <div class='item-cell-box full'>
                                   <div class='tbox full'>
-                                    <input type='text' v-model='model.newPt.bascAddr' />
+                                    <input type='text' v-model='model.newPt.bascAddr' readonly />
                                   </div>
                                   <div class='item-note-box flex-shrink-0 ms-2 text-black'></div>
                                 </div>
@@ -578,7 +578,7 @@
                               </div>
                             </article>
 
-                            <div class='item-note-box'>* 입원여부 선택</div>
+<!--                            <div class='item-note-box'>* 입원여부 선택</div>-->
                           </div>
                         </td>
                         <th>요양기관 기호 / 이름</th>
@@ -630,6 +630,7 @@
                               <div class='tbox full'>
                                 <input
                                     type='text'
+                                    readonly
                                     v-model='model.dsInfo.instAddr'
                                     placeholder='기본주소 입력'
                                 />
