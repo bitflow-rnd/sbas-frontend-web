@@ -485,14 +485,14 @@ function cfmTrsf() {
 }
 
 function openAlert() {
+  if (model.trsfInfo.chfTelno === 1) {
+    model.selectedTelno = model.trsfInfo.crew1Telno
+  } else if (model.trsfInfo.chfTelno === 2) {
+    model.selectedTelno = model.trsfInfo.crew2Telno
+  } else if (model.trsfInfo.chfTelno === 3) {
+    model.selectedTelno = model.trsfInfo.crew3Telno
+  }
   if (validateForm()) {
-    if (model.trsfInfo.chfTelno === 1) {
-      model.selectedTelno = model.trsfInfo.crew1Telno
-    } else if (model.trsfInfo.chfTelno === 2) {
-      model.selectedTelno = model.trsfInfo.crew2Telno
-    } else if (model.trsfInfo.chfTelno === 3) {
-      model.selectedTelno = model.trsfInfo.crew3Telno
-    }
     model.isAlert = true
     model.errMsg = '이송처리 하시겠습니까?'
     model.cncBtn = true
@@ -512,7 +512,9 @@ function validateInput(idx) {
   if (idx === 0) {
     return (model.selectedInst === null || model.selectedInst === '') && model.showErrorMsg
   } else if (idx === 1) {
-    return (model.trsfInfo.chfTelno === null || model.trsfInfo.chfTelno === '') && model.showErrorMsg
+    return (model.trsfInfo.chfTelno === null || model.trsfInfo.chfTelno === ''
+      || model.selectedTelno === null || model.selectedTelno === '' || model.selectedTelno === undefined)
+      && model.showErrorMsg
   }
 }
 
@@ -521,11 +523,19 @@ function validateForm() {
   const requiredFields = {
     instId: { idx: 0 },
     chfTelno: { idx: 1 },
+    selectedTelno: { idx: 2 },
   }
 
   for (const field in requiredFields) {
     let showErrorMsg = false
-    if (!data[field]) {
+
+    if (field === 'selectedTelno') {
+      if (model.selectedTelno === null || model.selectedTelno === '' || model.selectedTelno === undefined) {
+        showErrorMsg = true
+        model.showErrorMsg = showErrorMsg
+        return false
+      }
+    } else if (!data[field]) {
       showErrorMsg = true
       model.showErrorMsg = showErrorMsg
       return false
