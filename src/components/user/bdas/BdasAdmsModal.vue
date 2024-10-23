@@ -202,7 +202,7 @@
                 이전
               </a>
               <a class='modal-menu-btn menu-primary'
-                 @click='confirm' >
+                 @click='openAlert' >
                 입·퇴원 처리 완료
               </a>
             </div>
@@ -215,7 +215,12 @@
     <!--end::Modal dialog-->
   </div>
 
+  <!-- 입퇴원 처리 확인 Alert -->
   <SbasAlert :is-alert='model.isAlert' :err-msg='model.errMsg' :cnc-btn='model.cncBtn'
+             @confirm-alert='cfmHosp' @alert-close='closeAlert' />
+
+  <!-- 입퇴원 처리 완료 Alert -->
+  <SbasAlert :is-alert='model.confirmAlert' :err-msg='model.errMsg' :cnc-btn='model.cncBtn'
              @confirm-alert='closeModal' />
 
 </template>
@@ -248,12 +253,13 @@ const model = reactive({
     pid: '',
   },
   isAlert: false,
+  confirmAlert: false,
   errMsg: '',
   cncBtn: false,
   showErrorMsg: false,
 })
 
-function confirm() {
+function openAlert() {
   if (validateForm() && checkPid()) {
     const sampleData = getHisSampleData(model.hosptlzdiscg.pid)
     if (sampleData === null) {
@@ -273,7 +279,9 @@ function confirm() {
       model.hosptlzdiscg.monStrtDt = sampleData.monStrtDt
       model.hosptlzdiscg.monStrtTm = sampleData.monStrtTm
     }
-    cfmHosp()
+    model.isAlert = true
+    model.errMsg = '입퇴원 처리 하시겠습니까?'
+    model.cncBtn = true
   }
 }
 
@@ -284,7 +292,7 @@ function cfmHosp() {
     .then((response) => {
       const data = response.data
       if (data.code === '00') {
-        model.isAlert = true
+        model.confirmAlert = true
         model.errMsg = '입·퇴원 처리가 완료되었습니다.'
       }
     })
@@ -327,6 +335,10 @@ function validateForm() {
     }
   }
   return true
+}
+
+function closeAlert() {
+  model.isAlert = false
 }
 
 function closeModal() {
