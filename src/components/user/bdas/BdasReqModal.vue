@@ -1739,7 +1739,7 @@ function uploadRpt(event) {
     }).catch((error) => {
       model.errMsg =
         '역학조사서 인식에 실패했습니다.\n다시 한번 시도해주세요.'
-      model.isAlert = true
+      model.confirmAlert = true
       console.log(error)
     }).finally(() => {
       isLoading.value = false
@@ -1768,6 +1768,7 @@ function setPatientInfo(result) {
 
 function setDsInfo(result) {
   model.dsInfo.rcptPhc = result.rcptPhc
+  model.selectPhcType = 'direct'
   model.dsInfo.diagNm = result.diagNm
   model.dsInfo.diagGrde = result.diagGrde
   model.dsInfo.cv19Symp = result.cv19Symp
@@ -1875,7 +1876,6 @@ function bedRequest() {
       if (response.data.code === '00') {
         model.isAlert = true
         model.errMsg = "병상요청이 완료되었습니다."
-        closeAll()
       }
     })
     .catch((error) => {

@@ -285,6 +285,7 @@
 
   <!--  신규병상요청   -->
   <BedRequestModal v-if='showPatnt' @close-patnt-request='closePatntRequest'
+                   @closeDetailModal='closeModal(0)'
                    :pt-id='newPt.ptId' />
 
 </template>
