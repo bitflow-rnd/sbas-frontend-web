@@ -53,14 +53,24 @@ onMounted(() => {
 })
 
 function getImage() {
-  const url = `${API_PROD}/api/v1/private/common/image/${props.item.attcId}`
+  const url = `${API_PROD}/api/v1/private/common/images/${props.item.attcId}`
   axios({
     method: 'get',
     url: url,
-    responseType: 'arraybuffer'
+    // responseType: 'arraybuffer'
   }).then((response) => {
-    const blob = new Blob([response.data], { type: 'image/jpeg' })
-    model.imgUrl = URL.createObjectURL(blob)
+    console.log(response)
+    response.data.result.items.forEach((item) => {
+      const decodedData = atob(item)
+
+      const byteArray = new Uint8Array(decodedData.length)
+      for (let i = 0; i < decodedData.length; i++) {
+        byteArray[i] = decodedData.charCodeAt(i)
+      }
+
+      const blob = new Blob([byteArray], { type: 'image/jpeg' })
+      model.imgUrl = URL.createObjectURL(blob)
+    })
   })
 }
 
