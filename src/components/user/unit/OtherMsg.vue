@@ -12,9 +12,9 @@
         <!--end::Avatar-->
         <!--begin::Details-->
         <div class="ms-3">
-          <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">{{
-            props.item.rgstUserId
-          }}</a>
+          <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">
+            {{ props.item['instNm'] }} / {{ props.item['userNm'] }}
+          </a>
           <span class="text-muted fs-7 mb-1">{{ TimestampToDateWithDot(props.item.rgstDttm) }}</span>
         </div>
         <!--end::Details-->
