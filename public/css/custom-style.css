@@ -3005,7 +3005,6 @@ input[type=checkbox] + i, .form-body-box select, .form-body-box input[type=text]
 .form-body-box input, .card-header input[type=text]
 , .form-body-box input[type=password] { border-radius: 30px; color: #888; }
 .form-body-box .sbox select { line-height: initial; }
-.message-room-in { padding-bottom: 100px; }
 .message-room-in div.rounded {
   font-weight: normal !important;
   font-size: 1.4rem;

@@ -173,6 +173,8 @@ function onFileChange(event) {
   const fileInput = event.target
   const file = fileInput.files[0]
 
+  if (!file) return
+
   const formData = new FormData()
   formData.append('param1', 'chat-image')
   formData.append('param2', file)
@@ -218,7 +220,7 @@ h2 {
 }
 .card-body {
   overflow-y: scroll;
-  max-height: 855px;
+  height: 75vh;
 }
 .card-body > .scroll-y > div + div {
   margin-top: 24px;
