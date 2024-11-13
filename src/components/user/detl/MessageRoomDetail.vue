@@ -36,7 +36,7 @@
           <div class="msg-group-box">
             <div class="img-upload-box">
               <label>
-                <input type="file" />
+                <input type="file" @change='onFileChange' accept='image/*' />
                 <img src="/img/common/ic_msg_img_upload.svg" alt="이미지" />
               </label>
             </div>
@@ -64,6 +64,9 @@ import { useStore } from 'vuex'
 import MyMsg from '@/components/user/unit/MyMsg.vue'
 import OtherMsg from '@/components/user/unit/OtherMsg.vue'
 import { ref } from 'vue'
+import { API_PROD } from '@/util/constantURL'
+import { isLoading } from '@/util/axios_cstm'
+import axios from 'axios'
 
 const store = useStore()
 const chatRoomScroll = ref()
@@ -165,6 +168,40 @@ function sendMessage() {
   model.messageTxt = ''
   // loadMessages()
 }
+
+function onFileChange(event) {
+  const fileInput = event.target
+  const file = fileInput.files[0]
+
+  if (!file) return
+
+  const formData = new FormData()
+  formData.append('param1', 'chat-image')
+  formData.append('param2', file)
+
+  const url = `${API_PROD}/api/v1/private/common/upload`
+  const headers = {}
+  const token = sessionStorage.getItem('userToken')
+  headers.Authorization = `Bearer ${token}`
+  isLoading.value = true
+  axios({
+    method: 'post',
+    url: url,
+    data: formData,
+    headers: headers,
+  }).then((response) => {
+    const data = response.data
+    if (data.code === '00') {
+      const attcGrpId = data.result.attcGrpId
+      socket.send(`${model.userInfo.id}|attcId:${attcGrpId}|${messageTxt.value.value}`)
+    }
+  }).catch((e) => {
+    console.log(e)
+  }).finally(() => {
+    isLoading.value = false
+  })
+}
+
 </script>
 
 <style scoped>
@@ -183,7 +220,7 @@ h2 {
 }
 .card-body {
   overflow-y: scroll;
-  max-height: 855px;
+  height: 75vh;
 }
 .card-body > .scroll-y > div + div {
   margin-top: 24px;

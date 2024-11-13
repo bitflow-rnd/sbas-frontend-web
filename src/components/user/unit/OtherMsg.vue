@@ -12,9 +12,9 @@
         <!--end::Avatar-->
         <!--begin::Details-->
         <div class="ms-3">
-          <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">{{
-            props.item.rgstUserId
-          }}</a>
+          <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">
+            {{ props.item['instNm'] }} / {{ props.item['userNm'] }}
+          </a>
           <span class="text-muted fs-7 mb-1">{{ TimestampToDateWithDot(props.item.rgstDttm) }}</span>
         </div>
         <!--end::Details-->
@@ -55,7 +55,7 @@ import axios from 'axios'
 const props = defineProps(['item'] )
 
 const model = reactive({
-  imgUrl: null,
+  imgUrl: '',
   visibleRef: false,
   imgsRef: '',
   indexRef: 0,
@@ -68,14 +68,24 @@ onMounted(() => {
 })
 
 function getImage() {
-  const url = `${API_PROD}/api/v1/private/common/image/${props.item.attcId}`
+  const url = `${API_PROD}/api/v1/private/common/images/${props.item.attcId}`
   axios({
     method: 'get',
     url: url,
-    responseType: 'arraybuffer'
+    // responseType: 'arraybuffer'
   }).then((response) => {
-    const blob = new Blob([response.data], { type: 'image/jpeg' })
-    model.imgUrl = URL.createObjectURL(blob)
+    console.log(response)
+    response.data.result.items.forEach((item) => {
+      const decodedData = atob(item)
+
+      const byteArray = new Uint8Array(decodedData.length)
+      for (let i = 0; i < decodedData.length; i++) {
+        byteArray[i] = decodedData.charCodeAt(i)
+      }
+
+      const blob = new Blob([byteArray], { type: 'image/jpeg' })
+      model.imgUrl = URL.createObjectURL(blob)
+    })
   })
 }
 
