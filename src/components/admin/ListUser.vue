@@ -1567,7 +1567,7 @@
 import { mapState } from 'vuex'
 import { ref } from 'vue'
 import { getGugun, getSido, getTelno, toggleCheckbox } from '@/util/ui'
-import DataPagination from '@/components/user/cpnt/DataPagination.vue'
+import DataPagination from '@/components/user/unit/DataPagination.vue'
 import { JobCode } from '@/util/sbas_cnst'
 import UserDetailAdminModal from '@/components/admin/UserDetailAdminModal.vue'
 

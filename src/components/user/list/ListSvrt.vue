@@ -290,7 +290,7 @@
 </template>
 
 <script>
-import DataPagination from '@/components/user/cpnt/DataPagination.vue'
+import DataPagination from '@/components/user/unit/DataPagination.vue'
 import { mapState } from 'vuex'
 import SvrtChartUnitNoTitle from '@/components/user/unit/SvrtChartUnitNoTitle.vue'
 import { TimestampToDateWithDot, formatYyyyMmDd, toggleCheckbox } from '@/util/ui'

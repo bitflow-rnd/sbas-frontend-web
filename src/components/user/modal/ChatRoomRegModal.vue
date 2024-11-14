@@ -283,7 +283,7 @@ import { computed, defineEmits, defineProps, onMounted, reactive, watch } from '
 import { API_PROD } from '@/util/constantURL'
 import { axios_cstm } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
-import DataPagination from '@/components/user/cpnt/DataPagination.vue'
+import DataPagination from '@/components/user/unit/DataPagination.vue'
 import CloseButton from '@/components/common/CloseButton.vue'
 import SbasAlert from '@/components/common/SbasAlert.vue'
 

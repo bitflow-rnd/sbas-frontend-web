@@ -548,7 +548,7 @@
 </template>
 
 <script>
-import DataPagination from '@/components/user/cpnt/DataPagination.vue'
+import DataPagination from '@/components/user/unit/DataPagination.vue'
 import { mapState, useStore } from 'vuex'
 import { ref } from 'vue'
 import { getDtBlue, getSido, getTag, maskingNm, reqBedType } from '@/util/ui'

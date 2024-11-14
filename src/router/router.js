@@ -6,11 +6,6 @@ const routes = [
     component: () => import('@/components/common/LoginView.vue')
   },
   {
-    path: '/idfysms',
-    name: 'idfysms',
-    component: () => import('@/components/common/IdfySms.vue')
-  },
-  {
     path: '/initpw',
     name: 'initpw',
     component: () => import('@/components/common/InitPw.vue')

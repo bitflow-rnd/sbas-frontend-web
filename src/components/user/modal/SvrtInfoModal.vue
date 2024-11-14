@@ -148,7 +148,7 @@
 <script setup>
 import { defineEmits, defineProps, onMounted, reactive } from 'vue'
 import { useStore } from 'vuex'
-import DataPagination from '@/components/user/cpnt/DataPagination.vue'
+import DataPagination from '@/components/user/unit/DataPagination.vue'
 import { getTag } from '@/util/ui'
 import { axios_cstm } from '@/util/axios_cstm'
 import { API_PROD } from '@/util/constantURL'
