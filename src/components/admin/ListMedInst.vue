@@ -556,11 +556,11 @@
                                 <img src="/img/common/img_profile_default.svg" alt="이미지" />
                               </td>
                               <td>{{ items.dutyDstr1Cd }}</td>
-                              <td>{{ items.ocpCd }}</td>
-                              <td>{{ items.userNm }}</td>
-                              <td>{{ items.ptTypeCdNm }}</td>
-                              <td>{{ items.jobCd }}</td>
-                              <td>{{ items.authCd }}</td>
+                              <td>{{ items.ocpCd ?? '-' }}</td>
+                              <td>{{ items.userNm ?? '-' }}</td>
+                              <td>{{ items.ptTypeCdNm ?? '-' }}</td>
+                              <td>{{ items.jobCd ?? '-' }}</td>
+                              <td>{{ items.authCd ?? '-' }}</td>
                               <td>{{ getUpDt(items.rgstDttm) }}</td>
                               <td>{{ getUpDt(items.updtDttm) }}</td>
                               <td>{{ items.userStatCdNm }}</td>
