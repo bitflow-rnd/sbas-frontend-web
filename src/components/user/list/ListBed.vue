@@ -762,7 +762,6 @@ export default {
         this.$store.commit('bedasgn/setDisesInfo', null)
         this.$store.commit('bedasgn/setTimeline', null)
         this.$store.commit('patnt/setBasicInfo', null)
-        this.$store.commit('patnt/setRpt', null)
         this.newPt = this.initNewPt
         this.dsInfo = this.initDsInfo
         const filterDataWithoutBedStatCd = { ...this.filterData };
@@ -798,7 +797,6 @@ export default {
       this.dsInfo = JSON.parse(JSON.stringify(this.initDsInfo))
       this.svInfo = this.initSvInfo
       this.spInfo = this.initSpInfo
-      this.$store.commit('patnt/setRpt', null)
       this.preRpt = null
       this.undrDsesCdArr = []
     },

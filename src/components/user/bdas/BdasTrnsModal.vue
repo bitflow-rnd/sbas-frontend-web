@@ -144,7 +144,7 @@
                     <td colspan='3'>
                       <div class='item-cell-box'>
                         <div v-if='model.firemenList' class='sbox' style='width: 128px'>
-                          <select v-model='model.selectedFm2' @change='fillFiremen(model.selectedFm2, 2)' >
+                          <select v-model='model.selectedFm2' @change='fillFiremen(model.selectedFm2, 2)' :disabled='!model.trsfInfo.crew1Nm' >
                             <option value='null'>구급대원 선택</option>
                             <option
                               v-for='(item, i) in model.firemenList'
@@ -194,7 +194,7 @@
                     <td colspan='3'>
                       <div class='item-cell-box'>
                         <div v-if='model.firemenList' class='sbox' style='width: 128px'>
-                          <select v-model='model.selectedFm3' @change='fillFiremen(model.selectedFm3, 3)' >
+                          <select v-model='model.selectedFm3' @change='fillFiremen(model.selectedFm3, 3)' :disabled='!model.trsfInfo.crew2Nm' >
                             <option value='null'>구급대원 선택</option>
                             <option
                               v-for='(item, i) in model.firemenList'
@@ -251,7 +251,7 @@
                               :value='1'
                               type='radio'
                             />
-                            <span class='txt'>대원#1</span>
+                            <span class='txt' :class="{ 'crew-select': !model.trsfInfo.crew2Nm && !model.trsfInfo.crew3Nm }" >대원#1</span>
                           </label>
 
                           <label v-show='model.trsfInfo.crew2Nm'>
@@ -260,7 +260,7 @@
                               :value='2'
                               type='radio'
                             />
-                            <span class='txt'>대원#2</span>
+                            <span class='txt' :class="{ 'crew-select': model.trsfInfo.crew2Nm && !model.trsfInfo.crew3Nm }">대원#2</span>
                           </label>
 
                           <label v-show='model.trsfInfo.crew3Nm'>
@@ -269,7 +269,7 @@
                               :value='3'
                               type='radio'
                             />
-                            <span class='txt'>대원#3</span>
+                            <span class='txt' :class="{ 'crew-select': model.trsfInfo.crew3Nm }">대원#3</span>
                           </label>
                         </div>
                         <div v-if='validateInput(1)' class='item-row-box pt-2 text-danger'>
@@ -549,10 +549,28 @@ function closeAlert() {
 }
 
 function fillFiremen(data, idx) {
-  model.trsfInfo[`crew${idx}Id`] = data.crewId
-  model.trsfInfo[`crew${idx}Pstn`] = data.pstn
-  model.trsfInfo[`crew${idx}Nm`] = data.crewNm
-  model.trsfInfo[`crew${idx}Telno`] = data.telno
+  const isNullData = data === 'null'
+
+  if (isNullData) {
+    if (idx === 1) {
+      model.selectedFm2 = model.selectedFm3 = null;
+      ['crew1', 'crew2', 'crew3'].forEach(crew => {
+        model.trsfInfo[`${crew}Id`] = model.trsfInfo[`${crew}Pstn`] =
+          model.trsfInfo[`${crew}Nm`] = model.trsfInfo[`${crew}Telno`] = null
+      });
+    } else if (idx === 2) {
+      model.selectedFm3 = null;
+      ['crew2', 'crew3'].forEach(crew => {
+        model.trsfInfo[`${crew}Id`] = model.trsfInfo[`${crew}Pstn`] =
+          model.trsfInfo[`${crew}Nm`] = model.trsfInfo[`${crew}Telno`] = null
+      });
+    }
+  } else {
+    model.trsfInfo[`crew${idx}Id`] = data.crewId
+    model.trsfInfo[`crew${idx}Pstn`] = data.pstn
+    model.trsfInfo[`crew${idx}Nm`] = data.crewNm
+    model.trsfInfo[`crew${idx}Telno`] = data.telno
+  }
 }
 
 function closeModal() {
@@ -573,6 +591,11 @@ function closeModal() {
 
 .list-table-hoverable tr:hover td {
   background-color: #74afeb22;
+}
+
+.crew-select {
+  border-top-right-radius: 6px !important;
+  border-bottom-right-radius: 6px !important;
 }
 
 </style>

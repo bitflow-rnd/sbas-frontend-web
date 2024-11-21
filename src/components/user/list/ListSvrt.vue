@@ -461,7 +461,6 @@ export default {
         this.$store.commit('bedasgn/setDisesInfo', null)
         this.$store.commit('bedasgn/setTimeline', null)
         this.$store.commit('patnt/setBasicInfo', null)
-        this.$store.commit('patnt/setRpt', null)
         this.search()
       }
     },

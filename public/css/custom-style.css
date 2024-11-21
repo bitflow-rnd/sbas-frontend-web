@@ -2986,7 +2986,6 @@ article.toggle-list-layout2 .toggle-list label .txt {
   color: #595959;
 }
 article.toggle-list-layout2 .toggle-list label:first-child .txt {
-  border-right-width: 0;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
 }
