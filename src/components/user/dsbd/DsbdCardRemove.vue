@@ -15,7 +15,7 @@
           <input type='hidden' name='cardIdx'>
           <div class='modal-menu-list'>
             <a @click='closePopup' class='modal-menu-btn menu-cancel' data-type='cancel'>취소</a>
-            <a @click='' class='modal-menu-btn menu-primary' data-type='success'>확인</a>
+            <a @click='confirm' class='modal-menu-btn menu-primary' data-type='success'>확인</a>
           </div>
         </article>
       </div>
@@ -26,6 +26,15 @@
 import { defineEmits } from 'vue'
 
 const emits = defineEmits(['closePopup'])
+const props = defineProps({
+  idx: 0,
+  cardItemList: Array,
+})
+
+function confirm() {
+  props.cardItemList.splice(props.idx, 1)
+  closePopup()
+}
 
 function closePopup() {
   emits('closePopup')

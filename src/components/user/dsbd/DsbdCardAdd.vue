@@ -51,13 +51,13 @@
 
 <script setup>
 import CloseButton from '@/components/common/CloseButton.vue'
-import { defineEmits, reactive } from 'vue'
+import { defineEmits, defineProps, reactive } from 'vue'
 import { axios_cstm } from '@/util/axios_cstm'
 import { API_PROD } from '@/util/constantURL'
 
 const emits = defineEmits(['closePopup'])
 const props = defineProps({
-  cardItemList: [],
+  cardItemList: Array,
 })
 
 const model = reactive({
@@ -84,9 +84,22 @@ function addItem() {
         const filteredData = response.data.result.filter(item =>
           selectedItems.includes(item.title)
         )
-        props.cardItemList.push(...filteredData)
+        // filteredData의 title을 model.bedStat의 value에 맞는 name으로 변경
+        const updatedData = filteredData.map(item => {
+          const matchingBedStat = model.bedStat.find(stat => stat.value === item.title)
+          if (matchingBedStat) {
+            return {
+              ...item,
+              title: matchingBedStat.name
+            }
+          }
+          return item // 일치하는 값이 없으면 원래 항목 그대로 반환
+        })
+
+        // 변경된 데이터를 cardItemList에 추가
+        props.cardItemList.push(...updatedData)
         closePopup()
-        console.log('성공', filteredData)
+        console.log('성공', updatedData)
       }
     })
     .catch((e) => {
