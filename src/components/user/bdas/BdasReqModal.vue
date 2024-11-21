@@ -28,7 +28,7 @@
         <div class='modal-body scroll-y py-10 px-10'>
           <article class='request-step-layout'>
             <div class='step-list'>
-              <div class='step-box' :class='{ active: model.tab === 0 }'>
+              <div class='step-box' :class='{ active: model.tab === 0 }' role='button' @click='changeTab(0)'>
                 <div class='order-box'>1</div>
                 <div class='info-box'>
                   <div class='subject-box'>1단계</div>
@@ -39,7 +39,7 @@
                 </div>
               </div>
 
-              <div class='step-box' :class='{ active: model.tab === 1 }'>
+              <div class='step-box' :class='{ active: model.tab === 1 }' role='button' @click='changeTab(1)'>
                 <div class='order-box'>2</div>
                 <div class='info-box'>
                   <div class='subject-box'>2단계</div>
@@ -47,7 +47,7 @@
                 </div>
               </div>
 
-              <div class='step-box' :class='{ active: model.tab === 2 }'>
+              <div class='step-box' :class='{ active: model.tab === 2 }' role='button' @click='changeTab(2)'>
                 <div class='order-box'>3</div>
                 <div class='info-box'>
                   <div class='subject-box'>3단계</div>
@@ -55,7 +55,7 @@
                 </div>
               </div>
 
-              <div class='step-box' :class='{ active: model.tab === 3 }'>
+              <div class='step-box' :class='{ active: model.tab === 3 }' role='button' @click='changeTab(3)'>
                 <div class='order-box'>4</div>
                 <div class='info-box'>
                   <div class='subject-box'>4단계</div>
@@ -1847,6 +1847,10 @@ function saveInfo() {
       }
     })
     .catch((error) => {
+      if (error.response.data.code === '01' && error.response.status === 400) {
+        model.confirmAlert = true
+        model.errMsg = "필수 입력값을 확인해주세요."
+      }
       console.log(error)
     })
 }
@@ -1872,6 +1876,10 @@ function bedRequest() {
       }
     })
     .catch((error) => {
+      if (error.response.data.code === '01' && error.response.status === 400) {
+        model.confirmAlert = true
+        model.errMsg = "필수 입력값을 확인해주세요."
+      }
       console.log(error)
     })
 }
@@ -2173,6 +2181,10 @@ function closePopup() {
   model.confirmAlert = false
   model.openExistPtModal = false
   model.epidConfirmAlert = false
+}
+
+function changeTab(idx) {
+  model.tab = idx
 }
 
 </script>

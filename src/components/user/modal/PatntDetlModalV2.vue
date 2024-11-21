@@ -185,7 +185,7 @@
 
                         <div class='img-box' v-if='!bdasHisInfo.items || bdasHisInfo.items.length===0'>
                           <img src='/img/common/img_nodata.svg' alt='이미지'>
-                          <h2 data-v-70fc8ce7=''>최근 이력 없음</h2>
+                          <h2 style='text-align: center'>최근 이력 없음</h2>
                         </div>
 
                       </div>
@@ -273,9 +273,9 @@
                       </ul>
                     </div>
 
-                    <div v-if='timeline === null' class='img-box' data-v-70fc8ce7=''><img
-                        src='/img/common/img_nodata.svg' alt='이미지' data-v-70fc8ce7=''>
-                      <h2 data-v-70fc8ce7=''>최근 이력 없음</h2></div>
+                    <div v-if='timeline === null' class='img-box'><img
+                        src='/img/common/img_nodata.svg' alt='이미지'>
+                      <h2 style='text-align: center'>최근 이력 없음</h2></div>
                     <div class='detail-foot-box pb-5'>
                       <article class='msg-send-layout1'>
                         <div class='img-upload-result'>
