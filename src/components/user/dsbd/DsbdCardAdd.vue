@@ -24,13 +24,12 @@
               <div v-for='(item, idx) in model.bedStat' :key='idx' class='row mt-3' :class="{'mt-4': idx > 0}">
                 <div class='cbox'>
                   <label>
-                    <input type='checkbox' v-model='model.selectedItems' :value='item.value'><i></i>
+                    <input type='checkbox' v-model='model.selectedItemList' :value='item.value'><i></i>
                     <span class='txt'>{{item.name}}</span>
                   </label>
                 </div>
               </div>
             </div>
-
           </div>
 
           <article class='modal-menu-layout1'>
@@ -41,12 +40,13 @@
             </div>
           </article>
         </div>
-
       </div>
-
     </div>
-
   </article>
+
+  <SbasAlert :is-alert='model.confirmAlert' :err-msg='model.errMsg'
+             @confirm-alert='closeAlert' />
+
 </template>
 
 <script setup>
@@ -54,6 +54,7 @@ import CloseButton from '@/components/common/CloseButton.vue'
 import { defineEmits, defineProps, reactive } from 'vue'
 import { axios_cstm } from '@/util/axios_cstm'
 import { API_PROD } from '@/util/constantURL'
+import SbasAlert from '@/components/common/SbasAlert.vue'
 
 const emits = defineEmits(['closePopup'])
 const props = defineProps({
@@ -68,13 +69,16 @@ const model = reactive({
     { name: '입/퇴원처리 현황', value: 'BAST0007' },
     // { name: '불가 처리 현황', value: 'BAST0008' },
   ],
-  selectedItems: [],
+  dsbdItemList: [],
+  selectedItemList: [],
+  confirmAlert: false,
+  errMsg: '',
 })
 
 function addItem() {
   const period = '180'
   const url = `${API_PROD}/api/v1/public/dsbd/bedStat/${period}`
-  const selectedItems = model.selectedItems
+  const selectedItems = model.selectedItemList
 
   console.log(selectedItems.includes('BAST0003'))
 
@@ -84,6 +88,7 @@ function addItem() {
         const filteredData = response.data.result.filter(item =>
           selectedItems.includes(item.title)
         )
+        model.dsbdItemList = filteredData
         // filteredData의 title을 model.bedStat의 value에 맞는 name으로 변경
         const updatedData = filteredData.map(item => {
           const matchingBedStat = model.bedStat.find(stat => stat.value === item.title)
@@ -93,18 +98,40 @@ function addItem() {
               title: matchingBedStat.name
             }
           }
-          return item // 일치하는 값이 없으면 원래 항목 그대로 반환
+          return item
         })
 
         // 변경된 데이터를 cardItemList에 추가
         props.cardItemList.push(...updatedData)
-        closePopup()
+        saveDsbdItem()
+        model.confirmAlert = true
+        model.errMsg = '대시보드에 추가되었습니다.'
         console.log('성공', updatedData)
       }
     })
     .catch((e) => {
       console.error('실패', e)
     })
+}
+
+function saveDsbdItem() {
+  const url = `${API_PROD}/api/v1/private/dsbd`
+  const request = model.dsbdItemList
+  console.log(request)
+  axios_cstm().post(url, request)
+    .then((response) => {
+      if (response.data?.code === '00') {
+        console.log('성공')
+      }
+    })
+    .catch((e) => {
+      console.error('실패', e)
+    })
+}
+
+function closeAlert() {
+  model.confirmAlert = false
+  emits('closePopup')
 }
 
 function closePopup() {
