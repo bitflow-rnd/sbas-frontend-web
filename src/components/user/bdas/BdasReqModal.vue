@@ -1761,6 +1761,7 @@ function setPatientInfo(result) {
 
 function setDsInfo(result) {
   model.dsInfo.rcptPhc = result.rcptPhc
+  model.selectPhcType = 'direct'
   model.dsInfo.diagNm = result.diagNm
   model.dsInfo.diagGrde = result.diagGrde
   model.dsInfo.cv19Symp = result.cv19Symp
@@ -1872,7 +1873,6 @@ function bedRequest() {
       if (response.data.code === '00') {
         model.isAlert = true
         model.errMsg = "병상요청이 완료되었습니다."
-        closeAll()
       }
     })
     .catch((error) => {
