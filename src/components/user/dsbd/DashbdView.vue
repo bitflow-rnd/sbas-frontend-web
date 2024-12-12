@@ -426,7 +426,7 @@
                     </div>
                   </div>
                   <div class='card-box' v-for='(item, idx) in model.cardItemList' :key='idx'>
-                    <DsbdCardItem v-if='model.cardItemList.length > 0' :cardItem='item' @openRemovePopup='openRemovePopup' />
+                    <DsbdCardItem v-if='model.cardItemList.length > 0' :cardItem='item' @openRemovePopup='openRemovePopup(idx)' />
                   </div>
 
 <!--                  <a class="card-box" role='button' @click='openAddPopup'>-->
@@ -450,15 +450,15 @@
   <!--end:::Main-->
 
   <!-- 현황카드 삭제 -->
-  <DsbdCardRemove v-if='model.removePopup' @closePopup='closePopup' />
+  <DsbdCardRemove v-if='model.removePopup' :cardItemList='model.cardItemList' :idx='model.idx' @closePopup='closePopup' />
 
   <!-- 현황카드 항목선택 -->
-  <DsbdCardSelect :cardItemList='model.cardItemList' v-if='model.addPopup' @closePopup='closePopup' />
+  <DsbdCardAdd :cardItemList='model.cardItemList' v-if='model.addPopup' @closePopup='closePopup' />
 
 </template>
 
 <script setup>
-import DsbdCardSelect from '@/components/user/dsbd/DsbdCardAdd.vue'
+import DsbdCardAdd from '@/components/user/dsbd/DsbdCardAdd.vue'
 import DsbdCardRemove from '@/components/user/dsbd/DsbdCardRemove.vue'
 import { reactive } from 'vue'
 import DsbdCardItem from '@/components/user/dsbd/DsbdCardItem.vue'
@@ -468,13 +468,15 @@ const model = reactive({
   addPopup: false,
   removePopup: false,
   cardItemList: [],
+  idx: 0,
 })
 
 function openAddPopup() {
   model.addPopup = true
 }
 
-function openRemovePopup() {
+function openRemovePopup(idx) {
+  model.idx = idx
   model.removePopup = true
 }
 

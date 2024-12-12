@@ -364,16 +364,15 @@
 </template>
 
 <script setup>
-import { defineProps, reactive, defineEmits, onMounted } from 'vue'
+import { defineEmits, defineProps, onMounted, reactive } from 'vue'
 import ExistPatntModal from '@/components/user/modal/ExistPatntModal.vue'
 import { getAge, getGndr } from '@/util/ui'
 import { useStore } from 'vuex'
 import { API_PROD } from '@/util/constantURL'
-import axios from 'axios'
 import SbasAlert from '@/components/common/SbasAlert.vue'
-import { axios_cstm, isLoading } from '@/util/axios_cstm'
+import { axios_cstm } from '@/util/axios_cstm'
 import CloseButton from '@/components/common/CloseButton.vue'
-import { registerNewPt } from '@/store/modules/patnt'
+import { registerNewPt, upldEpidRpt } from '@/store/modules/patnt'
 
 const props = defineProps({
   existPt: Object,
@@ -421,36 +420,29 @@ function uploadRpt(event) {
   formData.append('param1', 'epidreport')
   formData.append('param2', file)
 
-  const token = sessionStorage.getItem('userToken')
-  const url = `${API_PROD}/api/v1/private/patient/upldepidreport`
-  isLoading.value = true
-  axios
-    .post(url, formData, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).then((response) => {
-      const data = response.data
-      if (data.code === '00') {
-        //역조서 이미지 미리보기 만들기
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          model.epidReportImage = e.target.result
-        }
-        reader.readAsDataURL(file)
+  const onSuccess = (data) => {
+    //역조서 이미지 미리보기 만들기
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      model.epidReportImage = e.target.result
+    }
+    reader.readAsDataURL(file)
 
-        model.errMsg =
-          '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
-        model.isAlert = true
+    model.errMsg =
+      '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
+    model.isAlert = true
 
-        setPatientInfo(data.result)
-      }
-    }).catch((e) => {
-      model.errMsg =
-        '역학조사서 인식에 실패했습니다.\n다시 한번 시도해주세요.'
-      model.isAlert = true
-      console.log(e)
-    }).finally(() => {
-      isLoading.value = false
-    })
+    setPatientInfo(data.result)
+  }
+
+  const onError = (error) => {
+    model.errMsg =
+      '역학조사서 인식에 실패했습니다.\n다시 한번 시도해주세요.'
+    model.isAlert = true
+    console.error(error)
+  }
+
+  upldEpidRpt(formData, onSuccess, onError)
 }
 
 function setPatientInfo(result) {

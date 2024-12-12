@@ -28,7 +28,7 @@
         <div class='modal-body scroll-y py-10 px-10'>
           <article class='request-step-layout'>
             <div class='step-list'>
-              <div class='step-box' :class='{ active: model.tab === 0 }'>
+              <div class='step-box' :class='{ active: model.tab === 0 }' role='button' @click='changeTab(0)'>
                 <div class='order-box'>1</div>
                 <div class='info-box'>
                   <div class='subject-box'>1단계</div>
@@ -39,7 +39,7 @@
                 </div>
               </div>
 
-              <div class='step-box' :class='{ active: model.tab === 1 }'>
+              <div class='step-box' :class='{ active: model.tab === 1 }' role='button' @click='changeTab(1)'>
                 <div class='order-box'>2</div>
                 <div class='info-box'>
                   <div class='subject-box'>2단계</div>
@@ -47,7 +47,7 @@
                 </div>
               </div>
 
-              <div class='step-box' :class='{ active: model.tab === 2 }'>
+              <div class='step-box' :class='{ active: model.tab === 2 }' role='button' @click='changeTab(2)'>
                 <div class='order-box'>3</div>
                 <div class='info-box'>
                   <div class='subject-box'>3단계</div>
@@ -55,7 +55,7 @@
                 </div>
               </div>
 
-              <div class='step-box' :class='{ active: model.tab === 3 }'>
+              <div class='step-box' :class='{ active: model.tab === 3 }' role='button' @click='changeTab(3)'>
                 <div class='order-box'>4</div>
                 <div class='info-box'>
                   <div class='subject-box'>4단계</div>
@@ -1567,14 +1567,14 @@
 <script setup>
 import { defineEmits, defineProps, onMounted, reactive, watch } from 'vue'
 import CloseButton from '@/components/common/CloseButton.vue'
-import { getAge, getTelno, getGndr } from '@/util/ui'
+import { getAge, getGndr, getTelno } from '@/util/ui'
 import { API_PROD } from '@/util/constantURL'
 import { axios_cstm, isLoading } from '@/util/axios_cstm'
 import { useStore } from 'vuex'
 import SbasAlert from '@/components/common/SbasAlert.vue'
 import ExistPatntModal from '@/components/user/modal/ExistPatntModal.vue'
 import axios from 'axios'
-import { registerNewPt } from '@/store/modules/patnt'
+import { registerNewPt, upldEpidRpt } from '@/store/modules/patnt'
 
 const props = defineProps({
   ptId: null,
@@ -1713,37 +1713,30 @@ function uploadRpt(event) {
   formData.append('param1', 'epidreport')
   formData.append('param2', file)
 
-  const token = sessionStorage.getItem('userToken')
-  const url = `${API_PROD}/api/v1/private/patient/upldepidreport`
-  isLoading.value = true
-  axios
-    .post(url, formData, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).then((response) => {
-      const data = response.data
-      if (data.code === '00') {
-        //역조서 이미지 미리보기 만들기
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          model.epidReportImage = e.target.result
-        }
-        reader.readAsDataURL(file)
+  const onSuccess = (data) => {
+    // 역학조사서 이미지 미리보기
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      model.epidReportImage = e.target.result
+    }
+    reader.readAsDataURL(file)
 
-        model.errMsg =
-          '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
-        model.confirmAlert = true
+    model.errMsg =
+      '역학조사서 파일 기반으로\n환자정보를 자동입력 하였습니다.\n내용을 확인해주세요.'
+    model.confirmAlert = true
 
-        setPatientInfo(data.result)
-        setDsInfo(data.result)
-      }
-    }).catch((error) => {
-      model.errMsg =
-        '역학조사서 인식에 실패했습니다.\n다시 한번 시도해주세요.'
-      model.confirmAlert = true
-      console.log(error)
-    }).finally(() => {
-      isLoading.value = false
-    })
+    setPatientInfo(data.result)
+    setDsInfo(data.result)
+  }
+
+  const onError = (error) => {
+    model.errMsg =
+      '역학조사서 인식에 실패했습니다.\n다시 한번 시도해주세요.'
+    model.confirmAlert = true
+    console.error(error)
+  }
+
+  upldEpidRpt(formData, onSuccess, onError)
 }
 
 function setPatientInfo(result) {
@@ -1855,6 +1848,10 @@ function saveInfo() {
       }
     })
     .catch((error) => {
+      if (error.response.data.code === '01' && error.response.status === 400) {
+        model.confirmAlert = true
+        model.errMsg = "필수 입력값을 확인해주세요."
+      }
       console.log(error)
     })
 }
@@ -1879,6 +1876,10 @@ function bedRequest() {
       }
     })
     .catch((error) => {
+      if (error.response.data.code === '01' && error.response.status === 400) {
+        model.confirmAlert = true
+        model.errMsg = "필수 입력값을 확인해주세요."
+      }
       console.log(error)
     })
 }
@@ -2180,6 +2181,10 @@ function closePopup() {
   model.confirmAlert = false
   model.openExistPtModal = false
   model.epidConfirmAlert = false
+}
+
+function changeTab(idx) {
+  model.tab = idx
 }
 
 </script>

@@ -6,11 +6,6 @@ const routes = [
     component: () => import('@/components/common/LoginView.vue')
   },
   {
-    path: '/idfysms',
-    name: 'idfysms',
-    component: () => import('@/components/common/IdfySms.vue')
-  },
-  {
     path: '/initpw',
     name: 'initpw',
     component: () => import('@/components/common/InitPw.vue')
@@ -88,13 +83,6 @@ const routes = [
         name: 'DetlCntc',
         component: () => import('@/components/user/detl/DetlCntc1.vue')
       },
-      /*
-      {
-        path: 'chnl/list',
-        name: 'listchnl',
-        component: () => import('@/components/user/chnl/ListChnl.vue')
-      },
-      */
       {
         path: 'svrt/dashbd',
         name: 'svrt',

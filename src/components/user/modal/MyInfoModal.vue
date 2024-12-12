@@ -1,10 +1,6 @@
 <template>
   <!--begin::Modal - 내정보-->
-  <div
-    class="modal show"
-    id="kt_modal_user_profile_view"
-    tabindex="-1"
-  >
+  <div class="modal show" id="kt_modal_user_profile_view" tabindex="-1">
     <!--begin::Modal dialog-->
     <div class="modal-dialog mw-750px modal-dialog-centered">
       <!--begin::Modal content-->
@@ -183,9 +179,10 @@ onMounted(() => {
     logoutLink.value.addEventListener('click', handleLogout)
   }
   store.dispatch('user/readPrivateImage', props.userInfo.attcId).then((result) => {
-    console.log(result)
-    const blob = new Blob([result], { type: 'image/jpeg' })
-    model.myImage = URL.createObjectURL(blob)
+    if (result) {
+      const blob = new Blob([result], { type: 'image/jpeg' })
+      model.myImage = URL.createObjectURL(blob)
+    }
   }).catch(() => {
     model.myImage = ''
   })
@@ -216,5 +213,8 @@ const handleLogout = () => {
   color: #fff;
   background-color: #82b7ed;
   margin-top: 20px;
+}
+.modal {
+  display: block;
 }
 </style>

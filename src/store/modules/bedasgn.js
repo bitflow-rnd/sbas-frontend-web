@@ -46,12 +46,6 @@ export default {
     setBdasHisInfo(state, payload) {
       state.bdasHisInfo = payload
     },
-    isTrsf(state, payload) {
-      state.isTrsf = payload
-    },
-    isCfrmHosp(state, payload) {
-      state.isCfrmHosp = payload
-    },
     setBdListWeb(state,payload){
       state.bdListWeb = payload
     },
@@ -132,7 +126,6 @@ export default {
     async getDSInfo(comment, data) {
       const token = sessionStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/disease-info/${data.ptId}`
-      // const url = `http://localhost:8080/api/v1/private/patient/disease-info/${data.ptId}`
       console.log('병상배정 - 세부정보 - 질병 정보')
       try {
         const response = await axios.get(url, {
@@ -152,7 +145,6 @@ export default {
     async getBdasHisInfo(comment, data) {
       //const token = localStorage.getItem('userToken')
       const url = `${API_PROD}/api/v1/private/patient/bdasHisinfos/${data.ptId}`
-      // const url = `http://localhost:8080/api/v1/private/patient/disease-info/${data.ptId}`
       console.log('병상배정 - 병상 이력 조회')
       try {
         const response = await axios.get(url)

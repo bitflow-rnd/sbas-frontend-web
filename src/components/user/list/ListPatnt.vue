@@ -336,7 +336,7 @@
 </template>
 
 <script>
-import DataPagination from '@/components/user/cpnt/DataPagination.vue'
+import DataPagination from '@/components/user/unit/DataPagination.vue'
 import { mapState } from 'vuex'
 import { TimestampToDateWithDot, toggleCheckbox } from '@/util/ui'
 import { reactive } from 'vue'
@@ -512,7 +512,6 @@ export default {
         this.$store.commit('bedasgn/setDisesInfo', null)
         this.$store.commit('bedasgn/setTimeline', null)
         this.$store.commit('patnt/setBasicInfo', null)
-        this.$store.commit('patnt/setRpt', null)
         this.search()
       }
     },

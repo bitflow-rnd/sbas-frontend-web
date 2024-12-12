@@ -10,47 +10,47 @@
  */
 export default {
 
-	async fetch(req, env, ctx) {
+  async fetch(req, env, ctx) {
 
     const url         = new URL(req.url)
-		const search     = url.search?url.search:''
-		const path       = url.pathname + search
-		const host       = url.protocol + "//" + url.host
-		const PRXY_URL_API= env.VITE_APP_API_URL + path
+    const search     = url.search?url.search:''
+    const path       = url.pathname + search
+    const host       = url.protocol + "//" + url.host
+    const PRXY_URL_API= env.VITE_APP_API_URL + path
 
-  if (path.startsWith('/api/')) {
+    if (path.startsWith('/api/')) {
       console.log('PRXY_URL_API', PRXY_URL_API)
       return fetch(PRXY_URL_API, req)
-		} else {
-			try {
-				return env.ASSETS.fetch(req)
-			} catch (e) {
-				let object = { }
-				object['code'] = 404
-				object['mesg'] = null
-				object['rslt'] = null
-				return Response.json(object)
-			}
-		}
+    } else {
+      try {
+        return env.ASSETS.fetch(req)
+      } catch (e) {
+        let object = { }
+        object['code'] = 404
+        object['mesg'] = null
+        object['rslt'] = null
+        return Response.json(object)
+      }
+    }
 
-	}
+  }
 }
 
 const AttributeRewriter = class {
 
-	constructor(dataKey, contentAttr, metaMap) {
-		this.attributeName = dataKey
-		this.contentAttr = contentAttr
-		this.metaMap = metaMap
-	}
-	element(element) {
-		const attribute = element.getAttribute(this.attributeName)
-		if (attribute) {
-			if (element.tagName === "title") {
-				element.setInnerContent(this.metaMap[attribute])
-			} else {
-				element.setAttribute(this.contentAttr, this.metaMap[attribute])
-			}
-		}
-	}
+  constructor(dataKey, contentAttr, metaMap) {
+    this.attributeName = dataKey
+    this.contentAttr = contentAttr
+    this.metaMap = metaMap
+  }
+  element(element) {
+    const attribute = element.getAttribute(this.attributeName)
+    if (attribute) {
+      if (element.tagName === "title") {
+        element.setInnerContent(this.metaMap[attribute])
+      } else {
+        element.setAttribute(this.contentAttr, this.metaMap[attribute])
+      }
+    }
+  }
 }

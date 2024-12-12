@@ -65,4 +65,8 @@ function alertClose() {
   margin-top: 12px;
 }
 
+.alert-msg-box {
+  white-space: pre-line;
+}
+
 </style>
