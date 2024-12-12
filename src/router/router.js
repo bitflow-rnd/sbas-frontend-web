@@ -83,13 +83,6 @@ const routes = [
         name: 'DetlCntc',
         component: () => import('@/components/user/detl/DetlCntc1.vue')
       },
-      /*
-      {
-        path: 'chnl/list',
-        name: 'listchnl',
-        component: () => import('@/components/user/chnl/ListChnl.vue')
-      },
-      */
       {
         path: 'svrt/dashbd',
         name: 'svrt',
